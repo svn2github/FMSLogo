@@ -39,6 +39,7 @@ public:
     bool StatusDialogIsShowing();
 
     CCommander * GetCommander();
+    wxWindow   * GetTopLevelWindowForCommander();
     CScreen    * GetScreen();
 
     CWorkspaceEditor * GetWorkspaceEditor();

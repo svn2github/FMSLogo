@@ -588,7 +588,7 @@ HWND GetCommanderWindow()
 {
     CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
     assert(mainFrame != NULL);
-    return reinterpret_cast<HWND>(mainFrame->GetCommander()->GetHandle());
+    return reinterpret_cast<HWND>(mainFrame->GetTopLevelWindowForCommander()->GetHandle());
 }
 
 HWND GetParentWindowForDialog()

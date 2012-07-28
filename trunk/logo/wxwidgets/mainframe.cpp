@@ -899,6 +899,18 @@ CCommander * CMainFrame::GetCommander()
     return m_RealCommander;
 }
 
+// Returns the window to which is it appropriate to send state change
+// messages, such as minimizing, that are intended for the commander.
+//
+// If the commander is docked, this is the commander panel.
+// If the commander is not docked, this is the top-level window that
+// contains the commander panel.
+//
+wxWindow * CMainFrame::GetTopLevelWindowForCommander()
+{
+    return m_Commander;
+}
+
 void CMainFrame::OnClose(wxCloseEvent& Event)
 {
     if (Event.CanVeto())
@@ -1105,7 +1117,7 @@ void CMainFrame::OnFileNew(wxCommandEvent& WXUNUSED(Event))
                 LOCALIZED_FILENEWWILLERASEWORKSPACE,
                 LOCALIZED_YOUHAVEUNSAVEDCHANGES,
                 wxOK | wxCANCEL | wxICON_QUESTION,
-                GetCommander()) == wxCANCEL)
+                GetTopLevelWindowForCommander()) == wxCANCEL)
         {
             return;
         }
@@ -1155,7 +1167,7 @@ void CMainFrame::OnFileLoad(wxCommandEvent& WXUNUSED(Event))
                 LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE,
                 LOCALIZED_YOUHAVEUNSAVEDCHANGES,
                 wxOK | wxCANCEL | wxICON_QUESTION,
-                GetCommander()) == wxCANCEL)
+                GetTopLevelWindowForCommander()) == wxCANCEL)
         {
             return;
         }
@@ -1200,7 +1212,7 @@ void CMainFrame::OnFileOpen(wxCommandEvent& WXUNUSED(Event))
                 LOCALIZED_FILEOPENWILLERASEWORKSPACE,
                 LOCALIZED_YOUHAVEUNSAVEDCHANGES,
                 wxOK | wxCANCEL | wxICON_QUESTION,
-                GetCommander()) == wxCANCEL)
+                GetTopLevelWindowForCommander()) == wxCANCEL)
         {
             return;
         }
