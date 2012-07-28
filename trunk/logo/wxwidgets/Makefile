@@ -64,7 +64,7 @@ endif
 
 CPPFLAGS += -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES -I$(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) -I$(wx_top_builddir)/include -I$(wx_top_builddir)/contrib/include -I../src 
 CXXFLAGS += -Wall -Wundef -Wno-ctor-dtor-privacy  -fno-strict-aliasing
-CXXFLAGS += -DFMSLOGO_SCREENSAVER -DNOASM
+CXXFLAGS += -DFMSLOGO_WXWIDGETS -DNOASM
 CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
 CXXFLAGS += -I"/cygdrive/c/Program Files/HTML Help Workshop/include"
 
@@ -125,6 +125,7 @@ OBJECTS =  \
         cursor.o         \
         devwind.o        \
         dib.o            \
+        dlgwind.o        \
         dynamicbuffer.o  \
         error.o          \
         eval.o           \

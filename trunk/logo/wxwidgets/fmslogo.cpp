@@ -36,6 +36,8 @@
 #include "commander.h"
 
 // global variables declared in main.h
+char edit_editexit[MAX_BUFFER_SIZE];     // editor callback instruction list 
+
 int  GCMAX        = 8192;
 int  BitMapWidth  = 1000;
 int  BitMapHeight = 1000;
@@ -568,10 +570,6 @@ bool promptuser(char *str, const char *prompt)
     return false;
 }
 
-void uninitialize_windows()
-{
-}
-
 HWND GetScreenWindow()
 {
     CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
@@ -591,6 +589,11 @@ HWND GetCommanderWindow()
     CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
     assert(mainFrame != NULL);
     return reinterpret_cast<HWND>(mainFrame->GetCommander()->GetHandle());
+}
+
+HWND GetParentWindowForDialog()
+{
+    return GetCommanderWindow();
 }
 
 HWND GetEditorWindow()

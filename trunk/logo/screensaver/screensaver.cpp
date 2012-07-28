@@ -649,10 +649,6 @@ bool promptuser(char *str, const char *prompt)
     return false;
 }
 
-void uninitialize_windows()
-{
-}
-
 HWND GetScreenWindow()
 {
     return g_ScreenWindow;
@@ -666,6 +662,14 @@ HWND GetMainWindow()
 HWND GetCommanderWindow()
 {
     return NULL;
+}
+
+HWND GetParentWindowForDialog()
+{
+    // Because the screen window is full screen and always on top,
+    // it must be the parent of any dialog box that we want to
+    // show, or else that dialog wouldn't be visible.
+    return GetScreenWindow();
 }
 
 HWND GetEditorWindow()

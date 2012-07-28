@@ -25,6 +25,7 @@ OBJECTS=\
     cursor.o         \
     devwind.o        \
     dib.o            \
+    dlgwind.o        \
     dynamicbuffer.o  \
     error.o          \
     eval.o           \
