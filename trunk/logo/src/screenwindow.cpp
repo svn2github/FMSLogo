@@ -47,6 +47,11 @@ HWND GetCommanderWindow()
     return MainWindowx->CommandWindow->HWindow;
 }
 
+HWND GetParentWindowForDialog()
+{
+    return GetCommanderWindow();
+}
+
 HWND GetEditorWindow()
 {
     TMyFileWindow * editor = MainWindowx->GetEditor();

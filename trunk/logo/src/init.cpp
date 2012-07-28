@@ -158,7 +158,7 @@ const PRIMTYPE prims[] =
     { "butfirst", 1, 1, 1, PREFIX_PRIORITY, lbutfirst, LOCALIZED_ALTERNATE_BUTFIRST },
     { "butfirsts", 1, 1, 1, PREFIX_PRIORITY, lbfs, LOCALIZED_ALTERNATE_BUTFIRSTS },
     { "butlast", 1, 1, 1, PREFIX_PRIORITY, lbutlast, LOCALIZED_ALTERNATE_BUTLAST },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "buttoncreate", 8, 8, 8, PREFIX_PRIORITY, lbuttoncreate, LOCALIZED_ALTERNATE_BUTTONCREATE },
     { "buttondelete", 1, 1, 1, PREFIX_PRIORITY, lbuttondelete, LOCALIZED_ALTERNATE_BUTTONDELETE },
     { "buttonenable", 2, 2, 2, PREFIX_PRIORITY, lbuttonenable, LOCALIZED_ALTERNATE_BUTTONENABLE },
@@ -170,7 +170,7 @@ const PRIMTYPE prims[] =
     { "catch", 2, 2, 2, MACRO_PRIORITY, lcatch, LOCALIZED_ALTERNATE_CATCH },
     { "char", 1, 1, 1, PREFIX_PRIORITY, lchar, LOCALIZED_ALTERNATE_CHAR },
     { "chdir", 1, 1, 1, PREFIX_PRIORITY, lchdir, LOCALIZED_ALTERNATE_CHDIR },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "checkboxcreate", 8, 8, 8, PREFIX_PRIORITY, lcheckboxcreate, LOCALIZED_ALTERNATE_CHECKBOXCREATE },
     { "checkboxdelete", 1, 1, 1, PREFIX_PRIORITY, lcheckboxdelete, LOCALIZED_ALTERNATE_CHECKBOXDELETE },
     { "checkboxenable", 2, 2, 2, PREFIX_PRIORITY, lcheckboxenable, LOCALIZED_ALTERNATE_CHECKBOXENABLE },
@@ -180,14 +180,14 @@ const PRIMTYPE prims[] =
     { "clean", 0, 0, 0, PREFIX_PRIORITY, lclean, LOCALIZED_ALTERNATE_CLEAN },
     { "clearpalette", 0, 0, 0, PREFIX_PRIORITY, lclearpalette, LOCALIZED_ALTERNATE_CLEARPALETTE },
     { "clearscreen", 0, 0, 0, PREFIX_PRIORITY, lclearscreen, LOCALIZED_ALTERNATE_CLEARSCREEN },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "cleartext", 0, 0, 0, PREFIX_PRIORITY, lcleartext, LOCALIZED_ALTERNATE_CLEARTEXT },
 #endif
     { "cleartimer", 1, 1, 1, PREFIX_PRIORITY, lcleartimer, LOCALIZED_ALTERNATE_CLEARTIMER },
     { "close", 1, 1, 1, PREFIX_PRIORITY, lclose, LOCALIZED_ALTERNATE_CLOSE },
     { "closeall", 0, 0, 0, PREFIX_PRIORITY, lcloseall, LOCALIZED_ALTERNATE_CLOSEALL },
     { "co", OK_NO_ARG, 1, 1, PREFIX_PRIORITY, lcontinue, LOCALIZED_ALTERNATE_CO },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "comboboxaddstring", 2, 2, 2, PREFIX_PRIORITY, lcomboboxaddstring, LOCALIZED_ALTERNATE_COMBOBOXADDSTRING },
     { "comboboxcreate", 6, 6, 6, PREFIX_PRIORITY, lcomboboxcreate, LOCALIZED_ALTERNATE_COMBOBOXCREATE },
     { "comboboxdelete", 1, 1, 1, PREFIX_PRIORITY, lcomboboxdelete, LOCALIZED_ALTERNATE_COMBOBOXDELETE },
@@ -202,7 +202,7 @@ const PRIMTYPE prims[] =
     { "cos", 1, 1, 1, PREFIX_PRIORITY, lcos, LOCALIZED_ALTERNATE_COS },
     { "count", 1, 1, 1, PREFIX_PRIORITY, lcount, LOCALIZED_ALTERNATE_COUNT },
     { "cs", 0, 0, 0, PREFIX_PRIORITY, lclearscreen, LOCALIZED_ALTERNATE_CS },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "ct", 0, 0, 0, PREFIX_PRIORITY, lcleartext, LOCALIZED_ALTERNATE_CT },
     { "cursor", 0, 0, 0, PREFIX_PRIORITY, lcursor, LOCALIZED_ALTERNATE_CURSOR },
     { "debugwindows", 0, 0, 1, PREFIX_PRIORITY, ldebugwindows, LOCALIZED_ALTERNATE_DEBUGWINDOWS },
@@ -210,16 +210,16 @@ const PRIMTYPE prims[] =
     { "define", 2, 2, 2, PREFIX_PRIORITY, ldefine, LOCALIZED_ALTERNATE_DEFINE },
     { "definedp", 1, 1, 1, PREFIX_PRIORITY, ldefinedp, LOCALIZED_ALTERNATE_DEFINEDP },
     { "defined?", 1, 1, 1, PREFIX_PRIORITY, ldefinedp, LOCALIZED_ALTERNATE_DEFINED_ },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "dialogcreate", 8, 8, 8, PREFIX_PRIORITY, ldialogcreate, LOCALIZED_ALTERNATE_DIALOGCREATE },
     { "dialogenable", 2, 2, 2, PREFIX_PRIORITY, ldialogenable, LOCALIZED_ALTERNATE_DIALOGENABLE },
     { "dialogdelete", 1, 1, 1, PREFIX_PRIORITY, ldialogdelete, LOCALIZED_ALTERNATE_DIALOGDELETE },
+#endif
     { "dialogfileopen", 1, 1, 1, PREFIX_PRIORITY, ldialogfileopen, LOCALIZED_ALTERNATE_DIALOGFILEOPEN },
     { "dialogfilesave", 1, 1, 1, PREFIX_PRIORITY, ldialogfilesave, LOCALIZED_ALTERNATE_DIALOGFILESAVE },
-#endif
     { "difference", 2, 2, 2, PREFIX_PRIORITY, lsub, LOCALIZED_ALTERNATE_DIFFERENCE },
     { "directories", 0, 0, 0, PREFIX_PRIORITY, ldirectories, LOCALIZED_ALTERNATE_DIRECTORIES },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "dllcall", 1, 1, 2, PREFIX_PRIORITY, ldllcall, LOCALIZED_ALTERNATE_DLLCALL },
     { "dllfree", 0, 0, 1, PREFIX_PRIORITY, ldllfree, LOCALIZED_ALTERNATE_DLLFREE },
     { "dllload", 1, 1, 1, PREFIX_PRIORITY, ldllload, LOCALIZED_ALTERNATE_DLLLOAD },
@@ -268,7 +268,7 @@ const PRIMTYPE prims[] =
     { "greaterequal?", 2, 2, 2, PREFIX_PRIORITY, lgreaterequalp, LOCALIZED_ALTERNATE_GREATEREQUAL_ },
     { "greaterequalp", 2, 2, 2, PREFIX_PRIORITY, lgreaterequalp, LOCALIZED_ALTERNATE_GREATEREQUALP },
     { "greaterp", 2, 2, 2, PREFIX_PRIORITY, lgreaterp, LOCALIZED_ALTERNATE_GREATERP },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "groupboxcreate", 6, 6, 6, PREFIX_PRIORITY, lgroupboxcreate, LOCALIZED_ALTERNATE_GROUPBOXCREATE },
     { "groupboxdelete", 1, 1, 1, PREFIX_PRIORITY, lgroupboxdelete, LOCALIZED_ALTERNATE_GROUPBOXDELETE },
     { "halt", 0, 0, 0, PREFIX_PRIORITY, lhalt, LOCALIZED_ALTERNATE_HALT },
@@ -308,7 +308,7 @@ const PRIMTYPE prims[] =
     { "lessp", 2, 2, 2, PREFIX_PRIORITY, llessp, LOCALIZED_ALTERNATE_LESSP },
     { "light", 0, 0, 0, PREFIX_PRIORITY, llight, LOCALIZED_ALTERNATE_LIGHT },
     { "list", 0, 2, -1, PREFIX_PRIORITY, llist, LOCALIZED_ALTERNATE_LIST },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "listboxaddstring", 2, 2, 2, PREFIX_PRIORITY, llistboxaddstring, LOCALIZED_ALTERNATE_LISTBOXADDSTRING },
     { "listboxcreate", 6, 6, 6, PREFIX_PRIORITY, llistboxcreate, LOCALIZED_ALTERNATE_LISTBOXCREATE },
     { "listboxenable", 2, 2, 2, PREFIX_PRIORITY, llistboxenable, LOCALIZED_ALTERNATE_LISTBOXENABLE },
@@ -336,9 +336,7 @@ const PRIMTYPE prims[] =
     { "member", 2, 2, 2, PREFIX_PRIORITY, lmember, LOCALIZED_ALTERNATE_MEMBER },
     { "memberp", 2, 2, 2, PREFIX_PRIORITY, lmemberp, LOCALIZED_ALTERNATE_MEMBERP },
     { "member?", 2, 2, 2, PREFIX_PRIORITY, lmemberp, LOCALIZED_ALTERNATE_MEMBER_ },
-#ifndef FMSLOGO_SCREENSAVER
     { "messagebox", 2, 2, 2, PREFIX_PRIORITY, lmessagebox, LOCALIZED_ALTERNATE_MESSAGEBOX },
-#endif
     { "midiclose", 0, 0, 0, PREFIX_PRIORITY, lmidiclose, LOCALIZED_ALTERNATE_MIDICLOSE },
     { "midimessage", 1, 1, 1, PREFIX_PRIORITY, lmidimessage, LOCALIZED_ALTERNATE_MIDIMESSAGE },
     { "midiopen", 0, 0, 1, PREFIX_PRIORITY, lmidiopen, LOCALIZED_ALTERNATE_MIDIOPEN },
@@ -368,7 +366,7 @@ const PRIMTYPE prims[] =
     { "not", 1, 1, 1, PREFIX_PRIORITY, lnot, LOCALIZED_ALTERNATE_NOT },
     { "notequal?", 2, 2, 2, PREFIX_PRIORITY, lnotequalp, LOCALIZED_ALTERNATE_NOTEQUAL_ },
     { "notequalp", 2, 2, 2, PREFIX_PRIORITY, lnotequalp, LOCALIZED_ALTERNATE_NOTEQUALP },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "noyield", 0, 0, 0, PREFIX_PRIORITY, lnoyield, LOCALIZED_ALTERNATE_NOYIELD },
 #endif
     { "numberp", 1, 1, 1, PREFIX_PRIORITY, lnumberp, LOCALIZED_ALTERNATE_NUMBERP },
@@ -435,7 +433,7 @@ const PRIMTYPE prims[] =
     { "product", 0, 2, -1, PREFIX_PRIORITY, lmul, LOCALIZED_ALTERNATE_PRODUCT },
     { "pu", 0, 0, 0, PREFIX_PRIORITY, lpenup, LOCALIZED_ALTERNATE_PU },
     { "px", 0, 0, 0, PREFIX_PRIORITY, lpenreverse, LOCALIZED_ALTERNATE_PX },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "questionbox", 2, 2, 2, PREFIX_PRIORITY, lquestionbox, LOCALIZED_ALTERNATE_QUESTIONBOX },
 #endif
     { "quotient", 1, 2, 2, PREFIX_PRIORITY, ldivide, LOCALIZED_ALTERNATE_QUOTIENT },
@@ -443,7 +441,7 @@ const PRIMTYPE prims[] =
     { "radarcsin", 1, 1, 1, PREFIX_PRIORITY, lradasin, LOCALIZED_ALTERNATE_RADARCSIN },
     { "radarctan", 1, 1, 2, PREFIX_PRIORITY, lradatan, LOCALIZED_ALTERNATE_RADARCTAN },
     { "radcos", 1, 1, 1, PREFIX_PRIORITY, lradcos, LOCALIZED_ALTERNATE_RADCOS },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "radiobuttoncreate", 8, 8, 8, PREFIX_PRIORITY, lradiobuttoncreate, LOCALIZED_ALTERNATE_RADIOBUTTONCREATE },
     { "radiobuttonenable", 2, 2, 2, PREFIX_PRIORITY, lradiobuttonenable, LOCALIZED_ALTERNATE_RADIOBUTTONENABLE },
     { "radiobuttondelete", 1, 1, 1, PREFIX_PRIORITY, lradiobuttondelete, LOCALIZED_ALTERNATE_RADIOBUTTONDELETE },
@@ -482,7 +480,7 @@ const PRIMTYPE prims[] =
     { "rw", 0, 0, 0, PREFIX_PRIORITY, lreadword, LOCALIZED_ALTERNATE_RW },
     { "save", 1, 1, 1, PREFIX_PRIORITY, lsave, LOCALIZED_ALTERNATE_SAVE },
     { "screencolor", 0, 0, 0, PREFIX_PRIORITY, lscreencolor, LOCALIZED_ALTERNATE_SCREENCOLOR },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "scrollbarcreate", 7, 7, 7, PREFIX_PRIORITY, lscrollbarcreate, LOCALIZED_ALTERNATE_SCROLLBARCREATE },
     { "scrollbarenable", 2, 2, 2, PREFIX_PRIORITY, lscrollbarenable, LOCALIZED_ALTERNATE_SCROLLBARENABLE },
     { "scrollbardelete", 1, 1, 1, PREFIX_PRIORITY, lscrollbardelete, LOCALIZED_ALTERNATE_SCROLLBARDELETE },
@@ -493,7 +491,7 @@ const PRIMTYPE prims[] =
     { "scrolly", 1, 1, 1, PREFIX_PRIORITY, lscrolly, LOCALIZED_ALTERNATE_SCROLLY },
     { "scrunch", 0, 0, 0, PREFIX_PRIORITY, lscrunch, LOCALIZED_ALTERNATE_SCRUNCH },
     { "se", 0, 2, -1, PREFIX_PRIORITY, lsentence, LOCALIZED_ALTERNATE_SE },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "selectbox", 2, 2, 2, PREFIX_PRIORITY, lselectbox, LOCALIZED_ALTERNATE_SELECTBOX },
 #endif
     { "sentence", 0, 2, -1, PREFIX_PRIORITY, lsentence, LOCALIZED_ALTERNATE_SENTENCE },
@@ -512,7 +510,7 @@ const PRIMTYPE prims[] =
     { "setitem", 3, 3, 3, PREFIX_PRIORITY, lsetitem, LOCALIZED_ALTERNATE_SETITEM },
     { "setlabelfont", 1, 1, 1, PREFIX_PRIORITY, lsetlabelfont, LOCALIZED_ALTERNATE_SETLABELFONT },
     { "setlight", 1, 1, 1, PREFIX_PRIORITY, lsetlight, LOCALIZED_ALTERNATE_SETLIGHT },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "setmargins", 1, 1, 1, PREFIX_PRIORITY, lsetmargins, LOCALIZED_ALTERNATE_SETMARGINS },
 #endif
     { "setpc", 1, 1, 1, PREFIX_PRIORITY, lsetpencolor, LOCALIZED_ALTERNATE_SETPC },
@@ -550,7 +548,7 @@ const PRIMTYPE prims[] =
     { "sqrt", 1, 1, 1, PREFIX_PRIORITY, lsqrt, LOCALIZED_ALTERNATE_SQRT },
     { "ss", 0, 0, 0, PREFIX_PRIORITY, lsplitscreen, LOCALIZED_ALTERNATE_SS },
     { "st", 0, 0, 0, PREFIX_PRIORITY, lshowturtle, LOCALIZED_ALTERNATE_ST },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "standout", 1, 1, 1, PREFIX_PRIORITY, lstandout, LOCALIZED_ALTERNATE_STANDOUT },
     { "staticcreate", 7, 7, 7, PREFIX_PRIORITY, lstaticcreate, LOCALIZED_ALTERNATE_STATICCREATE },
     { "staticdelete", 1, 1, 1, PREFIX_PRIORITY, lstaticdelete, LOCALIZED_ALTERNATE_STATICDELETE },
@@ -591,10 +589,12 @@ const PRIMTYPE prims[] =
     { "uppitch", 1, 1, 1, PREFIX_PRIORITY, luppitch, LOCALIZED_ALTERNATE_UPPITCH },
     { "wait", 1, 1, 1, PREFIX_PRIORITY, lwait, LOCALIZED_ALTERNATE_WAIT },
     { "window", 0, 0, 0, PREFIX_PRIORITY, lwindow, LOCALIZED_ALTERNATE_WINDOW },
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
     { "windowcreate", 8, 8, 8, PREFIX_PRIORITY, lwindowcreate, LOCALIZED_ALTERNATE_WINDOWCREATE },
     { "windowenable", 2, 2, 2, PREFIX_PRIORITY, lwindowenable, LOCALIZED_ALTERNATE_WINDOWENABLE },
     { "windowdelete", 1, 1, 1, PREFIX_PRIORITY, lwindowdelete, LOCALIZED_ALTERNATE_WINDOWDELETE },
+#endif
+#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
     { "windowfileedit", 2, 2, 2, PREFIX_PRIORITY, lwindowfileedit, LOCALIZED_ALTERNATE_WINDOWFILEEDIT },
 #endif
     { "windowset", 2, 2, 2, PREFIX_PRIORITY, lwindowset, LOCALIZED_ALTERNATE_WINDOWSET },
@@ -605,8 +605,8 @@ const PRIMTYPE prims[] =
     { "wrap", 0, 0, 0, PREFIX_PRIORITY, lwrap, LOCALIZED_ALTERNATE_WRAP },
     { "writepos", 0, 0, 0, PREFIX_PRIORITY, lwritepos, LOCALIZED_ALTERNATE_WRITEPOS },
     { "writer", 0, 0, 0, PREFIX_PRIORITY, lwriter, LOCALIZED_ALTERNATE_WRITER },
-#ifndef FMSLOGO_SCREENSAVER
     { "yesnobox", 2, 2, 2, PREFIX_PRIORITY, lyesnobox, LOCALIZED_ALTERNATE_YESNOBOX },
+#ifdef FMSLOGO_OWL
     { "yield", 0, 0, 0, PREFIX_PRIORITY, lyield, LOCALIZED_ALTERNATE_YIELD },
 #endif
     { "zoom", 1, 1, 1, PREFIX_PRIORITY, lzoom, LOCALIZED_ALTERNATE_ZOOM },
@@ -685,7 +685,7 @@ void init()
     // 
 
     // intern all of the primitives by their English name
-    for (int i = 0; i < ARRAYSIZE(prims); i++)
+    for (size_t i = 0; i < ARRAYSIZE(prims); i++)
     {
         // intern the current primitive
         intern_primitive(
@@ -698,7 +698,7 @@ void init()
     }
 
     // Now intern the commands by their localized name
-    for (int i = 0; i < ARRAYSIZE(prims); i++)
+    for (size_t i = 0; i < ARRAYSIZE(prims); i++)
     {
         // If there is an alternate name for the primitive,
         // and it's different from the normal name, make a

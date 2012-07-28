@@ -19,6 +19,8 @@
 
 #ifdef DEBUG
 
+#include <stddef.h> // for size_t
+
 #define malloc    debug_malloc
 #define calloc    debug_calloc
 #define realloc   debug_realloc

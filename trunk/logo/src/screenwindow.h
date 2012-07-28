@@ -25,6 +25,7 @@ HWND GetScreenWindow();
 HWND GetMainWindow();
 HWND GetEditorWindow();
 HWND GetCommanderWindow();
+HWND GetParentWindowForDialog();
 UINT GetScreenHorizontalScrollPosition();
 UINT GetScreenVerticalScrollPosition();
 void SetScreenScrollPosition(UINT x, UINT y);

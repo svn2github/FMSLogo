@@ -18,6 +18,7 @@
 *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 *
 */
+#ifdef FMSLOGO_OWL
 
 #include <owl/scroller.h>
 #include <owl/dialog.h>
@@ -30,27 +31,35 @@
 #include <owl/scrollba.h>
 #include <owl/inputdia.h>
 
+#endif // FMSLOGO_OWL
+
 #include "dlgwind.h"
 
-#include "main.h"
+#ifdef FMSLOGO_OWL
+
 #include "devwind.h"
 #include "wrksp.h"
-#include "argumentutils.h"
 #include "mainframe.h"
-#include "lists.h"
 #include "logorc.h"
-#include "localizedstrings.h"
-#include "init.h"
-#include "eval.h"
 #include "netwind.h"
-#include "error.h"
 #include "coms.h"
-#include "graphwin.h"
 #include "parse.h"
 #include "logodata.h"
 #include "logomath.h"
 #include "cmdwind.h"
 #include "selectbox.h"
+
+#endif // FMSLOGO_OWL
+
+#include "main.h"
+#include "localizedstrings.h"
+#include "init.h"
+#include "argumentutils.h"
+#include "graphwin.h"
+#include "error.h"
+#include "eval.h"
+#include "logocore.h"
+#include "lists.h"
 #include "screenwindow.h"
 #include "debugheap.h"
 
@@ -132,6 +141,8 @@ void TClientRectangle::ConvertToScreenCoordinates()
     m_X =  m_X - GetScreenHorizontalScrollPosition() + xoffset;
     m_Y = -m_Y - GetScreenVerticalScrollPosition()   + yoffset;
 }
+
+#ifdef FMSLOGO_OWL
 
 // class structures for the controls we support, for the most part they
 // are the same as the original with just a callback string added
@@ -665,7 +676,7 @@ void dialoglist::zap(const char *k)
     }
 }
 
-// prints the heirarchy of all children of the node whose "k".
+// prints the heirarchy of all children of the node whose key is "k".
 void dialoglist::list(const char *k, int level)
 {
     dialogthing * p = get(k);
@@ -2180,6 +2191,8 @@ NODE *ldebugwindows(NODE *arg)
     return Unbound;
 }
 
+#endif // FMSLOGO_OWL
+
 NODE *lmessagebox(NODE *args)
 {
     char banner[MAX_BUFFER_SIZE];
@@ -2190,7 +2203,8 @@ NODE *lmessagebox(NODE *args)
 
     if (NOT_THROWING)
     {
-        if (MainWindowx->CommandWindow->MessageBox(
+        if (::MessageBox(
+                GetParentWindowForDialog(),
                 body, 
                 banner, 
                 MB_OKCANCEL) == IDCANCEL)
@@ -2201,6 +2215,8 @@ NODE *lmessagebox(NODE *args)
 
     return Unbound;
 }
+
+#ifdef FMSLOGO_OWL
 
 NODE *lquestionbox(NODE *args)
 {
@@ -2267,6 +2283,8 @@ NODE *lselectbox(NODE *args)
     return make_intnode(status + 1);
 }
 
+#endif // FMSLOGO_OWL
+
 NODE *lyesnobox(NODE *args)
 {
     char banner[MAX_BUFFER_SIZE];
@@ -2277,7 +2295,8 @@ NODE *lyesnobox(NODE *args)
 
     if (NOT_THROWING)
     {
-        int status = MainWindowx->CommandWindow->MessageBox(
+        int status = ::MessageBox(
+            GetParentWindowForDialog(),
             body,
             banner,
             MB_YESNOCANCEL | MB_ICONQUESTION);
@@ -2307,7 +2326,7 @@ NODE *ldialogfileopen(NODE *args)
     OPENFILENAME openFileName;
     ZeroMemory(&openFileName, sizeof openFileName);
     openFileName.lStructSize       = sizeof openFileName;
-    openFileName.hwndOwner         = NULL;
+    openFileName.hwndOwner         = GetParentWindowForDialog();
     openFileName.hInstance         = NULL;
     openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_ALLFILES;
     openFileName.lpstrCustomFilter = NULL;
@@ -2323,7 +2342,7 @@ NODE *ldialogfileopen(NODE *args)
     openFileName.nFileOffset       = 0;
     openFileName.nFileExtension    = 0;
     openFileName.lpstrDefExt       = NULL;
-    openFileName.lCustData         = NULL;
+    openFileName.lCustData         = 0;
     openFileName.lpfnHook          = NULL;
     openFileName.lpTemplateName    = NULL;
 
@@ -2346,7 +2365,7 @@ NODE *ldialogfilesave(NODE *args)
     OPENFILENAME openFileName;
     ZeroMemory(&openFileName, sizeof openFileName);
     openFileName.lStructSize       = sizeof openFileName;
-    openFileName.hwndOwner         = NULL;
+    openFileName.hwndOwner         = GetParentWindowForDialog();
     openFileName.hInstance         = NULL;
     openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_ALLFILES;
     openFileName.lpstrCustomFilter = NULL;
@@ -2362,7 +2381,7 @@ NODE *ldialogfilesave(NODE *args)
     openFileName.nFileOffset       = 0;
     openFileName.nFileExtension    = 0;
     openFileName.lpstrDefExt       = NULL;
-    openFileName.lCustData         = NULL;
+    openFileName.lCustData         = 0;
     openFileName.lpfnHook          = NULL;
     openFileName.lpTemplateName    = NULL;
 
@@ -2377,6 +2396,8 @@ NODE *ldialogfilesave(NODE *args)
     }
 }
 
+#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+
 NODE *lwindowfileedit(NODE *args)
 {
     char filename[MAX_BUFFER_SIZE];
@@ -2387,11 +2408,15 @@ NODE *lwindowfileedit(NODE *args)
 
     strcpy(edit_editexit, editexit);
 
-    TMainFrame::PopupEditorForFile(filename, NULL);
+    ShowEditorForFile(filename, NULL);
     return Unbound;
 }
 
+#endif
+
 void uninitialize_windows()
 {
+#ifdef FMSLOGO_OWL
     dialogboxes.clear();
+#endif // FMSLOGO_OWL
 }

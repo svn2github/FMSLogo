@@ -27,7 +27,7 @@ ResLocalOptsAtW32_fmslogodexe = -l$(LOCALECODE)
 
 IncludePath = -I"C:\Program Files\HTML Help Workshop\include" -IC:\BC5\INCLUDE -Iscintilla\include -Iscintilla\src -Iscintilla\win32 -I.
 
-CDefines = -DSTRICT;LOCALE=$(LOCALECODE);STATIC_BUILD;PLAT_WIN=1;_OWLPCH;SCI_NAMESPACE;SCI_LEXER;BORLAND
+CDefines = -DSTRICT;LOCALE=$(LOCALECODE);STATIC_BUILD;PLAT_WIN=1;_OWLPCH;SCI_NAMESPACE;SCI_LEXER;BORLAND;FMSLOGO_OWL
 
 CompInheritOptsAt_fmslogodexe = $(IncludePath) $(CDefines) -DNOASM;DEBUG;MEM_DEBUG;TRACE=1
 
