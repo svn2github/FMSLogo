@@ -47,7 +47,8 @@ bool bExpert    = false;               // Expert mode
 bool yield_flag = true;                // Flag to signal yield state
 bool IsDirty    = false;               // Flag to signal to query user ok to quit
 bool to_pending = false;
-fpos_t LinesLoadedOnEdit;
+
+fpos_t g_CharactersSuccessfullyParsedInEditor;
 
 static
 NODE *make_procnode(NODE *lst, NODE *wrds, short min, short df, short max)
@@ -1634,7 +1635,7 @@ bool endedit(void)
     yield_flag = false;
     lsetcursorwait(NIL);
 
-    LinesLoadedOnEdit = 0;
+    g_CharactersSuccessfullyParsedInEditor = 0;
 
     loadstream = fopen(TempPathName, "r");
     if (loadstream != NULL)
@@ -1644,9 +1645,9 @@ bool endedit(void)
         realsave = true;
         while (!feof(loadstream) && NOT_THROWING)
         {
-            fgetpos(loadstream, &LinesLoadedOnEdit);
+            fgetpos(loadstream, &g_CharactersSuccessfullyParsedInEditor);
             current_line = reref(current_line, reader(loadstream, ""));
-         
+
             NODE * exec_list = parser(current_line, true);
 
             g_ValueStatus = VALUE_STATUS_NotOk;

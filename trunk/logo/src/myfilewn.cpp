@@ -1501,8 +1501,8 @@ void TMyFileWindow::ReopenAfterError()
     // Force the child editor into a dirty state.
     IsDirty = true;
 
-    // Move the caret to the line that had the error
-    SendEditor(SCI_GOTOLINE, LinesLoadedOnEdit);
+    // Move the caret to the character that had the error
+    SendEditor(SCI_GOTOPOS, g_CharactersSuccessfullyParsedInEditor);
 }
 
 bool TMyFileWindow::CanClose()
