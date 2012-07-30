@@ -925,6 +925,9 @@
 
 #define LOCALIZED_EDITFAILEDTOLOAD              LOCALIZED_SAVETOWORKSPACE
 
+#define LOCALIZED_ERRORINFILETITLE              "pseudo.Error in File"
+#define LOCALIZED_ERRORINFILEMESSAGE            "pseudo.There was a problem loading the contents of the file \"%s\".\n\nCheck the Commander for possible error message.\n\nDo you want to open the file in the editor to see the error?"
+
 
 
 // 

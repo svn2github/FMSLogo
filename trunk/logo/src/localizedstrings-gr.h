@@ -925,6 +925,9 @@
 
 #define LOCALIZED_EDITFAILEDTOLOAD              "Η επεξεργασία σας ΑΠΕΤΥΧΕ να φορτωθεί" // Isn't the use of capitals like shouting to the programmer for making a mistake? ;P
 
+#define LOCALIZED_ERRORINFILETITLE              "Error in File" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERRORINFILEMESSAGE            "There was a problem loading the contents of the file \"%s\".\n\nCheck the Commander for possible error message.\n\nDo you want to open the file in the editor to see the error?" // NOT_YET_LOCALIZED
+
 
 
 // 
