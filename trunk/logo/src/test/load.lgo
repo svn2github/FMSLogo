@@ -1,6 +1,6 @@
 LOAD "testlib.lgo
 
-TO LOADTEST
+TO LOADTEST.BADINPUT
 
    ; bad number of inputs
    RUNNOTENOUGHINPUTSTEST [(LOAD)]
@@ -8,8 +8,26 @@ TO LOADTEST
 
    ; bad inputs
    RUNFILESYSTEMERRORTEST [LOAD  "doesnotexist.lgo ]
+END
+
+TO LOADTEST.SMOKETEST
 
    ; load a file by running a procedure with the same name
    TRACEINSTRUCTION [ERASE "procedureinworkingdirectory]
    SIMPLEREPORTTEST [procedureinworkingdirectory] 123
+
+   ; Test that when LOAD fails because the file
+   ; contains a parse error, that everything before the failure
+   ; is successfully parsed.
+   TRACEINSTRUCTION [ ERASE [FileWithParseError ProcedureWithError ProcedureThatShouldNotBeDefined] ]
+   RUNEXPECTERRORTEST [LOAD "filewithparseerror.lgo] 26
+   SIMPLEREPORTTEST [ DEFINED? "FileWithParseError              ] LOCALETRUE
+   SIMPLEREPORTTEST [ DEFINED? "ProcedureWithError              ] LOCALEFALSE
+   SIMPLEREPORTTEST [ DEFINED? "ProcedureThatShouldNotBeDefined ] LOCALEFALSE
+
+END
+
+TO LOADTEST
+   LOADTEST.BADINPUT
+   LOADTEST.SMOKETEST
 END
