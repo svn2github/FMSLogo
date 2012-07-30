@@ -52,7 +52,7 @@
 
 #include "localizedstrings.h"
 
-#ifndef FMSLOGO_SCREENSAVER
+#ifdef FMSLOGO_OWL
 #include "mainframe.h"  // for docking/undocking commander
 #endif
 
