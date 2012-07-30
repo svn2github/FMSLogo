@@ -30,6 +30,10 @@ UINT GetScreenHorizontalScrollPosition();
 UINT GetScreenVerticalScrollPosition();
 void SetScreenScrollPosition(UINT x, UINT y);
 bool IsEditorOpen();
+
+// This is called when FMSLogo attempts to load a file, such
+// as one that was passed on the command line, and an error
+// is encountered while evaluating the contents.
 void OpenEditorToLocationOfFirstError(const char *FileName);
 
 HDC GetScreenDeviceContext();
