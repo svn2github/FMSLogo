@@ -51,6 +51,11 @@ void filesave(const char *FileName)
 }
 
 
+// Loads and evaluates the contents of a file.
+//
+// Returns true if the file could be opened for reading,
+// even if there was error while evaluating the contents.
+// Returns false if the file couldn't be opened for reading.
 bool fileload(const char *Filename)
 {
     bool isOk;
