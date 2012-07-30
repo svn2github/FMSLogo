@@ -7,15 +7,11 @@
 #include "logocore.h"  // for ARRAYSIZE
 #include "screenwindow.h"  // for TraceOutput
 
+#include "wrksp.h" // for g_CharactersSuccessfullyParsedInEditor
+
 #include "scintilla/include/Platform.h"
 #include "scintilla/include/Scintilla.h"
 #include "scintilla/include/SciLexer.h"
-
-BEGIN_EVENT_TABLE(CLogoCodeCtrl, wxStyledTextCtrl)
-    EVT_STC_UPDATEUI(wxID_ANY,         CLogoCodeCtrl::OnUpdateUi)
-    EVT_STC_SAVEPOINTREACHED(wxID_ANY, CLogoCodeCtrl::OnSavePointReached)
-    EVT_STC_SAVEPOINTLEFT(wxID_ANY,    CLogoCodeCtrl::OnSavePointLeft)
-END_EVENT_TABLE()
 
 CLogoCodeCtrl::CLogoCodeCtrl(
     wxWindow *      Parent,
@@ -666,3 +662,26 @@ CLogoCodeCtrl::IsDirty() const
 {
     return m_IsDirty;
 }
+
+// Puts the editor into a dirty state and
+// moves the caret to the line that had the error.
+void CLogoCodeCtrl::ReopenAfterError()
+{
+    // Put the editor into a dirty state so that
+    // saving it without making any changes will cause the
+    // contents to be re-evaluated and generate another
+    // error, instead of ignoring the changes from the
+    // previous incarnation where the error was first
+    // introduced.
+    m_IsDirty = true;
+
+    // Move the caret to the line that had the error.
+    SendMsg(SCI_GOTOPOS, g_CharactersSuccessfullyParsedInEditor);
+}
+
+
+BEGIN_EVENT_TABLE(CLogoCodeCtrl, wxStyledTextCtrl)
+    EVT_STC_UPDATEUI(wxID_ANY,         CLogoCodeCtrl::OnUpdateUi)
+    EVT_STC_SAVEPOINTREACHED(wxID_ANY, CLogoCodeCtrl::OnSavePointReached)
+    EVT_STC_SAVEPOINTLEFT(wxID_ANY,    CLogoCodeCtrl::OnSavePointLeft)
+END_EVENT_TABLE()

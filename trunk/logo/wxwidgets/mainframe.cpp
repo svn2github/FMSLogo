@@ -24,6 +24,7 @@
 
     #include <wx/textdlg.h>  // for wxGetTextFromUser
     #include <wx/fontutil.h> // for wxNativeFontInfo
+    #include <wx/msgdlg.h>   // for wxMessageBox
 #endif
 
 #include <algorithm>
@@ -715,7 +716,8 @@ CWorkspaceEditor *
 CMainFrame::CreateWorkspaceEditor(
     const wxString & FileName,
     NODE           * EditArguments,
-    bool             CheckForErrors
+    bool             CheckForErrors,
+    bool             OpenToError
     )
 {
     // Construct the default coordinates of the editor's window
@@ -751,7 +753,8 @@ CMainFrame::CreateWorkspaceEditor(
         wxSize(w, h),
         FileName,
         EditArguments,
-        CheckForErrors);
+        CheckForErrors,
+        OpenToError);
 
     // add this editor the the list of known editors
     m_Editors.insert(std::pair<CWorkspaceEditor*,CWorkspaceEditor*>(editor,editor));
@@ -785,26 +788,84 @@ void
 CMainFrame::PopupEditor(
     const wxString & FileName,
     NODE           * EditArguments,
-    bool             CheckForErrors
+    bool             CheckForErrors,
+    bool             OpenToError
     )
 {
-    CWorkspaceEditor * editor = CreateWorkspaceEditor(
+    CreateWorkspaceEditor(
         FileName,
         EditArguments,
-        CheckForErrors);
+        CheckForErrors,
+        OpenToError);
 
-    if (EditArguments != NIL || CheckForErrors)
+    GiveFocusToEditbox = false;
+}
+
+void CMainFrame::PopupEditorToError(const char *FileName)
+{
+    bool fileNameIsTempPathName;
+    if (strcmp(FileName, TempPathName) == 0)
     {
-        // If an error occured "force" a change so that we're
-        // still in "dirty" state.
-        if (editor->IsErrorDetected())
+        fileNameIsTempPathName = true;
+    }
+    else
+    {
+        fileNameIsTempPathName = false;
+    }
+
+    // Copy the input file to the editor's temporary file.
+    if (!fileNameIsTempPathName)
+    {
+        FILE * srcfile = fopen(FileName, "r");
+        if (srcfile != NULL)
         {
-            //TODO: Implement this
-            //editor->ReopenAfterError();
+            FILE * dstfile = fopen(TempPathName, "w");
+            if (dstfile != NULL)
+            {
+                int ch;
+                while ((ch = fgetc(srcfile)) != EOF)
+                {
+                    fputc(ch, dstfile);
+                }
+                fclose(dstfile);
+            }
+            fclose(srcfile);
         }
     }
 
-    GiveFocusToEditbox = false;
+    // Force the contents of the file to be processed for errors.
+    // This updates g_CharactersSuccessfullyParsedInEditor so that the
+    // editor can be opened to the point of the first error.
+    endedit();
+
+    // Calling endedit() throws an error.
+    // We must clear the error from the evaluating engine and put
+    // it into the commander.
+    process_special_conditions();
+
+    // Prompt the user to decide if they want to
+    // open FileName in the editor.
+    int rval = wxMessageBox(
+        wxString::Format(LOCALIZED_ERRORINFILEMESSAGE, FileName),
+        LOCALIZED_ERRORINFILETITLE,
+        wxYES_NO | wxICON_ERROR);
+    if (rval != wxYES)
+    {
+        // The user doesn't want to open the editor.
+
+        // Cleanup the file that we created.
+        if (!fileNameIsTempPathName)
+        {
+            unlink(TempPathName);
+        }
+        return;
+    }
+
+    CreateWorkspaceEditor(
+        FileName,
+        NIL,
+        true,  // check for errors
+        true); // open to the error
 }
 
 static
@@ -867,7 +928,8 @@ CMainFrame::PopupEditorForFile(
     CFmsLogo::GetMainFrame()->PopupEditor(
         FileName,
         EditArguments,
-        false);
+        false,  // don't check for errors
+        false); // no errors
     return 0;
 }
 

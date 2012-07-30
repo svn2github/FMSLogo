@@ -41,6 +41,7 @@ public:
     void Print();
 
     bool IsDirty() const;
+    void ReopenAfterError();
 
 private:
 

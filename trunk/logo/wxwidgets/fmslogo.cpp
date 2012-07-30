@@ -630,6 +630,7 @@ bool IsEditorOpen()
 
 void OpenEditorToLocationOfFirstError(const char *FileName)
 {
+    CFmsLogo::GetMainFrame()->PopupEditorToError(FileName);
 }
 
 HDC GetScreenDeviceContext()

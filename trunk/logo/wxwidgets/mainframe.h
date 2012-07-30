@@ -54,7 +54,13 @@ public:
     PopupEditor(
         const wxString & FileName,
         NODE           * EditArguments,
-        bool             CheckForErrors
+        bool             CheckForErrors,
+        bool             OpenToError
+        );
+
+    void
+    PopupEditorToError(
+        const char *FileName
         );
 
     static
@@ -141,7 +147,8 @@ private:
     CreateWorkspaceEditor(
         const wxString & FileName,
         NODE           * EditArguments,
-        bool             CheckForErrors
+        bool             CheckForErrors,
+        bool             OpenToError
         );
 
     void

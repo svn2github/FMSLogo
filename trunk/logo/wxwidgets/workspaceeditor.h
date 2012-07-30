@@ -16,10 +16,9 @@ public:
         const wxSize   & Size,
         const wxString & FileName,
         NODE           * EditArguments,
-        bool             CheckForErrors
+        bool             CheckForErrors,
+        bool             OpenToError
         );
-
-    bool IsErrorDetected() const;
 
 private:
 
@@ -94,7 +93,7 @@ private:
 
     // Whether or not the editor should check for errors when
     // saving and re-launch itself on error.
-    bool m_CheckForErrors;
+    const bool m_CheckForErrors;
 
     // If an error was detected when evaluating the workspace.
     bool m_ErrorDetected;

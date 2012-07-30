@@ -118,7 +118,8 @@ CWorkspaceEditor::CWorkspaceEditor(
     const wxSize   & Size,
     const wxString & FileName,
     NODE           * EditArguments,
-    bool             CheckForErrors
+    bool             CheckForErrors,
+    bool             OpenToError
     )
     : wxFrame(
         Parent,
@@ -264,13 +265,12 @@ CWorkspaceEditor::CWorkspaceEditor(
     Iconize(false);
     Show();
     Raise();
-}
 
-bool CWorkspaceEditor::IsErrorDetected() const
-{
-    return m_ErrorDetected;
+    if (OpenToError)
+    {
+        m_LogoCodeControl->ReopenAfterError();
+    }
 }
-
 
 void CWorkspaceEditor::OnSetFont(wxCommandEvent& WXUNUSED(Event))
 {
@@ -903,9 +903,9 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
                 CFmsLogo::GetMainFrame()->PopupEditor(
                     TempPathName,
                     m_EditArguments,
-                    m_CheckForErrors);
+                    m_CheckForErrors,
+                    true); // open the editor to the error
                 unlink(TempPathName);
-                //TODO: IsDirty = true;
             }
             else
             {
