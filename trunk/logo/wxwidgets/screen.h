@@ -2,6 +2,8 @@
     #include "wx/scrolwin.h"
 #endif
 
+#include <logocore.h> // for FLONUM
+
 class wxClientDC;
 class wxMemoryDC;
 class wxBitMap;
@@ -14,6 +16,8 @@ public:
 
     wxClientDC & GetScreenDeviceContext();
     wxMemoryDC & GetMemoryDeviceContext();
+
+    void AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor);
 
 private:
     // event handlers

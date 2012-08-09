@@ -612,7 +612,6 @@ UINT GetScreenHorizontalScrollPosition()
     return CFmsLogo::GetMainFrame()->GetScreen()->GetScrollPos(wxHORIZONTAL);
 }
 
-
 UINT GetScreenVerticalScrollPosition()
 {
     return CFmsLogo::GetMainFrame()->GetScreen()->GetScrollPos(wxVERTICAL);
@@ -661,6 +660,8 @@ void CloseStatusWindow()
 
 void AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor)
 {
+    CMainFrame * mainFrame = CFmsLogo::GetMainFrame();
+    mainFrame->GetScreen()->AdjustScrollPositionToZoomFactor(NewZoomFactor);
 }
 
 void UndockCommanderWindow()

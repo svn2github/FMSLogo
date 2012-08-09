@@ -1887,22 +1887,17 @@ void CMainFrame::OnSetCommanderFont(wxCommandEvent& WXUNUSED(Event))
 
 void CMainFrame::OnZoomIn(wxCommandEvent& WXUNUSED(Event))
 {
-    // TODO
-    UndockCommanderWindow();
+    zoom_helper(the_zoom * 2.0);
 }
 
 void CMainFrame::OnZoomOut(wxCommandEvent& WXUNUSED(Event))
 {
-    // TODO
-    DockCommanderWindow();
+    zoom_helper(the_zoom * 0.5);
 }
 
 void CMainFrame::OnZoomNormal(wxCommandEvent& WXUNUSED(Event))
 {
-    // TODO
-    // For now, show the "To" mini-editor as a test hook
-    CMiniEditor dlg(this, "TO SQUARE :length");
-    dlg.ShowModal();
+    zoom_helper(1.0);
 }
 
 void CMainFrame::OnHelp(wxCommandEvent& WXUNUSED(Event))
