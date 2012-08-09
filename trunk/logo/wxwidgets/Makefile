@@ -154,6 +154,7 @@ OBJECTS =                    \
     parse.o          \
     print.o          \
     startup.o        \
+    term.o           \
     threed.o         \
     unix.o           \
     vector.o         \

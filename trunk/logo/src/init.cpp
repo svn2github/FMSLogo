@@ -180,7 +180,7 @@ const PRIMTYPE prims[] =
     { "clean", 0, 0, 0, PREFIX_PRIORITY, lclean, LOCALIZED_ALTERNATE_CLEAN },
     { "clearpalette", 0, 0, 0, PREFIX_PRIORITY, lclearpalette, LOCALIZED_ALTERNATE_CLEARPALETTE },
     { "clearscreen", 0, 0, 0, PREFIX_PRIORITY, lclearscreen, LOCALIZED_ALTERNATE_CLEARSCREEN },
-#ifdef FMSLOGO_OWL
+#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
     { "cleartext", 0, 0, 0, PREFIX_PRIORITY, lcleartext, LOCALIZED_ALTERNATE_CLEARTEXT },
 #endif
     { "cleartimer", 1, 1, 1, PREFIX_PRIORITY, lcleartimer, LOCALIZED_ALTERNATE_CLEARTIMER },
@@ -202,9 +202,11 @@ const PRIMTYPE prims[] =
     { "cos", 1, 1, 1, PREFIX_PRIORITY, lcos, LOCALIZED_ALTERNATE_COS },
     { "count", 1, 1, 1, PREFIX_PRIORITY, lcount, LOCALIZED_ALTERNATE_COUNT },
     { "cs", 0, 0, 0, PREFIX_PRIORITY, lclearscreen, LOCALIZED_ALTERNATE_CS },
-#ifdef FMSLOGO_OWL
+#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
     { "ct", 0, 0, 0, PREFIX_PRIORITY, lcleartext, LOCALIZED_ALTERNATE_CT },
     { "cursor", 0, 0, 0, PREFIX_PRIORITY, lcursor, LOCALIZED_ALTERNATE_CURSOR },
+#endif
+#ifdef FMSLOGO_OWL
     { "debugwindows", 0, 0, 1, PREFIX_PRIORITY, ldebugwindows, LOCALIZED_ALTERNATE_DEBUGWINDOWS },
 #endif
     { "define", 2, 2, 2, PREFIX_PRIORITY, ldefine, LOCALIZED_ALTERNATE_DEFINE },
@@ -548,8 +550,10 @@ const PRIMTYPE prims[] =
     { "sqrt", 1, 1, 1, PREFIX_PRIORITY, lsqrt, LOCALIZED_ALTERNATE_SQRT },
     { "ss", 0, 0, 0, PREFIX_PRIORITY, lsplitscreen, LOCALIZED_ALTERNATE_SS },
     { "st", 0, 0, 0, PREFIX_PRIORITY, lshowturtle, LOCALIZED_ALTERNATE_ST },
-#ifdef FMSLOGO_OWL
+#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
     { "standout", 1, 1, 1, PREFIX_PRIORITY, lstandout, LOCALIZED_ALTERNATE_STANDOUT },
+#endif
+#ifdef FMSLOGO_OWL
     { "staticcreate", 7, 7, 7, PREFIX_PRIORITY, lstaticcreate, LOCALIZED_ALTERNATE_STATICCREATE },
     { "staticdelete", 1, 1, 1, PREFIX_PRIORITY, lstaticdelete, LOCALIZED_ALTERNATE_STATICDELETE },
     { "staticupdate", 2, 2, 2, PREFIX_PRIORITY, lstaticupdate, LOCALIZED_ALTERNATE_STATICUPDATE },
