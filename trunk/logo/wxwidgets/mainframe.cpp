@@ -64,29 +64,6 @@
 #include "fontutils.h"
 
 // ----------------------------------------------------------------------------
-// our classes
-// ----------------------------------------------------------------------------
-
-// TODO: move to separate file
-class MainSplitterWindow : public wxSplitterWindow
-{
-public:
-    MainSplitterWindow(wxFrame *Parent);
-
-private:
-    // event handlers
-    void OnPositionChanged(wxSplitterEvent& Event);
-    void OnPositionChanging(wxSplitterEvent& Event);
-    void OnDClick(wxSplitterEvent& Event);
-    void OnUnsplitEvent(wxSplitterEvent& Event);
-
-    wxFrame *m_frame;
-
-    DECLARE_EVENT_TABLE()
-    DECLARE_NO_COPY_CLASS(MainSplitterWindow)
-};
-
-// ----------------------------------------------------------------------------
 // CMainFrame::CLogoPicturePrintout
 // ----------------------------------------------------------------------------
 
@@ -497,8 +474,14 @@ CMainFrame::CMainFrame(
     SetFmsLogoIcon(*this);
 
     // Add the splitter to separate the screen from the commander
-    m_Splitter = new MainSplitterWindow(this);
+    m_Splitter = new wxSplitterWindow(
+        this,
+        wxID_ANY,
+        wxDefaultPosition,
+        wxDefaultSize,
+        wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN /* | wxSP_NO_XP_THEME */);
 
+    m_Splitter->SetMinimumPaneSize(MIN_COMMANDER_HEIGHT);
     m_Splitter->SetSashGravity(1.0);
 
     m_Screen = new CScreen(m_Splitter, ScreenWidth, ScreenHeight);
@@ -518,10 +501,6 @@ CMainFrame::CMainFrame(
         ARRAYSIZE(acceleratorEntries),
         acceleratorEntries);
     SetAcceleratorTable(acceleratorTable);
-
-#if wxUSE_STATUSBAR
-    SetStatusText(_T("Min pane size = 0"), 1);
-#endif // wxUSE_STATUSBAR
 
     // Set a flag that the printer data needs to be initialized.
     // We delay the initialization because it can be block
@@ -1883,6 +1862,12 @@ void CMainFrame::OnSetLabelFont(wxCommandEvent& WXUNUSED(Event))
 void CMainFrame::OnSetCommanderFont(wxCommandEvent& WXUNUSED(Event))
 {
     m_RealCommander->ChooseNewFont();
+
+#if wxUSE_STATUSBAR
+    // TODO: Delete this.  It's just a reminder on how to write
+    // to the status bar.
+    SetStatusText("New font chosen", 1);
+#endif // wxUSE_STATUSBAR
 }
 
 void CMainFrame::OnZoomIn(wxCommandEvent& WXUNUSED(Event))
@@ -1898,6 +1883,12 @@ void CMainFrame::OnZoomOut(wxCommandEvent& WXUNUSED(Event))
 void CMainFrame::OnZoomNormal(wxCommandEvent& WXUNUSED(Event))
 {
     zoom_helper(1.0);
+
+#if wxUSE_STATUSBAR
+    // TODO: Delete this.  It's just a reminder on how to write
+    // to the status bar.
+    wxLogStatus(this, "Zoom is now %f", the_zoom);
+#endif
 }
 
 void CMainFrame::OnHelp(wxCommandEvent& WXUNUSED(Event))
@@ -1975,73 +1966,4 @@ void CMainFrame::OnAboutMultipleSclerosis(wxCommandEvent& WXUNUSED(Event))
     // show the "About FMS" dialog box
     CAboutMultipleSclerosis dlg(this);
     dlg.ShowModal();
-}
-
-
-
-// ----------------------------------------------------------------------------
-// MainSplitterWindow
-// ----------------------------------------------------------------------------
-
-BEGIN_EVENT_TABLE(MainSplitterWindow, wxSplitterWindow)
-    EVT_SPLITTER_SASH_POS_CHANGED(wxID_ANY, MainSplitterWindow::OnPositionChanged)
-    EVT_SPLITTER_SASH_POS_CHANGING(wxID_ANY, MainSplitterWindow::OnPositionChanging)
-
-    EVT_SPLITTER_DCLICK(wxID_ANY, MainSplitterWindow::OnDClick)
-
-    EVT_SPLITTER_UNSPLIT(wxID_ANY, MainSplitterWindow::OnUnsplitEvent)
-END_EVENT_TABLE()
-
-MainSplitterWindow::MainSplitterWindow(
-    wxFrame *Parent
-    ) : wxSplitterWindow(
-        Parent,
-        wxID_ANY,
-        wxDefaultPosition,
-        wxDefaultSize,
-        wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN /* | wxSP_NO_XP_THEME */)
-{
-    SetMinimumPaneSize(MIN_COMMANDER_HEIGHT);
-
-    m_frame = Parent;
-}
-
-void MainSplitterWindow::OnPositionChanged(wxSplitterEvent& event)
-{
-    wxLogStatus(
-        m_frame,
-        "Position has changed, now = %d (or %d)",
-        event.GetSashPosition(),
-        GetSashPosition());
-
-    event.Skip();
-}
-
-void MainSplitterWindow::OnPositionChanging(wxSplitterEvent& event)
-{
-    wxLogStatus(
-        m_frame,
-        "Position is changing, now = %d (or %d)",
-        event.GetSashPosition(),
-        GetSashPosition());
-
-    event.Skip();
-}
-
-void MainSplitterWindow::OnDClick(wxSplitterEvent& Event)
-{
-#if wxUSE_STATUSBAR
-    m_frame->SetStatusText("Splitter double clicked", 1);
-#endif // wxUSE_STATUSBAR
-
-    Event.Skip();
-}
-
-void MainSplitterWindow::OnUnsplitEvent(wxSplitterEvent& Event)
-{
-#if wxUSE_STATUSBAR
-    m_frame->SetStatusText("Splitter unsplit", 1);
-#endif // wxUSE_STATUSBAR
-
-    Event.Skip();
 }
