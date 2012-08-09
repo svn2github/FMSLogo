@@ -29,6 +29,8 @@
 
 #include <algorithm>
 
+#include "commanderhistory.h"
+
 #include "guiutils.h"
 #include "commander.h"
 #include "activearea.h"
@@ -525,12 +527,12 @@ void CMainFrame::UndockCommanderWindow()
     if (m_CommanderIsDocked)
     {
         CCommanderDialog * newCommander = new CCommanderDialog(this);
-#if 0
-        // TODO: copy over the content/state of the dialog
-        newCommandWindow->Duplicate(m_CommandWindow);
-#endif
 
-#if 0
+        newCommander->GetCommander()->Duplicate(*m_RealCommander);
+        long lastPosition = newCommander->GetCommander()->GetHistory()->GetLastPosition();
+        newCommander->GetCommander()->GetHistory()->ShowPosition(lastPosition);
+
+#if 0 // TODO
         if (bFixed)
         {
             // The user requested that we never change the size of the drawing surface,
@@ -589,7 +591,7 @@ void CMainFrame::DockCommanderWindow()
         int commanderWindowHeight = MIN_COMMANDER_HEIGHT;
 #endif
 
-#if 0
+#if 0 // TODO
         if (bFixed)
         {
             // The user requested that we never change the size of the drawing surface,
@@ -652,10 +654,15 @@ void CMainFrame::DockCommanderWindow()
         m_Splitter->SplitHorizontally(m_Screen, newCommander);
         m_Splitter->SetSashPosition(splitterPosition);
 
-#if 0
-        // TODO copy the history
-        newCommandWindow->Duplicate(*CommandWindow);
-#endif
+        // copy the history the button state
+        if (m_RealCommander != NULL)
+        {
+            newCommander->Duplicate(*m_RealCommander);
+
+            // Scroll to the bottom
+            long lastPosition = newCommander->GetCommander()->GetHistory()->GetLastPosition();
+            newCommander->GetCommander()->GetHistory()->ShowPosition(lastPosition);
+        }
 
 
 #if 0 // is this necessary with wxWidgets?

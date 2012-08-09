@@ -26,6 +26,7 @@ public:
 
     void ToggleStep();
     void Halt();
+    void Duplicate(CCommander & Source);
 
     void GiveControlToInputBox();
     void GiveControlToHistoryBox();

@@ -14,6 +14,8 @@ public:
 
     void OnKeyDown(wxKeyEvent& event);
 
+    void Duplicate(CCommanderHistory & CommanderHistory);
+
 private:
     CCommander * GetCommander() const;
 

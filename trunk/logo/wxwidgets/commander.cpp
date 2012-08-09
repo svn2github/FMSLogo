@@ -227,6 +227,15 @@ void CCommander::ChooseNewFont()
     }
 }
 
+void CCommander::Duplicate(CCommander & Source)
+{
+    // Copy the text of the recall box
+    m_History->Duplicate(*Source.m_History);
+
+    // Copy the text of the commander's input field
+    m_NextInstruction->Duplicate(*Source.m_NextInstruction);
+}
+
 void CCommander::UpdateStepButtonState()
 {
     m_StepButton->SetPressedState(stepflag);
@@ -348,19 +357,16 @@ void CCommander::OnResetButton(wxCommandEvent& WXUNUSED(Event))
 void clearcombobox()
 {
     // clear the recall box
-    CCommanderHistory * commanderHistory = CFmsLogo::GetMainFrame()->GetCommander()->m_History;
+    CCommanderHistory * commanderHistory = CFmsLogo::GetMainFrame()->GetCommander()->GetHistory();
 
     commanderHistory->Clear();
-
-    // TODO: is it necessary to move the position
-    // commanderHistory->MoveEnd();
 }
 
 // Appends "str" to the end of the what is in the Commander's Recall box.
 // If "str" doesn't fit, then some text will be removed from the top to make it fit.
 void putcombobox(const char *str)
 {
-    // only if OK to write to recall box do we do it
+    // Check that the commander's history field is ready for input.
     if (g_IsOkayToUseCommanderWindow)
     {
         CCommanderHistory * commanderHistory = CFmsLogo::GetMainFrame()->GetCommander()->m_History;
@@ -389,18 +395,14 @@ void putcombobox(const char *str)
             wxRichTextRange addedRange(uBefore, uAfter);
             commanderHistory->DeleteSelection();
 
-            // strip 4k off top
+            // Strip 4k off top
             wxRichTextRange rangeToRemove(0, 4096);
             commanderHistory->Delete(rangeToRemove);
-
-            commanderHistory->SetEditable(false);
         }
 
         // If all else fails try erasing everything.
-        // we should never get here.
-        clearcombobox();
-        commanderHistory->AppendText(str);
-        commanderHistory->AppendText("\n");
+        // We should never get here.
+        commanderHistory->SetValue(str);
     }
 }
 

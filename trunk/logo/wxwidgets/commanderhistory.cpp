@@ -264,6 +264,17 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
     }
 }
 
+void CCommanderHistory::Duplicate(CCommanderHistory & Source)
+{
+    // Copy the text over
+    SetValue(Source.GetValue() + "\n");
+
+    // Put the caret in the same location
+    long caretPosition = Source.GetCaretPosition();
+    SetInsertionPoint(caretPosition);
+    ShowPosition(caretPosition);
+}
+
 
 BEGIN_EVENT_TABLE(CCommanderHistory, wxRichTextCtrl)
     EVT_KEY_DOWN(CCommanderHistory::OnKeyDown)
