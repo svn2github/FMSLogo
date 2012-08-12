@@ -8,7 +8,7 @@
 #include "logocore.h"      // for ARRAYSIZE
 #include "wrksp.h"         // for lprocedures
 #include "argumentutils.h" // for cnv_strnode_string
-#include "logodata.h"      // formake_strnode
+#include "logodata.h"      // for make_strnode
 #include "screenwindow.h"  // for TraceOutput
 #include "guiutils.h"
 #include "localizedstrings.h"
