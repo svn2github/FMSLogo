@@ -28,8 +28,7 @@
 #endif
 
 #include <algorithm>
-
-#include "commanderhistory.h"
+#include <shlobj.h>
 
 #include "guiutils.h"
 #include "commander.h"
@@ -46,8 +45,10 @@
 #include "utils.h"
 #include "statusdialog.h"
 #include "screen.h"
+#include "selectstartupinstruction.h"
 #include "editproceduredialog.h"
 #include "eraseproceduredialog.h"
+#include "commanderhistory.h"
 #include "minieditor.h"
 #include "workspaceeditor.h"
 #include "logodata.h"
@@ -284,6 +285,7 @@ enum MainFrameMenuIds
     ID_FILEOPEN,
     ID_FILESAVE,
     ID_FILESAVEAS,
+    ID_FILESETASSCREENSAVER,
     ID_FILEEDIT,
     ID_FILEERASE,
     ID_EXIT,
@@ -328,42 +330,44 @@ enum MainFrameMenuIds
 };
 
 BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
-    EVT_MENU(ID_FILENEW,            CMainFrame::OnFileNew)
-    EVT_MENU(ID_FILELOAD,           CMainFrame::OnFileLoad)
-    EVT_MENU(ID_FILEOPEN,           CMainFrame::OnFileOpen)
-    EVT_MENU(ID_FILESAVE,           CMainFrame::OnFileSave)
-    EVT_MENU(ID_FILESAVEAS,         CMainFrame::OnFileSaveAs)
-    EVT_MENU(ID_FILEEDIT,           CMainFrame::OnEditProcedure)
-    EVT_MENU(ID_FILEERASE,          CMainFrame::OnEraseProcedure)
-    EVT_MENU(ID_EXIT,               CMainFrame::OnExit)
-    EVT_MENU(ID_BITMAPNEW,          CMainFrame::OnBitmapNew)
-    EVT_MENU(ID_BITMAPOPEN,         CMainFrame::OnBitmapOpen)
-    EVT_MENU(ID_BITMAPSAVE,         CMainFrame::OnBitmapSave)
-    EVT_MENU(ID_BITMAPSAVEAS,       CMainFrame::OnBitmapSaveAs)
-    EVT_MENU(ID_BITMAPPRINT,        CMainFrame::OnBitmapPrint)
-    EVT_MENU(ID_BITMAPPRINTERSETUP, CMainFrame::OnBitmapPrinterSetup)
-    EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::OnSetActiveArea)
-    EVT_MENU(ID_SETPENSIZE,         CMainFrame::OnSetPenSize)
-    EVT_MENU(ID_SETLABELFONT,       CMainFrame::OnSetLabelFont)
-    EVT_MENU(ID_SETCOMMANDERFONT,   CMainFrame::OnSetCommanderFont)
-    EVT_MENU(ID_SETPENCOLOR,        CMainFrame::OnSetPenColor)
-    EVT_MENU(ID_SETSCREENCOLOR,     CMainFrame::OnSetScreenColor)
-    EVT_MENU(ID_SETFLOODCOLOR,      CMainFrame::OnSetFloodColor)
-    EVT_MENU(ID_HELP,               CMainFrame::OnHelp)
+    EVT_MENU(ID_FILENEW,                   CMainFrame::OnFileNew)
+    EVT_MENU(ID_FILELOAD,                  CMainFrame::OnFileLoad)
+    EVT_MENU(ID_FILEOPEN,                  CMainFrame::OnFileOpen)
+    EVT_MENU(ID_FILESAVE,                  CMainFrame::OnFileSave)
+    EVT_MENU(ID_FILESAVEAS,                CMainFrame::OnFileSaveAs)
+    EVT_MENU(ID_FILESETASSCREENSAVER,      CMainFrame::OnFileSetAsScreenSaver)
+    EVT_UPDATE_UI(ID_FILESETASSCREENSAVER, CMainFrame::OnUpdateFileSetAsScreenSaver)
+    EVT_MENU(ID_FILEEDIT,                  CMainFrame::OnEditProcedure)
+    EVT_MENU(ID_FILEERASE,                 CMainFrame::OnEraseProcedure)
+    EVT_MENU(ID_EXIT,                      CMainFrame::OnExit)
+    EVT_MENU(ID_BITMAPNEW,                 CMainFrame::OnBitmapNew)
+    EVT_MENU(ID_BITMAPOPEN,                CMainFrame::OnBitmapOpen)
+    EVT_MENU(ID_BITMAPSAVE,                CMainFrame::OnBitmapSave)
+    EVT_MENU(ID_BITMAPSAVEAS,              CMainFrame::OnBitmapSaveAs)
+    EVT_MENU(ID_BITMAPPRINT,               CMainFrame::OnBitmapPrint)
+    EVT_MENU(ID_BITMAPPRINTERSETUP,        CMainFrame::OnBitmapPrinterSetup)
+    EVT_MENU(ID_BITMAPPRINTERAREA,         CMainFrame::OnSetActiveArea)
+    EVT_MENU(ID_SETPENSIZE,                CMainFrame::OnSetPenSize)
+    EVT_MENU(ID_SETLABELFONT,              CMainFrame::OnSetLabelFont)
+    EVT_MENU(ID_SETCOMMANDERFONT,          CMainFrame::OnSetCommanderFont)
+    EVT_MENU(ID_SETPENCOLOR,               CMainFrame::OnSetPenColor)
+    EVT_MENU(ID_SETSCREENCOLOR,            CMainFrame::OnSetScreenColor)
+    EVT_MENU(ID_SETFLOODCOLOR,             CMainFrame::OnSetFloodColor)
+    EVT_MENU(ID_HELP,                      CMainFrame::OnHelp)
 #if MANUAL_HAS_TRANSLATION_TABLES
     // options for translating to/from English
-    EVT_MENU(ID_HELPLANGTOENGLISH,  CMainFrame::OnHelpLanguageToEnglish)
-    EVT_MENU(ID_HELPENGLISHTOLANG,  CMainFrame::OnHelpEnglishToLanguage)
+    EVT_MENU(ID_HELPLANGTOENGLISH,         CMainFrame::OnHelpLanguageToEnglish)
+    EVT_MENU(ID_HELPENGLISHTOLANG,         CMainFrame::OnHelpEnglishToLanguage)
 #endif
-    EVT_MENU(ID_HELPTUTORIAL,       CMainFrame::OnHelpTutorial)
-    EVT_MENU(ID_HELPDEMO,           CMainFrame::OnHelpDemo)
-    EVT_MENU(ID_HELPEXAMPLES,       CMainFrame::OnHelpExamples)
-    EVT_MENU(ID_HELPRELEASENOTES,   CMainFrame::OnHelpReleaseNotes)
-    EVT_MENU(ID_HELPABOUT,          CMainFrame::OnAboutFmsLogo)
-    EVT_MENU(ID_HELPABOUTMS,        CMainFrame::OnAboutMultipleSclerosis)
-    EVT_MENU(ID_ZOOMIN,             CMainFrame::OnZoomIn)
-    EVT_MENU(ID_ZOOMOUT,            CMainFrame::OnZoomOut)
-    EVT_MENU(ID_ZOOMNORMAL,         CMainFrame::OnZoomNormal)
+    EVT_MENU(ID_HELPTUTORIAL,              CMainFrame::OnHelpTutorial)
+    EVT_MENU(ID_HELPDEMO,                  CMainFrame::OnHelpDemo)
+    EVT_MENU(ID_HELPEXAMPLES,              CMainFrame::OnHelpExamples)
+    EVT_MENU(ID_HELPRELEASENOTES,          CMainFrame::OnHelpReleaseNotes)
+    EVT_MENU(ID_HELPABOUT,                 CMainFrame::OnAboutFmsLogo)
+    EVT_MENU(ID_HELPABOUTMS,               CMainFrame::OnAboutMultipleSclerosis)
+    EVT_MENU(ID_ZOOMIN,                    CMainFrame::OnZoomIn)
+    EVT_MENU(ID_ZOOMOUT,                   CMainFrame::OnZoomOut)
+    EVT_MENU(ID_ZOOMNORMAL,                CMainFrame::OnZoomNormal)
     EVT_CLOSE(CMainFrame::OnClose)
 END_EVENT_TABLE()
 
@@ -404,16 +408,17 @@ CMainFrame::CMainFrame(
     // Construct the main menu
     //
     static const MENUITEM fileMenuItems[] = {
-        {LOCALIZED_FILE_NEW,    ID_FILENEW},
-        {LOCALIZED_FILE_LOAD,   ID_FILELOAD},
-        {LOCALIZED_FILE_OPEN,   ID_FILEOPEN},
-        {LOCALIZED_FILE_SAVE,   ID_FILESAVE},
-        {LOCALIZED_FILE_SAVEAS, ID_FILESAVEAS},
+        {LOCALIZED_FILE_NEW,              ID_FILENEW},
+        {LOCALIZED_FILE_LOAD,             ID_FILELOAD},
+        {LOCALIZED_FILE_OPEN,             ID_FILEOPEN},
+        {LOCALIZED_FILE_SAVE,             ID_FILESAVE},
+        {LOCALIZED_FILE_SAVEAS,           ID_FILESAVEAS},
+        {LOCALIZED_FILE_SETASSCREENSAVER, ID_FILESETASSCREENSAVER},
         {0},
-        {LOCALIZED_FILE_EDIT,   ID_FILEEDIT},
-        {LOCALIZED_FILE_ERASE,  ID_FILEERASE},
+        {LOCALIZED_FILE_EDIT,             ID_FILEEDIT},
+        {LOCALIZED_FILE_ERASE,            ID_FILEERASE},
         {0},
-        {LOCALIZED_FILE_EXIT,   ID_EXIT},
+        {LOCALIZED_FILE_EXIT,             ID_EXIT},
     };
 
     static const MENUITEM bitmapMenuItems[] = {
@@ -1406,6 +1411,197 @@ void CMainFrame::OnFileSaveAs(wxCommandEvent& WXUNUSED(Event))
     }
 
     SaveFileAs();
+}
+
+// Gets the full path to where the FMSLogo screensaver
+// should be located (if it's installed).
+static
+bool
+GetScreenSaverFilePath(
+    char * ScreenSaverPath,
+    size_t ScreenSaverPathLength
+    )
+{
+    static const char screenSaverFileName[] = "\\fmslogo.scr";
+
+    // Using GetSystemDirectory() instead of SHGetFolderPath
+    // for compatibility with Windows 95.
+    UINT totalChars = GetSystemDirectory(
+        ScreenSaverPath,
+        ScreenSaverPathLength);
+    if (totalChars == 0)
+    {
+        // an error occurred.
+        return false;
+    }
+    if (ScreenSaverPathLength <= totalChars + ARRAYSIZE(screenSaverFileName))
+    {
+        // More space is needed to hold
+        // the path to the screensaver.
+        // This should never happen.
+        return false;
+    }
+
+    // concatenate %windir%\fmslogo.scr
+    strcpy(ScreenSaverPath + totalChars, screenSaverFileName);
+    return true;
+}
+
+static
+bool ScreenSaverIsInstalled()
+{
+    char screenSaverPath[MAX_PATH];
+
+    if (!GetScreenSaverFilePath(screenSaverPath, ARRAYSIZE(screenSaverPath)))
+    {
+        // an error occurred.
+        return false;
+    }
+
+    // check for the file's existence
+    DWORD fileAttributes = GetFileAttributes(screenSaverPath);
+    if (fileAttributes == INVALID_FILE_ATTRIBUTES)
+    {
+        // The screen saver does not exist.
+        return false;
+    }
+
+    // The screen saver exists.
+    return true;
+}
+
+void CMainFrame::OnUpdateFileSetAsScreenSaver(wxUpdateUIEvent& Event)
+{
+    // Enable this option if a screen saver is installed.
+    Event.Enable(ScreenSaverIsInstalled());
+}
+
+void CMainFrame::OnFileSetAsScreenSaver(wxCommandEvent& WXUNUSED(Event))
+{
+    // Before we save the workspace, we should ensure that a
+    // startup procedure exists.  If not, their screen saver won't
+    // do anything.
+    NODE * startup = Startup.GetValue();
+
+    CSelectStartupInstructionDialog::EXPLAINTEXT explainText;
+    if (startup == Unbound)
+    {
+        explainText = CSelectStartupInstructionDialog::EXPLAINTEXT_StartupNotDefined;
+    }
+    else if (startup == NIL)
+    {
+        explainText = CSelectStartupInstructionDialog::EXPLAINTEXT_StartupEmpty;
+    }
+    else if (!is_list(startup))
+    {
+        explainText = CSelectStartupInstructionDialog::EXPLAINTEXT_StartupNotList;
+    }
+    else
+    {
+        explainText = CSelectStartupInstructionDialog::EXPLAINTEXT_None;
+    }
+
+    if (explainText != CSelectStartupInstructionDialog::EXPLAINTEXT_None)
+    {
+        CSelectStartupInstructionDialog dialog(this, explainText);
+        int exitCode = dialog.ShowModal();
+        if (exitCode == wxID_CANCEL)
+        {
+            // The user hasn't selected a startup instruction list,
+            // so there's no sense in setting this program to
+            // be a screen saver.
+            return;
+        }
+
+        char makeInstruction[512] = {0};
+
+        // Make "Startup [<instructionlist>]
+        int formattedStringLength = snprintf(
+            makeInstruction,
+            ARRAYSIZE(makeInstruction),
+            "%s \"%s [%s]",
+            LOCALIZED_ALTERNATE_MAKE,
+            LOCALIZED_ALTERNATE_STARTUP,
+            dialog.GetSelectedInstruction().c_str());
+        if ((int)ARRAYSIZE(makeInstruction) <= formattedStringLength)
+        {
+            // More than the fixed buffer size was needed
+            // to hold the instruction list.
+
+            // TODO: Handle this.
+        }
+        else
+        {
+            RunLogoInstructionFromGui(makeInstruction);
+        }
+    }
+
+
+    LPITEMIDLIST itemIdList;
+
+    // Get a handle to a folder where we can store personal documents.
+    // Note that we call the defunct SHGetSpecialFolderLocation()
+    // because it is supported as far back as Windows 95.
+    HRESULT hr = SHGetSpecialFolderLocation(
+        NULL,
+        CSIDL_PERSONAL,
+        &itemIdList);
+    if (SUCCEEDED(hr))
+    {
+        char screenSaverProgramName[MAX_PATH] = "";
+
+        // Get a handle to a folder where we can store personal documents.
+        BOOL isOk = SHGetPathFromIDList(
+            itemIdList,
+            screenSaverProgramName);
+        if (isOk)
+        {
+            // Append "screesaver.lgo" to the path
+            size_t screenSaverProgramNameLength = strlen(screenSaverProgramName);
+
+            strcpy(
+                &screenSaverProgramName[screenSaverProgramNameLength],
+                "\\screensaver.lgo");
+
+            filesave(screenSaverProgramName);
+
+            // handle any error that may have occured
+            process_special_conditions();
+
+            // Configure this file as the screensaver
+            SetConfigurationString("ScreenSaverFile", screenSaverProgramName);
+
+            // Best-effort to set the Logo screensaver 
+            // to be the active screensaver
+            char screenSaverPath[MAX_PATH];
+            if (GetScreenSaverFilePath(
+                    screenSaverPath,
+                    ARRAYSIZE(screenSaverPath)))
+            {
+                HKEY desktopKey = NULL;
+
+                LONG result = RegOpenKeyEx(
+                    HKEY_CURRENT_USER,
+                    "Control Panel\\Desktop",
+                    0,      // reserved
+                    KEY_SET_VALUE,
+                    &desktopKey);
+                if (result == ERROR_SUCCESS)
+                {
+                    result = RegSetValueEx(
+                        desktopKey,
+                        "SCRNSAVE.EXE",
+                        0,
+                        REG_SZ,
+                        reinterpret_cast<BYTE*>(screenSaverPath),
+                        strlen(screenSaverPath) + 1);
+
+                    RegCloseKey(desktopKey);
+                }
+            }
+        }
+        CoTaskMemFree(itemIdList);
+    }
 }
 
 void CMainFrame::OnEditProcedure(wxCommandEvent& WXUNUSED(Event))

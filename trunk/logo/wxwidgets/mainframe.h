@@ -1,10 +1,12 @@
 // -*- c++ -*-
 #include <map>
+#include <windows.h> // for COLORREF
 
 #include <wx/frame.h>
 #include <wx/print.h>
 
 #include "localizedstrings.h" // for MANUAL_HAS_TRANSLATION_TABLES
+
 
 class wxSplitterWindow;
 class wxCommandEvent;
@@ -16,6 +18,7 @@ class CStatusDialog;
 class CWorkspaceEditor;
 class CSetPenSize;
 class CScreen;
+class CSetColor;
 
 struct NODE;
 
@@ -109,6 +112,8 @@ private:
     void OnFileOpen(wxCommandEvent& Event);
     void OnFileSave(wxCommandEvent& Event);
     void OnFileSaveAs(wxCommandEvent& Event);
+    void OnFileSetAsScreenSaver(wxCommandEvent& Event);
+    void OnUpdateFileSetAsScreenSaver(wxUpdateUIEvent& Event);
     void OnEditProcedure(wxCommandEvent& Event);
     void OnEraseProcedure(wxCommandEvent& Event);
     void OnExit(wxCommandEvent& Event);
@@ -153,10 +158,10 @@ private:
 
     void
     SetColorHelper(
-        class CSetColor * &   SetColorDialog,
-        const char *          DialogTitle,
-        COLORREF              InitialColor,
-        const char *          LogoCommand
+        CSetColor * &   SetColorDialog,
+        const char *    DialogTitle,
+        COLORREF        InitialColor,
+        const char *    LogoCommand
         );
 
     void
@@ -199,11 +204,11 @@ private:
     char m_FileName[MAX_PATH];
     char m_BitmapName[MAX_PATH];
 
-    class CSetColor * m_SetPenColorDialog;
-    class CSetColor * m_SetFloodColorDialog;
-    class CSetColor * m_SetScreenColorDialog;
+    CSetColor * m_SetPenColorDialog;
+    CSetColor * m_SetFloodColorDialog;
+    CSetColor * m_SetScreenColorDialog;
 
-    std::map<CWorkspaceEditor*,CWorkspaceEditor*>  m_Editors;
+    std::map<CWorkspaceEditor*,CWorkspaceEditor*> m_Editors;
 
     DECLARE_EVENT_TABLE();
     DECLARE_NO_COPY_CLASS(CMainFrame);

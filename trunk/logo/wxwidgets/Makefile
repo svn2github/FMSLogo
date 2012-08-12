@@ -90,32 +90,33 @@ WX_VERSION = $(WX_RELEASE).4
 LIBDIRNAME = $(wx_top_builddir)/lib
 CXXFLAGS  += -D__WX$(TOOLKIT)__ -I$(srcdir) $(CPPFLAGS)
 
-OBJECTS =                    \
-    mainframe.o              \
-    commander.o              \
-    aboutfmslogo.o           \
-    aboutmultiplesclerosis.o \
-    setactivearea.o          \
-    workspaceeditor.o        \
-    guiutils.o               \
-    fmslogo.o                \
-    logocodectrl.o           \
-    setpensize.o             \
-    statusdialog.o           \
-    savebeforeexitdialog.o   \
-    screen.o                 \
-    commanderbutton.o        \
-    commandertogglebutton.o  \
-    commanderinput.o         \
-    commanderhistory.o       \
-    selectproceduredialog.o  \
-    editproceduredialog.o    \
-    eraseproceduredialog.o   \
-    minieditor.o             \
-    minieditortextctrl.o     \
-    fontutils.o              \
-    utils.o                  \
-    setcolor.o               \
+OBJECTS =                      \
+    mainframe.o                \
+    commander.o                \
+    aboutfmslogo.o             \
+    aboutmultiplesclerosis.o   \
+    setactivearea.o            \
+    workspaceeditor.o          \
+    guiutils.o                 \
+    fmslogo.o                  \
+    logocodectrl.o             \
+    setpensize.o               \
+    statusdialog.o             \
+    savebeforeexitdialog.o     \
+    screen.o                   \
+    commanderbutton.o          \
+    commandertogglebutton.o    \
+    commanderinput.o           \
+    commanderhistory.o         \
+    selectstartupinstruction.o \
+    selectproceduredialog.o    \
+    editproceduredialog.o      \
+    eraseproceduredialog.o     \
+    minieditor.o               \
+    minieditortextctrl.o       \
+    fontutils.o                \
+    utils.o                    \
+    setcolor.o                 \
     3dsolid.o        \
     activearea.o     \
     appendablelist.o \
