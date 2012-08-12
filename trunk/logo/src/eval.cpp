@@ -1752,7 +1752,7 @@ bool is_executing()
 void do_execution(char * logocommand)
 {
     // if something there continue
-    if (strlen(logocommand) != 0)
+    if (logocommand[0] != '\0')
     {
         start_execution();
 
