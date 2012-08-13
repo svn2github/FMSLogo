@@ -18,8 +18,10 @@ Plays a wave file.
 </para>
 
 <para>
-The <parameter>wavefile</parameter> input must be a filename of a WAVE file.
+The <parameter>wavefile</parameter> input is a filename of a WAVE file.
 It may either be a word or a list of words.
+If <parameter>wavefile</parameter> is the empty word or the empty list, then &PRODUCTNAME; stops any wave files that it is currently playing.
+If the file named by <parameter>wavefile</parameter> does not exist or is an invalid wave file, then the instruction does nothing.
 </para>
 
 <para>
