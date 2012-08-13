@@ -87,6 +87,7 @@ LOAD "windows.lgo
 LOAD "windowfileedit.lgo
 LOAD "midi.lgo
 LOAD "sound.lgo
+LOAD "playwave.lgo
 LOAD "messagebox.lgo
 LOAD "yesnobox.lgo
 LOAD "selectbox.lgo
@@ -254,6 +255,7 @@ TO TESTALL
   MOUSETEST           ; from mouse.lgo
   MIDITEST            ; from midi.lgo
   SOUNDTEST           ; from sound.lgo
+  PLAYWAVETEST        ; from playwave.lgo
   COMMANDLINETEST     ; from commandline.lgo
   NETWORKTEST         ; from network.lgo
   SLOWDRAWTEST        ; from slowdraw.lgo
