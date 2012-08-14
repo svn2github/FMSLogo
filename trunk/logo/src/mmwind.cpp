@@ -309,7 +309,7 @@ NODE *lmci(NODE *args)
     else
     {
         // if something was returned then return it to user 
-        if (strlen(MciReturnBuffer))
+        if (MciReturnBuffer[0] != '\0')
         {
             NODE * targ = make_strnode(MciReturnBuffer);
             NODE * val = parser(targ, false);
@@ -399,7 +399,7 @@ NODE *lplaywave(NODE *args)
 
     int flag = getint(nonnegative_int_arg(args = cdr(args)));
 
-    if (strlen(name) == 0)
+    if (name[0] == '\0')
     {
         sndPlaySound(NULL, flag);
     }
