@@ -37,16 +37,12 @@
 
 #ifdef FMSLOGO_OWL
 
-#include "devwind.h"
-#include "wrksp.h"
 #include "mainframe.h"
 #include "logorc.h"
-#include "netwind.h"
 #include "coms.h"
 #include "parse.h"
 #include "logodata.h"
 #include "logomath.h"
-#include "cmdwind.h"
 #include "selectbox.h"
 
 #endif // FMSLOGO_OWL
