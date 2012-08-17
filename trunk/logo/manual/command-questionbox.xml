@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Displays a dialog box with <parameter>title</parameter> in the title bar, <parameter>question</parameter> as the message, and an edit control for text input.
-The dialog also "OK" and "Cancel" buttons.
+The dialog box also has "OK" and "Cancel" buttons.
 Processing will not continue until the user clicks one of these buttons.
 The commander window is also disabled until dialog is dismissed.
 If the user presses "OK", then QUESTIONBOX outputs the text in the edit control as a list.
@@ -23,7 +23,7 @@ If the user presses "Cancel", then processing will be halted, as if by the <link
 
 <para>
 Both the <parameter>title</parameter> and <parameter>question</parameter> inputs must be lists.
-The dialog box will NOT automatically sized to fit <parameter>question</parameter>, so keep it short.
+The dialog box will NOT automatically resize to fit <parameter>question</parameter>, so keep it short.
 </para>
 
 </listitem>
