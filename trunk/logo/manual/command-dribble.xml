@@ -24,10 +24,13 @@ The intent is to create a transcript of a &GENERICNAME; session, including thing
 <varlistentry><term>Example</term>
 <listitem>
 
-<programlisting><userinput>DRIBBLE "dummy.fil
+<programlisting><userinput>; Dribble a few instructions, then stop.
+DRIBBLE "dummy.fil
 FORWARD 100
 RIGHT 90
 NODRIBBLE
+
+; Open the dribble file and see what was written.
 OPENREAD "dummy.fil
 SETREAD "dummy.fil
 REPEAT 3 [SHOW READLIST]</userinput>
