@@ -1,52 +1,36 @@
-/*
-*
-*       Copyright (C) 1995 by the Regents of the University of California
-*       Copyright (C) 1995 by George Mills
-*
-*      This program is free software; you can redistribute it and/or modify
-*      it under the terms of the GNU General Public License as published by
-*      the Free Software Foundation; either version 2 of the License, or
-*      (at your option) any later version.
-*
-*      This program is distributed in the hope that it will be useful,
-*      but WITHOUT ANY WARRANTY; without even the implied warranty of
-*      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*      GNU General Public License for more details.
-*
-*      You should have received a copy of the GNU General Public License
-*      along with this program; if not, write to the Free Software
-*      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-*
-*/
-#ifdef FMSLOGO_OWL
-
-#include <owl/scroller.h>
-#include <owl/dialog.h>
-#include <owl/combobox.h>
-#include <owl/listbox.h>
-#include <owl/radiobut.h>
-#include <owl/groupbox.h>
-#include <owl/checkbox.h>
-#include <owl/static.h>
-#include <owl/scrollba.h>
-#include <owl/inputdia.h>
-
-#endif // FMSLOGO_OWL
+// Copyright (C) 1995 by the Regents of the University of California
+// Copyright (C) 1995 by George Mills
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #include "dlgwind.h"
 
-#ifdef FMSLOGO_OWL
+#include <wx/app.h>
+#include <wx/choicdlg.h>
+#include <wx/textdlg.h>
+#include <wx/button.h>
+#include <wx/listbox.h>
 
+#include "fmslogo.h"
 #include "mainframe.h"
-#include "logorc.h"
+#include "mainwind.h"
+#include "screen.h"
 #include "coms.h"
 #include "parse.h"
 #include "logodata.h"
 #include "logomath.h"
-#include "selectbox.h"
-
-#endif // FMSLOGO_OWL
-
 #include "main.h"
 #include "localizedstrings.h"
 #include "init.h"
@@ -63,21 +47,22 @@ enum WINDOWTYPE
 {
     WINDOWTYPE_None,
     WINDOWTYPE_Window,
-    WINDOWTYPE_Static,
+    //WINDOWTYPE_Static,
     WINDOWTYPE_ListBox,
-    WINDOWTYPE_ComboBox,
+    //WINDOWTYPE_ComboBox,
     WINDOWTYPE_Button,
-    WINDOWTYPE_ScrollBar,
-    WINDOWTYPE_GroupBox,
-    WINDOWTYPE_RadioButton,
-    WINDOWTYPE_CheckBox,
+    //WINDOWTYPE_ScrollBar,
+    //WINDOWTYPE_GroupBox,
+    //WINDOWTYPE_RadioButton,
+    //WINDOWTYPE_CheckBox,
     WINDOWTYPE_Dialog,
 };
 
-class TClientRectangle
+// TODO: Derive from wxRect
+class CClientRectangle
 {
 public:
-    TClientRectangle();
+    CClientRectangle();
 
     void InitializeFromInput(NODE * & Args);
 
@@ -96,7 +81,7 @@ private:
     int m_Height;
 };
 
-TClientRectangle::TClientRectangle() : 
+CClientRectangle::CClientRectangle() : 
     m_X(0),
     m_Y(0),
     m_Width(0), 
@@ -104,7 +89,7 @@ TClientRectangle::TClientRectangle() :
 {
 }
 
-void TClientRectangle::InitializeFromInput(NODE * & Args)
+void CClientRectangle::InitializeFromInput(NODE * & Args)
 {
     NODE * nextinput = Args;
 
@@ -123,7 +108,7 @@ void TClientRectangle::InitializeFromInput(NODE * & Args)
     Args = nextinput;
 }
 
-void TClientRectangle::ConvertToDialogCoordinates()
+void CClientRectangle::ConvertToDialogCoordinates()
 {
     m_X = (m_X * BaseUnitsx) / 4;
     m_Y = (m_Y * BaseUnitsy) / 8;
@@ -132,98 +117,97 @@ void TClientRectangle::ConvertToDialogCoordinates()
     m_Height = (m_Height * BaseUnitsy) / 8;
 }
 
-void TClientRectangle::ConvertToScreenCoordinates()
+void CClientRectangle::ConvertToScreenCoordinates()
 {
     m_X =  m_X - GetScreenHorizontalScrollPosition() + xoffset;
     m_Y = -m_Y - GetScreenVerticalScrollPosition()   + yoffset;
 }
 
-#ifdef FMSLOGO_OWL
+static void SetMswLogoCompatibleFont(wxWindow * Window)
+{
+    // Sets the font to look like it did in MSWLogo.
+    wxFont font = Window->GetFont();
+    font.SetFaceName("System");
+    Window->SetFont(font);
+}
 
 // class structures for the controls we support, for the most part they
 // are the same as the original with just a callback string added
 
-class TMxDialog : public TDialog
+class CLogoDialog : public wxDialog
 {
 public:
-    char callback[MAX_BUFFER_SIZE];
-    char caption[MAX_BUFFER_SIZE];
-
-    TClientRectangle clientrect;
-
-    TMxDialog(
-        TWindow * Parent
-        ) : TDialog(Parent, IDD_STUB)
+    CLogoDialog(
+        wxWindow               * Parent,
+        const wxString         & Caption,
+        const CClientRectangle & ClientRectangle
+        ) : wxDialog(
+            Parent,
+            wxID_ANY,
+            Caption,
+            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
+            wxCAPTION) //DS_MODALFRAME | WS_POPUP
     {
     }
 
-protected:
-    void SetupWindow();
+private:
 
-    void CmCancel()
-    {
-        // no cancel
-    }
+    // Event handlers
+    void OnOkButton(wxCommandEvent& Event);
+    void OnCancelButton(wxCommandEvent& Event);
 
-    void CmOk()
-    {
-        // no close
-    }
-
-    DECLARE_RESPONSE_TABLE(TMxDialog);
+    DECLARE_EVENT_TABLE();
+    DECLARE_NO_COPY_CLASS(CLogoDialog);
 };
 
-
-void TMxDialog::SetupWindow()
+void CLogoDialog::OnOkButton(wxCommandEvent& Event)
 {
-    SetWindowPos(
-        NULL, 
-        clientrect.GetX(),
-        clientrect.GetY(),
-        clientrect.GetWidth(),
-        clientrect.GetHeight(),
-        0);
-
-    SetCaption(caption);
-
-    do_execution(callback);
-
-    TDialog::SetupWindow();
 }
 
-DEFINE_RESPONSE_TABLE1(TMxDialog, TDialog)
-    EV_COMMAND(IDCANCEL, CmCancel),
-    EV_COMMAND(IDOK, CmOk),
-END_RESPONSE_TABLE;
+void CLogoDialog::OnCancelButton(wxCommandEvent& Event)
+{
+}
 
+// REVISIT: This was really supposed to prevent closing the window
+// from normal UI events, like pressing the "X" on the system menu.
+// However, since the system menu doesn't show up, I'm not sure how
+// useful this is.  Also, in the OWL implementation, Alt+F4 would close
+// the window and I'm not sure if that's a good thing or not.
+BEGIN_EVENT_TABLE(CLogoDialog, wxDialog)
+    EVT_BUTTON(wxID_OK,     CLogoDialog::OnOkButton)
+    EVT_BUTTON(wxID_CANCEL, CLogoDialog::OnCancelButton)
+END_EVENT_TABLE()
 
-class TMyListBox : public TListBox
+class CLogoListBox : public wxListBox
 {
 public:
 
-    TMyListBox(
-        TWindow                * Parent, 
-        const TClientRectangle & ClientRect
-        ) : 
-        TListBox(
-            Parent, 
-            MYLISTBOX_ID, 
-            ClientRect.GetX(), 
-            ClientRect.GetY(), 
-            ClientRect.GetWidth(), 
-            ClientRect.GetHeight())
+    CLogoListBox(
+        wxWindow               * Parent,
+        const CClientRectangle & ClientRectangle
+        ) : wxListBox(
+            Parent,
+            wxID_ANY,
+            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()))
     {
-        // disable automatic sorting
-        Attr.Style ^= LBS_SORT;
+        SetMswLogoCompatibleFont(this);
     }
+
+private:
+
+    DECLARE_NO_COPY_CLASS(CLogoListBox);
 };
+
+#ifdef FMSLOGO_OWL
 
 class TMxComboBox : public TComboBox
 {
 public:
     TMxComboBox(
         TWindow                * Parent, 
-        const TClientRectangle & ClientRect
+        const CClientRectangle & ClientRect
         ) : 
         TComboBox(
             Parent, 
@@ -247,7 +231,7 @@ public:
     TMyStatic(
         TWindow                * Parent,
         const char             * Text, 
-        const TClientRectangle & ClientRect
+        const CClientRectangle & ClientRect
         ) : 
         TStatic(
             Parent, 
@@ -261,43 +245,52 @@ public:
     }
 };
 
-class TMyButton : public TButton
+#endif
+
+class CLogoButton : public wxButton
 {
 public:
-    char callback[MAX_BUFFER_SIZE];
 
-    TMyButton(
-        TWindow                * Parent, 
-        const char             * Text, 
-        const TClientRectangle & ClientRect
-        ) : 
-        TButton(
-            Parent, 
-            MYBUTTON_ID, 
-            Text, 
-            ClientRect.GetX(),
-            ClientRect.GetY(),
-            ClientRect.GetWidth(),
-            ClientRect.GetHeight())
+    CLogoButton(
+        wxWindow               * Parent,
+        const wxString         & Caption,
+        const CClientRectangle & ClientRectangle,
+        const char             * Callback
+        ) : wxButton(
+            Parent,
+            wxID_ANY,
+            Caption,
+            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()))
     {
+        strcpy(m_Callback, Callback);
+        SetMswLogoCompatibleFont(this);
     }
 
-    void EvButtonClick();
-    DECLARE_RESPONSE_TABLE(TMyButton);
+private:
+    // Event handlers
+    void OnClick(wxCommandEvent& Event);
+
+    // private member variables
+    char m_Callback[MAX_BUFFER_SIZE];
+
+    DECLARE_EVENT_TABLE();
+    DECLARE_NO_COPY_CLASS(CLogoButton);
 };
 
-DEFINE_RESPONSE_TABLE1(TMyButton, TButton)
-    EV_NOTIFY_AT_CHILD(BN_CLICKED, EvButtonClick),
-END_RESPONSE_TABLE;
-
+BEGIN_EVENT_TABLE(CLogoButton, wxButton)
+    EVT_BUTTON(wxID_ANY, CLogoButton::OnClick)
+END_EVENT_TABLE()
 
 // if the button gets clicked we end up here and queue the event 
-void TMyButton::EvButtonClick()
+void CLogoButton::OnClick(wxCommandEvent& Event)
 {
-    callthing *callevent = callthing::CreateFunctionEvent(callback);
+    callthing *callevent = callthing::CreateFunctionEvent(m_Callback);
     calllists.insert(callevent);
     checkqueue();
 }
+
+#if 0 // TODO
 
 class TMyScrollBar : public TScrollBar
 {
@@ -306,7 +299,7 @@ public:
 
     TMyScrollBar(
         TWindow                * Parent, 
-        const TClientRectangle & ClientRect,
+        const CClientRectangle & ClientRect,
         bool                     IsHScrollBar
         ) : 
         TScrollBar(
@@ -372,7 +365,7 @@ class TMyGroupBox : public TGroupBox
 public:
     TMyGroupBox(
         TWindow                * Parent, 
-        const TClientRectangle & ClientRect
+        const CClientRectangle & ClientRect
         ) : 
         TGroupBox(
             Parent, 
@@ -393,7 +386,7 @@ public:
     TMyRadioButton(
         TWindow                * Parent, 
         const char             * Title, 
-        const TClientRectangle & ClientRect,
+        const CClientRectangle & ClientRect,
         TGroupBox              * Group
         ) : 
         TRadioButton(
@@ -415,7 +408,7 @@ public:
     TMyCheckBox(
         TWindow                * Parent, 
         const char             * Title, 
-        const TClientRectangle & ClientRect,
+        const CClientRectangle & ClientRect,
         TGroupBox              * Group
         ) : TCheckBox(
             Parent, 
@@ -430,79 +423,111 @@ public:
     }
 };
 
+#endif
+
 
 // class structure for storing information about user windows.
 // The implementation is an in-place circular doubly-linked list.
-struct dialogthing
+class CLogoWidget
 {
-    friend class dialoglist;
+    friend class CLogoWidgetList;
 
 private:
-    struct dialogthing *next;
-    struct dialogthing *prev;
+    class CLogoWidget * m_Next;
+    class CLogoWidget * m_Prev;
 
 public:
-    char key[MAX_BUFFER_SIZE];
-    char *parent;
+    char   m_Key[MAX_BUFFER_SIZE];
+    char * m_Parent;
 
-    WINDOWTYPE type;
+    WINDOWTYPE m_Type;
 
     union
     {
-        class TMxDialog      * TDmybox;
-        class TMyStatic      * TSmybox;
-        class TMyListBox     * TLmybox;
-        class TMxComboBox    * TCmybox;
-        class TMyButton      * TBmybox;
-        class TMyScrollBar   * TSCmybox;
-        class TMyGroupBox    * TGmybox;
-        class TMyRadioButton * TRmybox;
-        class TMyCheckBox    * TCBmybox;
+        class CLogoDialog    * Dialog;
+        //class TMyStatic      * TSmybox;
+        class CLogoListBox     * ListBox;
+        //class TMxComboBox    * TCmybox;
+        class CLogoButton    * Button;
+        //class TMyScrollBar   * TSCmybox;
+        //class TMyGroupBox    * TGmybox;
+        //class TMyRadioButton * TRmybox;
+        //class TMyCheckBox    * TCBmybox;
     };
 
-   dialogthing(WINDOWTYPE t, const char * name)
-       : next(NULL),
-         prev(NULL),
-         parent(NULL),
-         type(t),
-         TDmybox(NULL)
-      {
-          strcpy(key, name);
-      }
+   CLogoWidget(WINDOWTYPE Type, const char * Name)
+       : m_Next(NULL),
+         m_Prev(NULL),
+         m_Parent(NULL),
+         m_Type(Type),
+         Dialog(NULL)
+    {
+        strcpy(m_Key, Name);
+    }
 
-    TWindow * GetWindow();
+    wxWindow * GetWindow() const;
+    bool       IsRootWindow() const;
 };
 
-TWindow * dialogthing::GetWindow()
+wxWindow * CLogoWidget::GetWindow() const
 {
-    switch (type)
+    switch (m_Type)
     {
-    case WINDOWTYPE_Window:      return TDmybox;
-    case WINDOWTYPE_Static:      return TSmybox;
-    case WINDOWTYPE_ListBox:     return TLmybox;
-    case WINDOWTYPE_ComboBox:    return TCmybox;
-    case WINDOWTYPE_Button:      return TBmybox;
-    case WINDOWTYPE_ScrollBar:   return TSCmybox;
-    case WINDOWTYPE_GroupBox:    return TGmybox;
-    case WINDOWTYPE_RadioButton: return TRmybox;
-    case WINDOWTYPE_CheckBox:    return TCBmybox;
-    case WINDOWTYPE_Dialog:      return TDmybox;
+    case WINDOWTYPE_Window:
+    case WINDOWTYPE_Dialog:
+        return Dialog;
+
+    //case WINDOWTYPE_Static:      return TSmybox;
+
+    case WINDOWTYPE_ListBox:
+        return ListBox;
+
+    //case WINDOWTYPE_ComboBox:    return TCmybox;
+
+    case WINDOWTYPE_Button:
+        return Button;
+
+    //case WINDOWTYPE_ScrollBar:   return TSCmybox;
+    //case WINDOWTYPE_GroupBox:    return TGmybox;
+    //case WINDOWTYPE_RadioButton: return TRmybox;
+    //case WINDOWTYPE_CheckBox:    return TCBmybox;
+
+    case WINDOWTYPE_None:
+        assert(!"can't happen");
+        return NULL;
     }
 
     assert(!"can't happen");
     return NULL;
 }
 
-
-class dialoglist
+bool CLogoWidget::IsRootWindow() const
 {
-    dialogthing * last;
+    if (m_Parent == NULL)
+    {
+        // This is a top-level WINDOW or DIALOG.
+        return true;
+    }
+
+    if (m_Parent == (char *)CFmsLogo::GetMainFrame()->GetScreen())
+    {
+        // This is a widget that was placed on the screen window
+        return true;
+    }
+
+    return false;
+}
+
+// TODO: Use std::list instead
+class CLogoWidgetList
+{
+    CLogoWidget * last;
 
 public:
-    void insert(dialogthing * a);
-    dialogthing * get(const char *k);
-    dialogthing * get(const char *k, WINDOWTYPE type);
-    dialogthing * get(const char *k, WINDOWTYPE type1, WINDOWTYPE type2);
+    void insert(CLogoWidget * a);
+    CLogoWidget * get(const char *k);
+    CLogoWidget * get(const char *k, WINDOWTYPE type);
+    CLogoWidget * get(const char *k, WINDOWTYPE type1, WINDOWTYPE type2);
     const char *getrootkey();
     const char *getfirstchild(const char *par);
     void zap(const char *k);
@@ -511,12 +536,12 @@ public:
     void clear();
     bool OnScreenControlsExist();
 
-    dialoglist()
+    CLogoWidgetList()
     {
         last = NULL;
     }
 
-    ~dialoglist()
+    ~CLogoWidgetList()
     {
         clear();
     }
@@ -525,60 +550,60 @@ public:
 
 
 // inserts an element into the list.
-void dialoglist::insert(dialogthing * newnode)
+void CLogoWidgetList::insert(CLogoWidget * NewNode)
 {
     if (last != NULL)
     {
-        // the list was not empty.
-        // insert the new node just after "last"
-        newnode->next = last->next;
-        newnode->prev = last;
+        // The list was not empty.
+        // Insert the new node just after "last".
+        NewNode->m_Next = last->m_Next;
+        NewNode->m_Prev = last;
 
-        last->next->prev = newnode;
-        last->next       = newnode;
+        last->m_Next->m_Prev = NewNode;
+        last->m_Next         = NewNode;
 
-        last = newnode;
+        last = NewNode;
     }
     else
     {
-        // the list was empty.
-        // make the newnode the "last" node.
-        last = newnode;
-        last->next = last;
-        last->prev = last;
+        // The list was empty.
+        // Make the newnode the "last" node.
+        last = NewNode;
+        last->m_Next = last;
+        last->m_Prev = last;
     }
 }
 
 // returns the element whose key is "key"
-dialogthing * dialoglist::get(const char *key)
+CLogoWidget * CLogoWidgetList::get(const char *Key)
 {
     if (last == NULL) 
     {
         return NULL;
     }
 
-    dialogthing * f = last;
+    CLogoWidget * f = last;
 
     do
     {
-        if (strcmp(f->key, key) == 0)
+        if (strcmp(f->m_Key, Key) == 0)
         {
             return f;
         }
-        f = f->next;
+        f = f->m_Next;
     } while (f != last);
 
     return NULL;
 }
 
 // returns the element whose key is k and whose type is t
-dialogthing * dialoglist::get(const char *key, WINDOWTYPE type)
+CLogoWidget * CLogoWidgetList::get(const char *Key, WINDOWTYPE Type)
 {
-    dialogthing * item = get(key);
+    CLogoWidget * item = get(Key);
     if (item != NULL)
     {
         // the window exists
-        if (item->type == type) 
+        if (item->m_Type == Type) 
         {
             // the window has the correct type
             return item;
@@ -588,14 +613,14 @@ dialogthing * dialoglist::get(const char *key, WINDOWTYPE type)
     return NULL;
 }
 
-// returns the element whose key is "key" and whose type is either type1 or type2
-dialogthing * dialoglist::get(const char *key, WINDOWTYPE type1, WINDOWTYPE type2)
+// returns the element whose key is "Key" and whose type is either Type1 or Type2
+CLogoWidget * CLogoWidgetList::get(const char *Key, WINDOWTYPE Type1, WINDOWTYPE Type2)
 {
-    dialogthing * item = get(key);
+    CLogoWidget * item = get(Key);
     if (item != NULL)
     {
         // the window exists
-        if (item->type == type1 || item->type == type2) 
+        if (item->m_Type == Type1 || item->m_Type == Type2) 
         {
             // the window exists and has the correct type
             return item;
@@ -605,31 +630,32 @@ dialogthing * dialoglist::get(const char *key, WINDOWTYPE type1, WINDOWTYPE type
     return NULL;
 }
 
-// returns the key of the first link whose parent is "k"
-// In the words, returns the first child of "k"
-const char *dialoglist::getfirstchild(const char *k)
+// returns the key of the first link whose parent is "Key"
+// In the words, returns the first child of "Key"
+const char *CLogoWidgetList::getfirstchild(const char * Key)
 {
     if (last == NULL) 
     {
         return NULL;
     }
 
-    dialogthing * f = last;
+    CLogoWidget * f = last;
 
     do
     {
-        if (strcmp(f->parent, k) == 0)
+        if (f->m_Parent != NULL &&
+            strcmp(f->m_Parent, Key) == 0)
         {
-            return f->key;
+            return f->m_Key;
         }
-        f = f->next;
+        f = f->m_Next;
     } while (f != last);
 
     return NULL;
 }
 
-// deletes the link whose key is "k" and any children of that link.
-void dialoglist::zap(const char *k)
+// deletes the link whose key is "Key" and any children of that link.
+void CLogoWidgetList::zap(const char * Key)
 {
 
     if (last == NULL) 
@@ -637,12 +663,12 @@ void dialoglist::zap(const char *k)
         return;
     }
 
-    // find the link whose key is "k"
-    dialogthing * p = get(k);
+    // find the link whose key is "Key"
+    CLogoWidget * p = get(Key);
 
     // delete any children first
     const char *t;
-    while ((t = getfirstchild(k)) != NULL)
+    while ((t = getfirstchild(Key)) != NULL)
     {
         zap(t);
     }
@@ -650,7 +676,7 @@ void dialoglist::zap(const char *k)
     // remove the link from the list
     if (p != NULL)
     {
-        dialogthing * f = p->next;
+        CLogoWidget * f = p->m_Next;
 
         if (f == p)
         {
@@ -661,11 +687,11 @@ void dialoglist::zap(const char *k)
         {
             if (p == last) 
             {
-                last = p->prev;
+                last = p->m_Prev;
             }
 
-            p->prev->next = p->next;
-            f->prev = p->prev;
+            p->m_Prev->m_Next = p->m_Next;
+            f->m_Prev         = p->m_Prev;
         }
 
         delete p;
@@ -673,12 +699,12 @@ void dialoglist::zap(const char *k)
 }
 
 // prints the heirarchy of all children of the node whose key is "k".
-void dialoglist::list(const char *k, int level)
+void CLogoWidgetList::list(const char *k, int level)
 {
-    dialogthing * p = get(k);
+    CLogoWidget * p = get(k);
     if (p != NULL)
     {
-        static const char *Windowname[] =
+        static const char *WindowName[] =
         {
             "?",
             LOCALIZED_WINDOWCLASSNAME_WINDOW,
@@ -693,37 +719,40 @@ void dialoglist::list(const char *k, int level)
             LOCALIZED_WINDOWCLASSNAME_DIALOG,
         };
 
-        // MAX_WINDOWNAME_LENGTH is the length of the longest string of
-        // in Windowname.  This should be computed dynamically, but choosing
-        // a reasonable upper-bound is easier.
-        const size_t MAX_WINDOWNAME_LENGTH = 256;
-
         if (level == 0)
         {
-            char temp[MAX_WINDOWNAME_LENGTH + 1 + MAX_BUFFER_SIZE + 1];
-            sprintf(temp, "%s %s", Windowname[(int)p->type], p->key);
+            const wxString & temp = wxString::Format(
+                "%s %s",
+                WindowName[(int)p->m_Type],
+                p->m_Key);
             putcombobox(temp);
         }
 
-        dialogthing *ff = last;
+        CLogoWidget *ff = last;
         do
         {
-            if (strcmp(ff->parent, k) == 0)
+            if (ff->m_Parent != NULL &&
+                strcmp(ff->m_Parent, k) == 0)
             {
-                char temp[2 + 1 + MAX_WINDOWNAME_LENGTH + 1 + MAX_BUFFER_SIZE + 1];
-                sprintf(temp, "  %*s%s %s", level, "", Windowname[(int)ff->type], ff->key);
+                const wxString & temp = wxString::Format(
+                    "  %*s%s %s",
+                    level,
+                    "",
+                    WindowName[(int)ff->m_Type],
+                    ff->m_Key);
+
                 putcombobox(temp);
-                list(ff->key, level + 1);
+                list(ff->m_Key, level + 1);
             }
-            ff = ff->next;
+            ff = ff->m_Next;
         } while (ff != last);
     }
 }
 
 // deletes all elements in the list
-void dialoglist::clear()
+void CLogoWidgetList::clear()
 {
-    dialogthing *l = last;
+    CLogoWidget *l = last;
 
     if (l == NULL) 
     {
@@ -732,8 +761,11 @@ void dialoglist::clear()
 
     do
     {
-        dialogthing *ll = l;
-        l = l->next;
+        CLogoWidget *ll = l;
+        l = l->m_Next;
+        // REVISIT: is it okay to destroy every window, or does
+        // this destroy some windows (like children windows) twice.
+        ll->GetWindow()->Destroy();
         delete ll;
     } while (l != last);
 
@@ -742,9 +774,9 @@ void dialoglist::clear()
 
 // returns the key of the first element whose parent is the root window.
 // returns NULL, if no element's parent is the root window.
-const char *dialoglist::getrootkey()
+const char *CLogoWidgetList::getrootkey()
 {
-    dialogthing *l = last;
+    CLogoWidget *l = last;
 
     if (l == NULL) 
     {
@@ -753,20 +785,20 @@ const char *dialoglist::getrootkey()
 
     do
     {
-        if (l->parent == (char *)MainWindowx->ScreenWindow)
+        if (l->IsRootWindow())
         {
-            return l->key;
+            return l->m_Key;
         }
-        l = l->next;
+        l = l->m_Next;
     } while (l != last);
 
     return NULL;
 }
 
 // prints the heirarchy of all windows starting at the screen window
-void dialoglist::listall()
+void CLogoWidgetList::listall()
 {
-    dialogthing *l = last;
+    CLogoWidget *l = last;
 
     if (l == NULL) 
     {
@@ -775,17 +807,17 @@ void dialoglist::listall()
 
     do
     {
-        if (l->parent == (char *)MainWindowx->ScreenWindow)
+        if (l->IsRootWindow())
         {
-            list(l->key, 0);
+            list(l->m_Key, 0);
         }
-        l = l->next;
+        l = l->m_Next;
     } while (l != last);
 }
 
-bool dialoglist::OnScreenControlsExist()
+bool CLogoWidgetList::OnScreenControlsExist()
 {
-    dialogthing *l = last;
+    CLogoWidget *l = last;
 
     if (l == NULL) 
     {
@@ -794,20 +826,18 @@ bool dialoglist::OnScreenControlsExist()
 
     do
     {
-        if (l->parent == (char *)MainWindowx->ScreenWindow)
+        // Check if the control is on the screen window
+        if (l->m_Parent == (char *)CFmsLogo::GetMainFrame()->GetScreen())
         {
-            if ((l->type != WINDOWTYPE_Window) && (l->type != WINDOWTYPE_Dialog))
-            {
-                return true;
-            }
+            return true;
         }
-        l = l->next;
+        l = l->m_Next;
     } while (l != last);
 
     return false;
 }
 
-dialoglist dialogboxes;
+CLogoWidgetList g_LogoWidgets;
 
 
 /* User function to create a modeless window */
@@ -829,7 +859,7 @@ NODE *lwindowcreate(NODE *args)
     cnv_strnode_string(titlename, nextArg);
     nextArg = cdr(nextArg);
 
-    TClientRectangle clientrect;
+    CClientRectangle clientrect;
     clientrect.InitializeFromInput(nextArg);
 
     char callback[MAX_BUFFER_SIZE];
@@ -849,7 +879,7 @@ NODE *lwindowcreate(NODE *args)
     }
 
 
-    if (dialogboxes.get(childname) != NULL)
+    if (g_LogoWidgets.get(childname) != NULL)
     {
         // it's an error if this already exists
         err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
@@ -860,36 +890,40 @@ NODE *lwindowcreate(NODE *args)
     // This is the key to making all Graphics Modes work correctly.
     clientrect.ConvertToDialogCoordinates();
 
-    dialogthing *child = new dialogthing(WINDOWTYPE_Window, childname);
+    CLogoWidget *child = new CLogoWidget(WINDOWTYPE_Window, childname);
 
-    // if parent exists use it else use main window
-    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window);
+    // if parent exists use it, else use desktop
+    CLogoWidget *parent = g_LogoWidgets.get(parentname, WINDOWTYPE_Window);
+    wxWindow * wxParent;
     if (parent != NULL)
     {
-        child->TDmybox = new TMxDialog(parent->TDmybox);
-        child->parent = (char *)parent->TDmybox;
+        wxParent = parent->Dialog;
     }
     else
     {
-        child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
-        child->parent = (char *)MainWindowx->ScreenWindow;
+        // The parent doesn't exist.  Use the desktop as the parent.
+        // REVISIT: The OWL implementation uses the screen window as the parent.
+        // This might be okay in wxWidgets as long as SetExtraStyle(wxWS_EX_BLOCK_EVENTS)
+        // is called to block suprious events from being sent to the main window.
+        // This would make eliminate the need to call uninitilaize_windows() from
+        // CMainFrame::OnClose and would keep the wxWidgets implementation closer to
+        // the OWL implementation.
+        wxParent = NULL;
     }
 
-    // Modeless windows can have to have a callback to set them up
-    // since it will return
-    strcpy(child->TDmybox->callback, callback);
-    strcpy(child->TDmybox->caption, titlename);
+    child->Dialog = new CLogoDialog(
+        wxParent,
+        titlename,
+        clientrect);
+    child->m_Parent = (char*) wxParent;
 
-    // Most attributes are set in DIALOGSTUB
-    child->TDmybox->clientrect = clientrect;
+    g_LogoWidgets.insert(child);
 
-    dialogboxes.insert(child);
+    // Modeless windows have a callback to set them up due to
+    // legacy with the Borland OWL implementation of MSWLogo.
+    do_execution(callback);
 
-    child->TDmybox->Create();
-    child->TDmybox->ShowWindow(SW_SHOW);
-
-    // Make sure the window is up before we try to add controls
-    MyMessageScan();
+    child->Dialog->Show();
 
     return Unbound;
 }
@@ -912,14 +946,14 @@ WindowEnableHelper(
         return Unbound;
     }
 
-    dialogthing *window = dialogboxes.get(childname, WindowType);
+    CLogoWidget *window = g_LogoWidgets.get(childname, WindowType);
     if (window == NULL)
     {
         err_logo(WINDOW_DOES_NOT_EXIST, car(args));
         return Unbound;
     }
 
-    window->GetWindow()->EnableWindow(bEnable);
+    window->GetWindow()->Enable(bEnable);
     return Unbound;
 }
 
@@ -939,7 +973,7 @@ WindowDeleteHelper(
         return Unbound;
     }
 
-    dialogthing *window = dialogboxes.get(windowkey, WindowType);
+    CLogoWidget *window = g_LogoWidgets.get(windowkey, WindowType);
     if (window == NULL)
     {
         // The window does not exist.  Throw an error.
@@ -948,8 +982,9 @@ WindowDeleteHelper(
     }
 
     // The window exists.  Close it.
-    window->GetWindow()->CloseWindow();
-    dialogboxes.zap(windowkey);
+    window->GetWindow()->Destroy();
+
+    g_LogoWidgets.zap(windowkey);
 
     UpdateZoomControlFlag();
     return Unbound;
@@ -968,26 +1003,26 @@ NODE *lwindowdelete(NODE *arg)
 
     if (NOT_THROWING)
     {
-        dialogthing *window = dialogboxes.get(windowname, WINDOWTYPE_Window);
+        CLogoWidget *window = g_LogoWidgets.get(windowname, WINDOWTYPE_Window);
         if (window != NULL)
         {
             // The exact name and type exists matches.
             // kill this window and all of its children.
-            window->TDmybox->CloseWindow();
-            dialogboxes.zap(windowname);
+            window->Dialog->Destroy();
+            g_LogoWidgets.zap(windowname);
         }
         else
         {
             // No window exists that matches this name and type.
             // Close all windows.
             const char *tempkey;
-            while (tempkey = dialogboxes.getrootkey())
+            while ((tempkey = g_LogoWidgets.getrootkey()))
             {
-                dialogthing *temp = dialogboxes.get(tempkey);
+                CLogoWidget *temp = g_LogoWidgets.get(tempkey);
                 if (temp != NULL)
                 {
-                    temp->GetWindow()->CloseWindow();
-                    dialogboxes.zap(tempkey);
+                    temp->GetWindow()->Destroy();
+                    g_LogoWidgets.zap(tempkey);
                 }
                 else
                 {
@@ -1017,7 +1052,7 @@ NODE *ldialogcreate(NODE *args)
     cnv_strnode_string(titlename, nextArg);
     nextArg = cdr(nextArg);
 
-    TClientRectangle clientrect;
+    CClientRectangle clientrect;
     clientrect.InitializeFromInput(nextArg);
 
     char callback[MAX_BUFFER_SIZE];
@@ -1036,7 +1071,7 @@ NODE *ldialogcreate(NODE *args)
     }
 
     // if it does not exist continue
-    if (dialogboxes.get(childname) != NULL)
+    if (g_LogoWidgets.get(childname) != NULL)
     {
         err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
         return Unbound;
@@ -1047,36 +1082,34 @@ NODE *ldialogcreate(NODE *args)
     clientrect.ConvertToDialogCoordinates();
 
     // make one
-    dialogthing * child = new dialogthing(WINDOWTYPE_Dialog, childname);
+    CLogoWidget * child = new CLogoWidget(WINDOWTYPE_Dialog, childname);
 
-    // if parent of corect type exists use it
-    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window);
+    // if parent of correct type exists use it
+    CLogoWidget *parent = g_LogoWidgets.get(parentname, WINDOWTYPE_Window);
+    wxWindow * wxParent;
     if (parent != NULL)
     {
-        child->TDmybox = new TMxDialog(parent->TDmybox);
-        child->parent = (char *)parent->TDmybox;
+        wxParent = parent->Dialog;
     }
     else
     {
-        // else use main window
-        child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
-        child->parent = (char *)MainWindowx->ScreenWindow;
+        // The parent does not exist.  Use the desktop as the parent.
+        wxParent = NULL;
     }
 
-    // Modal windows have to have a callback to set them up
-    // since it will not return until closed
-    strcpy(child->TDmybox->callback, callback);
-    strcpy(child->TDmybox->caption, titlename);
+    child->Dialog = new CLogoDialog(
+        wxParent,
+        titlename,
+        clientrect);
+    child->m_Parent = (char *)wxParent;
 
-    // Most attributes are set in DIALOGSTUB
-    child->TDmybox->clientrect = clientrect;
+    g_LogoWidgets.insert(child);
 
-    dialogboxes.insert(child);
+    // Modal windows must have a callback to set them up
+    // since it will not return until closed.
+    do_execution(callback);
 
-    // Note will not return until the Window closes
-    // But the LOGO program still has some control through
-    // the callback which is done through OWLs "SetupWindow".
-    child->TDmybox->Execute();
+    child->Dialog->ShowModal();
     return Unbound;
 }
 
@@ -1103,7 +1136,7 @@ NODE *llistboxcreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    TClientRectangle clientrect;
+    CClientRectangle clientrect;
     clientrect.InitializeFromInput(nextArg);
 
     if (stopping_flag == THROWING)
@@ -1111,39 +1144,39 @@ NODE *llistboxcreate(NODE *args)
         return Unbound;
     }
 
-    if (dialogboxes.get(childname) != NULL)
+    if (g_LogoWidgets.get(childname) != NULL)
     {
         err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
         return Unbound;
     }
     
-    dialogthing * child = new dialogthing(WINDOWTYPE_ListBox, childname);
+    CLogoWidget * child = new CLogoWidget(WINDOWTYPE_ListBox, childname);
 
-    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
+    CLogoWidget *parent = g_LogoWidgets.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
     if (parent != NULL)
     {
         // The parent is a user-created window
         clientrect.ConvertToDialogCoordinates();
             
-        child->parent = parent->key;
+        child->m_Parent = parent->m_Key;
 
-        child->TLmybox = new TMyListBox(parent->TDmybox, clientrect);
+        child->ListBox = new CLogoListBox(
+            parent->Dialog,
+            clientrect);
     }
     else
     {
         // else the parent does not exist -- put the control on the screen
         clientrect.ConvertToScreenCoordinates();
 
-        child->parent = (char *)MainWindowx->ScreenWindow;
+        child->m_Parent = (char *)CFmsLogo::GetMainFrame()->GetScreen();
 
-        child->TLmybox = new TMyListBox(MainWindowx->ScreenWindow, clientrect);
+        child->ListBox = new CLogoListBox(
+            CFmsLogo::GetMainFrame()->GetScreen(),
+            clientrect);
     }
 
-    child->TLmybox->Create();
-
-    MyMessageScan();
-
-    dialogboxes.insert(child);
+    g_LogoWidgets.insert(child);
 
     if (parent == NULL)
     {
@@ -1173,7 +1206,7 @@ NODE *llistboxgetselect(NODE *args)
         return Unbound;
     }
 
-    dialogthing * listbox = dialogboxes.get(listboxname, WINDOWTYPE_ListBox);
+    CLogoWidget * listbox = g_LogoWidgets.get(listboxname, WINDOWTYPE_ListBox);
     if (listbox == NULL)
     {
         // the listbox does not exist
@@ -1182,15 +1215,10 @@ NODE *llistboxgetselect(NODE *args)
     }
 
     // Fetch the selected string from the listbox
-    char stringname[MAX_BUFFER_SIZE];
-    if (listbox->TLmybox->GetSelString(stringname, MAX_BUFFER_SIZE) < 0)
-    {
-        // an error occured
-        return NIL;
-    }
+    const wxString & selection = listbox->ListBox->GetStringSelection();
 
     // Parsing the string turns it into a list for us
-    return parser(make_strnode(stringname), false);
+    return parser(make_strnode(selection.c_str()), false);
 }
 
 NODE *llistboxaddstring(NODE *args)
@@ -1207,7 +1235,7 @@ NODE *llistboxaddstring(NODE *args)
         return Unbound;
     }
 
-    dialogthing *listbox = dialogboxes.get(listboxname, WINDOWTYPE_ListBox);
+    CLogoWidget *listbox = g_LogoWidgets.get(listboxname, WINDOWTYPE_ListBox);
     if (listbox == NULL)
     {
         // the list box does not exist.
@@ -1216,8 +1244,8 @@ NODE *llistboxaddstring(NODE *args)
     }
 
     // add entry and reset Index for consistency
-    listbox->TLmybox->AddString(stringname);
-    listbox->TLmybox->SetSelIndex(0);
+    listbox->ListBox->Append(stringname);
+    listbox->ListBox->SetSelection(0);
     return Unbound;
 }
 
@@ -1235,7 +1263,7 @@ NODE *llistboxdeletestring(NODE *args)
     }
 
     // if exists continue
-    dialogthing *listbox = dialogboxes.get(listboxname, WINDOWTYPE_ListBox);
+    CLogoWidget *listbox = g_LogoWidgets.get(listboxname, WINDOWTYPE_ListBox);
     if (listbox == NULL)
     {
         // the list box does not exist.
@@ -1244,10 +1272,12 @@ NODE *llistboxdeletestring(NODE *args)
     }
 
     // kill entry based on index
-    listbox->TLmybox->DeleteString(index);
-    listbox->TLmybox->SetSelIndex(0);
+    listbox->ListBox->Delete(index);
+    listbox->ListBox->SetSelection(0);
     return Unbound;
 }
+
+#if 0 // TODO: implement the rest of the controls
 
 NODE *lcomboboxcreate(NODE *args)
 {
@@ -1262,7 +1292,7 @@ NODE *lcomboboxcreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    TClientRectangle clientrect;
+    CClientRectangle clientrect;
     clientrect.InitializeFromInput(nextArg);
 
     if (stopping_flag == THROWING)
@@ -1271,33 +1301,33 @@ NODE *lcomboboxcreate(NODE *args)
     }
 
     // if unique continue
-    if (dialogboxes.get(childname) != NULL)
+    if (g_LogoWidgets.get(childname) != NULL)
     {
         err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
         return Unbound;
     }
 
-    dialogthing * child = new dialogthing(WINDOWTYPE_ComboBox, childname);
+    CLogoWidget * child = new CLogoWidget(WINDOWTYPE_ComboBox, childname);
 
-    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
+    CLogoWidget *parent = g_LogoWidgets.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
     if (parent != NULL)
     {
         // convert to "DIALOG" units
         clientrect.ConvertToDialogCoordinates();
 
-        child->parent = parent->key;
+        child->m_Parent = parent->m_Key;
 
-        child->TCmybox = new TMxComboBox(parent->TDmybox, clientrect);
+        child->TCmybox = new TMxComboBox(parent->Dialog, clientrect);
     }
     else
     {
         // else the parent does not exist -- put the control on the screen
         clientrect.ConvertToScreenCoordinates();
 
-        child->parent = (char *) MainWindowx->ScreenWindow;
+        child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
 
         child->TCmybox = new TMxComboBox(
-            MainWindowx->ScreenWindow,
+            CFmsLogo::GetMainFrame()->GetScreen(),
             clientrect);
     }
 
@@ -1305,7 +1335,7 @@ NODE *lcomboboxcreate(NODE *args)
 
     MyMessageScan();
 
-    dialogboxes.insert(child);
+    g_LogoWidgets.insert(child);
 
     if (parent == NULL)
     {
@@ -1332,7 +1362,7 @@ NODE *lcomboboxgettext(NODE *args)
     cnv_strnode_string(comboboxname, args);
 
     // get the combobox
-    dialogthing *combobox = dialogboxes.get(comboboxname, WINDOWTYPE_ComboBox);
+    CLogoWidget *combobox = g_LogoWidgets.get(comboboxname, WINDOWTYPE_ComboBox);
     if (combobox == NULL)
     {
         // the combobox does not exist
@@ -1362,7 +1392,7 @@ NODE *lcomboboxsettext(NODE *args)
     cnv_strnode_string(stringname, cdr(args));
 
     // if exists continue
-    dialogthing *combobox = dialogboxes.get(comboboxname, WINDOWTYPE_ComboBox);
+    CLogoWidget *combobox = g_LogoWidgets.get(comboboxname, WINDOWTYPE_ComboBox);
     if (combobox == NULL)
     {
         err_logo(WINDOW_DOES_NOT_EXIST, car(args));
@@ -1384,7 +1414,7 @@ NODE *lcomboboxaddstring(NODE *args)
     cnv_strnode_string(stringname, cdr(args));
 
     // get the combobox
-    dialogthing *combobox = dialogboxes.get(comboboxname, WINDOWTYPE_ComboBox);
+    CLogoWidget *combobox = g_LogoWidgets.get(comboboxname, WINDOWTYPE_ComboBox);
     if (combobox == NULL)
     {
         // the combobox does not exist
@@ -1407,7 +1437,7 @@ NODE *lcomboboxdeletestring(NODE *args)
     int index = getint(nonnegative_int_arg(cdr(args)));
 
     // get the combobox
-    dialogthing *combobox = dialogboxes.get(comboboxname, WINDOWTYPE_ComboBox);
+    CLogoWidget *combobox = g_LogoWidgets.get(comboboxname, WINDOWTYPE_ComboBox);
     if (combobox == NULL)
     {
         err_logo(WINDOW_DOES_NOT_EXIST, car(args));
@@ -1432,7 +1462,7 @@ NODE *lscrollbarcreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    TClientRectangle clientrect;
+    CClientRectangle clientrect;
     clientrect.InitializeFromInput(nextArg);
 
     char callback[MAX_BUFFER_SIZE];
@@ -1444,25 +1474,25 @@ NODE *lscrollbarcreate(NODE *args)
         return Unbound;
     }
 
-    if (dialogboxes.get(childname) != NULL)
+    if (g_LogoWidgets.get(childname) != NULL)
     {
         err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
         return Unbound;
     }
 
-    dialogthing * child = new dialogthing(WINDOWTYPE_ScrollBar, childname);
+    CLogoWidget * child = new CLogoWidget(WINDOWTYPE_ScrollBar, childname);
          
     const bool isHorizontalScrollbar = clientrect.GetWidth() > clientrect.GetHeight();
 
-    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
+    CLogoWidget *parent = g_LogoWidgets.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
     if (parent != NULL)
     {
         clientrect.ConvertToDialogCoordinates();
 
-        child->parent = parent->key;
+        child->m_Parent = parent->m_Key;
 
         child->TSCmybox = new TMyScrollBar(
-            parent->TDmybox, 
+            parent->Dialog, 
             clientrect,
             isHorizontalScrollbar);
     }
@@ -1470,10 +1500,10 @@ NODE *lscrollbarcreate(NODE *args)
     {
         clientrect.ConvertToScreenCoordinates();
 
-        child->parent = (char*) MainWindowx->ScreenWindow;
+        child->m_Parent = (char*) CFmsLogo::GetMainFrame()->GetScreen();
 
         child->TSCmybox = new TMyScrollBar(
-            MainWindowx->ScreenWindow,
+            CFmsLogo::GetMainFrame()->GetScreen(),
             clientrect,
             isHorizontalScrollbar);
     }
@@ -1484,7 +1514,7 @@ NODE *lscrollbarcreate(NODE *args)
 
     MyMessageScan();
 
-    dialogboxes.insert(child);
+    g_LogoWidgets.insert(child);
 
     if (parent == NULL)
     {
@@ -1522,7 +1552,7 @@ NODE *lscrollbarset(NODE *args)
         return Unbound;
     }
 
-    dialogthing *scrollbar = dialogboxes.get(scrollbarname, WINDOWTYPE_ScrollBar);
+    CLogoWidget *scrollbar = g_LogoWidgets.get(scrollbarname, WINDOWTYPE_ScrollBar);
     if (scrollbar == NULL)
     {
         err_logo(WINDOW_DOES_NOT_EXIST, car(args));
@@ -1544,7 +1574,7 @@ NODE *lscrollbarget(NODE *args)
         return Unbound;
     }
 
-    dialogthing *scrollbar = dialogboxes.get(scrollbarname, WINDOWTYPE_ScrollBar);
+    CLogoWidget *scrollbar = g_LogoWidgets.get(scrollbarname, WINDOWTYPE_ScrollBar);
     if (scrollbar == NULL)
     {
         // the scrollbar doesn't exist
@@ -1582,7 +1612,7 @@ NODE *lstaticcreate(NODE *args)
     cnv_strnode_string(titlename, nextArg);
     nextArg = cdr(nextArg);
 
-    TClientRectangle clientrect;
+    CClientRectangle clientrect;
     clientrect.InitializeFromInput(nextArg);
 
     if (stopping_flag == THROWING)
@@ -1590,15 +1620,15 @@ NODE *lstaticcreate(NODE *args)
         return Unbound;
     }
 
-    if (dialogboxes.get(childname) != NULL)
+    if (g_LogoWidgets.get(childname) != NULL)
     {
         err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
         return Unbound;
     }
 
-    dialogthing * child = new dialogthing(WINDOWTYPE_Static, childname);
+    CLogoWidget * child = new CLogoWidget(WINDOWTYPE_Static, childname);
 
-    dialogthing *parent = dialogboxes.get(
+    CLogoWidget *parent = g_LogoWidgets.get(
         parentname, 
         WINDOWTYPE_Window, 
         WINDOWTYPE_Dialog);
@@ -1606,10 +1636,10 @@ NODE *lstaticcreate(NODE *args)
     {
         clientrect.ConvertToDialogCoordinates();
 
-        child->parent = parent->key;
+        child->m_Parent = parent->m_Key;
 
         child->TSmybox = new TMyStatic(
-            parent->TDmybox, 
+            parent->Dialog, 
             titlename, 
             clientrect);
     }
@@ -1617,10 +1647,10 @@ NODE *lstaticcreate(NODE *args)
     {
         clientrect.ConvertToScreenCoordinates();
 
-        child->parent = (char *) MainWindowx->ScreenWindow;
+        child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
             
         child->TSmybox = new TMyStatic(
-            MainWindowx->ScreenWindow,
+            CFmsLogo::GetMainFrame()->GetScreen(),
             titlename,
             clientrect);
     }
@@ -1629,7 +1659,7 @@ NODE *lstaticcreate(NODE *args)
 
     MyMessageScan();
 
-    dialogboxes.insert(child);
+    g_LogoWidgets.insert(child);
 
     if (parent == NULL)
     {
@@ -1647,7 +1677,7 @@ NODE *lstaticupdate(NODE *args)
     char titlename[MAX_BUFFER_SIZE];
     cnv_strnode_string(titlename, cdr(args));
 
-    dialogthing *temp = dialogboxes.get(childname, WINDOWTYPE_Static);
+    CLogoWidget *temp = g_LogoWidgets.get(childname, WINDOWTYPE_Static);
     if (temp == NULL)
     {
         err_logo(WINDOW_DOES_NOT_EXIST, car(args));
@@ -1662,6 +1692,8 @@ NODE *lstaticdelete(NODE *args)
 {
     return WindowDeleteHelper(args, WINDOWTYPE_Static);
 }
+
+#endif
 
 NODE *lbuttoncreate(NODE *args)
 {
@@ -1679,7 +1711,7 @@ NODE *lbuttoncreate(NODE *args)
     cnv_strnode_string(titlename, nextArg);
     nextArg = cdr(nextArg);
 
-    TClientRectangle clientrect;
+    CClientRectangle clientrect;
     clientrect.InitializeFromInput(nextArg);
 
     char callback[MAX_BUFFER_SIZE];
@@ -1697,49 +1729,46 @@ NODE *lbuttoncreate(NODE *args)
         return Unbound;
     }
 
-    if (dialogboxes.get(childname) != NULL)
+    if (g_LogoWidgets.get(childname) != NULL)
     {
         // the button already exists
         err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
         return Unbound;
     }
 
-    dialogthing * child = new dialogthing(WINDOWTYPE_Button, childname);
+    CLogoWidget * child = new CLogoWidget(WINDOWTYPE_Button, childname);
 
-    dialogthing *parent = dialogboxes.get(
-        parentname, 
-        WINDOWTYPE_Window, 
+    CLogoWidget *parent = g_LogoWidgets.get(
+        parentname,
+        WINDOWTYPE_Window,
         WINDOWTYPE_Dialog);
+
     if (parent != NULL)
     {
         clientrect.ConvertToDialogCoordinates();
 
-        child->parent = parent->key;
+        child->m_Parent = parent->m_Key;
 
-        child->TBmybox = new TMyButton(
-            parent->TDmybox,
+        child->Button = new CLogoButton(
+            parent->Dialog,
             titlename,
-            clientrect);
+            clientrect,
+            callback);
     }
     else
     {
         clientrect.ConvertToScreenCoordinates();
 
-        child->parent = (char *) MainWindowx->ScreenWindow;
+        child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
 
-        child->TBmybox = new TMyButton(
-            MainWindowx->ScreenWindow,
+        child->Button = new CLogoButton(
+            CFmsLogo::GetMainFrame()->GetScreen(),
             titlename,
-            clientrect);
+            clientrect,
+            callback);
     }
 
-    strcpy(child->TBmybox->callback, callback);
-
-    child->TBmybox->Create();
-
-    MyMessageScan();
-
-    dialogboxes.insert(child);
+    g_LogoWidgets.insert(child);
 
     if (parent == NULL)
     {
@@ -1762,14 +1791,14 @@ NODE *lbuttonupdate(NODE *args)
         return Unbound;
     }
 
-    dialogthing *button = dialogboxes.get(buttonname, WINDOWTYPE_Button);
+    CLogoWidget *button = g_LogoWidgets.get(buttonname, WINDOWTYPE_Button);
     if (button == NULL)
     {
         err_logo(WINDOW_DOES_NOT_EXIST, car(args));
         return Unbound;
     }
 
-    button->TBmybox->SetWindowText(titlename);
+    button->Button->SetLabel(titlename);
     return Unbound;
 }
 
@@ -1783,6 +1812,8 @@ NODE *lbuttondelete(NODE *args)
     return WindowDeleteHelper(args, WINDOWTYPE_Button);
 }
 
+#if 0
+
 NODE *lgroupboxcreate(NODE *args)
 {
     NODE * nextArg = args;
@@ -1795,7 +1826,7 @@ NODE *lgroupboxcreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    TClientRectangle clientrect;
+    CClientRectangle clientrect;
     clientrect.InitializeFromInput(nextArg);
 
     if (stopping_flag == THROWING)
@@ -1803,15 +1834,15 @@ NODE *lgroupboxcreate(NODE *args)
         return Unbound;
     }
 
-    if (dialogboxes.get(childname) != NULL)
+    if (g_LogoWidgets.get(childname) != NULL)
     {
         err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
         return Unbound;
     }
 
-    dialogthing * child = new dialogthing(WINDOWTYPE_GroupBox, childname);
+    CLogoWidget * child = new CLogoWidget(WINDOWTYPE_GroupBox, childname);
 
-    dialogthing *parent = dialogboxes.get(
+    CLogoWidget *parent = g_LogoWidgets.get(
         parentname, 
         WINDOWTYPE_Window, 
         WINDOWTYPE_Dialog);
@@ -1819,20 +1850,20 @@ NODE *lgroupboxcreate(NODE *args)
     {
         clientrect.ConvertToDialogCoordinates();
 
-        child->parent = parent->key;
+        child->m_Parent = parent->m_Key;
 
         child->TGmybox = new TMyGroupBox(
-            parent->TDmybox, 
+            parent->Dialog, 
             clientrect);
     }
     else
     {
         clientrect.ConvertToScreenCoordinates();
 
-        child->parent = (char *) MainWindowx->ScreenWindow;
+        child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
             
         child->TGmybox = new TMyGroupBox(
-            MainWindowx->ScreenWindow, 
+            CFmsLogo::GetMainFrame()->GetScreen(), 
             clientrect);
     }
 
@@ -1840,7 +1871,7 @@ NODE *lgroupboxcreate(NODE *args)
 
     MyMessageScan();
 
-    dialogboxes.insert(child);
+    g_LogoWidgets.insert(child);
 
     if (parent == NULL)
     {
@@ -1875,7 +1906,7 @@ NODE *lradiobuttoncreate(NODE *args)
     cnv_strnode_string(titlename, nextArg);
     nextArg = cdr(nextArg);
 
-    TClientRectangle clientrect;
+    CClientRectangle clientrect;
     clientrect.InitializeFromInput(nextArg);
 
     if (stopping_flag == THROWING)
@@ -1883,7 +1914,7 @@ NODE *lradiobuttoncreate(NODE *args)
         return Unbound;
     }
 
-    dialogthing *group = dialogboxes.get(groupname, WINDOWTYPE_GroupBox);
+    CLogoWidget *group = g_LogoWidgets.get(groupname, WINDOWTYPE_GroupBox);
     if (group == NULL)
     {
         // the group does not exist
@@ -1891,16 +1922,16 @@ NODE *lradiobuttoncreate(NODE *args)
         return Unbound;
     }
 
-    if (dialogboxes.get(childname) != NULL)
+    if (g_LogoWidgets.get(childname) != NULL)
     {
         // a radio button by this name already exists
         err_logo(WINDOW_ALREADY_EXISTS, car(cdr(cdr(args))));
         return Unbound;
     }
      
-    dialogthing * child = new dialogthing(WINDOWTYPE_RadioButton, childname);
+    CLogoWidget * child = new CLogoWidget(WINDOWTYPE_RadioButton, childname);
 
-    dialogthing *parent = dialogboxes.get(
+    CLogoWidget *parent = g_LogoWidgets.get(
         parentname, 
         WINDOWTYPE_Window, 
         WINDOWTYPE_Dialog);
@@ -1908,10 +1939,10 @@ NODE *lradiobuttoncreate(NODE *args)
     {
         clientrect.ConvertToDialogCoordinates();
 
-        child->parent = parent->key;
+        child->m_Parent = parent->m_Key;
 
         child->TRmybox = new TMyRadioButton(
-            parent->TDmybox, 
+            parent->Dialog, 
             titlename, 
             clientrect,
             group->TGmybox);
@@ -1920,10 +1951,10 @@ NODE *lradiobuttoncreate(NODE *args)
     {
         clientrect.ConvertToScreenCoordinates();
 
-        child->parent = (char *) MainWindowx->ScreenWindow;
+        child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
 
         child->TRmybox = new TMyRadioButton(
-            MainWindowx->ScreenWindow,
+            CFmsLogo::GetMainFrame()->GetScreen(),
             titlename,
             clientrect,
             group->TGmybox);
@@ -1933,7 +1964,7 @@ NODE *lradiobuttoncreate(NODE *args)
 
     MyMessageScan();
 
-    dialogboxes.insert(child);
+    g_LogoWidgets.insert(child);
 
     if (parent == NULL)
     {
@@ -1963,7 +1994,7 @@ NODE *lradiobuttonget(NODE *args)
         return Unbound;
     }
 
-    dialogthing *radiobutton = dialogboxes.get(radiobuttonname, WINDOWTYPE_RadioButton);
+    CLogoWidget *radiobutton = g_LogoWidgets.get(radiobuttonname, WINDOWTYPE_RadioButton);
     if (radiobutton == NULL)
     {
         // the radio button does not exist
@@ -1987,7 +2018,7 @@ NODE *lradiobuttonset(NODE *args)
         return Unbound;
     }
 
-    dialogthing *radiobutton = dialogboxes.get(radiobuttonname, WINDOWTYPE_RadioButton);
+    CLogoWidget *radiobutton = g_LogoWidgets.get(radiobuttonname, WINDOWTYPE_RadioButton);
     if (radiobutton == NULL)
     {
         // the radio button does not exist
@@ -2027,7 +2058,7 @@ NODE *lcheckboxcreate(NODE *args)
     cnv_strnode_string(titlename, nextArg);
     nextArg = cdr(nextArg);
 
-    TClientRectangle clientrect;
+    CClientRectangle clientrect;
     clientrect.InitializeFromInput(nextArg);
 
     if (stopping_flag == THROWING)
@@ -2035,7 +2066,7 @@ NODE *lcheckboxcreate(NODE *args)
         return Unbound;
     }
 
-    dialogthing *group = dialogboxes.get(groupname, WINDOWTYPE_GroupBox);
+    CLogoWidget *group = g_LogoWidgets.get(groupname, WINDOWTYPE_GroupBox);
     if (group == NULL)
     {
         // the group does not exist
@@ -2043,16 +2074,16 @@ NODE *lcheckboxcreate(NODE *args)
         return Unbound;
     }
 
-    if (dialogboxes.get(childname) != NULL)
+    if (g_LogoWidgets.get(childname) != NULL)
     {
         // the checkbox already exists
         err_logo(WINDOW_ALREADY_EXISTS, car(cdr(cdr(args))));
         return Unbound;
     }
 
-    dialogthing * child = new dialogthing(WINDOWTYPE_CheckBox, childname);
+    CLogoWidget * child = new CLogoWidget(WINDOWTYPE_CheckBox, childname);
 
-    dialogthing * parent = dialogboxes.get(
+    CLogoWidget * parent = g_LogoWidgets.get(
         parentname, 
         WINDOWTYPE_Window, 
         WINDOWTYPE_Dialog);
@@ -2060,10 +2091,10 @@ NODE *lcheckboxcreate(NODE *args)
     {
         clientrect.ConvertToDialogCoordinates();
 
-        child->parent = parent->key;
+        child->m_Parent = parent->m_Key;
 
         child->TCBmybox = new TMyCheckBox(
-            parent->TDmybox, 
+            parent->Dialog, 
             titlename, 
             clientrect,
             group->TGmybox);
@@ -2072,10 +2103,10 @@ NODE *lcheckboxcreate(NODE *args)
     {
         clientrect.ConvertToScreenCoordinates();
 
-        child->parent = (char *) MainWindowx->ScreenWindow;
+        child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
 
         child->TCBmybox = new TMyCheckBox(
-            MainWindowx->ScreenWindow,
+            CFmsLogo::GetMainFrame()->GetScreen(),
             titlename,
             clientrect,
             group->TGmybox);
@@ -2085,7 +2116,7 @@ NODE *lcheckboxcreate(NODE *args)
 
     MyMessageScan();
 
-    dialogboxes.insert(child);
+    g_LogoWidgets.insert(child);
 
     if (parent == NULL)
     {
@@ -2115,7 +2146,7 @@ NODE *lcheckboxget(NODE *args)
         return Unbound;
     }
 
-    dialogthing *checkbox = dialogboxes.get(checkboxname, WINDOWTYPE_CheckBox);
+    CLogoWidget *checkbox = g_LogoWidgets.get(checkboxname, WINDOWTYPE_CheckBox);
     if (checkbox == NULL)
     {
         // the checkbox doesn't exist
@@ -2139,7 +2170,7 @@ NODE *lcheckboxset(NODE *args)
         return Unbound;
     }
 
-    dialogthing *checkbox = dialogboxes.get(checkboxname, WINDOWTYPE_CheckBox);
+    CLogoWidget *checkbox = g_LogoWidgets.get(checkboxname, WINDOWTYPE_CheckBox);
     if (checkbox == NULL)
     {
         // the checkbox doesn't exist
@@ -2159,9 +2190,11 @@ NODE *lcheckboxset(NODE *args)
     return Unbound;
 }
 
+#endif 
+
 bool CheckOnScreenControls()
 {
-    return dialogboxes.OnScreenControlsExist();
+    return g_LogoWidgets.OnScreenControlsExist();
 }
 
 NODE *ldebugwindows(NODE *arg)
@@ -2171,23 +2204,21 @@ NODE *ldebugwindows(NODE *arg)
         char windowname[MAX_BUFFER_SIZE];
         cnv_strnode_string(windowname, arg);
       
-        if (dialogboxes.get(windowname) == NULL)
+        if (g_LogoWidgets.get(windowname) == NULL)
         {
             err_logo(WINDOW_DOES_NOT_EXIST, car(arg));
             return Unbound;
         }
 
-        dialogboxes.list(windowname, 0);
+        g_LogoWidgets.list(windowname, 0);
     }
     else
     {
-        dialogboxes.listall();
+        g_LogoWidgets.listall();
     }
 
     return Unbound;
 }
-
-#endif // FMSLOGO_OWL
 
 NODE *lmessagebox(NODE *args)
 {
@@ -2212,8 +2243,6 @@ NODE *lmessagebox(NODE *args)
     return Unbound;
 }
 
-#ifdef FMSLOGO_OWL
-
 NODE *lquestionbox(NODE *args)
 {
     // read/validate inputs
@@ -2229,24 +2258,24 @@ NODE *lquestionbox(NODE *args)
         return Unbound;
     }
 
-    char str[MAX_BUFFER_SIZE];
-    str[0] = '\0';
-
-    TInputDialog dlg(
-        MainWindowx->ScreenWindow,
-        banner,
+    const wxString & str = ::wxGetTextFromUser(
         body,
-        str,
-        MAX_BUFFER_SIZE);
+        banner,
+        "",
+        CFmsLogo::GetMainFrame());
 
-    if (dlg.Execute() == IDCANCEL)
+    if (str.IsEmpty())
     {
-        // the user pressed cancel
+        // BUG: This doesn't distinguish between when the user
+        // selects the empty string and when the user presses
+        // cancel.
+
+        // The user pressed cancel.
         err_logo(STOP_ERROR, NIL);
         return Unbound;
     }
 
-    NODE * targ = make_strnode(str);
+    NODE * targ = make_strnode(str.c_str());
     NODE * val = parser(targ, false);
     return val;
 }
@@ -2258,17 +2287,31 @@ NODE *lselectbox(NODE *args)
     char banner[MAX_BUFFER_SIZE];
     cnv_strnode_string(banner, args);
 
-    NODE * choices = list_arg(cdr(args));
+    NODE * choicesNode = list_arg(cdr(args));
     if (stopping_flag == THROWING)
     {
         return Unbound;
     }
 
-    CSelectBox selectbox(MainWindowx->ScreenWindow, banner, choices);
+    wxArrayString choices;
+    for (NODE * currentChoice = choicesNode;
+         currentChoice != NIL;
+         currentChoice = cdr(currentChoice))
+    {
+        char choice[MAX_BUFFER_SIZE];
+        cnv_strnode_string(choice, currentChoice);
 
-    selectbox.Execute();
+        choices.Add(choice);
+    }
 
-    int status = selectbox.GetSelection();
+    // TODO: Implement our own version of this
+    // routine that doesn't leave a blank space
+    // where the question should be placed.
+    int status = ::wxGetSingleChoiceIndex(
+        "",
+        banner,
+        choices,
+        CFmsLogo::GetMainFrame());
     if (status < 0)
     {
         // the user pressed cancel
@@ -2278,8 +2321,6 @@ NODE *lselectbox(NODE *args)
 
     return make_intnode(status + 1);
 }
-
-#endif // FMSLOGO_OWL
 
 NODE *lyesnobox(NODE *args)
 {
@@ -2392,8 +2433,6 @@ NODE *ldialogfilesave(NODE *args)
     }
 }
 
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
-
 NODE *lwindowfileedit(NODE *args)
 {
     char filename[MAX_BUFFER_SIZE];
@@ -2408,11 +2447,7 @@ NODE *lwindowfileedit(NODE *args)
     return Unbound;
 }
 
-#endif
-
 void uninitialize_windows()
 {
-#ifdef FMSLOGO_OWL
-    dialogboxes.clear();
-#endif // FMSLOGO_OWL
+    g_LogoWidgets.clear();
 }
