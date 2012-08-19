@@ -17,11 +17,16 @@
 
 #include "dlgwind.h"
 
+#include <windows.h>
+#include <windowsx.h> // for combobox macros
+#include <commctrl.h> // for combobox style manifest constants
+
 #include <wx/app.h>
 #include <wx/choicdlg.h>
 #include <wx/textdlg.h>
 #include <wx/button.h>
 #include <wx/listbox.h>
+#include <wx/combobox.h>
 
 #include "fmslogo.h"
 #include "mainframe.h"
@@ -49,7 +54,7 @@ enum WINDOWTYPE
     WINDOWTYPE_Window,
     //WINDOWTYPE_Static,
     WINDOWTYPE_ListBox,
-    //WINDOWTYPE_ComboBox,
+    WINDOWTYPE_ComboBox,
     WINDOWTYPE_Button,
     //WINDOWTYPE_ScrollBar,
     //WINDOWTYPE_GroupBox,
@@ -200,30 +205,126 @@ private:
     DECLARE_NO_COPY_CLASS(CLogoListBox);
 };
 
-#ifdef FMSLOGO_OWL
-
-class TMxComboBox : public TComboBox
+// Unfortunately, wxComboBox does not handle CBS_SIMPLE Windows comboboxes well.
+// In particular, there was no way to set CBS_DISABLENOSCROLL, which means that
+// its height would vary with the number of elements within it, which makes it
+// incompatable with the MSWLogo behavior.
+//
+// To work around this, the CLogoComboBox is written as a thin wrapper around
+// a native COMBOBOX window, with only the member functions from wxComboBox that
+// are necessary to support the MSWLogo commands.
+class CLogoComboBox : public wxWindow
 {
 public:
-    TMxComboBox(
-        TWindow                * Parent, 
-        const CClientRectangle & ClientRect
-        ) : 
-        TComboBox(
-            Parent, 
-            MYCOMBOBOX_ID, 
-            ClientRect.GetX(), 
-            ClientRect.GetY(), 
-            ClientRect.GetWidth(), 
-            ClientRect.GetHeight(),
-            CBS_SIMPLE, 
-            0)
+    CLogoComboBox(
+        wxWindow               * Parent, 
+        const CClientRectangle & ClientRectangle
+        )
     {
-        // set attributes
-        Attr.Style |= CBS_DISABLENOSCROLL;
-        Attr.Style ^= CBS_SORT;
+        HWND hwnd = CreateWindow(
+            WC_COMBOBOX, // window class
+            "",          // caption
+            CBS_SIMPLE |
+                CBS_AUTOHSCROLL |
+                CBS_DISABLENOSCROLL |
+                CBS_HASSTRINGS |
+                WS_VSCROLL |
+                WS_CHILD |
+                WS_OVERLAPPED |
+                WS_VISIBLE,
+            ClientRectangle.GetX(),
+            ClientRectangle.GetY(),
+            ClientRectangle.GetWidth(),
+            ClientRectangle.GetHeight(),
+            Parent != NULL ? static_cast<HWND>(Parent->GetHandle()) : NULL,
+            NULL,  // menu
+            NULL,  // module instance
+            NULL); // additional parameters
+        if (hwnd == NULL)
+        {
+            // TODO: raise a wxWidgets error
+            TraceOutput("Error in CLogoComboBox (%d)\n", GetLastError());
+        }
+
+        Reparent(Parent);
+        SetHWND(hwnd);
+        SubclassWin(hwnd);
+        AdoptAttributesFromHWND();
+
+        SetMswLogoCompatibleFont(this);
     }
+
+    const wxString GetValue() const
+    {
+        // Determine how long the value is.
+        int valueLength = ComboBox_GetTextLength(static_cast<HWND>(GetHandle()));
+
+        // Allocate space for the value.
+        wxString value;
+        wxChar * buffer = value.GetWriteBuf(valueLength + 1);
+
+        // Read the value into the allocated space
+        ComboBox_GetText(
+            static_cast<HWND>(GetHandle()),
+            buffer,
+            valueLength + 1);
+
+        // Put the string back into a usable state
+        value.wxString::UngetWriteBuf();
+
+        // Return the value
+        return value;
+    }
+
+    void SetValue(const wxString & NewValue)
+    {
+        int isOk = ComboBox_SetText(
+            static_cast<HWND>(GetHandle()),
+            NewValue.c_str());
+        if (!isOk)
+        {
+            // TODO: raise a wxWidgets error
+        }
+    }
+
+    void Delete(int IndexToDelete)
+    {
+        int totalItems = ComboBox_SetCurSel(
+            static_cast<HWND>(GetHandle()),
+            IndexToDelete);
+        if (totalItems == CB_ERR)
+        {
+            // TODO: raise a wxWidgets error
+        }
+    }
+
+    void Append(const wxString & NewValue)
+    {
+        int newIndex = ComboBox_AddString(
+            static_cast<HWND>(GetHandle()),
+            NewValue.c_str());
+        if (newIndex == CB_ERR || newIndex == CB_ERRSPACE)
+        {
+            // TODO: raise a wxWidgets error
+        }
+    }
+
+    void SetSelection(int IndexToSelect)
+    {
+        int status = ComboBox_SetCurSel(
+            static_cast<HWND>(GetHandle()),
+            IndexToSelect);
+        if (status == CB_ERR && IndexToSelect != -1)
+        {
+            // TODO: raise a wxWidgets error
+        }
+    }
+
+private:
+    DECLARE_NO_COPY_CLASS(CLogoComboBox);
 };
+
+#ifdef FMSLOGO_OWL
 
 class TMyStatic : public TStatic
 {
@@ -444,11 +545,11 @@ public:
 
     union
     {
-        class CLogoDialog    * Dialog;
+        CLogoDialog    * Dialog;
         //class TMyStatic      * TSmybox;
-        class CLogoListBox     * ListBox;
-        //class TMxComboBox    * TCmybox;
-        class CLogoButton    * Button;
+        CLogoListBox   * ListBox;
+        CLogoComboBox  * ComboBox;
+        CLogoButton    * Button;
         //class TMyScrollBar   * TSCmybox;
         //class TMyGroupBox    * TGmybox;
         //class TMyRadioButton * TRmybox;
@@ -482,7 +583,8 @@ wxWindow * CLogoWidget::GetWindow() const
     case WINDOWTYPE_ListBox:
         return ListBox;
 
-    //case WINDOWTYPE_ComboBox:    return TCmybox;
+    case WINDOWTYPE_ComboBox:
+        return ComboBox;
 
     case WINDOWTYPE_Button:
         return Button;
@@ -1277,8 +1379,6 @@ NODE *llistboxdeletestring(NODE *args)
     return Unbound;
 }
 
-#if 0 // TODO: implement the rest of the controls
-
 NODE *lcomboboxcreate(NODE *args)
 {
     // get args
@@ -1317,7 +1417,9 @@ NODE *lcomboboxcreate(NODE *args)
 
         child->m_Parent = parent->m_Key;
 
-        child->TCmybox = new TMxComboBox(parent->Dialog, clientrect);
+        child->ComboBox = new CLogoComboBox(
+            parent->Dialog,
+            clientrect);
     }
     else
     {
@@ -1326,14 +1428,10 @@ NODE *lcomboboxcreate(NODE *args)
 
         child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
 
-        child->TCmybox = new TMxComboBox(
+        child->ComboBox = new CLogoComboBox(
             CFmsLogo::GetMainFrame()->GetScreen(),
             clientrect);
     }
-
-    child->TCmybox->Create();
-
-    MyMessageScan();
 
     g_LogoWidgets.insert(child);
 
@@ -1371,15 +1469,10 @@ NODE *lcomboboxgettext(NODE *args)
     }
 
     // Get the text from the combobox
-    char stringname[MAX_BUFFER_SIZE];
-    if (combobox->TCmybox->GetText(stringname, MAX_BUFFER_SIZE) < 0)
-    {
-        // there was an error
-        return NIL;
-    }
+    const wxString & selection = combobox->ComboBox->GetValue();
 
     // parsing it turns it into a list
-    return parser(make_strnode(stringname), false);
+    return parser(make_strnode(selection.c_str()), false);
 }
 
 NODE *lcomboboxsettext(NODE *args)
@@ -1400,7 +1493,7 @@ NODE *lcomboboxsettext(NODE *args)
     }
 
     // set the editcontrol portion to the user specified text
-    combobox->TCmybox->SetText(stringname);
+    combobox->ComboBox->SetValue(stringname);
     return Unbound;
 }
 
@@ -1423,8 +1516,8 @@ NODE *lcomboboxaddstring(NODE *args)
     }
 
     // add string and reset selection
-    combobox->TCmybox->AddString(stringname);
-    combobox->TCmybox->SetSelIndex(0);
+    combobox->ComboBox->Append(stringname);
+    combobox->ComboBox->SetSelection(0);
     return Unbound;
 }
 
@@ -1445,10 +1538,12 @@ NODE *lcomboboxdeletestring(NODE *args)
     }
 
     // kill entry and reset index
-    combobox->TCmybox->DeleteString(index);
-    combobox->TCmybox->SetSelIndex(0);
+    combobox->ComboBox->Delete(index);
+    combobox->ComboBox->SetSelection(0);
     return Unbound;
 }
+
+#if 0 // TODO: implement the rest of the controls
 
 NODE *lscrollbarcreate(NODE *args)
 {
@@ -2261,7 +2356,7 @@ NODE *lquestionbox(NODE *args)
     const wxString & str = ::wxGetTextFromUser(
         body,
         banner,
-        "",
+        wxEmptyString,
         CFmsLogo::GetMainFrame());
 
     if (str.IsEmpty())
@@ -2308,7 +2403,7 @@ NODE *lselectbox(NODE *args)
     // routine that doesn't leave a blank space
     // where the question should be placed.
     int status = ::wxGetSingleChoiceIndex(
-        "",
+        wxEmptyString,
         banner,
         choices,
         CFmsLogo::GetMainFrame());
