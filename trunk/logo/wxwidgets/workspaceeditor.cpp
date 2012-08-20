@@ -14,6 +14,7 @@
 #include "fontutils.h"
 #include "fmslogo.h"
 #include "mainframe.h"
+#include "mainwind.h"
 #include "utils.h"
 #include "logocore.h"     // for ARRAYSIZE
 #include "wrksp.h"        // for bExpert
@@ -944,11 +945,9 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
     }
     else
     {
-#if 0 // TODO
-        // else execute callback for user callable editor
+        // else execute callback for WINDOWFILEEDIT
         callthing *callevent = callthing::CreateFunctionEvent(edit_editexit);
         calllists.insert(callevent);
-#endif
     }
 
     // Save the location and size of our window so we can
