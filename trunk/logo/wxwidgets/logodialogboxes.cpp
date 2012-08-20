@@ -27,6 +27,11 @@
 #include <wx/button.h>
 #include <wx/listbox.h>
 #include <wx/combobox.h>
+#include <wx/stattext.h>
+#include <wx/statbox.h>
+#include <wx/checkbox.h>
+#include <wx/radiobut.h>
+#include <wx/scrolbar.h>
 
 #include "fmslogo.h"
 #include "mainframe.h"
@@ -52,14 +57,14 @@ enum WINDOWTYPE
 {
     WINDOWTYPE_None,
     WINDOWTYPE_Window,
-    //WINDOWTYPE_Static,
+    WINDOWTYPE_Static,
     WINDOWTYPE_ListBox,
     WINDOWTYPE_ComboBox,
     WINDOWTYPE_Button,
-    //WINDOWTYPE_ScrollBar,
-    //WINDOWTYPE_GroupBox,
-    //WINDOWTYPE_RadioButton,
-    //WINDOWTYPE_CheckBox,
+    WINDOWTYPE_ScrollBar,
+    WINDOWTYPE_GroupBox,
+    WINDOWTYPE_RadioButton,
+    WINDOWTYPE_CheckBox,
     WINDOWTYPE_Dialog,
 };
 
@@ -146,7 +151,8 @@ public:
         wxWindow               * Parent,
         const wxString         & Caption,
         const CClientRectangle & ClientRectangle
-        ) : wxDialog(
+        ) :
+        wxDialog(
             Parent,
             wxID_ANY,
             Caption,
@@ -187,17 +193,26 @@ END_EVENT_TABLE()
 class CLogoListBox : public wxListBox
 {
 public:
-
     CLogoListBox(
         wxWindow               * Parent,
         const CClientRectangle & ClientRectangle
-        ) : wxListBox(
+        ) :
+        wxListBox(
             Parent,
             wxID_ANY,
             wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
-            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()))
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
+            0,
+            NULL,
+            wxLB_SINGLE | wxBORDER_SUNKEN)
     {
         SetMswLogoCompatibleFont(this);
+
+        // TODO: This gets the dialog box in DEMO to look pretty close,
+        // except for the border.  I'm not sure how to get this to behave
+        // exactly as before.
+        SetSize(wxSize(ClientRectangle.GetWidth() - 2, ClientRectangle.GetHeight() - 4));
+        SetPosition(wxPoint(ClientRectangle.GetX() + 1, ClientRectangle.GetY() + 1));
     }
 
 private:
@@ -243,7 +258,6 @@ public:
         if (hwnd == NULL)
         {
             // TODO: raise a wxWidgets error
-            TraceOutput("Error in CLogoComboBox (%d)\n", GetLastError());
         }
 
         Reparent(Parent);
@@ -285,6 +299,14 @@ public:
         {
             // TODO: raise a wxWidgets error
         }
+
+        // For compatibility with MSWLogo, also make a best
+        // effort to change the selected item to match the
+        // new text.
+        ComboBox_SelectString(
+            static_cast<HWND>(GetHandle()),
+            -1,  // search the entire list
+            NewValue.c_str());
     }
 
     void Delete(int IndexToDelete)
@@ -324,29 +346,27 @@ private:
     DECLARE_NO_COPY_CLASS(CLogoComboBox);
 };
 
-#ifdef FMSLOGO_OWL
-
-class TMyStatic : public TStatic
+class CLogoStaticText : public wxStaticText
 {
 public:
-    TMyStatic(
-        TWindow                * Parent,
-        const char             * Text, 
-        const CClientRectangle & ClientRect
-        ) : 
-        TStatic(
-            Parent, 
-            MYSTATIC_ID, 
-            Text, 
-            ClientRect.GetX(), 
-            ClientRect.GetY(), 
-            ClientRect.GetWidth(), 
-            ClientRect.GetHeight())
+    CLogoStaticText(
+        wxWindow               * Parent,
+        const wxString         & Text, 
+        const CClientRectangle & ClientRectangle
+        ) :
+        wxStaticText(
+            Parent,
+            wxID_ANY,
+            Text,
+            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()))
     {
+        SetMswLogoCompatibleFont(this);
     }
-};
 
-#endif
+private:
+    DECLARE_NO_COPY_CLASS(CLogoStaticText);
+};
 
 class CLogoButton : public wxButton
 {
@@ -357,7 +377,8 @@ public:
         const wxString         & Caption,
         const CClientRectangle & ClientRectangle,
         const char             * Callback
-        ) : wxButton(
+        ) :
+        wxButton(
             Parent,
             wxID_ANY,
             Caption,
@@ -391,140 +412,215 @@ void CLogoButton::OnClick(wxCommandEvent& Event)
     checkqueue();
 }
 
-#if 0 // TODO
-
-class TMyScrollBar : public TScrollBar
+class CLogoScrollBar : public wxScrollBar
 {
 public:
-    char callback[MAX_BUFFER_SIZE];
-
-    TMyScrollBar(
-        TWindow                * Parent, 
-        const CClientRectangle & ClientRect,
-        bool                     IsHScrollBar
-        ) : 
-        TScrollBar(
+    CLogoScrollBar(
+        wxWindow               * Parent,
+        const CClientRectangle & ClientRectangle,
+        bool                     IsHScrollBar,
+        const char             * Callback
+        ) :
+        wxScrollBar(
             Parent, 
-            MYSCROLLBAR_ID,
-            ClientRect.GetX(),
-            ClientRect.GetY(),
-            IsHScrollBar  ? ClientRect.GetWidth()  : 0,
-            !IsHScrollBar ? ClientRect.GetHeight() : 0,
-            IsHScrollBar),
-        rangeoffset(0)
+            wxID_ANY,
+            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
+            wxSize(
+                 IsHScrollBar  ? ClientRectangle.GetWidth()  : GetSystemScrollBarWidth(),
+                 !IsHScrollBar ? ClientRectangle.GetHeight() : GetSystemScrollBarHeight()),
+            IsHScrollBar ? wxSB_HORIZONTAL : wxSB_VERTICAL),
+        m_IsHorizontal(IsHScrollBar),
+        m_RangeOffset(0)
     {
+        strcpy(m_Callback, Callback);
+        SetMswLogoCompatibleFont(this);
     }
 
     int  Get();
-    void Set(int low, int high, int position);
+    void Set(int Low, int High, int Position);
 
-protected:
-    void SetPosition(int, bool redraw = true);
+    void SetPosition(int ThumbPosition);
 
 private:
-    int  rangeoffset;
+    // Event handlers
+    void OnScroll(wxScrollEvent& Event);
+
+    // Private helper functions
+    void RunCallback();
+
+    static int GetSystemMetric(int MetricId, int DefaultValue);
+    static int GetSystemScrollBarWidth();
+    static int GetSystemScrollBarHeight();
+    static int GetSystemScrollThumbWidth();
+    static int GetSystemScrollThumbHeight();
+
+    // private member variables
+    const int m_IsHorizontal;
+    int       m_RangeOffset;
+    char      m_Callback[MAX_BUFFER_SIZE];
+
+    DECLARE_EVENT_TABLE();
+    DECLARE_NO_COPY_CLASS(CLogoScrollBar);
 };
 
-void TMyScrollBar::SetPosition(int thumbpos, bool redraw)
+int CLogoScrollBar::GetSystemMetric(int MetricId, int DefaultValue)
 {
-    TScrollBar::SetPosition(thumbpos, redraw);
+    int value = GetSystemMetrics(MetricId);
+    if (value == 0)
+    {
+        // GetSystemMetrics failed.  Use a reasonable default.
+        value = DefaultValue;
+    }
 
-    callthing *callevent = callthing::CreateNoYieldFunctionEvent(callback);
+    return value;
+}
+
+int CLogoScrollBar::GetSystemScrollBarHeight()
+{
+    return GetSystemMetric(SM_CYVSCROLL, 16);
+}
+
+int CLogoScrollBar::GetSystemScrollBarWidth()
+{
+    return GetSystemMetric(SM_CYHSCROLL, 16);
+}
+
+int CLogoScrollBar::GetSystemScrollThumbHeight()
+{
+    return GetSystemMetric(SM_CYVTHUMB, 16);
+}
+
+int CLogoScrollBar::GetSystemScrollThumbWidth()
+{
+    return GetSystemMetric(SM_CXHTHUMB, 16);
+}
+
+void CLogoScrollBar::RunCallback()
+{
+    callthing *callevent = callthing::CreateNoYieldFunctionEvent(m_Callback);
     calllists.insert(callevent);
     checkqueue();
 }
 
-void TMyScrollBar::Set(int low, int high, int position)
+void CLogoScrollBar::SetPosition(int ThumbPosition)
 {
-    if (low < 0)
-    {
-        // if the low value is negative, then shift the 
-        // range so that we keep it positive.
-        // The OWL class cannot handle a negative low position.
-        rangeoffset = low;
+    SetThumbPosition(ThumbPosition);
 
-        low       = 0;
-        high     -= rangeoffset;
-        position -= rangeoffset;
-    }
-    else
-    {
-        rangeoffset = 0;
-    }
-
-    SetRange(low, high);
-    SetPosition(position);
+    RunCallback();
 }
 
-int TMyScrollBar::Get()
+void CLogoScrollBar::Set(int Low, int High, int Position)
 {
-    return GetPosition() + rangeoffset;
+    // Update the scrollbar
+    m_RangeOffset = Low;
+
+    int scrollThumbWidth = m_IsHorizontal ?
+        GetSystemScrollThumbWidth() :
+        GetSystemScrollThumbHeight();
+
+    SetScrollbar(
+        Position - Low,                // position
+        scrollThumbWidth,              // width of the thumb
+        High - Low + scrollThumbWidth, // range
+        1);                            // granularity of thumb position
+
+    // Notify Logo of the update
+    RunCallback();
 }
 
-class TMyGroupBox : public TGroupBox
+int CLogoScrollBar::Get()
+{
+    return GetThumbPosition() + m_RangeOffset;
+}
+
+void CLogoScrollBar::OnScroll(wxScrollEvent& Event)
+{
+    // Notify Logo of the update
+    RunCallback();
+
+    // continue with the default processing
+    Event.Skip();
+}
+
+BEGIN_EVENT_TABLE(CLogoScrollBar, wxScrollBar)
+    EVT_COMMAND_SCROLL(wxID_ANY, CLogoScrollBar::OnScroll)
+END_EVENT_TABLE()
+
+
+class CLogoGroupBox : public wxStaticBox
 {
 public:
-    TMyGroupBox(
-        TWindow                * Parent, 
-        const CClientRectangle & ClientRect
-        ) : 
-        TGroupBox(
-            Parent, 
-            MYGROUPBOX_ID, 
-            NULL, 
-            ClientRect.GetX(), 
-            ClientRect.GetY(), 
-            ClientRect.GetWidth(), 
-            ClientRect.GetHeight())
+    CLogoGroupBox(
+        wxWindow                * Parent, 
+        const CClientRectangle  & ClientRectangle
+        ) :
+        wxStaticBox(
+            Parent,
+            wxID_ANY,
+            wxEmptyString,
+            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()))
     {
+        // Even though we don't show any text, the font size affects
+        // the location of the lines which surround the groupbox,
+        // so we must match the font used by MSWLogo.
+        SetMswLogoCompatibleFont(this);
     }
+
+private:
+    DECLARE_NO_COPY_CLASS(CLogoGroupBox);
 };
 
-class TMyRadioButton : public TRadioButton
+
+class CLogoRadioButton : public wxRadioButton
 {
 public:
 
-    TMyRadioButton(
-        TWindow                * Parent, 
+    CLogoRadioButton(
+        wxWindow               * Parent, 
         const char             * Title, 
-        const CClientRectangle & ClientRect,
-        TGroupBox              * Group
+        const CClientRectangle & ClientRectangle,
+        CLogoGroupBox          * Group
         ) : 
-        TRadioButton(
+        wxRadioButton(
             Parent, 
-            MYRADIOBUTTON_ID, 
-            Title, 
-            ClientRect.GetX(), 
-            ClientRect.GetY(), 
-            ClientRect.GetWidth(), 
-            ClientRect.GetHeight(),
-            Group)
-    {
-    }
-};
-
-class TMyCheckBox : public TCheckBox
-{
-public:
-    TMyCheckBox(
-        TWindow                * Parent, 
-        const char             * Title, 
-        const CClientRectangle & ClientRect,
-        TGroupBox              * Group
-        ) : TCheckBox(
-            Parent, 
-            MYCHECKBOX_ID, 
+            wxID_ANY, 
             Title,
-            ClientRect.GetX(), 
-            ClientRect.GetY(), 
-            ClientRect.GetWidth(), 
-            ClientRect.GetHeight(),
-            Group)
+            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()))
     {
+        // TODO: Figure out how to use Group -- probably with wxRB_GROUP
+        SetMswLogoCompatibleFont(this);
     }
+
+private:
+    DECLARE_NO_COPY_CLASS(CLogoRadioButton);
 };
 
-#endif
+class CLogoCheckBox : public wxCheckBox
+{
+public:
+    CLogoCheckBox(
+        wxWindow               * Parent,
+        const wxString         & Title,
+        const CClientRectangle & ClientRectangle,
+        CLogoGroupBox          * Group
+        ) :
+        wxCheckBox(
+            Parent,
+            wxID_ANY,
+            Title,
+            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()))
+    {
+        // TODO: Figure out how to use Group
+        SetMswLogoCompatibleFont(this);
+    }
+
+private:
+    DECLARE_NO_COPY_CLASS(CLogoCheckBox);
+};
+
 
 
 // class structure for storing information about user windows.
@@ -545,15 +641,15 @@ public:
 
     union
     {
-        CLogoDialog    * Dialog;
-        //class TMyStatic      * TSmybox;
-        CLogoListBox   * ListBox;
-        CLogoComboBox  * ComboBox;
-        CLogoButton    * Button;
-        //class TMyScrollBar   * TSCmybox;
-        //class TMyGroupBox    * TGmybox;
-        //class TMyRadioButton * TRmybox;
-        //class TMyCheckBox    * TCBmybox;
+        CLogoDialog      * Dialog;
+        CLogoStaticText  * StaticText;
+        CLogoListBox     * ListBox;
+        CLogoComboBox    * ComboBox;
+        CLogoButton      * Button;
+        CLogoScrollBar   * ScrollBar;
+        CLogoGroupBox    * GroupBox;
+        CLogoRadioButton * RadioButton;
+        CLogoCheckBox    * CheckBox;
     };
 
    CLogoWidget(WINDOWTYPE Type, const char * Name)
@@ -578,7 +674,8 @@ wxWindow * CLogoWidget::GetWindow() const
     case WINDOWTYPE_Dialog:
         return Dialog;
 
-    //case WINDOWTYPE_Static:      return TSmybox;
+    case WINDOWTYPE_Static:
+        return StaticText;
 
     case WINDOWTYPE_ListBox:
         return ListBox;
@@ -589,10 +686,17 @@ wxWindow * CLogoWidget::GetWindow() const
     case WINDOWTYPE_Button:
         return Button;
 
-    //case WINDOWTYPE_ScrollBar:   return TSCmybox;
-    //case WINDOWTYPE_GroupBox:    return TGmybox;
-    //case WINDOWTYPE_RadioButton: return TRmybox;
-    //case WINDOWTYPE_CheckBox:    return TCBmybox;
+    case WINDOWTYPE_ScrollBar:
+        return ScrollBar;
+
+    case WINDOWTYPE_GroupBox:
+        return GroupBox;
+
+    case WINDOWTYPE_RadioButton:
+        return RadioButton;
+
+    case WINDOWTYPE_CheckBox:
+        return CheckBox;
 
     case WINDOWTYPE_None:
         assert(!"can't happen");
@@ -1543,8 +1647,6 @@ NODE *lcomboboxdeletestring(NODE *args)
     return Unbound;
 }
 
-#if 0 // TODO: implement the rest of the controls
-
 NODE *lscrollbarcreate(NODE *args)
 {
     NODE * nextArg = args;
@@ -1586,10 +1688,11 @@ NODE *lscrollbarcreate(NODE *args)
 
         child->m_Parent = parent->m_Key;
 
-        child->TSCmybox = new TMyScrollBar(
+        child->ScrollBar = new CLogoScrollBar(
             parent->Dialog, 
             clientrect,
-            isHorizontalScrollbar);
+            isHorizontalScrollbar,
+            callback);
     }
     else
     {
@@ -1597,17 +1700,12 @@ NODE *lscrollbarcreate(NODE *args)
 
         child->m_Parent = (char*) CFmsLogo::GetMainFrame()->GetScreen();
 
-        child->TSCmybox = new TMyScrollBar(
+        child->ScrollBar = new CLogoScrollBar(
             CFmsLogo::GetMainFrame()->GetScreen(),
             clientrect,
-            isHorizontalScrollbar);
+            isHorizontalScrollbar,
+            callback);
     }
-
-    strcpy(child->TSCmybox->callback, callback);
-
-    child->TSCmybox->Create();
-
-    MyMessageScan();
 
     g_LogoWidgets.insert(child);
 
@@ -1654,7 +1752,7 @@ NODE *lscrollbarset(NODE *args)
         return Unbound;
     }
 
-    scrollbar->TSCmybox->Set(lo, hi, pos);
+    scrollbar->ScrollBar->Set(lo, hi, pos);
     return Unbound;
 }
 
@@ -1677,7 +1775,7 @@ NODE *lscrollbarget(NODE *args)
         return Unbound;
     }
 
-    int pos = scrollbar->TSCmybox->Get();
+    int pos = scrollbar->ScrollBar->Get();
     return make_intnode(pos);
 }
 
@@ -1724,8 +1822,8 @@ NODE *lstaticcreate(NODE *args)
     CLogoWidget * child = new CLogoWidget(WINDOWTYPE_Static, childname);
 
     CLogoWidget *parent = g_LogoWidgets.get(
-        parentname, 
-        WINDOWTYPE_Window, 
+        parentname,
+        WINDOWTYPE_Window,
         WINDOWTYPE_Dialog);
     if (parent != NULL)
     {
@@ -1733,7 +1831,7 @@ NODE *lstaticcreate(NODE *args)
 
         child->m_Parent = parent->m_Key;
 
-        child->TSmybox = new TMyStatic(
+        child->StaticText = new CLogoStaticText(
             parent->Dialog, 
             titlename, 
             clientrect);
@@ -1744,15 +1842,11 @@ NODE *lstaticcreate(NODE *args)
 
         child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
             
-        child->TSmybox = new TMyStatic(
+        child->StaticText = new CLogoStaticText(
             CFmsLogo::GetMainFrame()->GetScreen(),
             titlename,
             clientrect);
     }
-
-    child->TSmybox->Create();
-
-    MyMessageScan();
 
     g_LogoWidgets.insert(child);
 
@@ -1779,7 +1873,7 @@ NODE *lstaticupdate(NODE *args)
         return Unbound;
     }
 
-    temp->TSmybox->SetText(titlename);
+    temp->StaticText->SetLabel(titlename);
     return Unbound;
 }
 
@@ -1788,7 +1882,6 @@ NODE *lstaticdelete(NODE *args)
     return WindowDeleteHelper(args, WINDOWTYPE_Static);
 }
 
-#endif
 
 NODE *lbuttoncreate(NODE *args)
 {
@@ -1907,8 +2000,6 @@ NODE *lbuttondelete(NODE *args)
     return WindowDeleteHelper(args, WINDOWTYPE_Button);
 }
 
-#if 0
-
 NODE *lgroupboxcreate(NODE *args)
 {
     NODE * nextArg = args;
@@ -1947,7 +2038,7 @@ NODE *lgroupboxcreate(NODE *args)
 
         child->m_Parent = parent->m_Key;
 
-        child->TGmybox = new TMyGroupBox(
+        child->GroupBox = new CLogoGroupBox(
             parent->Dialog, 
             clientrect);
     }
@@ -1957,14 +2048,10 @@ NODE *lgroupboxcreate(NODE *args)
 
         child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
             
-        child->TGmybox = new TMyGroupBox(
+        child->GroupBox = new CLogoGroupBox(
             CFmsLogo::GetMainFrame()->GetScreen(), 
             clientrect);
     }
-
-    child->TGmybox->Create();
-
-    MyMessageScan();
 
     g_LogoWidgets.insert(child);
 
@@ -2036,11 +2123,11 @@ NODE *lradiobuttoncreate(NODE *args)
 
         child->m_Parent = parent->m_Key;
 
-        child->TRmybox = new TMyRadioButton(
+        child->RadioButton = new CLogoRadioButton(
             parent->Dialog, 
             titlename, 
             clientrect,
-            group->TGmybox);
+            group->GroupBox);
     }
     else
     {
@@ -2048,16 +2135,12 @@ NODE *lradiobuttoncreate(NODE *args)
 
         child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
 
-        child->TRmybox = new TMyRadioButton(
+        child->RadioButton = new CLogoRadioButton(
             CFmsLogo::GetMainFrame()->GetScreen(),
             titlename,
             clientrect,
-            group->TGmybox);
+            group->GroupBox);
     }
-
-    child->TRmybox->Create();
-
-    MyMessageScan();
 
     g_LogoWidgets.insert(child);
 
@@ -2097,8 +2180,8 @@ NODE *lradiobuttonget(NODE *args)
         return Unbound;
     }
 
-    uint check = radiobutton->TRmybox->GetCheck();
-    return true_or_false(BF_CHECKED == check);
+    bool isPressed = radiobutton->RadioButton->GetValue();
+    return true_or_false(isPressed);
 }
 
 NODE *lradiobuttonset(NODE *args)
@@ -2106,7 +2189,7 @@ NODE *lradiobuttonset(NODE *args)
     char radiobuttonname[MAX_BUFFER_SIZE];
     cnv_strnode_string(radiobuttonname, args);
 
-    bool pos = boolean_arg(cdr(args));
+    bool isPressed = boolean_arg(cdr(args));
 
     if (stopping_flag == THROWING)
     {
@@ -2121,14 +2204,7 @@ NODE *lradiobuttonset(NODE *args)
         return Unbound;
     }
 
-    if (pos)
-    {
-        radiobutton->TRmybox->Check();
-    }
-    else
-    {
-        radiobutton->TRmybox->Uncheck();
-    }
+    radiobutton->RadioButton->SetValue(isPressed);
 
     return Unbound;
 }
@@ -2188,11 +2264,11 @@ NODE *lcheckboxcreate(NODE *args)
 
         child->m_Parent = parent->m_Key;
 
-        child->TCBmybox = new TMyCheckBox(
+        child->CheckBox = new CLogoCheckBox(
             parent->Dialog, 
             titlename, 
             clientrect,
-            group->TGmybox);
+            group->GroupBox);
     }
     else
     {
@@ -2200,16 +2276,12 @@ NODE *lcheckboxcreate(NODE *args)
 
         child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
 
-        child->TCBmybox = new TMyCheckBox(
+        child->CheckBox = new CLogoCheckBox(
             CFmsLogo::GetMainFrame()->GetScreen(),
             titlename,
             clientrect,
-            group->TGmybox);
+            group->GroupBox);
     }
-
-    child->TCBmybox->Create();
-
-    MyMessageScan();
 
     g_LogoWidgets.insert(child);
 
@@ -2249,8 +2321,8 @@ NODE *lcheckboxget(NODE *args)
         return Unbound;
     }
 
-    uint check = checkbox->TCBmybox->GetCheck();
-    return true_or_false(BF_CHECKED == check);
+    bool isChecked = checkbox->CheckBox->IsChecked();
+    return true_or_false(isChecked);
 }
 
 NODE *lcheckboxset(NODE *args)
@@ -2258,7 +2330,7 @@ NODE *lcheckboxset(NODE *args)
     char checkboxname[MAX_BUFFER_SIZE];
     cnv_strnode_string(checkboxname, args);
 
-    int pos = boolean_arg(cdr(args));
+    bool check = boolean_arg(cdr(args));
 
     if (stopping_flag == THROWING)
     {
@@ -2273,19 +2345,10 @@ NODE *lcheckboxset(NODE *args)
         return Unbound;
     }
 
-    if (pos)
-    {
-        checkbox->TCBmybox->Check();
-    }
-    else
-    {
-        checkbox->TCBmybox->Uncheck();
-    }
+    checkbox->CheckBox->SetValue(check);
 
     return Unbound;
 }
-
-#endif 
 
 bool CheckOnScreenControls()
 {
