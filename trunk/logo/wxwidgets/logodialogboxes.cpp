@@ -68,34 +68,18 @@ enum WINDOWTYPE
     WINDOWTYPE_Dialog,
 };
 
-// TODO: Derive from wxRect
-class CClientRectangle
+class CClientRectangle : public wxRect
 {
 public:
     CClientRectangle();
 
     void InitializeFromInput(NODE * & Args);
 
-    int GetX() const {return m_X;}
-    int GetY() const {return m_Y;}
-    int GetWidth() const {return m_Width;}
-    int GetHeight() const {return m_Height;}
-
     void ConvertToDialogCoordinates();
     void ConvertToScreenCoordinates();
-
-private:
-    int m_X;
-    int m_Y;
-    int m_Width;
-    int m_Height;
 };
 
-CClientRectangle::CClientRectangle() : 
-    m_X(0),
-    m_Y(0),
-    m_Width(0), 
-    m_Height(0)
+CClientRectangle::CClientRectangle()
 {
 }
 
@@ -103,16 +87,16 @@ void CClientRectangle::InitializeFromInput(NODE * & Args)
 {
     NODE * nextinput = Args;
 
-    m_X = int_arg(nextinput);
+    SetX(int_arg(nextinput));
     nextinput = cdr(nextinput);
 
-    m_Y = int_arg(nextinput);
+    SetY(int_arg(nextinput));
     nextinput = cdr(nextinput);
 
-    m_Width = getint(nonnegative_int_arg(nextinput));
+    SetWidth(getint(nonnegative_int_arg(nextinput)));
     nextinput = cdr(nextinput);
 
-    m_Height = getint(nonnegative_int_arg(nextinput));
+    SetHeight(getint(nonnegative_int_arg(nextinput)));
     nextinput = cdr(nextinput);
    
     Args = nextinput;
@@ -120,17 +104,17 @@ void CClientRectangle::InitializeFromInput(NODE * & Args)
 
 void CClientRectangle::ConvertToDialogCoordinates()
 {
-    m_X = (m_X * BaseUnitsx) / 4;
-    m_Y = (m_Y * BaseUnitsy) / 8;
+    SetX((GetX() * BaseUnitsx) / 4);
+    SetY((GetY() * BaseUnitsy) / 8);
 
-    m_Width  = (m_Width  * BaseUnitsx) / 4;
-    m_Height = (m_Height * BaseUnitsy) / 8;
+    SetWidth((GetWidth() * BaseUnitsx) / 4);
+    SetHeight((GetHeight() * BaseUnitsy) / 8);
 }
 
 void CClientRectangle::ConvertToScreenCoordinates()
 {
-    m_X =  m_X - GetScreenHorizontalScrollPosition() + xoffset;
-    m_Y = -m_Y - GetScreenVerticalScrollPosition()   + yoffset;
+    SetX( GetX() - GetScreenHorizontalScrollPosition() + xoffset);
+    SetY(-GetY() - GetScreenVerticalScrollPosition()   + yoffset);
 }
 
 static void SetMswLogoCompatibleFont(wxWindow * Window)
