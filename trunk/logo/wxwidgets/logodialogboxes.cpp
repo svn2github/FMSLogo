@@ -180,26 +180,49 @@ END_EVENT_TABLE()
 class CLogoListBox : public wxListBox
 {
 public:
+
+    // In MSWLogo, the list boxes rounded down the height so that
+    // they would never show a partial item in the list.  I wasn't
+    // able to figure out to change the style of a wxListBox so that
+    // it didn't include LBS_NOINTEGRALHEIGHT, so instead I create
+    // the window using CreateWindowEx().
     CLogoListBox(
         wxWindow               * Parent,
         const CClientRectangle & ClientRectangle
-        ) :
-        wxListBox(
-            Parent,
-            wxID_ANY,
-            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
-            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
-            0,
-            NULL,
-            wxLB_SINGLE | wxBORDER_SUNKEN)
+        )
     {
-        SetMswLogoCompatibleFont(this);
+        HWND hwnd = ::CreateWindowEx(
+            WS_EX_CLIENTEDGE | WS_EX_LEFT, // extended style
+            WC_LISTBOX,                    // window class
+            "",                            // caption
+            LBS_HASSTRINGS |
+                LBS_NOTIFY |
+                WS_GROUP |
+                WS_TABSTOP |
+                WS_BORDER |
+                WS_CHILD |
+                WS_VSCROLL |
+                WS_OVERLAPPED |
+                WS_VISIBLE,
+            ClientRectangle.GetX(),
+            ClientRectangle.GetY(),
+            ClientRectangle.GetWidth(),
+            ClientRectangle.GetHeight(),
+            Parent != NULL ? static_cast<HWND>(Parent->GetHandle()) : NULL,
+            NULL,  // menu
+            NULL,  // module instance
+            NULL); // additional parameters
+        if (hwnd == NULL)
+        {
+            // TODO: raise a wxWidgets error
+        }
 
-        // TODO: This gets the dialog box in DEMO to look pretty close,
-        // except for the border.  I'm not sure how to get this to behave
-        // exactly as before.
-        SetSize(wxSize(ClientRectangle.GetWidth() - 2, ClientRectangle.GetHeight() - 4));
-        SetPosition(wxPoint(ClientRectangle.GetX() + 1, ClientRectangle.GetY() + 1));
+        Reparent(Parent);
+        SetHWND(hwnd);
+        SubclassWin(hwnd);
+        AdoptAttributesFromHWND();
+
+        SetMswLogoCompatibleFont(this);
     }
 
 private:
