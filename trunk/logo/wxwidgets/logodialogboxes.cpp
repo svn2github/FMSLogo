@@ -145,37 +145,13 @@ public:
             Caption,
             wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
             wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
-            wxCAPTION) //DS_MODALFRAME | WS_POPUP
+            wxCAPTION)
     {
     }
 
 private:
-
-    // Event handlers
-    void OnOkButton(wxCommandEvent& Event);
-    void OnCancelButton(wxCommandEvent& Event);
-
-    DECLARE_EVENT_TABLE();
     DECLARE_NO_COPY_CLASS(CLogoDialog);
 };
-
-void CLogoDialog::OnOkButton(wxCommandEvent& Event)
-{
-}
-
-void CLogoDialog::OnCancelButton(wxCommandEvent& Event)
-{
-}
-
-// REVISIT: This was really supposed to prevent closing the window
-// from normal UI events, like pressing the "X" on the system menu.
-// However, since the system menu doesn't show up, I'm not sure how
-// useful this is.  Also, in the OWL implementation, Alt+F4 would close
-// the window and I'm not sure if that's a good thing or not.
-BEGIN_EVENT_TABLE(CLogoDialog, wxDialog)
-    EVT_BUTTON(wxID_OK,     CLogoDialog::OnOkButton)
-    EVT_BUTTON(wxID_CANCEL, CLogoDialog::OnCancelButton)
-END_EVENT_TABLE()
 
 class CLogoListBox : public wxListBox
 {
@@ -740,7 +716,7 @@ wxWindow * CLogoWidget::GetWindow() const
 
 bool CLogoWidget::IsRootWindow() const
 {
-    if (m_Parent == NULL)
+    if (m_Parent == (char*)CFmsLogo::GetMainFrame())
     {
         // This is a top-level WINDOW or DIALOG.
         return true;
@@ -999,9 +975,6 @@ void CLogoWidgetList::clear()
     {
         CLogoWidget *ll = l;
         l = l->m_Next;
-        // REVISIT: is it okay to destroy every window, or does
-        // this destroy some windows (like children windows) twice.
-        ll->GetWindow()->Destroy();
         delete ll;
     } while (l != last);
 
@@ -1137,14 +1110,8 @@ NODE *lwindowcreate(NODE *args)
     }
     else
     {
-        // The parent doesn't exist.  Use the desktop as the parent.
-        // REVISIT: The OWL implementation uses the screen window as the parent.
-        // This might be okay in wxWidgets as long as SetExtraStyle(wxWS_EX_BLOCK_EVENTS)
-        // is called to block suprious events from being sent to the main window.
-        // This would make eliminate the need to call uninitilaize_windows() from
-        // CMainFrame::OnClose and would keep the wxWidgets implementation closer to
-        // the OWL implementation.
-        wxParent = NULL;
+        // The parent doesn't exist.  Use the top-level window as the parent.
+        wxParent = CFmsLogo::GetMainFrame();
     }
 
     child->Dialog = new CLogoDialog(
