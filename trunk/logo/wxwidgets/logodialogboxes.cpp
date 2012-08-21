@@ -111,6 +111,9 @@ void CClientRectangle::ConvertToDialogCoordinates()
     SetHeight((GetHeight() * BaseUnitsy) / 8);
 }
 
+// Converts from logo coordinates (where 0,0 is the center of the logical screen
+// and may be scrolled off-center) to coordinates within the client area of the
+// screen.
 void CClientRectangle::ConvertToScreenCoordinates()
 {
     SetX( GetX() - GetScreenHorizontalScrollPosition() + xoffset);
@@ -543,7 +546,8 @@ public:
             wxID_ANY,
             wxEmptyString,
             wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
-            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()))
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight())),
+        m_FirstChild(NULL)
     {
         // Even though we don't show any text, the font size affects
         // the location of the lines which surround the groupbox,
@@ -551,10 +555,29 @@ public:
         SetMswLogoCompatibleFont(this);
     }
 
+    bool IsEmpty() const;
+    void Add(wxWindow * Window);
+
 private:
+
+    // member variables
+    wxWindow * m_FirstChild;
+
     DECLARE_NO_COPY_CLASS(CLogoGroupBox);
 };
 
+bool CLogoGroupBox::IsEmpty() const
+{
+    return m_FirstChild == NULL;
+}
+
+void CLogoGroupBox::Add(wxWindow * Window)
+{
+    if (m_FirstChild == NULL)
+    {
+        m_FirstChild = Window;
+    }
+}
 
 class CLogoRadioButton : public wxRadioButton
 {
@@ -565,15 +588,16 @@ public:
         const char             * Title, 
         const CClientRectangle & ClientRectangle,
         CLogoGroupBox          * Group
-        ) : 
+        ) :
         wxRadioButton(
-            Parent, 
-            wxID_ANY, 
+            Parent,
+            wxID_ANY,
             Title,
             wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
-            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()))
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
+            Group->IsEmpty() ? wxRB_GROUP : 0)
     {
-        // TODO: Figure out how to use Group -- probably with wxRB_GROUP
+        Group->Add(this);
         SetMswLogoCompatibleFont(this);
     }
 
@@ -767,7 +791,7 @@ void CLogoWidgetList::insert(CLogoWidget * NewNode)
 // returns the element whose key is "key"
 CLogoWidget * CLogoWidgetList::get(const char *Key)
 {
-    if (last == NULL) 
+    if (last == NULL)
     {
         return NULL;
     }
@@ -793,7 +817,7 @@ CLogoWidget * CLogoWidgetList::get(const char *Key, WINDOWTYPE Type)
     if (item != NULL)
     {
         // the window exists
-        if (item->m_Type == Type) 
+        if (item->m_Type == Type)
         {
             // the window has the correct type
             return item;
@@ -847,7 +871,6 @@ const char *CLogoWidgetList::getfirstchild(const char * Key)
 // deletes the link whose key is "Key" and any children of that link.
 void CLogoWidgetList::zap(const char * Key)
 {
-
     if (last == NULL) 
     {
         return;
@@ -944,7 +967,7 @@ void CLogoWidgetList::clear()
 {
     CLogoWidget *l = last;
 
-    if (l == NULL) 
+    if (l == NULL)
     {
         return;
     }
@@ -1009,7 +1032,7 @@ bool CLogoWidgetList::OnScreenControlsExist()
 {
     CLogoWidget *l = last;
 
-    if (l == NULL) 
+    if (l == NULL)
     {
         return false;
     }
@@ -1057,7 +1080,7 @@ NODE *lwindowcreate(NODE *args)
     {
         cnv_strnode_string(callback, nextArg);
     }
-    else 
+    else
     {
         callback[0] = '\0';
     }
