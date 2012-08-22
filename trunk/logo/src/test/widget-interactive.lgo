@@ -11,9 +11,9 @@ TO MisOrderedGroups
   WINDOWCREATE "desktop "misorderedgroups [Misordered Groups] 120 120 230 100 []
 
   STATICCREATE "misorderedgroups GENSYM [
-        This window has two sets of radio buttons that belong
-        to separate groups, but whose GROUPBOXCREATE calls
-        are both made before any RADIOBUTTONCREATE.
+    This window has two sets of radio buttons that belong
+    to separate groups, but whose GROUPBOXCREATE calls
+    are both made before any RADIOBUTTONCREATE.
   ] 5 5 220 300
 
   localmake "LeftColumnX   10
@@ -85,14 +85,14 @@ TO ModalDialogBox.AddWidgets
   CHECKBOXCREATE "ModalDialogBox "dlggroup2 GENSYM [Check A] 155 55 80 16
   CHECKBOXCREATE "ModalDialogBox "dlggroup2 GENSYM [Check B] 155 70 80 16
 
-  STATICCREATE      "ModalDialogBox "dlgverticalstatic [] 0 5 100 20
+  STATICCREATE      "ModalDialogBox "dlgverticalstatic [] 0 5 50 10
   SCROLLBARCREATE   "ModalDialogBox "dlgverticalscroll 15 20 0 100 [
      STATICUPDATE "dlgverticalstatic (word "-30, SCROLLBARGET "dlgverticalscroll ", "50)
   ]
   SCROLLBARSET      "dlgverticalscroll -30 50 -20
 
-  STATICCREATE      "ModalDialogBox "dlghorizontalstatic [] 5 125 180 20
-  SCROLLBARCREATE   "ModalDialogBox "dlghorizontalscroll 5 135 120 0 [
+  STATICCREATE      "ModalDialogBox "dlghorizontalstatic [] 5 125 50 18
+  SCROLLBARCREATE   "ModalDialogBox "dlghorizontalscroll 55 125 120 0 [
      STATICUPDATE "dlghorizontalstatic (word "100, SCROLLBARGET "dlghorizontalscroll ", "1000)
   ]
   SCROLLBARSET      "dlghorizontalscroll 100 1000 0
@@ -108,6 +108,8 @@ TO ModalDialogBox.AddWidgets
   COMBOBOXADDSTRING "dlgscreencombobox [ComboBox Item #2]
   COMBOBOXADDSTRING "dlgscreencombobox [ComboBox Item #3]
 
+  STATICCREATE "ModalDialogBox GENSYM [This has no height and should be hidden] 0 5 200 0
+
   BUTTONCREATE "ModalDialogBox GENSYM "OK 210 120 40 18 [DIALOGDELETE "ModalDialogBox]
 
 END
@@ -115,6 +117,64 @@ END
 TO ModalDialogBox
 
   DIALOGCREATE "desktop "ModalDialogBox [Modal Dialog Box With All Widgets] 200 200 260 160 [ModalDialogBox.AddWidgets]
+
+END
+
+TO DeleteAndCreateDialogFromCallback.Callback
+
+  STATICCREATE "testdialog GENSYM [
+     This test deletes, then recreate a dialog box from the callback.
+     This is the dialog that is deleted.  You should not see it.
+  ] 5 5 110 110
+
+  DIALOGDELETE "testdialog
+
+  DIALOGCREATE "root "testdialog [Inner Dialog] 100 100 120 120 [
+
+     STATICCREATE "testdialog GENSYM [
+        This is the inner dialog box that gets created after another
+        one of the same name is deleted.
+        You should only see it once.
+     ] 5 5 110 70
+     buttoncreate "testdialog "button [OK] 60 80 50 16 [DIALOGDELETE "testdialog]
+  ]
+End
+
+TO DeleteAndCreateDialogFromCallback
+
+  ; create, delete, and create a dialog from the callback
+  DIALOGCREATE "root "testdialog [Outer Dialog] 0 0 120 120 [ 
+     DeleteAndCreateDialogFromCallback.Callback
+  ]
+
+END
+
+TO DeleteAndCreateWindowFromCallback.Callback
+
+  STATICCREATE "testwindow GENSYM [
+     This test deletes, then recreate a dialog box from the callback.
+     This is the dialog that is deleted.  You should not see it.
+  ] 5 5 110 110
+
+  WINDOWDELETE "testwindow
+
+  WINDOWCREATE "root "testwindow [Inner Window] 100 100 120 120 [
+
+     STATICCREATE "testwindow GENSYM [
+        This is the inner dialog box that gets created after another
+        one of the same name is deleted.
+        You should only see it once.
+     ] 5 5 110 70
+     buttoncreate "testwindow "button [OK] 60 80 50 16 [WINDOWDELETE "testwindow]
+  ]
+End
+
+TO DeleteAndCreateWindowFromCallback
+
+  ; create, delete, and create a dialog from the callback
+  WINDOWCREATE "root "testwindow [Outer Window] 0 0 120 120 [ 
+     DeleteAndCreateWindowFromCallback.Callback
+  ]
 
 END
 
@@ -175,26 +235,33 @@ TO WIDGETTEST.INTERACTIVE
   make "CheckboxColumnY :CheckboxColumnY + 14
 
   ; Create a listbox to launch the other dialog boxes
-  LISTBOXCREATE "interactiveroot "listbox 5 90 100 80
+  LISTBOXCREATE "interactiveroot "listbox 5 90 130 80
   LISTBOXADDSTRING "listbox [MisOrderedGroups]
   LISTBOXADDSTRING "listbox [ListBoxes]
   LISTBOXADDSTRING "listbox [ModalDialogBox]
+  LISTBOXADDSTRING "listbox [DeleteAndCreateDialogFromCallback]
+  LISTBOXADDSTRING "listbox [DeleteAndCreateWindowFromCallback]
 
   ; Create a button to open of the child interactive tests
-  BUTTONCREATE  "interactiveroot GENSYM [Open Window] 5 167 100 18 [ RUN LISTBOXGETSELECT "listbox ]
+  BUTTONCREATE  "interactiveroot GENSYM [Open Window] 5 167 130 18 [ RUN LISTBOXGETSELECT "listbox ]
 
   ; Add a long static text control
   STATICCREATE "interactiveroot GENSYM [
      This window contains all widget types.
      It is intended to be used in interactive testing, particularly when
      comparing the behavior of one version of FMSLogo to another.
-  ] 110 90 200 80
+  ] 140 90 200 80
 
   ; Continue the message on a second static text control to work around the 255 character limit.
   STATICCREATE "interactiveroot GENSYM [
      You can run other specialized tests by selecing the test case
      from the list box to the right and clicking \"Open Window\".
-  ] 110 120 200 80
+  ] 140 120 200 80
+
+  ; Add a third static text
+  STATICCREATE "interactiveroot GENSYM (WORD
+     "Static (char 9) "With (char 9) "Tab (char 9) "|and & ampersands.|
+  ) 140 150 200 80
 
   ; Create a button to close the window
   BUTTONCREATE "interactiveroot  GENSYM "Close 300 156 80 18 [WINDOWDELETE "interactiveroot]
@@ -211,7 +278,7 @@ TO WIDGETTEST.INTERACTIVE
   CHECKBOXCREATE "main "group2 GENSYM [Check A] 5 140 80 16
   CHECKBOXCREATE "main "group2 GENSYM [Check B] 5 120 80 16
 
-  STATICCREATE      "main "verticalstatic [] -200 200 100 0
+  STATICCREATE      "main "verticalstatic [] -200 200 100 20
   SCROLLBARCREATE   "main "verticalscroll -175 180 0 100 [
      STATICUPDATE "verticalstatic (word "-30, SCROLLBARGET "verticalscroll ", "50)
   ]
