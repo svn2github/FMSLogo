@@ -145,7 +145,7 @@ public:
             Caption,
             wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
             wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
-            wxCAPTION)
+            wxCLIP_CHILDREN | wxCAPTION)
     {
     }
 
@@ -229,6 +229,8 @@ public:
                 CBS_AUTOHSCROLL |
                 CBS_DISABLENOSCROLL |
                 CBS_HASSTRINGS |
+                WS_GROUP |
+                WS_TABSTOP |
                 WS_VSCROLL |
                 WS_CHILD |
                 WS_OVERLAPPED |
@@ -250,8 +252,6 @@ public:
         SetHWND(hwnd);
         SubclassWin(hwnd);
         AdoptAttributesFromHWND();
-
-        SetMswLogoCompatibleFont(this);
     }
 
     const wxString GetValue() const
@@ -297,7 +297,7 @@ public:
 
     void Delete(int IndexToDelete)
     {
-        int totalItems = ComboBox_SetCurSel(
+        int totalItems = ComboBox_DeleteString(
             static_cast<HWND>(GetHandle()),
             IndexToDelete);
         if (totalItems == CB_ERR)
@@ -332,22 +332,42 @@ private:
     DECLARE_NO_COPY_CLASS(CLogoComboBox);
 };
 
-class CLogoStaticText : public wxStaticText
+// CLogoStaticText cannot be derived from wxStaticText because that
+// class does not support word-wrapping in the same manner that 
+// the static text control in MSWLogo does.
+class CLogoStaticText : public wxWindow
 {
 public:
     CLogoStaticText(
         wxWindow               * Parent,
-        const wxString         & Text, 
+        const char             * Text, 
         const CClientRectangle & ClientRectangle
-        ) :
-        wxStaticText(
-            Parent,
-            wxID_ANY,
-            Text,
-            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
-            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()))
+        )
     {
-        SetMswLogoCompatibleFont(this);
+        HWND hwnd = CreateWindow(
+            WC_STATIC, // window class
+            Text,      // caption
+            WS_CHILD |
+                WS_OVERLAPPED |
+                WS_CLIPCHILDREN |
+                WS_VISIBLE,
+            ClientRectangle.GetX(),
+            ClientRectangle.GetY(),
+            ClientRectangle.GetWidth(),
+            ClientRectangle.GetHeight(),
+            Parent != NULL ? static_cast<HWND>(Parent->GetHandle()) : NULL,
+            NULL,  // menu
+            NULL,  // module instance
+            NULL); // additional parameters
+        if (hwnd == NULL)
+        {
+            // TODO: raise a wxWidgets error
+        }
+
+        Reparent(Parent);
+        SetHWND(hwnd);
+        SubclassWin(hwnd);
+        AdoptAttributesFromHWND();
     }
 
 private:
@@ -358,21 +378,47 @@ class CLogoButton : public wxButton
 {
 public:
 
+    // Initializing the native window using the wxButton ctor
+    // caused some painting prbolems.  The problems seemed
+    // related to changing the font to the MSWLogo-compatible
+    // one.  Since this is not necessary when using the raw
+    // win32 BUTTON class, we create the child window using
+    // CreateWindow.
     CLogoButton(
         wxWindow               * Parent,
-        const wxString         & Caption,
+        const char             * Caption,
         const CClientRectangle & ClientRectangle,
         const char             * Callback
-        ) :
-        wxButton(
-            Parent,
-            wxID_ANY,
-            Caption,
-            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
-            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()))
+        )
     {
+        HWND hwnd = CreateWindow(
+            WC_BUTTON, // window class
+            Caption,   // caption
+            BS_PUSHBUTTON |
+                BS_TEXT |
+                WS_CHILD |
+                WS_GROUP |
+                WS_TABSTOP |
+                WS_VISIBLE,
+            ClientRectangle.GetX(),
+            ClientRectangle.GetY(),
+            ClientRectangle.GetWidth(),
+            ClientRectangle.GetHeight(),
+            Parent != NULL ? static_cast<HWND>(Parent->GetHandle()) : NULL,
+            NULL,  // menu
+            NULL,  // module instance
+            NULL); // additional parameters
+        if (hwnd == NULL)
+        {
+            // TODO: raise a wxWidgets error
+        }
+
+        Reparent(Parent);
+        SetHWND(hwnd);
+        SubclassWin(hwnd);
+        AdoptAttributesFromHWND();
+
         strcpy(m_Callback, Callback);
-        SetMswLogoCompatibleFont(this);
     }
 
 private:
