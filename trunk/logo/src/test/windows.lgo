@@ -74,6 +74,12 @@ TO WINDOWSTEST.WINDOW.SMOKETEST
   ; delete the root window
   windowdelete "testwindow
 
+  ; Delete a window from the context of its callback
+  ; Commented out because of bug #3560750
+  ; windowcreate "root "testwindow [delete window from callback] 0 0 120 400 [
+  ;   windowdelete "testwindow
+  ; ]
+
 END
 
 
@@ -317,6 +323,7 @@ TO WINDOWSTEST.LISTBOX
 
   ; add a different string and get it
   TRACEINSTRUCTION [ LISTBOXADDSTRING    "testlist [secondstring] ]
+  TRACEINSTRUCTION [ LISTBOXADDSTRING    "testlist [thirdstring]  ]
   SIMPLEREPORTTEST [ LISTBOXGETSELECT    "testlist ] [secondstring]
 
   ; make sure we can add a lot of items
@@ -458,6 +465,7 @@ TO WINDOWSTEST.COMBOBOX
 
   ; add a different string and get it
   TRACEINSTRUCTION [ COMBOBOXADDSTRING "combobox   [secondstring] ]
+  TRACEINSTRUCTION [ COMBOBOXADDSTRING "combobox   [thirdstring]  ]
   SIMPLEREPORTTEST [ COMBOBOXGETTEXT   "combobox ] [secondstring]
 
   ; set and get the text in the edit control portion
