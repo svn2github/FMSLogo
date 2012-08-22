@@ -1378,6 +1378,12 @@ NODE *lnostatus(NODE *)
 }
 
 
+// The zoom control flag determines whether or not we can use the faster line
+// drawing method of drawing directly to the screen buffer, or use the slower
+// method of drawing to the backbuffer and invalidating part of the screen.
+// This is only faster when there is no zooming.
+// And it's only correct to do when there are no widgets on the screen, such
+// as ones created with BUTTONCREATE or LISTBOXCREATE.
 void UpdateZoomControlFlag()
 {
     if ((the_zoom != 1.0) || CheckOnScreenControls())
@@ -3047,7 +3053,7 @@ setfont(
             LOCALIZED_ERROR_FONTNOTFOUND,
             fontname);
 
-        EnumFontFamilies(hdc, NULL, PrintFont, NULL);
+        EnumFontFamilies(hdc, NULL, PrintFont, 0L);
     }
 
     ReleaseDC(::GetFocus(), hdc);
@@ -3128,7 +3134,7 @@ void do_help(const char *arg)
         GetDesktopWindow(), 
         szHelpFileName,
         HH_DISPLAY_TOPIC,
-        NULL);
+        0);
 
     HH_AKLINK aklink = {0};
     aklink.cbStruct     = sizeof aklink;
