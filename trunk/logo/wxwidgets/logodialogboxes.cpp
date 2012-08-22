@@ -197,8 +197,6 @@ public:
         SetHWND(hwnd);
         SubclassWin(hwnd);
         AdoptAttributesFromHWND();
-
-        SetMswLogoCompatibleFont(this);
     }
 
 private:
@@ -278,6 +276,14 @@ public:
 
     void SetValue(const wxString & NewValue)
     {
+        // For compatibility with MSWLogo, make a best
+        // effort to change the selected item to match the
+        // new text.
+        ComboBox_SelectString(
+            static_cast<HWND>(GetHandle()),
+            -1,  // search the entire list
+            NewValue.c_str());
+
         int isOk = ComboBox_SetText(
             static_cast<HWND>(GetHandle()),
             NewValue.c_str());
@@ -285,14 +291,6 @@ public:
         {
             // TODO: raise a wxWidgets error
         }
-
-        // For compatibility with MSWLogo, also make a best
-        // effort to change the selected item to match the
-        // new text.
-        ComboBox_SelectString(
-            static_cast<HWND>(GetHandle()),
-            -1,  // search the entire list
-            NewValue.c_str());
     }
 
     void Delete(int IndexToDelete)
@@ -1358,7 +1356,13 @@ NODE *ldialogcreate(NODE *args)
     // since it will not return until closed.
     do_execution(callback);
 
-    child->Dialog->ShowModal();
+    // Since executing "callback" can delete the new dialog box,
+    // we must check that it still exists before we try to show it.
+    child = g_LogoWidgets.get(childname, WINDOWTYPE_Dialog);
+    if (child != NULL)
+    {
+        child->Dialog->ShowModal();
+    }
     return Unbound;
 }
 
@@ -1520,9 +1524,23 @@ NODE *llistboxdeletestring(NODE *args)
         return Unbound;
     }
 
+    if (listbox->ListBox->GetCount() <= (unsigned int) index)
+    {
+        // The index is out of range.
+        // This is not an error in FMSLogo, but it is in wxWidgets,
+        // so we ignore the request.
+        return Unbound;
+    }
+
     // kill entry based on index
     listbox->ListBox->Delete(index);
-    listbox->ListBox->SetSelection(0);
+
+    // Set the selection back to 0, if such an entry exists
+    if (!listbox->ListBox->IsEmpty())
+    {
+        listbox->ListBox->SetSelection(0);
+    }
+
     return Unbound;
 }
 
