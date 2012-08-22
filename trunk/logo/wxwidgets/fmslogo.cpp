@@ -520,13 +520,6 @@ BEGIN_EVENT_TABLE(CFmsLogo, wxApp)
     EVT_IDLE(CFmsLogo::OnIdle)
 END_EVENT_TABLE()
 
-
-// stubs that abstract the logo engine from the window toolkit
-bool CheckOnScreenControls()
-{
-    return false;
-}
-
 void single_step_box(NODE *the_line)
 {
     char textbuf[MAX_BUFFER_SIZE];

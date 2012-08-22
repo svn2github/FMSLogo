@@ -100,6 +100,7 @@ OBJECTS =                      \
     guiutils.o                 \
     fmslogo.o                  \
     logocodectrl.o             \
+    logodialogboxes.o          \
     setpensize.o               \
     statusdialog.o             \
     savebeforeexitdialog.o     \
@@ -126,7 +127,6 @@ OBJECTS =                      \
     cursor.o         \
     devwind.o        \
     dib.o            \
-    dlgwind.o        \
     dynamicbuffer.o  \
     error.o          \
     eval.o           \
