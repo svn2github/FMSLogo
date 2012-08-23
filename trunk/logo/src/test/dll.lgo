@@ -1,6 +1,6 @@
 LOAD "testlib.lgo
 
-TO DLLSMOKETEST
+TO DLL.SMOKETEST
   ; Load the windowing subsystem library
   DLLLOAD "user32.dll
 
@@ -14,12 +14,26 @@ TO DLLSMOKETEST
 
   ; Restore Main Window (using captial letters for type specifiers)
   SIMPLEREPORTTEST [ DLLCALL (LIST "L "MoveWindow "W 1 "L 600 "L 800 "L 0 "L 0 "L :hwnd) ] [1]
-
+  
   DLLFREE
 END
 
+TO DLLCALL.VARIATIONS
 
-TO DLLCALLTEST
+  ; Load the test library
+  TRACEINSTRUCTION [ DLLLOAD "testfunction.dll ]
+
+  SIMPLEREPORTTEST [ DLLCALL [F MakeSquare@8  F 2.2    ] ] [4.840000]
+  SIMPLEREPORTTEST [ DLLCALL [S FormatFloat@8 F 2.2    ] ] [2.200000]
+  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4  W 123    ] ] [123]
+  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4  W 65537  ] ] [1] ; WORD overflow
+
+  ; Cleanup
+  TRACEINSTRUCTION [ DLLFREE ]
+END
+
+
+TO DLLCALLTEST.BADINPUT
 
   ; call a function when no DLL is loaded
   RUNDLLNOTLOADEDTEST [DLLCALL [L FindWindowA S FMSLogo L 0]]
@@ -62,7 +76,7 @@ TO DLLCALLTEST
 
 END
 
-TO MULTIDLLLOADTEST
+TO DLL.MULTILOADTEST
 
   ; load two DLLs at once
   TRACEINSTRUCTION [ DLLLOAD "user32.dll   ]
@@ -105,7 +119,7 @@ TO MULTIDLLLOADTEST
 END
 
 
-TO DLLLOADTEST
+TO DLLLOADTEST.BADINPUT
 
   ; wrong number of inputs
   RUNNOTENOUGHINPUTSTEST [(DLLLOAD)]
@@ -131,7 +145,7 @@ TO DLLLOADTEST
 
 END
 
-TO DLLFREETEST
+TO DLLFREETEST.BADINPUT
 
   ; can't free a DLL when nothing is loaded
   RUNDLLNOTLOADEDTEST [DLLFREE]
@@ -149,12 +163,12 @@ TO DLLTEST
 
    ; TODO: test calling a function by ordinal
 
-   DLLSMOKETEST
+   DLL.SMOKETEST
+   DLLCALL.VARIATIONS
 
-   DLLLOADTEST
-   DLLCALLTEST
-   DLLFREETEST
+   DLLLOADTEST.BADINPUT
+   DLLCALLTEST.BADINPUT
+   DLLFREETEST.BADINPUT
 
-   MULTIDLLLOADTEST
+   DLL.MULTILOADTEST
 END
-
