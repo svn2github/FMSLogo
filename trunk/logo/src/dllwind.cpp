@@ -32,10 +32,26 @@
 #include "parse.h"
 #include "debugheap.h"
 
-extern "C" void PASCAL pushw(WORD);
-extern "C" void PASCAL pushl(DWORD);
-extern "C" void PASCAL pushf(double);
-extern "C" void PASCAL pushs(LPCSTR);
+#ifdef __BORLANDC__
+
+extern "C" 
+{
+    void PASCAL pushl(DWORD);
+}
+
+#elif defined __GNUC__
+
+#define pushl(D)                                     \
+    asm ("pushl %0;"                                 \
+         :               /* output */                \
+         :"r"((int)D)    /* input  */                \
+         :"%esp"         /* clobbered register */    \
+         );
+
+#else
+  #error Unsupported compiler
+#endif
+
 
 
 class CLoadedDll
@@ -457,10 +473,18 @@ NODE *ldllcall(NODE *args)
         return Unbound;
     }
 
-    char *values[1024];  // strings we must free
+    // BUG: Both of these stacks, values and parameters, can be overflowed.
+    // This should be fixed, but it's not a problem in practice because
+    // any malformed call to DLLCALL can also corrupt memory and it's
+    // unlikely that a user will exhaust either stack in proper usage.
+    
+    char *values[1024];   // strings we must free
+    int nextValue = 0;
+
+    int parameters[1024]; // a stack of parsed parameters to pass to the function
+    int nextParameter = 0;
 
     // fill queue with type/data pairs
-    int i = 0;
     while (functionArg != NIL)
     {
         char akind[MAX_BUFFER_SIZE];
@@ -469,44 +493,42 @@ NODE *ldllcall(NODE *args)
 
         char avalue[MAX_BUFFER_SIZE];
         cnv_strnode_string(avalue, functionArg);
-
         functionArg = cdr(functionArg);
 
         switch (akind[0])
         {
         case 'w':
         case 'W':
-            {
-                WORD w = (WORD) atoi(avalue);
-                pushw(w);
-                break;
-            }
+            parameters[nextParameter++] = (int) (atoi(avalue) & 0xFFFF);
+            break;
 
         case 'l':
         case 'L':
-            {
-                DWORD dw = (DWORD) atol(avalue);
-                pushl(dw);
-                break;
-            }
+            parameters[nextParameter++] = (int) atol(avalue);
+            break;
 
         case 'f':
         case 'F':
             {
-                double df = atof(avalue);
-                pushf(df);
+                // A double is 8 bytes, so we must push it
+                // as two four-byte parameters.
+                double number = atof(avalue);
+                parameters[nextParameter++] = ((int*)(&number))[1];
+                parameters[nextParameter++] = ((int*)(&number))[0];
+                assert(sizeof(number) == 2 * sizeof(*parameters));
                 break;
             }
 
         case 's':
         case 'S':
-            values[i] = strdup(avalue);
-            pushs(values[i]);
-            i++;
+            values[nextValue] = strdup(avalue);
+            parameters[nextParameter++] = (int) values[nextValue];
+            nextValue++;
             break;
 
         case 'v':
         case 'V':
+            // void type
             break;
 
         default:
@@ -514,6 +536,14 @@ NODE *ldllcall(NODE *args)
             return Unbound;
         }
     }
+
+    // Now that we have all of the parameters, it's time to copy them
+    // them from the "parameters" stack variable to the real stack.
+    for (int j = 0; j < nextParameter; j++) 
+    {
+        pushl(parameters[j]);
+    }
+
 
     char areturn[MAX_BUFFER_SIZE] = {0};
     switch (fkind[0])
@@ -556,6 +586,7 @@ NODE *ldllcall(NODE *args)
 
     case 'v':
     case 'V':
+        // "void" return type
         (*(void (WINAPI *)()) theFunc)();
         areturn[0] = '\0';
         break;
@@ -565,9 +596,11 @@ NODE *ldllcall(NODE *args)
         break;
     }
 
-    for (int j = 0; j < i; j++) 
+    // Free any string parameters which we allocated.
+    while (nextValue != 0) 
     {
-        free(values[j]);
+        nextValue--;
+        free(values[nextValue]);
     }
 
     if (areturn[0] != '\0')

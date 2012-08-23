@@ -69,7 +69,6 @@ CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
 CXXFLAGS += -I"/cygdrive/c/Program Files/HTML Help Workshop/include"
 
 
-
 prefix = /usr/local
 exec_prefix = ${prefix}
 INSTALL = /usr/bin/install -c
@@ -127,6 +126,7 @@ OBJECTS =                      \
     cursor.o         \
     devwind.o        \
     dib.o            \
+    dllwind.o        \
     dynamicbuffer.o  \
     error.o          \
     eval.o           \

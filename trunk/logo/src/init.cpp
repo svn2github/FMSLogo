@@ -221,7 +221,7 @@ const PRIMTYPE prims[] =
     { "dialogfilesave", 1, 1, 1, PREFIX_PRIORITY, ldialogfilesave, LOCALIZED_ALTERNATE_DIALOGFILESAVE },
     { "difference", 2, 2, 2, PREFIX_PRIORITY, lsub, LOCALIZED_ALTERNATE_DIFFERENCE },
     { "directories", 0, 0, 0, PREFIX_PRIORITY, ldirectories, LOCALIZED_ALTERNATE_DIRECTORIES },
-#ifdef FMSLOGO_OWL
+#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
     { "dllcall", 1, 1, 2, PREFIX_PRIORITY, ldllcall, LOCALIZED_ALTERNATE_DLLCALL },
     { "dllfree", 0, 0, 1, PREFIX_PRIORITY, ldllfree, LOCALIZED_ALTERNATE_DLLFREE },
     { "dllload", 1, 1, 1, PREFIX_PRIORITY, ldllload, LOCALIZED_ALTERNATE_DLLLOAD },
