@@ -656,7 +656,9 @@ HWND GetScreenWindow()
 
 HWND GetMainWindow()
 {
-    return NULL;
+    // Return the screen so that WM_TIMER events that are
+    // created by SetTimer() get posted to the ScreenSaverProc.
+    return g_ScreenWindow;
 }
 
 HWND GetCommanderWindow()
