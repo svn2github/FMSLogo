@@ -30,6 +30,7 @@
 #include "graphwin.h"
 #include "status.h"
 #include "fontutils.h"
+#include "mmwind.h"
 #include "screenwindow.h"
 
 bool g_IsOkayToUseCommanderWindow = true;
@@ -270,18 +271,22 @@ void CCommander::UpdateStatusButtonState()
 
 void CCommander::Halt()
 {
-#if 0 // TODO
-    for (int i = 1; i < 32; i++)
-    {
-        MainWindowx->KillTimer(i);
-    }
-#endif
+    // End all timers that could have been started
+    // by a call to SETTIMER.
+    halt_all_timers();
 
-    m_NextInstruction->SetFocus();
+    // Set a flag so that the Logo engine will halt
+    // when it has finished processing the current
+    // instruction.
     if (is_executing())
     {
         IsTimeToHalt = true;
     }
+
+    // Give focus to the command input control,
+    // since it's not useful for focus to remain
+    // on the Halt button.
+    m_NextInstruction->SetFocus();
 }
 
 void CCommander::OnHaltButton(wxCommandEvent& WXUNUSED(Event))

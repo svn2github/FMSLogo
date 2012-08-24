@@ -147,6 +147,12 @@ private:
 
     void OnClose(wxCloseEvent& Event);
 
+    virtual WXLRESULT MSWWindowProc(
+        WXUINT   Message,
+        WXWPARAM WParam,
+        WXLPARAM LParam
+        );
+
     // Private helper functions
     CWorkspaceEditor *
     CreateWorkspaceEditor(

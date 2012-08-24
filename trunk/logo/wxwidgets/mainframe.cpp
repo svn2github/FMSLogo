@@ -30,6 +30,7 @@
 #include <algorithm>
 #include <shlobj.h>
 
+#include "logorc.h" // for WM_*
 #include "guiutils.h"
 #include "commander.h"
 #include "activearea.h"
@@ -2169,4 +2170,46 @@ void CMainFrame::OnAboutMultipleSclerosis(wxCommandEvent& WXUNUSED(Event))
     // show the "About FMS" dialog box
     CAboutMultipleSclerosis dlg(this);
     dlg.ShowModal();
+}
+
+WXLRESULT
+CMainFrame::MSWWindowProc(
+    WXUINT   Message,
+    WXWPARAM WParam,
+    WXLPARAM LParam
+    )
+{
+    switch (Message)
+    {
+    case WM_TIMER:
+        if (WParam < 16)
+        {
+            // not safe to yield
+            callthing * callevent = callthing::CreateNoYieldFunctionEvent(timer_callback[WParam]);
+            calllists.insert(callevent);
+            PostMessage(
+                static_cast<HWND>(GetHandle()),
+                WM_CHECKQUEUE,
+                0,
+                0);
+        }
+        else if (WParam < 32)
+        {
+            // yieldable
+            callthing * callevent = callthing::CreateFunctionEvent(timer_callback[WParam]);
+            calllists.insert(callevent);
+            PostMessage(
+                static_cast<HWND>(GetHandle()),
+                WM_CHECKQUEUE,
+                0,
+                0);
+        }
+        break;
+
+    case WM_CHECKQUEUE:
+        checkqueue();
+        break;
+    }
+
+    return wxFrame::MSWWindowProc(Message, WParam, LParam);
 }
