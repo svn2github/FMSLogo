@@ -1793,10 +1793,10 @@ void do_execution(char * logocommand)
 
         // turn text into a NODE and parse it
         current_line = vref(make_strnode(
-         logocommand, 
-         (int) strlen(logocommand), 
-         this_type, 
-         strnzcpy));
+            logocommand, 
+            (int) strlen(logocommand), 
+            this_type, 
+            strnzcpy));
 
         NODE * exec_list = vref(parser(current_line, true));
 
