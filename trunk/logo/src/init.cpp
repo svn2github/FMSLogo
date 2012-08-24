@@ -274,9 +274,7 @@ const PRIMTYPE prims[] =
     { "groupboxcreate", 6, 6, 6, PREFIX_PRIORITY, lgroupboxcreate, LOCALIZED_ALTERNATE_GROUPBOXCREATE },
     { "groupboxdelete", 1, 1, 1, PREFIX_PRIORITY, lgroupboxdelete, LOCALIZED_ALTERNATE_GROUPBOXDELETE },
 #endif
-#if defined FMSLOGO_OWL
     { "halt", 0, 0, 0, PREFIX_PRIORITY, lhalt, LOCALIZED_ALTERNATE_HALT },
-#endif
     { "hasownpen?", 0, 0, 0, PREFIX_PRIORITY, lhasownpenp, LOCALIZED_ALTERNATE_HASOWNPEN_ },
     { "hasownpenp", 0, 0, 0, PREFIX_PRIORITY, lhasownpenp, LOCALIZED_ALTERNATE_HASOWNPENP },
     { "heading", 0, 0, 0, PREFIX_PRIORITY, lheading, LOCALIZED_ALTERNATE_HEADING },
@@ -370,9 +368,7 @@ const PRIMTYPE prims[] =
     { "not", 1, 1, 1, PREFIX_PRIORITY, lnot, LOCALIZED_ALTERNATE_NOT },
     { "notequal?", 2, 2, 2, PREFIX_PRIORITY, lnotequalp, LOCALIZED_ALTERNATE_NOTEQUAL_ },
     { "notequalp", 2, 2, 2, PREFIX_PRIORITY, lnotequalp, LOCALIZED_ALTERNATE_NOTEQUALP },
-#ifdef FMSLOGO_OWL
     { "noyield", 0, 0, 0, PREFIX_PRIORITY, lnoyield, LOCALIZED_ALTERNATE_NOYIELD },
-#endif
     { "numberp", 1, 1, 1, PREFIX_PRIORITY, lnumberp, LOCALIZED_ALTERNATE_NUMBERP },
     { "number?", 1, 1, 1, PREFIX_PRIORITY, lnumberp, LOCALIZED_ALTERNATE_NUMBER_ },
     { "op", 1, 1, 1, OUTPUT_PRIORITY, loutput, LOCALIZED_ALTERNATE_OP },
@@ -612,9 +608,7 @@ const PRIMTYPE prims[] =
     { "writepos", 0, 0, 0, PREFIX_PRIORITY, lwritepos, LOCALIZED_ALTERNATE_WRITEPOS },
     { "writer", 0, 0, 0, PREFIX_PRIORITY, lwriter, LOCALIZED_ALTERNATE_WRITER },
     { "yesnobox", 2, 2, 2, PREFIX_PRIORITY, lyesnobox, LOCALIZED_ALTERNATE_YESNOBOX },
-#ifdef FMSLOGO_OWL
     { "yield", 0, 0, 0, PREFIX_PRIORITY, lyield, LOCALIZED_ALTERNATE_YIELD },
-#endif
     { "zoom", 1, 1, 1, PREFIX_PRIORITY, lzoom, LOCALIZED_ALTERNATE_ZOOM },
 };
 

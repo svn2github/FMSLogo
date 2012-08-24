@@ -378,6 +378,14 @@ void init_timers()
     }
 }
 
+void halt_all_timers()
+{
+    for (int i = 1; i < MAX_TIMERS; i++)
+    {
+        ::KillTimer(GetMainWindow(), i);
+    }
+}
+
 void uninitialize_timers()
 {
     for (int id = 0; id < MAX_TIMERS; id++)

@@ -39,6 +39,8 @@
 #include "parse.h"
 #include "logomath.h"
 #include "ibmterm.h"
+#include "mainwind.h"
+#include "mmwind.h"
 #include "debugheap.h"
 
 NODE *    throw_node = NIL;
@@ -675,6 +677,35 @@ NODE *lpause(NODE*)
         deref(uname);
     }
    
+    return Unbound;
+}
+
+NODE *lhalt(NODE *)
+{
+    // End all timers that could have been started
+    // by a call to SETTIMER.
+    halt_all_timers();
+
+    // Cancel any pending events that may execute more code.
+    emptyqueue();
+
+    // throw a Stop error to stop the current execution.
+    err_logo(STOP_ERROR, NIL);
+
+    return Unbound;
+}
+
+NODE *lyield(NODE *)
+{
+    // set flag
+    yield_flag = true;
+    return Unbound;
+}
+
+NODE *lnoyield(NODE *)
+{
+    // clear flag
+    yield_flag = false;
     return Unbound;
 }
 

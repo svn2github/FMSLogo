@@ -37,6 +37,7 @@
 #include "parse.h"
 #include "mainwind.h"
 #include "mainframe.h"
+#include "mmwind.h"
 #include "debugheap.h"
 
 #define SELECTBOTTOMLINE
@@ -543,18 +544,23 @@ void TMyCommandWindow::DoButtonTrace(UINT)
 
 void TMyCommandWindow::DoButtonHalt(UINT)
 {
+    // End all timers that could have been started
+    // by a call to SETTIMER.
+    halt_all_timers();
 
-    for (int i = 1; i < 32; i++)
-    {
-        MainWindowx->KillTimer(i);
-    }
-
-    /* if ok to halt and we get here then halt */
-    Editbox.SetFocus();
+    // Set a flag so that the Logo engine will halt
+    // when it has finished processing the current
+    // instruction.
     if (is_executing())
     {
         IsTimeToHalt = true;
     }
+
+    // In response to to the user pressing the Halt button
+    // we give keyboard focus back to the commander input,
+    // since it's not useful for it to remain on the Halt
+    // button.
+    Editbox.SetFocus();
 }
 
 void TMyCommandWindow::EvDestroy()
@@ -621,27 +627,6 @@ void TMyCommandWindow::ChooseNewFont()
         RecalculateLayout();
         Invalidate(true);
     }
-}
-
-
-NODE *lhalt(NODE *)
-{
-    MainWindowx->CommandWindow->PostMessage(WM_COMMAND, ID_HALT, ID_HALT);
-    return Unbound;
-}
-
-NODE *lyield(NODE *)
-{
-    // set flag
-    yield_flag = true;
-    return Unbound;
-}
-
-NODE *lnoyield(NODE *)
-{
-    // clear flag
-    yield_flag = false;
-    return Unbound;
 }
 
 /* Editbox members */
