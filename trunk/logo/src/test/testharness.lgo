@@ -86,6 +86,7 @@ LOAD "mouse.lgo
 LOAD "windows.lgo
 LOAD "windowfileedit.lgo
 LOAD "midi.lgo
+LOAD "mci.lgo
 LOAD "sound.lgo
 LOAD "playwave.lgo
 LOAD "messagebox.lgo
@@ -254,6 +255,7 @@ TO TESTALL
   WINDOWSTEST         ; from windows.lgo
   MOUSETEST           ; from mouse.lgo
   MIDITEST            ; from midi.lgo
+  MCITEST             ; from mci.lgo
   SOUNDTEST           ; from sound.lgo
   PLAYWAVETEST        ; from playwave.lgo
   COMMANDLINETEST     ; from commandline.lgo
