@@ -221,7 +221,7 @@
 
 
 // some key codes that are missing from Borland's WinUser.h.
-#ifdef __BORLAND_C__
+#ifdef BORLAND
     #define VK_OEM_2 0xBF
     #define VK_OEM_3 0XC0
     #define VK_OEM_4 0xDB // [{ on US keyboards
