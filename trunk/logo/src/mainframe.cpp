@@ -67,9 +67,6 @@ const int DEFAULT_COMMANDER_HEIGHT = 150;
 const int MIN_COMMANDER_HEIGHT     = 100;
 const int DEFAULT_SPLITTER_WIDTH   = 5;
 
-const int MAX_PENDING_CONNECTS = 4;  // The backlog allowed for listen()
-
-
 class TRulerOut : public TPrintout
 {
 public:
@@ -2534,273 +2531,22 @@ LRESULT TMainFrame::WMCheckQueue(WPARAM, LPARAM)
 
 LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
 {
-    TMessage msg = __GetTMessage();
-
-    if (WSAGETASYNCERROR(lParam) != 0)
-    {
-        MessageBox(
-            WSAGetLastErrorString(WSAGETASYNCERROR(lParam)),
-            "WSAAsyncGetHostByNameCallBack()");
-        // err_logo(STOP_ERROR,NIL);
-        return 0;
-    }
-
-    if (!g_ClientConnection.IsEnabled())
-    {
-        // The network client side has been shut down.
-        // This message must have been delayed.
-        return 0;
-    }
-
-    // update flags based on event type
-    switch (WSAGETSELECTEVENT(lParam))
-    {
-    case FD_READ:
-        g_ClientConnection.AsyncReceive(HWindow, "recv(sendsock)");
-        return 0;
-
-    case FD_WRITE:
-        // allow another frame to go out.
-        g_ClientConnection.m_IsBusy = false;
-        break;
-
-    case FD_CONNECT:
-        // flag it's ok to start firing
-        g_ClientConnection.m_IsConnected = true;
-        break;
-
-    case FD_CLOSE:
-        // done
-        g_ClientConnection.AsyncClose(HWindow);
-        break;
-    }
-
-    // we don't distinguish between all event types
-    g_ClientConnection.PostOnSendReadyEvent(HWindow);
-    return 0;
-}
-
-static
-void
-InitializeSocketAddress(
-    SOCKADDR_IN & SocketAddress,
-    PHOSTENT      HostEntry,
-    unsigned int  Port
-    )
-{
-    // always start clean
-    memset(&SocketAddress, 0, sizeof(SOCKADDR_IN));
-
-    // what else is there
-    SocketAddress.sin_family = AF_INET;
-
-    memcpy(&SocketAddress.sin_addr, HostEntry->h_addr, HostEntry->h_length);
-
-    SocketAddress.sin_port = htons(Port); // Convert to network ordering
+    return g_ClientConnection.OnNetworkConnectSendAck(HWindow, lParam);
 }
 
 LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lParam)
 {
-    TMessage msg = __GetTMessage();
-
-    if (WSAGETASYNCERROR(lParam) != 0)
-    {
-        MessageBox(
-            WSAGetLastErrorString(WSAGETASYNCERROR(lParam)),
-            "WSAAsyncGetHostByNameCallBack()");
-        // err_logo(STOP_ERROR,NIL);
-        return 0;
-    }
-
-    if (!g_ClientConnection.IsEnabled())
-    {
-        // The client-side is not initialized.
-        // This must be a delayed event coming in after shutdown.
-        MessageBox(
-            LOCALIZED_ERROR_NETWORKSHUTDOWN,
-            LOCALIZED_ERROR_NETWORK);
-        return 0;
-    }
-
-    SOCKADDR_IN send_dest_sin;
-
-    InitializeSocketAddress(
-        send_dest_sin,
-        g_ClientConnection.m_HostEntry,
-        g_ClientConnection.m_Port);
-
-    // watch for connect
-    if (WSAAsyncSelect(
-            g_ClientConnection.m_Socket,
-            MainWindowx->HWindow,
-            WM_NETWORK_CONNECTSENDACK,
-            FD_CONNECT | FD_WRITE | FD_READ | FD_CLOSE) == SOCKET_ERROR)
-    {
-        MessageBox(WSAGetLastErrorString(0), "WSAAsyncSelect(sendSock) FD_CONNECT");
-        // err_logo(STOP_ERROR,NIL);
-    }
-
-    // lets try now
-    int rval = connect(g_ClientConnection.m_Socket, (PSOCKADDR) & send_dest_sin, sizeof(send_dest_sin));
-    if (rval == SOCKET_ERROR)
-    {
-        if (WSAGetLastError() != WSAEWOULDBLOCK)
-        {
-            MessageBox(WSAGetLastErrorString(0), "connect(sendsock)");
-            // err_logo(STOP_ERROR,NIL);
-            return 0;
-        }
-    }
-
-#ifdef UDP
-    // fake an FD_CONNECT for UDP, these would of been called by winsock if TCP
-    OnNetworkConnectSendAck(0, MAKELONG(FD_CONNECT, FD_CONNECT));
-#endif
-
-    // fire event that connection is made
-    g_ClientConnection.PostOnSendReadyEvent(HWindow);
-    return 0;
+    return g_ClientConnection.OnNetworkConnectSendFinish(HWindow, lParam);
 }
 
 LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam)
 {
-    SOCKADDR_IN acc_sin;       // Accept socket address - internet style
-    int acc_sin_len;           // Accept socket address length
-
-    TMessage msg = __GetTMessage();
-
-    if (WSAGETASYNCERROR(lParam) != 0)
-    {
-        MessageBox(
-            WSAGetLastErrorString(WSAGETASYNCERROR(lParam)),
-            "WSAAsyncGetHostByNameCallBack()");
-        // err_logo(STOP_ERROR,NIL);
-        return 0;
-    }
-
-    if (!g_ServerConnection.IsEnabled())
-    {
-        // The server-side is not initialized.
-        // This must be a delayed event coming in after shutdown.
-        return 0;
-    }
-
-
-    // based on event do the right thing
-    switch (WSAGETSELECTEVENT(lParam))
-    {
-    case FD_READ:
-        g_ServerConnection.AsyncReceive(HWindow, "recv(receivesock)");
-        return 0;
-
-    case FD_ACCEPT:
-        // disabled for UDP
-#ifndef USE_UDP
-        acc_sin_len = sizeof(acc_sin);
-
-        g_ServerConnection.m_Socket = accept(
-            g_ServerConnection.m_Socket, 
-            (struct sockaddr *) &acc_sin, 
-            &acc_sin_len);
-        if (g_ServerConnection.m_Socket == INVALID_SOCKET)
-        {
-            MessageBox(WSAGetLastErrorString(0), "accept(receivesock)");
-            // err_logo(STOP_ERROR,NIL);
-            return 0;
-        }
-#endif
-        g_ServerConnection.m_IsConnected = true;
-
-        break;
-
-    case FD_CLOSE:
-
-        g_ServerConnection.AsyncClose(HWindow);
-        break;
-
-    case FD_WRITE:
-
-        // allow another frame to go out.
-        g_ServerConnection.m_IsBusy = false;
-        break;
-    }
-
-    // all other events just queue the event
-    g_ServerConnection.PostOnSendReadyEvent(HWindow);
-    return 0;
+    return g_ServerConnection.OnNetworkListenReceiveAck(HWindow, lParam);
 }
-
 
 LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lParam)
 {
-    TMessage msg = __GetTMessage();
-
-    if (WSAGETASYNCERROR(lParam) != 0)
-    {
-        MessageBox(
-            WSAGetLastErrorString(WSAGETASYNCERROR(lParam)),
-            "WSAAsyncGetHostByNameCallBack()");
-        // err_logo(STOP_ERROR,NIL);
-        return 0;
-    }
-
-    if (!g_ServerConnection.IsEnabled())
-    {
-        // TODO: print an error about the network being shutdown
-        return 0;
-    }
-
-    SOCKADDR_IN receive_local_sin;
-
-    InitializeSocketAddress(
-        receive_local_sin,
-        g_ServerConnection.m_HostEntry,
-        g_ServerConnection.m_Port);
-
-    // Associate an address with a socket. (bind)
-    int rval = bind(
-        g_ServerConnection.m_Socket, 
-        (struct sockaddr *) &receive_local_sin, 
-        sizeof(receive_local_sin));
-    if (rval == SOCKET_ERROR)
-    {
-        MessageBox(WSAGetLastErrorString(0), "bind(receivesock)");
-        // err_logo(STOP_ERROR,NIL);
-        return 0;
-    }
-
-    // listen for connect
-
-#ifndef USE_UDP
-    if (listen(g_ServerConnection.m_Socket, MAX_PENDING_CONNECTS) == SOCKET_ERROR)
-    {
-        MessageBox(WSAGetLastErrorString(0), "listen(receivesock)");
-        // err_logo(STOP_ERROR,NIL);
-        return 0;
-    }
-#endif
-
-    // watch for when connect happens
-    rval = WSAAsyncSelect(
-        g_ServerConnection.m_Socket,
-        MainWindowx->HWindow,
-        WM_NETWORK_LISTENRECEIVEACK,
-        FD_ACCEPT | FD_READ | FD_WRITE | FD_CLOSE);
-    if (rval == SOCKET_ERROR)
-    {
-        MessageBox(WSAGetLastErrorString(0), "WSAAsyncSelect(receivesock) FD_ACCEPT");
-        // err_logo(STOP_ERROR,NIL);
-    }
-
-    // fake an FD_ACCEPT for UDP, this automatically happens on TCP
-
-#ifdef USE_UDP
-    OnNetworkListenReceiveAck(0, MAKELONG(FD_ACCEPT, FD_ACCEPT));
-#endif
-
-    // queue this event
-    g_ServerConnection.PostOnSendReadyEvent(HWindow);
-    return 0;
+    return g_ServerConnection.OnNetworkListenReceiveFinish(HWindow, lParam);
 }
 
 LRESULT TMainFrame::MMMCINotify(WPARAM, LPARAM)

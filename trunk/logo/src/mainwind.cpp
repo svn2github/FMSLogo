@@ -225,20 +225,24 @@ callthing * callthing::CreateNoYieldFunctionEvent(char * function)
     return callevent;
 }
 
-callthing * callthing::CreateNetworkReceiveReadyEvent(CNetworkConnection * NetworkConnection, const char * packet)
+callthing * callthing::CreateNetworkReceiveReadyEvent(
+    CNetworkConnection * NetworkConnection,
+    const char         * OnReadyReceiveCallback,
+    const char         * Packet
+    )
 {
     callthing * callevent = new callthing;
     callevent->kind = EVENTTYPE_NetworkReceiveReady;
    
     callevent->networkconnection = NetworkConnection;
 
-    // copy m_OnReceiveReady now because it might be freed by the time 
-    // the event is processed.
-    callevent->func = strdup(NetworkConnection->m_OnReceiveReady);
+    // Copy OnReceiveReadyCallback now because it might be freed
+    // by the time the event is processed.
+    callevent->func = strdup(OnReadyReceiveCallback);
 
     // copy the network packet into the event (instead of into NetworkConnection) 
     // so that it can be processed in the order in which is was received.
-    callevent->networkpacket = strdup(packet);
+    callevent->networkpacket = strdup(Packet);
 
     return callevent;
 }

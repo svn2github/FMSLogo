@@ -91,7 +91,12 @@ public:
     static callthing * CreateMouseEvent(char * function, int x, int y);
     static callthing * CreateFunctionEvent(char * function);
     static callthing * CreateNoYieldFunctionEvent(char * function);
-    static callthing * CreateNetworkReceiveReadyEvent(class CNetworkConnection * NetworkConnection, const char * packet);
+
+    static callthing * CreateNetworkReceiveReadyEvent(
+        class CNetworkConnection * NetworkConnection,
+        const char               * OnReadyReceiveCallback,
+        const char               * Packet
+        );
 
     ~callthing();
 

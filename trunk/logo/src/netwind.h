@@ -24,23 +24,6 @@
 
 struct NODE;
 
-// Class for buffering (carrying over) network data from 
-// one "receive" call to another when 
-class CCarryOverBuffer 
-{
-public:
-    CCarryOverBuffer();
-
-    void ReleaseBuffer();
-
-    void Append(const char * AppendBuffer, int AppendBufferLength);
-    void ShiftLeft(int ShiftAmount);
-
-    char * m_Buffer;
-    int    m_BufferSize;
-    int    m_BytesOfData;
-};
-
 
 class CNetworkConnection 
 {
@@ -59,9 +42,45 @@ public:
     bool IsEnabled() const;
     void Disable();
 
-    void SetLastPacketReceived(char * LastPacket);
     NODE * GetLastPacketReceived() const;
+    void SetLastPacketReceived(char * LastPacket);
 
+    void Shutdown();
+
+    bool
+    SendValue(
+        const char * Data
+        );
+
+    void UninitializeHostEntry();
+
+    int
+    OnNetworkConnectSendAck(
+        HWND        WindowHandle,
+        LONG        LParam
+        );
+
+    int
+    OnNetworkConnectSendFinish(
+        HWND        WindowHandle,
+        LONG        LParam
+        );
+
+    int
+    OnNetworkListenReceiveAck(
+        HWND        WindowHandle,
+        LONG        LParam
+        );
+
+    int
+    OnNetworkListenReceiveFinish(
+        HWND        WindowHandle,
+        LONG        LParam
+        );
+
+private:
+
+    // private helper functions
     void
     AsyncReceive(
         HWND                 WindowHandle,
@@ -73,42 +92,47 @@ public:
         HWND                 WindowHandle
         );
 
-    void Shutdown();
-
     void
     PostOnSendReadyEvent(
         HWND                 WindowHandle
         );
 
-    bool
-    SendValue(
-        const char * Data
-        );
-
+    // private member variables
     SOCKET       m_Socket;     // socket for the connection
     unsigned int m_Port;       // server's listen port
 
     bool         m_IsConnected;  // socket is connected
     bool         m_IsBusy;       // socket is too busy to send
-private:
     bool         m_IsEnabled;    // if message processing is enabled for this socket
-
-public:
     PHOSTENT     m_HostEntry;    // Pointer to Host Entry
 
     char * m_OnReceiveReady;  // Buffer for receive callback
-private:
     char * m_OnSendReady;     // Buffer for send    callback
-
     char * m_ReceiveValue;    // pointer to the last packet received
+
+
+    // Private helper class for buffering (carrying over) network
+    // data from  one "receive" call to another.
+    class CCarryOverBuffer 
+    {
+    public:
+        CCarryOverBuffer();
+
+        void ReleaseBuffer();
+
+        void Append(const char * AppendBuffer, int AppendBufferLength);
+        void ShiftLeft(int ShiftAmount);
+
+        char * m_Buffer;
+        int    m_BufferSize;
+        int    m_BytesOfData;
+    };
 
     CCarryOverBuffer m_CarryOverData;  // a buffer for carrying over partial packets 
                                        // from one recv() call to the next.
 };
 
 // function declarations
-extern LPCSTR WSAGetLastErrorString(int);
-
 extern NODE *lnetaccepton(NODE *args);
 extern NODE *lnetacceptoff(NODE *arg);
 extern NODE *lnetacceptsendvalue(NODE *args);
@@ -123,6 +147,5 @@ extern NODE *lnetshutdown(NODE *arg);
 // global variables
 extern CNetworkConnection g_ClientConnection;
 extern CNetworkConnection g_ServerConnection;
-
 
 #endif // __NETWND_H_
