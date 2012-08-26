@@ -21,8 +21,8 @@ It is the same as pressing the <link linkend="commander-halt">Halt Button</link>
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>REPEAT 100000 [FORWARD REPCOUNT RIGHT 91]</userinput>
-<replaceable>Enter HALT and press the Execute button.</replaceable>
+<programlisting><userinput>FOREVER [FORWARD REPCOUNT RIGHT 91 SETPENCOLOR REPCOUNT]</userinput>
+<replaceable>Type "HALT" in the commander's input box and press the Execute button.</replaceable>
 Stopping...
 </programlisting>
 
