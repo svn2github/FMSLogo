@@ -2531,22 +2531,22 @@ LRESULT TMainFrame::WMCheckQueue(WPARAM, LPARAM)
 
 LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
 {
-    return g_ClientConnection.OnNetworkConnectSendAck(HWindow, lParam);
+    return g_ClientConnection.OnConnectSendAck(HWindow, lParam);
 }
 
 LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lParam)
 {
-    return g_ClientConnection.OnNetworkConnectSendFinish(HWindow, lParam);
+    return g_ClientConnection.OnConnectSendFinish(HWindow, lParam);
 }
 
 LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam)
 {
-    return g_ServerConnection.OnNetworkListenReceiveAck(HWindow, lParam);
+    return g_ServerConnection.OnListenReceiveAck(HWindow, lParam);
 }
 
 LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lParam)
 {
-    return g_ServerConnection.OnNetworkListenReceiveFinish(HWindow, lParam);
+    return g_ServerConnection.OnListenReceiveFinish(HWindow, lParam);
 }
 
 LRESULT TMainFrame::MMMCINotify(WPARAM, LPARAM)

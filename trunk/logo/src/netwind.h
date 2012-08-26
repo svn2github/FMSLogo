@@ -24,13 +24,13 @@
 
 struct NODE;
 
-
+// Abstract base class for network connections
 class CNetworkConnection 
 {
 public:
     CNetworkConnection();
 
-    void 
+    void
     Enable(
         const char *    OnSendReady,
         const char *    OnReceiveReady,
@@ -54,31 +54,8 @@ public:
 
     void UninitializeHostEntry();
 
-    int
-    OnNetworkConnectSendAck(
-        HWND        WindowHandle,
-        LONG        LParam
-        );
-
-    int
-    OnNetworkConnectSendFinish(
-        HWND        WindowHandle,
-        LONG        LParam
-        );
-
-    int
-    OnNetworkListenReceiveAck(
-        HWND        WindowHandle,
-        LONG        LParam
-        );
-
-    int
-    OnNetworkListenReceiveFinish(
-        HWND        WindowHandle,
-        LONG        LParam
-        );
-
-private:
+protected:
+    ~CNetworkConnection() {} // enforce abstract class
 
     // private helper functions
     void
@@ -132,6 +109,41 @@ private:
                                        // from one recv() call to the next.
 };
 
+// Class for client network connections
+class CClientNetworkConnection : public CNetworkConnection
+{
+public:
+    int
+    OnConnectSendAck(
+        HWND        WindowHandle,
+        LONG        LParam
+        );
+
+    int
+    OnConnectSendFinish(
+        HWND        WindowHandle,
+        LONG        LParam
+        );
+};
+
+
+// Class for server network connections
+class CServerNetworkConnection : public CNetworkConnection
+{
+public:
+    int
+    OnListenReceiveAck(
+        HWND        WindowHandle,
+        LONG        LParam
+        );
+
+    int
+    OnListenReceiveFinish(
+        HWND        WindowHandle,
+        LONG        LParam
+        );
+};
+
 // function declarations
 extern NODE *lnetaccepton(NODE *args);
 extern NODE *lnetacceptoff(NODE *arg);
@@ -145,7 +157,7 @@ extern NODE *lnetstartup(NODE *args);
 extern NODE *lnetshutdown(NODE *arg);
 
 // global variables
-extern CNetworkConnection g_ClientConnection;
-extern CNetworkConnection g_ServerConnection;
+extern CClientNetworkConnection g_ClientConnection;
+extern CServerNetworkConnection g_ServerConnection;
 
 #endif // __NETWND_H_

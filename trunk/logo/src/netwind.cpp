@@ -40,8 +40,8 @@ const int MAX_PENDING_CONNECTS = 4;  // The backlog allowed for listen()
 /////////////////////////////////////////////////////////////////////////////////////
 // Global Variables
 
-CNetworkConnection g_ClientConnection;
-CNetworkConnection g_ServerConnection;
+CClientNetworkConnection g_ClientConnection;
+CServerNetworkConnection g_ServerConnection;
 
 static int network_dns_sync = 0;
 
@@ -584,13 +584,11 @@ CNetworkConnection::PostOnSendReadyEvent(
 
 // Call this to handle a WM_NETWORK_CONNECTSENDACK message.
 int
-CNetworkConnection::OnNetworkConnectSendAck(
+CClientNetworkConnection::OnConnectSendAck(
     HWND        WindowHandle,
     LONG        LParam
     )
 {
-    assert(this == &g_ClientConnection);
-
     if (WSAGETASYNCERROR(LParam) != 0)
     {
         ::MessageBox(
@@ -637,16 +635,17 @@ CNetworkConnection::OnNetworkConnectSendAck(
     return 0;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////
+// CClientNetworkConnection class
+
 
 // Call this to handle a WM_NETWORK_CONNECTSENDFINISH message.
 int
-CNetworkConnection::OnNetworkConnectSendFinish(
+CClientNetworkConnection::OnConnectSendFinish(
     HWND        WindowHandle,
     LONG        LParam
     )
 {
-    assert(this == &g_ClientConnection);
-
     if (WSAGETASYNCERROR(LParam) != 0)
     {
         ::MessageBox(
@@ -706,7 +705,7 @@ CNetworkConnection::OnNetworkConnectSendFinish(
 
 #ifdef UDP
     // fake an FD_CONNECT for UDP, these would of been called by winsock if TCP
-    OnNetworkConnectSendAck(WindowHandle, MAKELONG(FD_CONNECT, FD_CONNECT));
+    OnConnectSendAck(WindowHandle, MAKELONG(FD_CONNECT, FD_CONNECT));
 #endif
 
     // fire event that connection is made
@@ -714,9 +713,12 @@ CNetworkConnection::OnNetworkConnectSendFinish(
     return 0;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////
+// CServerNetworkConnection class
+
 // Call this to handle a WM_NETWORK_LISTENRECEIVEACK message.
 int
-CNetworkConnection::OnNetworkListenReceiveAck(
+CServerNetworkConnection::OnListenReceiveAck(
     HWND        WindowHandle,
     LONG        LParam
     )
@@ -789,7 +791,7 @@ CNetworkConnection::OnNetworkListenReceiveAck(
 
 // Call this to handle a WM_NETWORK_LISTENRECEIVEFINISH message.
 int
-CNetworkConnection::OnNetworkListenReceiveFinish(
+CServerNetworkConnection::OnListenReceiveFinish(
     HWND        WindowHandle,
     LONG        LParam
     )
@@ -864,7 +866,7 @@ CNetworkConnection::OnNetworkListenReceiveFinish(
 
     // fake an FD_ACCEPT for UDP, this automatically happens on TCP
 #ifdef USE_UDP
-    OnNetworkListenReceiveAck(WindowHandle, MAKELONG(FD_ACCEPT, FD_ACCEPT));
+    OnListenReceiveAck(WindowHandle, MAKELONG(FD_ACCEPT, FD_ACCEPT));
 #endif
 
     // queue this event
