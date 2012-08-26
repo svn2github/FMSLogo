@@ -54,7 +54,7 @@ It will pass in arg1 as a type1, arg2 as a type2, and so on.
 
 <para>
 <parameter>function_parameter_list</parameter> must contain at least 4 items (typef function type1 arg1) even if arg1 is not used.
-If the formal argument list is "void" then use <userinput>["funcname "v 0]</userinput>.
+If the formal argument list is "void" then use <userinput>[funcname v 0]</userinput>.
 </para>
 
 <para>
@@ -78,14 +78,15 @@ You can write your own DLL with a compatible call interface to call more complex
 <varlistentry><term>Example</term>
 <listitem>
 <para>
+<programlisting><userinput>; Equivalent to the C call
+;   MessageBox(NULL, "MyMessage", "Hello How are you", MB_OK);
 
-<programlisting><userinput>DLLLOAD "user32.dll
-DLLCALL [w MessageBoxA w 0 s MyMessage s [Hello How are you] w 0]</userinput>
-</programlisting>
+DLLLOAD "user32.dll
+IGNORE DLLCALL [w MessageBoxA w 0 s MyMessage s [Hello How are you] w 0]</userinput>
 
-See a message box pop up.
+<replaceable>See a message box pop up.</replaceable>
 
-<programlisting><userinput>DLLFREE</userinput>
+<userinput>DLLFREE</userinput>
 </programlisting>
 </para>
 

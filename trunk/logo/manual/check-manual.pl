@@ -228,6 +228,7 @@ $Exceptions{'command-dllcall.xml'}{'allcaps'}{'DOUBLE'} = 1;
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'DWORD'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'LPSTR'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'TCHAR'}  = 1;
+$Exceptions{'command-dllcall.xml'}{'allcaps'}{'NULL'}   = 1;
 $Exceptions{'command-dllcall.xml'}{'bannedword'}{'function'}   = 1;
 $Exceptions{'command-dllcall.xml'}{'bannedword'}{'functions'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'bannedword'}{'parameter'}  = 1;
