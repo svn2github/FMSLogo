@@ -2172,6 +2172,16 @@ void CMainFrame::OnAboutMultipleSclerosis(wxCommandEvent& WXUNUSED(Event))
     dlg.ShowModal();
 }
 
+void
+CMainFrame::PostCheckQueueMessage()
+{
+    PostMessage(
+        static_cast<HWND>(GetHandle()),
+        WM_CHECKQUEUE,
+        0,
+        0);
+}
+
 WXLRESULT
 CMainFrame::MSWWindowProc(
     WXUINT   Message,
@@ -2187,27 +2197,26 @@ CMainFrame::MSWWindowProc(
             // not safe to yield
             callthing * callevent = callthing::CreateNoYieldFunctionEvent(timer_callback[WParam]);
             calllists.insert(callevent);
-            PostMessage(
-                static_cast<HWND>(GetHandle()),
-                WM_CHECKQUEUE,
-                0,
-                0);
+            PostCheckQueueMessage();
         }
         else if (WParam < 32)
         {
             // yieldable
             callthing * callevent = callthing::CreateFunctionEvent(timer_callback[WParam]);
             calllists.insert(callevent);
-            PostMessage(
-                static_cast<HWND>(GetHandle()),
-                WM_CHECKQUEUE,
-                0,
-                0);
+            PostCheckQueueMessage();
         }
         break;
 
     case WM_CHECKQUEUE:
         checkqueue();
+        break;
+
+    case MM_MCINOTIFY:
+        // if user fired up a callback mci event then queue it up here
+        callthing * callevent = callthing::CreateNoYieldFunctionEvent(mci_callback);
+        calllists.insert(callevent);
+        PostCheckQueueMessage();
         break;
     }
 

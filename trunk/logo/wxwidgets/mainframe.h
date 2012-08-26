@@ -154,6 +154,8 @@ private:
         );
 
     // Private helper functions
+    void PostCheckQueueMessage();
+
     CWorkspaceEditor *
     CreateWorkspaceEditor(
         const wxString & FileName,
