@@ -255,6 +255,14 @@ callthing::~callthing()
         free(func);
         free(networkpacket);
         break;
+
+    case EVENTTYPE_Unknown:
+    case EVENTTYPE_Mouse:
+    case EVENTTYPE_Keyboard:
+    case EVENTTYPE_YieldFunction:
+    case EVENTTYPE_NoYieldFunction:
+        // These event types have no special cleanup
+        break;
     }
 }
 
