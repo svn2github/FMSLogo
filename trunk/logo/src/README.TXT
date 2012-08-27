@@ -22,6 +22,8 @@ II. New features/bugs fixed:
   * Changed in 6.29.0
     o Fix bug #3551212; FMSLogo once again places the editor's caret at the
       first error when saving the contents fails due to a syntax error.
+    o Fix bug #1895669; NETSHUTDOWN no longer has a race condition that can
+      corrupt internal memory.
     o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see

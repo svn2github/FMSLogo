@@ -308,21 +308,11 @@ CNetworkConnection::CNetworkConnection() :
     m_IsConnected(false),
     m_IsBusy(false),
     m_IsEnabled(false),
-    m_HostEntry(NULL),
     m_OnReceiveReady(NULL),
     m_OnSendReady(NULL),
     m_ReceiveValue(NULL)
 {
-}
-
-void CNetworkConnection::UninitializeHostEntry()
-{
-    if (network_dns_sync != 1)
-    {
-        free(m_HostEntry);
-    }
-
-    m_HostEntry = NULL;
+    memset(m_HostEntry.Buffer, 0x00, sizeof(m_HostEntry.Buffer));
 }
 
 void
@@ -412,30 +402,37 @@ CNetworkConnection::Enable(
 
     if (network_dns_sync == 1)
     {
-        m_HostEntry = gethostbyname(HostName);
-        if (m_HostEntry == NULL)
+        PHOSTENT hostEntry = gethostbyname(HostName);
+        if (hostEntry == NULL)
         {
             ShowMessageAndStop("gethostbyname(host)", WSAGetLastErrorString(0));
             return;
         }
 
+        // This HOSTENTRY structure is owned by WinSock and
+        // could be changed.  Therefore, we copy the information
+        // that we need before any other WinSock calls can be made.
+        // Note that this may result in some dangling pointers, but
+        // this is okay, since the pointers will be valid long enough
+        // to initialize the SOCKADDR_IN struct, which is all we use
+        // it for.
+        m_HostEntry.Entry = *hostEntry;
+
         m_IsEnabled = true;
+
+        // Set up the rest of the connection by invoking the logic that
+        // should be invoked once m_HostEntry is filled in.
         SendMessage(GetMainWindow(), ResolvedHostNameMessage, 0, 0);
     }
     else
     {
-        if (m_HostEntry == NULL)
-        {
-            m_HostEntry = (PHOSTENT) calloc(1, MAXGETHOSTSTRUCT);
-        }
-
         // get address of remote machine
         HANDLE getHostByNameHandle = WSAAsyncGetHostByName(
             GetMainWindow(),
-            ResolvedHostNameMessage, 
-            HostName, 
-            (LPSTR) m_HostEntry, 
-            MAXGETHOSTSTRUCT);
+            ResolvedHostNameMessage,
+            HostName,
+            m_HostEntry.Buffer,
+            sizeof(m_HostEntry.Buffer));
         if (getHostByNameHandle == NULL)
         {
             ShowMessageAndStop("WSAAsyncGetHostByName()", WSAGetLastErrorString(0));
@@ -443,7 +440,9 @@ CNetworkConnection::Enable(
         }
 
         m_IsEnabled = true;
-        // wait for callback
+
+        // The rest of the connection will be set up when the GetHostByName
+        // callback is invoked, after m_HostEntry is filled in.
     }
 }
 
@@ -670,7 +669,7 @@ CClientNetworkConnection::OnConnectSendFinish(
     }
 
     SOCKADDR_IN send_dest_sin;
-    InitializeSocketAddress(send_dest_sin, m_HostEntry, m_Port);
+    InitializeSocketAddress(send_dest_sin, &m_HostEntry.Entry, m_Port);
 
     // watch for connect
     if (WSAAsyncSelect(
@@ -723,8 +722,6 @@ CServerNetworkConnection::OnListenReceiveAck(
     LONG        LParam
     )
 {
-    assert(this == &g_ServerConnection);
-
     if (WSAGETASYNCERROR(LParam) != 0)
     {
         ::MessageBox(
@@ -796,8 +793,6 @@ CServerNetworkConnection::OnListenReceiveFinish(
     LONG        LParam
     )
 {
-    assert(this == &g_ServerConnection);
-
     if (WSAGETASYNCERROR(LParam) != 0)
     {
         ::MessageBox(
@@ -816,7 +811,7 @@ CServerNetworkConnection::OnListenReceiveFinish(
     }
 
     SOCKADDR_IN receive_local_sin;
-    InitializeSocketAddress(receive_local_sin, m_HostEntry, m_Port);
+    InitializeSocketAddress(receive_local_sin, &m_HostEntry.Entry, m_Port);
 
     // Associate an address with a socket. (bind)
     int rval = bind(
@@ -914,14 +909,20 @@ NODE *lnetshutdown(NODE *)
     g_ClientConnection.Shutdown();
 
     // cleanup library
-    if (network_is_started) 
+    if (network_is_started)
     {
+        // There seems to be a race condition with WSAAsyncGetHostByName
+        // in that WSACleanup() won't always cancel the callback.
+        // As a result, it could still attempt to write into the
+        // m_HostEntry.Entry field after it has been freed.
+        //
+        // This is not a problem for the current implementation, since it
+        // statically allocates the memory and never frees it.
+        // However, it could be a problem if g_ServerConnection and
+        // g_ClientConnection were dynamically allocated.
         WSACleanup();
         network_is_started = false;
     }
-
-    g_ServerConnection.UninitializeHostEntry();
-    g_ClientConnection.UninitializeHostEntry();
 
     network_dns_sync = 0;
     return Unbound;

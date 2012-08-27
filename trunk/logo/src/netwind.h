@@ -52,8 +52,6 @@ public:
         const char * Data
         );
 
-    void UninitializeHostEntry();
-
 protected:
     ~CNetworkConnection() {} // enforce abstract class
 
@@ -81,7 +79,12 @@ protected:
     bool         m_IsConnected;  // socket is connected
     bool         m_IsBusy;       // socket is too busy to send
     bool         m_IsEnabled;    // if message processing is enabled for this socket
-    PHOSTENT     m_HostEntry;    // Pointer to Host Entry
+
+    union _union_host_entry_buffer
+    {
+        HOSTENT  Entry;                    // The host entry
+        char     Buffer[MAXGETHOSTSTRUCT]; // enough space for host entry
+    } m_HostEntry;
 
     char * m_OnReceiveReady;  // Buffer for receive callback
     char * m_OnSendReady;     // Buffer for send    callback
