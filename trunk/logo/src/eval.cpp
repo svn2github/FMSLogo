@@ -114,7 +114,11 @@ static NODE *qm_list = NIL;      // question mark list
 static int trace_level = 0;      // indentation level when tracing
 
 static NODE *var       = NIL;    // frame pointer into var_stack
-static NODE *var_stack = NIL;    // the stack of variables and their bindings
+static NODE *var_stack = NIL;    // The stack of local variables and their
+                                 // bindings.
+                                 //   car is the case object (variable name).
+                                 //   obj is the variable's value.
+                                 //   cdr is the next variable in the stack.
 
 static int halt_flag = 0;        // Flag to signal it's OK to halt
 
@@ -214,6 +218,10 @@ bool not_local(NODE *name, NODE *sp)
     {
         if (compare_node(car(sp), name, TRUE) == 0)
         {
+            // We found a variable in the stack whose
+            // case object "car(sp)" matches "name",
+            // which means that it's already a local
+            // variable.
             return false;
         }
     }
@@ -324,7 +332,7 @@ void trace_input(NODE * UnquotedArgument)
 static
 NODE *evaluator(NODE *list, enum labels where)
 {
-    // registers
+    // Registers
     NODE *exp = NIL;          // the current expression
     NODE *val = NIL;          // the value of the last expression
     NODE *proc = NIL;         // the procedure definition
@@ -335,7 +343,11 @@ NODE *evaluator(NODE *list, enum labels where)
     NODE *catch_tag = NIL;
     NODE *arg = NIL;          // the current actual
 
-    // registers that don't get reference counted
+    // Registers that don't get reference counted.
+    // REVISIT: Should these be saved/restored as numbers
+    // so that we don't try to increment/decrement the ref
+    // count?  There have been a few bugs where not setting
+    // these to NIL have crashed because of this.
     NODE * var_stack_position = NIL;  // temp ptr into var_stack
     FIXNUM cont    = 0;               // where to go next (an enum label)
     NODE * formals = NIL;             // list of formal parameters
@@ -390,6 +402,9 @@ NODE *evaluator(NODE *list, enum labels where)
  tail_eval_dispatch:
     tailcall = 1;
  eval_dispatch:
+    // Evaluates "exp" and returns to the continuation point,
+    // possibly dispatching to the appropriate label if the
+    // evaluation requires a procedure call.
     switch (nodetype(exp))
     {
     case QUOTE:
@@ -465,6 +480,8 @@ NODE *evaluator(NODE *list, enum labels where)
     // Evaluate an application of a procedure with arguments.
     assign(unev, cdr(exp));
     assign(argl, NIL);
+
+    // Note: these values are restored in eval_args_done
     mixsave(tailcall, var);
     num2save(g_ValueStatus, ift_iff_flag);
     save2(didnt_get_output, didnt_output_name);
@@ -610,7 +627,17 @@ NODE *evaluator(NODE *list, enum labels where)
  lambda_apply:
 
     // Bind the actual inputs to the formal inputs
-    var_stack_position = var_stack; // remember where we came in
+
+    // Evaluating each of the arguments can add new variables
+    // to var_stack.  For example, each named parameter will
+    // be added as a local variable.
+    // Since each parameter must be evaluated independently, we
+    // need to save the current position in the var_stack so that
+    // we can each parameter is evaluated only with the original
+    // var_stack and not the accumulated one (with which the body of
+    // the lambda apply will be evaluated).
+    var_stack_position = var_stack;
+
     for (formals = formals__procnode(proc);
          formals != NIL;
          formals = cdr(formals))
@@ -685,11 +712,21 @@ NODE *evaluator(NODE *list, enum labels where)
                 // Otherwise this could crash. 
                 // See bug #1563318.
                 formals = NIL;
+
+                // Because parm was a "rest" input, we have all of the
+                // inputs for this procedure call and can break out
+                // of the loop.
                 break;
             }
             if (arg == Unbound)
             {
-                /* use default */
+                // No value was explicitly given for the argument,
+                // so we use the parameter's default value, which
+                // means evaluating cdr(parm)
+
+                // These register values are stored in set_args_continue.
+                // REVISIT: would it be faster if these were 
+                // saved/restored if is_tree(list)?
                 save2(fun, var);
                 save2(ufun, last_ufun);
                 save2(this_line, last_line);
@@ -721,6 +758,8 @@ NODE *evaluator(NODE *list, enum labels where)
                 }
 
             set_args_continue:
+                // We have evaluated the default value, which is
+                // now in "val".
                 restore(var_stack_position);
                 restore2(formals, argl);
                 parm = car(formals);
@@ -729,7 +768,7 @@ NODE *evaluator(NODE *list, enum labels where)
                 restore2(didnt_output_name, didnt_get_output);
                 restore2(this_line, last_line);
                 restore2(ufun, last_ufun);
-                restore2(fun, var);  
+                restore2(fun, var);
                 arg = val;
             }
 
@@ -744,6 +783,13 @@ NODE *evaluator(NODE *list, enum labels where)
         }
     }
 
+    // Now that the evaluation of parameters is complete, we do
+    // not need to maintain the position in the var stack anymore.
+    // Set the value to NIL so that it can safely be restored()
+    // with inadvertantly attempting to decrement a potentially
+    // bogus pointer.
+    var_stack_position = NIL;
+
     if (argl != NIL) 
     {
         // APPLY [[A] [IGNORE :A]] [1 2]
@@ -755,7 +801,6 @@ NODE *evaluator(NODE *list, enum labels where)
         goto fetch_cont;
     }
 
-    var_stack_position = NIL;
     if (tracing = (!is_list(fun) && flag__caseobj(fun, PROC_TRACED)) || traceflag)
     {
         if (NOT_THROWING) 
