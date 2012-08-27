@@ -110,17 +110,17 @@ obj/debug-%res.o : %.rc
 # compilers so that .PDB files exist for debugging with windbg.exe.
 #
 msdbg : $(TARGET)msdbg.scr ;
-MSLIBS     = $(subst stdc++,,$(LIBS))
+MSLIBS     = $(subst msvcrt,,$(subst stdc++,,$(LIBS)))
 MSCPPFLAGS = $(CPPFLAGS) -I"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\Include" -I"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\include" -D_CRT_SECURE_NO_WARNINGS
 
 $(TARGET)msdbg.scr : $(addprefix obj/msdbg-,$(DEBUG_OBJECTS))
-	link.exe /nologo /OUT:$@ /DEBUG /LIBPATH:"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\lib" /LIBPATH:"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\lib" /NODEFAULTLIB:libcmt /subsystem:windows /machine:I386 $(addsuffix .lib,$(MSLIBS)) -def:screensaver.def $^
+	link.exe /nologo /OUT:$@ /DEBUG /LIBPATH:"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\lib" /LIBPATH:"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\lib" /subsystem:windows /machine:I386 $(addsuffix .lib,$(MSLIBS)) -def:screensaver.def $^
 
 obj/msdbg-%.o: %.cpp
-	cl.exe /c /nologo -Fo$@ /Od /Zi /W4 /EHsc -DDEBUG -DMEM_DEBUG $(MSCPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
+	cl.exe /c /nologo -Fo$@ /Od /Zi /W4 /EHsc /MTd -DDEBUG -DMEM_DEBUG $(MSCPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
 
 obj/msdbg-%.o: ../src/%.cpp
-	cl.exe /c /nologo -Fo$@ /Od /Zi /W4 /EHsc -DDEBUG -DMEM_DEBUG $(MSCPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
+	cl.exe /c /nologo -Fo$@ /Od /Zi /W4 /EHsc /MTd -DDEBUG -DMEM_DEBUG $(MSCPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
 
 obj/msdbg-%res.o : %.rc
 	rc.exe $(MSCPPFLAGS) -DLOCALE=$(DEFAULT_LCID) /fo $@ $<
