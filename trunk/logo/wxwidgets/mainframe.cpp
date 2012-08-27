@@ -66,6 +66,7 @@
 #include "mmwind.h" // for uninitialize_timers()
 #include "startup.h"
 #include "fontutils.h"
+#include "netwind.h"
 
 // ----------------------------------------------------------------------------
 // CMainFrame::CLogoPicturePrintout
@@ -2214,9 +2215,35 @@ CMainFrame::MSWWindowProc(
 
     case MM_MCINOTIFY:
         // if user fired up a callback mci event then queue it up here
-        callthing * callevent = callthing::CreateNoYieldFunctionEvent(mci_callback);
-        calllists.insert(callevent);
-        PostCheckQueueMessage();
+        {
+            callthing * callevent = callthing::CreateNoYieldFunctionEvent(mci_callback);
+            calllists.insert(callevent);
+            PostCheckQueueMessage();
+        }
+        break;
+
+    case WM_NETWORK_CONNECTSENDACK:
+        g_ClientConnection.OnConnectSendAck(
+            static_cast<HWND>(GetHandle()),
+            LParam);
+        break;
+
+    case WM_NETWORK_CONNECTSENDFINISH:
+        g_ClientConnection.OnConnectSendFinish(
+            static_cast<HWND>(GetHandle()),
+            LParam);
+        break;
+
+    case WM_NETWORK_LISTENRECEIVEACK:
+        g_ServerConnection.OnListenReceiveAck(
+            static_cast<HWND>(GetHandle()),
+            LParam);
+        break;
+
+    case WM_NETWORK_LISTENRECEIVEFINISH:
+        g_ServerConnection.OnListenReceiveFinish(
+            static_cast<HWND>(GetHandle()),
+            LParam);
         break;
     }
 

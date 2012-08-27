@@ -18,6 +18,7 @@
 #include "devwind.h"
 #include "eval.h"
 #include "logorc.h"
+#include "netwind.h"
 #include "screenwindow.h"
 
 #include "resource.h"
@@ -397,6 +398,29 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 
     case WM_CHECKQUEUE:
         checkqueue();
+        break;
+
+    case MM_MCINOTIFY:
+        // if user fired up a callback mci event then queue it up here
+        callevent = callthing::CreateNoYieldFunctionEvent(mci_callback);
+        calllists.insert(callevent);
+        PostMessage(hwnd, WM_CHECKQUEUE, 0, 0);
+        break;
+
+    case WM_NETWORK_CONNECTSENDACK:
+        g_ClientConnection.OnConnectSendAck(hwnd, lParam);
+        break;
+
+    case WM_NETWORK_CONNECTSENDFINISH:
+        g_ClientConnection.OnConnectSendFinish(hwnd, lParam);
+        break;
+
+    case WM_NETWORK_LISTENRECEIVEACK:
+        g_ServerConnection.OnListenReceiveAck(hwnd, lParam);
+        break;
+
+    case WM_NETWORK_LISTENRECEIVEFINISH:
+        g_ServerConnection.OnListenReceiveFinish(hwnd, lParam);
         break;
 
     case WM_DESTROY:
