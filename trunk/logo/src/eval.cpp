@@ -152,6 +152,8 @@ load_procedure_if_necessary(
     return procnode__caseobj(ProcNode);
 }
 
+// Remove the first element on *stack, then updates
+// *stack to point to the new top of the stack.
 void spop(NODE **stack)
 {
     assert(stack != NULL && "bad input");
@@ -174,6 +176,8 @@ void spop(NODE **stack)
     *stack = temp;
 }
 
+// Pushes "obj" onto the front of *stack, then updates
+// *stack to point to the new head.
 void spush(NODE *obj, NODE **stack)
 {
     assert(stack != NULL && "bad input");
@@ -374,6 +378,7 @@ NODE *evaluator(NODE *list, enum labels where)
     assign(this_line, list);
     newcont(end_line);
  begin_seq:
+    // Parenthesize the Logo list into something more like LISP
     treeify_line(list);
     if (!is_tree(list))
     {
@@ -402,9 +407,10 @@ NODE *evaluator(NODE *list, enum labels where)
  tail_eval_dispatch:
     tailcall = 1;
  eval_dispatch:
-    // Evaluates "exp" and returns to the continuation point,
-    // possibly dispatching to the appropriate label if the
-    // evaluation requires a procedure call.
+    // Evaluates "exp", sets the result in "val", and returns to the
+    // continuation point, possibly dispatching to the appropriate
+    // label if the evaluation requires a procedure call.
+
     switch (nodetype(exp))
     {
     case QUOTE:
@@ -464,7 +470,7 @@ NODE *evaluator(NODE *list, enum labels where)
         goto fetch_cont;
 
     default: 
-        // self-evaluating
+        // self-evaluating (like a number or a word)
         assign(val, exp);
         goto fetch_cont;
     }
@@ -486,8 +492,17 @@ NODE *evaluator(NODE *list, enum labels where)
     num2save(g_ValueStatus, ift_iff_flag);
     save2(didnt_get_output, didnt_output_name);
  eval_arg_loop:
+    // Evaluates each of the expression in "unev" as arguments to
+    // a procedure call.  In each iteration, moves the first
+    // of "unev" to "exp" then jumps to eval_dispatch to evaluate "exp"
+    // into "val".  This returns to "accumulate_arg", which moves "var"
+    // onto the end of "argl", which is the evaluated list of arguments
+    // that will be passed to the procedure.
+
     if (unev == NIL) 
     {
+        // We've finished processing all of the arguments.
+        // We can now call the procedure.
         goto eval_args_done;
     }
     assign(exp, car(unev));
@@ -512,7 +527,10 @@ NODE *evaluator(NODE *list, enum labels where)
     goto eval_dispatch;                 // evaluate the current argument
 
  accumulate_arg:
-    /* Put the evaluated argument into the argl list. */
+    // The argument has been evaluted and the result is now in "var".
+
+    // Reset the local variable state to where it was before this
+    // argument was evaluated.
     reset_args(var);
     restore2(this_line, last_line);
     restore2(ufun, last_ufun);
@@ -523,11 +541,20 @@ NODE *evaluator(NODE *list, enum labels where)
     {
         assign(val, err_logo(DIDNT_OUTPUT, NIL));
     }
+
+    // Move "var" into the list of evaluated arguments
     push(val, argl);
+
+    // Remove the unevaluated expression, since it has now been
+    // evaluated to "val".
     pop(unev);
     goto eval_arg_loop;
 
  eval_args_done:
+    // We have finished evaluating all of the arguments in "unev"
+    // or encountered an error.
+    assert(unev == NIL || stopping_flag == THROWING);
+
     restore2(didnt_get_output, didnt_output_name);
     num2restore(g_ValueStatus, ift_iff_flag);
     mixrestore(tailcall, var);
@@ -536,9 +563,19 @@ NODE *evaluator(NODE *list, enum labels where)
         assign(val, Unbound);
         goto fetch_cont;
     }
+
+    // Reverse "argl" because we had treated it as a stack,
+    // popping from "unev" as we evaluated each argument expression
+    // and prepending the result to "argl".
     assign(argl, reverse(argl));
+
+
     /* --------------------- APPLY ---------------------------- */
  apply_dispatch:
+    // This section is responsible for calling a procedure.
+    // The procedure name is in "fun" and the arguments that were passed
+    // to it are in "argl".
+
     eval_count++;
     update_status_evals();
 
@@ -555,6 +592,11 @@ NODE *evaluator(NODE *list, enum labels where)
         assign(proc, procnode__caseobj(fun));
         if (is_macro(fun))
         {
+            // We are going to evalute a macro, so after we're done,
+            // we'll have some extra stuff to do--either evaluate
+            // whatever the macro returns in the caller's
+            // context, or jump to a special continuation for the
+            // primitive macros that need special evaluation logic.
             num2save(g_ValueStatus, tailcall);
             // BUG: save didnt_get_output, current_unode like UCBLogo?
             g_ValueStatus = VALUE_STATUS_Required;
@@ -597,21 +639,28 @@ NODE *evaluator(NODE *list, enum labels where)
         assign(val, Unbound);
     }
 
-#define do_case(x) case x: goto x;
  fetch_cont:
+    // Jumps back to the current continuation point, stored in "stack"
     {
         enum labels x = (enum labels) cont;
         cont = (FIXNUM) car(stack);
         numpop(&stack);
         switch (x)
         {
+#define do_case(x) case x: goto x;
             do_list(do_case)
-                default : abort();
+        default : abort();
         }
     }
 
  compound_apply:
-    // call (that is, APPLY) a non-primitive procedure/macro
+    // call (that is, APPLY) a non-primitive procedure/macro.
+
+    // "argl" holds all of the arguments
+    // "proc" contains the procnode of the non-primitive
+
+    // Before we continue, check if the UI has requested that we
+    // stop execution (for example, if they want to close).
     check_stop(true);
 
     if (tracing = flag__caseobj(fun, PROC_TRACED) || traceflag)
@@ -626,7 +675,12 @@ NODE *evaluator(NODE *list, enum labels where)
 
  lambda_apply:
 
-    // Bind the actual inputs to the formal inputs
+    // Bind the actual inputs to the formal inputs.
+    // "Binding" means creating local variables for each
+    // formal parameter and assigning them either a value
+    // from the argument list in argl that was passed in,
+    // or using the default values, specified in the procedure
+    // definition.
 
     // Evaluating each of the arguments can add new variables
     // to var_stack.  For example, each named parameter will
@@ -646,14 +700,20 @@ NODE *evaluator(NODE *list, enum labels where)
         parm = car(formals);
         if (nodetype(parm) == INTEGER) 
         {
-            // default # args
+            // Default # args
+
+            // This is always listed after the last parameter, so we
+            // can break out of the loop.
 
             // set formals to NIL so that it doesn't get deref'ed in restore
             formals = NIL;
             break;
         }
+
+
         if (argl != NIL)
         {
+            // An argument was supplied by the caller.
             arg = car(argl);
             if (tracing || traceflag)
             {
@@ -673,10 +733,14 @@ NODE *evaluator(NODE *list, enum labels where)
 
             // bind the argument to the formal parameter object
             setvalnode__caseobj(parm, arg);
+
             if (arg == Unbound)
             {
                 // we have more formal inputs than actual inputs
                 err_logo(NOT_ENOUGH, fun);
+
+                // REVISIT: Should this be moved to the front
+                // of the if statement and should we break?
             }
         }
         else if (nodetype(parm) == CONS)
@@ -697,6 +761,8 @@ NODE *evaluator(NODE *list, enum labels where)
                 {
                     if (tracing || traceflag)
                     {
+                        // Start at cdr(argl) because we have already
+                        // traced car(argl) above.
                         for (NODE * nextinput = cdr(argl);
                              nextinput != NIL;
                              nextinput = cdr(nextinput))
@@ -722,7 +788,7 @@ NODE *evaluator(NODE *list, enum labels where)
             {
                 // No value was explicitly given for the argument,
                 // so we use the parameter's default value, which
-                // means evaluating cdr(parm)
+                // means evaluating cdr(parm).
 
                 // These register values are stored in set_args_continue.
                 // REVISIT: would it be faster if these were 
@@ -792,7 +858,12 @@ NODE *evaluator(NODE *list, enum labels where)
 
     if (argl != NIL) 
     {
-        // APPLY [[A] [IGNORE :A]] [1 2]
+        // There were more arguments than formal parameters.
+        // This shouldn't happen if everything is tree'ified
+        // correctly, but it can happen in cases like:
+        //
+        //    APPLY [[A] [IGNORE :A]] [1 2]
+        //
         err_logo(TOO_MUCH, fun);
     }
     if (check_throwing)
@@ -835,6 +906,8 @@ NODE *evaluator(NODE *list, enum labels where)
         goto fetch_cont;
     }
 
+    // Set the tree'ified expressions from "proc" to "unev" so that they
+    // can be evaluated.
     assign(unev, tree__tree(list));
     if (NOT_THROWING)
     {
@@ -842,6 +915,8 @@ NODE *evaluator(NODE *list, enum labels where)
     }
     assign(output_node, Unbound);
 
+    // Set expectations on whether or not "unev" should evaluate to
+    // to a value.
     if (g_ValueStatus == VALUE_STATUS_Required) 
     {
         g_ValueStatus = VALUE_STATUS_OutputOk;
@@ -856,8 +931,9 @@ NODE *evaluator(NODE *list, enum labels where)
     }
 
  eval_sequence:
-    // Evaluate each expression in the sequence.  
-    // Stop as soon as val != Unbound.
+    // Evaluate each expression in "unev" in the sequence.
+    // Stop as soon as val != Unbound, which is when we
+    // have a value to return.
     if (!RUNNING || val != Unbound)
     {
         goto fetch_cont;
@@ -933,12 +1009,16 @@ NODE *evaluator(NODE *list, enum labels where)
             // update_coords('\n');
         }
     }
+
+    // Move the first unevaluated expression into "exp" for evaluation.
     assign(exp, car(unev));
     pop(unev);
+
     if (exp != NIL &&
         is_list(exp) && 
         is_tailform(procnode__caseobj(car(exp))))
     {
+        // "exp" is a procedure call.  car(exp) is the proceedure's case object.
         NODE * const caseobj = car(exp);
 
         // Get the priority of the primitive to get the "true identity".
@@ -1066,6 +1146,11 @@ NODE *evaluator(NODE *list, enum labels where)
     goto eval_dispatch;
 
  eval_sequence_continue:
+    // This is the return point for eval_sequence executions which have
+    // dispatched to eval_dispatch or tail_eval_dispatch.
+    // It is responsible for splicing the return value from a macro into
+    // "unev", then jumping to eval_sequence to evaluate the next expression.
+
     reset_args(var);
     restore2(qm_list, argl);
     restore2(var, proc);
@@ -1081,6 +1166,11 @@ NODE *evaluator(NODE *list, enum labels where)
         num2restore(ift_iff_flag, g_ValueStatus);
     }
     restore2(unev, fun);
+
+    // If we dispatched to a macro, then we must splice the
+    // output of the macro (which is held in "val") into
+    // the remaining unevaluated expressions "unev" so that
+    // the macro can be evaluated in the context of the caller.
     if (stopping_flag == MACRO_RETURN)
     {
         if (unev == Unbound) 
@@ -1157,7 +1247,10 @@ NODE *evaluator(NODE *list, enum labels where)
         }
         goto fetch_cont;
     }
+
+    // Evaluate the next expression in "unev".
     goto eval_sequence;
+    assert(0 && !"doesn't fall through");
 
 
  compound_apply_continue:
