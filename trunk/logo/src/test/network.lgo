@@ -21,7 +21,7 @@ TO CLIENT.ONREADYTOSEND
 
   if :NetConnectOnCall > 2 [
      (print "Sending: :payload)
-     LOCALMAKE "isok NETCONNECTSENDVALUE :payload 
+     LOCALMAKE "isok NETCONNECTSENDVALUE :payload
      (print "Send "Status: :isok)
   ]
 
@@ -73,16 +73,16 @@ TO NETWORKTEST.SERVER.RECEIVEUNFRAMEDPACKET
 
    ; start the server
    TRACEINSTRUCTION [ NETSTARTUP ]
-   FAILIFNOTTRUE [ 
-      NETACCEPTON 
-         :localport 
-         [ MAKE  "onsendreadycounter :onsendreadycounter + 1 ] 
+   FAILIFNOTTRUE [
+      NETACCEPTON
+         :localport
+         [ MAKE  "onsendreadycounter :onsendreadycounter + 1 ]
          [ QUEUE "server.data        NETACCEPTRECEIVEVALUE   ]
       ]
 
    TRACEINSTRUCTION [ WAIT 60 * 2 ]
 
-   ; spawn a client to send some data such that the data not end in NUL.
+   ; spawn a client to send some data such that the data do not end in NUL.
    ; This is a regression test for bug #1367386, which sent FMSLogo into a tight loop
    MAKE "shellcommand (SENTENCE [perl.exe sendtologo.pl] NETWORKTEST.HOSTNAME :localport)
    FAILIFNOTTRUE (LIST "SHELL :shellcommand)
@@ -95,7 +95,11 @@ TO NETWORKTEST.SERVER.RECEIVEUNFRAMEDPACKET
    TRACEINSTRUCTION [ NETSHUTDOWN  ]
 
 
-   ; verify that the "send ready" callback was called the correct number of times
+   ; Verify that the "send ready" callback was called three times.
+   ; 1) When the accept() is successful and the server
+   ;    is ready to receive connections.
+   ; 2) When the client connects to the server.
+   ; 3) When the server is ready to send data.
    SIMPLEREPORTTEST [:onsendreadycounter] 3
 
    ; verify that we received the expected data
@@ -185,9 +189,9 @@ TO NETWORKTEST.CLIENT.ECHO
 
    FAILIFNOTTRUE [ 
       NETCONNECTON 
-         NETWORKTEST.HOSTNAME 
-         :remoteport 
-         [ MAKE   "onsendreadycounter :onsendreadycounter + 1 ] 
+         NETWORKTEST.HOSTNAME
+         :remoteport
+         [ MAKE   "onsendreadycounter :onsendreadycounter + 1 ]
          [ QUEUE "client.data         NETCONNECTRECEIVEVALUE  ]
    ]
 
@@ -231,10 +235,10 @@ TO NETWORKTEST.CLIENT.RECEIVELARGEPACKET
    TRACEINSTRUCTION  [ NETSTARTUP ]
 
    FAILIFNOTTRUE [
-      NETCONNECTON 
-         NETWORKTEST.HOSTNAME 
-         :remoteport 
-         [ MAKE "onsendreadycounter :onsendreadycounter + 1 ] 
+      NETCONNECTON
+         NETWORKTEST.HOSTNAME
+         :remoteport
+         [ MAKE "onsendreadycounter :onsendreadycounter + 1 ]
          [ QUEUE "client.data ITEM 1 NETCONNECTRECEIVEVALUE ]
    ]
 
@@ -247,7 +251,7 @@ TO NETWORKTEST.CLIENT.RECEIVELARGEPACKET
    MAKE "expecteddata TESTLIB.REPEATWORD "abcdefghijklmnopqrstuvwxyz 1000
 
    SIMPLEREPORTTEST [:onsendreadycounter ] 3
-   
+
    ; TESTBUG: we shouldn't have to concatenate the data because it should have come in a single packet.
    ;SIMPLEREPORTTEST [:client.data] (LIST :expecteddata)
    SIMPLEREPORTTEST [APPLY "WORD :client.data] :expecteddata
@@ -311,7 +315,7 @@ TO NETWORKTEST.CLIENT.SHUTDOWNRACE
    ; make an outbound connection.  Because this is asynchronous, 
    ; we don't even need a server, we are going to shutdown before
    ; the call to connect() is made.
-   FAILIFNOTTRUE [ NETCONNECTON NETWORKTEST.HOSTNAME 4444 [] [] ] 
+   FAILIFNOTTRUE [ NETCONNECTON NETWORKTEST.HOSTNAME 4444 [] [] ]
 
    ; Immediately shutdown (before the client's sendready gets called)
    ; this forces a race condition where the WSAAsyncGetHostByName message
