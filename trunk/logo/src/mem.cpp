@@ -36,8 +36,6 @@ struct segment
 };
 
 int memory_count = 0;                  // Current amount of logo segments malloc'd
-NODE **gcstack;
-NODE **gctop;
 
 static NODE    *free_list    = NIL;    // global ptr to free node list
 static segment *segment_list = NULL;   // global ptr to segment list

@@ -20,8 +20,6 @@
 #include "logodata.h"
 
 // global variables
-extern NODE **gcstack;
-extern NODE **gctop;
 extern int memory_count;
 
 // function declarations

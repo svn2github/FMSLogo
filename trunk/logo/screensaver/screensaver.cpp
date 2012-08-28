@@ -84,8 +84,6 @@ UninitializeLogoEngine()
 
     uninit_turtles();
 
-    free(gcstack);
-
     // release the HTML Help subsystem
     HtmlHelpUninitialize();
 
@@ -226,19 +224,11 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
             NULL,  // default security attributes
             FALSE, // no initial owner
             "LogoForWindowsMutex");
-      
-        // Get garbage collector stack size from the configuration settings
-        GCMAX = GetConfigurationInt("GCStackSize", 8192);
 
         // Get video mode parameters
         init_videomode();
 
         srand(time(NULL));
-
-        // alloc garbage collector stack
-        gcstack = (NODE **) malloc(sizeof(NODE *) *GCMAX);
-
-        gctop = gcstack;
 
         // init the timer callback array
         init_timers();

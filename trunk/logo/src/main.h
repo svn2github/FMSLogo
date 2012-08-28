@@ -43,7 +43,6 @@ extern void ChangeActiveScreenColor(int Red, int Green, int Blue);
 extern void ContextHelp(class TEdit *Editor);
 
 // global variables
-extern int GCMAX;
 extern bool bFixed;
 extern NODE *exec_list;
 extern bool error_happen;

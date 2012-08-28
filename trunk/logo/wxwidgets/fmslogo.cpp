@@ -298,20 +298,12 @@ bool CFmsLogo::OnInit()
         FALSE, // no initial owner
         "LogoForWindowsMutex");
 
-    // Get garbage collector stack size from the configuration settings
-    GCMAX = GetConfigurationInt("GCStackSize", 8192);
-
     ProcessCommandLine();
 
     // Get video mode parameters
     init_videomode();
 
     srand(time(NULL));
-
-    // alloc garbage collector stack
-    gcstack = (NODE **) malloc(sizeof(NODE *) *GCMAX);
-
-    gctop = gcstack;
 
     // init the timer callback array
     init_timers();
@@ -430,8 +422,6 @@ int CFmsLogo::OnExit()
     uninit_bitmaps();
 
     uninit_turtles();
-
-    free(gcstack);
 
     // release the HTML Help subsystem
     HtmlHelpUninitialize();

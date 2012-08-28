@@ -85,7 +85,6 @@ char edit_editexit[MAX_BUFFER_SIZE];   /* callable editor cb                  */
 
 TMainFrame *MainWindowx;               // Pointer to the Main window
 
-int GCMAX = 8192;                      // Garbage Collector Stack Size
 int BitMapWidth = 1000;                // Current bitmap size in X
 int BitMapHeight = 1000;               // Current bitmap size in Y
 bool IsOkayToUseCommanderWindow = false; // Flag to signal it's OK to write to recall box
@@ -615,19 +614,10 @@ WinMain(
         }
     }
 
-
-    // Get garbage collector stack size from the configuration settings
-    GCMAX = GetConfigurationInt("GCStackSize", 8192);
-
     // Get video mode parameters
     init_videomode();
 
     srand(time(NULL));
-
-    // alloc garbage collector stack
-    gcstack = (NODE **) malloc(sizeof(NODE *) *GCMAX);
-
-    gctop = gcstack;
 
     // init the timer callback array
     init_timers();
@@ -682,8 +672,6 @@ WinMain(
     uninit_bitmaps();
 
     uninit_turtles();
-
-    free(gcstack);
 
     // release the HTML Help subsystem
     HtmlHelpUninitialize();
