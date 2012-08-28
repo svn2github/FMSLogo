@@ -119,6 +119,8 @@ NODE *reref(NODE *oldval, NODE *newval)
     return newval;
 }
 
+// Decrements the reference count and returns the object.
+// This assumes that the reference count won't go to zero.
 NODE *unref(NODE *ret_var)
 {
     if (ret_var != NIL) 
@@ -207,36 +209,173 @@ NODE *cons(NODE *x, NODE *y)
     return val;
 }
 
-static
-void maybe_gc(NODE * nd)
+class CGarbageCollectionStack
 {
-    if (nd == NIL)
+    typedef struct _LIST_NODE
     {
-        // NIL doesn't need to be garbage collected
-        return;
+        // Pointer to the next item in the list.
+        struct _LIST_NODE * Next;
+        
+        // As many pointers as can fit into a NODE
+        NODE * Nodes[3];
+    } LIST_NODE;
+
+public:
+    void Initialize()
+    {
+        m_FreeList     = NULL;
+        m_TopNode      = NULL;
+        m_TopNodeIndex = ARRAYSIZE(m_TopNode->Nodes);
     }
 
-    if (decrefcnt(nd) != 0)
+    void AddMemory(NODE * UnusedLogoNode)
     {
-        // more references remain--don't garbage collect now
-        return;
+        LIST_NODE * listNode = reinterpret_cast<LIST_NODE*>(UnusedLogoNode);
+
+        // Assert that we can use an unused NODE as a LIST_NODE.
+        assert(sizeof *listNode <= sizeof *UnusedLogoNode);
+
+        // Add this node to the head of the free list.
+        listNode->Next = m_FreeList;
+        m_FreeList     = listNode;
     }
 
-    if (&gcstack[GCMAX] <= gctop)
+    void PushDeferredNode(NODE * DeferredNode)
     {
-        // there's no more room on the stack.
-        // we have to leak this node.
-        return;
+        if (m_TopNodeIndex == ARRAYSIZE(m_TopNode->Nodes))
+        {
+            // The current stack element is full.
+            // Get another one from the FreeList.
+            // The caller is responsible for ensuring that
+            // there are enough elements in the free list.
+            assert(m_FreeList != NULL);
+
+            // Pop the node off the free list
+            LIST_NODE * newNode = reinterpret_cast<LIST_NODE*>(m_FreeList);
+            m_FreeList = m_FreeList->Next;
+
+#ifdef MEM_DEBUG
+            // Initialize the unused node slots to a recognizable value
+            for (size_t i = 0; i < ARRAYSIZE(m_FreeList->Nodes); i++)
+            {
+                newNode->Nodes[i] = (NODE*)0xDCDCDCDC;
+            }
+#endif
+
+            // Push this node onto the deferred stack
+            newNode->Next  = m_TopNode;
+            m_TopNode      = newNode;
+            m_TopNodeIndex = 0;
+        }
+
+        // Now m_TopNode[m_TopNodeIndex] is an open slot.  Use it.
+        m_TopNode->Nodes[m_TopNodeIndex] = DeferredNode;
+        m_TopNodeIndex++;
     }
 
-    // push node onto the garbage-collection stack
-    // to be garbage collected in due time
-    *gctop++ = nd;
-}
+    void MaybeGarbageCollect(NODE * Node)
+    {
+        // REVISIT: Should this be reconciled with deref?
+        if (Node != NIL)
+        {
+            if (decrefcnt(Node) == 0)
+            {
+                PushDeferredNode(Node);
+            }
+        }
+    }
+
+    bool DeferredStackIsEmpty()
+    {
+        return m_TopNode == NULL;
+    }
+
+    NODE * PopDeferredNode()
+    {
+        if (m_TopNode == NULL)
+        {
+            // There are no deferred nodes remaining.
+            assert(m_TopNodeIndex == ARRAYSIZE(m_TopNode->Nodes));
+            return NIL;
+        }
+
+        // Decrement m_TopNodeIndex to the next used slot.
+        m_TopNodeIndex--;
+
+        // Return the node in the m_TopNodeIndex slot.
+        NODE * deferredNode = m_TopNode->Nodes[m_TopNodeIndex];
+
+#ifdef MEM_DEBUG
+        // Set the now freed slot to a recognizable value.
+        m_TopNode->Nodes[m_TopNodeIndex] = (NODE*)0xABABABAB;
+#endif
+
+        if (m_TopNodeIndex == 0)
+        {
+            // That was the last node in this block.
+            // Move it back to the free list.
+
+            // Pop this node from the deferred GC list.
+            LIST_NODE * node = m_TopNode;
+            m_TopNode      = m_TopNode->Next;
+            m_TopNodeIndex = ARRAYSIZE(m_TopNode->Nodes);
+
+            // Push it node onto the free list.
+            node->Next = m_FreeList;
+            m_FreeList = node;
+        }
+
+        return deferredNode;
+    }
+
+    void Uninitialize()
+    {
+        // If the GC stack is going to be uninitialized, there shouldn't
+        // be any nodes which are pending evaluation.
+        assert(m_TopNode == NULL);
+        assert(m_TopNodeIndex == ARRAYSIZE(m_TopNode->Nodes));
+
+        LIST_NODE * nextNode;
+        for (LIST_NODE * node = m_FreeList; node != NULL; node = nextNode)
+        {
+            // Remember what the next node is, before we free node.
+            nextNode = node->Next;
+
+#ifdef MEM_DEBUG
+            // The easiest way to debug leaks is to just free the node.
+            free(node);
+#else
+            // "free" this node by adding it to the free list
+            NODE * logoNode = reinterpret_cast<NODE*>(node);
+            logoNode->nunion.ncons.ncdr = free_list;
+            free_list = logoNode;
+#endif
+        }
+
+        m_FreeList = NULL;
+    }
+
+private:
+    // A pointer to a list of GC deferred list nodes that
+    // contains no NODEs.  This is a "free" list that can be
+    // used when we need to expand the stack.
+    // TODO: Merge this with the global "free list"
+    LIST_NODE * m_FreeList;
+
+    // This is the first node in the GC deferred list that has
+    // NODE* in it that still need to be garbage collected.
+    LIST_NODE * m_TopNode;
+    int         m_TopNodeIndex;
+};
+
 
 void gc(NODE *nd)
 {
-    for (;;)
+    CGarbageCollectionStack gc_deferred_list;
+
+    gc_deferred_list.Initialize();
+
+    while (nd != NIL)
     {
         NODE *tcar;
         NODE *tcdr;
@@ -249,14 +388,9 @@ void gc(NODE *nd)
         {
         case PUNBOUND:
             nd->ref_count = 10000;  // save some time
-        case PNIL:
-            if (gctop == gcstack) 
-            {
-                // no more nodes to garbage collect
-                return;
-            }
+
             // get ready to garbage collect the next node
-            nd = *--gctop;
+            nd = gc_deferred_list.PopDeferredNode();
             continue;
 
         case LINE:
@@ -284,6 +418,10 @@ void gc(NODE *nd)
             while (--i >= 0)
             {
                 tobj = *pp++;
+
+                // BUG: deref(tobj) can potentially call gc(),  which
+                // means that it could cause a stack overflow.
+                // The deref() should be reworked to use the gcstack.
                 deref(tobj);
             }
             free(getarrptr(nd));
@@ -300,7 +438,7 @@ void gc(NODE *nd)
                 // Decrement the reference count and free it, if necessary.
                 unsigned short *temp = (unsigned short *) getstrhead(nd);
 
-                assert(*temp != 0); // BUG: the string was already freed
+                assert(*temp != 0); // the string was already freed
                 if (decstrrefcnt(temp) == 0) 
                 {
                     free(getstrhead(nd));
@@ -317,33 +455,28 @@ void gc(NODE *nd)
             break;
 
         default:
-            assert(0 && "freeing unrecognized node type");
+            assert(!"freeing unrecognized node type");
         }
-
-#ifdef MEM_DEBUG
-        // The easiest way to debug leaks is to just free the node.
-        free(nd);
-#else
-        // "free" this node by adding it to the free list
-        nd->nunion.ncons.ncdr = free_list;
-        free_list = nd;
-#endif
 
         mem_nodes--;
 
-        maybe_gc(tcdr);
-        maybe_gc(tcar);
-        maybe_gc(tobj);
+        // At this point, we no longer need "nd", so we can
+        // use its memory as bookkeeping space for the nodes
+        // that we wish to free.
+        gc_deferred_list.AddMemory(nd);
 
-        if (gctop == gcstack) 
-        {
-            // no more nodes to garbage collect
-            return;
-        }
+        // Check if any of the child noded can be garbage collected
+        gc_deferred_list.MaybeGarbageCollect(tcar);
+        gc_deferred_list.MaybeGarbageCollect(tcdr);
+        gc_deferred_list.MaybeGarbageCollect(tobj);
 
-        // garbage-collect whatever node is at the top of the stack
-        nd = *--gctop;
+        // get ready to garbage collect the next node
+        nd = gc_deferred_list.PopDeferredNode();
     }
+
+    // Free all of the nodes which were marked has having
+    // no further references as a result of freeing nd.
+    gc_deferred_list.Uninitialize();
 }
 
 NODE *lnodes(NODE *  /* args */)
