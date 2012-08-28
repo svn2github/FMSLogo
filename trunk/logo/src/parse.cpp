@@ -607,12 +607,15 @@ NODE *list_to_array(NODE *list)
     int len = list_length(list);
 
     NODE * result = make_array(len);
-    setarrorg(result, 1);
-
-    int i = 0;
-    for (NODE * np = list; np; np = cdr(np))
+    if (NOT_THROWING)
     {
-        (getarrptr(result))[i++] = vref(car(np));
+        setarrorg(result, 1);
+
+        int i = 0;
+        for (NODE * np = list; np; np = cdr(np))
+        {
+            (getarrptr(result))[i++] = vref(car(np));
+        }
     }
 
     return result;

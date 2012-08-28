@@ -776,6 +776,8 @@ int list_length(const NODE * List)
     return length;
 }
 
+// Constructs an array node with "len" elements, all of which are NIL.
+// Returns Unbound when out of memory.
 NODE *make_array(int len)
 {
     NODE* node = newnode(ARRAY);

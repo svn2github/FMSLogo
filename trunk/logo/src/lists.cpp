@@ -1019,8 +1019,12 @@ NODE *larray(NODE *args)
     {
         int d = getint(arg);
         arg = make_array(d);
-        setarrorg(arg, o);
-        return arg;
+
+        if (NOT_THROWING)
+        {
+            setarrorg(arg, o);
+            return arg;
+        }
     }
     return Unbound;
 }
