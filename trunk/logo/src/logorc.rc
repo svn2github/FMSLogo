@@ -8,7 +8,6 @@
 #include "localizedstrings.h"
 #include "logorc.h"
 
-#include "stdwnds.rc"
 #include "filemenu.rc"
 
 LOGOICON ICON "logo.ico"
