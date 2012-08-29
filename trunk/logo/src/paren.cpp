@@ -69,7 +69,8 @@ void untreeify_body(NODE *body)
 {
     NODE *body_ptr;
 
-    for (body_ptr = body; body_ptr != NIL; body_ptr = cdr(body_ptr)) {
+    for (body_ptr = body; body_ptr != NIL; body_ptr = cdr(body_ptr))
+    {
         untreeify_line(car(body_ptr));
     }
     untreeify(body);
@@ -320,7 +321,7 @@ NODE *paren_line(NODE *line)
             gcref(parenthesizedLine.GetList());
             return Unbound;
         }
-      
+
         addition = paren_infix(addition, &line, -1, false);
         parenthesizedLine.AppendElement(addition);
     }
@@ -430,7 +431,7 @@ NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
         // primitive
         min = (inparen ? getprimmin(proc) : getprimdflt(proc));
         if (min < 0)
-        {            
+        {
             // special form (either TO or .MACRO)
             return ((logofunc) *getprimfun(proc)) (*args);
         }
@@ -443,7 +444,7 @@ NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
 
         max = (inparen ? getprimmax(proc) : getprimdflt(proc));
     }
-      
+
     return gather_some_args(min, max, args, inparen, ifnode);
 }
 
