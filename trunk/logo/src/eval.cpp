@@ -55,6 +55,20 @@
 #define restore2(reg1,reg2) (assign(reg2,getobject(stack)), \
            assign(reg1,car(stack)), pop(stack))
 
+// save/restore two NODEs, only one of which is reference counted.
+#define mixednodesave(unreferenced_node,referenced_node) \
+       (numpush((FIXNUM)unreferenced_node,&stack), \
+        setobject(stack,referenced_node))
+#define mixednoderestore(unreferenced_node,referenced_node) \
+       deref(referenced_node); referenced_node=getobject(stack); \
+       unreferenced_node=car(stack); numpop(&stack)
+
+// save/restore an unreferenced node
+#define unreferencednodesave(unreferenced_node)   \
+        numpush((FIXNUM)unreferenced_node, &stack)
+#define unreferencednoderestore(unreferenced_node) \
+        (unreferenced_node=car(stack), numpop(&stack))
+
 // save/restore a FIXNUM
 #define numsave(register)   numpush(register, &stack)
 #define numrestore(register) (register=(FIXNUM)car(stack), numpop(&stack))
@@ -348,13 +362,11 @@ NODE *evaluator(NODE *list, enum labels where)
     NODE *arg = NIL;          // the current actual
 
     // Registers that don't get reference counted.
-    // REVISIT: Should these be saved/restored as numbers
-    // so that we don't try to increment/decrement the ref
-    // count?  There have been a few bugs where not setting
-    // these to NIL have crashed because of this.
-    NODE * var_stack_position = NIL;  // temp ptr into var_stack
-    FIXNUM cont    = 0;               // where to go next (an enum label)
-    NODE * formals = NIL;             // list of formal parameters
+    // These be saved/restored as numbers so that we
+    // don't try to increment/decrement the ref count.
+    NODE * var_stack_position;  // temp ptr into var_stack
+    FIXNUM cont;                // where to go next (an enum label)
+    NODE * formals;             // list of formal parameters
 
     int i;
     bool tracing;                 // are we tracing the current procedure?
@@ -687,7 +699,7 @@ NODE *evaluator(NODE *list, enum labels where)
     // be added as a local variable.
     // Since each parameter must be evaluated independently, we
     // need to save the current position in the var_stack so that
-    // we can each parameter is evaluated only with the original
+    // each parameter is evaluated only with the original
     // var_stack and not the accumulated one (with which the body of
     // the lambda apply will be evaluated).
     var_stack_position = var_stack;
@@ -696,7 +708,6 @@ NODE *evaluator(NODE *list, enum labels where)
          formals != NIL;
          formals = cdr(formals))
     {
-
         parm = car(formals);
         if (nodetype(parm) == INTEGER) 
         {
@@ -704,9 +715,6 @@ NODE *evaluator(NODE *list, enum labels where)
 
             // This is always listed after the last parameter, so we
             // can break out of the loop.
-
-            // set formals to NIL so that it doesn't get deref'ed in restore
-            formals = NIL;
             break;
         }
 
@@ -774,11 +782,6 @@ NODE *evaluator(NODE *list, enum labels where)
 
                 assign(argl, NIL);
 
-                // Set formals to NIL so that it doesn't get deref'ed in restore2()
-                // Otherwise this could crash. 
-                // See bug #1563318.
-                formals = NIL;
-
                 // Because parm was a "rest" input, we have all of the
                 // inputs for this procedure call and can break out
                 // of the loop.
@@ -791,19 +794,17 @@ NODE *evaluator(NODE *list, enum labels where)
                 // means evaluating cdr(parm).
 
                 // These register values are stored in set_args_continue.
-                // REVISIT: would it be faster if these were 
-                // saved/restored if is_tree(list)?
                 save2(fun, var);
                 save2(ufun, last_ufun);
                 save2(this_line, last_line);
                 save2(didnt_output_name, didnt_get_output);
                 num2save(ift_iff_flag, g_ValueStatus);
-                assign(var, var_stack);
+                mixednodesave(formals, argl);
+                unreferencednodesave(var_stack_position);
+
                 tailcall = -1;
                 g_ValueStatus = VALUE_STATUS_Required;
-                save2(formals, argl);
-                save(var_stack_position);
-
+                assign(var, var_stack);
                 assign(list, cdr(parm));
                 if (NOT_THROWING)
                 {
@@ -826,8 +827,8 @@ NODE *evaluator(NODE *list, enum labels where)
             set_args_continue:
                 // We have evaluated the default value, which is
                 // now in "val".
-                restore(var_stack_position);
-                restore2(formals, argl);
+                unreferencednoderestore(var_stack_position);
+                mixednoderestore(formals, argl);
                 parm = car(formals);
                 reset_args(var);
                 num2restore(ift_iff_flag, g_ValueStatus);
@@ -835,6 +836,9 @@ NODE *evaluator(NODE *list, enum labels where)
                 restore2(this_line, last_line);
                 restore2(ufun, last_ufun);
                 restore2(fun, var);
+
+                // Act like the evaluated default value for this parameter
+                // was passed in as an argument.
                 arg = val;
             }
 
@@ -842,19 +846,12 @@ NODE *evaluator(NODE *list, enum labels where)
             setvalnode__caseobj(car(parm), arg);
         }
 
-        // advance to the next argument in the list
+        // advance to the next argument in the list, if one exists
         if (argl != NIL) 
         {
             pop(argl);
         }
     }
-
-    // Now that the evaluation of parameters is complete, we do
-    // not need to maintain the position in the var stack anymore.
-    // Set the value to NIL so that it can safely be restored()
-    // with inadvertantly attempting to decrement a potentially
-    // bogus pointer.
-    var_stack_position = NIL;
 
     if (argl != NIL) 
     {

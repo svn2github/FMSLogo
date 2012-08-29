@@ -23,13 +23,15 @@ II. New features/bugs fixed:
 
     o Fix bug #3551212; FMSLogo once again places the editor's caret at the
       first error when saving the contents fails due to a syntax error.
-    o Fix bug #3150920; FMSlogo no longer corrupts internal memory when halted
-      while evaluating a parameter's default value that requires a separate
-      function call.
+    o Fix bug #3150920; FMSLogo no longer leaks memory or corrupts memory
+      when halted while evaluating a parameter's default value that requires
+      a separate function call.
     o Fix bug #1895669; NETSHUTDOWN no longer has a race condition that can
       corrupt internal memory.
     o Fix bug #1568629; FMSLogo no longer leaks memory when its internal
       garbage collection stack is exhausted.
+    o Fix bug #1471162; FMSLogo no longer leaks memory when calling procedures
+      that have parameters with default values.
     o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
