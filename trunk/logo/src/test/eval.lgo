@@ -64,10 +64,62 @@ TO EVALTEST.CATCHERRORMANYTIMES
   REPORTTESTPASSED [|The "catch 'too many inputs' error many times" test did not crash.|]
 END
 
-TO EVALTEST
+TO EVALTEST.BUG1471162.OUTPUT1234
+   OUTPUT 1234
+END
 
+TO EVALTEST.BUG1471162.PARAMETERWITHDEFAULTVALUE [:param EVALTEST.BUG1471162.OUTPUT1234]
+END
+
+TO EVALTEST.BUG1471162
+    ; Bug 1471162 is a leak when calling a procedure with
+    ; a default value whose evaluation requires calling
+    ; a non-primitive.
+    EVALTEST.BUG1471162.PARAMETERWITHDEFAULTVALUE
+END
+
+TO EVALTEST.PARAMSDONTPOLLUTEVARIABLES.PARAM1 [:Param1Param 123]
+
+   LOCALMAKE "Param1LocalVariable 123
+   OUTPUT 1234
+END
+
+TO EVALTEST.PARAMSDONTPOLLUTEVARIABLES.PARAM2
+
+   ; Param1 should be defined when evaluating Param2
+   SIMPLEREPORTTEST [NAMEP "Param1] LOCALETRUE
+
+   ; The parameters to the procedure which defined
+   ; Param1 should not be defined.
+   SIMPLEREPORTTEST [NAMEP "Param1Param] LOCALEFALSE
+
+   ; Local variables defined in the procedure which defined
+   ; Param1 should not be defined.
+   SIMPLEREPORTTEST [NAMEP "Param1LocalVariable] LOCALEFALSE
+
+   OUTPUT 1234
+END
+
+TO EVALTEST.PARAMSDONTPOLLUTEVARIABLES.INNER [:Param1 EVALTEST.PARAMSDONTPOLLUTEVARIABLES.PARAM1] [:Param2 EVALTEST.PARAMSDONTPOLLUTEVARIABLES.PARAM2]
+
+   ; The parameters to the procedure which defined
+   ; Param1 should not be defined.
+   SIMPLEREPORTTEST [NAMEP "Param1Param] LOCALEFALSE
+
+   ; Local variables defined in the procedure which defined
+   ; Param1 should not be defined.
+   SIMPLEREPORTTEST [NAMEP "Param1LocalVariable] LOCALEFALSE
+END
+
+TO EVALTEST.PARAMSDONTPOLLUTEVARIABLES
+   LOCAL [Param1 Param1Variable Param1Param Param2]
+   EVALTEST.PARAMSDONTPOLLUTEVARIABLES.INNER
+END
+
+TO EVALTEST
    EVALTEST.CATCHERRORMANYTIMES
    EVALTEST.TAILRECURSIVE
    EVALTEST.NONTAILRECURSIVE
-
+   EVALTEST.BUG1471162
+   EVALTEST.PARAMSDONTPOLLUTEVARIABLES
 END
