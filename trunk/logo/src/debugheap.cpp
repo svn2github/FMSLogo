@@ -47,6 +47,13 @@ struct memory_header_t
     struct memory_header_t *  next;
 };
 
+struct node_information_t
+{
+    const NODE * node;
+    long         block_id;
+    long         actual_reference_count;
+};
+
 static struct memory_header_t g_allocated_blocks;
 static long g_nextid             = 1;
 static long g_break_alloc_id     = 0;
@@ -73,6 +80,15 @@ debug_header_to_userptr(
     )
 {
     return reinterpret_cast<unsigned char *>(header + 1);
+}
+
+static
+const unsigned char *
+debug_header_to_userptr(
+    const memory_header_t * header
+    )
+{
+    return reinterpret_cast<const unsigned char *>(header + 1);
 }
 
 const char *debug_typename_to_string(const NODE *nd)
@@ -128,6 +144,42 @@ debug_print_node(const NODE* node)
 }
 
 static
+const NODE *
+get_node(const struct memory_header_t * block)
+{
+    const void * userptr = debug_header_to_userptr(block);
+
+    if (block->blocksize == sizeof(NODE) &&
+        0 == memcmp(userptr, "NODE", 4))
+    {
+        return static_cast<const NODE*>(userptr);
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
+static
+void
+note_reference(
+    const NODE                * node,
+    struct node_information_t * elements,
+    long                        total_elements
+    )
+{
+    for (long i = 0; i < total_elements; i++)
+    {
+        if (elements[i].node == node)
+        {
+            // found it
+            elements[i].actual_reference_count++;
+            return;
+        }
+    }
+}
+
+static
 void 
 debug_report_leaks(void)
 {
@@ -147,10 +199,7 @@ debug_report_leaks(void)
             total_bytes_leaked += current_block->blocksize;
             total_blocks_leaked++;
 
-            void * userptr = debug_header_to_userptr(current_block);
-
-            if (current_block->blocksize == sizeof(NODE) &&
-                0 == memcmp(userptr, "NODE", 4))
+            if (get_node(current_block) != NULL)
             {
                 total_nodes_leaked++;
             }
@@ -170,7 +219,7 @@ debug_report_leaks(void)
             unsigned char * ptr = static_cast<unsigned char*>(userptr);
 
             TraceOutput(
-                "(id=%8lu) %8u bytes at 0x%X: <", 
+                "(id=%8lu) %8u bytes at 0x%08X: <",
                 current_block->id,
                 current_block->blocksize,
                 ptr);
@@ -218,31 +267,118 @@ debug_report_leaks(void)
 
         if (total_nodes_leaked != 0)
         {
-            TraceOutput("\n");
-            TraceOutput("Dumping leaked NODEs\n");
-            for (struct memory_header_t * current_block = g_allocated_blocks.next;
-                 current_block != &g_allocated_blocks;
-                 current_block = current_block->next)
+            struct node_information_t * node_information = 
+                static_cast<struct node_information_t *>(calloc(
+                    total_nodes_leaked,
+                    sizeof(struct node_information_t)));
+
+            if (node_information != NULL)
             {
-                void * userptr = debug_header_to_userptr(current_block);
-
-                if (current_block->blocksize == sizeof(NODE) &&
-                    0 == memcmp(userptr, "NODE", 4))
+                // Initialize the additional node information array.
+                int i = 0;
+                for (const struct memory_header_t * current_block = g_allocated_blocks.next;
+                     current_block != &g_allocated_blocks;
+                     current_block = current_block->next)
                 {
-                    NODE * current_node = static_cast<NODE*>(userptr);
+                    const NODE * current_node = get_node(current_block);
+                    if (current_node != NULL)
+                    {
+                        if (node_information != NULL)
+                        {
+                            node_information[i].node                   = current_node;
+                            node_information[i].block_id               = current_block->id;
+                            node_information[i].actual_reference_count = 0;
+                        }
 
+                        i++;
+                    }
+                }
+
+                // Populate the additional node information.
+                i = 0;
+                for (const struct memory_header_t * current_block = g_allocated_blocks.next;
+                     current_block != &g_allocated_blocks;
+                     current_block = current_block->next)
+                {
+                    const NODE * current_node = get_node(current_block);
+                    if (current_node != NULL)
+                    {
+                        switch (nodetype(current_node))
+                        {
+                        case LINE:
+                        case CONS:
+                        case CASEOBJ:
+                        case RUN_PARSE:
+                        case QUOTE:
+                        case COLON:
+                        case TREE:
+                            // These node types may have a CAR, a CDR, and an OBJ
+                            note_reference(
+                                car(current_node),
+                                node_information,
+                                total_nodes_leaked);
+
+                            note_reference(
+                                cdr(current_node),
+                                node_information,
+                                total_nodes_leaked);
+
+                            note_reference(
+                                getobject(current_node),
+                                node_information,
+                                total_nodes_leaked);
+                            break;
+
+                        case CONT:
+                            // Continuation nodes only have a valid cdr.
+                            note_reference(
+                                cdr(current_node),
+                                node_information,
+                                total_nodes_leaked);
+                            break;
+
+                        case ARRAY:
+                            {
+                                NODE ** pp        = getarrptr(current_node);
+                                int     dimension = getarrdim(current_node);
+                                while (--dimension >= 0)
+                                {
+                                    note_reference(
+                                        *pp,
+                                        node_information,
+                                        total_nodes_leaked);
+
+                                    pp++;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                // Display the leaked nodes
+                TraceOutput("\n");
+                TraceOutput("Dumping leaked NODEs\n");
+                for (i = 0; i < total_nodes_leaked; i++)
+                {
                     TraceOutput(
-                        "(id=%8lu) at 0x%X %s ref=%d:\n  ",
-                        current_block->id,
-                        current_node,
-                        debug_typename_to_string(current_node),
-                        getrefcnt(current_node));
+                        "(id=%8lu) at 0x%08X %s reported_refs=%d computed_refs=%d:%s\n",
+                        node_information[i].block_id,
+                        node_information[i].node,
+                        debug_typename_to_string(node_information[i].node),
+                        getrefcnt(node_information[i].node),
+                        node_information[i].actual_reference_count,
+                        node_information[i].actual_reference_count == 0 ?
+                            " <--- TOP_LEVEL_LEAK" :
+                            "");
 
-                    debug_print_node(current_node);
+                    debug_print_node(node_information[i].node);
 
                     TraceOutput("\n");
                 }
             }
+
+            free(node_information);
         }
     }
 }
