@@ -295,7 +295,6 @@ debug_report_leaks(void)
                 }
 
                 // Populate the additional node information.
-                i = 0;
                 for (const struct memory_header_t * current_block = g_allocated_blocks.next;
                      current_block != &g_allocated_blocks;
                      current_block = current_block->next)
@@ -413,6 +412,14 @@ initialize_memory_tracking(
 
 void * debug_malloc(size_t blocksize)
 {
+    size_t realsize = blocksize + sizeof(memory_header_t);
+    if (realsize < blocksize) 
+    {
+        // There was integer overflow, so blocksize it
+        // too large to allocate.
+        return NULL;
+    }
+
     void * realptr = malloc(sizeof(memory_header_t) + blocksize);
     if (realptr == NULL) 
     {
@@ -421,7 +428,7 @@ void * debug_malloc(size_t blocksize)
 
     if (g_break_alloc_id == g_nextid)
     {
-        // the user has requested that we break on this allocation
+        // The user has requested that we break on this allocation.
         DebugBreak();
     }
 
@@ -499,6 +506,12 @@ void debug_free(void * userptr)
 void * debug_calloc(size_t arraylength, size_t elementsize)
 {
     size_t blocksize = arraylength * elementsize;
+    if (blocksize < elementsize || blocksize < arraylength)
+    {
+        // Integer overflow when calculating the size
+        // This is too large to allocate.
+        return NULL;
+    }
 
     void * ptr = debug_malloc(blocksize);
     if (ptr == NULL) 
