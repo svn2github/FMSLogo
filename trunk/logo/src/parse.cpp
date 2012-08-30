@@ -665,7 +665,8 @@ parser_iterate(
         }
         if (++ (*inln) >= inlimit) 
         {
-            *inln = &terminate;
+            // Fake a NUL terminator
+            *inln = inlimit = &terminate;
         }
 
         /* skip through comments and line continuations */
@@ -679,7 +680,8 @@ parser_iterate(
             {
                 if (++ (*inln) >= inlimit) 
                 {
-                    *inln = &terminate;
+                    // Fake a NUL terminator
+                    *inln = inlimit = &terminate;
                 }
                 ch = **inln;
                 if (word_length == 0)
@@ -701,7 +703,8 @@ parser_iterate(
                 }
                 if (++ (*inln) >= inlimit) 
                 {
-                    *inln = &terminate;
+                    // Fake a NUL terminator
+                    *inln = inlimit = &terminate;
                 }
             }
 
@@ -726,7 +729,8 @@ parser_iterate(
 
                     if (++ (*inln) >= inlimit) 
                     {
-                        *inln = &terminate;
+                        // Fake a NUL terminator
+                        *inln = inlimit = &terminate;
                     }
                 }
 
@@ -788,20 +792,29 @@ parser_iterate(
         else if (ch == '{')
         {
             NODE * array_as_list = parser_iterate(inln, inlimit, ignore_comments, '}');
-            tnode = cons_list(list_to_array(array_as_list));
+            NODE * array         = list_to_array(array_as_list);
             gcref(array_as_list);
-            if (**inln == '@')
-            {
-                // parse the origin as a decimal number
-                char * unparsedPortion;
-                long origin = strtol((*inln) + 1, &unparsedPortion, 10);
-                *inln = unparsedPortion;
 
-                setarrorg(car(tnode), origin);
-            }
-            if (**inln == '\0') 
+            if (NOT_THROWING)
             {
-                ch = '\0';
+                tnode = cons_list(array);
+                if (**inln == '@')
+                {
+                    // parse the origin as a decimal number
+                    char * unparsedPortion;
+                    long origin = strtol((*inln) + 1, &unparsedPortion, 10);
+                    *inln = unparsedPortion;
+
+                    setarrorg(car(tnode), origin);
+                }
+                if (**inln == '\0') 
+                {
+                    ch = '\0';
+                }
+            }
+            else
+            {
+                tnode = NIL;
             }
         }
         else if (white_space(ch) || ch == '\0' ||
@@ -842,7 +855,7 @@ parser_iterate(
 
         // put the word onto the end of the return list
         return_list.AppendList(tnode);
-    } while (ch);
+    } while (ch != '\0');
 
 
     return return_list.GetList();
