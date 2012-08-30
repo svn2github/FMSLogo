@@ -250,8 +250,10 @@ NODE *paren_expr(NODE **expr, bool inparen)
         {
             // it must be a procedure
             NODE * proc = load_procedure_if_necessary(first);
-            if (proc == UNDEFINED && NOT_THROWING)
+            if (proc == UNDEFINED)
             {
+                // Even after attempting a silent load of
+                // the procedure, it couldn't be defined.
                 retval = cons_list(first);
                 tree_dk_how = true;
             }
