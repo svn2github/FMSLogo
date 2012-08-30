@@ -780,23 +780,43 @@ int list_length(const NODE * List)
 // Returns Unbound when out of memory.
 NODE *make_array(int len)
 {
-    NODE* node = newnode(ARRAY);
-    setarrorg(node, 1);
-    setarrdim(node, len);
-    if (len != 0)
-    {
-        NODE ** data = (NODE **) malloc(len * sizeof(NODE *));
-        if (data == NULL)
+    assert(0 <= len);  // can't have a negative length array
+
+#ifdef BORLAND
+        // Borland's calloc() doesn't handle overflow,
+        // so we must do it ourselves.
+        if (sizeof(NODE*) * len + 100 < len)
         {
+            // There would be an integer overflow when
+            // calculating the size of the internal array.
             err_logo(OUT_OF_MEM, NIL);
             return Unbound;
         }
-        setarrptr(node, data);
-        while (--len >= 0)
+#endif
+
+
+    NODE ** data;
+    if (len != 0)
+    {
+        // calloc() handles both integer overflow and
+        // initializing each of the members to NIL.
+        data = (NODE **) calloc(sizeof *data, len);
+        if (data == NULL)
         {
-            *data++ = NIL;
+            // The array is too large to allocate.
+            err_logo(OUT_OF_MEM, NIL);
+            return Unbound;
         }
     }
+    else
+    {
+        data = NULL;
+    }
+
+    NODE* node = newnode(ARRAY);
+    setarrptr(node, data);
+    setarrorg(node, 1);
+    setarrdim(node, len);
     return node;
 }
 
