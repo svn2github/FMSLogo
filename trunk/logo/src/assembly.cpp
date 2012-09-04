@@ -18,9 +18,115 @@
 #include <time.h>
 #include "startup.h"
 
+
+// Input a byte from a port
+static unsigned char asm_inportb(unsigned short port)
+{
+   unsigned char value = 0;
+
+#ifndef NOASM
+#if defined __BORLANDC__
+        _asm
+        {
+            mov dx,    port
+            xor al,    al
+            in  al,    dx
+            mov value, al
+        }
+#elif defined __GNUC__
+        asm(
+            "inb %1, %0;"
+            : "=a"(value)   // output
+            : "d" (port)    // input
+            :
+            );
+#else
+#  error Assembly code not supported on this compiler.
+#endif // assembly by compiler
+#endif // NOASM
+
+   return value;
+}
+
+// Input a word from a port
+static unsigned short asm_inport(unsigned short port)
+{
+   unsigned short value = 0;
+
+#ifndef NOASM
+#if defined __BORLANDC__
+        _asm
+        {
+            mov dx,    port
+            xor ax,    ax
+            in  ax,    dx
+            mov value, ax
+        }
+#elif defined __GNUC__
+        asm(
+            "in %1, %0;"
+            : "=a"(value)  // output
+            : "d" (port)   // input
+            :
+            );
+#else
+#  error Assembly code not supported on this compiler.
+#endif // assembly by compiler
+#endif // NOASM
+
+   return value;
+}
+
+// Write a byte to a port
+static void asm_outportb(unsigned short port, unsigned char value)
+{
+#ifndef NOASM
+#if defined __BORLANDC__
+        _asm
+        {
+            mov dx, port
+            mov al, value
+            out dx, al
+        }
+#elif defined __GNUC__
+        asm(
+            "outb %1, %0;"
+            :                         // outputs
+            : "d" (port), "a"(value)  // inputs
+            :                         // clobbered
+            );
+#else
+#  error Assembly code not supported on this compiler.
+#endif // assembly by compiler
+#endif // NOASM
+}
+
+// Write a word to a port
+static void asm_outport(unsigned short port, unsigned short value)
+{
+#ifndef NOASM
+#if defined __BORLANDC__
+        _asm
+        {
+            mov dx, port
+            mov ax, value
+            out dx, ax
+        }
+#elif defined __GNUC__
+        asm(
+            "out %1,%0;"
+            :                         // outputs
+            : "d" (port), "a"(value)  // inputs
+            :                         // clobbered
+            );
+#else
+#  error Assembly code not supported on this compiler.
+#endif // assembly by compiler
+#endif // NOASM
+}
+
 BOOL MyBeep(DWORD frequency, DWORD duration)
 {
-   
     // Beep() ignores frequency/duration on Win9X series
     if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
     {
@@ -29,41 +135,35 @@ BOOL MyBeep(DWORD frequency, DWORD duration)
     }
     else
     {
-        // interface directly with the hardware
-      
-#ifndef NOASM
+        // interface directly with the Intel 8254 programmable interval timer.
         WORD count = 1193180L / frequency;
         unsigned char count_lo = LOBYTE(count);
         unsigned char count_hi = HIBYTE(count);
 
-        _asm
-        {
-            mov al, 0xB6
-            out 0x43, al
-            mov al, count_lo
-            out 0x42, al
-            mov al, count_hi
-            out 0x42, al
-            xor al, al
-            in al, 0x61
-            or al, 0x03
-            out 0x61, al
-        }
+        // Write 0xB6 to port 0x43.
+        // This sets the hardware into mode 3: Square Wave, and configures
+        // counter 2 to be at port 0x42 as two separate bytes.
+        asm_outportb(0x43, 0xB6);
 
+        // How long to wait to port 0x42 as two bytes
+        asm_outportb(0x42, count_lo);
+        asm_outportb(0x42, count_hi);
+
+        // Read status byte from port 0x61, set the bottom two bits in
+        // order to turn on the timer and the speaker, then write it back.
+        unsigned char status = asm_inportb(0x61);
+        asm_outportb(0x61, status | 0x03);
+
+        // Wait for the time to pass
         clock_t endTime = duration + clock();
         while (endTime > clock())
         {
             // empty loop
         }
 
-        _asm
-        {
-            xor al, al
-            in al, 0x61
-            xor al, 0x03
-            out 0x61, al
-        }
-#endif // NOASM
+        // Turn off the timer and the speaker.
+        status = asm_inportb(0x61);
+        asm_outportb(0x61, status & 0xFC);
     }
 
     return TRUE;
@@ -74,14 +174,7 @@ void Myoutportb(short portid, unsigned char value)
     // the assembly code would crash on Windows NT
     if (g_OsVersionInformation.dwPlatformId != VER_PLATFORM_WIN32_NT)
     {
-#ifndef NOASM
-        _asm
-        {
-            mov dx, portid
-            mov al, value
-            out dx, al
-        }
-#endif // NOASM
+        asm_outportb(portid, value);
     }
 }
 
@@ -140,15 +233,7 @@ unsigned char Myinportb(short portid)
     }
     else
     {
-#ifndef NOASM
-        _asm
-        {
-            mov dx, portid
-            xor al, al
-            in al, dx
-            mov value, al
-        }
-#endif // NOASM
+        value = asm_inportb(portid);
     }
 
     return value;
@@ -159,14 +244,7 @@ void Myoutport(short portid, short value)
     // the assembly code would crash on Windows NT
     if (g_OsVersionInformation.dwPlatformId != VER_PLATFORM_WIN32_NT)
     {
-#ifndef NOASM
-        _asm
-        {
-            mov dx, portid
-            mov ax, value
-            out dx, ax
-        }
-#endif // NOASM
+        asm_outport(portid, value);
     }
 }
 
@@ -226,15 +304,7 @@ short Myinport(short portid)
     }
     else
     {
-#ifndef NOASM
-        _asm
-        {
-            mov dx, portid
-            xor ax, ax
-            in ax, dx
-            mov value, ax
-        }
-#endif // NOASM
+        value = asm_inport(portid);
     }
 
     return value;
@@ -310,4 +380,3 @@ int Myingameport(short portid, short mask)
 
     return value;
 }
-
