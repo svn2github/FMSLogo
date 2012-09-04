@@ -7,7 +7,7 @@ CXX=c:/mingw/bin/gcc.exe
 WINDRES=c:/mingw/bin/windres.exe
 
 INCLUDES = -I../src -I"C:\Program Files\HTML Help Workshop\include"
-DEFINES=FMSLOGO_SCREENSAVER NOASM
+DEFINES=FMSLOGO_SCREENSAVER
 CPPFLAGS=$(INCLUDES) $(addprefix -D,$(DEFINES))
 
 DEBUG_CXXFLAGS += -Wall -Wundef -Wno-ctor-dtor-privacy -O0 -g -DDEBUG -DMEM_DEBUG
@@ -111,7 +111,7 @@ obj/debug-%res.o : %.rc
 #
 msdbg : $(TARGET)msdbg.scr ;
 MSLIBS     = $(subst msvcrt,,$(subst stdc++,,$(LIBS)))
-MSCPPFLAGS = $(CPPFLAGS) -I"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\Include" -I"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\include" -D_CRT_SECURE_NO_WARNINGS
+MSCPPFLAGS = $(CPPFLAGS) -I"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\Include" -I"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\include" -D_CRT_SECURE_NO_WARNINGS -DNOASM
 
 $(TARGET)msdbg.scr : $(addprefix obj/msdbg-,$(DEBUG_OBJECTS))
 	link.exe /nologo /OUT:$@ /DEBUG /LIBPATH:"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\lib" /LIBPATH:"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\lib" /subsystem:windows /machine:I386 $(addsuffix .lib,$(MSLIBS)) -def:screensaver.def $^
