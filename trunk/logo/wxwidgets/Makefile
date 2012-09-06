@@ -51,7 +51,7 @@ endif
 
 TARGET_PREFIX=i686-pc-mingw32-
 
-LDFLAGS  += -mwindows 
+LDFLAGS  += -mwindows
 
 TOOLKIT = MSW
 TOOLKIT_LOWERCASE = msw
@@ -67,20 +67,15 @@ CXXFLAGS += -Wall -Wundef -Wno-ctor-dtor-privacy  -fno-strict-aliasing
 CXXFLAGS += -DFMSLOGO_WXWIDGETS
 CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
 CXXFLAGS += -I"/cygdrive/c/Program Files/HTML Help Workshop/include"
-#CXXFLAGS += -march=pentium
+
+# Meet FMSLogo's minimum system requirements
+CXXFLAGS += -march=pentium
 
 
-prefix = /usr/local
-exec_prefix = ${prefix}
-INSTALL = /usr/bin/install -c
-REZ = 
-SETFILE = 
 #BK_DEPS = $(wx_top_builddir)/bk-deps
-NM = nm
 srcdir = .
 LIBS = -lm
 CXX = $(TARGET_PREFIX)g++
-HOST_SUFFIX = 
 
 ### Variables: ###
 
@@ -218,13 +213,13 @@ fmslogo-$(1)$$(EXEEXT) : $$(addprefix obj/$(1)-,$$(OBJECTS))
 	$(CXX) -o $$@ $$^ $(LDFLAGS) -L$(LIBDIRNAME) $(LIBS) $(EXTRALIBS)
 
 obj/$(1)-%.o : $(srcdir)/%.cpp
-	$(CXXC) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
+	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
 
 obj/$(1)-%.o : $(srcdir)/../src/%.cpp
-	$(CXXC) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
+	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
 
 obj/$(1)-%.o : $(srcdir)/../src/scintilla/src/%.cxx
-	$(CXXC) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 -I$(srcdir)/../src/scintilla/include $$<
+	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 -I$(srcdir)/../src/scintilla/include $$<
 
 obj/$(1)-%_rc.o : %.rc
 	$(WINDRES) -i$$< -o$$@ -DLOCALE=$1 --define __WX$(TOOLKIT)__ $(RCDEFDIR) --include-dir $(srcdir) --include-dir $(top_srcdir)/include --include-dir $(wx_top_builddir)/include
