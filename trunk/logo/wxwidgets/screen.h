@@ -23,6 +23,7 @@ private:
     // event handlers
     void OnKeyDown(wxKeyEvent& Event);
     void OnKeyUp(wxKeyEvent& Event);
+    void OnChar(wxKeyEvent& Event);
     void OnScroll(wxScrollWinEvent & Event);
     void OnPaint(wxPaintEvent& PaintEvent);
     void OnSize(wxSizeEvent& Event);
