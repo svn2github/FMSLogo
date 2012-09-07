@@ -136,13 +136,15 @@ BOOL MyBeep(DWORD frequency, DWORD duration)
     else
     {
         // interface directly with the Intel 8254 programmable interval timer.
-        WORD count = 1193180L / frequency;
+
+        // The crystal oscilates at 1,193,182 Hz
+        WORD count = 1193182L / frequency;
         unsigned char count_lo = LOBYTE(count);
         unsigned char count_hi = HIBYTE(count);
 
         // Write 0xB6 to port 0x43.
         // This sets the hardware into mode 3: Square Wave, and configures
-        // counter 2 to be at port 0x42 as two separate bytes.
+        // counter 2 (port 0x42) to be read as two separate bytes.
         asm_outportb(0x43, 0xB6);
 
         // How long to wait to port 0x42 as two bytes
