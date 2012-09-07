@@ -283,7 +283,7 @@ CMainFrame::CLogoPicturePrintout::HasPage(int Page)
 
 enum MainFrameMenuIds
 {
-    ID_FILENEW,
+    ID_FILENEW = wxID_HIGHEST,
     ID_FILELOAD,
     ID_FILEOPEN,
     ID_FILESAVE,
