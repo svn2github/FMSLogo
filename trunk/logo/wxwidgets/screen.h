@@ -24,6 +24,11 @@ private:
     void OnKeyDown(wxKeyEvent& Event);
     void OnKeyUp(wxKeyEvent& Event);
     void OnChar(wxKeyEvent& Event);
+    void OnRightMouseButtonDown(wxMouseEvent& Event);
+    void OnRightMouseButtonUp(wxMouseEvent& Event);
+    void OnLeftMouseButtonDown(wxMouseEvent& Event);
+    void OnLeftMouseButtonUp(wxMouseEvent& Event);
+    void OnMouseMove(wxMouseEvent& Event);
     void OnScroll(wxScrollWinEvent & Event);
     void OnPaint(wxPaintEvent& PaintEvent);
     void OnSize(wxSizeEvent& Event);

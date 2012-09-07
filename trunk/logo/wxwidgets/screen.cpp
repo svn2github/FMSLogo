@@ -743,6 +743,49 @@ void CScreen::OnChar(wxKeyEvent& Event)
     }
 }
 
+static void ProcessMouseEvent(wxMouseEvent & Event, char * Callback)
+{
+    if (MouseCaptureIsEnabled)
+    {
+        // if user turned on mouse the queue up event
+        callthing * callevent = callthing::CreateMouseEvent(
+            Callback,
+            Event.GetX(),
+            Event.GetY());
+
+        calllists.insert(callevent);
+        checkqueue();
+    }
+
+    // Always do default processing
+    Event.Skip();
+}
+
+void CScreen::OnRightMouseButtonDown(wxMouseEvent& Event)
+{
+    ProcessMouseEvent(Event, mouse_rbuttondown);
+}
+
+void CScreen::OnRightMouseButtonUp(wxMouseEvent& Event)
+{
+    ProcessMouseEvent(Event, mouse_rbuttonup);
+}
+
+void CScreen::OnLeftMouseButtonDown(wxMouseEvent& Event)
+{
+    ProcessMouseEvent(Event, mouse_lbuttondown);
+}
+
+void CScreen::OnLeftMouseButtonUp(wxMouseEvent& Event)
+{
+    ProcessMouseEvent(Event, mouse_lbuttonup);
+}
+
+void CScreen::OnMouseMove(wxMouseEvent& Event)
+{
+    ProcessMouseEvent(Event, mouse_mousemove);
+}
+
 void CScreen::OnSize(wxSizeEvent& Event)
 {
     ScrollToRatio();
@@ -754,6 +797,11 @@ BEGIN_EVENT_TABLE(CScreen, wxScrolledWindow)
     EVT_KEY_DOWN(CScreen::OnKeyDown)
     EVT_KEY_UP(CScreen::OnKeyUp)
     EVT_CHAR(CScreen::OnChar)
+    EVT_LEFT_DOWN(CScreen::OnLeftMouseButtonDown)
+    EVT_LEFT_UP(CScreen::OnLeftMouseButtonUp)
+    EVT_RIGHT_DOWN(CScreen::OnRightMouseButtonDown)
+    EVT_RIGHT_UP(CScreen::OnRightMouseButtonUp)
+    EVT_MOTION(CScreen::OnMouseMove)
     EVT_PAINT(CScreen::OnPaint)
     EVT_SIZE(CScreen::OnSize)
     EVT_SCROLLWIN(CScreen::OnScroll)
