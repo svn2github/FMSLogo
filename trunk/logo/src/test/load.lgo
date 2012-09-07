@@ -25,6 +25,10 @@ TO LOADTEST.SMOKETEST
    SIMPLEREPORTTEST [ DEFINED? "ProcedureWithError              ] LOCALEFALSE
    SIMPLEREPORTTEST [ DEFINED? "ProcedureThatShouldNotBeDefined ] LOCALEFALSE
 
+   ; Test what happens when loading a file that outputs a value at the top level.
+   ; I'm not sure exactly what should happen,  but this at least exercises the
+   ; code path.
+   RUNEXPECTERRORTEST [LOAD "outputattoplevel.lgo] 30
 END
 
 TO LOADTEST

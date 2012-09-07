@@ -133,6 +133,7 @@ TO ERRORTEST
    IGNORE ERROR.30.TEST
 
    ; error 31: can only be tested at the top level
+   ; (SHELL [fmslogo.exe "outputattoplevel.lgo])
 
    (RUNEXPECTERRORTEST [APPLY "ONE.INPUT.NO.OUTPUT 1 ]        32 "|APPLY doesn't like 1 as input|)
    (RUNEXPECTERRORTEST [LOAD "endinmultilineinstruction.lgo]  33 "|END inside multi-line instruction in END.INSIDE.MULTILINE.INSTRUCTION|)
