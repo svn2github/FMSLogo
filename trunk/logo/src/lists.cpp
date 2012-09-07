@@ -1076,9 +1076,14 @@ NODE *lform(NODE *args)
     {
         char result[100];
       
+        // Take care not to overflow the buffer
         if (width >= sizeof(result))
         {
             width = sizeof(result) - 1;
+        }
+        if (precision > sizeof(result))
+        {
+            precision = sizeof(result) - 1;
         }
 
         sprintf(result, "%*.*f", width, precision, number);
