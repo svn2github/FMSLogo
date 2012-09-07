@@ -57,8 +57,9 @@
 #include "graphwin.h"
 #include "init.h"
 #include "main.h"
-#include "screenwindow.h" // for TraceOutput
-#include "mainwind.h" // for checkwindow()
+#include "screenwindow.h"   // for TraceOutput
+#include "mainwind.h"
+#include "logoeventqueue.h"
 #include "wrksp.h"
 #include "eval.h"
 #include "fileswnd.h"
@@ -1672,8 +1673,8 @@ void CMainFrame::OnBitmapOpen(wxCommandEvent& WXUNUSED(Event))
     // if user found a file then try to load it
     if (GetOpenFileName(&openFileName))
     {
-        DWORD dwPixelWidth  = 1;
-        DWORD dwPixelHeight = 1;
+        unsigned int dwPixelWidth  = 1;
+        unsigned int dwPixelHeight = 1;
 
         m_IsNewBitmap = false;
 

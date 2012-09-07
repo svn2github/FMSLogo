@@ -11,6 +11,8 @@
     #include <wx/dcmemory.h>
 #endif
 
+#include "devwind.h"
+#include "logoeventqueue.h"
 #include "fmslogo.h"
 #include "commander.h"
 #include "commanderinput.h"
@@ -437,11 +439,13 @@ void CScreen::OnKeyDown(wxKeyEvent& Event)
 {
     int keyCode = Event.GetKeyCode();
 
-#if 0
     // if keyboard was on and up and down is enabled then continue
     if (KeyboardCapture == KEYBOARDCAPTURE_KeyDownKeyUp)
     {
-        callthing *callevent = callthing::CreateKeyboardEvent(keyboard_keydown, Msg.WParam);
+        // TODO: Map WX keycodes to Windows key codes
+        callthing *callevent = callthing::CreateKeyboardEvent(
+            keyboard_keydown,
+            keyCode);
 
         calllists.insert(callevent);
         checkqueue();
@@ -451,31 +455,17 @@ void CScreen::OnKeyDown(wxKeyEvent& Event)
     }
 
     // scroll main window with arrow keys
-    if (Msg.WParam == VK_PRIOR ||
-        Msg.WParam == VK_UP)
+    if (keyCode == WXK_PRIOR ||
+        keyCode == WXK_UP    ||
+        keyCode == WXK_NEXT  ||
+        keyCode == WXK_DOWN  ||
+        keyCode == WXK_LEFT  ||
+        keyCode == WXK_RIGHT)
     {
-        Scroller->ScrollBy(0, -Scroller->YLine);
-    }
-    else if (Msg.WParam == VK_NEXT ||
-             Msg.WParam == VK_DOWN)
-    {
-        Scroller->ScrollBy(0, Scroller->YLine);
-    }
-    else if (Msg.WParam == VK_LEFT)
-    {
-        Scroller->ScrollBy(-Scroller->XLine, 0);
-    }
-    else if (Msg.WParam == VK_RIGHT)
-    {
-        Scroller->ScrollBy(Scroller->XLine, 0);
+        Event.Skip();
     }
     else if (KeyboardCapture == KEYBOARDCAPTURE_Off &&
-        );
-#endif
-
-    TraceOutput("CScreen::OnKeyDown()\n");
-
-    if (CCommanderInput::WantsKeyEvent(keyCode))
+             CCommanderInput::WantsKeyEvent(keyCode))
     {
         CCommander * commander = CFmsLogo::GetMainFrame()->GetCommander();
 
@@ -485,11 +475,9 @@ void CScreen::OnKeyDown(wxKeyEvent& Event)
     }
     else
     {
+        // default processing
         Event.Skip();
     }
-    
-
-    // default processing?
 }
 
 void CScreen::OnKeyUp(wxKeyEvent& Event)

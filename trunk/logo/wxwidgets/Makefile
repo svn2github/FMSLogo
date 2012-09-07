@@ -141,6 +141,7 @@ OBJECTS =                      \
     lists.o          \
     localizednode.o  \
     logodata.o       \
+    logoeventqueue.o \
     logomath.o       \
     mainwind.o       \
     mem.o            \

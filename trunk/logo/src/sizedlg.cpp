@@ -18,8 +18,10 @@
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
-
 #include "sizedlg.h"
+
+#include <stdio.h>
+
 #include "logorc.h"
 #include "localizedstrings.h"
 #include "main.h"

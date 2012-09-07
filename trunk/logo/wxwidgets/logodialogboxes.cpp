@@ -35,7 +35,7 @@
 
 #include "fmslogo.h"
 #include "mainframe.h"
-#include "mainwind.h"
+#include "logoeventqueue.h"
 #include "screen.h"
 #include "coms.h"
 #include "parse.h"

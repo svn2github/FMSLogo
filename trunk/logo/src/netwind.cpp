@@ -16,7 +16,7 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #include "netwind.h"
-#include "mainwind.h"
+#include "logoeventqueue.h"
 
 #include "init.h"
 #include "main.h"

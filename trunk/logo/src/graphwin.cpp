@@ -517,9 +517,9 @@ NODE *lbitsave(NODE *args)
 
 ERR_TYPES
 gifload_helper(
-    const char * GifFileName,
-    DWORD      & dwPixelWidth,
-    DWORD      & dwPixelHeight
+    const char   * GifFileName,
+    unsigned int & dwPixelWidth,
+    unsigned int & dwPixelHeight
     )
 {
     // convert the GIF to a DIB
@@ -552,9 +552,9 @@ NODE *lgifload(NODE *arg)
         return Unbound;
     }
 
-    DWORD dwPixelWidth = 1;
-    DWORD dwPixelHeight = 1;
-    ERR_TYPES status = gifload_helper(gifFileName, dwPixelWidth, dwPixelHeight);
+    unsigned int pixelWidth = 1;
+    unsigned int pixelHeight = 1;
+    ERR_TYPES status = gifload_helper(gifFileName, pixelWidth, pixelHeight);
     if (status != SUCCESS)
     {
         err_logo(status, NIL);
@@ -573,9 +573,9 @@ NODE *lgifsize(NODE *args)
         return Unbound;
     }
 
-    DWORD dwPixelWidth = 0;
-    DWORD dwPixelHeight = 0;
-    ERR_TYPES status = gifload_helper(gifFileName, dwPixelWidth, dwPixelHeight);
+    unsigned int pixelWidth = 0;
+    unsigned int pixelHeight = 0;
+    ERR_TYPES status = gifload_helper(gifFileName, pixelWidth, pixelHeight);
     if (status != SUCCESS)
     {
         err_logo(status, NIL);
@@ -583,8 +583,8 @@ NODE *lgifsize(NODE *args)
     }
 
     return cons_list(
-        make_intnode((FIXNUM) dwPixelWidth),
-        make_intnode((FIXNUM) dwPixelHeight));
+        make_intnode((FIXNUM) pixelWidth),
+        make_intnode((FIXNUM) pixelHeight));
 }
 
 NODE *lbitload(NODE *arg)
@@ -598,12 +598,12 @@ NODE *lbitload(NODE *arg)
     }
 
 
-    DWORD dwPixelWidth = 1;
-    DWORD dwPixelHeight = 1;
+    unsigned int pixelWidth = 1;
+    unsigned int pixelHeight = 1;
     ERR_TYPES status = LoadBitmapFile(
         bitmapFileName,
-        dwPixelWidth,
-        dwPixelHeight);
+        pixelWidth,
+        pixelHeight);
     if (status != SUCCESS)
     {
         err_logo(status, NIL);
@@ -623,9 +623,9 @@ NODE *lbitloadsize(NODE *arg)
         return Unbound;
     }
 
-    DWORD dwPixelWidth = 0;
-    DWORD dwPixelHeight = 0;
-    ERR_TYPES status = LoadBitmapFile(bitmapFileName, dwPixelWidth, dwPixelHeight);
+    unsigned int pixelWidth = 0;
+    unsigned int pixelHeight = 0;
+    ERR_TYPES status = LoadBitmapFile(bitmapFileName, pixelWidth, pixelHeight);
     if (status != SUCCESS)
     {
         err_logo(status, NIL);
@@ -633,8 +633,8 @@ NODE *lbitloadsize(NODE *arg)
     }
 
     return cons_list(
-        make_intnode((FIXNUM) dwPixelWidth),
-        make_intnode((FIXNUM) dwPixelHeight));
+        make_intnode((FIXNUM) pixelWidth),
+        make_intnode((FIXNUM) pixelHeight));
 }
 
 NODE *lbitsize(NODE *)

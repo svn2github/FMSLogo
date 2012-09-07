@@ -249,9 +249,9 @@ struct NODE
     {
         struct
         {
-            NODE * ncar;
-            NODE * ncdr;
-            NODE * nobj;    // used only for oblist
+            struct NODE * ncar;
+            struct NODE * ncdr;
+            struct NODE * nobj;    // used only for oblist
         }
             ncons;
         struct
@@ -274,9 +274,9 @@ struct NODE
         FLONUM nfloat;
         struct
         {
-            int     dim;
-            int     origin;
-            NODE ** data;
+            int            dim;
+            int            origin;
+            struct NODE ** data;
         }
             narray;
     }

@@ -14,6 +14,7 @@
 #include "utils.h"
 #include "files.h"
 #include "localizedstrings.h"
+#include "logoeventqueue.h"
 #include "mainwind.h"
 #include "devwind.h"
 #include "eval.h"

@@ -43,7 +43,7 @@
 #include "mmwind.h"
 #include "dllwind.h"
 #include "devwind.h"
-#include "mainwind.h"
+#include "logoeventqueue.h"
 #include "netwind.h"
 #include "graphwin.h"
 #include "dlgwind.h"

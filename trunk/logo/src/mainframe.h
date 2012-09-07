@@ -21,7 +21,8 @@
 #include <owl\decframe.h>
 #include <owl\panespli.h>
 
-#include "mainwind.h"         // for qlist
+#include "logocore.h"         // for FLONUM
+#include "logoeventqueue.h"   // for qlist
 #include "localizedstrings.h" // for MANUAL_HAS_TRANSLATION_TABLES
 
 class TScreenWindow : public TWindow

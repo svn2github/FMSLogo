@@ -14,7 +14,7 @@
 #include "fontutils.h"
 #include "fmslogo.h"
 #include "mainframe.h"
-#include "mainwind.h"
+#include "logoeventqueue.h"
 #include "utils.h"
 #include "logocore.h"     // for ARRAYSIZE
 #include "wrksp.h"        // for bExpert

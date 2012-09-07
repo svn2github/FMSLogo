@@ -39,7 +39,7 @@
 #include "parse.h"
 #include "logomath.h"
 #include "ibmterm.h"
-#include "mainwind.h"
+#include "logoeventqueue.h"
 #include "mmwind.h"
 #include "debugheap.h"
 

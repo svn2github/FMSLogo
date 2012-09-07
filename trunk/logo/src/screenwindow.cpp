@@ -21,6 +21,7 @@
 
 #include "screenwindow.h"
 
+#include <stdio.h>
 #include <owl/scroller.h>
 
 #include "main.h"

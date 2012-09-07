@@ -59,6 +59,7 @@ const DWORD INVALID_FILE_ATTRIBUTES = 0xFFFFFFFF;
 #include "selectstartupinstruction.h"
 #include "startup.h"
 #include "mmwind.h"
+#include "mainwind.h"
 #include "debugheap.h"
 
 #include "localizedstrings.h"
@@ -827,8 +828,8 @@ void TMainFrame::CMBitmapOpen()
     // if user found a file then try to load it
     if (GetOpenFileName(&openFileName))
     {
-        DWORD dwPixelWidth  = 1;
-        DWORD dwPixelHeight = 1;
+        unsigned int pixelWidth  = 1;
+        unsigned int pixelHeight = 1;
 
         IsNewBitmap = FALSE;
 
@@ -837,11 +838,11 @@ void TMainFrame::CMBitmapOpen()
         _splitpath(BitmapName, NULL, NULL, NULL, ext);
         if (stricmp(ext, ".gif") == 0)
         {
-            status = gifload_helper(BitmapName, dwPixelWidth, dwPixelHeight);
+            status = gifload_helper(BitmapName, pixelWidth, pixelHeight);
         }
         else
         {
-            status = LoadBitmapFile(BitmapName, dwPixelWidth, dwPixelHeight);
+            status = LoadBitmapFile(BitmapName, pixelWidth, pixelHeight);
         }
 
         if (status != SUCCESS)

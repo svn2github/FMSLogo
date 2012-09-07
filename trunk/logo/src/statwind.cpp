@@ -23,6 +23,7 @@
 #include "logorc.h"
 #include "main.h"
 #include "mainframe.h"
+#include "mainwind.h"
 #include "cmdwind.h"
 #include "utils.h"
 #include "localizedstrings.h"

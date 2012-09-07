@@ -164,8 +164,6 @@ extern NODE *lbitsize(NODE *arg);
 extern NODE *lbitsave(NODE *arg);
 extern NODE *lgifsave(NODE *arg);
 extern NODE *lgifload(NODE *arg);
-extern ERR_TYPES gifsave_helper(const char *GifFileName, int iDelay_, int bAppendMode_, int iLoop_, int iTrans, int iMaxColorDepth);
-extern ERR_TYPES gifload_helper(const char *GifFileName, DWORD &dwPixelWidth, DWORD &dwPixelHeight);
 extern NODE *lgifsize(NODE *arg);
 extern NODE *lbitcut(NODE *arg);
 extern NODE *lbitcopy(NODE *arg);
