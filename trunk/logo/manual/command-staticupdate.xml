@@ -14,6 +14,7 @@
 <listitem>
 <para>
 Replaces the text of the static control identified by <parameter>name</parameter> with <parameter>text</parameter>.
+If there is more text than can fit within the width of the static control on a single line, then the text is word-wrapped.
 </para>
 </listitem>
 </varlistentry>
