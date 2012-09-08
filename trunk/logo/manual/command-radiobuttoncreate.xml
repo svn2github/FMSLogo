@@ -80,7 +80,7 @@ BUTTONCREATE "mywindow "mybutton "Go 40 70 25 15 [CHECKONTHINGS]
 ; Delete the window and all of its child controls.
 WINDOWDELETE "mywindow</userinput></programlisting>
 </para>
- 
+
 <para>
 Create a radio button on the &PRODUCTNAME; screen window:
 <programlisting><userinput>TO CHECKONTHINGS
