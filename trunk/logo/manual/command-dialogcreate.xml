@@ -21,7 +21,7 @@ This command is similar to <link linkend="command-windowcreate">WINDOWCREATE</li
 
 <para>
 The <parameter>parent</parameter> input is the name of the window that will own the new dialog.
-If this is the first window you are creating, use <userinput>"root</userinput> as the <parameter>parent</parameter> input.
+If this is the first window you are creating, use <userinput>"main</userinput> as the <parameter>parent</parameter> input.
 </para>
 
 <para>
@@ -41,11 +41,11 @@ The <parameter>ypos</parameter> input is the Y coordinate where the upper-left c
 </para>
 
 <para>
-The <parameter>width</parameter> input is the width of the new dialog, in pixels.
+The <parameter>width</parameter> input is the width of the new dialog, in dialog units.
 </para>
 
 <para>
-The <parameter>height</parameter> input is the height of the new dialog, in pixels.
+The <parameter>height</parameter> input is the height of the new dialog, in dialog units.
 </para>
 
 <para>

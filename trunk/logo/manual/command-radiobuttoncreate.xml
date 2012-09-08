@@ -15,12 +15,13 @@
 <para>
 Creates a radio button control.
 A radio button control is used to give the user a selection of a two state (TRUE or FALSE) item.
-But along with this the user will be restricted to only have one radio button set TRUE within a group box at any given time.
-A radio button be associated with a groupbox control (see <link linkend="command-groupboxcreate">GROUPBOXCREATE</link>).
+But along with this is a restriction that only one radio button within a group box can be set to TRUE at any given time.
+A radio button must be associated with a group box control (see <link linkend="command-groupboxcreate">GROUPBOXCREATE</link>).
 </para>
 
 <para>
 The <parameter>parent</parameter> input is the name of the window that will own the new radio button.
+If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 
 <para>
@@ -44,21 +45,27 @@ The <parameter>ypos</parameter> input is the Y coordinate where the upper-left c
 </para>
 
 <para>
-The <parameter>width</parameter> input is the width of the new radio button, in pixels.
+The <parameter>width</parameter> input is the width of the new radio button.
 </para>
 
 <para>
-The <parameter>height</parameter> input is the height of the new radio button, in pixels.
+The <parameter>height</parameter> input is the height of the new radio button.
 </para>
+
+<para>
+If the parent of the radio button is the &PRODUCTNAME; screen window, then the <parameter>xpos</parameter>, <parameter>ypos</parameter>, <parameter>width</parameter>, and <parameter>height</parameter> inputs are all given in turtle coordinates.
+Otherwise, they are given in "dialog units", the origin is the upper-left corner of the parent, and Y values increase as you move down the screen.
+</para>
+
 </listitem>
 </varlistentry>
-
 
 <varlistentry><term>Example</term>
 <listitem>
 
-<programlisting><userinput>; create a radio button in a new window:
-TO CHECKONTHINGS
+<para>
+Create radio buttons in a new window:
+<programlisting><userinput>TO CHECKONTHINGS
   IFELSE RADIOBUTTONGET "myhideturtle [HIDETURTLE] [SHOWTURTLE]
 END
 
@@ -69,10 +76,14 @@ RADIOBUTTONCREATE "mywindow "mygroupbox "myshowturtle [Show Turtle] 20 35 60 20
 RADIOBUTTONSET "myhideturtle "true
 RADIOBUTTONSET "myshowturtle "false
 BUTTONCREATE "mywindow "mybutton "Go 40 70 25 15 [CHECKONTHINGS]
-WINDOWDELETE "mywindow</userinput></programlisting>
 
-<programlisting><userinput>; create a radio button on the graphics window:
-TO CHECKONTHINGS
+; Delete the window and all of its child controls.
+WINDOWDELETE "mywindow</userinput></programlisting>
+</para>
+ 
+<para>
+Create a radio button on the &PRODUCTNAME; screen window:
+<programlisting><userinput>TO CHECKONTHINGS
   IFELSE RADIOBUTTONGET "myhideturtle [HIDETURTLE] [SHOWTURTLE]
 END
 
@@ -82,7 +93,10 @@ RADIOBUTTONCREATE "main "mygroupbox "myshowturtle [Show Turtle] 120 80 120 40
 RADIOBUTTONSET "myhideturtle "true
 RADIOBUTTONSET "myshowturtle "false
 BUTTONCREATE "main "mybutton "Go 160 20 50 50 [CHECKONTHINGS]
+
+; Delete all windows.
 WINDOWDELETE "main</userinput></programlisting>
+</para>
 
 </listitem>
 </varlistentry>

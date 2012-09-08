@@ -14,11 +14,12 @@
 <listitem>
 <para>
 Creates a listbox control.
-A listbox control gives the user a selection of items.
+A listbox control shows the user a set of items and lets them select one of them.
 </para>
 
 <para>
 The <parameter>parent</parameter> input is the name of the window that will own the new listbox.
+If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 
 <para>
@@ -34,11 +35,16 @@ The <parameter>ypos</parameter> input is the Y coordinate where the upper-left c
 </para>
 
 <para>
-The <parameter>width</parameter> input is the width of the new listbox, in pixels.
+The <parameter>width</parameter> input is the width of the new listbox.
 </para>
 
 <para>
-The <parameter>height</parameter> input is the height of the new listbox, in pixels.
+The <parameter>height</parameter> input is the height of the new listbox.
+</para>
+
+<para>
+If the parent of the listbox is the &PRODUCTNAME; screen window, then the <parameter>xpos</parameter>, <parameter>ypos</parameter>, <parameter>width</parameter>, and <parameter>height</parameter> inputs are all given in turtle coordinates.
+Otherwise, they are given in "dialog units", the origin is the upper-left corner of the parent, and Y values increase as you move down the screen.
 </para>
 
 </listitem>
@@ -47,17 +53,24 @@ The <parameter>height</parameter> input is the height of the new listbox, in pix
 
 <varlistentry><term>Example</term>
 <listitem>
-
-<programlisting><userinput>; create a listbox in a new window:
-WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
+<para>
+Create a listbox in a new window:
+<programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 LISTBOXCREATE "mywindow "mylist 25 25 50 50
+
+; Delete the parent window and its listbox control.
 WINDOWDELETE "mywindow</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; create a listbox on graphics window:
-LISTBOXCREATE "main "mylist 25 25 100 100
+<para>
+Create a listbox on the &PRODUCTNAME; screen window:
+<programlisting><userinput>LISTBOXCREATE "main "mylist 25 25 100 100
+
+; Delete all windows.
 WINDOWDELETE "main</userinput>
 </programlisting>
+</para>
 
 </listitem>
 </varlistentry>

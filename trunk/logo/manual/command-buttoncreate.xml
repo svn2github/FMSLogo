@@ -20,6 +20,7 @@ The only function of the button control is to run the <parameter>callback</param
 
 <para>
 The <parameter>parent</parameter> input is the name of the window that will own the new button.
+If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 
 <para>
@@ -39,39 +40,55 @@ The <parameter>ypos</parameter> input is the Y coordinate where the upper-left c
 </para>
 
 <para>
-The <parameter>width</parameter> input is the width of the new button, in pixels.
+The <parameter>width</parameter> input is the width of the new button.
 </para>
 
 <para>
-The <parameter>height</parameter> input is the height of the new button, in pixels.
+The <parameter>height</parameter> input is the height of the new button.
 </para>
 
 <para>
 The <parameter>callback</parameter> input is an instruction list that is run whenever the user clicks on the button.
 </para>
+
+<para>
+If the parent of the button is the &PRODUCTNAME; screen window, then the <parameter>xpos</parameter>, <parameter>ypos</parameter>, <parameter>width</parameter>, and <parameter>height</parameter> inputs are all given in turtle coordinates.
+Otherwise, they are given in "dialog units", the origin is the upper-left corner of the parent, and Y values increase as you move down the screen.
+</para>
+
 </listitem>
 </varlistentry>
-
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>; create a button in a new window:
-WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
+<para>
+Create buttons in a new window:
+<programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 BUTTONCREATE "mywindow "myleft "Left 25 25 25 25 [FORWARD 2 LEFT 1]
 BUTTONCREATE "mywindow "myright "Right 50 25 25 25 [FORWARD 2 RIGHT 1]</userinput>
-<replaceable>Click left or right repeatedly and watch the turtle</replaceable>
+<replaceable>Click left or right repeatedly and watch the turtle.</replaceable>
 <userinput>WINDOWDELETE "mywindow</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; create a button on graphics window:
-BUTTONCREATE "main "myleft "Left 50 50 50 25 [FORWARD 2 LEFT 1]
+<para>
+Create buttons on the &PRODUCTNAME; screen window:
+<programlisting><userinput>BUTTONCREATE "main "myleft "Left 50 50 50 25 [FORWARD 2 LEFT 1]
 BUTTONCREATE "main "myright "Right 100 50 50 25 [FORWARD 2 RIGHT 1]</userinput>
-<replaceable>Click left or right repeatedly and watch the turtle</replaceable>
+<replaceable>Click left or right repeatedly and watch the turtle.</replaceable>
 <userinput>WINDOWDELETE "main</userinput>
 </programlisting>
+</para>
 
 </listitem>
 </varlistentry>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-buttonupdate">BUTTONUPDATE</link></member>
+<member><link linkend="command-buttonenable">BUTTONENABLE</link></member>
+<member><link linkend="command-buttondelete">BUTTONDELETE</link></member>
+</simplelist></listitem>
+</varlistentry>
 </variablelist>
 </section>

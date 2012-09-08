@@ -20,6 +20,7 @@ The term "static control" is somewhat misleading because the text displayed by a
 
 <para>
 The <parameter>parent</parameter> input is the name of the window that will own the new static control.
+If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 
 <para>
@@ -39,11 +40,16 @@ The <parameter>ypos</parameter> input is the Y coordinate where the upper-left c
 </para>
 
 <para>
-The <parameter>width</parameter> input is the width of the new static control, in pixels.
+The <parameter>width</parameter> input is the width of the new static control.
 </para>
 
 <para>
-The <parameter>height</parameter> input is the height of the new static control, in pixels.
+The <parameter>height</parameter> input is the height of the new static control.
+</para>
+
+<para>
+If the parent of the static control is the &PRODUCTNAME; screen window, then the <parameter>xpos</parameter>, <parameter>ypos</parameter>, <parameter>width</parameter>, and <parameter>height</parameter> inputs are all given in turtle coordinates.
+Otherwise, they are given in "dialog units", the origin is the upper-left corner of the parent, and Y values increase as you move down the screen.
 </para>
 
 </listitem>
@@ -52,6 +58,7 @@ The <parameter>height</parameter> input is the height of the new static control,
 
 <varlistentry><term>Example</term>
 <listitem>
+<para>
 Creating a static control on a new window:
 <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 STATICCREATE "mywindow "mystatic [Heading=0] 25 25 50 25
@@ -61,8 +68,10 @@ REPEAT 72 [RIGHT 5 STATICUPDATE "mystatic SENTENCE [Heading=] HEADING WAIT 60]</
 
 <userinput>WINDOWDELETE "mywindow</userinput>
 </programlisting>
+</para>
 
-Creating a static control on the graphics window:
+<para>
+Creating a static control on the &PRODUCTNAME; screen window:
 <programlisting><userinput>STATICCREATE "main "mystatic [Heading=0] 25 25 100 50
 REPEAT 72 [RIGHT 5 STATICUPDATE "mystatic SENTENCE [Heading=] HEADING WAIT 60]</userinput>
 
@@ -70,6 +79,7 @@ REPEAT 72 [RIGHT 5 STATICUPDATE "mystatic SENTENCE [Heading=] HEADING WAIT 60]</
 
 <userinput>WINDOWDELETE "mywindow</userinput>
 </programlisting>
+</para>
 
 </listitem>
 </varlistentry>

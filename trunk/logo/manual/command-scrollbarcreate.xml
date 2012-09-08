@@ -31,6 +31,7 @@ Otherwise, the scrollbar will be vertical.
 
 <para>
 The <parameter>parent</parameter> input is the name of the window that will own the new scrollbar.
+If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 
 <para>
@@ -46,37 +47,47 @@ The <parameter>ypos</parameter> input is the Y coordinate where the upper-left c
 </para>
 
 <para>
-The <parameter>width</parameter> input is the width of the new scrollbar, in pixels.
+The <parameter>width</parameter> input is the width of the new scrollbar.
 </para>
 
 <para>
-The <parameter>height</parameter> input is the height of the new scrollbar, in pixels.
+The <parameter>height</parameter> input is the height of the new scrollbar.
 </para>
 
 <para>
 The <parameter>callback</parameter> input is an instruction list that is run whenever the position of the scrollbar changes.
 One common use for the <parameter>callback</parameter> input is to inform the user of what value has been selected.
 </para>
+
+<para>
+If the parent of the scrollbar is the &PRODUCTNAME; screen window, then the <parameter>xpos</parameter>, <parameter>ypos</parameter>, <parameter>width</parameter>, and <parameter>height</parameter> inputs are all given in turtle coordinates.
+Otherwise, they are given in "dialog units", the origin is the upper-left corner of the parent, and Y values increase as you move down the screen.
+</para>
+
 </listitem>
 </varlistentry>
 
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>; create a scrollbar in a new window:
-WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
+<para>
+Create a scrollbar in a new window:
+<programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 SCROLLBARCREATE "mywindow "myscroll 25 25 50 25 [SETHEADING SCROLLBARGET "myscroll]
 SCROLLBARSET "myscroll 0 360 0</userinput>
-<replaceable>Move the scrollbar and observe what happens to the turtle</replaceable>
+<replaceable>Move the scrollbar and observe what happens to the turtle.</replaceable>
 <userinput>WINDOWDELETE "mywindow</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; create a scrollbar on graphics window:
-SCROLLBARCREATE "main "myscroll 25 25 100 25 [SETHEADING SCROLLBARGET "myscroll]
+<para>
+Create a scrollbar on &PRODUCTNAME; screen window:
+<programlisting><userinput>SCROLLBARCREATE "main "myscroll 25 25 100 25 [SETHEADING SCROLLBARGET "myscroll]
 SCROLLBARSET "myscroll 0 360 0</userinput>
-<replaceable>Move the scrollbar and observe what happens to the turtle</replaceable>
+<replaceable>Move the scrollbar and observe what happens to the turtle.</replaceable>
 <userinput>SCROLLBARDELETE "myscroll</userinput>
 </programlisting>
+</para>
 
 </listitem>
 </varlistentry>

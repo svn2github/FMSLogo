@@ -20,6 +20,7 @@ A checkbox must be associated with a groupbox control (see <link linkend="comman
 
 <para>
 The <parameter>parent</parameter> input is the name of the window that will own the new checkbox.
+If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 
 <para>
@@ -43,41 +44,58 @@ The <parameter>ypos</parameter> input is the Y coordinate where the upper-left c
 </para>
 
 <para>
-The <parameter>width</parameter> input is the width of the new checkbox, in pixels.
+The <parameter>width</parameter> input is the width of the new checkbox.
 </para>
 
 <para>
-The <parameter>height</parameter> input is the height of the new checkbox, in pixels.
+The <parameter>height</parameter> input is the height of the new checkbox.
 </para>
+
+<para>
+If the parent of the checkbox is the &PRODUCTNAME; screen window, then the <parameter>xpos</parameter>, <parameter>ypos</parameter>, <parameter>width</parameter>, and <parameter>height</parameter> inputs are all given in turtle coordinates.
+Otherwise, they are given in "dialog units", the origin is the upper-left corner of the parent, and Y values increase as you move down the screen.
+</para>
+
 </listitem>
 </varlistentry>
-
 
 <varlistentry><term>Example</term>
 <listitem>
 
-<programlisting><userinput>; create a checkbox in a new window:
-TO CHECKONTHINGS
+<para>
+Create a checkbox in a new window:
+<programlisting><userinput>TO CHECKONTHINGS
   IFELSE CHECKBOXGET "myhideturtle [HIDETURTLE] [SHOWTURTLE]
 END
 
 WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 GROUPBOXCREATE "mywindow "mygroupbox 10 10 80 40
 CHECKBOXCREATE "mywindow "mygroupbox "myhideturtle [Hide Turtle] 20 20 60 20
-BUTTONCREATE "mywindow "mybutton "Go 40 50 25 25 [CHECKONTHINGS]
-WINDOWDELETE "mywindow</userinput>
-</programlisting>
+BUTTONCREATE "mywindow "mybutton "Go 40 50 25 25 [CHECKONTHINGS]</userinput>
 
-<programlisting><userinput>; create a checkbox on graphics window:
-TO CHECKONTHINGS
+<replaceable>Clicking on the Go button shows or hides the turtle,
+depending on whether the checkbox is checked.</replaceable>
+
+<userinput>WINDOWDELETE "mywindow</userinput>
+</programlisting>
+</para>
+
+<para>
+Create a checkbox on the &PRODUCTNAME; screen window:
+<programlisting><userinput>TO CHECKONTHINGS
   IFELSE CHECKBOXGET "myhideturtle [HIDETURTLE] [SHOWTURTLE]
 END
 
 GROUPBOXCREATE "main "mygroupbox 110 90 140 60
 CHECKBOXCREATE "main "mygroupbox "myhideturtle [Hide Turtle] 120 80 120 40
-BUTTONCREATE "main "mybutton "Go 160 20 50 50 [CHECKONTHINGS]
-WINDOWDELETE "main</userinput>
+BUTTONCREATE "main "mybutton "Go 160 20 50 50 [CHECKONTHINGS]</userinput>
+
+<replaceable>Clicking on the Go button shows or hides the turtle, depending
+on whether the checkbox is checked.</replaceable>
+
+<userinput>WINDOWDELETE "main</userinput>
 </programlisting>
+</para>
 
 </listitem>
 </varlistentry>

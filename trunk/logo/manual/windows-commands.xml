@@ -23,10 +23,12 @@ When a parent window is deleted, its "child" Windows and controls are also delet
 When controls are in windows, the coordinates used by all the Windows procedures are in Windows coordinate system (<emphasis>not</emphasis> the turtle coordinate system).
 That is the Y axis is upside down (positive numbers are down).
 Likewise, the origin is <emphasis>not</emphasis> the middle of the screen, it is the upper left hand corner of the window.
+Furthermore, the position and size are given in "dialog units", which are proportional to the size of the font that is being used.
+This ensures that the dialog boxes have a consistent layout, regardless of the font size.
 </para>
 
 <para>
-When controls are in the graphics window the coordinates will be in the turtle coordinate system.
+When controls are on the &PRODUCTNAME; screen window the coordinates are in the turtle coordinate system.
 </para>
 
    <section id="window-commands">
