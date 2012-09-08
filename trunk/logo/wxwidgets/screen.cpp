@@ -9,6 +9,7 @@
     #include <wx/event.h>
     #include <wx/dc.h>
     #include <wx/dcmemory.h>
+    #include <wx/event.h>
 #endif
 
 #include "devwind.h"
@@ -37,7 +38,8 @@ CScreen::CScreen(
         wxID_ANY, 
         wxDefaultPosition,
         wxDefaultSize,
-        wxHSCROLL | wxVSCROLL | wxNO_FULL_REPAINT_ON_RESIZE),
+        wxHSCROLL | wxVSCROLL | wxNO_FULL_REPAINT_ON_RESIZE |
+        wxWANTS_CHARS), // to get Enter and Tab for KEYBOARDON
     m_ScreenDeviceContext(0),
     m_MemoryDeviceContext(0),
     m_MemoryBitmap(0),
@@ -566,6 +568,29 @@ WxKeyCodeToVirtualKeyCode(
 void CScreen::OnKeyDown(wxKeyEvent& Event)
 {
     int keyCode = Event.GetKeyCode();
+
+    if (KeyboardCapture == KEYBOARDCAPTURE_Off)
+    {
+        if (keyCode == WXK_TAB)
+        {
+            // Because we use the wxWANT_CHARs to capture WKX_TAB
+            // and WXK_RETURN codes to support KEYBOARDON, we must
+            // we must explicitly convert tabs to navigation
+            // in the cases where no keyboard capture is requested.
+            wxNavigationKeyEvent navigationEvent;
+            navigationEvent.SetFromTab(true);
+            if (Event.ShiftDown())
+            {
+                navigationEvent.SetDirection(wxNavigationKeyEvent::IsBackward);
+            }
+            else
+            {
+                navigationEvent.SetDirection(wxNavigationKeyEvent::IsForward);
+            }
+
+            ProcessEvent(navigationEvent);
+        }
+    }
 
     // if keyboard was on and up and down is enabled then continue
     if (KeyboardCapture == KEYBOARDCAPTURE_KeyDownKeyUp)
