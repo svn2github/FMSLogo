@@ -8,6 +8,16 @@ CCommanderInput::CCommanderInput(
     wxWindowID      Id
     ) : wxTextCtrl(Parent, Id)
 {
+    // Configure the keyboard shortcuts
+    wxAcceleratorEntry acceleratorEntries[1];
+
+    // Ctrl+A is Select All
+    acceleratorEntries[0].Set(wxACCEL_CTRL, 'A', wxID_SELECTALL);
+
+    wxAcceleratorTable acceleratorTable(
+        ARRAYSIZE(acceleratorEntries),
+        acceleratorEntries);
+    SetAcceleratorTable(acceleratorTable);
 }
 
 bool
@@ -41,16 +51,6 @@ CCommanderInput::WantsKeyEvent(
         return true;
     }
 
-#if 0
-    // we want the "OEM" keys, which are usually punctiation and international characters
-    // OEM keys are not defined in Borland 5.0.2's header files
-    const WPARAM VK_OEM_1   = 186;
-    const WPARAM VK_OEM_102 = 226;
-    if (VK_OEM_1 <= KeyEventWParam && KeyEventWParam <= VK_OEM_102)
-    {
-        return true;
-    }
-#endif
     // we want the "hardware-specific keys".
     // I hope these coorepond to the windows OEM keys which are usually
     // punctiation and international characters.
@@ -58,7 +58,6 @@ CCommanderInput::WantsKeyEvent(
     {
         return true;
     }
-
 
     // there are a few navigational keys that we also want.
     if (KeyCode == WXK_NUMPAD_HOME  || 
