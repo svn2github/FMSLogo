@@ -23,10 +23,10 @@ If <parameter>state</parameter> equals FALSE, then the scrollbar is disabled.
 <varlistentry><term>Example</term>
 <listitem>
     <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
-SCROLLBARCREATE "mywindow "myscroll 25 25 50 25 []
+SCROLLBARCREATE "mywindow "myscroll 25 25 50 0 []
 SCROLLBARENABLE "myscroll "False</userinput>
 
-<replaceable>The scrollbar is now disabled</replaceable>
+<replaceable>The scrollbar is now disabled.</replaceable>
 
 <userinput>SCROLLBARENABLE "myscroll "True
 WINDOWDELETE "mywindow</userinput>

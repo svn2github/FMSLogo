@@ -48,10 +48,12 @@ The <parameter>ypos</parameter> input is the Y coordinate where the upper-left c
 
 <para>
 The <parameter>width</parameter> input is the width of the new scrollbar.
+If the <parameter>height</parameter> input is greater than or equal to the <parameter>width</parameter> input, then the scrollbar is vertical and the system's default scrollbar width is used instead of the <parameter>width</parameter> input.
 </para>
 
 <para>
 The <parameter>height</parameter> input is the height of the new scrollbar.
+If the <parameter>height</parameter> input is less than the <parameter>width</parameter> input, then the scrollbar is horizonal and the system's default scrollbar height is used instead of the <parameter>height</parameter> input.
 </para>
 
 <para>
@@ -73,7 +75,7 @@ Otherwise, they are given in "dialog units", the origin is the upper-left corner
 <para>
 Create a scrollbar in a new window:
 <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
-SCROLLBARCREATE "mywindow "myscroll 25 25 50 25 [SETHEADING SCROLLBARGET "myscroll]
+SCROLLBARCREATE "mywindow "myscroll 25 25 50 0 [SETHEADING SCROLLBARGET "myscroll]
 SCROLLBARSET "myscroll 0 360 0</userinput>
 <replaceable>Move the scrollbar and observe what happens to the turtle.</replaceable>
 <userinput>WINDOWDELETE "mywindow</userinput>
@@ -82,7 +84,7 @@ SCROLLBARSET "myscroll 0 360 0</userinput>
 
 <para>
 Create a scrollbar on &PRODUCTNAME; screen window:
-<programlisting><userinput>SCROLLBARCREATE "main "myscroll 25 25 100 25 [SETHEADING SCROLLBARGET "myscroll]
+<programlisting><userinput>SCROLLBARCREATE "main "myscroll 25 25 100 0 [SETHEADING SCROLLBARGET "myscroll]
 SCROLLBARSET "myscroll 0 360 0</userinput>
 <replaceable>Move the scrollbar and observe what happens to the turtle.</replaceable>
 <userinput>SCROLLBARDELETE "myscroll</userinput>

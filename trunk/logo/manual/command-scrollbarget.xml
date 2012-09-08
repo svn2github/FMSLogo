@@ -22,9 +22,9 @@ The output will be within the range specified by <link linkend="command-scrollba
 <varlistentry><term>Example</term>
 <listitem>
     <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
-SCROLLBARCREATE "mywindow "myscroll 25 25 50 25 [SETHEADING SCROLLBARGET "myscroll]
+SCROLLBARCREATE "mywindow "myscroll 25 25 50 0 [SETHEADING SCROLLBARGET "myscroll]
 SCROLLBARSET "myscroll 0 360 0</userinput>
-<replaceable>Move the scrollbar and observe what happens to the turtle</replaceable>
+<replaceable>Move the scrollbar and observe what happens to the turtle.</replaceable>
 <userinput>WINDOWDELETE "mywindow</userinput>
 </programlisting>
 
@@ -32,5 +32,4 @@ SCROLLBARSET "myscroll 0 360 0</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>
