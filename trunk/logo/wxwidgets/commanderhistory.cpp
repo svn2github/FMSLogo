@@ -155,7 +155,8 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
 
     if (keyCode == WXK_RETURN)
     {
-        Event.Skip();
+        // Enter does the same as pressing the Execute button.
+        GetCommander()->Execute();
     }
     else if (Event.ControlDown() && keyCode == WXK_HOME)
     {

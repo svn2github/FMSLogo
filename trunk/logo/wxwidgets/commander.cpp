@@ -447,7 +447,7 @@ RunLogoInstructionFromGui(
     }
 }
 
-void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(Event))
+void CCommander::Execute()
 {
     // REVISIT:
     // GiveFocusToEditbox initially starts off as true,
@@ -473,6 +473,11 @@ void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(Event))
     {
         CFmsLogo::GetMainFrame()->GetCommander()->m_NextInstruction->SetFocus();
     }
+}
+
+void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(Event))
+{
+    Execute();
 }
 
 void CCommander::OnEdallButton(wxCommandEvent& WXUNUSED(Event))
