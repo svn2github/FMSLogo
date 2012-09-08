@@ -19,6 +19,11 @@ Deletes the item at <parameter>index</parameter> from the listbox portion of a c
 <para>
 Combobox items are zero-indexed, which means that the first item in the combobox is at index 0, the second is at index 1, etc.
 </para>
+
+<para>
+If there are <parameter>index</parameter> items or fewer in the combobox, then the instruction does nothing.
+This is not considered an error.
+</para>
 </listitem>
 </varlistentry>
 
