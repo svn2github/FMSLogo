@@ -49,7 +49,7 @@ TMyFileWindow::TMyFileWindow(
     TWindow *Parent,
     LPCSTR   Title,
     LPCSTR   TheFilename,
-    NODE *   Args,
+    NODE *   Args,        // consumes a reference
     bool     CheckForErrors
     ) :
     TFrameWindow(Parent, Title, 0, false),
@@ -1435,6 +1435,9 @@ void TMyFileWindow::EvDestroy()
             }
             else
             {
+                // free up args_list
+                args_list = reref(args_list, NIL);
+
                 error_happen = false;
                 MainWindowx->CommandWindow->Editbox.SetFocus();
             }

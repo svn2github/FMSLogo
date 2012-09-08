@@ -118,7 +118,7 @@ CWorkspaceEditor::CWorkspaceEditor(
     const wxPoint  & Position,
     const wxSize   & Size,
     const wxString & FileName,
-    NODE           * EditArguments,
+    NODE           * EditArguments,   // consumes a reference
     bool             CheckForErrors,
     bool             OpenToError
     )
@@ -900,7 +900,9 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
                     wxYES_NO | wxICON_ERROR,
                     commander) == wxYES)
             {
-                // Open up another editor
+                // Open up another editor.
+
+                // Give the new editor our reference on m_EditArguments
                 CFmsLogo::GetMainFrame()->PopupEditor(
                     TempPathName,
                     m_EditArguments,
@@ -911,7 +913,16 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
             else
             {
                 // The user doesn't care about the error.
+
+                // Release our reference on m_EditArguments
+                m_EditArguments = reref(m_EditArguments, NIL);
+
+                // Clear the error flag, since it was handled by the user.
                 m_ErrorDetected = false;
+
+                // Give keyboard focus to the commander so that
+                // the user can start typing commands after the
+                // editor closes.
                 commander->GiveControlToInputBox();
             }
         }

@@ -20,6 +20,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Changed in 6.29.0
+    o Fix bug #3564270; FMSLogo no longer leaks memory when saving the
+      editor encounters an error which the user ignores.
     o Fix bug #3563059; "ARRAY 1073741825" no longer crashes.
     o Fix bug #3551212; FMSLogo once again places the editor's caret at the
       first error when saving the contents fails due to a syntax error.
