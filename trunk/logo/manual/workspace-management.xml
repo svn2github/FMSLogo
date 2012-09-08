@@ -166,8 +166,14 @@ Buried things can be completely restored to the workspace by unburying them (for
        &command-save;
        &command-savel;
        &command-load;
+    </section>
+
+   <section id="workspace-debug-commands">
+      <title>Debug Commands</title>
+
+       &command-nodes;
        &command-status;
        &command-nostatus;
-    </section>
+   </section>
 
 </chapter>

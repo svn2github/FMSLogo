@@ -396,6 +396,7 @@
   <!ENTITY command-load           SYSTEM "command-load.xml">
   <!ENTITY command-status         SYSTEM "command-status.xml">
   <!ENTITY command-nostatus       SYSTEM "command-nostatus.xml">
+  <!ENTITY command-nodes           SYSTEM "command-nodes.xml">
 
   <!ENTITY command-run              SYSTEM "command-run.xml">
   <!ENTITY command-runresult        SYSTEM "command-runresult.xml">
