@@ -291,7 +291,6 @@ enum MainFrameMenuIds
     ID_FILESETASSCREENSAVER,
     ID_FILEEDIT,
     ID_FILEERASE,
-    ID_EXIT,
 
     ID_BITMAPNEW,
     ID_BITMAPOPEN,
@@ -312,11 +311,6 @@ enum MainFrameMenuIds
     ID_SETFLOODCOLOR,
     ID_SETSCREENCOLOR,
 
-    ID_ZOOMIN,
-    ID_ZOOMOUT,
-    ID_ZOOMNORMAL,
-
-    ID_HELP,
 #if MANUAL_HAS_TRANSLATION_TABLES
     // options for translating to/from English
     ID_HELPLANGTOENGLISH,
@@ -328,7 +322,6 @@ enum MainFrameMenuIds
     ID_HELPEXAMPLES,
     ID_HELPRELEASENOTES,
 
-    ID_HELPABOUT,
     ID_HELPABOUTMS,
 };
 
@@ -342,7 +335,7 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_UPDATE_UI(ID_FILESETASSCREENSAVER, CMainFrame::OnUpdateFileSetAsScreenSaver)
     EVT_MENU(ID_FILEEDIT,                  CMainFrame::OnEditProcedure)
     EVT_MENU(ID_FILEERASE,                 CMainFrame::OnEraseProcedure)
-    EVT_MENU(ID_EXIT,                      CMainFrame::OnExit)
+    EVT_MENU(wxID_EXIT,                    CMainFrame::OnExit)
     EVT_MENU(ID_BITMAPNEW,                 CMainFrame::OnBitmapNew)
     EVT_MENU(ID_BITMAPOPEN,                CMainFrame::OnBitmapOpen)
     EVT_MENU(ID_BITMAPSAVE,                CMainFrame::OnBitmapSave)
@@ -356,7 +349,7 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_SETPENCOLOR,               CMainFrame::OnSetPenColor)
     EVT_MENU(ID_SETSCREENCOLOR,            CMainFrame::OnSetScreenColor)
     EVT_MENU(ID_SETFLOODCOLOR,             CMainFrame::OnSetFloodColor)
-    EVT_MENU(ID_HELP,                      CMainFrame::OnHelp)
+    EVT_MENU(wxID_HELP_INDEX,              CMainFrame::OnHelp)
 #if MANUAL_HAS_TRANSLATION_TABLES
     // options for translating to/from English
     EVT_MENU(ID_HELPLANGTOENGLISH,         CMainFrame::OnHelpLanguageToEnglish)
@@ -366,11 +359,11 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_HELPDEMO,                  CMainFrame::OnHelpDemo)
     EVT_MENU(ID_HELPEXAMPLES,              CMainFrame::OnHelpExamples)
     EVT_MENU(ID_HELPRELEASENOTES,          CMainFrame::OnHelpReleaseNotes)
-    EVT_MENU(ID_HELPABOUT,                 CMainFrame::OnAboutFmsLogo)
+    EVT_MENU(wxID_ABOUT,                   CMainFrame::OnAboutFmsLogo)
     EVT_MENU(ID_HELPABOUTMS,               CMainFrame::OnAboutMultipleSclerosis)
-    EVT_MENU(ID_ZOOMIN,                    CMainFrame::OnZoomIn)
-    EVT_MENU(ID_ZOOMOUT,                   CMainFrame::OnZoomOut)
-    EVT_MENU(ID_ZOOMNORMAL,                CMainFrame::OnZoomNormal)
+    EVT_MENU(wxID_ZOOM_IN,                 CMainFrame::OnZoomIn)
+    EVT_MENU(wxID_ZOOM_OUT,                CMainFrame::OnZoomOut)
+    EVT_MENU(wxID_ZOOM_100,                CMainFrame::OnZoomNormal)
     EVT_CLOSE(CMainFrame::OnClose)
 END_EVENT_TABLE()
 
@@ -421,7 +414,7 @@ CMainFrame::CMainFrame(
         {LOCALIZED_FILE_EDIT,             ID_FILEEDIT},
         {LOCALIZED_FILE_ERASE,            ID_FILEERASE},
         {0},
-        {LOCALIZED_FILE_EXIT,             ID_EXIT},
+        {LOCALIZED_FILE_EXIT,             wxID_EXIT},
     };
 
     static const MENUITEM bitmapMenuItems[] = {
@@ -448,13 +441,13 @@ CMainFrame::CMainFrame(
     };
 
     static const MENUITEM zoomMenuItems[] = {
-        {LOCALIZED_ZOOM_IN,     ID_ZOOMIN},
-        {LOCALIZED_ZOOM_OUT,    ID_ZOOMOUT},
-        {LOCALIZED_ZOOM_NORMAL, ID_ZOOMNORMAL},
+        {LOCALIZED_ZOOM_IN,     wxID_ZOOM_IN},
+        {LOCALIZED_ZOOM_OUT,    wxID_ZOOM_OUT},
+        {LOCALIZED_ZOOM_NORMAL, wxID_ZOOM_100},
     };
  
     static const MENUITEM helpMenuItems[] = {
-        {LOCALIZED_HELP_INDEX,         ID_HELP},
+        {LOCALIZED_HELP_INDEX,         wxID_HELP_INDEX},
 #if MANUAL_HAS_TRANSLATION_TABLES
         // options for translating to/from English
         {LOCALIZED_HELP_LANGTOENGLISH, ID_HELPLANGTOENGLISH},
@@ -466,7 +459,7 @@ CMainFrame::CMainFrame(
         {LOCALIZED_HELP_EXAMPLE,       ID_HELPEXAMPLES},
         {LOCALIZED_HELP_RELEASENOTES,  ID_HELPRELEASENOTES},
         {0},
-        {LOCALIZED_HELP_ABOUTFMSLOGO,  ID_HELPABOUT},
+        {LOCALIZED_HELP_ABOUTFMSLOGO,  wxID_ABOUT},
         {LOCALIZED_HELP_MS,            ID_HELPABOUTMS},
     };
 
@@ -505,7 +498,7 @@ CMainFrame::CMainFrame(
     wxAcceleratorEntry acceleratorEntries[1];
 
     // F1 opens help
-    acceleratorEntries[0].Set(wxACCEL_NORMAL, WXK_F1, ID_HELP);
+    acceleratorEntries[0].Set(wxACCEL_NORMAL, WXK_F1, wxID_HELP_INDEX);
 
     wxAcceleratorTable acceleratorTable(
         ARRAYSIZE(acceleratorEntries),
