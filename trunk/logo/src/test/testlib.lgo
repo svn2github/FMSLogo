@@ -78,6 +78,22 @@ TO REPORTTESTFAILED :message
 END
 BURY [REPORTTESTFAILED]
 
+TO REPORTTESTBUG :message
+
+  ; backup the current writer
+  LOCALMAKE "previouswriter WRITER
+  SETWRITE :testlog
+
+  LOCALMAKE "result (SENTENCE "TESTBUG: :message)
+  UNLIMITEDPRINT :result
+  UNLIMITEDMESSAGEBOX [Test Bug] :result
+
+  ; restore the current writer
+  SETWRITE :previouswriter
+END
+BURY [REPORTTESTBUG]
+
+
 
 TO REPORTTEST :testpassed :result :expected
   IFELSE :testpassed [

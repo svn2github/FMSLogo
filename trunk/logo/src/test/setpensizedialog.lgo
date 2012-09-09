@@ -1,22 +1,27 @@
 LOAD "testlib.lgo
 LOAD "uiautomationlib.lgo
 
-TO SETPENSIZEDIALOGTEST.SMOKETEST
+TO SETPENSIZEDIALOGTEST.BUG3418522
 
    UIAUTOMATION.INITIALIZE
 
    CATCH "ERROR [
+     ; Taken from logorc.h
+     LOCALMAKE "CMD_BASE      32771
+     LOCALMAKE "CM_SETPENSIZE :CMD_BASE + 55
 
-     ; Use access keys to open the Pen Size dialog box
-     ;UIAUTOMATION.POSTSTRINGTOWINDOW "FMSLogo 0 "^
-     ;UIAUTOMATION.POSTSTRINGTOWINDOW "|FMSLogo Commander| "Edit "SZ
+     REPEAT 2 [
+       ; Use the "Set Pen Size" menu command to open the Pen Size dialog box
+       UIAUTOMATION.SENDMENUCOMMANDTOWINDOW "FMSLogo :CM_SETPENSIZE
 
-     localmake "WM_VSCROLL  277
-     localmake "SB_LINEDOWN 3
-     localmake "hwnd        UIAUTOMATION.FINDWINDOW [Pen Size] 0
-     UIAUTOMATION.POSTMESSAGETOWINDOW [Pen Size] [SizeControl] :WM_VSCROLL :SB_LINEDOWN :hwnd
+       localmake "WM_VSCROLL  277
+       localmake "SB_LINEDOWN 3
+       localmake "hwnd        UIAUTOMATION.FINDWINDOW [Pen Size] 0
+       UIAUTOMATION.SENDMESSAGETOWINDOW [Pen Size] [SizeControl] :WM_VSCROLL :SB_LINEDOWN :hwnd
 
-     WAIT 600
+       ; dismiss the dialog box
+       UIAUTOMATION.SENDBUTTONPUSHTOWINDOW [Pen Size] "Cancel
+     ]
    ]
 
    LOCALMAKE "lasterror ERROR
@@ -25,8 +30,10 @@ TO SETPENSIZEDIALOGTEST.SMOKETEST
    ]
 
    UIAUTOMATION.UNINITIALIZE
+
+   REPORTTESTPASSED ["|Bug #3418522 is fixed; Sending a vertical scroll message to the Pen Size dialog box did not crash.| ]
 END
 
 TO SETPENSIZEDIALOGTEST
-  SETPENSIZEDIALOGTEST.SMOKETEST
+  SETPENSIZEDIALOGTEST.BUG3418522
 END
