@@ -291,15 +291,52 @@ bool CFmsLogo::OnInit()
     //_control87(EM_UNDERFLOW, EM_UNDERFLOW);
     TopOfStack = (int*) &rval;
 
+    ProcessCommandLine();
+
     // Grab the single instance lock.
-    // We don't want to fail if Logo is running, since we are a screen saver.
-    // But we do want to prevent Logo from being uninstalled.
     g_SingleInstanceMutex = CreateMutex(
         NULL,  // default security attributes
         FALSE, // no initial owner
         "LogoForWindowsMutex");
+    if (GetLastError() == ERROR_ALREADY_EXISTS)
+    {
+        // A copy of Logo is already running.
+        if (g_FileToLoad[0] == '\0')
+        {
+            // No logo scripts were specified on the command-line.
+            // We should re-use the existing window instead of creating a new 
+            // instance of logo, since this was probably just an accident.
 
-    ProcessCommandLine();
+            // Find that running copy of Logo and make it visible.
+            HWND runningInstance = FindWindow(NULL, LOCALIZED_GENERAL_PRODUCTNAME);
+            if (runningInstance != NULL)
+            {
+                // bring running instance to the the foreground
+                ::SetForegroundWindow(runningInstance);
+                if ( ::IsIconic(runningInstance) ||
+                     !::IsWindowVisible(runningInstance))
+                {
+                    // the running instance is not visible, so restore it
+                    ::ShowWindow(runningInstance, SW_SHOWDEFAULT);
+                }
+
+                CloseHandle(g_SingleInstanceMutex);
+                return false;
+            }
+
+            // We can't find the window, so we'll start up another instance.
+            // The feature of not running two instances is supposed to make
+            // things simpler.  If the other copy of Logo failed to exit
+            // cleanly, or if some other application created the mutex,
+            // it would more confusing if this Logo didn't start up.
+        }
+        else
+        {
+            // a Logo script was specified on the command-line.
+            // This means that we should open up a new instance
+            // of Logo, even if one is already running.
+        }
+    }
 
     // Get video mode parameters
     init_videomode();
@@ -398,15 +435,6 @@ bool CFmsLogo::OnInit()
 
 int CFmsLogo::OnExit()
 {
-    /// --- copied from screensaver WM_DESTROY handler ---
-    /// TODO: Is this necessary?
-    if (is_executing())
-    {
-        IsTimeToHalt = true;
-    }
-    IsTimeToExit = true;
-    /// --- end of copied from screensaver WM_DESTROY handler ---
-
     if (hCursorWait)
     {
         DestroyCursor(hCursorWait);
