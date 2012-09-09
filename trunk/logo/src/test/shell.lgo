@@ -1,4 +1,5 @@
 LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
 
 TO SHELLTEST.SMOKETEST
 
@@ -58,9 +59,27 @@ TO SHELLTEST.WAITYIELDS
    CLOSE     :messagefile
    SETWRITE  :oldwriter
 
-   ; Schedule a task to halt the SHELL command.
-   ; This will halt SHELL command, not the test pass
-   SETTIMER 1 5000 [ CLEARTIMER 1 HALT ]
+   TEXTSCREEN
+   UIAUTOMATION.INITIALIZE
+
+   ; Schedule a timer that simulates pressing the Halt button after five seconds.
+   ; This should halt SHELL command, not the test pass.
+   ; This reason is subtle and worth describing.  SHELL will yield to the timer
+   ; event.  The timer event will call the win32 API PostMessage() to post some
+   ; messages that simulate a button push.  Because this uses PostMessage, not
+   ; SendMessage, the messages won't be processed until the next time time
+   ; FMSLogo reads from the message pump, which will be after the timer event
+   ; has completed.  At this point, the SHELL command will again, scan for
+   ; messages, and dispatch to handling them.  Pressing "Halt" button sets the
+   ; IsTimeToHalt flag.  Again, this will be checked by the SHELL command,
+   ; at which point it will halt *and* clear the IsTimeToHalt.
+   ; Then the language engine will continue executing the commands *after*
+   ; SHELL, which is the IGNORE command.  Because the IsTimeToHalt flag was
+   ; cleared, there is no longer an indication to halt and test pass continues.
+   SETTIMER 1 5000 [
+     CLEARTIMER 1
+     (UIAUTOMATION.SENDBUTTONPUSHTOWINDOW "Commander "Halt "False)
+   ]
 
    ; Create a SHELL command that takes about 10 seconds to run.
    ; The timer event should cancel our wait after about 5 seconds.
@@ -70,6 +89,8 @@ TO SHELLTEST.WAITYIELDS
    CHECKEXECUTIONTIME :instructions :executionTime 0 6000
 
    ; cleanup
+   UIAUTOMATION.UNINITIALIZE
+   SPLITSCREEN
    ERASEFILE :messagefile
    
 END
