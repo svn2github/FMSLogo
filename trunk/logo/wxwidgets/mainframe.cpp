@@ -624,20 +624,6 @@ void CMainFrame::DockCommanderWindow()
         }
 #endif
 
-#if 0  // is this necessary with wxWindows?
-
-        // HACK: Hide the current commander window before adding
-        // the new one to the splitter.  This somehow forces a 
-        // refresh of the entire screen window.  Without it, the
-        // scrollbars sometimes don't show up (I don't know why).
-        // This is a hack because I'm sure there's a more direct
-        // way to force the scrollbars to show up.
-        //
-        // See bug #1372200 for details.
-        CommandWindow->Show(SW_HIDE);
-#endif
-
-
         int clientWidth;
         int clientHeight;
         GetClientSize(&clientWidth, &clientHeight);
@@ -665,12 +651,6 @@ void CMainFrame::DockCommanderWindow()
             newCommander->GetCommander()->GetHistory()->ShowPosition(lastPosition);
         }
 
-
-#if 0 // is this necessary with wxWidgets?
-        // redraw the entire screen window
-        m_Screen->Update();
-        newCommander->Update();
-#endif
 
         // commit to the docked commander
         if (m_Commander != NULL)
