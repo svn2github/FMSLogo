@@ -16,6 +16,7 @@
     #include <wx/msgdlg.h>
 
     #include <wx/splitter.h>
+    #include <wx/statusbr.h>
     #include <wx/dcmirror.h>
     #include <wx/fontdlg.h>
     #include <wx/printdlg.h>
@@ -489,6 +490,13 @@ CMainFrame::CMainFrame(
 
     m_Screen = new CScreen(m_Splitter, ScreenWidth, ScreenHeight);
 
+    if (bFixed) 
+    {
+        // Fix up the frame window's size so that the screen's client
+        // area matches what the client passed in on the command line.
+        SetClientSize(ScreenWidth, ScreenHeight);
+    }
+
     DockCommanderWindow();
 
     m_Screen->Show();
@@ -522,27 +530,28 @@ void CMainFrame::UndockCommanderWindow()
         long lastPosition = newCommander->GetCommander()->GetHistory()->GetLastPosition();
         newCommander->GetCommander()->GetHistory()->ShowPosition(lastPosition);
 
-#if 0 // TODO
         if (bFixed)
         {
-            // The user requested that we never change the size of the drawing surface,
-            // so we must shrink the main window to hold just the screen.
-            TRect screenWindowRect;
-            screenWindowRect.SetWH(
-                0,
-                0,
-                Attr.W,
-                Attr.H - CommandWindow->GetWindowRect().Height() - PaneSplitterWindow->GetSplitterWidth());
+            // The user requested that the screen window should not
+            // change sizes, so we must resize the main window to
+            // hold just the screen.
+            int mainFrameWidth;
+            int mainFrameHeight;
+            GetSize(&mainFrameWidth, &mainFrameHeight);
 
-            SetWindowPos(
-                NULL,
-                screenWindowRect,
-                SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
+            int commanderWidth;
+            int commanderHeight;
+            m_Commander->GetSize(&commanderWidth, &commanderHeight);
+
+            int newHeight = mainFrameHeight -
+                commanderHeight -
+                m_Splitter->GetSashSize();
+
+            // Use the computed height
+            SetSize(mainFrameWidth, newHeight);
         }
 
-#endif 
         m_Splitter->Unsplit(m_Commander);
-
 
         // commit to the new commander
         m_Commander->Destroy();
@@ -581,53 +590,32 @@ void CMainFrame::DockCommanderWindow()
         int commanderWindowHeight = MIN_COMMANDER_HEIGHT;
 #endif
 
-#if 0 // TODO
         if (bFixed)
         {
             // The user requested that we never change the size of the drawing surface,
             // so we must grow the main window to hold the commander window.
+            int mainFrameWidth;
+            int mainFrameHeight;
+            GetSize(&mainFrameWidth, &mainFrameHeight);
 
-            TRect originalWindowRect;
-            originalWindowRect.SetWH(
-                Attr.X,
-                Attr.Y,
-                Attr.W,
-                Attr.H);
 
             // grow the main window to hold the splitter and the commander
-            const int totalHeight =
-                originalWindowRect.Height() +
-                PaneSplitterWindow->GetSplitterWidth() +
+            const int newHeight =
+                mainFrameHeight +
+                m_Splitter->GetSashSize() +
                 commanderWindowHeight;
-         
-            const TRect newWindowRect(
-                originalWindowRect.Left(),
-                originalWindowRect.Top(),
-                originalWindowRect.Right(),
-                originalWindowRect.Top() + totalHeight);
 
-            SetWindowPos(
-                NULL,
-                newWindowRect,
-                SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
+            SetSize(mainFrameWidth, newHeight);
         }
-#endif
 
         int clientWidth;
         int clientHeight;
         GetClientSize(&clientWidth, &clientHeight);
 
-        int splitterWidth = m_Splitter->GetSashSize();
-
-        int splitterPosition = clientHeight - commanderWindowHeight - splitterWidth;
-
-        // the splitter can't get too small
-        if (splitterPosition < 20)
-        {
-            splitterPosition = 20;
-        }
-
         m_Splitter->SplitHorizontally(m_Screen, newCommander);
+
+        int splitterWidth = m_Splitter->GetSashSize();
+        int splitterPosition = clientHeight - commanderWindowHeight - splitterWidth;
         m_Splitter->SetSashPosition(splitterPosition);
 
         // copy the history the button state
