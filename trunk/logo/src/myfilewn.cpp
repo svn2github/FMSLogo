@@ -279,12 +279,9 @@ void TMyFileWindow::CMSaveToWorkspace()
 
     if (args_list != NULL)
     {
-        error_happen = false;
-
         EndEdit();
 
         unlink(TempPathName);
-        IsDirty = true;
 
         if (error_happen)
         {
@@ -1408,8 +1405,6 @@ void TMyFileWindow::EvDestroy()
 
     if (args_list != NIL || check_for_errors)
     {
-        error_happen = false;
-
         int realsave = EndEdit();
 
         if (error_happen)
