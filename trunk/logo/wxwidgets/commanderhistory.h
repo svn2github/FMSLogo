@@ -8,16 +8,18 @@ class CCommanderHistory : public wxRichTextCtrl
 {
 public:
     CCommanderHistory(CCommander* Parent, wxWindowID Id);
-
-    bool IsCursorAtBottom() const;
-    void CopyCurrentLineToCommanderInput() const;
-
-    void OnKeyDown(wxKeyEvent& event);
-
     void Duplicate(CCommanderHistory & CommanderHistory);
 
 private:
+    // Event handlers
+    void OnKeyDown(wxKeyEvent& Event);
+    void OnLeftMouseButtonDown(wxMouseEvent& Event);
+    void OnLeftMouseButtonDoubleClick(wxMouseEvent& Event);
+
+    // Private helper functions
     CCommander * GetCommander() const;
+    bool IsCursorAtBottom() const;
+    void CopyCurrentLineToCommanderInput() const;
 
     DECLARE_NO_COPY_CLASS(CCommanderHistory);
     DECLARE_EVENT_TABLE();

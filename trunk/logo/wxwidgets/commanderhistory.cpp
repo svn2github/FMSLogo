@@ -276,7 +276,33 @@ void CCommanderHistory::Duplicate(CCommanderHistory & Source)
     ShowPosition(caretPosition);
 }
 
+void CCommanderHistory::OnLeftMouseButtonDown(wxMouseEvent& Event)
+{
+    // Have the base class process the mouse click so that
+    // the cursor will be moved to the location of the click.
+    OnLeftClick(Event);
+    OnLeftUp(Event);
+
+    // On a single click, the contents of the current line
+    // gets copied to the commander's input box.
+    CopyCurrentLineToCommanderInput();
+
+    // Continue with the default processing for the event.
+    Event.Skip();
+}
+
+void CCommanderHistory::OnLeftMouseButtonDoubleClick(wxMouseEvent& Event)
+{
+    // On a double-click, the contents of the current line are executed.
+    CopyCurrentLineToCommanderInput();
+    GetCommander()->Execute();
+
+    // Continue with the default processing for the event.
+    Event.Skip();
+}
 
 BEGIN_EVENT_TABLE(CCommanderHistory, wxRichTextCtrl)
     EVT_KEY_DOWN(CCommanderHistory::OnKeyDown)
+    EVT_LEFT_DOWN(CCommanderHistory::OnLeftMouseButtonDown)
+    EVT_LEFT_DCLICK(CCommanderHistory::OnLeftMouseButtonDoubleClick)
 END_EVENT_TABLE()
