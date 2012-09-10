@@ -33,6 +33,7 @@ private:
     // Menu commands event handlers
     void OnExit(wxCommandEvent& Event);
     void OnSaveAndExit(wxCommandEvent& Event);
+    void OnSaveToWorkspace(wxCommandEvent& Event);
     void OnPrint(wxCommandEvent& Event);
 
     void OnUndo(wxCommandEvent& Event);

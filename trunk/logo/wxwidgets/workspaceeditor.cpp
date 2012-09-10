@@ -63,6 +63,7 @@ BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
 
     EVT_MENU(ID_FILEEXIT,            CWorkspaceEditor::OnExit)
     EVT_MENU(ID_FILESAVEANDEXIT,     CWorkspaceEditor::OnSaveAndExit)
+    EVT_MENU(ID_FILESAVETOWORKSPACE, CWorkspaceEditor::OnSaveToWorkspace)
     EVT_MENU(ID_FILEPRINT,           CWorkspaceEditor::OnPrint)
 
 
@@ -299,23 +300,6 @@ void CWorkspaceEditor::OnSetFont(wxCommandEvent& WXUNUSED(Event))
 
         // Set this as the new default font
         SetConfigurationFont("EditFont", font);
-
-#if 0
-        // Changing the font counts a modification as far as
-        // the edit control is concerned, but not as far as
-        // Logo is concerned.
-        // Therefore, we must preserve the IsModified() state
-        // ourselves to prevent spurious warnings when closing
-        // an unedited document.
-        bool editorIsModified = Editor->IsModified();
-
-        Editor->SetWindowFont(hFont, true);
-
-        if (!editorIsModified)
-        {
-            Editor->ClearModify();
-        }
-#endif
     }
 }
 
@@ -587,6 +571,34 @@ void CWorkspaceEditor::OnSaveAndExit(wxCommandEvent& Event)
 {
     Save();
     OnExit(Event);
+}
+
+void CWorkspaceEditor::OnSaveToWorkspace(wxCommandEvent& Event)
+{
+    Save();
+
+    if (m_EditArguments != NIL)
+    {
+        EndEdit();
+
+        unlink(TempPathName);
+
+        if (m_ErrorDetected)
+        {
+            // Notify the user that:
+            // 1) The changes in the editor failed to load
+            // 2) The cursor is positioned just after the last
+            //    successful definition
+            ::wxMessageBox(
+                LOCALIZED_CURSORISATLASTGOODDEFINITION,
+                LOCALIZED_EDITFAILEDTOLOAD,
+                wxOK | wxICON_ERROR,
+                CFmsLogo::GetMainFrame()->GetCommander());
+
+            // Reopen the editor to the location of the error.
+            m_LogoCodeControl->ReopenAfterError();
+        }
+    }
 }
 
 // Prints the contents of the editor
