@@ -23,6 +23,7 @@
 #include "startup.h"      // for TempPathName
 #include "mem.h"          // for reref
 #include "main.h"         // for putcombobox
+#include "graphwin.h"     // for do_help
 
 enum
 {
@@ -47,8 +48,8 @@ enum
     ID_SEARCHREPLACE,
     ID_SEARCHFINDNEXT,
     ID_EDITSETFONT,
-    ID_HELP,
     ID_TESTRUNSELECTION,
+    ID_HELP,
     ID_HELPEDIT,
     ID_HELPEDIT_TOPIC,
 
@@ -98,6 +99,10 @@ BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
 
     EVT_MENU(ID_TESTRUNSELECTION,      CWorkspaceEditor::OnRunSelection)
     EVT_UPDATE_UI(ID_TESTRUNSELECTION, CWorkspaceEditor::OnUpdateRunSelection)
+
+    EVT_MENU(ID_HELP,                CWorkspaceEditor::OnHelpIndex)
+    EVT_MENU(ID_HELPEDIT,            CWorkspaceEditor::OnHelpEditor)
+    EVT_MENU(ID_HELPEDIT_TOPIC,      CWorkspaceEditor::OnHelpTopicSearch)
 
     EVT_MENU(ID_FINDMATCHINGPAREN,   CWorkspaceEditor::OnFindMatchingParen)
     EVT_MENU(ID_SELECTMATCHINGPAREN, CWorkspaceEditor::OnSelectMatchingParen)
@@ -867,6 +872,22 @@ void CWorkspaceEditor::OnUpdateRunSelection(wxUpdateUIEvent& Event)
 {
     Event.Enable(m_LogoCodeControl->IsTextSelected());
 }
+
+void CWorkspaceEditor::OnHelpIndex(wxCommandEvent& WXUNUSED(Event))
+{
+    do_help(NULL);
+}
+
+void CWorkspaceEditor::OnHelpEditor(wxCommandEvent& WXUNUSED(Event))
+{
+    do_help("Editor");
+}
+
+void CWorkspaceEditor::OnHelpTopicSearch(wxCommandEvent& WXUNUSED(Event))
+{
+    do_help(m_LogoCodeControl->GetSelectedText().c_str());
+}
+
 
 void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
 {
