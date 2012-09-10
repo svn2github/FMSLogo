@@ -32,7 +32,7 @@ public:
     void GiveControlToInputBox();
     void GiveControlToHistoryBox();
 
-    void PostKeyDownToInputControl(wxKeyEvent& Event);
+    void ProcessKeyDownEventAtInputControl(wxKeyEvent& Event);
 
     void AppendToCommanderHistory(const char * String);
     void AppendToCommanderHistory(char Char);

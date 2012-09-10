@@ -585,8 +585,7 @@ void CCommander::OnSize(wxSizeEvent& event)
 }
 
 
-// TODO: rename so that it doesn't have "post" in it
-void CCommander::PostKeyDownToInputControl(wxKeyEvent& Event)
+void CCommander::ProcessKeyDownEventAtInputControl(wxKeyEvent& Event)
 {
     int keyCode = Event.GetKeyCode();
 
@@ -605,7 +604,7 @@ void CCommander::OnKeyDown(wxKeyEvent& Event)
 {
     if (m_NextInstruction->WantsKeyEvent(Event.GetKeyCode()))
     {
-        PostKeyDownToInputControl(Event);
+        ProcessKeyDownEventAtInputControl(Event);
     }
     else
     {

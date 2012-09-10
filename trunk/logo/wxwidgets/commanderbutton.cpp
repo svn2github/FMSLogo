@@ -16,9 +16,9 @@ void CCommanderButton::OnKeyDown(wxKeyEvent& Event)
     {
         CCommander * commander = static_cast<CCommander*>(GetParent());
 
-        // we don't handle this key.
-        // give focus to the edit box and send the press to it.
-        commander->PostKeyDownToInputControl(Event);
+        // We don't handle this key.
+        // Give focus to the edit box and send the press to it.
+        commander->ProcessKeyDownEventAtInputControl(Event);
     }
 
     // don't process the event (wxButtons don't usually get them)

@@ -247,7 +247,7 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
     }
     else if (CCommanderInput::WantsKeyEvent(keyCode))
     {
-        GetCommander()->PostKeyDownToInputControl(Event);
+        GetCommander()->ProcessKeyDownEventAtInputControl(Event);
     }
     else
     {

@@ -628,7 +628,7 @@ void CScreen::OnKeyDown(wxKeyEvent& Event)
 
         // We don't handle this key.
         // Give focus to the edit box and send the press to it.
-        commander->PostKeyDownToInputControl(Event);
+        commander->ProcessKeyDownEventAtInputControl(Event);
     }
     else
     {
