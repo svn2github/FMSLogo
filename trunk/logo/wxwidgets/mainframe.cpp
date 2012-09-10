@@ -494,17 +494,6 @@ CMainFrame::CMainFrame(
     m_Screen->Show();
     m_Commander->Show();
 
-    // Configure the keyboard shortcuts
-    wxAcceleratorEntry acceleratorEntries[1];
-
-    // F1 opens help
-    acceleratorEntries[0].Set(wxACCEL_NORMAL, WXK_F1, wxID_HELP_INDEX);
-
-    wxAcceleratorTable acceleratorTable(
-        ARRAYSIZE(acceleratorEntries),
-        acceleratorEntries);
-    SetAcceleratorTable(acceleratorTable);
-
     // Set a flag that the printer data needs to be initialized.
     // We delay the initialization because it can be block
     // if the default printer is an offline network printer.

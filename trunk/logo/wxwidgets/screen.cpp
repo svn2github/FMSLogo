@@ -590,6 +590,11 @@ void CScreen::OnKeyDown(wxKeyEvent& Event)
 
             ProcessEvent(navigationEvent);
         }
+        else if (Event.GetModifiers() == wxMOD_NONE && keyCode == WXK_F1)
+        {
+            // F1 displays the help
+            do_help(NULL);
+        }
     }
 
     // if keyboard was on and up and down is enabled then continue
