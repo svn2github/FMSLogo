@@ -234,18 +234,15 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
     }
     else if (keyCode == WXK_TAB)
     {
-        // TODO: the documentation for wxWANTS_CHARS says that I should
-        // create and send a wxNavigationKeyEvent, instead of doing it
-        // myself.
         if (Event.ShiftDown())
         {
-            // the previous control is the execute button
-            GetCommander()->GetEdallButton()->SetFocus();
+            // Shift+Tab means navigate backward.
+            Navigate(wxNavigationKeyEvent::IsBackward);
         }
         else
         {
-            // the next control is the commander input
-            GetCommander()->GetInput()->SetFocus();
+            // Shift+Tab means navigate forward.
+            Navigate(wxNavigationKeyEvent::IsForward);
         }
     }
     else if (CCommanderInput::WantsKeyEvent(keyCode))
