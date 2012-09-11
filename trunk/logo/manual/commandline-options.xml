@@ -140,7 +140,7 @@ If procedures are lost or have unexpected changes then you should not be using e
 <para>
 &PRODUCTNAME; will allow saves directly to the workspace.
 Saving directly to workspace can lead to unexpected behavior if you don't understand how &PRODUCTNAME; manages the workspace.
-If procedures are lost or unexpected changes then you should not be using expert mode.
+If procedures are lost or change unexpectedly then you should not be using expert mode.
 </para>
 
 <para>Example:</para>
