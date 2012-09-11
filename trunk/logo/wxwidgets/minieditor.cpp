@@ -72,17 +72,43 @@ CMiniEditor::CMiniEditor(
     GetConfigurationFont("CommanderFont", font);
     m_TextField->SetFont(font);
 
+    // Add a row for the two buttons (End and Cancel)
+    wxBoxSizer *buttonRow = new wxBoxSizer(wxHORIZONTAL);
+    topLevelSizer->Add(
+        buttonRow,
+        0,
+        wxALIGN_CENTER | wxBOTTOM | wxLEFT | wxRIGHT | wxEXPAND,
+        10);
+
     // Add the "end" button
     wxButton * endButton = new wxButton(
         this,
         wxID_OK,
         LOCALIZED_ALTERNATE_END);
-    topLevelSizer->Add(
+    buttonRow->Add(
         endButton,
         0,
-        wxALIGN_LEFT | wxBOTTOM | wxLEFT | wxRIGHT,
-        10);
+        wxALIGN_LEFT);
     endButton->SetDefault();
+
+    // Add a strech spacer between End and Cancel so
+    // that they can be on the left and right of the
+    // dialog box, instead of next to each other.
+    buttonRow->AddStretchSpacer();
+
+    // Add the "Cancel" button.
+    // While a Cancel button was not in the original design, wxWidgets
+    // requires that it exist in order for the ESC key to act like a cancel.
+    // Without it, ESC would simulate a keypress on the End button,
+    // causing the definition to be accepted, instead of abandoned.
+    wxButton * cancelButton = new wxButton(
+        this,
+        wxID_CANCEL,
+        LOCALIZED_GENERAL_CANCELBUTTON);
+    buttonRow->Add(
+        cancelButton,
+        0,
+        wxALIGN_RIGHT);
 
     SetSizer(topLevelSizer);
     topLevelSizer->Fit(this);
