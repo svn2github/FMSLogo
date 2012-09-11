@@ -62,7 +62,7 @@ CMiniEditor::CMiniEditor(
         wxSize(240, 200));
     topLevelSizer->Add(
         m_TextField,
-        0,
+        1, // expand this control with the size of the dialog box
         wxALIGN_CENTER | wxBOTTOM | wxLEFT | wxRIGHT | wxEXPAND,
         10);
 
@@ -111,7 +111,10 @@ CMiniEditor::CMiniEditor(
         wxALIGN_RIGHT);
 
     SetSizer(topLevelSizer);
-    topLevelSizer->Fit(this);
+
+    // Ensure that the user doesn't resize the window so small
+    // that the buttons overlap or are off-screen.
+    topLevelSizer->SetSizeHints(this);
 }
 
 CMiniEditor::~CMiniEditor()
