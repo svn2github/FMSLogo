@@ -5,7 +5,7 @@
 
 #include "commander.h"
 #include "commanderinput.h"
-#include "graphwin.h" // for do_help
+#include "helputils.h" // for ContextHelp()
 
 CCommanderHistory::CCommanderHistory(
     CCommander *    Parent, 
@@ -178,7 +178,7 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
     else if (Event.GetModifiers() == wxMOD_NONE && keyCode == WXK_F1)
     {
         // F1 displays the help
-        do_help(GetStringSelection().c_str());
+        ContextHelp(GetStringSelection());
     }
     else if (keyCode == WXK_PAGEUP || keyCode == WXK_NUMPAD_PAGEUP)
     {

@@ -111,6 +111,7 @@ OBJECTS =                      \
     minieditor.o               \
     minieditortextctrl.o       \
     fontutils.o                \
+    helputils.o                \
     utils.o                    \
     setcolor.o                 \
     3dsolid.o        \

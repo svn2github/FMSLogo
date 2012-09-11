@@ -1,7 +1,8 @@
 #include "commanderinput.h"
 
 #include "commander.h"
-#include "graphwin.h" // for do_help
+#include "logocore.h"  // for ARRAYSIZE
+#include "helputils.h" // for ContextHelp
 
 CCommanderInput::CCommanderInput(
     CCommander *    Parent, 
@@ -86,7 +87,7 @@ void CCommanderInput::OnKeyDown(wxKeyEvent& Event)
     switch (keyCode)
     {
     case WXK_F1:
-        do_help(GetStringSelection().c_str());
+        ContextHelp(GetStringSelection());
         break;
 
     case WXK_UP:

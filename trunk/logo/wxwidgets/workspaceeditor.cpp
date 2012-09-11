@@ -24,6 +24,7 @@
 #include "mem.h"          // for reref
 #include "main.h"         // for putcombobox
 #include "graphwin.h"     // for do_help
+#include "helputils.h"    // for ContextHelp
 
 enum
 {
@@ -897,7 +898,7 @@ void CWorkspaceEditor::OnHelpEditor(wxCommandEvent& WXUNUSED(Event))
 
 void CWorkspaceEditor::OnHelpTopicSearch(wxCommandEvent& WXUNUSED(Event))
 {
-    do_help(m_LogoCodeControl->GetSelectedText().c_str());
+    ContextHelp(m_LogoCodeControl->GetSelectedText());
 }
 
 
