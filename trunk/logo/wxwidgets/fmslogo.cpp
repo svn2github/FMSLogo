@@ -71,6 +71,59 @@ CFmsLogo::CFmsLogo()
 {
 }
 
+// Read an integer command-line argument, given as either "-W500" or "-W 500".
+//
+// CurrentArgument - A pointer in a string just after the switch,
+//                   to where the number should begin.
+//
+// NextArgument    - A reference to an pointer in varg.
+//                   This is incremented to the next argument if
+//                   the switch is given in the form "-W 500".
+static
+int
+ReadIntArgument(
+    wxChar *    CurrentArgument,
+    wxChar ** & NextArgument
+    )
+{
+    int numericValue;
+
+    if (*CurrentArgument != '\0')
+    {
+        // The command-line was given as "-w500".
+        numericValue = strtoul(CurrentArgument, &CurrentArgument, 10);
+    }
+    else
+    {
+        // The -w isn't immediately followed by a number.
+        // Try to get the next argument, as in "-w 500".
+        wxChar * nextArgument = NextArgument[1];
+        if (nextArgument != NULL)
+        {
+            // There was an argument following the -W.
+            numericValue = strtoul(nextArgument, NULL, 10);
+            NextArgument++;
+        }
+        else
+        {
+            // The command-line ends in something like "-w".
+            // In MSWLogo, the width would have silently been 
+            // taken to be 0.
+
+            // Since this results in an unusable workspace, we
+            // now warn user of their mistake.
+            wxMessageBox(
+                *NextArgument,
+                LOCALIZED_ERROR_BADCOMMANDLINE, 
+                wxOK | wxICON_INFORMATION);
+
+            numericValue = 0;
+        }
+    }
+
+    return numericValue;
+}
+
 void CFmsLogo::ProcessCommandLine()
 {
     // parse the command-line parameters
@@ -92,8 +145,8 @@ void CFmsLogo::ProcessCommandLine()
 
         if (copyRemaingArgsAsFilename)
         {
-            // BUG: this is not backward compatible with MSWLogo.
-            // This should tolerate multiple spaces, intead of assuming
+            // BUG: This is not backward compatible with MSWLogo.
+            // This should tolerate multiple spaces, instead of assuming
             // that there's exactly one space between arguments.
             if (fileToLoadIndex != 0 &&
                 fileToLoadIndex < ARRAYSIZE(g_FileToLoad))
@@ -132,13 +185,13 @@ void CFmsLogo::ProcessCommandLine()
 
             case 'h':
             case 'H':
-                BitMapHeight = strtoul(argument, &argument, 10);
+                BitMapHeight   = ReadIntArgument(argument, nextArgument);
                 g_CustomHeight = true;
                 break;
 
             case 'w':
             case 'W':
-                BitMapWidth = strtoul(argument, &argument, 10);
+                BitMapWidth   = ReadIntArgument(argument, nextArgument);
                 g_CustomWidth = true;
                 break;
 
@@ -159,7 +212,7 @@ void CFmsLogo::ProcessCommandLine()
         }
         else
         {
-            // this was not a switch, so treat it as a filename
+            // This was not a switch, so treat it as a filename.
             if (g_FileToLoad[0] == '\0')
             {
                 strncpy(g_FileToLoad, argument, ARRAYSIZE(g_FileToLoad) - 1);
@@ -217,6 +270,9 @@ bool CFmsLogo::OnInit()
 
     init_osversion();
 
+    // REVISIT: Disabling DEP was necessary in OWL because it used thunks that
+    // modified the stack in seemingly unsafe ways.  It might not be
+    // necessary in wxWidgets.
     DisableDataExecutionProtection();
 
     // Figure out the path that contains fmslogo.exe
