@@ -573,26 +573,22 @@ void CScreen::OnKeyDown(wxKeyEvent& Event)
     {
         if (keyCode == WXK_TAB)
         {
-            // Because we use the wxWANT_CHARs to capture WKX_TAB
-            // and WXK_RETURN codes to support KEYBOARDON, we must
+            // Because we use the wxWANTS_CHARS to capture WKX_TAB
+            // and WXK_RETURN codes for KEYBOARDON, we must
             // we must explicitly convert tabs to navigation
             // in the cases where no keyboard capture is requested.
-            wxNavigationKeyEvent navigationEvent;
-            navigationEvent.SetFromTab(true);
             if (Event.ShiftDown())
             {
-                navigationEvent.SetDirection(wxNavigationKeyEvent::IsBackward);
+                Navigate(wxNavigationKeyEvent::IsBackward);
             }
             else
             {
-                navigationEvent.SetDirection(wxNavigationKeyEvent::IsForward);
+                Navigate(wxNavigationKeyEvent::IsForward);
             }
-
-            ProcessEvent(navigationEvent);
         }
         else if (Event.GetModifiers() == wxMOD_NONE && keyCode == WXK_F1)
         {
-            // F1 displays the help
+            // F1 displays the help when keyboard capture isn't on
             do_help(NULL);
         }
     }
@@ -737,10 +733,36 @@ IsLogoCharCode(
     case WXK_NUMPAD_INSERT:
     case WXK_DELETE:
     case WXK_NUMPAD_DELETE:
+    case WXK_PAGEUP:
+    case WXK_NUMPAD_PAGEUP:
+    case WXK_PAGEDOWN:
+    case WXK_NUMPAD_PAGEDOWN:
         return false;
     }
 
     return true;
+}
+
+static
+bool
+IsLogoScrollingCharCode(
+    int WxKeyCode
+    )
+{
+    switch (WxKeyCode)
+    {
+    case WXK_LEFT:
+    case WXK_UP:
+    case WXK_RIGHT:
+    case WXK_DOWN:
+    case WXK_PAGEUP:
+    case WXK_NUMPAD_PAGEUP:
+    case WXK_PAGEDOWN:
+    case WXK_NUMPAD_PAGEDOWN:
+        return true;
+    }
+
+    return false;
 }
 
 void CScreen::OnChar(wxKeyEvent& Event)
@@ -751,20 +773,32 @@ void CScreen::OnChar(wxKeyEvent& Event)
     // WM_CHAR messages, instead of WM_KEY_DOWN messages.
     // WM_CHAR is similar to EVT_CHAR events in wxWidgets, except that EVT_CHAR
     // over-generates, so we filter out the extras using IsLogoCharCode().
-    if (KeyboardCapture == KEYBOARDCAPTURE_KeyDown &&
-        IsLogoCharCode(wxKeyCode))
+    if (KeyboardCapture == KEYBOARDCAPTURE_KeyDown)
     {
+        if (IsLogoCharCode(wxKeyCode))
+        {
+            // Map WX keycodes to Windows key codes
+            int windowsKeyCode = WxKeyCodeToVirtualKeyCode(wxKeyCode);
 
-        // Map WX keycodes to Windows key codes
-        int windowsKeyCode = WxKeyCodeToVirtualKeyCode(wxKeyCode);
+            // Forward the event to Logo
+            callthing * callevent = callthing::CreateKeyboardEvent(
+                keyboard_keyup,
+                windowsKeyCode);
 
-        // Forward the event to Logo
-        callthing * callevent = callthing::CreateKeyboardEvent(
-            keyboard_keyup,
-            windowsKeyCode);
-
-        calllists.insert(callevent);
-        checkqueue();
+            calllists.insert(callevent);
+            checkqueue();
+        }
+        else if (IsLogoScrollingCharCode(wxKeyCode))
+        {
+            // For compatiblity with MSWLogo, we let a few "char" events
+            // through to wxWidgets for their default behavior, which is
+            // mostly just to scroll the screen.
+            Event.Skip();
+        }
+        else
+        {
+            // Ignore the event
+        }
     }
     else
     {
