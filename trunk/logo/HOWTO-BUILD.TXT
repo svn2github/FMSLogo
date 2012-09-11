@@ -41,7 +41,8 @@ Install the Nullsoft Scriptable Installation System (NSIS) to C:\Program Files\N
 You can download this from http://sourceforge.net/projects/nsis.
 This is needed to build the self-extracting installer executable.
 
-Install MinGW C:\MinGW.  This is needed to build the FMSLogo screen saver.
+Install MinGW C:\MinGW.  This is needed to build the FMSLogo screen saver
+and functiontest.dll, which is used to help test DLLCALL.
 
 Once these steps are complete, you can build the entire FMSLogo package by running
 "gmake binaryexe" in the current directory.
