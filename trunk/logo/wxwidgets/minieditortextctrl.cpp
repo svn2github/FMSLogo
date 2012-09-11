@@ -2,6 +2,8 @@
 
 #include <wx/event.h>
 
+#include "helputils.h" // for ContextHelp()
+
 // ----------------------------------------------------------------------------
 // CMiniEditorTextCtrl
 // ----------------------------------------------------------------------------
@@ -30,24 +32,34 @@ void CMiniEditorTextCtrl::OnKeyDown(wxKeyEvent& Event)
 
     switch (keyCode)
     {
+    case WXK_F1:
+        // F1 displays the help
+        ContextHelp(GetStringSelection());
+        break;
+
     case WXK_RETURN:
+        // Enter writes a newline, instead of pressing the default button,
+        // which would close the mini-editor.
         WriteText("\n");
         break;
 
     case WXK_TAB:
-        // Use TAB and SHIFT+TAB as a navigational key event
+        // Use TAB and SHIFT+TAB as a navigational key events
+        if (Event.ShiftDown())
         {
-            wxNavigationKeyEvent eventNav;
-            eventNav.SetDirection(!Event.ShiftDown());
-            eventNav.SetWindowChange(Event.ControlDown());
-            eventNav.SetEventObject(this);
-
-            GetParent()->GetEventHandler()->ProcessEvent(eventNav);
+            // Shift+Tab means navigate backward.
+            Navigate(wxNavigationKeyEvent::IsBackward);
+        }
+        else
+        {
+            // Shift+Tab means navigate forward.
+            Navigate(wxNavigationKeyEvent::IsForward);
         }
         break;
 
     default:
         Event.Skip();
+        break;
     }
 }
 
