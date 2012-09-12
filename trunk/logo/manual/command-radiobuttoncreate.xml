@@ -26,6 +26,7 @@ If no window or dialog with that name exists, then the &PRODUCTNAME; screen wind
 
 <para>
 The <parameter>group</parameter> input is the name of the group box control to associate with the new radio button control.
+All radio buttons within the same group box must be created one after another, without creating any other controls on the same parent in between.
 </para>
 
 <para>
