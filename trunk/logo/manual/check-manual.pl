@@ -448,6 +448,9 @@ $Exceptions{'command-save.xml'}{'allcaps'}{'MYPROGRAM2'} = 1;
 $Exceptions{'command-savel.xml'}{'allcaps'}{'MYPROGRAM1'} = 1;
 $Exceptions{'command-savel.xml'}{'allcaps'}{'MYPROGRAM2'} = 1;
 
+$Exceptions{'command-scrollbarenable.xml'}{'allcaps'}{'SCROLLBARUPDATE'}   = 1;
+$Exceptions{'command-scrollbarenable.xml'}{'allcaps'}{'SCROLLBARCALLBACK'} = 1;
+
 $Exceptions{'command-selectbox.xml'}{'allcaps'}{'OK'} = 1;
 
 $Exceptions{'command-setbitmode.xml'}{'allcaps'}{'XOR'} = 1;
