@@ -315,6 +315,8 @@ $Exceptions{'command-ignore.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
 
 $Exceptions{'command-item.xml'}{'bannedword'}{'element'}  = 1;
 
+$Exceptions{'command-keyboardon.xml'}{'allcaps'}{'ONKEYDOWN'}   = 1;
+$Exceptions{'command-keyboardon.xml'}{'allcaps'}{'ONKEYUP'}     = 1;
 $Exceptions{'command-keyboardon.xml'}{'bannedword'}{'function'} = 1;
 
 $Exceptions{'command-keyp.xml'}{'allcaps'}{'CBREAK'}  = 1;

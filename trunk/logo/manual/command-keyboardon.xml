@@ -48,19 +48,46 @@ So uppercase <keycap>A</keycap> might generate the following keyboard events: a 
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>KEYBOARDON [PRINT CHAR KEYBOARDVALUE]
+
+<para>
+Using KEYBOARDON on with one input to print characters that are typed:
+<programlisting><userinput>KEYBOARDON [PRINT CHAR KEYBOARDVALUE]
 FULLSCREEN
 SETFOCUS [&PRODUCTNAME;]
 a</userinput>
 a
 <userinput>b</userinput>
 b
-SPLITSCREEN
-KEYBOARDOFF
+<userinput>SPLITSCREEN
+KEYBOARDOFF</userinput>
 </programlisting>
+</para>
+
+<para>
+Using KEYBOARDON with two inputs to perform actions only while keys are held down:
+<programlisting><userinput>TO ONKEYDOWN
+  IF KEYBOARDVALUE = ASCII "T [ HIDETURTLE ]
+  IF KEYBOARDVALUE = ASCII "S [ IF SCREENCOLOR &lt;> 1 [SETSCREENCOLOR 1] ]
+END
+
+TO ONKEYUP
+  IF KEYBOARDVALUE = ASCII "T [ SHOWTURTLE ]
+  IF KEYBOARDVALUE = ASCII "S [ SETSCREENCOLOR 7 ]
+END
+
+(KEYBOARDON [ONKEYDOWN] [ONKEYUP])
+FULLSCREEN</userinput>
+
+<replaceable>While you hold down the "T" key, the turtle will hide.
+While you hold down the "S" key, the screen will turn blue.</replaceable>
+
+<userinput>SPLITSCREEN
+KEYBOARDOFF</userinput>
+</programlisting>
+</para>
+
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
