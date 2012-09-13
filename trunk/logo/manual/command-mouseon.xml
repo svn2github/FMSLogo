@@ -28,18 +28,22 @@ To obtain where the mouse was when a button was pushed or the mouse moved call <
 
 <varlistentry><term>Example</term>
 <listitem>
-<para>
 <programlisting><userinput>PENUP
 MOUSEON [SETPOS MOUSEPOS PENDOWN] [PENUP] [] [] [SETPOS MOUSEPOS]</userinput>
+
+<replaceable>Move the mouse around.
+Hold down the left button to draw.</replaceable>
+
+<userinput>MOUSEOFF</userinput>
 </programlisting>
-Move the mouse around.
-Hold down the left button to draw.
-<programlisting><userinput>MOUSEOFF</userinput>
-</programlisting>
-</para>
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-mouseoff">MOUSEOFF</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>
