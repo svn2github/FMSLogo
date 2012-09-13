@@ -12,9 +12,11 @@ public:
 
 private:
     // Event handlers
+    void OnContextHelp(wxCommandEvent& Event);
     void OnKeyDown(wxKeyEvent& Event);
     void OnLeftMouseButtonDown(wxMouseEvent& Event);
     void OnLeftMouseButtonDoubleClick(wxMouseEvent& Event);
+    void OnContextMenu(wxContextMenuEvent& Event);
 
     // Private helper functions
     CCommander * GetCommander() const;

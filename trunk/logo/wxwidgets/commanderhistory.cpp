@@ -2,10 +2,15 @@
 
 #include <wx/settings.h>
 #include <wx/button.h>
+#include <wx/menu.h>
 
 #include "commander.h"
 #include "commanderinput.h"
 #include "helputils.h" // for ContextHelp()
+#include "guiutils.h"  // for FillMenu()
+#include "logocore.h"  // for ARRAYSIZE
+
+#include "localizedstrings.h"
 
 CCommanderHistory::CCommanderHistory(
     CCommander *    Parent, 
@@ -144,6 +149,11 @@ void CCommanderHistory::CopyCurrentLineToCommanderInput() const
     }
 #endif
 
+}
+
+void CCommanderHistory::OnContextHelp(wxCommandEvent& Event)
+{
+    ContextHelp(GetStringSelection());
 }
 
 void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
@@ -298,8 +308,26 @@ void CCommanderHistory::OnLeftMouseButtonDoubleClick(wxMouseEvent& Event)
     Event.Skip();
 }
 
+void CCommanderHistory::OnContextMenu(wxContextMenuEvent& Event)
+{
+    // Show a popup menu that is appropriate for a read-only test control.
+    static const MENUITEM contextMenuItems[] = {
+        {LOCALIZED_POPUP_COPY,      wxID_COPY},
+        {LOCALIZED_POPUP_SELECTALL, wxID_SELECTALL},
+        {0},
+        {LOCALIZED_POPUP_HELP,      wxID_HELP_INDEX},
+    };
+
+    wxMenu menu;
+    FillMenu(&menu, contextMenuItems, ARRAYSIZE(contextMenuItems));
+
+    PopupMenu(&menu);
+}
+
 BEGIN_EVENT_TABLE(CCommanderHistory, wxRichTextCtrl)
+    EVT_MENU(wxID_HELP_INDEX, CCommanderHistory::OnContextHelp)
     EVT_KEY_DOWN(CCommanderHistory::OnKeyDown)
     EVT_LEFT_DOWN(CCommanderHistory::OnLeftMouseButtonDown)
     EVT_LEFT_DCLICK(CCommanderHistory::OnLeftMouseButtonDoubleClick)
+    EVT_CONTEXT_MENU(CCommanderHistory::OnContextMenu)
 END_EVENT_TABLE()
