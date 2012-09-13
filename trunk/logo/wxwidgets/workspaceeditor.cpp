@@ -34,19 +34,8 @@ enum
 enum
 {
     ID_FILESAVEANDEXIT = wxID_HIGHEST,
-    ID_FILEPRINT,
-    ID_FILEEXIT,
     ID_FILESAVETOWORKSPACE,
-    ID_EDITUNDO,
-    ID_EDITREDO,
-    ID_EDITCUT,
-    ID_EDITCOPY,
-    ID_EDITPASTE,
-    ID_EDITDELETE,
     ID_EDITCLEAR,
-    ID_EDITSELECTALL,
-    ID_SEARCHFIND,
-    ID_SEARCHREPLACE,
     ID_SEARCHFINDNEXT,
     ID_EDITSETFONT,
     ID_TESTRUNSELECTION,
@@ -62,38 +51,32 @@ enum
 
 BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
 
-    EVT_MENU(ID_FILEEXIT,            CWorkspaceEditor::OnExit)
+    EVT_MENU(wxID_EXIT,              CWorkspaceEditor::OnExit)
     EVT_MENU(ID_FILESAVEANDEXIT,     CWorkspaceEditor::OnSaveAndExit)
     EVT_MENU(ID_FILESAVETOWORKSPACE, CWorkspaceEditor::OnSaveToWorkspace)
-    EVT_MENU(ID_FILEPRINT,           CWorkspaceEditor::OnPrint)
+    EVT_MENU(wxID_PRINT,             CWorkspaceEditor::OnPrint)
 
+    EVT_MENU(wxID_UNDO,              CWorkspaceEditor::OnUndo)
+    EVT_UPDATE_UI(wxID_UNDO,         CWorkspaceEditor::OnUpdateUndo)
+    EVT_MENU(wxID_REDO,              CWorkspaceEditor::OnRedo)
+    EVT_UPDATE_UI(wxID_REDO,         CWorkspaceEditor::OnUpdateRedo)
+    EVT_MENU(wxID_CUT,               CWorkspaceEditor::OnCut)
+    EVT_UPDATE_UI(wxID_CUT,          CWorkspaceEditor::OnUpdateCut)
+    EVT_MENU(wxID_COPY,              CWorkspaceEditor::OnCopy)
+    EVT_UPDATE_UI(wxID_COPY,         CWorkspaceEditor::OnUpdateCopy)
+    EVT_MENU(wxID_PASTE,             CWorkspaceEditor::OnPaste)
+    EVT_UPDATE_UI(wxID_PASTE,        CWorkspaceEditor::OnUpdatePaste)
+    EVT_MENU(wxID_DELETE,            CWorkspaceEditor::OnDelete)
+    EVT_UPDATE_UI(wxID_DELETE,       CWorkspaceEditor::OnUpdateDelete)
+    EVT_MENU(wxID_CLEAR,             CWorkspaceEditor::OnClear)
+    EVT_UPDATE_UI(wxID_CLEAR,        CWorkspaceEditor::OnUpdateClear)
+    EVT_MENU(wxID_SELECTALL,         CWorkspaceEditor::OnSelectAll)
+    EVT_UPDATE_UI(wxID_SELECTALL,    CWorkspaceEditor::OnUpdateSelectAll)
 
-    EVT_MENU(ID_EDITUNDO,            CWorkspaceEditor::OnUndo)
-    EVT_UPDATE_UI(ID_EDITUNDO,       CWorkspaceEditor::OnUpdateUndo)
-
-    EVT_MENU(ID_EDITUNDO,            CWorkspaceEditor::OnUndo)
-    EVT_UPDATE_UI(ID_EDITUNDO,       CWorkspaceEditor::OnUpdateUndo)
-    EVT_MENU(ID_EDITREDO,            CWorkspaceEditor::OnRedo)
-    EVT_UPDATE_UI(ID_EDITREDO,       CWorkspaceEditor::OnUpdateRedo)
-    EVT_MENU(ID_EDITCUT,             CWorkspaceEditor::OnCut)
-    EVT_UPDATE_UI(ID_EDITCUT,        CWorkspaceEditor::OnUpdateCut)
-    EVT_MENU(ID_EDITCOPY,            CWorkspaceEditor::OnCopy)
-    EVT_UPDATE_UI(ID_EDITCOPY,       CWorkspaceEditor::OnUpdateCopy)
-    EVT_MENU(ID_EDITPASTE,           CWorkspaceEditor::OnPaste)
-    EVT_UPDATE_UI(ID_EDITPASTE,      CWorkspaceEditor::OnUpdatePaste)
-    EVT_MENU(ID_EDITDELETE,          CWorkspaceEditor::OnDelete)
-    EVT_UPDATE_UI(ID_EDITDELETE,     CWorkspaceEditor::OnUpdateDelete)
-    EVT_MENU(ID_EDITCLEAR,           CWorkspaceEditor::OnClear)
-    EVT_UPDATE_UI(ID_EDITCLEAR,      CWorkspaceEditor::OnUpdateClear)
-    EVT_MENU(ID_EDITSELECTALL,       CWorkspaceEditor::OnSelectAll)
-    EVT_UPDATE_UI(ID_EDITSELECTALL,  CWorkspaceEditor::OnUpdateSelectAll)
-    EVT_MENU(ID_EDITSELECTALL,       CWorkspaceEditor::OnSelectAll)
-    EVT_UPDATE_UI(ID_EDITSELECTALL,  CWorkspaceEditor::OnUpdateSelectAll)
-
-    EVT_MENU(ID_SEARCHFIND,          CWorkspaceEditor::OnFind)
-    EVT_UPDATE_UI(ID_SEARCHFIND,     CWorkspaceEditor::OnUpdateFind)
-    EVT_MENU(ID_SEARCHREPLACE,       CWorkspaceEditor::OnReplace)
-    EVT_UPDATE_UI(ID_SEARCHREPLACE,  CWorkspaceEditor::OnUpdateReplace)
+    EVT_MENU(wxID_FIND,              CWorkspaceEditor::OnFind)
+    EVT_UPDATE_UI(wxID_FIND,         CWorkspaceEditor::OnUpdateFind)
+    EVT_MENU(wxID_REPLACE,           CWorkspaceEditor::OnReplace)
+    EVT_UPDATE_UI(wxID_REPLACE,      CWorkspaceEditor::OnUpdateReplace)
     EVT_MENU(ID_SEARCHFINDNEXT,      CWorkspaceEditor::OnFindNext)
     EVT_UPDATE_UI(ID_SEARCHFINDNEXT, CWorkspaceEditor::OnUpdateFindNext)
 
@@ -102,9 +85,9 @@ BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
     EVT_MENU(ID_TESTRUNSELECTION,      CWorkspaceEditor::OnRunSelection)
     EVT_UPDATE_UI(ID_TESTRUNSELECTION, CWorkspaceEditor::OnUpdateRunSelection)
 
-    EVT_MENU(ID_HELP,                CWorkspaceEditor::OnHelpIndex)
+    EVT_MENU(ID_HELP,                CWorkspaceEditor::OnHelp)
     EVT_MENU(ID_HELPEDIT,            CWorkspaceEditor::OnHelpEditor)
-    EVT_MENU(ID_HELPEDIT_TOPIC,      CWorkspaceEditor::OnHelpTopicSearch)
+    EVT_MENU(wxID_HELP_INDEX,        CWorkspaceEditor::OnHelpTopicSearch)
 
     EVT_MENU(ID_FINDMATCHINGPAREN,   CWorkspaceEditor::OnFindMatchingParen)
     EVT_MENU(ID_SELECTMATCHINGPAREN, CWorkspaceEditor::OnSelectMatchingParen)
@@ -159,35 +142,35 @@ CWorkspaceEditor::CWorkspaceEditor(
     //
     static const MENUITEM defaultFileMenuItems[] = {
         {LOCALIZED_EDITOR_FILE_SAVEANDEXIT,     ID_FILESAVEANDEXIT},
-        {LOCALIZED_EDITOR_FILE_PRINT,           ID_FILEPRINT},
+        {LOCALIZED_EDITOR_FILE_PRINT,           wxID_PRINT},
         {0},
-        {LOCALIZED_EDITOR_FILE_EXIT,            ID_FILEEXIT},
+        {LOCALIZED_EDITOR_FILE_EXIT,            wxID_EXIT},
     };
 
     static const MENUITEM expertFileMenuItems[] = {
         {LOCALIZED_EDITOR_FILE_SAVEANDEXIT,     ID_FILESAVEANDEXIT},
         {LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE, ID_FILESAVETOWORKSPACE},
-        {LOCALIZED_EDITOR_FILE_PRINT,           ID_FILEPRINT},
+        {LOCALIZED_EDITOR_FILE_PRINT,           wxID_PRINT},
         {0},
-        {LOCALIZED_EDITOR_FILE_EXIT,            ID_FILEEXIT},
+        {LOCALIZED_EDITOR_FILE_EXIT,            wxID_EXIT},
     };
 
     static const MENUITEM editMenuItems[] = {
-        {LOCALIZED_EDITOR_EDIT_UNDO,      ID_EDITUNDO},
-        {LOCALIZED_EDITOR_EDIT_REDO,      ID_EDITREDO},
+        {LOCALIZED_EDITOR_EDIT_UNDO,      wxID_UNDO},
+        {LOCALIZED_EDITOR_EDIT_REDO,      wxID_REDO},
         {0},
-        {LOCALIZED_EDITOR_EDIT_CUT,       ID_EDITCUT},
-        {LOCALIZED_EDITOR_EDIT_COPY,      ID_EDITCOPY},
-        {LOCALIZED_EDITOR_EDIT_PASTE,     ID_EDITPASTE},
-        {LOCALIZED_EDITOR_EDIT_DELETE,    ID_EDITDELETE},
+        {LOCALIZED_EDITOR_EDIT_CUT,       wxID_CUT},
+        {LOCALIZED_EDITOR_EDIT_COPY,      wxID_COPY},
+        {LOCALIZED_EDITOR_EDIT_PASTE,     wxID_PASTE},
+        {LOCALIZED_EDITOR_EDIT_DELETE,    wxID_DELETE},
         {0},
-        {LOCALIZED_EDITOR_EDIT_CLEARALL,  ID_EDITCLEAR},
-        {LOCALIZED_EDITOR_EDIT_SELECTALL, ID_EDITSELECTALL},
+        {LOCALIZED_EDITOR_EDIT_CLEARALL,  wxID_CLEAR},
+        {LOCALIZED_EDITOR_EDIT_SELECTALL, wxID_SELECTALL},
     };
 
     static const MENUITEM searchMenuItems[] = {
-        {LOCALIZED_EDITOR_SEARCH_FIND,    ID_SEARCHFIND},
-        {LOCALIZED_EDITOR_SEARCH_REPLACE, ID_SEARCHREPLACE},
+        {LOCALIZED_EDITOR_SEARCH_FIND,    wxID_FIND},
+        {LOCALIZED_EDITOR_SEARCH_REPLACE, wxID_REPLACE},
         {LOCALIZED_EDITOR_SEARCH_NEXT,    ID_SEARCHFINDNEXT},
     };
 
@@ -202,7 +185,7 @@ CWorkspaceEditor::CWorkspaceEditor(
     static const MENUITEM helpMenuItems[] = {
         {LOCALIZED_EDITOR_HELP_INDEX,       ID_HELP},
         {LOCALIZED_EDITOR_HELP_EDITOR,      ID_HELPEDIT},
-        {LOCALIZED_EDITOR_HELP_TOPICSEARCH, ID_HELPEDIT_TOPIC},
+        {LOCALIZED_EDITOR_HELP_TOPICSEARCH, wxID_HELP_INDEX},
     };
 
     wxMenuBar * mainMenu = new wxMenuBar;
@@ -886,7 +869,7 @@ void CWorkspaceEditor::OnUpdateRunSelection(wxUpdateUIEvent& Event)
     Event.Enable(m_LogoCodeControl->IsTextSelected());
 }
 
-void CWorkspaceEditor::OnHelpIndex(wxCommandEvent& WXUNUSED(Event))
+void CWorkspaceEditor::OnHelp(wxCommandEvent& WXUNUSED(Event))
 {
     do_help(NULL);
 }

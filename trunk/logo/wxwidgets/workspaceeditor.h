@@ -73,7 +73,7 @@ private:
     void OnFindDialogReplaceAll(wxFindDialogEvent& Event);
     void OnFindDialogClose(wxFindDialogEvent& Event);
 
-    void OnHelpIndex(wxCommandEvent& Event);
+    void OnHelp(wxCommandEvent& Event);
     void OnHelpEditor(wxCommandEvent& Event);
     void OnHelpTopicSearch(wxCommandEvent& Event);
 
