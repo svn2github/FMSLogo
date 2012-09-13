@@ -27,8 +27,8 @@ Halting clears all timers.
 </para>
 
 <para>
-Timers with <parameter>id</parameter> values from 1-16 will not allow the callback code to yield.
-Timers with <parameter>id</parameter> values from 17-31 will yield.
+Timers with <parameter>id</parameter> values from 1-16 run their callbacks in <link linkend="command-noyield">NOYIELD</link> mode, which means they will not be interrupted by user interaction and the screen won't be repainted if it becomes occulded.
+Timers with <parameter>id</parameter> values from 17-31 run their callbacks in the normal, interruptable mode.
 </para>
 
 <para>
@@ -40,10 +40,10 @@ Each timer <parameter>id</parameter> can have different values for <parameter>ca
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>SETTIMER 1 200 [SETPENCOLOR (LIST RANDOM 256 RANDOM 256 RANDOM 256)]</userinput>
+<programlisting><userinput>SETTIMER 17 200 [SETPENCOLOR (LIST RANDOM 256 RANDOM 256 RANDOM 256)]</userinput>
 <replaceable>&PRODUCTNAME; is ready to run more instructions and the timer changes the pen color randomly every 200 milliseconds.</replaceable>
 <userinput>REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] RIGHT 5]
-CLEARTIMER 1</userinput>
+CLEARTIMER 17</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

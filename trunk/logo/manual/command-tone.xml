@@ -28,7 +28,7 @@ The larger the duration the longer the tone will play for.
 </para>
 
 <para>
-&PRODUCTNAME; cannot yield to other applications while a sound is being played.
+&PRODUCTNAME; cannot respond to user control while it plays a tone.
 </para>
 
 </listitem>

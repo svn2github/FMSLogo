@@ -12,67 +12,22 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-
 <para>
-YIELD tells &PRODUCTNAME; to let other programs use the CPU while it is working.
-<link linkend="command-noyield">NOYIELD</link> tells &PRODUCTNAME; not to let other programs use the CPU while it is working.
-The default is to yield.
+YIELD tells &PRODUCTNAME; that it's okay to interrupt running &GENERICNAME; code in order to process windows messages, such as keyboard input, mouse clicks, or notifications to repaint the screen.
+The default state is to yield.
 </para>
 
 <para>
-Note that the commander window itself is like another program.
-That is, if you have issued a NOYIELD, the commander will lose control.
-This means that the <link linkend="commander-halt">Halt Button</link> won't work until a YIELD is issued or &PRODUCTNAME; is idle again.
-The reason that NOYIELD is available is that &PRODUCTNAME; runs faster if it prevents other programs from using the CPU.
+See the <link linkend="command-noyield">NOYIELD</link> command for an explaination of what "yielding" means.
 </para>
-
-<para>
-You can achieve the proper balance between performance and yielding for your programs by understanding the examples given below.
-Let's say that you have nested loops in your program and that most of the real work is done in the inner loop.
-</para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
-<para>
-Case 1: User in control for 10,000 operations, lower performance:
-
-<programlisting>YIELD
-REPEAT 100 [
-  REPEAT 100 [
-    <replaceable>; (work to be done)</replaceable>
-  ]
-]</programlisting>
-</para>
-
-
-<para>
-Case 2: User out of control for 10,000 operations, good performance:
-<programlisting>NOYIELD
-REPEAT 100 [
-  REPEAT 100 [
-    <replaceable>; (work to be done)</replaceable>
-  ]
-]</programlisting>
-</para>
-
-
-<para>
-Case 3: User out of control for 100 operations, still good performance:
-<programlisting>REPEAT 100 [
-  NOYIELD
-  REPEAT 100 [
-    <replaceable>; (work to be done)</replaceable>
-  ]
-  YIELD
-]</programlisting>
-</para>
-
-</listitem>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-eventcheck">EVENTCHECK</link></member>
+</simplelist></listitem>
 </varlistentry>
-
 
 </variablelist>
 </section>
