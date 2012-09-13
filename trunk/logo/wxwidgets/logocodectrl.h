@@ -93,6 +93,7 @@ private:
     void OnUpdateUi(wxStyledTextEvent& event);
     void OnSavePointReached(wxStyledTextEvent& event);
     void OnSavePointLeft(wxStyledTextEvent& event);
+    void OnContextMenu(wxContextMenuEvent& Event);
 
 
     // Helper functions

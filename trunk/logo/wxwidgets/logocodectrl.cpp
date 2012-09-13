@@ -4,8 +4,9 @@
 
 #include "logocodectrl.h"
 #include "localizedstrings.h"
-#include "logocore.h"  // for ARRAYSIZE
+#include "logocore.h"      // for ARRAYSIZE
 #include "screenwindow.h"  // for TraceOutput
+#include "guiutils.h"
 
 #include "wrksp.h" // for g_CharactersSuccessfullyParsedInEditor
 
@@ -679,9 +680,34 @@ void CLogoCodeCtrl::ReopenAfterError()
     SendMsg(SCI_GOTOPOS, g_CharactersSuccessfullyParsedInEditor);
 }
 
+void CLogoCodeCtrl::OnContextMenu(wxContextMenuEvent& Event)
+{
+    // The handlers for these event IDs are handled in CWorkspaceEditor.
+    // TODO: Move them into this class so that if this class is used
+    // in other contexts (for example, the mini-editor), the handlers
+    // won't need to be duplicated.
+    static const MENUITEM contextMenuItems[] = {
+        {LOCALIZED_POPUP_UNDO,      wxID_UNDO},
+        {LOCALIZED_POPUP_REDO,      wxID_REDO},
+        {0},
+        {LOCALIZED_POPUP_CUT,       wxID_CUT},
+        {LOCALIZED_POPUP_COPY,      wxID_COPY},
+        {LOCALIZED_POPUP_PASTE,     wxID_PASTE},
+        {LOCALIZED_POPUP_DELETE,    wxID_DELETE},
+        {LOCALIZED_POPUP_SELECTALL, wxID_SELECTALL},
+        {0},
+        {LOCALIZED_POPUP_HELP,      wxID_HELP_INDEX},
+    };
+
+    wxMenu menu;
+    FillMenu(&menu, contextMenuItems, ARRAYSIZE(contextMenuItems));
+
+    PopupMenu(&menu);
+}
 
 BEGIN_EVENT_TABLE(CLogoCodeCtrl, wxStyledTextCtrl)
     EVT_STC_UPDATEUI(wxID_ANY,         CLogoCodeCtrl::OnUpdateUi)
     EVT_STC_SAVEPOINTREACHED(wxID_ANY, CLogoCodeCtrl::OnSavePointReached)
     EVT_STC_SAVEPOINTLEFT(wxID_ANY,    CLogoCodeCtrl::OnSavePointLeft)
+    EVT_CONTEXT_MENU(CLogoCodeCtrl::OnContextMenu)
 END_EVENT_TABLE()
