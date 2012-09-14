@@ -648,7 +648,11 @@ void CWorkspaceEditor::OnDelete(wxCommandEvent& WXUNUSED(Event))
 
 void CWorkspaceEditor::OnUpdateDelete(wxUpdateUIEvent& Event)
 {
-    Event.Enable(m_LogoCodeControl->IsTextSelected());
+    // "Delete" is enabled if there is anything selected,
+    // or if a character appears after the cursor.
+    Event.Enable(
+        m_LogoCodeControl->IsTextSelected() || 
+        m_LogoCodeControl->GetCurrentPos() != m_LogoCodeControl->GetLength());
 }
 
 void CWorkspaceEditor::OnClear(wxCommandEvent& WXUNUSED(Event))
