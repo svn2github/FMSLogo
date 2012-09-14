@@ -921,7 +921,7 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
 {
     if (Event.CanVeto())
     {
-        // If an editor is running we could lose unsaved changes
+        // If an editor is running we could lose unsaved changes.
         CWorkspaceEditor * editor = GetWorkspaceEditor();
         if (editor != NULL)
         {
@@ -931,6 +931,13 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
             editor->Raise();
             GiveFocusToEditbox = false;
 
+            // Notify the user that they will lose the changes
+            // in this editor if they continue.
+
+            // REVISIT: It might be better to invoke the wxID_EXIT
+            // for each of the editors, so that we don't prompt the
+            // user unless there really are changes to save, and so
+            // that we prompt for all editors.
             if (wxMessageBox(
                     LOCALIZED_CHANGESINEDITORMAYBELOST,
                     LOCALIZED_EDITSESSIONISRUNNING,
@@ -939,6 +946,18 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
                 // The user doesn't want to shutdown.
                 Event.Veto();
                 return;
+            }
+
+            // The user wants to exit, anyway.
+            // Close all of the editors to give them a chance
+            // to clean up.
+            while (editor != NULL)
+            {
+                // Close without a chance to veto
+                editor->Close(true);
+
+                // Get the next workspace
+                editor = GetWorkspaceEditor();
             }
         }
 
