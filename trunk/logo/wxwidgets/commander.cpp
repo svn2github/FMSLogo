@@ -31,7 +31,6 @@
 #include "status.h"
 #include "fontutils.h"
 #include "mmwind.h"
-#include "screenwindow.h"
 
 bool g_IsOkayToUseCommanderWindow = true;
 
@@ -600,19 +599,6 @@ void CCommander::ProcessKeyDownEventAtInputControl(wxKeyEvent& Event)
     m_NextInstruction->EmulateKeyPress(Event);
 }
 
-void CCommander::OnKeyDown(wxKeyEvent& Event)
-{
-    if (m_NextInstruction->WantsKeyEvent(Event.GetKeyCode()))
-    {
-        ProcessKeyDownEventAtInputControl(Event);
-    }
-    else
-    {
-        TraceOutput("Skipping keydown event on CCommander\n");
-        Event.Skip();
-    }
-}
-
 void CCommander::GiveControlToInputBox()
 {
     // Give focus to the input edit control
@@ -692,7 +678,6 @@ BEGIN_EVENT_TABLE(CCommander, wxPanel)
     EVT_TOGGLEBUTTON(ID_COMMANDER_STATUS,  CCommander::OnStatusButton)
     EVT_TOGGLEBUTTON(ID_COMMANDER_STEP,    CCommander::OnStepButton)
     EVT_SIZE(CCommander::OnSize)
-    EVT_KEY_DOWN(CCommander::OnKeyDown)
 END_EVENT_TABLE()
 
 // ----------------------------------------------------------------------------

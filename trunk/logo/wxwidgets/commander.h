@@ -58,7 +58,6 @@ private:
     void OnEdallButton(wxCommandEvent& Event);
 
     void OnSize(wxSizeEvent& Event);
-    void OnKeyDown(wxKeyEvent& Event);
 
     CCommanderButton        * m_HaltButton;
     CCommanderToggleButton  * m_TraceButton;
