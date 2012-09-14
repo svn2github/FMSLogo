@@ -1,11 +1,12 @@
 include ../version.mk
 include ../lcids.mk
 
+TEMPORARY_FILES = translations.xml locale.xml
 HHP_STYLESHEET  = htmlhelp.xsl 
 HTML_STYLESHEET = html.xsl
 FO_STYLESHEET   = fo.xsl
 ROOTFILE        = logohelp.xml
-SOURCEFILES     = $(wildcard *.xml) logoversion.xml
+SOURCEFILES     = $(filter-out $(TEMPORARY_FILES), $(wildcard *.xml)) logoversion.xml
 
 XSLTPROC = xsltproc
 HHC      = 'C:\Program Files\HTML Help Workshop\hhc.exe'
@@ -90,12 +91,12 @@ clean :
 	$(RM) $(wildcard *.hhc)
 	$(RM) $(wildcard *.hhk)
 	$(RM) $(wildcard *.chw)
-	$(RM) $(filter-out logohelp-1031.chm,$(filter-out logohelp-2070.chm,$(wildcard *.chm)))
+	$(RM) $(filter-out logohelp-1031.chm logohelp-2070.chm,$(wildcard *.chm))
 	$(RM) $(wildcard *~)
 	$(RM) $(wildcard *.bak)
 	$(RM) $(wildcard www/*.html)
 	$(RM) $(wildcard www/*.css)
+	$(RM) $(TEMPORARY_FILES)
 
 test :
 	perl -W check-manual.pl
-
