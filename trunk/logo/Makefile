@@ -4,12 +4,14 @@ include lcids.mk
 BINARYBASENAME=fmslogo-$(FMSLOGO_VERSION)
 BINARYZIP=$(BINARYBASENAME).zip
 BINARYEXE=$(BINARYBASENAME).exe
+WXBINARYEXE=wx$(BINARYBASENAME).exe
 SOURCEZIP=fmslogo-src-$(FMSLOGO_VERSION).zip
 
 ZIPEXCLUDE=\*/.cvsignore \*/CVS/ \*/CVS/\* \*/\*/.cvsignore \*/\*/CVS/ \*/\*/CVS/\* \*/\*/\*/CVS/ \*/\*/\*/CVS/\*
 
-MANUALS      = $(addprefix manual/logohelp-, $(addsuffix .chm, $(LCIDS)))
-EXES         = $(addprefix src/fmslogo-, $(addsuffix .exe, $(LCIDS)))
+MANUALS      = $(addprefix manual/logohelp-,     $(addsuffix .chm, $(LCIDS)))
+EXES         = $(addprefix src/fmslogo-,         $(addsuffix .exe, $(LCIDS)))
+WXEXES       = $(addprefix wxwidgets/fmslogo-,   $(addsuffix .exe, $(LCIDS)))
 SCREENSAVERS = $(addprefix screensaver/fmslogo-, $(addsuffix .scr, $(LCIDS)))
 
 .SECONDARY : $(MANUALS) $(EXES) $(SCREENSAVERS) setup/fmslogo.exe $(BINARYEXE) $(BINARYZIP) $(SOURCEZIP)
@@ -20,9 +22,13 @@ binaryzip : $(BINARYZIP) ;
 sourcezip : $(SOURCEZIP) ;
 all : sourcezip binaryzip binaryexe;
 
-# make the executable
+# make the executables
 src/fmslogo-%.exe : src/*.cpp src/*.h version.mk
 	$(MAKE) -C src $(notdir $@)
+
+# make the wxwidgets-based executables
+wxwidgets/fmslogo-%.exe : wxwidgets/*.cpp wxwidgets/*.h src/*.cpp src/*.h version.mk
+	$(MAKE) -C wxwidgets $(notdir $@)
 
 # make the screensaver
 screensaver/fmslogo-%.scr : screensaver/*.cpp screensaver/*.h src/*.cpp src/*.h version.mk
@@ -32,12 +38,18 @@ screensaver/fmslogo-%.scr : screensaver/*.cpp screensaver/*.h src/*.cpp src/*.h 
 manual/logohelp-%.chm : manual/*.xml version.mk
 	$(MAKE) -C manual $(notdir $@)
 
-# make the installer
+# make the installers
 setup/fmslogo.exe : $(EXES) $(SCREENSAVERS) $(MANUALS)
-	$(MAKE) -C setup all
+	$(MAKE) -C setup $(notdir $@)
+
+setup/wxfmslogo.exe : $(WXEXES) $(SCREENSAVERS) $(MANUALS)
+	$(MAKE) -C setup $(notdir $@)
 
 # make the binary self-extracting executable release
 $(BINARYEXE) : setup/fmslogo.exe ;
+	cp $< $@
+
+$(WXBINARYEXE) : setup/wxfmslogo.exe ;
 	cp $< $@
 
 

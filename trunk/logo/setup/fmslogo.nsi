@@ -33,7 +33,7 @@ SetCompressor /SOLID lzma
 Name "FMSLogo"
 
 ; The file to write
-OutFile "fmslogo.exe"
+OutFile "${FMSLOGO_OUTPUT_FILE}"
 
 ; Use an XP manifest
 XPStyle on
@@ -258,9 +258,9 @@ Section "FMSLogo"
   ;
   ; Put files there
   ;
-  !insertmacro InstallLanguageFile ..\src\    startup   .logoscript
-  !insertmacro InstallLanguageFile ..\src\    fmslogo   .exe
-  !insertmacro InstallLanguageFile ..\manual\ logohelp  .chm
+  !insertmacro InstallLanguageFile ..\src\                 startup   .logoscript
+  !insertmacro InstallLanguageFile ..\${FMSLOGO_EXE_PATH}\ fmslogo   .exe
+  !insertmacro InstallLanguageFile ..\manual\              logohelp  .chm
 
   File "..\src\README.TXT"
   File "..\src\LICENSE.TXT"
