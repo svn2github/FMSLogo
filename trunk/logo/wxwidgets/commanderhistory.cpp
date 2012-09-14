@@ -47,108 +47,19 @@ bool CCommanderHistory::IsCursorAtBottom() const
 
 void CCommanderHistory::CopyCurrentLineToCommanderInput() const
 {
-#if 0
-    char buf[1024] = {0};
-
-    int currentline = GetLineFromPos(-1);
-
-    // Look for the first line backwards from the current line
-    // that doesn't ends in an EOL sequence.
-    // This tells us where this line really begins (ignoring word-wrapping)
-    for (long prevline = currentline - 1;
-         0 <= prevline;
-         prevline--)
-    {
-        wxString line = GetLineText();
-
-        // advance to the last char in buf
-        char * ptr = line + strlen(buf) - 1;
-        if (*ptr == '\n' || *ptr == '\r')
-        {
-            // we reached a line that ends in an EOL
-            break;
-        }
-
-        // This line does not end in an EOL sequence.
-        // Therefore, it is part of the current line.
-        currentline = prevline;
-    }
-   
-    // read as many word-wrapped lines as it takes to get to the end of a real line
-    char * ptr = buf;
-    char * end = buf + sizeof(buf) - 1;
-    while (ptr < end)
-    {
-        bool isok = GetLine(ptr, end - ptr, currentline);
-        if (!isok)
-        {
-            break;
-        }
-
-        if (*ptr == '\0')
-        {
-            // The line was blank.  
-            // This happens when the commander is squished such that
-            // it can't hold a single character.
-            // We must detect this condition and break out to avoid an inifnite loop.
-            // See bug #1652924 for details.
-            break;
-        }
-
-        // advance to the last char in buf
-        ptr = ptr + strlen(ptr) - 1;
-
-        if (*ptr == '\n' || *ptr == '\r')
-        {
-            // we reached the end of the line
-            break;
-        }
-
-        // This line doesn't end in an EOL sequence.
-        // This must be a word-wrapped line.
-
-        if (end <= ptr + 2)
-        {
-            // buf can't hold any more characters
-            break;
-        }
-
-        if (*ptr != ' ')
-        {
-            // append a space to the end of buf
-            ptr++;
-            ptr[0] = ' ';
-            ptr[1] = '\0';
-        }
-
-        // advance to the NUL
-        ptr++;
-        currentline++;
-    }
-
-    // remove trailing whitespace
-    for (char * stringend = buf + strlen(buf) - 1;
-         buf <= stringend && isspace(*stringend);
-         stringend--)
-    {
-        *stringend = '\0';
-    }
-#else
     wxRichTextLine * line = GetVisibleLineForCaretPosition(GetCaretPosition());
-    if (line)
+    if (line != NULL)
     {
-        wxRichTextParagraph* para = GetBuffer().GetParagraphForLine(line);
-        if (para)
+        wxRichTextParagraph* paragraph = GetBuffer().GetParagraphForLine(line);
+        if (paragraph != NULL)
         {
-            wxRichTextRange range(para->GetRange());
+            wxRichTextRange range(paragraph->GetRange());
 
-            wxString text = GetRange(range.GetStart(), range.GetEnd());
+            const wxString & text = GetRange(range.GetStart(), range.GetEnd());
 
             GetCommander()->GetInput()->SetValue(text);
         }
     }
-#endif
-
 }
 
 void CCommanderHistory::OnContextHelp(wxCommandEvent& Event)
