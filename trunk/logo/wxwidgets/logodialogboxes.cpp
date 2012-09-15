@@ -205,7 +205,7 @@ private:
 };
 
 // Unfortunately, wxComboBox does not handle CBS_SIMPLE Windows comboboxes well.
-// In particular, there was no way to set CBS_DISABLENOSCROLL, which means that
+// In particular, there is no way to set CBS_DISABLENOSCROLL, which means that
 // its height would vary with the number of elements within it, which makes it
 // incompatable with the MSWLogo behavior.
 //
@@ -248,8 +248,49 @@ public:
 
         Reparent(Parent);
         SetHWND(hwnd);
-        SubclassWin(hwnd);
         AdoptAttributesFromHWND();
+
+        //
+        // For the default COMBOBOX style, Microsoft Windows shrinks the
+        // listbox portion so that its height is a multiple of the height
+        // of its items (so it never shows a partial item).
+        // MSWLogo used this style, which means that FMSLogo must also, or
+        // else progams wouldn't lay out dialog boxes correctly.
+        //
+        // For some reason, under wxWidgets, the portion between the bottom
+        // of the listbox and the bottom of the overall COMBOBOX control does
+        // not get repainted, which has an undesireable effect.  This can be
+        // mostly accounted for by overriding EVT_ERASE_BACKGROUND and setting
+        // the brush to the parent's background color, but this doesn't behave
+        // correctly when the COMBOBOX is put on the FMSLogo screen window and
+        // the turtle draws into that area.
+        //
+        // So, instead, there is the following block of code shrinks the overall
+        // COMBOBOX control box to just be large enough to hold the listbox,
+        // which Windows shrunk.  MSWLogo didn't need to do this, so there is
+        // probably a way to get the parent to repaint this portion of the
+        // COMBOBOX, but I wasn't able to figure it out.
+        //
+
+        // Find the listbox child.
+        HWND childListBox = FindWindowEx(hwnd, NULL, "ComboLBox", NULL);
+        if (childListBox != NULL)
+        {
+            // Get the extents of the listbox.
+            RECT listboxRectangle;
+            BOOL isOk = ::GetWindowRect(childListBox, &listboxRectangle);
+            if (isOk)
+            {
+                // The bottom-right corner of the listbox is the
+                // height and width that we desire.
+                int x = listboxRectangle.right;
+                int y = listboxRectangle.bottom;
+
+                // Resize the combobox to exactly fit the listbox.
+                ScreenToClient(&x, &y);
+                SetSize(x, y);
+            }
+        }
     }
 
     const wxString GetValue() const
