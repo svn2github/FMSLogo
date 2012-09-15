@@ -38,8 +38,9 @@ CScreen::CScreen(
         wxID_ANY, 
         wxDefaultPosition,
         wxDefaultSize,
-        wxHSCROLL | wxVSCROLL | wxNO_FULL_REPAINT_ON_RESIZE |
-        wxWANTS_CHARS), // to get Enter and Tab for KEYBOARDON
+        wxHSCROLL | wxVSCROLL |
+        wxCLIP_CHILDREN | // to eliminate flicker when there are child controls
+        wxWANTS_CHARS),   // to get Enter and Tab for KEYBOARDON
     m_ScreenDeviceContext(0),
     m_MemoryDeviceContext(0),
     m_MemoryBitmap(0),
@@ -854,7 +855,6 @@ void CScreen::OnSize(wxSizeEvent& Event)
 {
     ScrollToRatio();
     Event.Skip();
-    Refresh();
 }
 
 BEGIN_EVENT_TABLE(CScreen, wxScrolledWindow)
