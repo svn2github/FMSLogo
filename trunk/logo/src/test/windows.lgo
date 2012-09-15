@@ -1146,7 +1146,7 @@ TO WINDOWSTEST.BUTTON
 
    LOCALMAKE "lasterror ERROR
    IF NOT EMPTY? :lasterror [
-      REPORTTESTFAILED (LIST "|YESNOBOX test failed.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
+      REPORTTESTFAILED (LIST "|WINDOWSTEST.BUTTON test failed.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
    ]
 
    UIAUTOMATION.UNINITIALIZE
