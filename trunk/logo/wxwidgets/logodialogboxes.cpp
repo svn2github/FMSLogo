@@ -374,7 +374,7 @@ private:
 // CLogoStaticText cannot be derived from wxStaticText because that
 // class does not support word-wrapping in the same manner that 
 // the static text control in MSWLogo does.
-class CLogoStaticText : public wxWindow
+class CLogoStaticText : public wxStaticTextBase
 {
 public:
     CLogoStaticText(
