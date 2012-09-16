@@ -213,6 +213,7 @@ define FMSLOGO_template
 
 fmslogo-$(1)$$(EXEEXT) : $$(addprefix obj/$(1)-,$$(OBJECTS))
 	$(CXX) -o $$@ $$^ $(LDFLAGS) -L$(LIBDIRNAME) $(LIBS) $(EXTRALIBS)
+	strip $$@
 
 obj/$(1)-%.o : $(srcdir)/%.cpp
 	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
