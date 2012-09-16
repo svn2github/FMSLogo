@@ -45,7 +45,7 @@ TOOLCHAIN_FULLNAME = msw-ansi-debug-static-2.8
 else
 CPPFLAGS = -DNDEBUG
 CXXFLAGS = -O2
-LDFLAGS  = -lwx_msw_stc-2.8 -lwx_msw-2.8 
+LDFLAGS  = --strip-all -lwx_msw_stc-2.8 -lwx_msw-2.8 
 TOOLCHAIN_FULLNAME = msw-ansi-release-static-2.8
 endif
 
@@ -62,7 +62,8 @@ MANUAL = logohelp.chm
 
 endif
 
-CPPFLAGS += -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES -I$(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) -I$(wx_top_builddir)/include -I$(wx_top_builddir)/contrib/include -I../src 
+INCLUDES = . $(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) $(wx_top_builddir)/include $(wx_top_builddir)/contrib/include ../src
+CPPFLAGS += -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES $(addprefix -I, $(INCLUDES))
 CXXFLAGS += -Wall -Wundef -Wno-ctor-dtor-privacy  -fno-strict-aliasing
 CXXFLAGS += -DFMSLOGO_WXWIDGETS
 CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
@@ -73,17 +74,15 @@ CXXFLAGS += -march=pentium
 
 
 #BK_DEPS = $(wx_top_builddir)/bk-deps
-srcdir = .
 LIBS = -lm
 CXX = $(TARGET_PREFIX)g++
 
 ### Variables: ###
 
-DESTDIR = 
 WX_RELEASE = 2.8
 WX_VERSION = $(WX_RELEASE).4
 LIBDIRNAME = $(wx_top_builddir)/lib
-CXXFLAGS  += -D__WX$(TOOLKIT)__ -I$(srcdir) $(CPPFLAGS)
+CXXFLAGS  += -D__WX$(TOOLKIT)__ $(CPPFLAGS)
 
 OBJECTS =                      \
     mainframe.o                \
@@ -189,11 +188,7 @@ logohelp.chm : ../manual/logohelp-1033.chm
 # The "all" target is used to build all locales.
 all : $(addsuffix $(EXEEXT),$(addprefix fmslogo-,$(LCIDS)));
 
-install: all
 
-uninstall: 
-
-install-strip: install
 
 clean: 
 	rm -rf ./.deps ./.pch
@@ -213,29 +208,28 @@ define FMSLOGO_template
 
 fmslogo-$(1)$$(EXEEXT) : $$(addprefix obj/$(1)-,$$(OBJECTS))
 	$(CXX) -o $$@ $$^ $(LDFLAGS) -L$(LIBDIRNAME) $(LIBS) $(EXTRALIBS)
-	strip $$@
 
-obj/$(1)-%.o : $(srcdir)/%.cpp
+obj/$(1)-%.o : %.cpp
 	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
 
-obj/$(1)-%.o : $(srcdir)/../src/%.cpp
+obj/$(1)-%.o : ../src/%.cpp
 	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
 
-obj/$(1)-%.o : $(srcdir)/../src/scintilla/src/%.cxx
-	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 -I$(srcdir)/../src/scintilla/include $$<
+obj/$(1)-%.o : ../src/scintilla/src/%.cxx
+	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 -I../src/scintilla/include $$<
 
 obj/$(1)-%_rc.o : %.rc
-	$(WINDRES) -i$$< -o$$@ -DLOCALE=$1 --define __WX$(TOOLKIT)__ $(RCDEFDIR) --include-dir $(srcdir) --include-dir $(top_srcdir)/include --include-dir $(wx_top_builddir)/include
+	$(WINDRES) -i$$< -o$$@ -DLOCALE=$1 --define __WX$(TOOLKIT)__ $(addprefix --include-dir ,$(INCLUDES))
 
 
 ifeq "$(TOOLKIT)" "GTK"
 
-obj/$(1)-%.o: $(srcdir)/linux/%.cpp
+obj/$(1)-%.o: linux/%.cpp
 	$(CXXC) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
 
 endif
 
-fmslogo_rc.o: $(srcdir)/fmslogo.rc
+fmslogo_rc.o: fmslogo.rc
 
 endef
 
