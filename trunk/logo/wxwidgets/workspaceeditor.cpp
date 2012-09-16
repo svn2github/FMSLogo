@@ -126,7 +126,6 @@ CWorkspaceEditor::CWorkspaceEditor(
     m_CheckForErrors(CheckForErrors),
     m_ErrorDetected(false)
 {
-    CreateStatusBar(1);
     SetFmsLogoIcon(*this);
 
     m_LogoCodeControl = new CLogoCodeCtrl(this, ID_LOGOCODECONTROL);
