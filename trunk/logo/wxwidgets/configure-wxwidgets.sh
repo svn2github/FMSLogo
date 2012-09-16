@@ -55,12 +55,25 @@ fi
     --with-libtiff=no             \
     --enable-monolithic           \
     --disable-shared              \
+    --disable-statusbar           \
+    --disable-toolbar             \
+    --disable-aui                 \
+    --disable-toolbook            \
+    --disable-joystick            \
+    --disable-splash              \
+    --disable-tooltips            \
     --disable-sockets             \
+    --disable-aboutdlg            \
     --disable-protocols           \
     --disable-protocol-http       \
+    --disable-protocol-ftp        \
+    --disable-protocol-file       \
     --disable-ftp                 \
     --disable-http                \
     --disable-fileproto           \
+    --disable-fs_archive          \
+    --disable-fs_inet             \
+    --disable-fs_zip              \
     --disable-url                 \
     --disable-tarstream           \
     --disable-mdi                 \
@@ -71,9 +84,11 @@ fi
     --disable-iff                 \
     --disable-pnm                 \
     --disable-png                 \
+    --disable-xrc                 \
     --disable-zipstream           \
     --disable-wizarddlg           \
     --disable-threads             \
+    --disable-docview             \
     --enable-no_deps              \
     --disable-dependency-tracking \
     --host=i686-pc-mingw32        \
