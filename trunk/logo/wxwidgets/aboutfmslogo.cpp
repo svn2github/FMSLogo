@@ -11,11 +11,11 @@
 // CAboutFmsLogo
 // ----------------------------------------------------------------------------
 
-#define LOCALIZED_ABOUTFMS_UNSTABLE_VERSION        \
-    LOCALIZED_GENERAL_PRODUCTNAME                  \
-    "Version "                                     \
-    FMSLOGO_VERSION " - UNSTABLE\n"                \
-    "http:\x2F/sourceforge.net/projects/fmslogo"   \
+#define LOCALIZED_ABOUTFMS_UNSTABLE_VERSION     \
+    LOCALIZED_GENERAL_PRODUCTNAME               \
+    " Version "                                 \
+    FMSLOGO_VERSION " - UNSTABLE\n"             \
+    "http://sourceforge.net/projects/fmslogo"   \
 
 CAboutFmsLogo::CAboutFmsLogo(wxWindow *parent)
     : wxDialog(parent, wxID_ANY, wxString(LOCALIZED_ABOUTFMS))
