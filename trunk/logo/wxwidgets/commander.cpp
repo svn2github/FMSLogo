@@ -375,13 +375,24 @@ void putcombobox(const char *str)
     {
         CCommanderHistory * commanderHistory = CFmsLogo::GetMainFrame()->GetCommander()->m_History;
 
+        // REVISIT: This looping logic was taken from MSWLogo and I'm
+        // not sure that it works in wxWidgets.  There might be a more
+        // direct way to handle out-of-memory errors.
         for (int i = 0; i < 16; i++)
         {
             // remember where we started
             wxTextPos uBefore = commanderHistory->GetLastPosition();
 
-            // output to list box 
-            commanderHistory->AppendText(str);
+            // Output to commander history.
+            // Don't append the empty string because that results in appending
+            // a newline.  When combined with the newline that gets added
+            // below, this would have the side-effect of inserting two lines.
+            if (str != NULL && str[0] != '\0')
+            {
+                commanderHistory->AppendText(str);
+            }
+
+            // Append the newline
             wxTextPos uCheck = commanderHistory->GetLastPosition();
             commanderHistory->AppendText("\n");
             wxTextPos uAfter = commanderHistory->GetLastPosition();
