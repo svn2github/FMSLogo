@@ -352,7 +352,7 @@ NODE *lallopen(NODE *)
     NODE * allopen = NIL;
     for (CFileListNode * node = g_OpenFiles; node != NULL; node = node->m_Next)
     {
-        push(node->m_FileNameNode, allopen);
+        allopen = cons(node->m_FileNameNode, allopen);
     }
 
     return allopen;

@@ -20,6 +20,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Changed in 6.29.0
+    o Fix bug #3570553; ALLOPEN no longer leaks memory.
     o Fix bug #3566411; Closing editor no longer claims that the contents
       have changed after "File->Save to Workspace" in expert mode.
     o Fix bug #3564270; FMSLogo no longer leaks memory when saving the
