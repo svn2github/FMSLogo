@@ -609,27 +609,37 @@ TO RUNPRINTTEST.HELPER :printinstruction :expectedword
 END
 BURY [RUNPRINTTEST.HELPER]
 
-TO RUNPRINTTEST :printinstruction :expectedvalue
+TO RUNPRINTTEST :printinstruction :expectedvalue [:outputfilename []]
 
-  LOCALMAKE "testfile  "printtest-output.txt
+  if empty? :outputfilename [
 
-  ;
-  ; use PRINT to write to a file
-  ;
-  OPENWRITE :testfile
+    ;
+    ; If no output file was specified, then create one and set it as the writer.
+    ;
 
-  LOCALMAKE "oldwriter WRITER
-  SETWRITE :testfile
+    LOCALMAKE "testfilename "printtest-output.txt
+
+    OPENWRITE :testfilename
+    LOCALMAKE "oldwriter WRITER
+    SETWRITE :testfilename
+  ]
+
+  ; Bury all of the parameters so that :printinstruction can be used to test SAVE
+  BURY NAMELIST [printinstruction expectedvalue outputfilename testfilename]
 
   ; clear the last error
   IGNORE ERROR
 
   CATCH "ERROR [ RUN :printinstruction ]
 
-  SETWRITE :oldwriter
-  CLOSE :testfile
+  if empty? :outputfilename [
+    ; Immediately restore the writer so that subsequent
+    ; test logging goes to the correct place.
+    SETWRITE :oldwriter
+    CLOSE :testfilename
+  ]
 
-  ; make sure that the instruction didn't throw an error
+  ; Make sure that the instruction didn't throw an error.
   LOCALMAKE "lasterror ERROR
   IF NOT EMPTY? :lasterror [
     REPORTTESTFAILED (LIST :printinstruction "|threw error.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
@@ -637,12 +647,13 @@ TO RUNPRINTTEST :printinstruction :expectedvalue
   ]
 
   ;
-  ; now read back the file and ensure that it is as expected
+  ; Now read back the file and ensure that it is as expected.
   ;
-  OPENREAD :testfile
+  LOCALMAKE "newreader IFELSE empty? :outputfilename [:testfilename] [:outputfilename]
+  OPENREAD :newreader
 
   LOCALMAKE "oldreader READER
-  SETREAD  :testfile
+  SETREAD :newreader
 
   IFELSE WORD? :expectedvalue [
       ; we only expect one line to be printed
@@ -663,9 +674,11 @@ TO RUNPRINTTEST :printinstruction :expectedvalue
   ]
 
   SETREAD :oldreader
-  CLOSE :testfile
+  CLOSE :newreader
 
-  ERASEFILE :testfile
+  if empty? :outputfilename [
+    ERASEFILE :testfilename
+  ]
 END
 BURY [RUNPRINTTEST]
 

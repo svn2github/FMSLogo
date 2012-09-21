@@ -74,6 +74,7 @@ LOAD "error.lgo
 LOAD "erract.lgo
 LOAD "copydef.lgo
 LOAD "iseq.lgo
+LOAD "save.lgo
 LOAD "load.lgo
 LOAD "trace.lgo
 LOAD "step.lgo
@@ -140,6 +141,7 @@ TO TESTALL
 
   GREATLOGOATLASTEST   ; from greatlogoatlas.lgo
   PARSETEST            ; from parse.lgo
+  SAVETEST             ; from save.lgo
   LOADTEST             ; from load.lgo
   RUNTEST              ; from run.lgo
   RUNRESULTTEST        ; from runresult.lgo

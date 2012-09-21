@@ -177,6 +177,21 @@ PASS: Bug #1565788 is fixed; running a long list of expressions didn't crash.
 PASS: 100000 output 100000 , as expected.
 PASS: Bug #1565788 is fixed; running a long list of expressions didn't crash.
 PASS: [:myvalue] output ÿ , as expected.
+CALL: DEFINE "MyProcedure [[x y] [OUTPUT :x + :y]]
+CALL: MAKE "MyVariable "abc
+CALL: PPROP "MyPropertyList "Property 1
+PASS: Running [SAVE "savetest.smoketest.txt] printed to myprocedure :x :y , as expected.
+PASS: Running [SAVE "savetest.smoketest.txt] printed OUTPUT :x + :y , as expected.
+PASS: Running [SAVE "savetest.smoketest.txt] printed end , as expected.
+PASS: Running [SAVE "savetest.smoketest.txt] printed  , as expected.
+PASS: Running [SAVE "savetest.smoketest.txt] printed Make "myvariable "abc , as expected.
+PASS: Running [SAVE "savetest.smoketest.txt] printed Pprop "mypropertylist "Property 1 , as expected.
+INFO: Running invalid instruction: [(SAVE)]
+PASS: error code is 6 , as expected.
+INFO: error text is not enough inputs to SAVE .
+INFO: Running invalid instruction: [(SAVE "testfile.txt "toomany)]
+PASS: error code is 8 , as expected.
+INFO: error text is too much inside ()'s .
 INFO: Running invalid instruction: [(LOAD)]
 PASS: error code is 6 , as expected.
 INFO: error text is not enough inputs to LOAD .
