@@ -94,17 +94,19 @@ CFileListNode::~CFileListNode()
     deref(m_FileNameNode);
 }
 
+static
 FILE *open_file(NODE *arg, const char *access)
 {
-    ref(arg);
-    arg = reref(arg, cnv_node_to_strnode(arg));
-    if (arg == Unbound) 
+    assert(arg == NIL || getrefcnt(arg) != 0);
+
+    NODE * filenameNode = cnv_node_to_strnode(arg);
+    if (filenameNode == Unbound) 
     {
         return NULL;
     }
 
-    char * fnstr = (char *) malloc((size_t) getstrlen(arg) + 1);
-    strnzcpy(fnstr, getstrptr(arg), getstrlen(arg));
+    char * fnstr = (char *) malloc((size_t) getstrlen(filenameNode) + 1);
+    strnzcpy(fnstr, getstrptr(filenameNode), getstrlen(filenameNode));
 
     FILE *tstrm;
     if (stricmp(fnstr, "clipboard") == 0)
@@ -163,7 +165,7 @@ FILE *open_file(NODE *arg, const char *access)
         }
     }
 
-    deref(arg);
+    gcref(filenameNode);
     free(fnstr);
     return tstrm;
 }
@@ -551,6 +553,7 @@ NODE *lerasefile(NODE *arg)
     strnzcpy(fnstr, getstrptr(arg), getstrlen(arg));
     remove(fnstr);
     free(fnstr);
+    gcref(arg);
     return Unbound;
 }
 
