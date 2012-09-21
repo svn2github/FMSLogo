@@ -548,9 +548,9 @@ NODE *reader(FILE *FileStream, const char * Prompt)
                 if (c != '\n')
                 {
                     // append the linear whitespace that we skipped (if any)
-                    const char * whitespaceString = whitespace.GetBuffer();
-                    if (whitespaceString != NULL)
+                    if (whitespace.GetBufferLength() != 0)
                     {
+                        const char * whitespaceString = whitespace.GetBuffer();
                         lineBuffer.AppendString(whitespaceString);
                         if (dribbling)
                         {
