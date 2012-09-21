@@ -117,8 +117,7 @@ NODE *reref(NODE *oldval, NODE *newval)
     return newval;
 }
 
-// Decrements the reference count and returns the object.
-// This assumes that the reference count won't go to zero.
+// Decrements the reference count and returns the object, but will not free it.
 NODE *unref(NODE *ret_var)
 {
     if (ret_var != NIL) 
