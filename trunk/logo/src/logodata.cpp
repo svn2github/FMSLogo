@@ -671,6 +671,18 @@ NODE *cnv_node_to_numnode(NODE *ndi)
     }
 }
 
+// Returns a string node that has the stringized form of "nd".
+//
+// If nd is already a string node, then it is returned.
+//
+// If nd is not already a string, but can be converted to one, then new node is
+// created with a reference count of 0.
+//
+// Returns Unbound if nd cannot be converted to a word node.
+//
+// If "nd" can be guaranteed by the caller to have a non-zero reference count,
+// such as if it's an argument in an argument list, then the returned node
+// can safely freed with gcref().  This handles all cases listed above.
 NODE *cnv_node_to_strnode(NODE *nd)
 {
     if (nd == Unbound || is_aggregate(nd))
