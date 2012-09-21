@@ -1,6 +1,6 @@
 LOAD "testlib.lgo
 
-TO SAVETEST.SMOKETEST
+TO SAVETEST.SMOKETEST.HELPER :filename
 
    LOCAL [savedWriter savedWorkspace]
 
@@ -15,7 +15,7 @@ TO SAVETEST.SMOKETEST
 
    ; Save the workspace and verify the contents
    (RUNPRINTTEST
-     [SAVE "savetest.smoketest.txt]
+     (list "SAVE QUOTED :filename)
      (list
          "|to myprocedure :x :y|
          "|OUTPUT :x + :y|
@@ -24,22 +24,35 @@ TO SAVETEST.SMOKETEST
          "|Make "myvariable "abc|
          "|Pprop "mypropertylist "Property 1|
      )
-     "savetest.smoketest.txt
+     :filename
    )
 
    ; Restore the workspace.
+   ERASE [[MyProcedure] [MyVariable] [MyPropertyList]]
    UNBURY :savedWorkspace
-   ERASEFILE "savetest.smoketest.txt
+   ERASEFILE :filename
 END
 
+TO SAVETEST.SMOKETEST
+  SAVETEST.SMOKETEST.HELPER "savetest.smoketest.txt
+END
+
+TO SAVETEST.NUMBERFILENAME
+  SAVETEST.SMOKETEST.HELPER 123.4
+END
 
 TO SAVETEST.BADINPUT
    RUNNOTENOUGHINPUTSTEST [(SAVE)]
    RUNTOOMANYINPUTSTEST   [(SAVE "testfile.txt "toomany)]
+
+   RUNFILESYSTEMERRORTEST [SAVE  [] ]
+   RUNFILESYSTEMERRORTEST [SAVE  [1]]
+   RUNFILESYSTEMERRORTEST [SAVE  {1}]
 END
 
 TO SAVETEST
   SAVETEST.SMOKETEST
+  SAVETEST.NUMBERFILENAME
   SAVETEST.BADINPUT
 END
 
