@@ -624,9 +624,10 @@ NODE *cnv_node_to_numnode(NODE *ndi)
     int dr;
     if (((getstrlen(ndi)) < MAX_NUMBER) && (dr = numberp(ndi)))
     {
-        char s2[MAX_NUMBER];
-        char *s = s2;
+        char buffer[MAX_NUMBER];
+        char *s = buffer;
 
+        // Copy the contents of the string node into buffer
         if (backslashed(ndi))
         {
             noparity_strnzcpy(s, getstrptr(ndi), getstrlen(ndi));
@@ -636,17 +637,23 @@ NODE *cnv_node_to_numnode(NODE *ndi)
             strnzcpy(s, getstrptr(ndi), getstrlen(ndi));
         }
 
+        // If the string was an explicit positive number,
+        // as in "+123" instead of "123", then we skip past the "+".
         if (*s == '+') 
         {
             ++s;
         }
-        if (s2[getstrlen(ndi) - 1] == '.') 
+
+        // If the string ends in a decimal point, as in "123.", then
+        // remove the decimal point.
+        if (buffer[getstrlen(ndi) - 1] == '.') 
         {
-            s2[getstrlen(ndi) - 1] = '\0';
+            buffer[getstrlen(ndi) - 1] = '\0';
         }
 
+        // Convert the string to a number node.
         NODE *val;
-        if (/*TRUE || */ dr - 1 || getstrlen(ndi) > 9)
+        if (dr - 1 || getstrlen(ndi) > 9)
         {
             val = make_floatnode(atof(s));
         }
