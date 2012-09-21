@@ -27,9 +27,9 @@
 const int DEFAULT_BUFFER_SIZE = 256;
 
 #ifdef NDEBUG
-#  define ASSERT_COMBOBUFF_INVARIANT
+#  define ASSERT_DYNAMIC_BUFFER_INVARIANT
 #else
-#  define ASSERT_COMBOBUFF_INVARIANT CDynamicBufferInvariant invariant(*this)
+#  define ASSERT_DYNAMIC_BUFFER_INVARIANT CDynamicBufferInvariant invariant(*this)
 
 class CDynamicBufferInvariant
 {
@@ -74,19 +74,19 @@ CDynamicBuffer::CDynamicBuffer() :
     m_BufferStart(0),
     m_BufferLimit(0)
 {
-    ASSERT_COMBOBUFF_INVARIANT;
+    ASSERT_DYNAMIC_BUFFER_INVARIANT;
 }
 
 CDynamicBuffer::~CDynamicBuffer()
 {
-    ASSERT_COMBOBUFF_INVARIANT;
+    ASSERT_DYNAMIC_BUFFER_INVARIANT;
     Dispose();
 }
 
 // deletes the contents of the internal buffer
 void CDynamicBuffer::Dispose()
 {
-    ASSERT_COMBOBUFF_INVARIANT;
+    ASSERT_DYNAMIC_BUFFER_INVARIANT;
 
     free(m_Buffer);
    
@@ -100,7 +100,7 @@ void CDynamicBuffer::Dispose()
 // empties the contents of the enternal buffer, but doesn't free it.
 void CDynamicBuffer::Empty()
 {
-    ASSERT_COMBOBUFF_INVARIANT;
+    ASSERT_DYNAMIC_BUFFER_INVARIANT;
 
     if (m_Buffer != NULL)
     {
@@ -113,7 +113,7 @@ void CDynamicBuffer::Empty()
 // returns if the buffer contains no data
 bool CDynamicBuffer::IsEmpty() const
 {
-    ASSERT_COMBOBUFF_INVARIANT;
+    ASSERT_DYNAMIC_BUFFER_INVARIANT;
 
     if (m_Buffer == NULL)
     {
@@ -131,9 +131,9 @@ CDynamicBuffer::GrowBy(
     size_t  ExtraLength
     )
 {
-    ASSERT_COMBOBUFF_INVARIANT;
+    ASSERT_DYNAMIC_BUFFER_INVARIANT;
 
-    // if combo_buff has never been allocated, do so now.
+    // if m_Buffer has never been allocated, do so now.
     if (m_Buffer == NULL)
     {
         m_Buffer     = (char *) calloc(DEFAULT_BUFFER_SIZE, sizeof(char));
@@ -155,15 +155,15 @@ CDynamicBuffer::GrowBy(
     }
 }
 
-// Append a NUL-terminated string to the combo buffer
+// Append a NUL-terminated string to the buffer
 void 
 CDynamicBuffer::AppendString(
     const char * ToAppend
     )
 {
-    ASSERT_COMBOBUFF_INVARIANT;
+    ASSERT_DYNAMIC_BUFFER_INVARIANT;
 
-    // resize combo_buff to be large enough to hold ToAppend
+    // resize the buffer to be large enough to hold ToAppend
     size_t toAppendLength = strlen(ToAppend);
     GrowBy(toAppendLength);
 
@@ -177,9 +177,9 @@ CDynamicBuffer::AppendChar(
     char         ToAppend
     )
 {
-    ASSERT_COMBOBUFF_INVARIANT;
+    ASSERT_DYNAMIC_BUFFER_INVARIANT;
 
-    // resize combo_buff to be large enough to hold ToAppend
+    // resize the buffer to be large enough to hold ToAppend
     GrowBy(1);
 
     // append ToAppend
@@ -196,7 +196,7 @@ CDynamicBuffer::GetBuffer(
     void
     )
 {
-    ASSERT_COMBOBUFF_INVARIANT;
+    ASSERT_DYNAMIC_BUFFER_INVARIANT;
     return m_Buffer + m_BufferStart;
 }
 
@@ -205,7 +205,7 @@ CDynamicBuffer::GetBufferLength(
     void
     ) const
 {
-    ASSERT_COMBOBUFF_INVARIANT;
+    ASSERT_DYNAMIC_BUFFER_INVARIANT;
     return m_BufferLimit - m_BufferStart;
 }
 
@@ -216,7 +216,7 @@ CDynamicBuffer::PopChar(
     void
     )
 {
-    ASSERT_COMBOBUFF_INVARIANT;
+    ASSERT_DYNAMIC_BUFFER_INVARIANT;
 
     int ch;
 
