@@ -592,21 +592,38 @@ NODE *lpause(NODE*)
     NODE * uname = vref(ufun);
     ufun = NIL;
 
+    // Print "Pausing..." to the commander history box.
+    // This does not print a newline, because the pausing
+    // line may also include the name of the procedure
+    // which ran PAUSE.
     ndprintf(stdout, LOCALIZED_PAUSING);
 
     jmp_buf sav_iblk;
     memcpy(sav_iblk, iblk_buf, sizeof(sav_iblk));
 
+    // Loop reading commands from the user until they
+    // exit Pause mode.
     bool saved_input_blocking = input_blocking;
     input_blocking = false;
     FIXNUM saved_value_status = g_ValueStatus;
     while (RUNNING)
     {
+        // uname is the CASEOBJ for the procedure that was running
+        // when PAUSE was invoked (either directly by calling PAUSE
+        // or when the Pause button was pressed).
+        // If PAUSE was run at the toplevel, then uname is NIL.
         if (uname != NIL) 
         {
             print_node(stdout, uname);
         }
 
+        // Flush the line, which might look something like
+        // "Pausing...<procedure name>" on the first iteration
+        // and just "<procedure name>" on subsequent iterations.
+        // This made a lot more sense in UCBLogo, when the prompt
+        // was "<procedure name>? ", but now that the input
+        // is taken from separate dialog box, this just looks weird,
+        // especially when uname is NIL.
         new_line(stdout);
 
         // get the interactive input for the "pause"
@@ -620,27 +637,38 @@ NODE *lpause(NODE*)
         {
             elist = reref(elist, NIL);
         }
+        input_mode = INPUTMODE_None;
 
         // check if there are other things to do
-        input_mode = INPUTMODE_None;
         MyMessageScan();
 
+        // REVISIT: This might legacy from UCBLogo that is
+        // inappropriate in FMSLogo, since "stdin" is the commander
+        // and never reaches the end of the file.
         if (feof(stdin)) 
         {
             lbye(NIL);
         }
 
+        // Evaluate the command that the given by the user.
+        // If the user pressed Cancel, then they'll run CONTINUE.
         g_ValueStatus = VALUE_STATUS_ValueMaybeOkInMacro;
         eval_driver(elist);
-
+ 
         if (stopping_flag == THROWING)
         {
             if (compare_node(throw_node, Pause, true) == 0)
             {
+                // The user ran CONTINUE, which is implemented by
+                // throwing to the "Pause" label.
+                // Reset back to a running node, cleanup, and return.
                 NODE * val = vref(output_node);
                 output_node = reref(output_node, Unbound);
                 stopping_flag = RUN;
 
+                // REVISIT: This is the same cleanup logic
+                // that is run on exit, so it should be possible
+                // to turn this into a break.
                 memcpy(iblk_buf, sav_iblk, sizeof(sav_iblk));
 
                 input_blocking = saved_input_blocking;
@@ -656,6 +684,9 @@ NODE *lpause(NODE*)
             }
             else if (Error.Equals(throw_node))
             {
+                // There was an error in the instruction that the
+                // user provided.  Print the error, but remain in
+                // pause mode.
                 err_print();
                 stopping_flag = RUN;
             }
