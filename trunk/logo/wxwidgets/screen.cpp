@@ -854,6 +854,7 @@ void CScreen::OnMouseMove(wxMouseEvent& Event)
 void CScreen::OnSize(wxSizeEvent& Event)
 {
     ScrollToRatio();
+    Refresh(false);
     Event.Skip();
 }
 
