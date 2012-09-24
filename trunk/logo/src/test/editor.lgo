@@ -92,11 +92,15 @@ TO EDITORTEST.OPENTOERROR
    LOCALMAKE "isok YESNOBOX ~
      [Question] ~
      [Press "Yes" if and only if\n
+\n
 1) The dialog box appeared\n
-2) The editor opened with the caret is positioned on the line that says\nCARET SHOULD BE HERE WHEN EDITOR IS OPENED\n
-3) The commander window shows the following explanation\n
-  unexpected '\]' in SIMPLEREPORTTEST\n
-  [To ProcedureWithError]\n
+\n
+2) The editor opened with the caret is positioned on the line that says:\n
+   CARET SHOULD BE HERE WHEN EDITOR IS OPENED\n
+\n
+3) The commander window shows the following explanation:\n
+   unexpected '\]' in SIMPLEREPORTTEST\n
+   [To ProcedureWithError]\n
 \n
 Fix the error then save the editor before answering.]
    IFELSE :isok [

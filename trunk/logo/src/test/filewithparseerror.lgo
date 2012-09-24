@@ -15,7 +15,7 @@ End
 
 To ProcedureWithError ; <--- CARET SHOULD BE HERE WHEN EDITOR IS OPENED
 ; No error on this line
- ] ; error on this line (unexpected ']')
+ ; error on this line (unexpected ']')
 ; No error on this line
 End
 
