@@ -158,6 +158,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\startup.obj\
    $(IntermediateDirectory)\status.obj\
    $(IntermediateDirectory)\statwind.obj\
+   $(IntermediateDirectory)\stringprintednode.obj\
    $(IntermediateDirectory)\term.obj\
    $(IntermediateDirectory)\threed.obj\
    $(IntermediateDirectory)\utils.obj\
@@ -259,6 +260,7 @@ $(IntermediateDirectory)\sizedlg.obj+
 $(IntermediateDirectory)\startup.obj+
 $(IntermediateDirectory)\status.obj+
 $(IntermediateDirectory)\statwind.obj+
+$(IntermediateDirectory)\stringprintednode.obj+
 $(IntermediateDirectory)\term.obj+
 $(IntermediateDirectory)\threed.obj+
 $(IntermediateDirectory)\utils.obj+
@@ -367,6 +369,7 @@ $(IntermediateDirectory)\sizedlg.obj                  : version.h
 $(IntermediateDirectory)\startup.obj                  : version.h
 $(IntermediateDirectory)\status.obj                   : version.h
 $(IntermediateDirectory)\statwind.obj                 : version.h
+$(IntermediateDirectory)\stringprintednode.obj        : version.h
 $(IntermediateDirectory)\term.obj                     : version.h
 $(IntermediateDirectory)\threed.obj                   : version.h
 $(IntermediateDirectory)\utils.obj                    : version.h

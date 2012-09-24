@@ -110,9 +110,8 @@ err_print_helper(
     }
     else
     {
-        print_stringptr = Buffer;
-        print_stringlen = BufferLength;
         fp = NULL;
+        InitializeStringPrintInformation(Buffer, BufferLength);
     }
 
     CTRLTYPE save_flag = stopping_flag;
@@ -148,7 +147,7 @@ err_print_helper(
     }
     else
     {
-        *print_stringptr = '\0';
+        FinalizeStringPrintInformation();
     }
 
     print_backslashes = false;

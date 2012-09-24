@@ -34,10 +34,11 @@ extern NODE *lshow(NODE *args);
 extern NODE *ltype(NODE *args);
 extern NODE *lprint(NODE *args);
 
-// global variables
-extern int   print_stringlen;
-extern char *print_stringptr;
-extern bool  print_backslashes;
+extern void   InitializeStringPrintInformation(char * Buffer, size_t BufferLength);
+extern size_t FinalizeStringPrintInformation();
+extern size_t PrintNodeToString(const NODE * Node, char * Buffer, size_t BufferLength);
 
+// global variables
+extern bool print_backslashes;
 
 #endif // __PRINT_H_

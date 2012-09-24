@@ -124,23 +124,42 @@ const char *debug_typename_to_string(const NODE *nd)
 }
 
 static
-void
+char *
 debug_print_node(const NODE* node)
 {
     // Preserve the machine state
     bool savedIsTimeToHalt  = IsTimeToHalt;
     bool savedIsTimeToPause = IsTimeToPause;
 
-    // Clear these flags so that real_print_node doesn't crash
+    // Clear these flags so that real_print_node doesn't crash in check_stop().
     IsTimeToHalt  = false;
     IsTimeToPause = false;
 
-    real_print_node(stderr, node, -1, -1);
-    fprintf(stderr, "\n");
+    // Figure out how many bytes are required.
+    size_t totalBytesNeeded = PrintNodeToString(node, NULL, 0);
+    
+    // Allocate the buffer.
+    // Note that this buffer may be leaked when this is called from gdb.
+    // To prevent it from showing up as a leaked allocation in the debug
+    // heap, we use malloc() instead of debug_malloc().
+    char * buffer = static_cast<char*>(malloc(totalBytesNeeded));
+    if (buffer != NULL)
+    {
+        // Print the node into the buffer
+        PrintNodeToString(node, buffer, totalBytesNeeded);
+
+        // Print the buffer
+        fprintf(stderr, "%s\n", buffer);
+    }
 
     // Restore the machine state
     IsTimeToHalt  = savedIsTimeToHalt;
     IsTimeToPause = savedIsTimeToPause;
+
+    // Return the string form of the buffer.
+    // This is because gdb doesn't always show the output from fprintf,
+    // but it can print any string that is returned to it.
+    return buffer;
 }
 
 static
@@ -371,7 +390,8 @@ debug_report_leaks(void)
                             " <--- TOP_LEVEL_LEAK" :
                             "");
 
-                    debug_print_node(node_information[i].node);
+                    char * str = debug_print_node(node_information[i].node);
+                    free(str);
 
                     TraceOutput("\n");
                 }

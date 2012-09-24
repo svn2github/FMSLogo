@@ -201,14 +201,11 @@ bool promptuser(char *str, const char *prompt)
 
 void single_step_box(NODE *the_line)
 {
+    // Print the line into a buffer
     char textbuf[MAX_BUFFER_SIZE];
+    PrintNodeToString(the_line, textbuf, ARRAYSIZE(textbuf));
 
     // pop up single step box showing line of code
-    print_stringptr = textbuf;
-    print_stringlen = MAX_BUFFER_SIZE;
-    ndprintf((FILE *) NULL, "%p", the_line);
-    *print_stringptr = '\0';
-
     if (MainWindowx->CommandWindow->MessageBox(
             textbuf,
             LOCALIZED_STEPPING,

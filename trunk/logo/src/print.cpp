@@ -38,10 +38,19 @@ using namespace std;
 
 #include "localizedstrings.h"
 
-int print_stringlen;
-char *print_stringptr;
+// structures
+struct STRING_PRINT_INFORMATION
+{
+    size_t  TotalBytesNeeded;
+    size_t  BufferLength;
+    char  * Buffer;
+};
+
+// global variable
+static STRING_PRINT_INFORMATION g_StringPrintInformation;
 
 bool print_backslashes = false;
+
 
 void update_coords(char /*ch*/)
 {
@@ -49,8 +58,9 @@ void update_coords(char /*ch*/)
 
 void print_char(FILE *strm, char ch)
 {
-    if (strm)
+    if (strm != NULL)
     {
+        // printing to a file stream
         if (strm == stdout)
         {
             putcombochar(ch);
@@ -67,11 +77,12 @@ void print_char(FILE *strm, char ch)
     }
     else
     {
-        /* printing to string */
-        if (--print_stringlen > 0)
+        // printing to string
+        if (g_StringPrintInformation.TotalBytesNeeded + 1 < g_StringPrintInformation.BufferLength)
         {
-            *print_stringptr++ = ch;
+            g_StringPrintInformation.Buffer[g_StringPrintInformation.TotalBytesNeeded] = ch;
         }
+        g_StringPrintInformation.TotalBytesNeeded++;
     }
 }
 
@@ -454,4 +465,72 @@ NODE *lprint(NODE *args)
     type_helper(args, true);
     new_line(g_Writer.GetStream());
     return Unbound;
+}
+
+// Initializes the printing engine to print to Buffer.
+void
+InitializeStringPrintInformation(
+    char * Buffer,
+    size_t BufferLength
+    )
+{
+    g_StringPrintInformation.TotalBytesNeeded = 0;
+    g_StringPrintInformation.Buffer           = Buffer;
+    g_StringPrintInformation.BufferLength     = BufferLength;
+}
+
+// NUL-terminate the string and return how many bytes would be
+// required to hold the entire print job.
+size_t FinalizeStringPrintInformation()
+{
+    // NUL-terminate the string
+    if (g_StringPrintInformation.TotalBytesNeeded + 1 < g_StringPrintInformation.BufferLength)
+    {
+        // The string fit within the buffer.
+        // NUL-terminate it at the end of what we wrote.
+        g_StringPrintInformation.Buffer[g_StringPrintInformation.TotalBytesNeeded] = '\0';
+    }
+    else if (g_StringPrintInformation.BufferLength != 0)
+    {
+        // The string didn't fit within the buffer.
+        // NUL-terminate it at the end of the buffer.
+        g_StringPrintInformation.Buffer[g_StringPrintInformation.BufferLength - 1] = '\0';
+    }
+    else
+    {
+        // No buffer was given, so we can't NUL-terminate anything.
+    }
+    g_StringPrintInformation.TotalBytesNeeded++;
+
+    // Return the total bytes needed.
+    return g_StringPrintInformation.TotalBytesNeeded;
+}
+
+
+// Prints a node to a string, as would happen with PRINT if no limits
+// were placed on its width or depth.
+// Returns the number of bytes needed to entire string for of Node, including
+// the NUL-terminator.
+size_t
+PrintNodeToString(
+    const NODE * Node,
+    char *       Buffer,
+    size_t       BufferLength
+    )
+{
+    // Initialize the printing engine to print to Buffer
+    InitializeStringPrintInformation(Buffer, BufferLength);
+
+    // Print the node
+    if (is_list(Node))
+    {
+        real_print_helper(NULL, Node, -1, -1);
+    }
+    else
+    {
+        real_print_node(NULL, Node, -1, -1);
+    }
+
+    // NUL-terminate the string and return the total bytes needed.
+    return FinalizeStringPrintInformation();
 }

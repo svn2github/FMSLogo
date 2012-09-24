@@ -50,6 +50,7 @@
 #include "eval.h"
 #include "logocore.h"
 #include "lists.h"
+#include "stringprintednode.h"
 #include "screenwindow.h"
 #include "debugheap.h"
 
@@ -2584,18 +2585,15 @@ NODE *lselectbox(NODE *args)
 
 NODE *lyesnobox(NODE *args)
 {
-    char banner[MAX_BUFFER_SIZE];
-    cnv_strnode_string(banner, args);
-
-    char body[MAX_BUFFER_SIZE];
-    cnv_strnode_string(body, args = cdr(args));
+    CStringPrintedNode banner(car(args));
+    CStringPrintedNode body(car(cdr(args)));
 
     if (NOT_THROWING)
     {
         int status = ::MessageBox(
             GetParentWindowForDialog(),
-            body,
-            banner,
+            body.GetString(),
+            banner.GetString(),
             MB_YESNOCANCEL | MB_ICONQUESTION);
 
         switch (status)
