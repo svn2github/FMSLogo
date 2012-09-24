@@ -550,6 +550,25 @@ void CMainFrame::UndockCommanderWindow()
             // Use the computed height
             SetSize(mainFrameWidth, newHeight);
         }
+        else
+        {
+            // Save the current height
+            // Restore the commander window's height.
+            SetConfigurationInt(
+                "CommanderHeight",
+                m_Commander->GetSize().GetHeight());
+
+            // Restore the previous size and position of the
+            // undocked commander window.
+            const wxRect & currentRect = newCommander->GetRect();
+            int x      = currentRect.GetX();
+            int y      = currentRect.GetY();
+            int width  = currentRect.GetWidth();
+            int height = currentRect.GetHeight();
+            GetConfigurationQuadruple("CommanderWindow", &x, &y, &width, &height);
+            checkwindow(&x, &y, &width, &height);
+            newCommander->SetSize(x, y, width, height);
+        }
 
         m_Splitter->Unsplit(m_Commander);
 
@@ -572,20 +591,15 @@ void CMainFrame::DockCommanderWindow()
 
 #ifdef __WXMSW__ // utils.cpp only builds on Windows
 
-        // restore the commander window's height
-        int commanderWindowX      = 0;
-        int commanderWindowY      = 0;
-        int commanderWindowWidth  = 0;
-        int commanderWindowHeight = DEFAULT_COMMANDER_HEIGHT;
-        GetConfigurationQuadruple(
-            "Commander",
-            &commanderWindowX,
-            &commanderWindowY,
-            &commanderWindowWidth,
-            &commanderWindowHeight);
+        // Restore the commander window's height.
+        int commanderWindowHeight = GetConfigurationInt(
+            "CommanderHeight",
+            DEFAULT_COMMANDER_HEIGHT);
 
         // sanity-check the input
-        commanderWindowHeight = std::max(commanderWindowHeight, MIN_COMMANDER_HEIGHT);
+        commanderWindowHeight = std::max(
+            commanderWindowHeight,
+            MIN_COMMANDER_HEIGHT);
 #else
         int commanderWindowHeight = MIN_COMMANDER_HEIGHT;
 #endif
@@ -626,6 +640,20 @@ void CMainFrame::DockCommanderWindow()
             // Scroll to the bottom
             long lastPosition = newCommander->GetCommander()->GetHistory()->GetLastPosition();
             newCommander->GetCommander()->GetHistory()->ShowPosition(lastPosition);
+
+            if (!bFixed &&
+                !static_cast<CCommanderDialog*>(m_Commander)->IsIconized())
+            {
+                // Save the window position
+                const wxRect windowRectangle = m_Commander->GetRect();
+
+                SetConfigurationQuadruple(
+                    "CommanderWindow",
+                    windowRectangle.GetLeft(),
+                    windowRectangle.GetTop(),
+                    windowRectangle.GetWidth(),
+                    windowRectangle.GetHeight());
+            }
         }
 
 
@@ -1049,31 +1077,42 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
 
     // Don't save the window size if it's minimized, the commander is undocked,
     // or if FMSLogo was started with the -F option.
-    if (!IsIconized() && m_CommanderIsDocked && !bFixed)
+    if (!IsIconized() && !bFixed)
     {
-        // Get location and size of our window on the screen so we can
-        // come back up in the same spot next time we are invoked.
-        const wxRect mainWindowRect = GetRect();
+        if (m_CommanderIsDocked)
+        {
+            // Get location and size of our window on the screen so we can
+            // come back up in the same spot next time we are invoked.
+            const wxRect mainWindowRect = GetRect();
 
-        // save the current location of the screen
-        SetConfigurationQuadruple(
-            "Screen",
-            mainWindowRect.GetLeft(),
-            mainWindowRect.GetTop(),
-            mainWindowRect.GetWidth(),
-            mainWindowRect.GetHeight());
+            // Save the current location of the screen.
+            SetConfigurationQuadruple(
+                "Screen",
+                mainWindowRect.GetLeft(),
+                mainWindowRect.GetTop(),
+                mainWindowRect.GetWidth(),
+                mainWindowRect.GetHeight());
 
-        // Save the current location of the commander.
-        // When the comander is docked, only the height
-        // is relevant, but we must save all parts.
-        const wxRect commanderRectangle = m_RealCommander->GetScreenRect();
+            // Save the location of the splitter.
+            SetConfigurationInt(
+                "CommanderHeight",
+                m_Commander->GetSize().GetHeight());
+        }
+        else
+        {
+            if (!static_cast<CCommanderDialog*>(m_Commander)->IsIconized())
+            {
+                // Save the commander's position
+                const wxRect windowRectangle = m_Commander->GetRect();
 
-        SetConfigurationQuadruple(
-            "Commander",
-            commanderRectangle.GetLeft(),
-            commanderRectangle.GetTop(),
-            commanderRectangle.GetWidth(),
-            commanderRectangle.GetHeight());
+                SetConfigurationQuadruple(
+                    "CommanderWindow",
+                    windowRectangle.GetLeft(),
+                    windowRectangle.GetTop(),
+                    windowRectangle.GetWidth(),
+                    windowRectangle.GetHeight());
+            }
+        }
     }
 
     // Cleanup the pens
@@ -2092,7 +2131,8 @@ void CMainFrame::OnHelpTutorial(wxCommandEvent& WXUNUSED(Event))
 
 void CMainFrame::OnHelpDemo(wxCommandEvent& WXUNUSED(Event))
 {
-    do_execution("demo");
+    char command[] = "demo";
+    do_execution(command);
 }
 
 void

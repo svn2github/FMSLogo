@@ -195,7 +195,10 @@ CCommander::CCommander(wxWindow *Parent)
         acceleratorEntries);
 
     SetAcceleratorTable(acceleratorTable);
+}
 
+CCommander::~CCommander()
+{
 }
 
 void CCommander::ChooseNewFont()
@@ -492,7 +495,9 @@ void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(Event))
 
 void CCommander::OnEdallButton(wxCommandEvent& WXUNUSED(Event))
 {
-    do_execution("EDALL");
+    // use a local buffer because do_execution can modify its parameter
+    char command[] = "EDALL";
+    do_execution(command);
 }
 
 CCommander * CCommander::GetCommander()
@@ -500,8 +505,54 @@ CCommander * CCommander::GetCommander()
     return this;
 }
 
+const wxSize CCommander::GetRecommendedMinimumSize() const
+{
+    const int x_border = 4;
+    const int y_border = 4;
+    const int padding  = 6;
+
+    const int minHistoryWidth = 100;
+
+    const int minX = 
+        x_border + 
+        minHistoryWidth +
+        padding +
+        m_ButtonWidth +
+        m_ButtonWidth +
+        x_border;
+
+    // height of one of the columns with buttons
+    const int minButtonY =
+        y_border +
+        m_ButtonHeight * 4 +
+        y_border;
+
+    // height of the history/input column,
+    // assuming history shows at least two rows
+    const int minHistoryY =
+        y_border +
+        m_NextInstructionHeight * 2 +
+        padding +
+        m_NextInstructionHeight +
+        y_border;
+
+    return wxSize(
+        minX,
+        std::max(minButtonY, minHistoryY));
+}
+
 void CCommander::RecalculateLayout()
 {
+    // NOTE: This cannot use a wxSizer because different localized
+    // versions of FMSLogo use different lengths of text for the buttons.
+    // The problems:
+    // 1) All buttons must be the same size, so the wxBoxSizer is inadequate.
+    // 2) There must be a variable amount of space between the first three
+    //    buttons and the fourth button in each column. This makes the
+    //    wxGridSizer inadequate.
+    // 3) The toggle buttons can change their text, but should be sized for
+    //    the longer of the two text possibilities.
+
     // scale and pos. each sub-window in commander window based on its size
     const wxSize commanderSize = GetClientSize();
 
@@ -589,9 +640,10 @@ CCommander::UpdateFont(const wxFont & NewFont)
     m_NextInstructionHeight = height + 10;
 }
 
-void CCommander::OnSize(wxSizeEvent& event)
+void CCommander::OnSize(wxSizeEvent& Event)
 {
     RecalculateLayout();
+    Event.Skip();
 }
 
 
@@ -710,24 +762,15 @@ CCommanderDialog::CCommanderDialog(wxWindow * Parent)
 {
     m_Commander = new CCommander(this);
 
-
-#ifdef __WXMSW__ // utils.cpp only builds on Windows
-
-    // restore the commander window's height
-    int x      = 0;
-    int y      = 0;
-    int width  = 0;
-    int height = 0;
-    GetConfigurationQuadruple("Commander", &x, &y, &width, &height);
-    SetSize(x, y, width, height);
-#endif
-
+    // Put the commander inside the dialog box
     wxSizer * sizer = new wxBoxSizer(wxVERTICAL);
 
-    sizer->Add(m_Commander, 0, wxEXPAND);
-
+    sizer->Add(m_Commander, 1, wxEXPAND);
     SetSizer(sizer);
-    sizer->Fit(this);
+
+    // Set the minimum size based on what's recommended to show
+    // all of the controls in the commander.
+    SetMinSize(ClientToWindowSize(m_Commander->GetRecommendedMinimumSize()));
 }
 
 CCommander * CCommanderDialog::GetCommander()
@@ -735,41 +778,20 @@ CCommander * CCommanderDialog::GetCommander()
     return m_Commander;
 }
 
-void CCommanderDialog::OnSize(wxSizeEvent& event)
+void CCommanderDialog::OnClose(wxCloseEvent& Event)
 {
-    int width;
-    int height;
-    GetClientSize(&width, &height);
-
-    m_Commander->SetSize(width, height);
-}
-
-void CCommanderDialog::OnClose(wxCloseEvent& event)
-{
-    if (event.CanVeto())
+    // Veto whenever possible so that we don't ever
+    // close this dialog by user interaction.
+    if (Event.CanVeto())
     {
-        event.Veto();
+        Event.Veto();
     }
     else
     {
-        // Save the location and size of our window so we can
-        // come back up in the same spot next time we are invoked.
-        if (!IsIconized())
-        {
-            const wxRect windowRectangle = GetRect();
-
-            SetConfigurationQuadruple(
-                "Commander",
-                windowRectangle.GetLeft(),
-                windowRectangle.GetTop(),
-                windowRectangle.GetWidth(),
-                windowRectangle.GetHeight());
-        }
-        Destroy();
+        Event.Skip();
     }
 }
 
 BEGIN_EVENT_TABLE(CCommanderDialog, wxDialog)
-    EVT_SIZE(CCommanderDialog::OnSize)
     EVT_CLOSE(CCommanderDialog::OnClose)
 END_EVENT_TABLE()

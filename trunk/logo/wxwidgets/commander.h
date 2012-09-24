@@ -3,8 +3,6 @@
 #include <wx/panel.h>
 #include <wx/dialog.h>
 
-class wxTextCtrl;
-class wxSizer;
 class CCommanderButton;
 class CCommanderToggleButton;
 class CCommanderHistory;
@@ -41,11 +39,15 @@ public:
     CCommanderInput   * GetInput();
     wxButton          * GetEdallButton();
 
+    const wxSize GetRecommendedMinimumSize() const;
+
     // HACK: friend functions
     friend void putcombobox(const char *str);
     friend void clearcombobox();
 
 private:
+    // Prevent objects from being declared as a stack variables
+    ~CCommander();
 
     // Event handlers
     void OnHaltButton(wxCommandEvent& Event);
@@ -56,9 +58,13 @@ private:
     void OnResetButton(wxCommandEvent& Event);
     void OnExecuteButton(wxCommandEvent& Event);
     void OnEdallButton(wxCommandEvent& Event);
-
     void OnSize(wxSizeEvent& Event);
 
+    // Private helper functions
+    void RecalculateLayout();
+    void UpdateFont(const wxFont & NewFont);
+
+    // Private member variables
     CCommanderButton        * m_HaltButton;
     CCommanderToggleButton  * m_TraceButton;
     CCommanderButton        * m_PauseButton;
@@ -76,9 +82,6 @@ private:
     int m_ButtonWidth;
     int m_ButtonHeight;
 
-    void RecalculateLayout();
-    void UpdateFont(const wxFont & NewFont);
-
     DECLARE_NO_COPY_CLASS(CCommander);
     DECLARE_EVENT_TABLE();
 };
@@ -89,11 +92,8 @@ public:
     CCommanderDialog(wxWindow *parent);
     CCommander * GetCommander();
 
-    bool EditBoxWantsKeyEvent() const;
-
 private:
     // event handlers
-    void OnSize(wxSizeEvent& event);
     void OnClose(wxCloseEvent& event);
 
     // member variables
