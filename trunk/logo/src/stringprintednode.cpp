@@ -18,16 +18,37 @@
 
 #include "logocore.h"
 #include "print.h"
+#include "init.h"
 #include "debugheap.h"
 
-CStringPrintedNode::CStringPrintedNode(const NODE * Node) :
+CStringPrintedNode::CStringPrintedNode(
+    const NODE *        Node,
+    PRINTLIMITSPECIFIER PrintLimit
+    ) :
     m_DynamicBuffer(NULL)
 {
+    int printDepthLimit;
+    int printWidthLimit;
+    if (PrintLimit == WithPrintLimits)
+    {
+        // Use the current limits for printing.
+        printDepthLimit = find_limit(Printdepthlimit);
+        printWidthLimit = find_limit(Printwidthlimit);
+    }
+    else
+    {
+        // There are no limits for printing.
+        printDepthLimit = -1;
+        printWidthLimit = -1;
+    }
+
     // First, try to print the node into the fixed-size buffer.
     size_t totalBytesNeeded = PrintNodeToString(
         Node,
         m_FixedBuffer,
-        ARRAYSIZE(m_FixedBuffer));
+        ARRAYSIZE(m_FixedBuffer),
+        printDepthLimit,
+        printWidthLimit);
 
     if (ARRAYSIZE(m_FixedBuffer) < totalBytesNeeded)
     {
@@ -39,7 +60,9 @@ CStringPrintedNode::CStringPrintedNode(const NODE * Node) :
             size_t newTotalBytesNeeded = PrintNodeToString(
                 Node,
                 m_DynamicBuffer,
-                totalBytesNeeded);
+                totalBytesNeeded,
+                printDepthLimit,
+                printWidthLimit);
 
             // The number of bytes needed shouldn't have changed
             // from the first attempt to the second attempt.
@@ -55,6 +78,19 @@ CStringPrintedNode::~CStringPrintedNode()
 
 const char *
 CStringPrintedNode::GetString() const
+{
+    if (m_DynamicBuffer != NULL)
+    {
+        return m_DynamicBuffer;
+    }
+    else
+    {
+        return m_FixedBuffer;
+    }
+}
+
+char *
+CStringPrintedNode::GetString()
 {
     if (m_DynamicBuffer != NULL)
     {

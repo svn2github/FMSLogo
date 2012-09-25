@@ -24,9 +24,22 @@
 class CStringPrintedNode
 {
 public:
-    CStringPrintedNode(const struct NODE * Node);
-    const char * GetString() const;
+
+    enum PRINTLIMITSPECIFIER
+    {
+        WithoutPrintLimits,
+        WithPrintLimits,
+    };
+    
+    CStringPrintedNode(
+        const struct NODE * Node,
+        PRINTLIMITSPECIFIER PrintLimit = WithoutPrintLimits
+        );
+
     ~CStringPrintedNode();
+
+    const char * GetString() const;
+    char * GetString();
 
 private:
     // block the compiler-generated constructors

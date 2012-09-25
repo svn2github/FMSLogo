@@ -381,7 +381,6 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
     }
 }
 
-static
 int find_limit(const CLocalizedNode & Node)
 {
     NODE * nd = cnv_node_to_numnode(Node.GetValue());
@@ -507,15 +506,17 @@ size_t FinalizeStringPrintInformation()
 }
 
 
-// Prints a node to a string, as would happen with PRINT if no limits
-// were placed on its width or depth.
-// Returns the number of bytes needed to entire string for of Node, including
-// the NUL-terminator.
+// Prints a node to a string, as would happen with PRINT, using
+// the given limits on width and depth.
+// Returns the number of bytes needed to print the entire string for Node,
+// including the NUL-terminator.
 size_t
 PrintNodeToString(
     const NODE * Node,
     char *       Buffer,
-    size_t       BufferLength
+    size_t       BufferLength,
+    int          PrintDepthLimit,
+    int          PrintWidthLimit
     )
 {
     // Initialize the printing engine to print to Buffer
@@ -524,13 +525,37 @@ PrintNodeToString(
     // Print the node
     if (is_list(Node))
     {
-        real_print_helper(NULL, Node, -1, -1);
+        real_print_helper(
+            NULL,
+            Node,
+            PrintDepthLimit,
+            PrintWidthLimit);
     }
     else
     {
-        real_print_node(NULL, Node, -1, -1);
+        real_print_node(
+            NULL,
+            Node,
+            PrintDepthLimit,
+            PrintWidthLimit);
     }
 
     // NUL-terminate the string and return the total bytes needed.
     return FinalizeStringPrintInformation();
 }
+
+
+// Prints a node to a string, as would happen with PRINT if no limits
+// were placed on its width or depth.
+// Returns the number of bytes needed to print the entire string for Node,
+// including the NUL-terminator.
+size_t
+PrintNodeToString(
+    const NODE * Node,
+    char *       Buffer,
+    size_t       BufferLength
+    )
+{
+    return PrintNodeToString(Node, Buffer, BufferLength, -1, -1);
+}
+

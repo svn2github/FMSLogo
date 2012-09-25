@@ -26,6 +26,7 @@ extern void update_coords(char ch);
 extern void print_char(FILE *strm, char ch);
 extern void print_space(FILE *strm);
 extern void ndprintf(FILE *strm, const char *fmt, ...);
+extern int find_limit(const class CLocalizedNode & Node);
 extern void print_helper(FILE *strm, NODE *nd);
 extern void print_node(FILE *strm, NODE *nd);
 extern void print_nobrak(FILE *strm, NODE *nd);
@@ -34,9 +35,32 @@ extern NODE *lshow(NODE *args);
 extern NODE *ltype(NODE *args);
 extern NODE *lprint(NODE *args);
 
-extern void   InitializeStringPrintInformation(char * Buffer, size_t BufferLength);
+extern
+void
+InitializeStringPrintInformation(
+    char * Buffer,
+    size_t BufferLength
+    );
+
 extern size_t FinalizeStringPrintInformation();
-extern size_t PrintNodeToString(const NODE * Node, char * Buffer, size_t BufferLength);
+
+extern
+size_t
+PrintNodeToString(
+    const NODE * Node,
+    char *       Buffer,
+    size_t       BufferLength
+    );
+
+extern
+size_t
+PrintNodeToString(
+    const NODE * Node,
+    char *       Buffer,
+    size_t       BufferLength,
+    int          PrintDepthLimit,
+    int          PrintWidthLimit
+    );
 
 // global variables
 extern bool print_backslashes;
