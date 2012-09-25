@@ -14,9 +14,18 @@
 <listitem>
 <para>
 Marks the items in the contents list for stepping.
+</para>
+
+<para>
 Whenever a stepped procedure is invoked, each instruction line in the procedure body is displayed in a dialog box before being executed and &PRODUCTNAME; waits for the user to press the OK button before continuing.
-A dialog box is displayed whenever a stepped variable name is "shadowed".
-A variable is shadowed when a variable of the same name is created with the <link linkend="command-local">LOCAL</link> command or when a procedure is invoked that has an input with the same name.
+The line is truncated according to the current values of <link linkend="command-printwidthlimit">PRINTWIDTHLIMIT</link> and <link linkend="command-printdepthlimit">PRINTDEPTHLIMIT</link>.
+</para>
+
+<para>
+Whenever a stepped variable is "shadowed", a message to this effect is printed to the commander's Output/Command-Recall box.
+A variable is shadowed whenever a variable of the same name is created with the <link linkend="command-local">LOCAL</link> command or when a procedure is invoked that has an input with the same name.
+If the variable was shadowed by LOCAL, then the instruction line that caused the shadowing is printed after the message.
+This instruction line is truncated according to the current values of <link linkend="command-printwidthlimit">PRINTWIDTHLIMIT</link> and <link linkend="command-printdepthlimit">PRINTDEPTHLIMIT</link>.
 </para>
 
 <para>
@@ -48,8 +57,8 @@ You can step all procedures and variables with the <link linkend="commander-step
   LEFT    90
 END
 
-MYPROGRAM
-STEP "MYPROGRAM</userinput>
+STEP "MYPROGRAM
+MYPROGRAM</userinput>
 <replaceable>Each line of MYPROGRAM will be displayed and will wait for OK to continue to next line.</replaceable>
 <userinput>UNSTEP "MYPROGRAM
 MYPROGRAM</userinput>
