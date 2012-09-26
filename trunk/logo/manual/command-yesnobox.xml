@@ -19,14 +19,18 @@ Processing will not continue until the user clicks one of these buttons.
 The commander window is also disabled until dialog is dismissed.
 If the user presses "Yes", then YESNOBOX outputs the TRUE and processing continues.
 If the user presses "No", then YESNOBOX outputs the FALSE and processing continues.
-If the user presses "Cancel", then processing will be halted, as if by the <link linkend="command-halt">HALT</link> command.
+If the user presses "Cancel", then processing is halted, as if by the <link linkend="command-halt">HALT</link> command.
 </para>
 
 <para>
 Both the <parameter>title</parameter> and <parameter>question</parameter> inputs should be either lists or words.
-For list inputs, the contents of the list is used (not the list, itself).
-The yes/no box will be automatically sized to fit <parameter>question</parameter>.
-The question will not be word-wrapped, so if you have a long question, you may want to put in some line breaks.
+For list inputs, the contents of the list is used, not the list, itself.
+The inputs are truncated according to the current values of <link linkend="command-printwidthlimit">PRINTWIDTHLIMIT</link> and <link linkend="command-printdepthlimit">PRINTDEPTHLIMIT</link>.
+</para>
+
+<para>
+The yes/no box is automatically sized to fit <parameter>question</parameter>.
+The question is not word-wrapped, so if you have a long question, you may want to put in some line breaks.
 </para>
 
 </listitem>
@@ -35,7 +39,7 @@ The question will not be word-wrapped, so if you have a long question, you may w
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW YESNOBOX [Question] [Do you like &PRODUCTNAME;?]</userinput>
+    <programlisting><userinput>SHOW YESNOBOX [Question] [Do you like &GENERICNAME;?]</userinput>
 true
 </programlisting>
 
