@@ -2284,8 +2284,8 @@ NODE *lselectbox(NODE *args)
 
 NODE *lyesnobox(NODE *args)
 {
-    CStringPrintedNode banner(car(args));
-    CStringPrintedNode body(car(cdr(args)));
+    CStringPrintedNode banner(car(args),    CStringPrintedNode::WithPrintLimits);
+    CStringPrintedNode body(car(cdr(args)), CStringPrintedNode::WithPrintLimits);
 
     if (NOT_THROWING)
     {
