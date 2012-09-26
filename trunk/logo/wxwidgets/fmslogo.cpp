@@ -595,15 +595,14 @@ BEGIN_EVENT_TABLE(CFmsLogo, wxApp)
     EVT_IDLE(CFmsLogo::OnIdle)
 END_EVENT_TABLE()
 
-void single_step_box(NODE *the_line)
+void single_step_box(NODE * the_line)
 {
-    // Print the line into a buffer
-    char textbuf[MAX_BUFFER_SIZE];
-    PrintNodeToString(the_line, textbuf, ARRAYSIZE(textbuf));
+    // Print the line into a buffer, honoring the current printing limits
+    CStringPrintedNode printedLine(the_line, CStringPrintedNode::WithPrintLimits);
 
     // pop up single step box showing line of code
     if (wxMessageBox(
-            textbuf,
+            printedLine->GetString(),
             LOCALIZED_STEPPING,
             wxOK | wxCANCEL) == wxCANCEL)
     {

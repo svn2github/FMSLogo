@@ -47,6 +47,7 @@
 #include "graphwin.h"
 #include "dlgwind.h"
 #include "startup.h"
+#include "stringprintednode.h"
 #include "screenwindow.h"
 
 #include "localizedstrings.h"
@@ -201,13 +202,12 @@ bool promptuser(char *str, const char *prompt)
 
 void single_step_box(NODE *the_line)
 {
-    // Print the line into a buffer
-    char textbuf[MAX_BUFFER_SIZE];
-    PrintNodeToString(the_line, textbuf, ARRAYSIZE(textbuf));
+    // Print the line into a buffer, honoring the current printing limits
+    CStringPrintedNode printedLine(the_line, CStringPrintedNode::WithPrintLimits);
 
     // pop up single step box showing line of code
     if (MainWindowx->CommandWindow->MessageBox(
-            textbuf,
+            printedLine.GetString(),
             LOCALIZED_STEPPING,
             MB_OKCANCEL) == IDCANCEL)
     {
