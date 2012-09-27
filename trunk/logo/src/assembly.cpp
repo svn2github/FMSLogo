@@ -157,7 +157,14 @@ BOOL MyBeep(DWORD frequency, DWORD duration)
         asm_outportb(0x61, status | 0x03);
 
         // Wait for the time to pass
-        clock_t endTime = duration + clock();
+#if CLOCKS_PER_SEC == 0
+        // Borland's compiler defines CLOCKS_PER_SEC to be 0, but it's in ms.
+        const clock_t duration_in_clocks = duration;
+#else
+        const int MS_PER_SECOND = 1000;
+        const clock_t duration_in_clocks = duration * CLOCKS_PER_SEC / MS_PER_SECOND;
+#endif
+        clock_t endTime = duration_in_clocks + clock();
         while (endTime > clock())
         {
             // empty loop
