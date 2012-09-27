@@ -23,6 +23,37 @@ TO LABELCIRCLETEST
 
 END
 
+TO LABELTEST.PRINTLIMITS
+  LOCAL [text printdepthlimit printwidthlimit originalsize]
+
+  SETLABELFONT [System]
+  make "text [ABCDEFGHIJKLMNOPQRSTUVWXYZ [12 34 56 78 90] {AB CD EF GH IJ KL MN OP QR ST UV WX YZ}]
+
+  ; Determine the size of the text when there are no limits
+  TRACEINSTRUCTION [ make "originalsize LABELSIZE :text ]
+
+  ; Set the print limits
+  TRACEINSTRUCTION [ make "printdepthlimit 2 ]
+  TRACEINSTRUCTION [ make "printwidthlimit 3 ]
+
+  ; Confirm that the size is not as wide, but is as high
+  FAILIFNOTTRUE [ LESSP  ITEM 1 LABELSIZE :text ITEM 1 :originalSize ]
+  FAILIFNOTTRUE [ EQUALP ITEM 2 LABELSIZE :text ITEM 2 :originalSize ]
+
+  ; Call LABEL on the text
+  SETSCREENCOLOR "White
+  SETPENCOLOR    "Black
+  CLEARSCREEN
+  CLEARPALETTE
+  HIDETURTLE
+  RIGHT 90
+  LABEL :text
+
+  CHECKSCREEN "label-with-print-limits
+  SHOWTURTLE
+END
+
+
 TO LABELBADINPUTTEST
   RUNNOTENOUGHINPUTSTEST [(LABEL)]
   RUNTOOMANYINPUTSTEST   [(LABEL 1 1)]
@@ -121,5 +152,6 @@ TO LABELTEST
   LABELBADINPUTTEST
 
   SETLABELFONTTEST
+  LABELTEST.PRINTLIMITS
 END
 
