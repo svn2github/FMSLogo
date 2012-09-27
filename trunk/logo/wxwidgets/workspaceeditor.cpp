@@ -118,7 +118,7 @@ CWorkspaceEditor::CWorkspaceEditor(
         Title,
         Position,
         Size,
-        wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE | wxFRAME_NO_TASKBAR),
+        wxDEFAULT_FRAME_STYLE | wxFRAME_NO_TASKBAR | wxFRAME_FLOAT_ON_PARENT),
     m_LogoCodeControl(NULL),
     m_FindReplaceDialog(NULL),
     m_FileName(FileName),
