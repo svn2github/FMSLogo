@@ -40,10 +40,83 @@ TO SELECTBOXTEST.SMOKETEST
      SIMPLEREPORTTEST [ SELECTBOX [SELECTBOX Test: No Choice (press ok)] [] ] 1
    ]
 
-   LOCALMAKE "lasterror ERROR
-   IF NOT EMPTY? :lasterror [
-      REPORTTESTFAILED (LIST "|SELECTBOX test failed.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
+   IGNORE FAILIFERROR "SELECTBOXTEST.SMOKETEST
+
+   UIAUTOMATION.UNINITIALIZE
+
+END
+
+TO SELECTBOXTEST.MANYCHOICES
+
+   UIAUTOMATION.INITIALIZE
+
+   CATCH "ERROR [
+
+     localmake "pagedown 34
+
+     ; Many choices
+     UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Many Choices] "Listbox :pagedown
+     UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Many Choices] "Listbox :pagedown
+     UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Many Choices] "Listbox :pagedown
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Many Choices] "OK
+     SIMPLEREPORTTEST [ SELECTBOX [SELECTBOX Test: Many Choices] (LIST
+        "|First Choice|
+        "|Second Choice|
+        "|Third Choice|
+        "|Fouth Choice|
+        "|Fifth Choice|
+        "|Sixth Choice|
+        "|Seventh Choice|
+        "|Eight Choice|
+        "|Ninth Choice|
+        "|Tenth Choice|
+        "|Eleventh Choice|
+        "|Twelveth Choice|
+        "|Thirteenth Choice|
+        "|Fourteenth Choice|
+        "|Fifteenth Choice|
+        "|Sixteenth Choice|
+        "|Seventeenth Choice|
+        "|Eighteenth Choice|
+        "|Nineteenth Choice|
+        "|Twentieth Choice|
+     ) ] 20
    ]
+
+   IGNORE FAILIFERROR "SELECTBOXTEST.SMOKETEST
+
+   UIAUTOMATION.UNINITIALIZE
+END
+
+TO SELECTBOXTEST.LONGCHOICES
+
+   UIAUTOMATION.INITIALIZE
+
+   CATCH "ERROR [
+
+     localmake "pagedown 34
+
+     ; Many choices
+     UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Many Choices] "Listbox :pagedown
+     UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Many Choices] "Listbox :pagedown
+     UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Many Choices] "Listbox :pagedown
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Many Choices] "OK
+     SIMPLEREPORTTEST [ SELECTBOX [SELECTBOX Test: Many Choices] (LIST
+        (word "|This is a | (REPEATWORD "|very, | 00) "|long choice|)
+        (word "|This is a | (REPEATWORD "|very, | 05) "|long choice|)
+        (word "|This is a | (REPEATWORD "|very, | 10) "|long choice|)
+        (word "|This is a | (REPEATWORD "|very, | 15) "|long choice|)
+        (word "|This is a | (REPEATWORD "|very, | 20) "|long choice|)
+        (word "|This is a | (REPEATWORD "|very, | 25) "|long choice|)
+        (word "|This is a | (REPEATWORD "|very, | 30) "|long choice|)
+        (word "|This is a | (REPEATWORD "|very, | 35) "|long choice|)
+        (word "|This is a | (REPEATWORD "|very, | 40) "|long choice|)
+        (word "|This is a | (REPEATWORD "|very, | 45) "|long choice|)
+        (word "|This is a | (REPEATWORD "|very, | 50) "|long choice|)
+     ) ] 11
+   ]
+
+   IGNORE FAILIFERROR "SELECTBOX.LONGCHOICES
 
    UIAUTOMATION.UNINITIALIZE
 
@@ -61,5 +134,7 @@ END
 TO SELECTBOXTEST
 
   SELECTBOXTEST.SMOKETEST
+  SELECTBOXTEST.MANYCHOICES
+  SELECTBOXTEST.LONGCHOICES
   SELECTBOXTEST.BADINPUT
 END
