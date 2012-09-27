@@ -22,6 +22,7 @@
 #include "main.h"
 #include "graphics.h"
 #include "argumentutils.h"
+#include "stringprintednode.h"
 #include "logodata.h"
 #include "logorc.h"
 #include "lists.h"
@@ -1038,8 +1039,7 @@ NODE *lnetconnecton(NODE *args)
     }
 
     // get args (remotemachinename, socket, callback)
-    char remotehostname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(remotehostname, args);
+    CStringPrintedNode remotehostname(car(args));
 
     int remote_port = getint(nonnegative_int_arg(cdr(args)));
 
@@ -1087,8 +1087,7 @@ NODE *lnetconnectoff(NODE *)
 NODE *lnetconnectsendvalue(NODE *args)
 {
     // get args (data)
-    char data[MAX_BUFFER_SIZE];
-    cnv_strnode_string(data, args);
+    CStringPrintedNode data(car(args));
 
     if (NOT_THROWING)
     {
@@ -1103,8 +1102,7 @@ NODE *lnetconnectsendvalue(NODE *args)
 NODE *lnetacceptsendvalue(NODE *args)
 {
     // get args (data)
-    char data[MAX_BUFFER_SIZE];
-    cnv_strnode_string(data, args);
+    CStringPrintedNode data(car(args));
 
     if (NOT_THROWING)
     {
