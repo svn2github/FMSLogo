@@ -31,7 +31,7 @@
 
 #include "wrksp.h"
 #include "graphics.h"
-#include "argumentutils.h"
+#include "stringprintednode.h"
 #include "main.h"
 #include "logodata.h"
 #include "init.h"
@@ -2498,8 +2498,7 @@ NODE *lfill(NODE *arg)
 
 NODE *llabelsize(NODE *arg)
 {
-    char textbuf[MAX_BUFFER_SIZE];
-    cnv_strnode_string(textbuf, arg);
+    CStringPrintedNode textbuf(car(arg), CStringPrintedNode::WithoutPrintLimits);
 
     if (NOT_THROWING)
     {
@@ -2514,8 +2513,7 @@ NODE *llabelsize(NODE *arg)
 NODE *llabel(NODE *arg)
 {
     // print the node as a string
-    char textbuf[MAX_BUFFER_SIZE];
-    cnv_strnode_string(textbuf, arg);
+    CStringPrintedNode textbuf(car(arg), CStringPrintedNode::WithoutPrintLimits);
 
     if (NOT_THROWING)
     {
