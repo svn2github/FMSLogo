@@ -157,7 +157,7 @@ BOOL MyBeep(DWORD frequency, DWORD duration)
         asm_outportb(0x61, status | 0x03);
 
         // Wait for the time to pass
-#if CLOCKS_PER_SEC == 0
+#ifdef __BORLANDC__
         // Borland's compiler defines CLOCKS_PER_SEC to be 0, but it's in ms.
         const clock_t duration_in_clocks = duration;
 #else
