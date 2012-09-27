@@ -59,6 +59,7 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)
     WORD size;
     if (SavebitCount <= 8)
     {
+        // Allocate space for a palette of 2^SavebitCount colors
         size = sizeof(BITMAPINFOHEADER) + ((1 << SavebitCount) * sizeof(RGBQUAD));
     }
     else
@@ -183,7 +184,7 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)
     }
 
     delete [] bitsPtr;
-    delete SaveBitmapInfo;
+    delete SaveBitmapInfo; // BUG: should use delete [] on char *.
 
     return status;
 }
