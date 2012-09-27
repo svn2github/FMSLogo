@@ -34,7 +34,7 @@
 #include "logodata.h"
 #include "mem.h"
 #include "parse.h"
-#include "argumentutils.h"
+#include "stringprintednode.h"
 #include "dynamicbuffer.h"
 #include "debugheap.h"
 #include "localizedstrings.h"
@@ -105,30 +105,39 @@ int printfx(const char *fmt, const char *str)
 {
     // BUG: this should use snprintf(), but it does
     // not exist in Borland's compiler.
-    char buff[MAX_BUFFER_SIZE * 2];
+    size_t bufferSize =
+        strlen(fmt) +
+        (str ? strlen(str) : 0) +
+        1;
+
+    char * buff = new char [bufferSize];
     int cnt = sprintf(buff, fmt, str);
 
     // check for a buffer overflow
-    assert(cnt < (int)ARRAYSIZE(buff));
+    assert(cnt < (int)bufferSize);
 
     mputcombobox(buff);
+
+    delete [] buff;
 
     return cnt;
 }
 
 NODE *lchdir(NODE *arg)
 {
-    char fname[MAX_BUFFER_SIZE + 1];
-    cnv_strnode_string(fname, arg);
+    CStringPrintedNode directoryName(car(arg));
 
-    if (chdir(fname))
+    if (chdir(directoryName))
     {
-        printfx(LOCALIZED_FILE_CHDIRFAILED, fname);
+        printfx(LOCALIZED_FILE_CHDIRFAILED, directoryName);
     }
     else
     {
-        getcwd(fname, sizeof fname);
-        printfx(LOCALIZED_FILE_CHDIRSUCCEEDED, fname);
+        // Get the directory that we are now in.
+        char newDirectoryName[MAX_BUFFER_SIZE + 1];
+        getcwd(newDirectoryName, sizeof newDirectoryName);
+
+        printfx(LOCALIZED_FILE_CHDIRSUCCEEDED, newDirectoryName);
     }
 
     return Unbound;
@@ -148,19 +157,18 @@ NODE *lpopdir(NODE *)
 
 NODE *lmkdir(NODE *arg)
 {
-    char fname[MAX_BUFFER_SIZE + 1];
-    cnv_strnode_string(fname, arg);
+    CStringPrintedNode directoryName(car(arg));
 
-    if (mkdir(fname))
+    if (mkdir(directoryName))
     {
         // mkdir returns -1 on error
-        printfx(LOCALIZED_FILE_MKDIRFAILED, fname);
+        printfx(LOCALIZED_FILE_MKDIRFAILED, directoryName);
     }
     else
     {
         // mkdir returns 0 on success
-        chdir(fname);
-        printfx(LOCALIZED_FILE_MKDIRSUCCEEDED, fname);
+        chdir(directoryName);
+        printfx(LOCALIZED_FILE_MKDIRSUCCEEDED, directoryName);
     }
 
     return Unbound;
@@ -168,12 +176,11 @@ NODE *lmkdir(NODE *arg)
 
 NODE *lrmdir(NODE *arg)
 {
-    char fname[MAX_BUFFER_SIZE + 1];
-    cnv_strnode_string(fname, arg);
+    CStringPrintedNode directoryName(car(arg));
 
-    if (rmdir(fname))
+    if (rmdir(directoryName))
     {
-        printfx(LOCALIZED_FILE_RMDIRFAILED, fname);
+        printfx(LOCALIZED_FILE_RMDIRFAILED, directoryName);
         if (errno == EEXIST)
         {
             printfx(LOCALIZED_FILE_RMDIRFAILEDNOEXIST);
@@ -189,7 +196,7 @@ NODE *lrmdir(NODE *arg)
     }
     else
     {
-        printfx(LOCALIZED_FILE_RMDIRSUCCEEDED, fname);
+        printfx(LOCALIZED_FILE_RMDIRSUCCEEDED, directoryName);
     }
 
     return Unbound;

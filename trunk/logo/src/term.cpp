@@ -21,7 +21,7 @@
  */
 
 #include "main.h"
-#include "argumentutils.h"
+#include "stringprintednode.h"
 #include "init.h"
 #include "logodata.h"
 #include "debugheap.h"
@@ -79,8 +79,6 @@ NODE *lsetmargins(NODE *  /*args*/)
 
 NODE *lstandout(NODE *args)
 {
-    char textbuf[MAX_BUFFER_SIZE];
-    cnv_strnode_string(textbuf, args);
-
-    return make_strnode(textbuf);
+    CStringPrintedNode text(car(args));
+    return make_strnode(text);
 }
