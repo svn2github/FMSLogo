@@ -41,6 +41,9 @@ public:
     const char * GetString() const;
     char * GetString();
 
+    operator const char *() const;
+    operator char *();
+
 private:
     // block the compiler-generated constructors
     CStringPrintedNode();

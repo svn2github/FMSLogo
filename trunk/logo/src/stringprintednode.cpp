@@ -21,6 +21,7 @@
 #include "init.h"
 #include "debugheap.h"
 
+
 CStringPrintedNode::CStringPrintedNode(
     const NODE *        Node,
     PRINTLIMITSPECIFIER PrintLimit
@@ -100,4 +101,15 @@ CStringPrintedNode::GetString()
     {
         return m_FixedBuffer;
     }
+}
+
+
+CStringPrintedNode::operator const char *() const
+{
+    return GetString();
+}
+
+CStringPrintedNode::operator char *()
+{
+    return GetString();
 }
