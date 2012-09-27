@@ -24,14 +24,12 @@ TO SETPENSIZEDIALOGTEST.BUG3418522
      ]
    ]
 
-   LOCALMAKE "lasterror ERROR
-   IF NOT EMPTY? :lasterror [
-      REPORTTESTFAILED (LIST "|SETPENSIZEDIALOGTEST.SMOKETEST test failed.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
+   IF NOT FAILIFERROR "SETPENSIZEDIALOGTEST.BUG3418522 [
+     REPORTTESTPASSED "|Bug #3418522 is fixed; Sending a vertical scroll message to the Pen Size dialog box did not crash.|
    ]
 
    UIAUTOMATION.UNINITIALIZE
 
-   REPORTTESTPASSED ["|Bug #3418522 is fixed; Sending a vertical scroll message to the Pen Size dialog box did not crash.| ]
 END
 
 TO SETPENSIZEDIALOGTEST
