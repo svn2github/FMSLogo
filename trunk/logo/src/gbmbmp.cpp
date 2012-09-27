@@ -6,8 +6,6 @@ Reads and writes any OS/2 1.x bitmap.
 Will also read uncompressed, RLE4 and RLE8 Windows 3.x bitmaps too.
 There are horrific file structure alignment considerations hence each
 word,dword is read individually.
-Input options: index=# (default: 0)
-
 */
 
 /*...sincludes:0:*/
@@ -70,7 +68,7 @@ static BOOLEAN write_dword(int fd, dword d)
     return TRUE;
 }
 
-static GBMFT bmp_gbmft =
+static const GBMFT bmp_gbmft =
 {
     "Bitmap",
     "OS/2 1.1, 1.2, 2.0 / Windows 3.0 bitmap",
@@ -127,25 +125,19 @@ GBM_ERR bmp_qft(GBMFT *gbmft)
     return GBM_ERR_OK;
 }
 
-GBM_ERR bmp_rhdr(const char *fn, int fd, GBM *gbm, const char *opt)
+GBM_ERR bmp_rhdr(const char *fn, int fd, GBM *gbm)
 {
     word usType, xHotspot, yHotspot;
     dword cbSize, offBits, cbFix;
     BMP_PRIV *bmp_priv = (BMP_PRIV *) gbm->priv;
-    bmp_priv->inv  = ( gbm_find_word(opt, "inv" ) != NULL );
-    bmp_priv->invb = ( gbm_find_word(opt, "invb") != NULL );
+    bmp_priv->inv  = 0;
+    bmp_priv->invb = 0;
 
     if ( !read_word(fd, &usType) )
         return GBM_ERR_READ;
     if ( usType == BFT_BITMAPARRAY )
     {
-        const char *index;
-        int i;
-
-        if ( (index = gbm_find_word_prefix(opt, "index=")) != NULL )
-            sscanf(index + 6, "%d", &i);
-        else
-            i = 0;
+        int i = 0;
 
         while ( i-- > 0 )
         {
@@ -555,11 +547,6 @@ GBM_ERR bmp_rdata(int fd, GBM *gbm, byte *data)
     return GBM_ERR_OK;
 }
 
-static int bright(const GBMRGB *gbmrgb)
-{
-    return gbmrgb->r*30+gbmrgb->g*60+gbmrgb->b*10;
-}
-
 static int write_inv(int fd, const byte *buffer, int count)
 {
     byte small_buf[1024];
@@ -578,15 +565,13 @@ static int write_inv(int fd, const byte *buffer, int count)
     return so_far;
 }
 
-GBM_ERR bmp_w(const char *fn, int fd, const GBM *gbm, const GBMRGB *gbmrgb, const byte *data, const char *opt)
+GBM_ERR bmp_w(const char *fn, int fd, const GBM *gbm, const GBMRGB *gbmrgb, const byte *data)
 {
-    BOOLEAN pm11    = ( gbm_find_word(opt, "1.1"    ) != NULL );
-    BOOLEAN win     = ( gbm_find_word(opt, "win"    ) != NULL ||
-                        gbm_find_word(opt, "2.0"    ) != NULL );
-    BOOLEAN inv     = ( gbm_find_word(opt, "inv"    ) != NULL );
-    BOOLEAN invb    = ( gbm_find_word(opt, "invb"   ) != NULL );
-    BOOLEAN darkfg  = ( gbm_find_word(opt, "darkfg" ) != NULL );
-    BOOLEAN lightfg = ( gbm_find_word(opt, "lightfg") != NULL );
+    const BOOLEAN pm11    = 0;
+    const BOOLEAN win     = 0;
+    const BOOLEAN inv     = 0;
+    const BOOLEAN invb    = 0;
+
     int cRGB;
     GBMRGB gbmrgb_1bpp[2];
 
@@ -619,18 +604,6 @@ GBM_ERR bmp_w(const char *fn, int fd, const GBM *gbm, const GBMRGB *gbmrgb, cons
 
         if ( !inv )
             swap_pal(gbmrgb_1bpp);
-
-        /*
-          If the user has picked the darkfg option, then they intend that the darkest
-          colour in the image is to be the foreground. This is a very sensible option
-          because the foreground will appear to be black when the image is reloaded.
-          To acheive this we must invert the bitmap bits, if the palette dictates.
-        */
-
-        if ( darkfg && bright(&gbmrgb[0]) < bright(&gbmrgb[1]) )
-            invb = !invb;
-        if ( lightfg && bright(&gbmrgb[0]) >= bright(&gbmrgb[1]) )
-            invb = !invb;
 
         gbmrgb = gbmrgb_1bpp;
     }

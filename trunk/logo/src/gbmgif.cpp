@@ -1,10 +1,5 @@
 /*
-
 gbmgif.cpp - Graphics Interchange Format support
-
-Input options: index=# to get a given image in the file
-Output options: xscreen=#,yscreen=#,background=#,xpos=#,ypos=#,transcol=#,ilace.
-
 */
 
 #include <stdio.h>
@@ -21,7 +16,7 @@ Output options: xscreen=#,yscreen=#,background=#,xpos=#,ypos=#,transcol=#,ilace.
 
 #define RGB(r,g,b) ((unsigned long)(((byte)(r)|((word)((byte)(g))<<8))|(((dword)(byte)(b))<<16)))
 
-static GBMFT gif_gbmft =
+static const GBMFT gif_gbmft =
 {
     "GIF",
     "CompuServe Graphics Interchange Format",
@@ -74,20 +69,15 @@ GBM_ERR gif_qft(GBMFT *gbmft)
 }
 
 
-GBM_ERR gif_rhdr(const char *fn, int fd, GBM *gbm, const char *opt)
+GBM_ERR gif_rhdr(const char *fn, int fd, GBM *gbm)
 {
     GIF_PRIV *gif_priv = (GIF_PRIV *) gbm->priv;
     byte signiture[6], scn_desc[7], image_desc[10];
-    const char *index;
-    int img = -1, img_want = 0;
+    int img = -1;
+    const int img_want = 0;
     int bits_gct;
 
-    /* Discover which image in GIF file we want */
-
-    if ( (index = gbm_find_word_prefix(opt, "index=")) != NULL )
-        sscanf(index + 6, "%u", &img_want);
-
-    gif_priv->errok = ( gbm_find_word(opt, "errok") != NULL );
+    gif_priv->errok = false;
 
     /* Read and validate signiture block */
 
@@ -536,52 +526,18 @@ struct DICT { cword tail; byte col; };
 
 GBMRGB global_gbmrgb[0x100];
 
-GBM_ERR gif_w(const char *fn, int fd, const GBM *gbm, const GBMRGB *gbmrgb, const byte *data, const char *opt)
+GBM_ERR gif_w(const char *fn, int fd, const GBM *gbm, const GBMRGB *gbmrgb, const byte *data)
 {
-    int xpos = 0, ypos = 0;
-    int xscreen = gbm->w, yscreen = gbm->h;
-    int inx_background = 0, inx_transcol = -1;
-    BOOLEAN ilace;
+    const int xpos           = 0;
+    const int ypos           = 0;
+    const int xscreen        = gbm->w;
+    const int yscreen        = gbm->h;
+    const int inx_background = 0;
+    const int inx_transcol   = -1;
+    const int ilace          = 0;
 
-    {
-        const char *s;
-
-        if ( gbm->bpp != 1 && gbm->bpp != 4 && gbm->bpp != 8 )
-            return GBM_ERR_NOT_SUPP;
-
-        ilace = ( gbm_find_word(opt, "ilace") != NULL );
-
-        //ilace = 1;
-
-        if ( (s = gbm_find_word_prefix(opt, "xscreen=")) != NULL )
-            sscanf(s + 8, "%d", &xscreen);
-   
-        if ( (s = gbm_find_word_prefix(opt, "yscreen=")) != NULL )
-            sscanf(s + 8, "%d", &yscreen);
-   
-        if ( (s = gbm_find_word_prefix(opt, "background=")) != NULL )
-            sscanf(s + 11, "%d", &inx_background);
-
-        if ( (s = gbm_find_word_prefix(opt, "xpos=")) != NULL )
-            sscanf(s + 5, "%d", &xpos);
-
-        if ( (s = gbm_find_word_prefix(opt, "ypos=")) != NULL )
-            sscanf(s + 5, "%d", &ypos);
-
-        if ( (s = gbm_find_word_prefix(opt, "transcol=")) != NULL )
-        {
-            if ( gbm_same(s+9, "edge", 4) )
-                switch ( gbm->bpp )
-                {
-                case 8:     inx_transcol = *data;           break;
-                case 4:     inx_transcol = *data >> 4;      break;
-                case 1:     inx_transcol = *data >> 7;      break;
-                }
-            else
-                sscanf(s + 9, "%d", &inx_transcol);
-        }
-    }
-
+    if ( gbm->bpp != 1 && gbm->bpp != 4 && gbm->bpp != 8 )
+        return GBM_ERR_NOT_SUPP;
 
     {
         extern int iDelay;

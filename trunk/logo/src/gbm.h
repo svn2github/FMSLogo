@@ -95,9 +95,9 @@ typedef int GBM_ERR;
 
 struct GBMFT
 {
-    char *short_name;           /* Eg: "Targa"                       */
-    char *long_name;            /* Eg: "Truevision Targa / Vista"    */
-    char *extensions;           /* Eg: "TGA VST"                     */
+    const char *short_name;     /* Eg: "Targa"                       */
+    const char *long_name;      /* Eg: "Truevision Targa / Vista"    */
+    const char *extensions;     /* Eg: "TGA VST"                     */
     int flags;                  /* What functionality exists         */
 };
 
@@ -123,14 +123,13 @@ GBMEXPORT long GBMENTRY gbm_io_lseek (int fd, long pos, int whence);
 GBMEXPORT int  GBMENTRY gbm_io_read  (int fd, void *buf, int len);
 GBMEXPORT int  GBMENTRY gbm_io_write (int fd, const void *buf, int len);
 
-GBMEXPORT GBM_ERR GBMENTRY gbm_query_n_filetypes(int *n_ft);
 GBMEXPORT GBM_ERR GBMENTRY gbm_query_filetype(int ft, GBMFT *gbmft);
 GBMEXPORT GBM_ERR GBMENTRY gbm_guess_filetype(const char *fn, int *ft);
 
-GBMEXPORT GBM_ERR GBMENTRY gbm_read_header(const char *fn, int fd, int ft, GBM *gbm, const char *opt);
+GBMEXPORT GBM_ERR GBMENTRY gbm_read_header(const char *fn, int fd, int ft, GBM *gbm);
 GBMEXPORT GBM_ERR GBMENTRY gbm_read_palette(int fd, int ft, GBM *gbm, GBMRGB *gbmrgb);
 GBMEXPORT GBM_ERR GBMENTRY gbm_read_data(int fd, int ft, GBM *gbm, byte *data);
-GBMEXPORT GBM_ERR GBMENTRY gbm_write(const char *fn, int fd, int ft, const GBM *gbm, const GBMRGB *gbmrgb, const byte *data, const char *opt);
+GBMEXPORT GBM_ERR GBMENTRY gbm_write(const char *fn, int fd, int ft, const GBM *gbm, const GBMRGB *gbmrgb, const byte *data);
 
 #endif
 

@@ -29,13 +29,13 @@ gbm.c - Generalised Bitmap Module
 struct FT
 {
     GBM_ERR (*query_filetype)(GBMFT *gbmft);
-    GBM_ERR (*read_header )(const char *fn, int fd, GBM *gbm, const char *opt);
+    GBM_ERR (*read_header )(const char *fn, int fd, GBM *gbm);
     GBM_ERR (*read_palette)(int fd, GBM *gbm, GBMRGB *gbmrgb);
     GBM_ERR (*read_data   )(int fd, GBM *gbm, byte *data);
-    GBM_ERR (*write       )(const char *fn, int fd, const GBM *gbm, const GBMRGB *gbmrgb, const byte *data, const char *opt);
+    GBM_ERR (*write       )(const char *fn, int fd, const GBM *gbm, const GBMRGB *gbmrgb, const byte *data);
 };
 
-static FT fts[] =
+static const FT fts[] =
 {
     {bmp_qft, bmp_rhdr, bmp_rpal, bmp_rdata, bmp_w},
     {gif_qft, gif_rhdr, gif_rpal, gif_rdata, gif_w}
@@ -84,15 +84,6 @@ GBMEXPORT int  GBMENTRY gbm_io_write(int fd, const void *buf, int len)
 }
 
 
-GBMEXPORT GBM_ERR GBMENTRY gbm_query_n_filetypes(int *n_ft)
-{
-    if ( n_ft == NULL )
-        return GBM_ERR_BAD_ARG;
-    *n_ft = N_FT;
-    return GBM_ERR_OK;
-}
-
-
 GBMEXPORT GBM_ERR GBMENTRY gbm_guess_filetype(const char *fn, int *ft)
 {
     int i;
@@ -131,12 +122,12 @@ GBMEXPORT GBM_ERR GBMENTRY gbm_query_filetype(int ft, GBMFT *gbmft)
 }
 
 
-GBMEXPORT GBM_ERR GBMENTRY gbm_read_header(const char *fn, int fd, int ft, GBM *gbm, const char *opt)
+GBMEXPORT GBM_ERR GBMENTRY gbm_read_header(const char *fn, int fd, int ft, GBM *gbm)
 {
-    if ( fn == NULL || opt == NULL || gbm == NULL )
+    if ( fn == NULL || gbm == NULL )
         return GBM_ERR_BAD_ARG;
     gbm_file_lseek(fd, 0L, SEEK_SET);
-    return (*fts[ft].read_header)(fn, fd, gbm, opt);
+    return (*fts[ft].read_header)(fn, fd, gbm);
 }
 
 
@@ -156,10 +147,10 @@ GBMEXPORT GBM_ERR GBMENTRY gbm_read_data(int fd, int ft, GBM *gbm, byte *data)
 }
 
 
-GBMEXPORT GBM_ERR GBMENTRY gbm_write(const char *fn, int fd, int ft, const GBM *gbm, const GBMRGB *gbmrgb, const byte *data, const char *opt)
+GBMEXPORT GBM_ERR GBMENTRY gbm_write(const char *fn, int fd, int ft, const GBM *gbm, const GBMRGB *gbmrgb, const byte *data)
 {
-    if ( fn == NULL || opt == NULL )
+    if ( fn == NULL )
         return GBM_ERR_BAD_ARG;
-    return (*fts[ft].write)(fn, fd, gbm, gbmrgb, data, opt);
+    return (*fts[ft].write)(fn, fd, gbm, gbmrgb, data);
 }
 

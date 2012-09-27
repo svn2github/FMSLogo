@@ -30,8 +30,7 @@ gbmReadFile(
         return NULL;
     }
 
-    char opt_src[] = "";
-    if (gbm_read_header(filename, fd, src_filetype, &gbm, opt_src) != GBM_ERR_OK)
+    if (gbm_read_header(filename, fd, src_filetype, &gbm) != GBM_ERR_OK)
     {
         gbm_io_close(fd);
         // fatal("can't read header of %s: %s", fn_src, gbm_err(rc));
@@ -83,7 +82,6 @@ gbmReadFile(
     return data;
 }
 
-
 int gbmBmpToGif(const char *fn_src, const char *fn_dst)
 {
     GBM     gbm;
@@ -118,8 +116,7 @@ int gbmBmpToGif(const char *fn_src, const char *fn_dst)
         }
     }
 
-    char opt_dst[] = "";
-    if (gbm_write(fn_dst, fd, FILETYPE_GIF, &gbm, gbmrgb, data, opt_dst) != GBM_ERR_OK)
+    if (gbm_write(fn_dst, fd, FILETYPE_GIF, &gbm, gbmrgb, data) != GBM_ERR_OK)
     {
         gbm_io_close(fd);
         remove(fn_dst);
@@ -154,8 +151,7 @@ int gbmGifToBmp(const char *fn_src, const char *fn_dst)
         return 7;
     }
    
-    char opt_dst[] = "";
-    if (gbm_write(fn_dst, fd, FILETYPE_BMP, &gbm, gbmrgb, data, opt_dst) != GBM_ERR_OK)
+    if (gbm_write(fn_dst, fd, FILETYPE_BMP, &gbm, gbmrgb, data) != GBM_ERR_OK)
     {
         gbm_io_close(fd);
         remove(fn_dst);
