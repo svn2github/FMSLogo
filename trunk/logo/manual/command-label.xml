@@ -13,27 +13,31 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Prints <parameter>text</parameter> on the screen.
-If <parameter>text</parameter> is a list, then any sub-lists are delimited by square brackets, but the entire object is not delimited by brackets.
+Prints <parameter>text</parameter> to the screen at the turtle's current position and heading.
+</para>
+
+<para>
 You can print any &GENERICNAME; thing (numbers, lists, strings, etc.).
-Note that the handle of the string (the origin) is the top-left corner of the string.
-Another thing to be aware of is that the capabilities of the text changes depending on the device (screen or printer), the size, the turtle heading (direction) and the font.
-In other words, sometimes the text can be drawn at the turtle heading and sometimes it cannot.
-Sometimes what is on the screen will not be exactly what you print.
+If <parameter>text</parameter> is a list, then any sub-lists are delimited by square brackets, but the entire object is not delimited by brackets.
+The text is truncated according to the current values of <link linkend="command-printwidthlimit">PRINTWIDTHLIMIT</link> and <link linkend="command-printdepthlimit">PRINTDEPTHLIMIT</link>.
 </para>
 
 <para>
 The position of the text is determined by the location of the turtle.
 </para>
+
 <para>
 The angle of the text is determined by the heading (direction) of the turtle.
 </para>
+
 <para>
-The color of the text will be the value of <link linkend="command-pencolor">PENCOLOR</link>, which is set with <link linkend="command-setpencolor">SETPENCOLOR</link>.
+The color of the text is determined by the value of <link linkend="command-pencolor">PENCOLOR</link>, which is set with <link linkend="command-setpencolor">SETPENCOLOR</link>.
 </para>
+
 <para>
-The text will use the font described by <link linkend="command-labelfont">LABELFONT</link>, which is set with <link linkend="command-setlabelfont">SETLABELFONT</link> or the <link linkend="menu-set-labelfont">Set->Label Font</link> menu item.
+The text is printed in the font described by <link linkend="command-labelfont">LABELFONT</link>, which is set with <link linkend="command-setlabelfont">SETLABELFONT</link> or the <link linkend="menu-set-labelfont">Set->Label Font</link> menu item.
 </para>
+
 <para>
 The width and height of the text's bounding box can be determined with <link linkend="command-labelsize">LABELSIZE</link>.
 </para>
@@ -44,8 +48,15 @@ The text will be placed wherever the turtle is on the screen and oriented accord
 </para>
 
 <para>
-If you want to flash a message by writing it in one color, then writing the same message in the background color, you should disable anti-aliasing in the LABELFONT by choosing a <parameter>Quality</parameter> of 3 when you call SETLABELFONT.
-Otherwise, you'll end up with a faint outline of the message you wanted to completely erase.
+Note that the top-left corner of the text is placed at the turtle's position, not the bottom-left corner.
+Another thing to be aware of is that the capabilities of the text changes depending on the device (screen or printer), the turtle heading (direction), and the font.
+In other words, sometimes the text can be drawn at the turtle heading and sometimes it cannot.
+Sometimes what is on the screen is not be exactly what you print.
+</para>
+
+<para>
+If you want to flash a message by writing it in one color, then writing the same message in the background color, you should disable anti-aliasing in the LABELFONT by choosing a <parameter>Quality</parameter> of 3 when you run SETLABELFONT.
+Otherwise, you'll end up with a faint outline of the message which you wanted to completely erase.
 </para>
 
 </listitem>
