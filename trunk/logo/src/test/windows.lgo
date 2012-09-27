@@ -1144,10 +1144,7 @@ TO WINDOWSTEST.BUTTON
      TRACEINSTRUCTION [ WINDOWDELETE "windowstest.button ]
    ]
 
-   LOCALMAKE "lasterror ERROR
-   IF NOT EMPTY? :lasterror [
-      REPORTTESTFAILED (LIST "|WINDOWSTEST.BUTTON test failed.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
-   ]
+   IGNORE FAILIFERROR "WINDOWSTEST.BUTTON
 
    UIAUTOMATION.UNINITIALIZE
 

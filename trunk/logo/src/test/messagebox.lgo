@@ -18,10 +18,7 @@ TO MESSAGEBOXTEST.SMOKETEST
      RUNSTOPPINGTEST  (list "MESSAGEBOX :title [Press "Cancel"] )
    ]
 
-   LOCALMAKE "lasterror ERROR
-   IF NOT EMPTY? :lasterror [
-      REPORTTESTFAILED (LIST "|MESSAGEBOX test failed.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
-   ]
+   IGNORE FAILIFERROR "MESSAGEBOXTEST.SMOKETEST
 
    UIAUTOMATION.UNINITIALIZE
 

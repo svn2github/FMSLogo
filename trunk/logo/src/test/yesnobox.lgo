@@ -22,10 +22,7 @@ TO YESNOBOXTEST.SMOKETEST
      RUNSTOPPINGTEST (list "YESNOBOX :title [Press "Cancel"] )
    ]
 
-   LOCALMAKE "lasterror ERROR
-   IF NOT EMPTY? :lasterror [
-      REPORTTESTFAILED (LIST "|YESNOBOX test failed.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
-   ]
+   IGNORE FAILIFERROR "YESNOBOX.SMOKETEST
 
    UIAUTOMATION.UNINITIALIZE
 
