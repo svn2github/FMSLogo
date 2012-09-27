@@ -22,6 +22,7 @@
 
 #include "mmwind.h"
 #include "argumentutils.h"
+#include "stringprintednode.h"
 #include "logocore.h"
 #include "logodata.h"
 #include "lists.h"
@@ -277,9 +278,8 @@ NODE *lmidimessage(NODE *arg)
 
 NODE *lmci(NODE *args)
 {
-    // get mci command string 
-    char textbuf[MAX_BUFFER_SIZE];
-    cnv_strnode_string(textbuf, args);
+    // get mci command string
+    CStringPrintedNode command(car(args));
 
     // check for optional callback routine 
     char callback[MAX_BUFFER_SIZE];
@@ -289,29 +289,29 @@ NODE *lmci(NODE *args)
         strcpy(mci_callback, callback);
     }
 
-    char MciReturnBuffer[MAX_BUFFER_SIZE];
-    MciReturnBuffer[0] = '\0';
+    char mciReturnBuffer[MAX_BUFFER_SIZE];
+    mciReturnBuffer[0] = '\0';
 
     // send out command 
-    DWORD MciError = mciSendString(
-        textbuf,
-        MciReturnBuffer,
-        MAX_BUFFER_SIZE,
+    DWORD mciError = mciSendString(
+        command,
+        mciReturnBuffer,
+        ARRAYSIZE(mciReturnBuffer),
         GetMainWindow());
 
-    if (MciError)
+    if (mciError != ERROR_SUCCESS)
     {
         // let user know about the error
-        char MciErrorBuffer[MAX_BUFFER_SIZE];
-        mciGetErrorString(MciError, MciErrorBuffer, MAX_BUFFER_SIZE);
-        ShowMessageAndStop(LOCALIZED_ERROR_MCI, MciErrorBuffer);
+        char mciErrorBuffer[MAX_BUFFER_SIZE];
+        mciGetErrorString(mciError, mciErrorBuffer, ARRAYSIZE(mciErrorBuffer));
+        ShowMessageAndStop(LOCALIZED_ERROR_MCI, mciErrorBuffer);
     }
     else
     {
         // if something was returned then return it to user 
-        if (MciReturnBuffer[0] != '\0')
+        if (mciReturnBuffer[0] != '\0')
         {
-            NODE * targ = make_strnode(MciReturnBuffer);
+            NODE * targ = make_strnode(mciReturnBuffer);
             NODE * val = parser(targ, false);
             return val;
         }
@@ -402,18 +402,17 @@ void uninitialize_timers()
 
 NODE *lplaywave(NODE *args)
 {
-    char name[MAX_BUFFER_SIZE];
-    cnv_strnode_string(name, args);
+    CStringPrintedNode fileName(car(args));
 
     int flag = getint(nonnegative_int_arg(args = cdr(args)));
 
-    if (name[0] == '\0')
+    if (fileName.GetString()[0] == '\0')
     {
         sndPlaySound(NULL, flag);
     }
     else
     {
-        sndPlaySound(name, flag);
+        sndPlaySound(fileName, flag);
     }
 
     return Unbound;

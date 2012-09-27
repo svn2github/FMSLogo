@@ -31,7 +31,7 @@
 #include "status.h"
 
 #include "utils.h"
-#include "argumentutils.h"
+#include "stringprintednode.h"
 #include "appendablelist.h"
 #include "mem.h"
 #include "logomath.h"
@@ -415,8 +415,7 @@ void GetWorkingAreaDimensions(int & Width, int & Height)
 NODE *lgifsave(NODE *args)
 {
     // same as BITMAP-SAVE but gets file name from logo command
-    char gifFileName[MAX_BUFFER_SIZE];
-    cnv_strnode_string(gifFileName, args);
+    CStringPrintedNode gifFileName(car(args));
 
     // setup default values for the optional inputs
     int  iDelay = -1;
@@ -487,8 +486,8 @@ NODE *lgifsave(NODE *args)
 NODE *lbitsave(NODE *args)
 {
     // same as BITMAP-SAVE but gets file name from logo instruction
-    char bmpFileName[MAX_BUFFER_SIZE];
-    cnv_strnode_string(bmpFileName, args);
+    CStringPrintedNode bmpFileName(car(args));
+
     if (stopping_flag == THROWING)
     {
         return Unbound;
@@ -545,8 +544,8 @@ gifload_helper(
 
 NODE *lgifload(NODE *arg)
 {
-    char gifFileName[MAX_BUFFER_SIZE];
-    cnv_strnode_string(gifFileName, arg);
+    CStringPrintedNode gifFileName(car(arg));
+
     if (stopping_flag == THROWING)
     {
         return Unbound;
@@ -566,8 +565,8 @@ NODE *lgifload(NODE *arg)
 
 NODE *lgifsize(NODE *args)
 {
-    char gifFileName[MAX_BUFFER_SIZE];
-    cnv_strnode_string(gifFileName, args);
+    CStringPrintedNode gifFileName(car(args));
+
     if (stopping_flag == THROWING)
     {
         return Unbound;
@@ -590,8 +589,8 @@ NODE *lgifsize(NODE *args)
 NODE *lbitload(NODE *arg)
 {
     // same as BITMAP-LOAD except callable from logo command
-    char bitmapFileName[MAX_BUFFER_SIZE];
-    cnv_strnode_string(bitmapFileName, arg);
+    CStringPrintedNode bitmapFileName(car(arg));
+
     if (stopping_flag == THROWING)
     {
         return Unbound;
@@ -616,8 +615,8 @@ NODE *lbitload(NODE *arg)
 NODE *lbitloadsize(NODE *arg)
 {
     // same as BITMAP-LOAD except callable from logo command
-    char bitmapFileName[MAX_BUFFER_SIZE];
-    cnv_strnode_string(bitmapFileName, arg);
+    CStringPrintedNode bitmapFileName(car(arg));
+
     if (stopping_flag == THROWING)
     {
         return Unbound;
@@ -2850,14 +2849,13 @@ NODE *lsetfocus(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    char textbuf[MAX_BUFFER_SIZE];
-    cnv_strnode_string(textbuf, arg);
+    CStringPrintedNode windowCaption(car(arg));
 
     HWND window;
 
-    if (0 == stricmp("FMSLogo", textbuf) ||
-        0 == stricmp("MSWLogo Screen", textbuf) ||
-        0 == stricmp("FMSLogo Screen", textbuf))
+    if (0 == stricmp("FMSLogo", windowCaption) ||
+        0 == stricmp("MSWLogo Screen", windowCaption) ||
+        0 == stricmp("FMSLogo Screen", windowCaption))
     {
         // special-case: set the focus on the screen
         window = GetScreenWindow();
@@ -2865,7 +2863,7 @@ NODE *lsetfocus(NODE *arg)
     else
     {
         // get handle to Window with arg as Caption
-        window = FindWindow(NULL, textbuf);
+        window = FindWindow(NULL, windowCaption);
     }
 
     // Now set focus to it, if it exists
@@ -2905,8 +2903,7 @@ NODE *lgetfocus(NODE *)
 
 NODE *lwindowset(NODE *args)
 {
-    char caption[MAX_BUFFER_SIZE];
-    cnv_strnode_string(caption, args);
+    CStringPrintedNode caption(car(args));
 
     int mode = getint(nonnegative_int_arg(cdr(args)));
 
@@ -3155,14 +3152,11 @@ void do_help(const char *arg)
 
 NODE *lhelp(NODE *arg)
 {
-
     // if arg then pass to do_help
     if (arg != NIL)
     {
-        char textbuf[MAX_BUFFER_SIZE];
-        cnv_strnode_string(textbuf, arg);
-
-        do_help(textbuf);
+        CStringPrintedNode item(car(arg));
+        do_help(item);
     }
     else
     {
@@ -3177,15 +3171,18 @@ NODE *lwinhelp(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    char textbuf[MAX_BUFFER_SIZE];
-    cnv_strnode_string(textbuf, arg);
+    CStringPrintedNode textbuf(car(arg));
 
     // if 2nd arg then pass to winhelp
     if (cdr(arg) != NIL)
     {
-        char textbuf2[MAX_BUFFER_SIZE];
-        cnv_strnode_string(textbuf2, cdr(arg));
-        WinHelp(GetMainWindow(), textbuf, HELP_PARTIALKEY, (DWORD) textbuf2);
+        CStringPrintedNode textbuf2(car(cdr(arg)));
+
+        WinHelp(
+            GetMainWindow(),
+            textbuf,
+            HELP_PARTIALKEY,
+            reinterpret_cast<DWORD>(textbuf2.GetString()));
     }
     else
     {
@@ -3227,8 +3224,7 @@ NODE *lsetlabelfont(NODE *arg)
             return Unbound;
         }
 
-        char textbuf[MAX_BUFFER_SIZE];
-        cnv_strnode_string(textbuf, args);
+        CStringPrintedNode textbuf(car(args));
 
         // Get the FontRec filled with a match to textbuf
         setfont(textbuf);
@@ -3282,12 +3278,6 @@ NODE *lsetlabelfont(NODE *arg)
         {
             FontRec.lfPitchAndFamily = getint(nonnegative_int_arg(args = cdr(args)));
         }
-
-        // update status window
-
-        // update_status_fontwieght();
-        // update_status_fontsize();
-        // update_status_fontname();
     }
 
     return Unbound;
