@@ -20,7 +20,7 @@
 #include "selectbox.h"
 #include "mainframe.h"
 #include "logorc.h"
-#include "argumentutils.h"
+#include "stringprintednode.h"
 #include "debugheap.h"
 
 #include "localizedstrings.h"
@@ -54,8 +54,7 @@ void CSelectBox::SetupWindow()
          choices != NIL;
          choices = cdr(choices))
     {
-        char choice[MAX_BUFFER_SIZE];
-        cnv_strnode_string(choice, choices);
+        CStringPrintedNode choice(car(choices));
 
         m_ListBox.AddString(choice);
     }
