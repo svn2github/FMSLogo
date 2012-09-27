@@ -140,6 +140,14 @@ TO TESTALL
 
   REPORTTESTINITIALIZE
 
+  ; Preallocate startnodes and endnodes to account for their memory.
+  localmake "endnodes   ITEM 1 NODES
+  localmake "startnodes ITEM 1 NODES
+
+  ; Determine the number of nodes in use at the start of the test.
+  make "startnodes ITEM 1 NODES
+
+
   GREATLOGOATLASTEST   ; from greatlogoatlas.lgo
   PARSETEST            ; from parse.lgo
   SAVETEST             ; from save.lgo
@@ -270,7 +278,14 @@ TO TESTALL
   TESTSMALLWINDOWHANG  ; from smallwindowhang.lgo
   SETPENSIZEDIALOGTEST ; from setpensizedialog.lgo
   BYETEST              ; from bye.lgo
-
+  
+  ; Determine if any nodes were leaked.
+  make "endnodes ITEM 1 NODES
+  IFELSE EQUALP :startnodes :endnodes [
+    REPORTTESTINFO (se [Node usage remained at] :startnodes [for the duration of the tests.])
+  ] [
+    REPORTTESTFAILED (se [Node usage went from] :startnodes [to] :endnodes [( change =] :endnodes - :startnodes [).])
+  ]
   REPORTTESTUNINITIALIZE
 
   print [The tests are now complete!]
