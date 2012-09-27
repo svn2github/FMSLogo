@@ -28,7 +28,7 @@
 #include "logocore.h"
 #include "guiutils.h"
 #include "wrksp.h"
-#include "argumentutils.h" // for cnv_strnode_string
+#include "stringprintednode.h"
 
 enum
 {
@@ -104,10 +104,10 @@ CSelectStartupInstructionDialog::CSelectStartupInstructionDialog(
              proclist_node != NIL;
              proclist_node = cdr(proclist_node))
         {
-            char tempbuff[MAX_BUFFER_SIZE];
-            cnv_strnode_string(tempbuff, proclist_node);
-
-            m_ProcedureList->Append(tempbuff);
+            // REVISIT: the procedure name should be useable
+            // as-is without further conversion.
+            CStringPrintedNode procedureName(car(proclist_node));
+            m_ProcedureList->Append(procedureName.GetString());
         }
 
         gcref(proclist);

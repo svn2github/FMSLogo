@@ -5,11 +5,11 @@
 #include <wx/sizer.h>
 #include <wx/button.h>
 
-#include "logocore.h"      // for ARRAYSIZE
-#include "wrksp.h"         // for lprocedures
-#include "argumentutils.h" // for cnv_strnode_string
-#include "logodata.h"      // for make_strnode
-#include "screenwindow.h"  // for TraceOutput
+#include "logocore.h"          // for ARRAYSIZE
+#include "wrksp.h"             // for lprocedures
+#include "stringprintednode.h" // for CStringPrintedNode
+#include "logodata.h"          // for make_strnode
+#include "screenwindow.h"      // for TraceOutput
 #include "guiutils.h"
 #include "localizedstrings.h"
 
@@ -60,10 +60,10 @@ CSelectProcedureDialog::CSelectProcedureDialog(
          proclist_node != NIL;
          proclist_node = cdr(proclist_node))
     {
-        char tempbuff[MAX_BUFFER_SIZE];
-        cnv_strnode_string(tempbuff, proclist_node);
-
-        m_ProcedureList->Append(tempbuff);
+        // REVISIT: the procedure name should be useable
+        // as-is without further conversion.
+        CStringPrintedNode procedureName(car(proclist_node));
+        m_ProcedureList->Append(procedureName.GetString());
     }
 
     gcref(proclist);
