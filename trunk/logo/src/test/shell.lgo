@@ -31,7 +31,6 @@ TO SHELLTEST.SMOKETEST
    MAKE "executionTime TIMECOMMAND :instructions
    REPORTTEST :rval = LOCALETRUE (LIST :instructions "output :rval ".) LOCALETRUE
    CHECKEXECUTIONTIME :instructions :executionTime 0 500
-
 END
 
 TO SHELLTEST.BADINPUT
@@ -95,11 +94,52 @@ TO SHELLTEST.WAITYIELDS
    
 END
 
+TO SHELLTEST.IGNORESPRINTLIMITS
+   ; verify that SHELL ignores print limits (bug #3571274)
+
+   ; Set the print limits very low
+   LOCAL [printwidthlimit printdepthlimit]
+   MAKE "printwidthlimit 3
+   MAKE "printdepthlimit 1
+
+   ; Run a shell command that create a specific file if ignores the print limits
+   ERASEFILE "shelltest.ignoresprintlimits.txt
+   (RUNPRINTTEST
+      [IGNORE (SHELL [CMD.EXE /C "ECHO [A [B C D] E] > shelltest.ignoresprintlimits.txt"] "True)]
+      "|[A [B C D] E] |
+      "shelltest.ignoresprintlimits.txt)
+
+   ; cleanup
+   ERASEFILE "shelltest.ignoresprintlimits.txt
+   
+END
+
+TO SHELLTEST.LONGCOMMANDLINE
+   ; verify that SHELL can run long command lines
+
+   localmake "longword "||
+   repeat 1000 [ make "longword word :longword "A ]
+
+   localmake "longcommand (list "CMD.EXE "/C ""ECHO :longword "> "shelltest.longcommandline.txt" )
+
+   ; Run a shell command that create a specific file if ignores the print limits
+   ERASEFILE "shelltest.longcommandline.txt
+   (RUNPRINTTEST
+      (list "IGNORE "\( "SHELL :longcommand ""True "\) )
+      (word :longword "| |)
+      "shelltest.longcommandline.txt)
+
+   ; cleanup
+   ERASEFILE "shelltest.longcommandline.txt
+
+END
 
 TO SHELLTEST
 
    SHELLTEST.SMOKETEST
    SHELLTEST.BADINPUT
    SHELLTEST.WAITYIELDS
+   SHELLTEST.IGNORESPRINTLIMITS
+   SHELLTEST.LONGCOMMANDLINE
 
 END
