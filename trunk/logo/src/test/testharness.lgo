@@ -103,6 +103,7 @@ LOAD "catch.lgo
 LOAD "refresh.lgo
 LOAD "combine.lgo
 LOAD "print.lgo
+LOAD "standout.lgo
 LOAD "runresult.lgo
 LOAD "slowdraw.lgo
 LOAD "status.lgo
@@ -201,6 +202,7 @@ TO TESTALL
   TURTLEMODETEST       ; from turtlemode.lgo
   FORMTEST             ; from form.lgo
   PRINTTEST            ; from print.lgo
+  STANDOUTTEST         ; from standout.lgo
   READWORDTEST         ; from readword.lgo
   READRAWLINETEST      ; from readrawline.lgo
   READCHARTEST         ; from readchar.lgo
