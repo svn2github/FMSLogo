@@ -24,7 +24,7 @@
 #include <stdio.h>
 
 #include "logocore.h"
-#include "argumentutils.h"
+#include "stringprintednode.h"
 #include "eval.h"
 #include "init.h"
 #include "error.h"
@@ -296,15 +296,15 @@ static CLoadedDlls g_LoadedDlls;
 NODE *ldllload(NODE *arg)
 {
     // read the name of the DLL that we're supposed to load
-    char dllname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(dllname, arg);
+    CStringPrintedNode dllName(car(arg));
+
     if (stopping_flag == THROWING)
     {
         return Unbound;
     }
 
     // look for this DLL in the list
-    CLoadedDll * dll = g_LoadedDlls.FindByName(dllname);
+    CLoadedDll * dll = g_LoadedDlls.FindByName(dllName);
     if (dll != NULL)
     {
         // Found it.  So all we need to do is increment the reference count.
@@ -314,7 +314,7 @@ NODE *ldllload(NODE *arg)
     {
         // This DLL hasn't been loaded before, so load it
         dll = new CLoadedDll();
-        if (!dll->Load(dllname))
+        if (!dll->Load(dllName))
         {
             delete dll;
 
@@ -336,15 +336,15 @@ NODE *ldllfree(NODE * args)
     if (args != NIL)
     {
         // we are freeing a DLL by name
-        char dllname[MAX_BUFFER_SIZE];
-        cnv_strnode_string(dllname, args);
+        CStringPrintedNode dllName(car(args));
+
         if (stopping_flag == THROWING)
         {
             return Unbound;
         }
 
         // look for this DLL in the list
-        dll = g_LoadedDlls.FindByName(dllname);
+        dll = g_LoadedDlls.FindByName(dllName);
     }
     else
     {
@@ -418,13 +418,11 @@ NODE *ldllcall(NODE *args)
     NODE * functionArg = functionArgs;
 
     // get the return type of the function
-    char fkind[MAX_BUFFER_SIZE];
-    cnv_strnode_string(fkind, functionArg);
+    CStringPrintedNode fkind(car(functionArg));
     functionArg = cdr(functionArg);
 
     // get the name of the function
-    char fname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(fname, functionArg);
+    CStringPrintedNode fname(car(functionArg));
     functionArg = cdr(functionArg);
 
 
@@ -435,11 +433,9 @@ NODE *ldllcall(NODE *args)
     NODE * dllNameArg = cdr(args);
     if (dllNameArg != NIL)
     {
-        char dllName[MAX_BUFFER_SIZE];
-        cnv_strnode_string(dllName, dllNameArg);
-
         // an DLL name was given, so let's use that one
-        cnv_strnode_string(dllName, cdr(args));
+        CStringPrintedNode dllName(car(dllNameArg));
+
         CLoadedDll * dll = g_LoadedDlls.FindByName(dllName);
         if (dll == NULL)
         {
@@ -487,15 +483,13 @@ NODE *ldllcall(NODE *args)
     // fill queue with type/data pairs
     while (functionArg != NIL)
     {
-        char akind[MAX_BUFFER_SIZE];
-        cnv_strnode_string(akind, functionArg);
+        CStringPrintedNode akind(car(functionArg));
         functionArg = cdr(functionArg);
 
-        char avalue[MAX_BUFFER_SIZE];
-        cnv_strnode_string(avalue, functionArg);
+        CStringPrintedNode avalue(car(functionArg));
         functionArg = cdr(functionArg);
 
-        switch (akind[0])
+        switch (akind.GetString()[0])
         {
         case 'w':
         case 'W':
@@ -546,7 +540,7 @@ NODE *ldllcall(NODE *args)
 
 
     char areturn[MAX_BUFFER_SIZE] = {0};
-    switch (fkind[0])
+    switch (fkind.GetString()[0])
     {
     case 'w':
     case 'W':
@@ -576,10 +570,12 @@ NODE *ldllcall(NODE *args)
     case 'S':
         {
             LPSTR lp = (*(LPSTR(WINAPI *)()) theFunc)();
+
+            // This should not be like this because lp[]
+            // can be bigger than areturn[] but for now...
             strncpy(areturn, lp, MAX_BUFFER_SIZE);
+
             // free global string mem.
-            // this should not be like this because lp[]
-            // can be bigger than resp[] but for now...
             GlobalFreePtr(lp);
             break;
         }
