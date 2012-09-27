@@ -107,7 +107,7 @@ BURY "UIAUTOMATION.POSTEVENT
 TO UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
   LOCALMAKE "parenthwnd UIAUTOMATION.FINDWINDOW :parentwindowtitle 0
   if :parenthwnd = 0 [
-     REPORTTESTINFO (se [TEST BUG: couldn't find parent] :parentwindowtitle)
+     REPORTTESTBUG (se [Couldn't find parent] :parentwindowtitle)
      OUTPUT 0
   ]
 
@@ -115,7 +115,7 @@ TO UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
 
   LOCALMAKE "hwnd UIAUTOMATION.FINDCHILDWINDOW :parenthwnd 0 :childwindowclass
   if :hwnd = 0 [
-     REPORTTESTINFO (se [TEST BUG: couldn't find child] :childwindowclass)
+     REPORTTESTBUG (se [Couldn't find child] :childwindowclass)
      OUTPUT 0
   ]
 
