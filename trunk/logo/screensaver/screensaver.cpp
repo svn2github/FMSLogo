@@ -34,8 +34,6 @@ int *TopOfStack  = NULL;
 int BitMapWidth  = 0;
 int BitMapHeight = 0;
 
-int GCMAX = 1024*8;
-
 static UINT   g_Timer;
 static CHAR   g_FileToLoad[MAX_PATH] = "";
 static HANDLE g_SingleInstanceMutex  = NULL;

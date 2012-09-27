@@ -32,6 +32,7 @@
 #include "workspaceeditor.h"
 #include "minieditor.h"
 #include "dynamicbuffer.h"
+#include "stringprintednode.h"
 
 #include "screen.h"
 #include "commander.h"
@@ -39,7 +40,6 @@
 // global variables declared in main.h
 char edit_editexit[MAX_BUFFER_SIZE];     // editor callback instruction list 
 
-int  GCMAX        = 8192;
 int  BitMapWidth  = 1000;
 int  BitMapHeight = 1000;
 bool bFixed       = false;
@@ -602,7 +602,7 @@ void single_step_box(NODE * the_line)
 
     // pop up single step box showing line of code
     if (wxMessageBox(
-            printedLine->GetString(),
+            printedLine.GetString(),
             LOCALIZED_STEPPING,
             wxOK | wxCANCEL) == wxCANCEL)
     {
