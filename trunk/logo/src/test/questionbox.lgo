@@ -27,10 +27,7 @@ TO QUESTIONBOXTEST.SMOKETEST
        RUNSTOPPINGTEST  [ QUESTIONBOX [QUESTIONBOX Test] [Press Cancel.] ]
    ]
 
-   localmake "lasterror ERROR
-   if :lasterror <> [] [
-      REPORTTESTFAILED (list "QUESTIONBOX "test "failed :lasterror)
-   ]
+   IGNORE FAILIFERROR "QUESTIONBOXTEST.SMOKETEST
 
    UIAUTOMATION.UNINITIALIZE
 

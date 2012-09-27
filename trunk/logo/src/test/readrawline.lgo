@@ -18,10 +18,7 @@ TO READRAWLINETEST.READRAWLINEFROMUI :wordtoread
        make "theword READRAWLINE
    ]
 
-   localmake "lasterror ERROR
-   if :lasterror <> [] [
-      REPORTTESTFAILED (list "UI "Automation "to "read :wordtoread ": :lasterror)
-   ]
+   IGNORE FAILIFERROR (word "UI "Automation "to "read :wordtoread)
 
    UIAUTOMATION.UNINITIALIZE
 
@@ -47,10 +44,7 @@ TO READRAWLINETEST.UICANCEL
        UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [Input Mode (Cancel to Halt)] "Cancel
    ]
 
-   localmake "lasterror ERROR
-   if :lasterror <> [] [
-      REPORTTESTFAILED (list "UI "Automation "to "read :wordtoread ": :lasterror)
-   ]
+   IGNORE FAILIFERROR "READRAWLINETEST.UICANCEL
 
    RUNSTOPPINGTEST [IGNORE READRAWLINE]
 
