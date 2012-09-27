@@ -650,8 +650,14 @@ TO RUNPRINTTEST :printinstruction :expectedvalue [:outputfilename []]
   ; Now read back the file and ensure that it is as expected.
   ;
   LOCALMAKE "newreader IFELSE empty? :outputfilename [:testfilename] [:outputfilename]
-  OPENREAD :newreader
+  CATCH "ERROR [OPENREAD :newreader]
+  MAKE "lasterror ERROR
+  IF NOT EMPTY? :lasterror [
+    REPORTTESTFAILED (LIST "|Attempting to read| :newreader "|threw error.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
+    STOP
+  ]
 
+  ; no error means we opened a file
   LOCALMAKE "oldreader READER
   SETREAD :newreader
 
