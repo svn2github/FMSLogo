@@ -24,6 +24,7 @@
 using namespace std;
 
 #include "devwind.h"
+#include "stringprintednode.h"
 #include "argumentutils.h"
 #include "logocore.h"
 #include "graphics.h"
@@ -214,8 +215,7 @@ NODE *lportclose(NODE *)
 
 NODE *lportopen(NODE *args)
 {
-    char comport[MAX_BUFFER_SIZE];
-    cnv_strnode_string(comport, args);
+    CStringPrintedNode comport(car(args));
 
     // if port open output error else open it
     if (ComIsOpen)
@@ -224,7 +224,14 @@ NODE *lportopen(NODE *args)
     }
     else
     {
-        ComId = CreateFile(comport, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
+        ComId = CreateFile(
+            comport,
+            GENERIC_READ | GENERIC_WRITE,
+            0,
+            NULL,
+            OPEN_EXISTING,
+            0,
+            NULL);
 
         SetupComm(ComId, 4096, 4096);
 
@@ -277,8 +284,7 @@ NODE *lportflush(NODE * /* args */)
 
 NODE *lportmode(NODE *args)
 {
-    char commode[MAX_BUFFER_SIZE];
-    cnv_strnode_string(commode, args);
+    CStringPrintedNode commode(car(args));
 
     // if closed output error else set mode
     if (!ComIsOpen)
