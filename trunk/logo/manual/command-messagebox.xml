@@ -23,7 +23,11 @@ If the user presses "Cancel", then processing will be halted, as if by the <link
 
 <para>
 Both the <parameter>title</parameter> and <parameter>message</parameter> inputs must be lists.
-The message box will be automatically sized to fit <parameter>message</parameter>.
+The inputs are truncated according to the current values of <link linkend="command-printwidthlimit">PRINTWIDTHLIMIT</link> and <link linkend="command-printdepthlimit">PRINTDEPTHLIMIT</link>.
+</para>
+
+<para>
+The message box is automatically sized to fit <parameter>message</parameter>.
 The message will not be word-wrapped, so if you have a long message, you may want to put in some line breaks.
 </para>
 
