@@ -41,7 +41,7 @@ TO UNLIMITEDYESNOBOX :caption :message
 
   OUTPUT YESNOBOX :caption :message
 END
-BURY [UNLIMITEDMESSAGEBOX]
+BURY [UNLIMITEDYESNOBOX]
 
 TO REPORTTESTINFO :message
 
@@ -102,6 +102,18 @@ END
 BURY [REPORTTESTBUG]
 
 
+TO FAILIFERROR :testdescription
+
+   LOCALMAKE "lasterror ERROR
+   IF NOT EMPTY? :lasterror [
+      REPORTTESTFAILED (LIST :testdescription "|had an error.| (WORD "code= (ITEM 1 :lasterror) ".) (ITEM 2 :lasterror)) 
+      OUTPUT LOCALETRUE
+   ]
+
+   OUTPUT LOCALEFALSE
+END
+BURY [FAILIFERROR]
+
 
 TO REPORTTEST :testpassed :result :expected
   IFELSE :testpassed [
@@ -127,11 +139,7 @@ TO TRACEINSTRUCTION :instruction
   CATCH "ERROR [IGNORE RUNRESULT :instruction]
 
   ; make sure that the instruction didn't throw an error
-  LOCALMAKE "lasterror ERROR
-  IF NOT EMPTY? :lasterror [
-    REPORTTESTFAILED (LIST :instruction "|threw error.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
-    STOP
-  ]
+  IGNORE FAILIFERROR :instruction
 END
 BURY [TRACEINSTRUCTION]
 
@@ -156,7 +164,6 @@ TO TRACEINSTRUCTIONNOCATCH :instruction
 END
 BURY [TRACEINSTRUCTIONNOCATCH]
 
-
 TO SIMPLEREPORTTEST :instruction :expectedresult
   LOCAL "result
 
@@ -167,12 +174,8 @@ TO SIMPLEREPORTTEST :instruction :expectedresult
   ; that throwing an error just fails 
   ; (instead of halt the tests)
   CATCH "ERROR [MAKE "result RUN :instruction]
-
-  LOCALMAKE "lasterror ERROR
-  IF NOT EMPTY? :lasterror [
-    REPORTTESTFAILED (LIST :instruction "|threw error.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
-    STOP
-  ]
+  
+  IF FAILIFERROR :instruction [ STOP ]
 
   IF NOT EQUAL? :result :expectedresult [
     REPORTTESTFAILED (LIST :instruction "output :result "|. We expected| :expectedresult ".)
@@ -231,8 +234,8 @@ BURY [REPORTTESTINITIALIZE]
 
 
 TO REPORTTESTUNINITIALIZE
-  CLOSE    :testlog
-  MAKE     :testlog []
+  CLOSE :testlog
+  MAKE  "testlog []
 END
 BURY [REPORTTESTUNINITIALIZE]
 
@@ -648,11 +651,7 @@ TO RUNPRINTTEST :printinstruction :expectedvalue [:outputfilename []]
   ]
 
   ; Make sure that the instruction didn't throw an error.
-  LOCALMAKE "lasterror ERROR
-  IF NOT EMPTY? :lasterror [
-    REPORTTESTFAILED (LIST :printinstruction "|threw error.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
-    STOP
-  ]
+  IF FAILIFERROR :printinstruction [ STOP ]
 
   ;
   ; Now read back the file and ensure that it is as expected.
@@ -660,10 +659,8 @@ TO RUNPRINTTEST :printinstruction :expectedvalue [:outputfilename []]
   LOCALMAKE "newreader IFELSE empty? :outputfilename [:testfilename] [:outputfilename]
   CATCH "ERROR [OPENREAD :newreader]
   MAKE "lasterror ERROR
-  IF NOT EMPTY? :lasterror [
-    REPORTTESTFAILED (LIST "|Attempting to read| :newreader "|threw error.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
-    STOP
-  ]
+  IF FAILIFERROR (WORD "|Attempting to read "| :newreader "") [ STOP ]
+
 
   ; no error means we opened a file
   LOCALMAKE "oldreader READER
@@ -708,6 +705,13 @@ TO WRITEBINARYDATA :filename :data
    SETWRITE :previouswriter
 END
 BURY [WRITEBINARYDATA]
+
+TO REPEATWORD :word :repcount
+   LOCALMAKE "accumulator "||
+   REPEAT :repcount [ MAKE "accumulator WORD :accumulator :word ]
+   OUTPUT :accumulator
+END
+BURY [REPEATWORD]
 
 ; protect against loading the file twice
 if not name? "testlog [
