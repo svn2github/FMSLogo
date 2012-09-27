@@ -20,7 +20,7 @@ END
 BURY [ISPSEUDOLOCBUILD]
 
 TO UNLIMITEDPRINT :listtoprint
-  ; declare printwidthlimit and printdepthlimit local to logging happens as expected
+  ; declare printwidthlimit and printdepthlimit local so that logging happens as expected.
   local [printdepthlimit printwidthlimit pseudo.printdepthlimit pseudo.printwidthlimit]
 
   PRINT :listtoprint
@@ -28,10 +28,18 @@ END
 BURY [UNLIMITEDPRINT]
 
 TO UNLIMITEDMESSAGEBOX :caption :message
-  ; declare printwidthlimit and printdepthlimit local to logging happens as expected
+  ; declare printwidthlimit and printdepthlimit local so that the full message is shown.
   local [printdepthlimit printwidthlimit pseudo.printdepthlimit pseudo.printwidthlimit]
 
   MESSAGEBOX :caption :message
+END
+BURY [UNLIMITEDMESSAGEBOX]
+
+TO UNLIMITEDYESNOBOX :caption :message
+  ; declare printwidthlimit and printdepthlimit local so that the full message is shown.
+  local [printdepthlimit printwidthlimit pseudo.printdepthlimit pseudo.printwidthlimit]
+
+  OUTPUT YESNOBOX :caption :message
 END
 BURY [UNLIMITEDMESSAGEBOX]
 
@@ -573,7 +581,7 @@ TO CHECKSCREEN :screenname
        ; The baseline file does not exist.
        ; We must ask the user if the screen looks correct.
 
-       MAKE "isok YESNOBOX :screenname [Does the screen look correct?]
+       MAKE "isok UNLIMITEDYESNOBOX :screenname [Does the screen look correct?]
        IF :isok [
          ; Everything is good.  Save the screen as a baseline.
          GIFSAVE :baselinefilename
