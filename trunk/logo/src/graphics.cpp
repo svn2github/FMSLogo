@@ -2498,7 +2498,7 @@ NODE *lfill(NODE *arg)
 
 NODE *llabelsize(NODE *arg)
 {
-    CStringPrintedNode textbuf(car(arg), CStringPrintedNode::WithoutPrintLimits);
+    CStringPrintedNode textbuf(car(arg), CStringPrintedNode::WithPrintLimits);
 
     if (NOT_THROWING)
     {
@@ -2513,7 +2513,7 @@ NODE *llabelsize(NODE *arg)
 NODE *llabel(NODE *arg)
 {
     // print the node as a string
-    CStringPrintedNode textbuf(car(arg), CStringPrintedNode::WithoutPrintLimits);
+    CStringPrintedNode textbuf(car(arg), CStringPrintedNode::WithPrintLimits);
 
     if (NOT_THROWING)
     {
