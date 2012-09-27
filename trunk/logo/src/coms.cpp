@@ -33,7 +33,7 @@
 #include "lists.h"
 #include "graphwin.h"
 #include "graphics.h"
-#include "argumentutils.h"
+#include "stringprintednode.h"
 #include "debugheap.h"
 
 // ift_iff_flag: flag for if TEST has been called within the scope
@@ -468,8 +468,7 @@ NODE *lwait(NODE *args)
 
 NODE *lshell(NODE *args)
 {
-    char shellCommand[MAX_BUFFER_SIZE];
-    cnv_strnode_string(shellCommand, args);
+    CStringPrintedNode shellCommand(car(args));
 
     bool waitForChildProcess;
     if (cdr(args) != NIL)
