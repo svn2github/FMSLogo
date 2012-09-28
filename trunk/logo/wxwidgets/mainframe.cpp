@@ -728,7 +728,7 @@ CMainFrame::CreateWorkspaceEditor(
         CheckForErrors,
         OpenToError);
 
-    // add this editor the the list of known editors
+    // Add this editor the the list of known editors.
     m_Editors.insert(std::pair<CWorkspaceEditor*,CWorkspaceEditor*>(editor,editor));
 
     return editor;
@@ -834,7 +834,7 @@ void CMainFrame::PopupEditorToError(const char *FileName)
     }
 
     CreateWorkspaceEditor(
-        FileName,
+        TempPathName, // use the temp file name, in case the user saves changes
         NIL,
         true,  // check for errors
         true); // open to the error
