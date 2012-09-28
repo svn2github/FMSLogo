@@ -50,6 +50,7 @@
 #include "eval.h"
 #include "logocore.h"
 #include "lists.h"
+#include "print.h"
 #include "stringprintednode.h"
 #include "screenwindow.h"
 #include "debugheap.h"
@@ -1150,8 +1151,7 @@ NODE *lwindowcreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, nextArg);
+    CStringPrintedNode titlename(car(nextArg));
     nextArg = cdr(nextArg);
 
     CClientRectangle clientrect;
@@ -1202,7 +1202,7 @@ NODE *lwindowcreate(NODE *args)
 
     child->Dialog = new CLogoDialog(
         wxParent,
-        titlename,
+        titlename.GetString(),
         clientrect);
     child->m_Parent = (char*) wxParent;
 
@@ -1337,8 +1337,7 @@ NODE *ldialogcreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, nextArg);
+    CStringPrintedNode titlename(car(nextArg));
     nextArg = cdr(nextArg);
 
     CClientRectangle clientrect;
@@ -1388,7 +1387,7 @@ NODE *ldialogcreate(NODE *args)
 
     child->Dialog = new CLogoDialog(
         wxParent,
-        titlename,
+        titlename.GetString(),
         clientrect);
     child->m_Parent = (char *)wxParent;
 
@@ -1904,8 +1903,7 @@ NODE *lstaticcreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, nextArg);
+    CStringPrintedNode titlename(car(nextArg));
     nextArg = cdr(nextArg);
 
     CClientRectangle clientrect;
@@ -1966,8 +1964,7 @@ NODE *lstaticupdate(NODE *args)
     char childname[MAX_BUFFER_SIZE];
     cnv_strnode_string(childname, args);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, cdr(args));
+    CStringPrintedNode titlename(car(cdr(args)));
 
     CLogoWidget *temp = g_LogoWidgets.get(childname, WINDOWTYPE_Static);
     if (temp == NULL)
@@ -1976,7 +1973,7 @@ NODE *lstaticupdate(NODE *args)
         return Unbound;
     }
 
-    temp->StaticText->SetLabel(titlename);
+    temp->StaticText->SetLabel(titlename.GetString());
     return Unbound;
 }
 
@@ -1998,8 +1995,7 @@ NODE *lbuttoncreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, nextArg);
+    CStringPrintedNode titlename(car(nextArg));
     nextArg = cdr(nextArg);
 
     CClientRectangle clientrect;
@@ -2074,8 +2070,7 @@ NODE *lbuttonupdate(NODE *args)
     char buttonname[MAX_BUFFER_SIZE];
     cnv_strnode_string(buttonname, args);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, cdr(args));
+    CStringPrintedNode titlename(car(cdr(args)));
 
     if (stopping_flag == THROWING)
     {
@@ -2089,7 +2084,7 @@ NODE *lbuttonupdate(NODE *args)
         return Unbound;
     }
 
-    button->Button->SetLabel(titlename);
+    button->Button->SetLabel(titlename.GetString());
     return Unbound;
 }
 
@@ -2187,8 +2182,7 @@ NODE *lradiobuttoncreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, nextArg);
+    CStringPrintedNode titlename(car(nextArg));
     nextArg = cdr(nextArg);
 
     CClientRectangle clientrect;
@@ -2328,8 +2322,7 @@ NODE *lcheckboxcreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, nextArg);
+    CStringPrintedNode titlename(car(nextArg));
     nextArg = cdr(nextArg);
 
     CClientRectangle clientrect;
@@ -2369,7 +2362,7 @@ NODE *lcheckboxcreate(NODE *args)
 
         child->CheckBox = new CLogoCheckBox(
             parent->Dialog, 
-            titlename, 
+            titlename.GetString(), 
             clientrect,
             group->GroupBox);
     }
@@ -2381,7 +2374,7 @@ NODE *lcheckboxcreate(NODE *args)
 
         child->CheckBox = new CLogoCheckBox(
             CFmsLogo::GetMainFrame()->GetScreen(),
-            titlename,
+            titlename.GetString(),
             clientrect,
             group->GroupBox);
     }
@@ -2483,11 +2476,8 @@ NODE *ldebugwindows(NODE *arg)
 
 NODE *lmessagebox(NODE *args)
 {
-    char banner[MAX_BUFFER_SIZE];
-    cnv_strnode_string(banner, args);
-
-    char body[MAX_BUFFER_SIZE];
-    cnv_strnode_string(body, args = cdr(args));
+    CStringPrintedNode banner(car(args));
+    CStringPrintedNode body(car(cdr(args)), CStringPrintedNode::WithPrintLimits);
 
     if (NOT_THROWING)
     {
@@ -2507,11 +2497,8 @@ NODE *lmessagebox(NODE *args)
 NODE *lquestionbox(NODE *args)
 {
     // read/validate inputs
-    char banner[MAX_BUFFER_SIZE];
-    cnv_strnode_string(banner, args);
-
-    char body[MAX_BUFFER_SIZE];
-    cnv_strnode_string(body, cdr(args));
+    CStringPrintedNode banner(car(args));
+    CStringPrintedNode body(car(cdr(args)), CStringPrintedNode::WithPrintLimits);
 
     if (stopping_flag == THROWING)
     {
@@ -2520,8 +2507,8 @@ NODE *lquestionbox(NODE *args)
     }
 
     const wxString & str = ::wxGetTextFromUser(
-        body,
-        banner,
+        body.GetString(),
+        banner.GetString(),
         wxEmptyString,
         CFmsLogo::GetMainFrame());
 
@@ -2545,8 +2532,7 @@ NODE *lquestionbox(NODE *args)
 NODE *lselectbox(NODE *args)
 {
     // read/validate inputs
-    char banner[MAX_BUFFER_SIZE];
-    cnv_strnode_string(banner, args);
+    CStringPrintedNode banner(car(args));
 
     NODE * choicesNode = list_arg(cdr(args));
     if (stopping_flag == THROWING)
@@ -2559,10 +2545,8 @@ NODE *lselectbox(NODE *args)
          currentChoice != NIL;
          currentChoice = cdr(currentChoice))
     {
-        char choice[MAX_BUFFER_SIZE];
-        cnv_strnode_string(choice, currentChoice);
-
-        choices.Add(choice);
+        CStringPrintedNode choice(car(currentChoice));
+        choices.Add(choice.GetString());
     }
 
     // TODO: Implement our own version of this
@@ -2570,7 +2554,7 @@ NODE *lselectbox(NODE *args)
     // where the question should be placed.
     int status = ::wxGetSingleChoiceIndex(
         wxEmptyString,
-        banner,
+        banner.GetString(),
         choices,
         CFmsLogo::GetMainFrame());
     if (status < 0)
@@ -2585,15 +2569,15 @@ NODE *lselectbox(NODE *args)
 
 NODE *lyesnobox(NODE *args)
 {
-    CStringPrintedNode banner(car(args),    CStringPrintedNode::WithPrintLimits);
+    CStringPrintedNode banner(car(args));
     CStringPrintedNode body(car(cdr(args)), CStringPrintedNode::WithPrintLimits);
 
     if (NOT_THROWING)
     {
         int status = ::MessageBox(
             GetParentWindowForDialog(),
-            body.GetString(),
-            banner.GetString(),
+            body,
+            banner,
             MB_YESNOCANCEL | MB_ICONQUESTION);
 
         switch (status)
@@ -2615,8 +2599,8 @@ NODE *lyesnobox(NODE *args)
 
 NODE *ldialogfileopen(NODE *args)
 {
-    char filename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(filename, args);
+    char filename[MAX_PATH];
+    PrintNodeToString(car(args), filename, ARRAYSIZE(filename));
 
     OPENFILENAME openFileName;
     ZeroMemory(&openFileName, sizeof openFileName);
@@ -2654,8 +2638,8 @@ NODE *ldialogfileopen(NODE *args)
 
 NODE *ldialogfilesave(NODE *args)
 {
-    char filename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(filename, args);
+    char filename[MAX_PATH];
+    PrintNodeToString(car(args), filename, ARRAYSIZE(filename));
 
     OPENFILENAME openFileName;
     ZeroMemory(&openFileName, sizeof openFileName);
@@ -2693,13 +2677,10 @@ NODE *ldialogfilesave(NODE *args)
 
 NODE *lwindowfileedit(NODE *args)
 {
-    char filename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(filename, args);
+    char filename[MAX_PATH];
+    PrintNodeToString(car(args), filename, ARRAYSIZE(filename));
 
-    char editexit[MAX_BUFFER_SIZE];
-    cnv_strnode_string(editexit, args = cdr(args));
-
-    strcpy(edit_editexit, editexit);
+    cnv_strnode_string(edit_editexit, cdr(args));
 
     ShowEditorForFile(filename, NULL);
     return Unbound;
