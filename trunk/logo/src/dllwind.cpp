@@ -573,7 +573,7 @@ NODE *ldllcall(NODE *args)
 
             // This should not be like this because lp[]
             // can be bigger than areturn[] but for now...
-            strncpy(areturn, lp, MAX_BUFFER_SIZE);
+            strncpy(areturn, lp, ARRAYSIZE(areturn));
 
             // free global string mem.
             GlobalFreePtr(lp);
