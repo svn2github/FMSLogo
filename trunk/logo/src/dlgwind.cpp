@@ -58,6 +58,7 @@
 #include "lists.h"
 #include "screenwindow.h"
 #include "stringprintednode.h"
+#include "print.h"
 #include "debugheap.h"
 
 enum WINDOWTYPE 
@@ -148,14 +149,15 @@ class TMxDialog : public TDialog
 {
 public:
     char callback[MAX_BUFFER_SIZE];
-    char caption[MAX_BUFFER_SIZE];
 
     TClientRectangle clientrect;
 
     TMxDialog(
-        TWindow * Parent
+        TWindow    * Parent,
+        const char * Title
         ) : TDialog(Parent, IDD_STUB)
     {
+        SetCaption(Title);
     }
 
 protected:
@@ -184,8 +186,6 @@ void TMxDialog::SetupWindow()
         clientrect.GetWidth(),
         clientrect.GetHeight(),
         0);
-
-    SetCaption(caption);
 
     do_execution(callback);
 
@@ -826,8 +826,7 @@ NODE *lwindowcreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, nextArg);
+    CStringPrintedNode titlename(car(nextArg));
     nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
@@ -867,19 +866,18 @@ NODE *lwindowcreate(NODE *args)
     dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window);
     if (parent != NULL)
     {
-        child->TDmybox = new TMxDialog(parent->TDmybox);
+        child->TDmybox = new TMxDialog(parent->TDmybox, titlename);
         child->parent = (char *)parent->TDmybox;
     }
     else
     {
-        child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
+        child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow, titlename);
         child->parent = (char *)MainWindowx->ScreenWindow;
     }
 
     // Modeless windows can have to have a callback to set them up
     // since it will return
     strcpy(child->TDmybox->callback, callback);
-    strcpy(child->TDmybox->caption, titlename);
 
     // Most attributes are set in DIALOGSTUB
     child->TDmybox->clientrect = clientrect;
@@ -1014,8 +1012,7 @@ NODE *ldialogcreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, nextArg);
+    CStringPrintedNode titlename(car(nextArg));
     nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
@@ -1054,20 +1051,19 @@ NODE *ldialogcreate(NODE *args)
     dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window);
     if (parent != NULL)
     {
-        child->TDmybox = new TMxDialog(parent->TDmybox);
+        child->TDmybox = new TMxDialog(parent->TDmybox, titlename);
         child->parent = (char *)parent->TDmybox;
     }
     else
     {
         // else use main window
-        child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
+        child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow, titlename);
         child->parent = (char *)MainWindowx->ScreenWindow;
     }
 
     // Modal windows have to have a callback to set them up
     // since it will not return until closed
     strcpy(child->TDmybox->callback, callback);
-    strcpy(child->TDmybox->caption, titlename);
 
     // Most attributes are set in DIALOGSTUB
     child->TDmybox->clientrect = clientrect;
@@ -1579,8 +1575,7 @@ NODE *lstaticcreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, nextArg);
+    CStringPrintedNode titlename(car(nextArg));
     nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
@@ -1645,8 +1640,7 @@ NODE *lstaticupdate(NODE *args)
     char childname[MAX_BUFFER_SIZE];
     cnv_strnode_string(childname, args);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, cdr(args));
+    CStringPrintedNode titlename(car(cdr(args)));
 
     dialogthing *temp = dialogboxes.get(childname, WINDOWTYPE_Static);
     if (temp == NULL)
@@ -1676,8 +1670,7 @@ NODE *lbuttoncreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, nextArg);
+    CStringPrintedNode titlename(car(nextArg));
     nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
@@ -1755,8 +1748,7 @@ NODE *lbuttonupdate(NODE *args)
     char buttonname[MAX_BUFFER_SIZE];
     cnv_strnode_string(buttonname, args);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, cdr(args));
+    CStringPrintedNode titlename(car(cdr(args)));
 
     if (stopping_flag == THROWING)
     {
@@ -1872,8 +1864,7 @@ NODE *lradiobuttoncreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, nextArg);
+    CStringPrintedNode titlename(car(nextArg));
     nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
@@ -2024,8 +2015,7 @@ NODE *lcheckboxcreate(NODE *args)
     cnv_strnode_string(childname, nextArg);
     nextArg = cdr(nextArg);
 
-    char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, nextArg);
+    CStringPrintedNode titlename(car(nextArg));
     nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
@@ -2192,11 +2182,8 @@ NODE *ldebugwindows(NODE *arg)
 
 NODE *lmessagebox(NODE *args)
 {
-    char banner[MAX_BUFFER_SIZE];
-    cnv_strnode_string(banner, args);
-
-    char body[MAX_BUFFER_SIZE];
-    cnv_strnode_string(body, args = cdr(args));
+    CStringPrintedNode banner(car(args));
+    CStringPrintedNode body(car(cdr(args)), CStringPrintedNode::WithPrintLimits);
 
     if (NOT_THROWING)
     {
@@ -2218,11 +2205,8 @@ NODE *lmessagebox(NODE *args)
 NODE *lquestionbox(NODE *args)
 {
     // read/validate inputs
-    char banner[MAX_BUFFER_SIZE];
-    cnv_strnode_string(banner, args);
-
-    char body[MAX_BUFFER_SIZE];
-    cnv_strnode_string(body, cdr(args));
+    CStringPrintedNode banner(car(args));
+    CStringPrintedNode body(car(cdr(args)), CStringPrintedNode::WithPrintLimits);
 
     if (stopping_flag == THROWING)
     {
@@ -2256,8 +2240,7 @@ NODE *lquestionbox(NODE *args)
 NODE *lselectbox(NODE *args)
 {
     // read/validate inputs
-    char banner[MAX_BUFFER_SIZE];
-    cnv_strnode_string(banner, args);
+    CStringPrintedNode banner(car(args));
 
     NODE * choices = list_arg(cdr(args));
     if (stopping_flag == THROWING)
@@ -2284,7 +2267,7 @@ NODE *lselectbox(NODE *args)
 
 NODE *lyesnobox(NODE *args)
 {
-    CStringPrintedNode banner(car(args),    CStringPrintedNode::WithPrintLimits);
+    CStringPrintedNode banner(car(args));
     CStringPrintedNode body(car(cdr(args)), CStringPrintedNode::WithPrintLimits);
 
     if (NOT_THROWING)
@@ -2314,8 +2297,8 @@ NODE *lyesnobox(NODE *args)
 
 NODE *ldialogfileopen(NODE *args)
 {
-    char filename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(filename, args);
+    char filename[MAX_PATH];
+    PrintNodeToString(car(args), filename, ARRAYSIZE(filename));
 
     OPENFILENAME openFileName;
     ZeroMemory(&openFileName, sizeof openFileName);
@@ -2353,8 +2336,8 @@ NODE *ldialogfileopen(NODE *args)
 
 NODE *ldialogfilesave(NODE *args)
 {
-    char filename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(filename, args);
+    char filename[MAX_PATH];
+    PrintNodeToString(car(args), filename, ARRAYSIZE(filename));
 
     OPENFILENAME openFileName;
     ZeroMemory(&openFileName, sizeof openFileName);
@@ -2394,13 +2377,10 @@ NODE *ldialogfilesave(NODE *args)
 
 NODE *lwindowfileedit(NODE *args)
 {
-    char filename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(filename, args);
+    char filename[MAX_PATH];
+    PrintNodeToString(car(args), filename, ARRAYSIZE(filename));
 
-    char editexit[MAX_BUFFER_SIZE];
-    cnv_strnode_string(editexit, args = cdr(args));
-
-    strcpy(edit_editexit, editexit);
+    cnv_strnode_string(edit_editexit, cdr(args));
 
     ShowEditorForFile(filename, NULL);
     return Unbound;
