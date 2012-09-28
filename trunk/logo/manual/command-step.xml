@@ -66,6 +66,13 @@ MYPROGRAM</userinput>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-unstep">UNSTEP</link></member>
+<member><link linkend="workspace-queries">Workspace Queries</link></member>
+</simplelist></listitem>
+</varlistentry>
+
+</variablelist>
 </section>

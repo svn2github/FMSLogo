@@ -44,5 +44,13 @@ Both the <parameter>title</parameter> and <parameter>choicelist</parameter> inpu
 </listitem>
 </varlistentry>
 
+
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-messagebox">MESSAGEBOX</link></member>
+<member><link linkend="command-questionbox">QUESTIONBOX</link></member>
+</simplelist></listitem>
+</varlistentry>
+
 </variablelist>
 </section>
