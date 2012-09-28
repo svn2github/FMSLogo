@@ -178,6 +178,61 @@ TO DeleteAndCreateWindowFromCallback
 
 END
 
+TO LongTextOnControls
+
+  ; Make a word that's a bunch of peroids followed by an exclamation point.
+  ; In a variable-width font, these are narrow characters and let's us
+  ; test the character limit before we run out of space.
+  ; The different character at the end ensures that we can see if the
+  ; entire string is shown.
+  localmake "longword "!
+  REPEAT 250 [ make "longword word ". :longword ]
+
+  WINDOWCREATE "desktop "longtextoncontrols WORD "|Long Text On Controls| :longword 0 0 632 200 []
+  STATICCREATE "longtextoncontrols GENSYM [
+     This dialog box has buttons with long text (>255 character).
+     All text ends in an exclaimation point.
+  ] 2 2 625 16
+
+  BUTTONCREATE "longtextoncontrols GENSYM (word
+    "|This was set with BUTTONCREATE.|
+    :longword
+  ) 2 18 625 18 []
+
+  BUTTONCREATE "longtextoncontrols "longtextbuttonupdate [ Initial ] 2 40 625 18 []
+  BUTTONUPDATE "longtextbuttonupdate (word
+    "|This was set with BUTTONUPDATE.|
+    :longword
+  )
+
+  LOCALMAKE "group GENSYM
+  GROUPBOXCREATE "longtextoncontrols :group 2 60 625 25
+  CHECKBOXCREATE "longtextoncontrols :group GENSYM (word
+    "|This checkbox has a long label |
+    :longword
+  ) 5 65 620 18
+
+  LOCALMAKE "group GENSYM
+  GROUPBOXCREATE "longtextoncontrols :group 2 80 625 25
+  RADIOBUTTONCREATE "longtextoncontrols :group GENSYM (word
+    "|This radio button has long text |
+    :longword
+  ) 5 85 620 18
+
+  STATICCREATE "longtextoncontrols GENSYM (word
+    "|This was set when the static control was created.|
+    :longword
+  ) 2 110 625 18 
+
+  STATICCREATE "longtextoncontrols "longtextstaticupdate [ Initial ] 2 130 625 18
+  STATICUPDATE "longtextstaticupdate (word
+    "|This was set with STATICUPDATE.|
+    :longword
+  )
+
+  BUTTONCREATE "longtextoncontrols GENSYM [Close] 590 170 35 15 [WINDOWDELETE "longtextoncontrols]
+
+END
 
 TO WIDGETTEST.INTERACTIVE
 
@@ -241,6 +296,7 @@ TO WIDGETTEST.INTERACTIVE
   LISTBOXADDSTRING "listbox [ModalDialogBox]
   LISTBOXADDSTRING "listbox [DeleteAndCreateDialogFromCallback]
   LISTBOXADDSTRING "listbox [DeleteAndCreateWindowFromCallback]
+  LISTBOXADDSTRING "listbox [LongTextOnControls]
 
   ; Create a button to open of the child interactive tests
   BUTTONCREATE  "interactiveroot GENSYM [Open Window] 5 167 130 18 [ RUN LISTBOXGETSELECT "listbox ]
@@ -249,14 +305,10 @@ TO WIDGETTEST.INTERACTIVE
   STATICCREATE "interactiveroot GENSYM [
      This window contains all widget types.
      It is intended to be used in interactive testing, particularly when
-     comparing the behavior of one version of FMSLogo to another.
-  ] 140 90 200 80
-
-  ; Continue the message on a second static text control to work around the 255 character limit.
-  STATICCREATE "interactiveroot GENSYM [
-     You can run other specialized tests by selecing the test case
+     comparing the behavior of one version of FMSLogo to another.\n
+     \nYou can run other specialized tests by selecing the test case
      from the list box to the right and clicking \"Open Window\".
-  ] 140 120 200 80
+  ] 140 90 200 160
 
   ; Add a third static text
   STATICCREATE "interactiveroot GENSYM (WORD
