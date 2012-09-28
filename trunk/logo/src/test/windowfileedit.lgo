@@ -15,11 +15,10 @@ END
 
 TO WINDOWFILEEDITTEST.LONGFILENAME
 
-  ; this is a regression test for bug #1474902.
+  ; This is a regression test for bug #1474902.
 
-  ; create a file with a long name
-  LOCALMAKE "longfilename "||
-  REPEAT 100 [ MAKE "longfilename word :longfilename "A ]
+  ; Create a file with a long name.
+  LOCALMAKE "longfilename REPEATWORD "A 100
   OPENWRITE :longfilename
   CLOSE     :longfilename
 
@@ -30,8 +29,15 @@ TO WINDOWFILEEDITTEST.LONGFILENAME
     )
   ]
 
-  ; wait for the editor to be closed
-  MESSAGEBOX [Notice] (list "|The editor should now be shown.  Save the contents of the editor, then press OK.|)
+  ; Wait for the editor to be closed.
+  MESSAGEBOX "Notice [The editor should now be shown.  Save the contents of the editor, then press OK.]
+
+  ; Coax FMSLogo into checking its internal event queue.
+  SETTIMER 31 0 [CLEARTIMER 31]
+  WAIT 30
+
+  ; Make sure the callback was run.
+  FAILIFNOTFALSE [FILEEXISTS :longfilename]
 END
 
 
