@@ -2,9 +2,17 @@ LOAD "testlib.lgo
 
 TO EDALLTEST.DISPLAYBYHWND
 
+  ; Create a window with the caption "Editor" to try to confuse
+  ; EDALL into thinking that the editor is already open.
   WINDOWCREATE "root "edalltest "Editor 100 100 100 100 []
   EDALL
   WINDOWDELETE "edalltest
+
+  ; Doc and undock the commander while the editor is open.
+  ; This has caused a crash in wxWidgets if the parent is
+  ; set to the commaner, as it is in MSWLogo.
+  TEXTSCREEN
+  SPLITSCREEN
 
   MAKE "isok YESNOBOX [Question] [Is the editor showing?  If so, close it before pressing "Yes".]
   IFELSE :isok [
