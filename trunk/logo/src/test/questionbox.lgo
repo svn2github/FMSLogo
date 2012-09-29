@@ -25,6 +25,22 @@ TO QUESTIONBOXTEST.SMOKETEST
        UIAUTOMATION.POSTSTRINGTOWINDOW     [QUESTIONBOX Test] "Edit "ToBeCancelled
        UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [QUESTIONBOX Test] "Cancel
        RUNSTOPPINGTEST  [ QUESTIONBOX [QUESTIONBOX Test] [Press Cancel.] ]
+
+       ; Long title
+       LOCALMAKE "longtitle (WORD "|QUESTIONBOX Test: A | REPEATWORD "|Very, | 6 "|Long Title|)
+       UIAUTOMATION.POSTSTRINGTOWINDOW     :longtitle "Edit "Yes
+       UIAUTOMATION.POSTBUTTONPUSHTOWINDOW :longtitle "OK
+       SIMPLEREPORTTEST [ QUESTIONBOX :longtitle [If you can read the entire title, enter "Yes" and press OK.] ] [Yes]
+
+       ; Long multi-line question
+       UIAUTOMATION.POSTSTRINGTOWINDOW     [QUESTIONBOX Test] "Edit "Yes
+       UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [QUESTIONBOX Test] "OK
+       SIMPLEREPORTTEST [ QUESTIONBOX [QUESTIONBOX Test] (WORD
+         "|This line ends in a newline.| (char 10)
+         "|This line ends in a carriage return - newline sequence.| (char 13) (char 10)
+         "|This line ends in a carriage return.| (char 13)
+         "|If you can read this line, enter "Yes" and press OK.|
+       ) ] [Yes]
    ]
 
    IGNORE FAILIFERROR "QUESTIONBOXTEST.SMOKETEST
