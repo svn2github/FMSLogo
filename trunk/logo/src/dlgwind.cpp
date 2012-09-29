@@ -29,7 +29,6 @@
 #include <owl/checkbox.h>
 #include <owl/static.h>
 #include <owl/scrollba.h>
-#include <owl/inputdia.h>
 
 #endif // FMSLOGO_OWL
 
@@ -44,6 +43,7 @@
 #include "logodata.h"
 #include "logomath.h"
 #include "selectbox.h"
+#include "questionbox.h"
 
 #endif // FMSLOGO_OWL
 
@@ -253,7 +253,7 @@ public:
         TStatic(
             Parent, 
             MYSTATIC_ID, 
-            Text, 
+            Text,
             ClientRect.GetX(), 
             ClientRect.GetY(), 
             ClientRect.GetWidth(), 
@@ -2214,15 +2214,10 @@ NODE *lquestionbox(NODE *args)
         return Unbound;
     }
 
-    char str[MAX_BUFFER_SIZE];
-    str[0] = '\0';
-
-    TInputDialog dlg(
+    TQuestionBox dlg(
         MainWindowx->ScreenWindow,
         banner,
-        body,
-        str,
-        MAX_BUFFER_SIZE);
+        body);
 
     if (dlg.Execute() == IDCANCEL)
     {
@@ -2231,7 +2226,7 @@ NODE *lquestionbox(NODE *args)
         return Unbound;
     }
 
-    NODE * targ = make_strnode(str);
+    NODE * targ = make_strnode(dlg.GetAnswer());
     NODE * val = parser(targ, false);
     return val;
 }

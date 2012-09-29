@@ -28,6 +28,7 @@ II. New features/bugs fixed:
     o Fix bug #3564270; FMSLogo no longer leaks memory when saving the
       editor encounters an error which the user ignores.
     o Fix bug #3563059; "ARRAY 1073741825" no longer crashes.
+    o Fix bug #3558071; QUESTIONBOX now resizes to fit the question.
     o Fix bug #3551212; FMSLogo once again places the editor's caret at the
       first error when saving the contents fails due to a syntax error.
     o Fix bug #3150920; FMSLogo no longer leaks memory or corrupts memory

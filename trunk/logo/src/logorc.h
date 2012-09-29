@@ -141,6 +141,9 @@
 #define ID_SELECTSTARTUPINSTRUCTION_EDIT        IDC_BASE + 151
 #define ID_SELECTSTARTUPINSTRUCTION_LISTBOX     IDC_BASE + 152
 
+#define ID_QUESTIONBOX_QUESTION IDC_BASE + 160
+#define ID_QUESTIONBOX_ANSWER   IDC_BASE + 161
+
 #define CM_CONTROLHALT          CMD_BASE + 0
 #define CM_CONTROLEXECUTE       CMD_BASE + 1
 
@@ -218,6 +221,7 @@
 #define IDD_MINIEDITOR                IDD_BASE + 11
 #define IDD_SELECTBOX                 IDD_BASE + 12
 #define IDD_SELECTSTARTUPINSTRUCTION  IDD_BASE + 13
+#define IDD_QUESTIONBOX               IDD_BASE + 14
 
 
 // some key codes that are missing from Borland's WinUser.h.
