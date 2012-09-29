@@ -22,6 +22,8 @@ II. New features/bugs fixed:
   * Changed in 6.29.0
     o STATICCREATE, STATICUPDATE, YESNOBOX, MESSAGEBOX, and others no longer
       truncate their inputs at 255 character.
+    o Fix bug #3571274; SHELL, PORTOPEN, and many other procedures no longer
+      truncate their inputs based on PRINTWIDTHLIMIT or PRINTDEPTHLIMIT.
     o Fix bug #3570553; ALLOPEN no longer leaks memory.
     o Fix bug #3566411; Closing editor no longer claims that the contents
       have changed after "File->Save to Workspace" in expert mode.
