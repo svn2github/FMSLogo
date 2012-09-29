@@ -28,7 +28,7 @@ The <parameter>question</parameter> input is truncated according to the current 
 
 <para>
 The question box is automatically sized to fit <parameter>question</parameter>.
-The dialog box will NOT automatically resize to fit <parameter>question</parameter>, so keep it short.
+The question is not word-wrapped, so if you have a long question, you may want to put in some line breaks.
 </para>
 
 </listitem>
