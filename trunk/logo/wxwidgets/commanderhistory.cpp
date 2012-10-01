@@ -162,7 +162,7 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
         }
         else
         {
-            // Shift+Tab means navigate forward.
+            // Tab means navigate forward.
             Navigate(wxNavigationKeyEvent::IsForward);
         }
     }
