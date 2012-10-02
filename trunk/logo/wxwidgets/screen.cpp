@@ -578,13 +578,25 @@ void CScreen::OnKeyDown(wxKeyEvent& Event)
             // and WXK_RETURN codes for KEYBOARDON, we must
             // we must explicitly convert tabs to navigation
             // in the cases where no keyboard capture is requested.
+            int flags;
             if (Event.ShiftDown())
             {
-                Navigate(wxNavigationKeyEvent::IsBackward);
+                flags = wxNavigationKeyEvent::IsBackward;
             }
             else
             {
-                Navigate(wxNavigationKeyEvent::IsForward);
+                flags = wxNavigationKeyEvent::IsForward;
+            }
+
+            if (Event.ControlDown())
+            {
+                CFmsLogo::GetMainFrame()->KeyboardNavigateTopLevelWindow(
+                    this,
+                    flags);
+            }
+            else
+            {
+                Navigate(flags);
             }
         }
         else if (Event.GetModifiers() == wxMOD_NONE && keyCode == WXK_F1)

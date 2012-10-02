@@ -945,6 +945,77 @@ wxWindow * CMainFrame::GetTopLevelWindowForCommander()
     return m_Commander;
 }
 
+// Gives focus to the next top-level window in the top-level window order.
+// This should be called in response to processing a Ctrl+Tab keyboard
+// sequence.
+//
+// From MSWLogo, the window order is:
+//
+//   Screen -> Commander -> Editor
+//
+// CurrentWindowFocus - The window that is currently selected.
+// DirectionFlags     - wxNavigationKeyEvent::IsForward to move forward.
+//
+void
+CMainFrame::KeyboardNavigateTopLevelWindow(
+    wxWindow * CurrentWindowFocus,
+    int        DirectionFlags
+    )
+{
+    // In MSWLogo, the top-level window order is:
+    //   Screen -> Commander -> Editor
+    if (DirectionFlags & wxNavigationKeyEvent::IsForward)
+    {
+        if (CurrentWindowFocus == m_Screen)
+        {
+            if (m_CommanderIsDocked)
+            {
+                // Do nothing when the commander is docked.
+                // This is the current FMSLogo behavior and there's
+                // a separate bug to fix this.
+            }
+            else
+            {
+                m_Commander->SetFocus();
+            }
+        }
+        else if (CurrentWindowFocus == m_Commander)
+        {
+            if (m_CommanderIsDocked)
+            {
+                // Do nothing when the commander is docked.
+                // This is the current FMSLogo behavior and there's
+                // a separate bug to fix this.
+            }
+            else
+            {
+                CWorkspaceEditor * editor = GetWorkspaceEditor();
+                if (editor != NULL)
+                {
+                    // An editor exists, so give it focus
+                    editor->SetFocus();
+                }
+                else
+                {
+                    // No editor exists, so skip it and move
+                    // to the next window (the screen).
+                    m_Screen->SetFocus();
+                }
+            }
+        }
+        else
+        {
+            // If this didn't come from the commander or the screen,
+            // then it must have come from the editor.
+            m_Screen->SetFocus();
+        }
+    }
+    else
+    {
+        // MSWLogo doesn't support backward navigation.
+    }
+}
+
 void CMainFrame::OnClose(wxCloseEvent& Event)
 {
     if (Event.CanVeto())

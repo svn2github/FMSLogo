@@ -78,6 +78,7 @@ private:
     void OnHelpTopicSearch(wxCommandEvent& Event);
 
     void OnClose(wxCloseEvent& Event);
+    void OnNavigateNextWindow(wxCommandEvent& Event);
 
     // Internal helper functions
     bool CanClose();

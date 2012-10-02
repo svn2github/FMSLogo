@@ -51,6 +51,8 @@ enum
    ID_COMMANDER_EDALL,
    ID_COMMANDER_HISTORY,
    ID_COMMANDER_NEXTINSTRUCTION,
+
+   ID_COMMANDER_NEXT_WINDOW,
 };
 
 // ----------------------------------------------------------------------------
@@ -771,6 +773,19 @@ CCommanderDialog::CCommanderDialog(wxWindow * Parent)
     // Set the minimum size based on what's recommended to show
     // all of the controls in the commander.
     SetMinSize(ClientToWindowSize(m_Commander->GetRecommendedMinimumSize()));
+
+
+    // Configure the keyboard shortcuts
+    wxAcceleratorEntry acceleratorEntries[1];
+
+    // Ctrl+Tab navigates to the next window.
+    acceleratorEntries[0].Set(wxACCEL_CTRL, WXK_TAB, ID_COMMANDER_NEXT_WINDOW);
+
+    wxAcceleratorTable acceleratorTable(
+        ARRAYSIZE(acceleratorEntries),
+        acceleratorEntries);
+
+    SetAcceleratorTable(acceleratorTable);
 }
 
 CCommander * CCommanderDialog::GetCommander()
@@ -792,6 +807,14 @@ void CCommanderDialog::OnClose(wxCloseEvent& Event)
     }
 }
 
+void CCommanderDialog::OnNavigateNextWindow(wxCommandEvent& Event)
+{
+    CFmsLogo::GetMainFrame()->KeyboardNavigateTopLevelWindow(
+        this,
+        wxNavigationKeyEvent::IsForward);
+}
+
 BEGIN_EVENT_TABLE(CCommanderDialog, wxDialog)
     EVT_CLOSE(CCommanderDialog::OnClose)
+    EVT_MENU(ID_COMMANDER_NEXT_WINDOW, CCommanderDialog::OnNavigateNextWindow)
 END_EVENT_TABLE()

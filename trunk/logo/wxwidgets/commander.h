@@ -89,12 +89,13 @@ private:
 class CCommanderDialog : public wxDialog
 {
 public:
-    CCommanderDialog(wxWindow *parent);
+    CCommanderDialog(wxWindow *Parent);
     CCommander * GetCommander();
 
 private:
     // event handlers
-    void OnClose(wxCloseEvent& event);
+    void OnClose(wxCloseEvent& Event);
+    void OnNavigateNextWindow(wxCommandEvent& Event);
 
     // member variables
     CCommander * m_Commander;

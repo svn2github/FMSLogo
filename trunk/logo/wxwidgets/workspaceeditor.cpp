@@ -47,6 +47,8 @@ enum
 
     ID_FINDMATCHINGPAREN,
     ID_SELECTMATCHINGPAREN,
+
+    ID_NEXT_WINDOW,
 };
 
 BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
@@ -98,6 +100,8 @@ BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
     EVT_FIND_REPLACE(wxID_ANY,     CWorkspaceEditor::OnFindDialogReplace)
     EVT_FIND_REPLACE_ALL(wxID_ANY, CWorkspaceEditor::OnFindDialogReplaceAll)
     EVT_FIND_CLOSE(wxID_ANY,       CWorkspaceEditor::OnFindDialogClose)
+
+    EVT_MENU(ID_NEXT_WINDOW, CWorkspaceEditor::OnNavigateNextWindow)
 END_EVENT_TABLE()
 
 
@@ -221,7 +225,7 @@ CWorkspaceEditor::CWorkspaceEditor(
     m_LogoCodeControl->SetFont(font);
 
     // Configure the keyboard shortcuts
-    wxAcceleratorEntry acceleratorEntries[2];
+    wxAcceleratorEntry acceleratorEntries[3];
 
     // Ctrl+] moves to matching paren
     acceleratorEntries[0].Set(
@@ -234,6 +238,12 @@ CWorkspaceEditor::CWorkspaceEditor(
         wxACCEL_CTRL | wxACCEL_SHIFT,
         KEY_CODE_CLOSE_BRACKET,
         ID_SELECTMATCHINGPAREN);
+
+    // Ctrl+Tab navigates to the next window.
+    acceleratorEntries[2].Set(
+        wxACCEL_CTRL,
+        WXK_TAB,
+        ID_NEXT_WINDOW);
 
     wxAcceleratorTable acceleratorTable(
         ARRAYSIZE(acceleratorEntries),
@@ -997,4 +1007,11 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
 
     // Perform the default processing, which will destroy the window.
     Event.Skip();
+}
+
+void CWorkspaceEditor::OnNavigateNextWindow(wxCommandEvent& Event)
+{
+    CFmsLogo::GetMainFrame()->KeyboardNavigateTopLevelWindow(
+        this,
+        wxNavigationKeyEvent::IsForward);
 }

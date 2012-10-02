@@ -47,6 +47,12 @@ public:
 
     CWorkspaceEditor * GetWorkspaceEditor();
 
+    void
+    KeyboardNavigateTopLevelWindow(
+        wxWindow * CurrentWindowFocus,
+        int        DirectionFlags
+        );
+
     bool
     PromptUserForInput(
         char       * Output,
