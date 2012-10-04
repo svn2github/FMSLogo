@@ -17,7 +17,7 @@ SCREENSAVERS = $(addprefix screensaver/fmslogo-, $(addsuffix .scr, $(LCIDS)))
 .SECONDARY : $(MANUALS) $(EXES) $(SCREENSAVERS) setup/fmslogo.exe $(BINARYEXE) $(BINARYZIP) $(SOURCEZIP)
 
 # top level targets
-binaryexe : $(BINARYEXE) ;
+binaryexe : $(BINARYEXE) $(WXBINARYEXE) ;
 binaryzip : $(BINARYZIP) ;
 sourcezip : $(SOURCEZIP) ;
 all : sourcezip binaryzip binaryexe;
@@ -75,10 +75,11 @@ $(SOURCEZIP) :
 	$(RM) $(shell /usr/bin/find -name '*~')
 	$(RM) $(shell /usr/bin/find -name '*.obj')
 	$(RM) $(shell /usr/bin/find -name '*.bak')
-	zip -r -9 -X $@ Makefile lcids.mk version.mk HOWTO-BUILD.txt src screensaver manual setup -x $(ZIPEXCLUDE)
+	zip -r -9 -X $@ Makefile lcids.mk version.mk HOWTO-BUILD.txt src screensaver manual setup wxwidgets -x $(ZIPEXCLUDE)
 
 clean :
 	-$(MAKE) -C src         $@
 	-$(MAKE) -C manual      $@
 	-$(MAKE) -C screensaver $@
 	-$(MAKE) -C setup       $@
+	-$(MAKE) -C wxwidgets   $@
