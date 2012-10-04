@@ -187,7 +187,6 @@ RunLogoInstructionFromGui(
 
 bool promptuser(char *str, const char *prompt)
 {
-    *str = '\0';
     if (MainWindowx->MyPopupInput(str, prompt))
     {
         return true;

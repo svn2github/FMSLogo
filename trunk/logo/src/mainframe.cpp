@@ -20,7 +20,6 @@
 
 #include <owl/compat.h>
 #include <owl/scroller.h>
-#include <owl/inputdia.h>
 #include <owl/printer.h>
 #include <shlobj.h>
 
@@ -43,6 +42,7 @@ const DWORD INVALID_FILE_ATTRIBUTES = 0xFFFFFFFF;
 #include "logodata.h"
 #include "activearea.h"
 #include "screenwindow.h"
+#include "questionbox.h"
 
 #include "devwind.h"
 #include "dlgwind.h"
@@ -1588,18 +1588,21 @@ int TMainFrame::PopupEditorForFile(const char *FileName, NODE *args)
 bool TMainFrame::MyPopupInput(char *Output, const char *Prompt)
 {
     // get user input
-
-    if (TInputDialog(
-            this, 
-            Prompt, 
-            LOCALIZED_INPUT, 
-            Output, 
-            MAX_BUFFER_SIZE).Execute() == IDOK)
+    TQuestionBox dlg(
+        MainWindowx->ScreenWindow,
+        Prompt,
+        LOCALIZED_INPUT);
+    if (dlg.Execute() == IDOK)
     {
+        // copy as much of the string as we can to the output buffer.
+        strncpy(Output, dlg.GetAnswer(), MAX_BUFFER_SIZE);
+        Output[MAX_BUFFER_SIZE - 1] = '\0';
         return true;
     }
     else
     {
+        // Always NUL-terminate the output string.
+        Output[0] = '\0';
         return false;
     }
 }
