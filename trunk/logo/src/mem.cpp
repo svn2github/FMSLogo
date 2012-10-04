@@ -130,6 +130,8 @@ NODE *unref(NODE *ret_var)
 static
 void addseg()
 {
+    // TODO: Change SEG_SIZE=1 when MEM_DEBUG to be able to merge
+    // the two difference code blocks.
 #ifdef MEM_DEBUG
     // allocate the nodes one at a time
     NODE* new_node = (NODE*) malloc(sizeof(*new_node));
@@ -142,13 +144,14 @@ void addseg()
     }
 #else
 
-    // Allocate a large block of nodes at one time
-    // and link them into the free_list.
+    // Update the number of segments that were allocated.
     memory_count++;
     update_status_memory();
 
-    struct segment *newseg;
-    if ((newseg = (segment *) malloc(sizeof(*newseg))) != NULL)
+    // Allocate a large block of nodes at one time
+    // and link them into the free_list.
+    segment *newseg = (segment *) malloc(sizeof(*newseg));
+    if (newseg != NULL)
     {
         newseg->next = segment_list;
         segment_list = newseg;
@@ -163,35 +166,46 @@ void addseg()
 
 NODE *newnode(NODETYPES type)
 {
-    NODE *newnd;
-
-    // include for debugging leaks
-    //    memory_count++;
-    //    update_status_memory();
-
-    if ((newnd = free_list) == NIL)
+    // Make sure that there's a node on the free list
+    if (free_list == NIL)
     {
+        // There's nothing on the free list.
+        // Try to allocate a new segment
         addseg();
-        if ((newnd = free_list) == NIL)
+        if (free_list == NIL)
         {
+            // There's still nothing.
+            // Raise an error and see if the ERRACT
+            // routine free any nodes.
             err_logo(OUT_OF_MEM, NIL);
-            if ((newnd = free_list) == NIL)
+            if (free_list == NIL)
             {
+                // We're out of options.
+                // Log an unrecoverable error, which will exit.
                 err_logo(OUT_OF_MEM_UNREC, NIL);
             }
         }
     }
+
+    // Pop the top node off the free list and use it.
+    NODE *newnd = free_list;
     free_list = newnd->nunion.ncons.ncdr;
+
+    // Initialize the new node
     settype(newnd, type);
     newnd->ref_count = 0;
     newnd->nunion.ncons.ncar = NIL;
     newnd->nunion.ncons.ncdr = NIL;
     newnd->nunion.ncons.nobj = NIL;
+
+    // Note the creation of this node for the next call to NODES
     mem_nodes++;
     if (mem_nodes > mem_max) 
     {
         mem_max = mem_nodes;
     }
+
+    // Return the new node
     return newnd;
 }
 
@@ -368,6 +382,8 @@ private:
 
 void gc(NODE *nd)
 {
+    assert(nd != NULL);
+
     CGarbageCollectionStack gc_deferred_list;
 
     gc_deferred_list.Initialize();
