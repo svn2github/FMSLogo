@@ -6,15 +6,19 @@ TO DLL.SMOKETEST
 
   ; Get Handle to Main Window (Note args are in REVERSE order)
   LOCALMAKE "hwnd DLLCALL [l FindWindowA s FMSLogo l 0]
+  IFELSE :hwnd = 0 [
+     ; FindWindow() failed, so this test cannot continue.
+     REPORTTESTFAILED "|FindWindowA() for FMSLogo returned a NULL HWND.|
+  ][
+    ; Resize Main Window (should return TRUE)
+    SIMPLEREPORTTEST [ DLLCALL (LIST "l "MoveWindow "w "1 "l "100 "l "100 "l "0 "l "0 "l :hwnd) ] [1]
 
-  ; Resize Main Window (should return TRUE)
-  SIMPLEREPORTTEST [ DLLCALL (LIST "l "MoveWindow "w "1 "l "100 "l "100 "l "0 "l "0 "l :hwnd) ] [1]
+    WAIT 30
 
-  WAIT 30
+    ; Restore Main Window (using captial letters for type specifiers)
+    SIMPLEREPORTTEST [ DLLCALL (LIST "L "MoveWindow "W 1 "L 600 "L 800 "L 0 "L 0 "L :hwnd) ] [1]
+  ]
 
-  ; Restore Main Window (using captial letters for type specifiers)
-  SIMPLEREPORTTEST [ DLLCALL (LIST "L "MoveWindow "W 1 "L 600 "L 800 "L 0 "L 0 "L :hwnd) ] [1]
-  
   DLLFREE
 END
 
