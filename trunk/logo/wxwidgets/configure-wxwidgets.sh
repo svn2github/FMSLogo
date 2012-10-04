@@ -36,12 +36,16 @@ then
   rm configarg.cache
 fi
 
-
 if [ "$DEBUG" == "1" ];
 then
   export ADDITIONAL_OPTIONS="--enable-debug --enable-debug_gdb --enable-debug_info --disable-optimise"
 else
   export ADDITIONAL_OPTIONS="--disable-debug --enable-optimise"
+fi
+
+if [ "$PROFILE" == "1" ];
+then
+export ADDITIONAL_OPTIONS="$ADDITIONAL_OPTIONS --enable-profile"
 fi
 
 ./configure                       \
@@ -56,6 +60,7 @@ fi
     --enable-monolithic           \
     --disable-shared              \
     --disable-statusbar           \
+    --disable-catch_segvs         \
     --disable-toolbar             \
     --disable-aui                 \
     --disable-toolbook            \
@@ -64,6 +69,7 @@ fi
     --disable-tooltips            \
     --disable-sockets             \
     --disable-aboutdlg            \
+    --disable-protocol            \
     --disable-protocols           \
     --disable-protocol-http       \
     --disable-protocol-ftp        \
@@ -78,17 +84,36 @@ fi
     --disable-tarstream           \
     --disable-mdi                 \
     --disable-tipdlg              \
+    --disable-tipwindow           \
     --disable-largefile           \
     --disable-tga                 \
     --disable-pcx                 \
     --disable-iff                 \
     --disable-pnm                 \
     --disable-png                 \
+    --disable-gif                 \
     --disable-xrc                 \
     --disable-zipstream           \
     --disable-wizarddlg           \
     --disable-threads             \
     --disable-docview             \
+    --disable-help                \
+    --disable-ole                 \
+    --disable-clipboard           \
+    --disable-metafile            \
+    --disable-dnd                 \
+    --disable-dragimage           \
+    --disable-miniframe           \
+    --disable-calendar            \
+    --disable-datepick            \
+    --disable-logwindow           \
+    --disable-logdialog           \
+    --disable-listbook            \
+    --disable-numberdlg           \
+    --disable-progressdlg         \
+    --disable-postscript          \
+    --disable-splines             \
+    --disable-unicode             \
     --enable-no_deps              \
     --disable-dependency-tracking \
     --host=i686-pc-mingw32        \
