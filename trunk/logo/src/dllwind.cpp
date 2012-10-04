@@ -469,6 +469,8 @@ NODE *ldllcall(NODE *args)
         return Unbound;
     }
 
+    const char returnType = fkind.GetString()[0];
+
     // BUG: Both of these stacks, values and parameters, can be overflowed.
     // This should be fixed, but it's not a problem in practice because
     // any malformed call to DLLCALL can also corrupt memory and it's
@@ -538,9 +540,12 @@ NODE *ldllcall(NODE *args)
         pushl(parameters[j]);
     }
 
+    // IMPORTANT: From here until we call theFunc, there cannot be any
+    // instructions that would change the stack pointer, such as calling
+    // a function.
 
-    char areturn[MAX_BUFFER_SIZE] = {0};
-    switch (fkind.GetString()[0])
+    char areturn[MAX_BUFFER_SIZE];
+    switch (returnType)
     {
     case 'w':
     case 'W':
@@ -589,6 +594,7 @@ NODE *ldllcall(NODE *args)
                   
     default:
         err_logo(DLL_INVALID_OUTPUT_TYPE, NIL);
+        areturn[0] = '\0';
         break;
     }
 
