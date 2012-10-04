@@ -45,7 +45,14 @@ TOOLCHAIN_FULLNAME = msw-ansi-debug-static-2.8
 else
 CPPFLAGS = -DNDEBUG
 CXXFLAGS = -O2
-LDFLAGS  = -s -lwx_msw_stc-2.8 -lwx_msw-2.8 
+LDFLAGS  = -lwx_msw_stc-2.8 -lwx_msw-2.8 
+
+ifneq "$(PROFILE)" "1"
+# On retail builds, strip symbols unless we need them for profiling.
+# CONSIDER: using a separate variable for offiical releases to strip. 
+LDFLAGS  += -s
+endif
+
 TOOLCHAIN_FULLNAME = msw-ansi-release-static-2.8
 endif
 
@@ -56,15 +63,22 @@ LDFLAGS  += -mwindows
 TOOLKIT = MSW
 TOOLKIT_LOWERCASE = msw
 TOOLKIT_VERSION = 
-EXTRALIBS = -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lcomctl32 -lcomdlg32 -lctl3d32 -ladvapi32 -lwsock32 -lgdi32 -lkernel32 -luser32 -limm32 -static-libgcc -static-libstdc++
+EXTRALIBS = -static-libgcc -static-libstdc++ -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lcomctl32 -lcomdlg32 -lctl3d32 -ladvapi32 -lwsock32 -lgdi32 -luser32 -limm32 
 
 MANUAL = logohelp.chm
 
 endif
 
+# Setup the build for profiling, if requested.
+ifeq "$(PROFILE)" "1"
+CFLAGS   += -pg
+CXXFLAGS += -pg
+LDFLAGS  += -pg
+endif
+
 INCLUDES = . $(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) $(wx_top_builddir)/include $(wx_top_builddir)/contrib/include ../src
 CPPFLAGS += -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES $(addprefix -I, $(INCLUDES))
-CXXFLAGS += -Wall -Wundef -Wno-ctor-dtor-privacy  -fno-strict-aliasing
+CXXFLAGS += -Wall -Wundef -Wno-ctor-dtor-privacy -fno-strict-aliasing
 CXXFLAGS += -DFMSLOGO_WXWIDGETS
 CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
 CXXFLAGS += -I"/cygdrive/c/Program Files/HTML Help Workshop/include"
