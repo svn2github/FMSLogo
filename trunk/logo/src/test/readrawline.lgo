@@ -18,7 +18,7 @@ TO READRAWLINETEST.READRAWLINEFROMUI :wordtoread
        make "theword READRAWLINE
    ]
 
-   IGNORE FAILIFERROR (word "UI "Automation "to "read :wordtoread)
+   IGNORE FAILIFERROR (list "UI "Automation "to "read :wordtoread)
 
    UIAUTOMATION.UNINITIALIZE
 

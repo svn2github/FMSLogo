@@ -18,7 +18,7 @@ TO READWORDTEST.READWORDFROMUI :wordtoread
        make "theword READWORD
    ]
 
-   IGNORE FAILIFERROR (word "UI "Automation "to "read :wordtoread)
+   IGNORE FAILIFERROR (list "UI "Automation "to "read :wordtoread)
 
    UIAUTOMATION.UNINITIALIZE
 
