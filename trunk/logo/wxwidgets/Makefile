@@ -99,80 +99,80 @@ LIBDIRNAME = $(wx_top_builddir)/lib
 CXXFLAGS  += -D__WX$(TOOLKIT)__ $(CPPFLAGS)
 
 OBJECTS =                      \
-    mainframe.o                \
-    commander.o                \
+    3dsolid.o                  \
+    LexFmsLogo.o               \
     aboutfmslogo.o             \
     aboutmultiplesclerosis.o   \
-    setactivearea.o            \
-    workspaceeditor.o          \
-    guiutils.o                 \
-    fmslogo.o                  \
-    logocodectrl.o             \
-    logodialogboxes.o          \
-    setpensize.o               \
-    statusdialog.o             \
-    savebeforeexitdialog.o     \
-    screen.o                   \
+    activearea.o               \
+    appendablelist.o           \
+    argumentutils.o            \
+    assembly.o                 \
+    commander.o                \
     commanderbutton.o          \
-    commandertogglebutton.o    \
-    commanderinput.o           \
     commanderhistory.o         \
-    selectstartupinstruction.o \
-    selectproceduredialog.o    \
+    commanderinput.o           \
+    commandertogglebutton.o    \
+    coms.o                     \
+    cursor.o                   \
+    devwind.o                  \
+    dib.o                      \
+    dllwind.o                  \
+    dynamicbuffer.o            \
     editproceduredialog.o      \
     eraseproceduredialog.o     \
+    error.o                    \
+    eval.o                     \
+    files.o                    \
+    fileswnd.o                 \
+    fmslogo.o                  \
+    fontutils.o                \
+    gbm.o                      \
+    gbmbmp.o                   \
+    gbmgif.o                   \
+    gbmhelp.o                  \
+    gbmsize.o                  \
+    graphics.o                 \
+    graphwin.o                 \
+    guiutils.o                 \
+    helputils.o                \
+    ibmterm.o                  \
+    init.o                     \
+    intern.o                   \
+    lists.o                    \
+    localizednode.o            \
+    logocodectrl.o             \
+    logodata.o                 \
+    logodialogboxes.o          \
+    logoeventqueue.o           \
+    logomath.o                 \
+    mainframe.o                \
+    mainwind.o                 \
+    mem.o                      \
+    messagebox.o               \
     minieditor.o               \
     minieditortextctrl.o       \
-    fontutils.o                \
-    helputils.o                \
-    utils.o                    \
+    mmwind.o                   \
+    netwind.o                  \
+    paren.o                    \
+    parse.o                    \
+    print.o                    \
+    savebeforeexitdialog.o     \
+    screen.o                   \
+    selectproceduredialog.o    \
+    selectstartupinstruction.o \
+    setactivearea.o            \
     setcolor.o                 \
-    3dsolid.o           \
-    activearea.o        \
-    appendablelist.o    \
-    argumentutils.o     \
-    assembly.o          \
-    coms.o              \
-    cursor.o            \
-    devwind.o           \
-    dib.o               \
-    dllwind.o           \
-    dynamicbuffer.o     \
-    error.o             \
-    eval.o              \
-    files.o             \
-    fileswnd.o          \
-    gbm.o               \
-    gbmbmp.o            \
-    gbmhelp.o           \
-    gbmgif.o            \
-    gbmsize.o           \
-    graphics.o          \
-    graphwin.o          \
-    ibmterm.o           \
-    init.o              \
-    intern.o            \
-    lists.o             \
-    localizednode.o     \
-    logodata.o          \
-    logoeventqueue.o    \
-    logomath.o          \
-    mainwind.o          \
-    mem.o               \
-    messagebox.o        \
-    mmwind.o            \
-    netwind.o           \
-    paren.o             \
-    parse.o             \
-    print.o             \
-    startup.o           \
-    stringprintednode.o \
-    term.o              \
-    threed.o            \
-    unix.o              \
-    vector.o            \
-    wrksp.o             \
-    LexFmsLogo.o        \
+    setpensize.o               \
+    startup.o                  \
+    statusdialog.o             \
+    stringprintednode.o        \
+    term.o                     \
+    threed.o                   \
+    unix.o                     \
+    utils.o                    \
+    vector.o                   \
+    workspaceeditor.o          \
+    wrksp.o                    \
 
 ifeq "$(TOOLKIT)" "MSW"
 OBJECTS +=       \
@@ -250,8 +250,7 @@ endef
 
 $(foreach lcid,$(LCIDS),$(eval $(call FMSLOGO_template,$(lcid))))
 
-
 # Include dependency info, if present:
 -include .deps/*.d
 
-.PHONY: all install uninstall clean default
+.PHONY: all clean default
