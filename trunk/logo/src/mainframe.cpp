@@ -1585,26 +1585,19 @@ int TMainFrame::PopupEditorForFile(const char *FileName, NODE *args)
 }
 
 
-bool TMainFrame::MyPopupInput(char *Output, const char *Prompt)
+char * TMainFrame::MyPopupInput(const char *Prompt)
 {
     // get user input
     TQuestionBox dlg(
         MainWindowx->ScreenWindow,
         Prompt,
         LOCALIZED_INPUT);
-    if (dlg.Execute() == IDOK)
+    if (dlg.Execute() != IDOK)
     {
-        // copy as much of the string as we can to the output buffer.
-        strncpy(Output, dlg.GetAnswer(), MAX_BUFFER_SIZE);
-        Output[MAX_BUFFER_SIZE - 1] = '\0';
-        return true;
+        return NULL;
     }
-    else
-    {
-        // Always NUL-terminate the output string.
-        Output[0] = '\0';
-        return false;
-    }
+
+    return strdup(dlg.GetAnswer());
 }
 
 void

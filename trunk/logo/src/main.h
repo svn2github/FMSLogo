@@ -36,7 +36,7 @@ extern void ShowErrorMessage(ERR_TYPES ErrorCode);
 extern void RunLogoInstructionFromGui(char * LogoInstruction);
 extern void putcombobox(const char *str);
 extern void clearcombobox(void);
-extern bool promptuser(char *str, const char *prompt);
+extern char * promptuser(const char *prompt);
 extern void ChangeActivePenColor(int Red, int Green, int Blue);
 extern void ChangeActiveFloodColor(int Red, int Green, int Blue);
 extern void ChangeActiveScreenColor(int Red, int Green, int Blue);

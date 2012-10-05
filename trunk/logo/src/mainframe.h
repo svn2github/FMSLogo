@@ -110,7 +110,7 @@ public:
 
     void MyPopupStatus();
     void MyPopupStatusKill();
-    bool MyPopupInput(char *str, const char *prompt);
+    char * MyPopupInput(const char *prompt);
 
     void FixWindowTitle();
     void UndockCommanderWindow();

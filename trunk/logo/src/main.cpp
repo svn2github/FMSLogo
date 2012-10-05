@@ -185,18 +185,9 @@ RunLogoInstructionFromGui(
     }
 }
 
-bool promptuser(char *str, const char *prompt)
+char * promptuser(const char *prompt)
 {
-    if (MainWindowx->MyPopupInput(str, prompt))
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-        // if (!is_executing()) IsTimeToHalt = true;
-        // MainWindowx->CommandWindow->PostMessage(WM_COMMAND, ID_HALT, ID_HALT);
-    }
+    return MainWindowx->MyPopupInput(prompt);
 }
 
 void single_step_box(NODE *the_line)

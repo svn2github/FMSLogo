@@ -1,6 +1,8 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
 * Changed in 6.29.0
+  o QUESTIONBOX, READCHAR, READCHARS, READWORD, READRAWLINE, and READLIST
+    no longer limit the user's input to 255 characters.
   o STATICCREATE, STATICUPDATE, YESNOBOX, MESSAGEBOX, and others no longer
     truncate their inputs at 255 character.
   o Fix bug #3571274; SHELL, PORTOPEN, and many other procedures no longer

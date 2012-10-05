@@ -41,10 +41,11 @@ using namespace std;
 #include "mem.h"
 #include "logomath.h"
 #include "appendablelist.h"
+#include "stringprintednode.h"
 #include "graphics.h"
-#include "debugheap.h"
 #include "screenwindow.h"
 #include "localizedstrings.h"
+#include "debugheap.h"
 
 FILE *loadstream = stdin;
 FILE *dribblestream = NULL;
@@ -242,42 +243,55 @@ int rd_getc(FILE *strm)
             // the buffer is empty, so we should read more
             switch (input_mode)
             {
-                char tmpbuffer[MAX_BUFFER_SIZE];
+                char * userInput;
 
             case INPUTMODE_To:
-                cnv_strnode_string(tmpbuffer, g_ToLine);
-                ShowProcedureMiniEditor(tmpbuffer, g_ReadBuffer);
-                break;
+                {
+                    CStringPrintedNode parsedToLine(g_ToLine);
+                    ShowProcedureMiniEditor(parsedToLine, g_ReadBuffer);
+                    break;
+                }
 
             case INPUTMODE_List:
-                if (!promptuser(tmpbuffer, LOCALIZED_PROMPT_LIST))
+                userInput = promptuser(LOCALIZED_PROMPT_LIST);
+                if (userInput == NULL)
                 {
                     // Halt when done
                     err_logo(STOP_ERROR, NIL);
                 }
-                g_ReadBuffer.AppendString(tmpbuffer);
+                else
+                {
+                    g_ReadBuffer.AppendString(userInput);
+                    free(userInput);
+                }
                 break;
 
             case INPUTMODE_Pause:
-                if (!promptuser(tmpbuffer, LOCALIZED_PROMPT_PAUSE))
+                userInput = promptuser(LOCALIZED_PROMPT_PAUSE);
+                if (userInput == NULL)
                 {
                     // continue when done
-                    g_ReadBuffer.AppendString(tmpbuffer);
                     g_ReadBuffer.AppendString("continue");
                 }
                 else
                 {
-                    g_ReadBuffer.AppendString(tmpbuffer);
+                    g_ReadBuffer.AppendString(userInput);
+                    free(userInput);
                 }
                 break;
 
             case INPUTMODE_None:
-                if (!promptuser(tmpbuffer, LOCALIZED_PROMPT_INPUT))
+                userInput = promptuser(LOCALIZED_PROMPT_INPUT);
+                if (userInput == NULL)
                 {
                     // Halt when done
                     err_logo(STOP_ERROR, NIL);
                 }
-                g_ReadBuffer.AppendString(tmpbuffer);
+                else
+                {
+                    g_ReadBuffer.AppendString(userInput);
+                    free(userInput);
+                }
                 break;
             }
 
