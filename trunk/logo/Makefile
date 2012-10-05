@@ -83,3 +83,4 @@ clean :
 	-$(MAKE) -C screensaver $@
 	-$(MAKE) -C setup       $@
 	-$(MAKE) -C wxwidgets   $@
+	$(RM) $(wildcard *~)
