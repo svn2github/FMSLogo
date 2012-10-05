@@ -51,6 +51,8 @@ fi
 ./configure                       \
     $ADDITIONAL_OPTIONS           \
     --with-msw                    \
+    --disable-rtti                \
+    --disable-exceptions          \
     --with-expat=no               \
     --with-regex=no               \
     --with-libpng=no              \
@@ -86,6 +88,9 @@ fi
     --disable-tipdlg              \
     --disable-tipwindow           \
     --disable-largefile           \
+    --disable-animatectrl         \
+    --disable-dynamicloader       \
+    --disable-display             \
     --disable-tga                 \
     --disable-pcx                 \
     --disable-iff                 \
@@ -98,8 +103,6 @@ fi
     --disable-threads             \
     --disable-docview             \
     --disable-help                \
-    --disable-ole                 \
-    --disable-clipboard           \
     --disable-metafile            \
     --disable-dnd                 \
     --disable-dragimage           \
@@ -112,8 +115,11 @@ fi
     --disable-numberdlg           \
     --disable-progressdlg         \
     --disable-postscript          \
+    --disable-cmdline             \
+    --disable-mimetype            \
     --disable-splines             \
     --disable-unicode             \
+    --disable-sysoptions          \
     --enable-no_deps              \
     --disable-dependency-tracking \
     --host=i686-pc-mingw32        \
