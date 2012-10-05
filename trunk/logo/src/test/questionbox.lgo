@@ -21,6 +21,12 @@ TO QUESTIONBOXTEST.SMOKETEST
        UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [QUESTIONBOX Test] "OK
        SIMPLEREPORTTEST [ QUESTIONBOX [QUESTIONBOX Test] [Enter "Hi Bye" and press OK. ] ] [Hi Bye]
 
+       ; enter a lot of text and press OK
+       LOCALMAKE "longanswer (WORD "This\ is\ a\ (REPEATWORD "very,\  100) "long\ answer.)
+       UIAUTOMATION.POSTSTRINGTOWINDOW     [QUESTIONBOX Test] "Edit :longanswer
+       UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [QUESTIONBOX Test] "OK
+       SIMPLEREPORTTEST [ QUESTIONBOX [QUESTIONBOX Test] [Enter the very long answer and press OK. ] ] (RUNPARSE :longanswer)
+
        ; press Cancel
        UIAUTOMATION.POSTSTRINGTOWINDOW     [QUESTIONBOX Test] "Edit "ToBeCancelled
        UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [QUESTIONBOX Test] "Cancel
