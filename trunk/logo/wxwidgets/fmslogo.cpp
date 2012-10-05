@@ -620,18 +620,7 @@ void single_step_box(NODE * the_line)
 
 bool promptuser(char *str, const char *prompt)
 {
-    *str = '\0';
-    if (CFmsLogo::GetMainFrame()->PromptUserForInput(str, prompt))
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-        // if (!is_executing()) IsTimeToHalt = true;
-        // MainWindowx->CommandWindow->PostMessage(WM_COMMAND, ID_HALT, ID_HALT);
-    }
-    return false;
+    return CFmsLogo::GetMainFrame()->PromptUserForInput(str, prompt);
 }
 
 HWND GetScreenWindow()
