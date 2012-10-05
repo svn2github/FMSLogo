@@ -204,6 +204,8 @@ logohelp.chm : ../manual/logohelp-1033.chm
 # The "all" target is used to build all locales.
 all : $(addsuffix $(EXEEXT),$(addprefix fmslogo-,$(LCIDS)));
 
+../src/version.h : ../version.mk
+	../src/generate-version.bat $(FMSLOGO_MAJOR_VERSION) $(FMSLOGO_MINOR_VERSION) $(FMSLOGO_MICRO_VERSION) $(FMSLOGO_VERSION_SUFFIX)
 
 
 clean: 
@@ -225,16 +227,16 @@ define FMSLOGO_template
 fmslogo-$(1)$$(EXEEXT) : $$(addprefix obj/$(1)-,$$(OBJECTS))
 	$(CXX) -o $$@ $$^ $(LDFLAGS) -L$(LIBDIRNAME) $(LIBS) $(EXTRALIBS)
 
-obj/$(1)-%.o : %.cpp
+obj/$(1)-%.o : %.cpp ../src/version.h
 	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
 
-obj/$(1)-%.o : ../src/%.cpp
+obj/$(1)-%.o : ../src/%.cpp ../src/version.h
 	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
 
 obj/$(1)-%.o : ../src/scintilla/src/%.cxx
 	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 -I../src/scintilla/include $$<
 
-obj/$(1)-%_rc.o : %.rc
+obj/$(1)-%_rc.o : %.rc ../src/version.h
 	$(WINDRES) -i$$< -o$$@ -DLOCALE=$1 --define __WX$(TOOLKIT)__ $(addprefix --include-dir ,$(INCLUDES))
 
 
