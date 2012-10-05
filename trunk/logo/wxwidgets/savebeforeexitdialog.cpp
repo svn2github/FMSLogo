@@ -60,11 +60,7 @@ CSaveBeforeExitDialog::CSaveBeforeExitDialog(wxWindow *Parent)
 
     topLevelSizer->Add(buttonSizer, 0, wxALIGN_RIGHT | wxALL, 5);
 
-
-    SetSizer(topLevelSizer);
-
-    topLevelSizer->SetSizeHints(this);
-    topLevelSizer->Fit(this);
+    SetSizerAndFit(topLevelSizer);
 
     // Make the "Save and Exit" button the default.
     saveAndExitButton->SetDefault();
