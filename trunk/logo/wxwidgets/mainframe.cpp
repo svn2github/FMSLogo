@@ -1099,8 +1099,7 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
         {
             CSaveBeforeExitDialog saveChangesDialog(this);
 
-            saveChangesDialog.ShowModal();
-            int exitCode = saveChangesDialog.GetReturnCode();
+            int exitCode = saveChangesDialog.ShowModal();
             switch (exitCode)
             {
             case CSaveBeforeExitDialog::SAVEBEFOREEXIT_Cancel:
