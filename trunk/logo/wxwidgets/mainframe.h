@@ -53,9 +53,8 @@ public:
         int        DirectionFlags
         );
 
-    bool
+    char *
     PromptUserForInput(
-        char       * Output,
         const char * Prompt
         );
 

@@ -612,9 +612,9 @@ void single_step_box(NODE * the_line)
     }
 }
 
-bool promptuser(char *str, const char *prompt)
+char * promptuser(const char *prompt)
 {
-    return CFmsLogo::GetMainFrame()->PromptUserForInput(str, prompt);
+    return CFmsLogo::GetMainFrame()->PromptUserForInput(prompt);
 }
 
 HWND GetScreenWindow()

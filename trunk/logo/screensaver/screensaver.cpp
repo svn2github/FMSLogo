@@ -657,9 +657,9 @@ void putcombobox(const char *str)
     g_NextTextLine += size.cy + 10;
 }
 
-bool promptuser(char *str, const char *prompt)
+char * promptuser(const char *prompt)
 {
-    return false;
+    return NULL;
 }
 
 HWND GetScreenWindow()

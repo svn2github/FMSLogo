@@ -735,26 +735,18 @@ CMainFrame::CreateWorkspaceEditor(
     return editor;
 }
 
-bool CMainFrame::PromptUserForInput(char *Output, const char *Prompt)
+char * CMainFrame::PromptUserForInput(const char *Prompt)
 {
     // prompt the user for input
     CQuestionBox questionBox(this, Prompt, LOCALIZED_INPUT);
     int exitCode = questionBox.ShowModal();
     if (exitCode != wxID_OK)
     {
-        // Always NUL-terminate the string, even on error.
-        Output[0] = '\0';
-        return false;
+        return NULL;
     }
 
     // Copy the user input to the Output string
-    strncpy(
-        Output,
-        questionBox.GetAnswer().c_str(),
-        MAX_BUFFER_SIZE);
-    Output[MAX_BUFFER_SIZE - 1] = '\0';
-
-    return true;
+    return strdup(questionBox.GetAnswer().c_str());
 }
 
 void
