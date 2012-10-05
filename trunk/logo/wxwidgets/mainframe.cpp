@@ -23,7 +23,6 @@
 
     #include <wx/dcmemory.h>
 
-    #include <wx/textdlg.h>  // for wxGetTextFromUser
     #include <wx/fontutil.h> // for wxNativeFontInfo
     #include <wx/msgdlg.h>   // for wxMessageBox
 #endif
@@ -69,6 +68,8 @@
 #include "startup.h"
 #include "fontutils.h"
 #include "netwind.h"
+#include "questionbox.h"
+#include "debugheap.h"
 
 // ----------------------------------------------------------------------------
 // CMainFrame::CLogoPicturePrintout
@@ -736,23 +737,23 @@ CMainFrame::CreateWorkspaceEditor(
 
 bool CMainFrame::PromptUserForInput(char *Output, const char *Prompt)
 {
-    // get user input
-    const wxString userInput = wxGetTextFromUser(
-        LOCALIZED_INPUT,
-        Prompt,
-        wxEmptyString,
-        this);
-    if (userInput.IsEmpty())
+    // prompt the user for input
+    CQuestionBox questionBox(this, Prompt, LOCALIZED_INPUT);
+    int exitCode = questionBox.ShowModal();
+    if (exitCode != wxID_OK)
     {
+        // Always NUL-terminate the string, even on error.
+        Output[0] = '\0';
         return false;
     }
 
     // Copy the user input to the Output string
     strncpy(
         Output,
-        userInput.c_str(),
-        MAX_BUFFER_SIZE - 1);
+        questionBox.GetAnswer().c_str(),
+        MAX_BUFFER_SIZE);
     Output[MAX_BUFFER_SIZE - 1] = '\0';
+
     return true;
 }
 
