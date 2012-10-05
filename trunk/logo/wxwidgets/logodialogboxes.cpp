@@ -23,7 +23,6 @@
 
 #include <wx/app.h>
 #include <wx/choicdlg.h>
-#include <wx/textdlg.h>
 #include <wx/button.h>
 #include <wx/listbox.h>
 #include <wx/combobox.h>
@@ -53,6 +52,7 @@
 #include "print.h"
 #include "stringprintednode.h"
 #include "screenwindow.h"
+#include "questionbox.h"
 #include "debugheap.h"
 
 enum WINDOWTYPE 
@@ -2506,24 +2506,20 @@ NODE *lquestionbox(NODE *args)
         return Unbound;
     }
 
-    const wxString & str = ::wxGetTextFromUser(
-        body.GetString(),
+    CQuestionBox questionBox(
+        CFmsLogo::GetMainFrame(),
         banner.GetString(),
-        wxEmptyString,
-        CFmsLogo::GetMainFrame());
+        body.GetString());
 
-    if (str.IsEmpty())
+    int exitCode = questionBox.ShowModal();
+    if (exitCode == wxID_CANCEL)
     {
-        // BUG: This doesn't distinguish between when the user
-        // selects the empty string and when the user presses
-        // cancel.
-
         // The user pressed cancel.
         err_logo(STOP_ERROR, NIL);
         return Unbound;
     }
 
-    NODE * targ = make_strnode(str.c_str());
+    NODE * targ = make_strnode(questionBox.GetAnswer().c_str());
     NODE * val = parser(targ, false);
     return val;
 }

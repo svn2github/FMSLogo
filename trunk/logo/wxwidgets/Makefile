@@ -156,6 +156,7 @@ OBJECTS =                      \
     paren.o                    \
     parse.o                    \
     print.o                    \
+    questionbox.o              \
     savebeforeexitdialog.o     \
     screen.o                   \
     selectproceduredialog.o    \
