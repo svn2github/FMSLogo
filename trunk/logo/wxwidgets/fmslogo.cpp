@@ -143,8 +143,67 @@ void CFmsLogo::ProcessCommandLine()
     {
         wxChar * argument = *nextArgument;
 
+        if (!copyRemaingArgsAsFilename)
+        {
+            if (*argument == '-')
+            {
+                argument++; // advance beyond the -
+
+                switch (*argument++)
+                {
+                case 'p':
+                case 'P':
+                    g_EnterPerspectiveMode = true;
+                    break;
+
+                case 'e':
+                case 'E':
+                    bExpert = true;
+                    break;
+
+                case 'f':
+                case 'F':
+                    bFixed = true;
+                    break;
+
+                case 'h':
+                case 'H':
+                    BitMapHeight   = ReadIntArgument(argument, nextArgument);
+                    g_CustomHeight = true;
+                    break;
+
+                case 'w':
+                case 'W':
+                    BitMapWidth   = ReadIntArgument(argument, nextArgument);
+                    g_CustomWidth = true;
+                    break;
+
+                case 'l':
+                case 'L':
+                    // the rest of the arguments should be taken as part of a filename
+                    copyRemaingArgsAsFilename = true;
+                    break;
+
+                default:
+                    // invalid command line: unrecognized switch
+                    wxMessageBox(
+                        argument - 2,
+                        LOCALIZED_ERROR_BADCOMMANDLINE, 
+                        wxOK | wxICON_INFORMATION);
+                    break;
+                }
+            }
+            else
+            {
+                // This was not a '-', so treat it as part of a filename
+                copyRemaingArgsAsFilename = true;
+            }
+        }
+
         if (copyRemaingArgsAsFilename)
         {
+            // Copy the rest of the line into the g_FileToLoad buffer
+
             // BUG: This is not backward compatible with MSWLogo.
             // This should tolerate multiple spaces, instead of assuming
             // that there's exactly one space between arguments.
@@ -154,77 +213,12 @@ void CFmsLogo::ProcessCommandLine()
                 g_FileToLoad[fileToLoadIndex++] = ' ';
             }
 
-            // copy the rest of the line into the g_FileToLoad buffer
             strncpy(
                 &g_FileToLoad[fileToLoadIndex],
                 argument,
                 ARRAYSIZE(g_FileToLoad) - 1 - fileToLoadIndex);
 
             fileToLoadIndex += strlen(argument);
-        }
-        else if (*argument == '-')
-        {
-            argument++; // advance beyond the -
-
-            switch (*argument++)
-            {
-            case 'p':
-            case 'P':
-                g_EnterPerspectiveMode = true;
-                break;
-
-            case 'e':
-            case 'E':
-                bExpert = true;
-                break;
-
-            case 'f':
-            case 'F':
-                bFixed = true;
-                break;
-
-            case 'h':
-            case 'H':
-                BitMapHeight   = ReadIntArgument(argument, nextArgument);
-                g_CustomHeight = true;
-                break;
-
-            case 'w':
-            case 'W':
-                BitMapWidth   = ReadIntArgument(argument, nextArgument);
-                g_CustomWidth = true;
-                break;
-
-            case 'l':
-            case 'L':
-                // the rest of the arguments should be taken as part of a filename
-                copyRemaingArgsAsFilename = true;
-                break;
-
-            default:
-                // invalid command line: unrecognized switch
-                wxMessageBox(
-                    argument,
-                    LOCALIZED_ERROR_BADCOMMANDLINE, 
-                    wxOK | wxICON_INFORMATION);
-                break;
-            }
-        }
-        else
-        {
-            // This was not a switch, so treat it as a filename.
-            if (g_FileToLoad[0] == '\0')
-            {
-                strncpy(g_FileToLoad, argument, ARRAYSIZE(g_FileToLoad) - 1);
-            }
-            else
-            {
-                // we only support loading a single filename.
-                wxMessageBox(
-                    argument,
-                    LOCALIZED_ERROR_BADCOMMANDLINE, 
-                    wxOK | wxICON_INFORMATION);
-            }
         }
     }
 
