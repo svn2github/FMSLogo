@@ -38,6 +38,9 @@ II. New features/bugs fixed:
     o Fix bug #3150920; FMSLogo no longer leaks memory or corrupts memory
       when halted while evaluating a parameter's default value that requires
       a separate function call.
+    o Fix bug #2943335; Selecting a long line in the commander history no
+      longer inserts a space into the line at the point where it was wrapped.
+      This is only fixed in the wxWidgets version of FMSLogo.
     o Fix bug #1895669; NETSHUTDOWN no longer has a race condition that can
       corrupt internal memory.
     o Fix bug #1568629; FMSLogo no longer leaks memory when its internal
