@@ -1,0 +1,125 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This file contains some regression tests for the evaluator (eval.cpp)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+LOAD "testlib.lgo
+
+TO EVALTEST.NONTAILRECURSIVECOUNT :depth
+
+   ; base-case
+   if :depth = 0  [ output 0 ]
+
+   ; call this recursively
+   MAKE "count 1 + EVALTEST.NONTAILRECURSIVECOUNT :depth - 1 
+
+   ; put some code after the recursive call
+   MAKE "something.to.break.tail.recursion "true
+
+   OUTPUT :count
+
+END
+
+TO EVALTEST.NONTAILRECURSIVE
+
+   SIMPLEREPORTTEST [ EVALTEST.NONTAILRECURSIVECOUNT 120   ] 120
+   SIMPLEREPORTTEST [ EVALTEST.NONTAILRECURSIVECOUNT 60000 ] 60000
+
+END
+
+
+TO EVALTEST.TAILRECURSIVECOUNT :depth
+
+   ; base-case
+   if :depth = 0  [ output 0 ]
+
+   ; call this recursively
+   OUTPUT 1 + EVALTEST.TAILRECURSIVECOUNT :depth - 1 
+
+END
+
+
+TO EVALTEST.NONTAILRECURSIVE
+   SIMPLEREPORTTEST [ EVALTEST.NONTAILRECURSIVECOUNT 120    ] 120
+   SIMPLEREPORTTEST [ EVALTEST.NONTAILRECURSIVECOUNT 100000 ] 100000
+END
+
+TO EVALTEST.TAILRECURSIVE
+   SIMPLEREPORTTEST [ EVALTEST.TAILRECURSIVECOUNT 120   ]  120
+   SIMPLEREPORTTEST [ EVALTEST.TAILRECURSIVECOUNT 100000 ] 100000
+END
+
+TO EVALTEST.CATCHTOOMANYINPUTSERROR
+  CATCH "ERROR [ (FD 1 "toomany) ]
+END
+
+TO EVALTEST.CATCHERRORMANYTIMES
+  ; This crashed once and no other test case caught the same problem.
+  ; I have no idea why this crashed, but it must be taking an unconventional
+  ; code path in the evaluator.
+
+  EVALTEST.CATCHTOOMANYINPUTSERROR
+  EVALTEST.CATCHTOOMANYINPUTSERROR
+  EVALTEST.CATCHTOOMANYINPUTSERROR
+  EVALTEST.CATCHTOOMANYINPUTSERROR
+  REPORTTESTPASSED [|The "catch 'too many inputs' error many times" test did not crash.|]
+END
+
+TO EVALTEST.BUG1471162.OUTPUT1234
+   OUTPUT 1234
+END
+
+TO EVALTEST.BUG1471162.PARAMETERWITHDEFAULTVALUE [:param EVALTEST.BUG1471162.OUTPUT1234]
+END
+
+TO EVALTEST.BUG1471162
+    ; Bug 1471162 is a leak when calling a procedure with
+    ; a default value whose evaluation requires calling
+    ; a non-primitive.
+    EVALTEST.BUG1471162.PARAMETERWITHDEFAULTVALUE
+END
+
+TO EVALTEST.PARAMSDONTPOLLUTEVARIABLES.PARAM1 [:Param1Param 123]
+
+   LOCALMAKE "Param1LocalVariable 123
+   OUTPUT 1234
+END
+
+TO EVALTEST.PARAMSDONTPOLLUTEVARIABLES.PARAM2
+
+   ; Param1 should be defined when evaluating Param2
+   SIMPLEREPORTTEST [NAMEP "Param1] LOCALETRUE
+
+   ; The parameters to the procedure which defined
+   ; Param1 should not be defined.
+   SIMPLEREPORTTEST [NAMEP "Param1Param] LOCALEFALSE
+
+   ; Local variables defined in the procedure which defined
+   ; Param1 should not be defined.
+   SIMPLEREPORTTEST [NAMEP "Param1LocalVariable] LOCALEFALSE
+
+   OUTPUT 1234
+END
+
+TO EVALTEST.PARAMSDONTPOLLUTEVARIABLES.INNER [:Param1 EVALTEST.PARAMSDONTPOLLUTEVARIABLES.PARAM1] [:Param2 EVALTEST.PARAMSDONTPOLLUTEVARIABLES.PARAM2]
+
+   ; The parameters to the procedure which defined
+   ; Param1 should not be defined.
+   SIMPLEREPORTTEST [NAMEP "Param1Param] LOCALEFALSE
+
+   ; Local variables defined in the procedure which defined
+   ; Param1 should not be defined.
+   SIMPLEREPORTTEST [NAMEP "Param1LocalVariable] LOCALEFALSE
+END
+
+TO EVALTEST.PARAMSDONTPOLLUTEVARIABLES
+   LOCAL [Param1 Param1Variable Param1Param Param2]
+   EVALTEST.PARAMSDONTPOLLUTEVARIABLES.INNER
+END
+
+TO EVALTEST
+   EVALTEST.CATCHERRORMANYTIMES
+   EVALTEST.TAILRECURSIVE
+   EVALTEST.NONTAILRECURSIVE
+   EVALTEST.BUG1471162
+   EVALTEST.PARAMSDONTPOLLUTEVARIABLES
+END

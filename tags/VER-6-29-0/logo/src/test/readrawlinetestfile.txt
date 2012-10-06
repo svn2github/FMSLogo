@@ -1,0 +1,4 @@
+Simple
+Two Words
+Line | With ; Special ( Characters ) [ ]
+Line \ With \\ Backslashes
