@@ -366,54 +366,54 @@ NODE *binary(NODE *args, char fcn)
                     break;
 
                 case MATHFUNC_ArcSin: 
-                    fval = asin(fval) * degrees_per_rad; 
+                    errchk(fval = asin(fval) * degrees_per_rad);
                     break;
 
                 case MATHFUNC_ArcCos: 
-                    fval = acos(fval) * degrees_per_rad; 
+                    errchk(fval = acos(fval) * degrees_per_rad);
                     break;
 
                 case MATHFUNC_ArcTan: 
-                    fval = atan(fval) * degrees_per_rad; 
+                    fval = atan(fval) * degrees_per_rad;
                     break;
 
                 case MATHFUNC_RadSin: 
-                    fval = sin(fval); 
+                    fval = sin(fval);
                     break;
 
-                case MATHFUNC_RadCos: 
-                    fval = cos(fval); 
+                case MATHFUNC_RadCos:
+                    fval = cos(fval);
                     break;
 
-                case MATHFUNC_RadTan: 
-                    fval = tan(fval); 
+                case MATHFUNC_RadTan:
+                    fval = tan(fval);
                     break;
 
-                case MATHFUNC_RadArcSin: 
-                    fval = asin(fval); 
+                case MATHFUNC_RadArcSin:
+                    errchk(fval = asin(fval));
                     break;
 
-                case MATHFUNC_RadArcCos: 
-                    fval = acos(fval); 
+                case MATHFUNC_RadArcCos:
+                    errchk(fval = acos(fval));
                     break;
 
-                case MATHFUNC_RadArcTan: 
-                    fval = atan(fval); 
+                case MATHFUNC_RadArcTan:
+                    fval = atan(fval);
                     break;
 
-                case MATHFUNC_SquareRoot: 
-                    errchk(fval = sqrt(fval)); 
+                case MATHFUNC_SquareRoot:
+                    errchk(fval = sqrt(fval));
                     break;
 
-                case MATHFUNC_Exp: 
-                    errchk(fval = exp(fval)); 
+                case MATHFUNC_Exp:
+                    errchk(fval = exp(fval));
                     break;
 
-                case MATHFUNC_Log10: 
-                    errchk(fval = log10(fval)); 
+                case MATHFUNC_Log10:
+                    errchk(fval = log10(fval));
                     break;
 
-                case MATHFUNC_Ln: 
+                case MATHFUNC_Ln:
                     errchk(fval = log(fval));
                     break;
 
@@ -696,7 +696,21 @@ NODE *binary(NODE *args, char fcn)
                         break;
 
                     case MATHFUNC_Power:
-                        errchk(fval = pow(fval, farg));
+                        if (fval == 0.0 && farg == 0.0)
+                        {
+                            // From: http://mathworld.wolfram.com/Zero.html
+                            //
+                            // 0^0 itself is undefined.
+                            // The lack of a well-defined meaning for this
+                            // quantity follows from the mutually contradictory
+                            // facts that x^0 is always 1, so 0^0 should equal
+                            // 1, but 0^a is always 0, so 0^0 should equal 0.
+                            err_logo(BAD_DATA_UNREC, arg);
+                        }
+                        else
+                        {
+                            errchk(fval = pow(fval, farg));
+                        }
                         break;
 
                     default:  // logical op
