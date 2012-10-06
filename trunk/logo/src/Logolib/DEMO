@@ -292,8 +292,10 @@ nostatus
 end
 
 to demo.13
+penup
 setxy 0 0
 bitcut 50 50
+clean
 setxy -250 -50
 setfloodcolor [125 125 125]
 bitblock 550 150
@@ -301,6 +303,7 @@ setxy -200 0
 setheading 90
 repeat 9 [setbitmode repcount bitpaste fd 50 wait 5]
 setbitmode 1
+pendown
 end
 
 to demo.14
