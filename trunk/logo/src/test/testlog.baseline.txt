@@ -16016,8 +16016,8 @@ INFO: Running invalid instruction: [(NOSTATUS "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 PASS: Resizing FMSLogo to be very small didn't cause an infinite loop.
-PASS: "Bug #3418522 is fixed; Sending a vertical scroll message to the Pen Size dialog box did not crash.
+PASS: Bug #3418522 is fixed; Sending a vertical scroll message to the Pen Size dialog box did not crash.
 INFO: Running invalid instruction: [(BYE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-FAIL: Node usage went from 140548 to 353967 ( change = 213419 ).
+FAIL: Node usage went from 153580 to 365733 ( change = 212153 ).
