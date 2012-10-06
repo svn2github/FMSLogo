@@ -5837,7 +5837,9 @@ PASS: [READRAWLINE] output Two Words , as expected.
 PASS: [READRAWLINE] output Line | With ; Special ( Characters ) [ ] , as expected.
 PASS: [READRAWLINE] output Line \ With \\ Backslashes , as expected.
 PASS: [READRAWLINE] output [] , as expected.
-PASS: [READRAWLINETEST.READRAWLINEFROMUI "Special Characters |;\(] output Special Characters |;\( , as expected.
+PASS: [READRAWLINETEST.READRAWLINEFROMUI :specialchars] output Special Characters |;\( , as expected.
+PASS: [READRAWLINETEST.READRAWLINEFROMUI :longword] output LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!"LONGLINE!" , as expected.
+PASS: [READRAWLINETEST.READRAWLINEFROMUI "] output  , as expected.
 INFO: Running invalid instruction: [IGNORE READRAWLINE]
 PASS: error code is 16 , as expected.
 INFO: error text is Stopping... .
@@ -14239,6 +14241,7 @@ INFO: error text is SELECTBOX doesn't like 12345 as input .
 PASS: [QUESTIONBOX [QUESTIONBOX Test] [Press OK without typing anything.]] output [] , as expected.
 PASS: [QUESTIONBOX [QUESTIONBOX Test] [Enter "Hello" and press OK.]] output [Hello] , as expected.
 PASS: [QUESTIONBOX [QUESTIONBOX Test] [Enter "Hi Bye" and press OK.]] output [Hi Bye] , as expected.
+PASS: [QUESTIONBOX [QUESTIONBOX Test] [Enter the very long answer and press OK.]] output [This is a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, long answer.] , as expected.
 INFO: Running invalid instruction: [QUESTIONBOX [QUESTIONBOX Test] [Press Cancel.]]
 PASS: error code is 16 , as expected.
 INFO: error text is Stopping... .
@@ -16017,4 +16020,4 @@ PASS: "Bug #3418522 is fixed; Sending a vertical scroll message to the Pen Size 
 INFO: Running invalid instruction: [(BYE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-FAIL: Node usage went from 140429 to 353250 ( change = 212821 ).
+FAIL: Node usage went from 140548 to 353967 ( change = 213419 ).
