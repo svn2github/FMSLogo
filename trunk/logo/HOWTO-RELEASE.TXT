@@ -3,23 +3,20 @@ This file contains the steps for doing a formal release.
 Build the Release Files
 ==================================================================================
 
-1) Build the Binary Installer Package
+1) Build the Candidate Release Files
 1.a) Copy the latest changes from README.TXT to CHANGELOG.TXT
 1.b) Update version.mk and logoversion.lgo
 1.c) Update the translation tables in the manual
-1.d) gmake clean (to force a complete rebuild)
-1.e) gmake binaryexe
-     (This builds fmslogo.exe, the screen saver, the documentation,
-     and the installer.)
-1.f) Copy resulting fmslogo-X-Y-Z.exe and wxfmslogo-X-Y-Z.exe to
-     \\dcostanz\dcostanz\logo
-1.g) Checkin all changes, "cvs up -APd", and tag the tree VER-X-Y-Z
+1.d) Checkin all changes, "cvs up -APd", and tag the tree VER-X-Y-Z
+1.e) Open up a fresh command prompt and cleanly build everything with:
 
-2) Build the Binary ZIP Package
-2.a) gmake binaryzip
-2.b) Copy resulting fmslogo-X-Y-Z.zip to \\dcostanz\dcostanz\logo
+     gmake clean binaryexe binaryzip
 
-Test the Release
+1.f) Copy resulting fmslogo-X-Y-Z.exe, fmslogo-X-Y-Z.zip, and wxfmslogo-X-Y-Z.exe
+     to \\dcostanz\dcostanz\logo
+
+
+Test the Candidate Release
 ==================================================================================
 
 1) Test the Borland and wxWidgets versions on Windows XP and
@@ -33,9 +30,14 @@ Release the files
 ==================================================================================
 1) Release the files on sourceforge.net
 1.a) Create a new folder on sourceforge and call it FMSLogo X-Y-Z
-1.b) Upload README.TXT as the release notes.
-1.c) Upload fmslogo-x-y-z.exe and set it as the default for Windows.
-1.d) Upload fmslogo-x-y-z.zip and set it as the default for Linux.
+1.b) Upload the following files:
+       README.TXT 
+       fmslogo-x-y-z.exe
+       fmslogo-x-y-z.zip
+       wxfmslogo-x-y-z.exe
+1.c) Set fmslogo-x-y-z.exe as the default file for Windows.
+1.d) Set fmslogo-x-y-z.zip as the default file for Linux.
+1.e) Add an artifact group to the bug tracker called "v. x-y-X"
 
 2) Update the manual on the Web site
 2.a) Build an updated manual ("gmake website" within "manual")
