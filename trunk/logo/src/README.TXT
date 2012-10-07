@@ -14,8 +14,9 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.29.0.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.29.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-6.29.0.exe   (Installer for the mainline Logo environment)
+  fmslogo-6.29.0.zip   (ZIP of the mainline Logo environment)
+  wxfmslogo-6.29.0.exe (Installer for the Beta wxWidgets-based Logo environment)
 
 II. New features/bugs fixed:
 
