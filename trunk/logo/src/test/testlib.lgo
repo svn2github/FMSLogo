@@ -641,6 +641,7 @@ TO RUNPRINTTEST :printinstruction :expectedvalue [:outputfilename []]
   ; clear the last error
   IGNORE ERROR
 
+  ; Run the test instruction list that prints something.
   CATCH "ERROR [ RUN :printinstruction ]
 
   if empty? :outputfilename [
@@ -658,7 +659,6 @@ TO RUNPRINTTEST :printinstruction :expectedvalue [:outputfilename []]
   ;
   LOCALMAKE "newreader IFELSE empty? :outputfilename [:testfilename] [:outputfilename]
   CATCH "ERROR [OPENREAD :newreader]
-  MAKE "lasterror ERROR
   IF FAILIFERROR (WORD "|Attempting to read "| :newreader "") [ STOP ]
 
 
