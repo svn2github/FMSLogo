@@ -6,7 +6,14 @@ CCommanderButton::CCommanderButton(
     CCommander *    Parent, 
     wxWindowID      Id, 
     const wxString& Label
-    ) : wxButton(Parent, Id, Label)
+    ) :
+    wxButton(
+        Parent,
+        Id,
+        Label,
+        wxDefaultPosition,
+        wxDefaultSize,
+        wxWANTS_CHARS)
 {
 }
 
@@ -19,6 +26,25 @@ void CCommanderButton::OnKeyDown(wxKeyEvent& Event)
         // Spaces are transformed into button presses,
         // so we want to handle this event.
         Event.Skip();
+    }
+    else if (keyCode == WXK_TAB)
+    {
+        if (Event.ShiftDown())
+        {
+            // Shift+Tab means navigate backward.
+            Navigate(wxNavigationKeyEvent::IsBackward);
+        }
+        else
+        {
+            // Tab means navigate forward.
+            Navigate(wxNavigationKeyEvent::IsForward);
+        }
+    }
+    else if (keyCode == WXK_RETURN)
+    {
+        // Convert this into a button press
+        wxCommandEvent remappedEvent(wxEVT_COMMAND_BUTTON_CLICKED, GetId());
+        ProcessEvent(remappedEvent);
     }
     else if (CCommanderInput::WantsKeyEvent(keyCode))
     {

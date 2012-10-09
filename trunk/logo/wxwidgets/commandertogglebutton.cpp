@@ -7,9 +7,16 @@ CCommanderToggleButton::CCommanderToggleButton(
     wxWindowID      Id,
     const char *    DownLabel,
     const char *    UpLabel
-    ) : wxToggleButton(Parent, Id, ""),
-        m_DownLabel(DownLabel),
-        m_UpLabel(UpLabel)
+    ) :
+    wxToggleButton(
+        Parent,
+        Id,
+        wxEmptyString,
+        wxDefaultPosition,
+        wxDefaultSize,
+        wxWANTS_CHARS),
+    m_DownLabel(DownLabel),
+    m_UpLabel(UpLabel)
 {
 }
 
@@ -22,6 +29,25 @@ void CCommanderToggleButton::OnKeyDown(wxKeyEvent& Event)
         // Spaces are transformed into button presses,
         // so we want to handle this event.
         Event.Skip();
+    }
+    else if (keyCode == WXK_TAB)
+    {
+        if (Event.ShiftDown())
+        {
+            // Shift+Tab means navigate backward.
+            Navigate(wxNavigationKeyEvent::IsBackward);
+        }
+        else
+        {
+            // Tab means navigate forward.
+            Navigate(wxNavigationKeyEvent::IsForward);
+        }
+    }
+    else if (keyCode == WXK_RETURN)
+    {
+        // Convert this into a button press
+        wxCommandEvent remappedEvent(wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, GetId());
+        ProcessEvent(remappedEvent);
     }
     else if (CCommanderInput::WantsKeyEvent(keyCode))
     {
