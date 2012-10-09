@@ -46,7 +46,9 @@ void CCommanderButton::OnKeyDown(wxKeyEvent& Event)
         wxCommandEvent remappedEvent(wxEVT_COMMAND_BUTTON_CLICKED, GetId());
         ProcessEvent(remappedEvent);
     }
-    else if (CCommanderInput::WantsKeyEvent(keyCode))
+    else if (keyCode == WXK_UP ||
+             keyCode == WXK_NUMPAD_UP ||
+             CCommanderInput::WantsKeyEvent(keyCode))
     {
         // We don't handle this key stroke.
         // Give focus to the edit box and send the press to it.

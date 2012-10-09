@@ -49,12 +49,13 @@ void CCommanderToggleButton::OnKeyDown(wxKeyEvent& Event)
         wxCommandEvent remappedEvent(wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, GetId());
         ProcessEvent(remappedEvent);
     }
-    else if (CCommanderInput::WantsKeyEvent(keyCode))
+    else if (keyCode == WXK_UP ||
+             keyCode == WXK_NUMPAD_UP ||
+             CCommanderInput::WantsKeyEvent(keyCode))
     {
-        CCommander * commander = static_cast<CCommander*>(GetParent());
-
         // We don't handle this key.
         // Give focus to the edit box and send the press to it.
+        CCommander * commander = static_cast<CCommander*>(GetParent());
         commander->ProcessKeyDownEventAtInputControl(Event);
     }
     else
