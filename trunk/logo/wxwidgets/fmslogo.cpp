@@ -301,12 +301,17 @@ bool CFmsLogo::OnInit()
             valueType == REG_SZ     &&
             valueSize < ARRAYSIZE(g_FmslogoBaseDirectory) - 2)
         {
-            // we successfully read the value as a string.
-            // Append the missing backslash
-            if (valueSize != 0 && g_FmslogoBaseDirectory[valueSize] == '\0')
+            // We successfully read the value as a string.
+
+            // The NUL character is not always included in string values,
+            // but if it's present, we need to set valueSize so that it
+            // doesn't include the NUL.
+            if (valueSize != 0 && g_FmslogoBaseDirectory[valueSize - 1] == '\0')
             {
                 valueSize--;
             }
+
+            // Append the missing backslash
             g_FmslogoBaseDirectory[valueSize + 0] = '\\';
             g_FmslogoBaseDirectory[valueSize + 1] = '\0';
         }
