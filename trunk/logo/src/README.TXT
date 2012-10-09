@@ -23,6 +23,8 @@ II. New features/bugs fixed:
   * Changed in 6.29.1
     o Fix bug #3575310; The wxWidgets-based version of FMSLogo now works when
       installed to a folder with an even number of characters.
+    o Fix bug #1602922; The commander buttons can now be pressed with the
+      spacebar.  This is only fixed in the wxWidgets version of FMSLogo.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT

@@ -303,8 +303,6 @@ void CCommander::OnTraceButton(wxCommandEvent& WXUNUSED(Event))
     // toggle trace state 
     traceflag = !traceflag;
     UpdateTraceButtonState();
-
-    m_NextInstruction->SetFocus();
 }
 
 void CCommander::OnPauseButton(wxCommandEvent& WXUNUSED(Event))
@@ -329,14 +327,14 @@ void CCommander::OnStatusButton(wxCommandEvent& WXUNUSED(Event))
     {
         // the status dialog is not showing, so we want to show it.
         mainFrame->ShowStatus();
+        m_StatusButton->SetFocus();
     }
     UpdateStatusButtonState();
-    m_NextInstruction->SetFocus();
 }
 
 void CCommander::ToggleStep()
 {
-    // toggle yield state
+    // Toggle the single-step state
     stepflag = !stepflag;
     UpdateStepButtonState();
 
@@ -345,7 +343,9 @@ void CCommander::ToggleStep()
 
 void CCommander::OnStepButton(wxCommandEvent& WXUNUSED(Event))
 {
-    ToggleStep();
+    // Toggle the single-step state
+    stepflag = !stepflag;
+    UpdateStepButtonState();
 }
 
 void CCommander::OnResetButton(wxCommandEvent& WXUNUSED(Event))
