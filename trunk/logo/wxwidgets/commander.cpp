@@ -122,8 +122,6 @@ CCommander::CCommander(wxWindow *Parent)
     m_ExecuteButton->SetFont(buttonFont);
     m_EdallButton->SetFont(buttonFont);
 
-    m_ExecuteButton->SetDefault();
-
     // Pick a good size for the buttons.
     // The rest will be re-sized to match it
     m_TraceButton->SetSize(0, 0, 100, 20);
@@ -474,6 +472,22 @@ void CCommander::OnEdallButton(wxCommandEvent& WXUNUSED(Event))
     do_execution(command);
 }
 
+void CCommander::OnEnter(wxCommandEvent & Event)
+{
+    if (is_executing())
+    {
+        // For compatibility with MSWLogo, simply beep if Logo is currently
+        // running when the user presses Enter.  It might be preferable to
+        // run the command anyway, but that was too significant a change for
+        // a micro release.
+        MessageBeep(MB_OK);
+    }
+    else
+    {
+        Execute();
+    }
+}
+
 CCommander * CCommander::GetCommander()
 {
     return this;
@@ -620,7 +634,6 @@ void CCommander::OnSize(wxSizeEvent& Event)
     Event.Skip();
 }
 
-
 void CCommander::ProcessKeyDownEventAtInputControl(wxKeyEvent& Event)
 {
     int keyCode = Event.GetKeyCode();
@@ -714,6 +727,7 @@ BEGIN_EVENT_TABLE(CCommander, wxPanel)
     EVT_TOGGLEBUTTON(ID_COMMANDER_TRACE,   CCommander::OnTraceButton)
     EVT_TOGGLEBUTTON(ID_COMMANDER_STATUS,  CCommander::OnStatusButton)
     EVT_TOGGLEBUTTON(ID_COMMANDER_STEP,    CCommander::OnStepButton)
+    EVT_TEXT_ENTER(ID_COMMANDER_NEXTINSTRUCTION, CCommander::OnEnter)
     EVT_SIZE(CCommander::OnSize)
 END_EVENT_TABLE()
 

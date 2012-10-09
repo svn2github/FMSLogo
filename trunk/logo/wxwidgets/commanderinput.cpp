@@ -7,7 +7,14 @@
 CCommanderInput::CCommanderInput(
     CCommander *    Parent, 
     wxWindowID      Id
-    ) : wxTextCtrl(Parent, Id)
+    ) :
+    wxTextCtrl(
+        Parent,
+        Id,
+        wxEmptyString,
+        wxDefaultPosition,
+        wxDefaultSize,
+        wxTE_PROCESS_ENTER)
 {
     // Configure the keyboard shortcuts
     wxAcceleratorEntry acceleratorEntries[1];

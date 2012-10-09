@@ -58,6 +58,7 @@ private:
     void OnResetButton(wxCommandEvent& Event);
     void OnExecuteButton(wxCommandEvent& Event);
     void OnEdallButton(wxCommandEvent& Event);
+    void OnEnter(wxCommandEvent & Event);
     void OnSize(wxSizeEvent& Event);
 
     // Private helper functions
