@@ -110,7 +110,12 @@ HBITMAP MemoryBitMap;                  // Backing store bitmap
 
 PLOGPALETTE MyLogPalette;              // Handle for the single logical color palette
 
-bool GiveFocusToEditbox = false;       // Flag to signal that focus should go to the editbox
+// Flag to signal that focus should go to the commander's editbox.  This is
+// initially set to true in TMyCommandWindow::DoButtonExecute(), but can
+// be overridden and set to false by some commands, such as EDIT and SETFOCUS.
+// If the flag is still true after the instruction has finished executing, then
+// focus is given to the commander's editbox.
+bool GiveFocusToEditbox = false;
 
 typedef HWND ( __stdcall *HTMLHELPFUNC)(HWND, PCSTR, UINT, DWORD);
 static HTMLHELPFUNC g_HtmlHelpFunc;
