@@ -286,11 +286,6 @@ void CCommander::Halt()
     {
         IsTimeToHalt = true;
     }
-
-    // Give focus to the command input control,
-    // since it's not useful for focus to remain
-    // on the Halt button.
-    m_NextInstruction->SetFocus();
 }
 
 void CCommander::OnHaltButton(wxCommandEvent& WXUNUSED(Event))
@@ -308,7 +303,6 @@ void CCommander::OnTraceButton(wxCommandEvent& WXUNUSED(Event))
 void CCommander::OnPauseButton(wxCommandEvent& WXUNUSED(Event))
 {
     // If it's ok to halt then it's ok to pause.
-    m_NextInstruction->SetFocus();
     if (is_executing())
     {
         IsTimeToPause = true;
@@ -337,15 +331,11 @@ void CCommander::ToggleStep()
     // Toggle the single-step state
     stepflag = !stepflag;
     UpdateStepButtonState();
-
-    m_NextInstruction->SetFocus();
 }
 
 void CCommander::OnStepButton(wxCommandEvent& WXUNUSED(Event))
 {
-    // Toggle the single-step state
-    stepflag = !stepflag;
-    UpdateStepButtonState();
+    ToggleStep();
 }
 
 void CCommander::OnResetButton(wxCommandEvent& WXUNUSED(Event))
@@ -359,8 +349,6 @@ void CCommander::OnResetButton(wxCommandEvent& WXUNUSED(Event))
         STRINGLENGTH(LOCALIZED_ALTERNATE_CLEARSCREEN));
     
     RunLogoInstructionFromGui(instruction);
-
-    m_NextInstruction->SetFocus();
 }
 
 void clearcombobox()
@@ -464,14 +452,6 @@ RunLogoInstructionFromGui(
 
 void CCommander::Execute()
 {
-    // REVISIT:
-    // GiveFocusToEditbox initially starts off as true,
-    // but can get set to false if executing a command opens
-    // an editor.  This logic dates back to MSWLogo and there may
-    // be other ways to accomplish the same thing that don't
-    // involve global variables.
-    GiveFocusToEditbox = true;
-
     // read what's in the input control
     wxString logoInstruction(m_NextInstruction->GetValue());
 
@@ -480,14 +460,6 @@ void CCommander::Execute()
 
     // BUG: This can potentially modify the contents of wxString's buffer
     RunLogoInstructionFromGui(const_cast<char*>(logoInstruction.c_str()));
-
-    // calling RunLogoInstructionFromGui() can delete the "this" pointer,
-    // if it executes FULLSCREEN, TEXTSCREEN, or SPLITSCREEN.
-    // Therefore, we must not touch any member variable at this point.
-    if (GiveFocusToEditbox)
-    {
-        CFmsLogo::GetMainFrame()->GetCommander()->m_NextInstruction->SetFocus();
-    }
 }
 
 void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(Event))

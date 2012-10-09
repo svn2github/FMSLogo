@@ -77,6 +77,7 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
     if (keyCode == WXK_RETURN)
     {
         // Enter does the same as pressing the Execute button.
+        GetCommander()->GiveControlToInputBox();
         GetCommander()->Execute();
     }
     else if (Event.ControlDown() && keyCode == WXK_HOME)
@@ -213,10 +214,12 @@ void CCommanderHistory::OnLeftMouseButtonDoubleClick(wxMouseEvent& Event)
 {
     // On a double-click, the contents of the current line are executed.
     CopyCurrentLineToCommanderInput();
+    GetCommander()->GiveControlToInputBox();
     GetCommander()->Execute();
 
-    // Continue with the default processing for the event.
-    Event.Skip();
+    // Don't call Event.Skip() because GetCommander()->Execute can run
+    // TEXTSCREEN, which would delete this control.  Therefore we cannot
+    // safely do any further processing on this control.
 }
 
 void CCommanderHistory::OnContextMenu(wxContextMenuEvent& Event)
