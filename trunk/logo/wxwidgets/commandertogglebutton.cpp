@@ -15,7 +15,15 @@ CCommanderToggleButton::CCommanderToggleButton(
 
 void CCommanderToggleButton::OnKeyDown(wxKeyEvent& Event)
 {
-    if (CCommanderInput::WantsKeyEvent(Event.GetKeyCode()))
+    const int keyCode = Event.GetKeyCode();
+
+    if (keyCode == WXK_SPACE)
+    {
+        // Spaces are transformed into button presses,
+        // so we want to handle this event.
+        Event.Skip();
+    }
+    else if (CCommanderInput::WantsKeyEvent(keyCode))
     {
         CCommander * commander = static_cast<CCommander*>(GetParent());
 
@@ -23,8 +31,10 @@ void CCommanderToggleButton::OnKeyDown(wxKeyEvent& Event)
         // Give focus to the edit box and send the press to it.
         commander->ProcessKeyDownEventAtInputControl(Event);
     }
-
-    Event.Skip();
+    else
+    {
+        Event.Skip();
+    }
 }
 
 void CCommanderToggleButton::SetPressedState(bool IsPressed)

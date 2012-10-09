@@ -12,18 +12,28 @@ CCommanderButton::CCommanderButton(
 
 void CCommanderButton::OnKeyDown(wxKeyEvent& Event)
 {
-    if (CCommanderInput::WantsKeyEvent(Event.GetKeyCode()))
-    {
-        CCommander * commander = static_cast<CCommander*>(GetParent());
+    const int keyCode = Event.GetKeyCode();
 
-        // We don't handle this key.
+    if (keyCode == WXK_SPACE)
+    {
+        // Spaces are transformed into button presses,
+        // so we want to handle this event.
+        Event.Skip();
+    }
+    else if (CCommanderInput::WantsKeyEvent(keyCode))
+    {
+        // We don't handle this key stroke.
         // Give focus to the edit box and send the press to it.
+        CCommander * commander = static_cast<CCommander*>(GetParent());
         commander->ProcessKeyDownEventAtInputControl(Event);
     }
-
-    // don't process the event (wxButtons don't usually get them)
-    Event.Skip();
+    else
+    {
+        // Continue with default event processing.
+        Event.Skip();
+    }
 }
+
 
 BEGIN_EVENT_TABLE(CCommanderButton, wxButton)
     EVT_KEY_DOWN(CCommanderButton::OnKeyDown)

@@ -8,11 +8,11 @@ class CCommanderButton : public wxButton
 {
 public:
     CCommanderButton(CCommander* Parent, wxWindowID Id, const wxString& Label);
-    virtual ~CCommanderButton(){};
-
-    void OnKeyDown(wxKeyEvent& event);
 
 private:
+    // Event Handlers
+    void OnKeyDown(wxKeyEvent& Event);
+
     DECLARE_NO_COPY_CLASS(CCommanderButton);
     DECLARE_EVENT_TABLE();
 };

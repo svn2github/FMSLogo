@@ -18,10 +18,11 @@ public:
 
     void SetPressedState(bool IsPressed);
 
-    void OnKeyDown(wxKeyEvent& event);
-
 private:
+    // Event handlers
+    void OnKeyDown(wxKeyEvent& Event);
 
+    // Private member variables
     const char * m_DownLabel;
     const char * m_UpLabel;
 
