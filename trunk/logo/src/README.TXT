@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.29.0 for Microsoft Windows
+FMSLogo Version 6.29.1 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -14,41 +14,15 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.29.0.exe   (Installer for the mainline Logo environment)
-  fmslogo-6.29.0.zip   (ZIP of the mainline Logo environment)
-  wxfmslogo-6.29.0.exe (Installer for the Beta wxWidgets-based Logo environment)
+  fmslogo-6.29.1.exe   - Installer for the mainline Logo environment
+  fmslogo-6.29.1.zip   - ZIP of the mainline Logo environment
+  wxfmslogo-6.29.1.exe - Installer for the Beta wxWidgets-based Logo environment
 
 II. New features/bugs fixed:
 
-  * Changed in 6.29.0
-    o QUESTIONBOX, READCHAR, READCHARS, READWORD, READRAWLINE, and READLIST
-      no longer limit the user's input to 255 characters.
-    o STATICCREATE, STATICUPDATE, YESNOBOX, MESSAGEBOX, and others no longer
-      truncate their inputs at 255 character.
-    o Fix bug #3571274; SHELL, PORTOPEN, and many other procedures no longer
-      truncate their inputs based on PRINTWIDTHLIMIT or PRINTDEPTHLIMIT.
-    o Fix bug #3570553; ALLOPEN no longer leaks memory.
-    o Fix bug #3566411; Closing editor no longer claims that the contents
-      have changed after "File->Save to Workspace" in expert mode.
-    o Fix bug #3564270; FMSLogo no longer leaks memory when saving the
-      editor encounters an error which the user ignores.
-    o Fix bug #3563059; "ARRAY 1073741825" no longer crashes.
-    o Fix bug #3558071; QUESTIONBOX now resizes to fit the question.
-    o Fix bug #3551212; FMSLogo once again places the editor's caret at the
-      first error when saving the contents fails due to a syntax error.
-    o Fix bug #3150920; FMSLogo no longer leaks memory or corrupts memory
-      when halted while evaluating a parameter's default value that requires
-      a separate function call.
-    o Fix bug #2943335; Selecting a long line in the commander history no
-      longer inserts a space into the line at the point where it was wrapped.
-      This is only fixed in the wxWidgets version of FMSLogo.
-    o Fix bug #1895669; NETSHUTDOWN no longer has a race condition that can
-      corrupt internal memory.
-    o Fix bug #1568629; FMSLogo no longer leaks memory when its internal
-      garbage collection stack is exhausted.
-    o Fix bug #1471162; FMSLogo no longer leaks memory when calling procedures
-      that have parameters with default values.
-    o Minor improvements to the manual.
+  * Changed in 6.29.1
+    o Fix bug #3575310; The wxWidgets-based version of FMSLogo now works when
+      installed to a folder with an even number of characters.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
@@ -101,6 +75,8 @@ VI. Sources
 
     Borland C++ 5.02 for windows (for .EXE)
     Borland Turbo 32bit Assembler (for .EXE)
+    MinGW (for the screen saver)
+    MinGW package of cygwin (for wxWidgets .EXE)
     DocBook, xsltproc, and Microsoft Help Workshop (for online help)
     Nullsoft Scriptable Install System (NSIS) (for the installer)
 
