@@ -6,18 +6,21 @@
 
 #include "fmslogo-16x16.xpm"
 #include "fmslogo-32x32.xpm"
+#include "fmslogo-64x64.xpm"
 
 void
 SetFmsLogoIcon(
     wxTopLevelWindow & TopLevelWindow
     )
 {
+    wxIcon icon64x64(fmslogo_64x64_xpm);
     wxIcon icon32x32(fmslogo_32x32_xpm);
     wxIcon icon16x16(fmslogo_16x16_xpm);
 
     wxIconBundle icons;
     icons.AddIcon(icon16x16);
     icons.AddIcon(icon32x32);
+    icons.AddIcon(icon64x64);
 
     TopLevelWindow.SetIcons(icons);
 }
