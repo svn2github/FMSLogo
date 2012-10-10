@@ -264,11 +264,6 @@ bool CFmsLogo::OnInit()
 
     init_osversion();
 
-    // REVISIT: Disabling DEP was necessary in OWL because it used thunks that
-    // modified the stack in seemingly unsafe ways.  It might not be
-    // necessary in wxWidgets.
-    DisableDataExecutionProtection();
-
     // Figure out the path that contains fmslogo.exe
     //
     // TODO: Once wxWidgets becomes the main logo project,
