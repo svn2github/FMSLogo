@@ -23,6 +23,8 @@ II. New features/bugs fixed:
   * Changed in 6.29.1
     o Fix a bug in the wxWidgets version of FMSLogo where double-clicking on
       the commander history box to run TEXTSCREEN could crash.
+    o Fix bug #3575314; The FMSLogo icon now appears in the Alt+Tab task
+      selector in high DPI modes ("large text size" on Vista or later).
     o Fix bug #3575313; In the wxWidgets version of FMSLogo, the commander
       buttons can now be pressed with Enter.  Pressing them with Spacebar
       no longer presses them twice.  Pressing the Edall button with Spacebar
