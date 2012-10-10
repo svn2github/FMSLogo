@@ -31,6 +31,9 @@ II. New features/bugs fixed:
       installed to a folder with an even number of characters.
     o Fix bug #1602922; The commander buttons can now be pressed with the
       spacebar.  This is only fixed in the wxWidgets version of FMSLogo.
+    o Fix bug #1327746; FMSLogo no longer beeps if you press a key when a
+      commander button has focus.  This is only fixed in the wxWidgets
+      version of FMSLogo.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
