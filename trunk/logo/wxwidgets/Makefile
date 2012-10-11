@@ -15,8 +15,6 @@ WINDRES =
 wx_top_builddir = /home/dcostanz/wxGTK-2.8.4
 
 TOOLKIT = GTK
-TOOLKIT_LOWERCASE = gtk
-TOOLKIT_VERSION = 2
 TOOLCHAIN_FULLNAME = gtk2-ansi-release-2.8
 EXTRALIBS = -pthread -Wl,--version-script,$(wx_top_builddir)/version-script -lz -ldl -lm -pthread -L/lib -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -ldl -lgthread-2.0 -lrt -lglib-2.0 -lXinerama -lSM -lpng -lz -ljpeg -ltiff -lwx_gtk2-2.8
 
@@ -25,8 +23,6 @@ CPPFLAGS = -pthread -I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/inc
 # TODO: CPPFLAGS += -DWX_PRECOMP
 
 LDFLAGS = -pthread
-
-MANUAL =
 
 else
 
@@ -61,11 +57,8 @@ TARGET_PREFIX=i686-pc-mingw32-
 LDFLAGS  += -mwindows
 
 TOOLKIT = MSW
-TOOLKIT_LOWERCASE = msw
-TOOLKIT_VERSION = 
-EXTRALIBS = -static-libgcc -static-libstdc++ -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lcomctl32 -lcomdlg32 -lctl3d32 -ladvapi32 -lwsock32 -lgdi32 -luser32 -limm32 
 
-MANUAL = logohelp.chm
+EXTRALIBS = -static-libgcc -static-libstdc++ -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lcomctl32 -lcomdlg32 -lctl3d32 -ladvapi32 -lwsock32 -lgdi32 -luser32 -limm32 
 
 endif
 
@@ -78,7 +71,7 @@ endif
 
 INCLUDES = . $(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) $(wx_top_builddir)/include $(wx_top_builddir)/contrib/include ../src
 CPPFLAGS += -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES $(addprefix -I, $(INCLUDES))
-CXXFLAGS += -Wall -Wundef -Wno-ctor-dtor-privacy -fno-strict-aliasing
+CXXFLAGS += -Wall -Wundef -fno-strict-aliasing
 CXXFLAGS += -DFMSLOGO_WXWIDGETS
 CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
 CXXFLAGS += -I"/cygdrive/c/Program Files/HTML Help Workshop/include"
@@ -91,10 +84,6 @@ CXXFLAGS += -march=pentium
 LIBS = -lm
 CXX = $(TARGET_PREFIX)g++
 
-### Variables: ###
-
-WX_RELEASE = 2.8
-WX_VERSION = $(WX_RELEASE).4
 LIBDIRNAME = $(wx_top_builddir)/lib
 CXXFLAGS  += -D__WX$(TOOLKIT)__ $(CPPFLAGS)
 
@@ -182,12 +171,9 @@ OBJECTS +=       \
 
 endif
 
-### Conditionally set variables: ###
 
 #CXXC = $(CXX)
 CXXC = $(BK_DEPS) $(CXX)
-PORTNAME = $(TOOLKIT_LOWERCASE)$(TOOLKIT_VERSION)
-RCDEFDIR = --include-dir $(LIBDIRNAME)/wx/include/$(TOOLCHAIN_FULLNAME)
 
 ### Targets: ###
 
