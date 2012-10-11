@@ -478,13 +478,18 @@ CMainFrame::CMainFrame(
 
     SetFmsLogoIcon(*this);
 
+    //
     // Add the splitter to separate the screen from the commander
+    //
+
+    // Without wxSP_NO_XP_THEME, the splitter is invisible in
+    // Windows XP, Windows Aero, and Windows 7 Basic themes.
     m_Splitter = new wxSplitterWindow(
         this,
         wxID_ANY,
         wxDefaultPosition,
         wxDefaultSize,
-        wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN /* | wxSP_NO_XP_THEME */);
+        wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN | wxSP_NO_XP_THEME);
 
     m_Splitter->SetMinimumPaneSize(MIN_COMMANDER_HEIGHT);
     m_Splitter->SetSashGravity(1.0);
