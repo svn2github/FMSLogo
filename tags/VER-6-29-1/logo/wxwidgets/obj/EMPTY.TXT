@@ -1,0 +1,2 @@
+This file is used to force CVS to create this directory because FMSlogo won't
+compile anything if this directory does not already exist.

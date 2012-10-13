@@ -1,0 +1,75 @@
+; This program is a manual regression test for keyboard and mouse
+; event handlers
+
+To OnKeyDown :KeyboardValue
+   StaticUpdate "KeyDownStatic  (Word "KeyDown= :KeyboardValue)
+   SetFocus  "FMSLogo
+End
+
+To OnKeyUp :KeyboardValue
+   StaticUpdate "KeyUpStatic    (Word "KeyUp= :KeyboardValue)
+   SetFocus  "FMSLogo
+End
+
+To OnMouseLeftButton :ButtonPosition
+   StaticUpdate "MouseLeftButtonStatic  (Word "MouseLeftButton= :ButtonPosition)
+   SetFocus  "FMSLogo
+End
+
+To OnMouseRightButton :ButtonPosition
+   StaticUpdate "MouseRightButtonStatic (Word "MouseRightButton= :ButtonPosition)
+   SetFocus  "FMSLogo
+End
+
+To OnMouseMove :MousePosition
+   StaticUpdate "MousePositionStatic (Word "MousePosition= (FIRST :MousePosition) ", (FIRST BUTFIRST :MousePosition))
+   SetFocus  "FMSLogo
+End
+
+To StartKeyUpDownTest
+   KeyboardOff
+   OnKeyDown "||
+   OnKeyUp   "||
+
+   (KeyboardOn [OnKeyDown KeyboardValue] [OnKeyUp KeyboardValue])
+   SetFocus  "FMSLogo
+End
+
+To StartKeyDownTest
+   KeyboardOff
+   OnKeyDown "||
+   OnKeyUp   "||
+
+   KeyboardOn [OnKeyDown KeyboardValue]
+   SetFocus  "FMSLogo
+End
+
+To SetupTest
+
+   ButtonCreate "Main "KeyUpDownButton [Test KeyUpDown] 200 100 150 20 [StartKeyUpDownTest]
+   ButtonCreate "Main "KeyDownButton   [Test KeyDown]   200  70 150 20 [StartKeyDownTest]
+   ButtonCreate "Main "QuitButton      [Quit]           200  40 150 20 [Bye]
+
+   StaticCreate "Main "KeyDownStatic           [] -200 100  200 18
+   StaticCreate "Main "KeyUpStatic             [] -200  80  200 18
+   StaticCreate "Main "MouseLeftButtonStatic   [] -200  60  200 18
+   StaticCreate "Main "MouseRightButtonStatic  [] -200  40  200 18
+   StaticCreate "Main "MousePositionStatic     [] -200  20  200 18
+
+   OnMouseLeftButton  "Up
+   OnMouseRightButton "Up
+   OnMouseMove        [0 0]
+
+   StartKeyUpDownTest
+
+   MouseOn ~
+     [OnMouseLeftButton  "Down] ~
+     [OnMouseLeftButton  "Up] ~
+     [OnMouseRightButton "Down] ~
+     [OnMouseRightButton "Up] ~
+     [OnMouseMove MousePos]
+
+   HideTurtle
+End
+
+Make "StartUp [SetupTest]
