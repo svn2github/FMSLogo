@@ -114,7 +114,9 @@ TO GIFSAVE.BADINPUT
    SIMPLEREPORTTEST [FILEEXISTS "file.gif] "false
 
    ; cleanup, just in case
-   TRACEINSTRUCTION [ ERASEFILE "file.gif ]
+   TRACEINSTRUCTION [ ERASEFILE "file.gif    ]
+   TRACEINSTRUCTION [ ERASEFILE "\{1\ 2\ 3\} ]
+   TRACEINSTRUCTION [ ERASEFILE "1\ 2\ 3     ]
 
    ; try to save a gif over a directory
    TRACEINSTRUCTION     [ MKDIR   "giftest.gif POPDIR ]
