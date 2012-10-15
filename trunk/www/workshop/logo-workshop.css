@@ -1,0 +1,44 @@
+H1 {
+    text-align: center;
+}
+
+DIV.code-sample {
+    background-color: #CCCCCC;
+
+    border-style: ridge;
+    border-color: #FFFFFF;
+
+    /* indent the box */
+    margin-left:  0.5cm;
+    margin-right: 0.5cm;
+}
+
+.centered {
+    text-align: center;
+}
+
+
+DIV.code-sample PRE {
+    padding-right: 0.5cm;
+    padding-left: 0.5cm;
+}
+
+DIV.activity {
+    background-color: #ECE795;
+    padding-left: 0.5cm;
+    padding-right: 0.5cm;
+    border-style: dashed;
+    border-color: red;
+    border-width: thin;
+}
+
+SPAN.activity {
+    background-color: #ECE795;
+    border-style: dashed;
+    border-color: red;
+    border-width: thin;
+}
+
+BODY {
+  /* width : 750px; */
+}

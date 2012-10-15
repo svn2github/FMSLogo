@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Lesson 9: Mad Libs</title>
+  <link rel="stylesheet" type="text/css" href="logo-workshop.css" />
+</head>
+
+<body>
+
+<h1>Lesson 9: Mad Libs</h1>
+
+<!-- title: Mad Libs -->
+
+<p>
+So far, we have taught the turtle to draw pictures.
+In this lesson, we are going to do something a little different.  
+Instead of drawing pictures, we are going to teach the turtle to tell a story.
+The story is going to be a Mad Libs.
+This means that most of the story is already made up, but some
+of the words are left blank so that we can fill them in.
+</p>
+
+<h2>Mad Libs</h2>
+<p>
+Mad libs are stories where the main characters (and other words) 
+are left blank.
+We fill in the blanks with our own words without reading the story.
+The resulting story is often silly nonsense, but it's not gibberish.
+</p>
+
+<p>
+Let's start with an example:
+</p>
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Fill in the blank in as many different words that you can think of
+that "fit" the sentence.
+</p>
+
+<div class="code-sample"><pre>Spiderman is very _________.
+                  adjective
+</pre></div>
+
+<p>
+What do all of the words that you used have in common?
+</p>
+
+<p>
+Are there any words that you can't use?
+</p>
+
+<p>
+How does the sentence feel if you use the word "cool"? 
+What about "yellow"? 
+What about "table"?
+</p>
+
+</div>
+
+
+<h2>Parts of Speech</h2>
+
+<p>
+A "Part of Speech" is a way of grouping words that have similar uses.  
+For example "run", "catch", "throw", and "kick" are all action words.
+Some parts of speech are given in the table below.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Part of Speech</th>
+    <th>Description</th>
+    <th>Examples</th>
+  </tr>
+
+  <tr>
+    <td>noun</td>
+    <td>a person, place, or thing</td>
+    <td>Spiderman, Bellevue, table</td>
+  </tr>
+
+  <tr>
+    <td>verb</td>
+    <td>an action word</td>
+    <td>run, catch, throw, kick</td>
+  </tr>
+
+  <tr>
+    <td>adjective</td>
+    <td>words that describe nouns</td>
+    <td>fast, tall, slow, strong</td>
+  </tr>
+
+  <tr>
+    <td>adverb</td>
+    <td>words that describe verbs</td>
+    <td>quickly, slowly, very</td>
+  </tr>
+
+</table>
+
+<p></p>
+
+<div class="activity">
+<b>Activity:</b>
+<ol>
+  <li>Click on the EDALL button.</li>
+  <li>Copy the following code into the EDALL window.</li>
+  <li>Replace the words "slow, "fast, "steady, "short", "feet,
+      "race, "Hare, and "Tortoise with your own words.
+      Be sure to choose a word with the same part of speech.</li>
+  <li>Save and Exit the EDALL window.</li>
+  <li>Run MADLIBS.</li>
+</ol>
+
+<div class="code-sample"><pre>TO MADLIBS
+  LOCALMAKE "adjective1 "slow
+  LOCALMAKE "opposite1  "fast
+  LOCALMAKE "adjective2 "steady
+  LOCALMAKE "adjective3 "short
+  LOCALMAKE "bodypart   "feet
+  LOCALMAKE "contest    "race
+  LOCALMAKE "loser      "Hare
+  LOCALMAKE "winner     "Tortoise
+
+  SHOWSTORY
+END
+
+TO SHOWSTORY
+
+  PRINT (LIST
+"\
+
+"One "day, "a :loser "made "fun "of "the "\
+
+:adjective3 :bodypart "and :adjective1 "pace "of "\
+
+"a :winner ".\
+
+"The :winner "replied: ""Even "though "I\
+
+"have :adjective3 :bodypart ", "I "will "beat\
+
+"you "in "a :contest "."\
+
+"The :loser "thought "that "this "was "impossible.\
+
+"So "he "challenged "the :winner "to "a :contest ".\
+
+"On "the "day "of "the :contest "the "two\
+
+"started "together.\
+
+"The :winner "never "stopped "for "a "moment,\
+
+"but "went "on "with "a :adjective1 "but :adjective2 "pace.\
+
+"The :loser "laid "down "and "fell "asleep.\
+
+"When "the :loser "woke "up,\
+
+"he "went "as :opposite1 "as "he "could, "but "the\
+
+:winner "had "already "won "the :contest "\
+
+"and "was "comfortably "dozing.\
+
+"\
+
+"The "moral "of "the "story "is\
+
+:adjective1 "and :adjective2 "wins "the :contest ".\
+
+)
+
+END
+</pre></div>
+
+<p></p>
+
+</div>
+
+<p>
+There are some commands in the Mad Libs program that we have never seen.
+Here's what they do.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Command</th>
+    <th>Example</th>
+    <th>What Happens</th>
+  </tr>
+
+  <tr>
+    <td>LOCALMAKE <i>name</i> <i>value</i></td>
+    <td>LOCALMAKE "length 100</td>
+    <td>Creates a variable named :length and assigns it the value 100.</td>
+  </tr>
+
+  <tr>
+    <td>PRINT <i>list</i></td>
+    <td>PRINT [Hello World!]</td>
+    <td>Displays "Hello World!" in the Commander window.</td>
+  </tr>
+
+  <tr>
+    <td>LIST <i>value1</i> <i>value2</i> <i>...</i></td>
+    <td>(LIST "Hello "World!)</td>
+    <td>Creates a list from whatever follows it. 
+        Each element is evaluated before being put into the list.</td>
+  </tr>
+
+</table>
+
+<p></p>
+
+<div class="activity">
+<p><b>Activity:</b>
+Write your own Mad Libs using the program above as a model.
+You can use a well-known story or make one up yourself.
+Just be sure to replace some of the words with blanks.
+</p>
+
+<p>
+When you are done, give the program to a friend and let them
+fill in the blanks with their own words.
+</p>
+</div>
+<hr />
+<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+       src="http://www.w3.org/Icons/valid-xhtml10"
+       alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+</p>
+
+</body>
+</html>
+

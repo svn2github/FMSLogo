@@ -1,0 +1,642 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Lesson 1: Getting Started with Turtle Graphics</title>
+  <link rel="stylesheet" type="text/css" href="logo-workshop.css" />
+</head>
+
+<body>
+
+<h1>Lesson 1: Getting Started with Turtle Graphics</h1>
+
+<!-- title: Getting Started with Turtle Graphics -->
+
+<p> 
+Meet the Logo turtle!
+He doesn't have a name.
+Everyone just calls him "the turtle".
+</p>
+
+<div class="centered"><img src="img/turtle.png" alt="the turtle" /></div>
+
+<p> 
+Sure, he looks like a triangle, but he's really a turtle.
+He's no ordinary turtle.   
+Unlike other turtles, this one will do exactly what you tell him to do.
+Right now, the turtle doesn't know many tricks, but he's a fast learner 
+and he wants you to teach him.
+</p>
+
+<p>
+The turtle has a pen tied to his back, so he draws a line wherever he goes.
+This means you can draw pictures just by telling him to walk around.
+</p>
+
+<h2>Getting Started</h2>
+
+<p>
+Start Logo by double-clicking on the MSWLogo icon on your desktop.
+It looks like this: <img src="img/desktop-icon.png" alt="MSWLogo icon" />.
+</p>
+
+<p>
+When Logo starts up, it looks like this:
+</p>
+
+<div class="centered"><img src="img/blank-screen.png" alt="logo start-up screen" /></div>
+
+<p>
+The window up top is where the turtle lives.
+The window down below is where you type instructions.
+You can see that I have typed the instruction "forward 10".
+</p>
+
+<p>
+The turtle can only follow instructions that he understands.
+If you give the turtle an instruction that he doesn't understand, 
+he'll say something like "I don't know how to do that".
+</p>
+
+<p>
+Here are some instructions that the turtle already knows.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Procedure</th>
+    <th>Example</th>
+    <th>What Happens</th>
+  </tr>
+
+  <tr>
+    <td>FORWARD <i>number</i></td>
+    <td>FORWARD 100</td>
+    <td>The turtle walks forward 100 screen dots.</td>
+  </tr>
+
+  <tr>
+    <td>BACK <i>number</i></td>
+    <td>BACK 100</td>
+    <td>The turtle walks backward 100 screen dots.</td>
+  </tr>
+
+  <tr>
+    <td>RIGHT <i>number</i></td>
+    <td>RIGHT 90</td>
+    <td>The turtle turns to the right.</td>
+  </tr>
+
+  <tr>
+    <td>LEFT <i>number</i></td>
+    <td>LEFT 90</td>
+    <td>The turtle turns to the left.</td>
+  </tr>
+
+  <tr>
+    <td>CLEARSCREEN</td>
+    <td>CLEARSCREEN</td>
+    <td>The turtle erases everything that he has drawn and 
+        goes back to where he started.</td>
+  </tr>
+
+</table>
+
+<p></p>
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Go ahead and type in some instructions and see what happens.  
+Try changing the numbers.  
+Try changing the words.
+When you're done, enter "CLEARSCREEN".
+This will erase the image and the turtle will move back where he started.
+</p>
+</div>
+
+<p>
+When you say "FORWARD 10", the turtle moves forward 10 screen dots.
+These screen dots are also called "picture elements" or just "pixels".
+The bigger the number, the more the turtle moves.
+</p>
+
+<p>
+But what does the number that follows "RIGHT" and "LEFT" mean?
+It's the number of "degrees" to rotate.  So what's a "degree"?
+Imagine that you are hold a clock flat in front of you (the kind with hands, not a digital clock).  
+Ahead of you is the "12"--this is a 0 degree turn.
+Behind you is the "6"--this is 180 degree turn.
+To the right is the "3"--this is a 90 degree right turn.
+To the left is the "9"--this is a 270 degree right turn.
+In fact, if you're facing the "12", to can turn to any
+number by rotating right that number multiplied by 30.
+</p>
+
+<p>
+The relationship between clocks and degrees is no accident--they're both
+based on circle math.  In fact, a half of a degree and a half of an hour 
+are both called the same thing: "30 minutes".
+</p>
+
+<p>
+Here are some pictures to help you remember.
+For every "RIGHT" instruction, there's a "LEFT" instruction that does
+the same thing.
+</p>
+
+<table border="1">
+  <tr>
+    <td valign="top">
+      <div class="centered">
+        <img src="img/turn-right-0.png" alt="RIGHT 0" />
+        <div class="code-sample"><pre>RIGHT 0</pre></div> or
+        <div class="code-sample"><pre>RIGHT 360</pre></div> or
+        <div class="code-sample"><pre>LEFT  0</pre></div> or
+        <div class="code-sample"><pre>LEFT  360</pre></div>
+      </div>
+    </td>
+
+    <td valign="top">
+      <div class="centered">
+        <img src="img/turn-right-45.png" alt="RIGHT 45" />
+        <div class="code-sample"><pre>RIGHT 45</pre></div> or
+        <div class="code-sample"><pre>LEFT  315</pre></div>
+      </div>
+    </td>
+
+    <td valign="top">
+      <div class="centered">
+        <img src="img/turn-right-90.png" alt="RIGHT 90" />
+        <div class="code-sample"><pre>RIGHT 90</pre></div> or
+        <div class="code-sample"><pre>LEFT  270</pre></div>
+      </div>
+    </td>
+
+    <td valign="top">
+      <div class="centered">
+        <img src="img/turn-right-135.png" alt="RIGHT 135" />
+        <div class="code-sample"><pre>RIGHT 135</pre></div> or
+        <div class="code-sample"><pre>LEFT  225</pre></div>
+      </div>
+    </td>
+  </tr>    
+
+  <tr>
+    <td valign="top">
+      <div class="centered">
+        <img src="img/turn-right-180.png" alt="RIGHT 180" />
+        <div class="code-sample"><pre>RIGHT 180</pre></div> or
+        <div class="code-sample"><pre>LEFT  180</pre></div>
+      </div>
+    </td>
+
+    <td valign="top">
+      <div class="centered">
+        <img src="img/turn-right-225.png" alt="RIGHT 225" />
+        <div class="code-sample"><pre>RIGHT 225</pre></div> or
+        <div class="code-sample"><pre>LEFT  135</pre></div>
+      </div>
+    </td>
+
+    <td valign="top">
+      <div class="centered">
+        <img src="img/turn-right-270.png" alt="RIGHT 270" />
+        <div class="code-sample"><pre>RIGHT 270</pre></div> or
+        <div class="code-sample"><pre>LEFT  90</pre></div>
+      </div>
+    </td>
+
+    <td valign="top">
+      <div class="centered">
+        <img src="img/turn-right-315.png" alt="RIGHT 315" />
+        <div class="code-sample"><pre>RIGHT 135</pre></div> or
+        <div class="code-sample"><pre>LEFT  45</pre></div>
+      </div>
+    </td>
+  </tr>    
+
+</table>
+
+
+<h2>Teaching The Turtle to Draw a Square</h2>
+
+<p>
+The turtle doesn't know how to draw a square.
+We're going to teach him how, using the commands that he already knows.
+</p>
+
+<p>
+First, we draw line.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>FORWARD 100
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/forward100.png" alt="FORWARD 100" />
+    </td>
+  </tr>
+</table>
+
+
+<p>
+Next, we make a corner by turning right.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>FORWARD 100
+RIGHT   90
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/forward100-right90.png" alt="FORWARD 100 RIGHT 90" />
+    </td>
+  </tr>
+</table>
+
+
+<p>
+Next, we draw another straight line.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>FORWARD 100
+RIGHT   90
+FORWARD 100
+</pre>
+      </div>
+    </td>
+    <td>
+      <img 
+         src="img/forward100-right90-forward100.png" 
+         alt="FORWARD 100 RIGHT 90 FORWARD 100" />
+    </td>
+  </tr>
+</table>
+
+
+<p>
+And so on, until we have drawn the entire square.
+</p>
+
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>FORWARD 100
+RIGHT   90
+FORWARD 100
+RIGHT   90
+FORWARD 100
+RIGHT   90
+FORWARD 100
+RIGHT   90
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/square.png" alt="a square" />
+    </td>
+  </tr>
+</table>
+
+<p></p>
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Enter the instructions above to make the turtle draw a square.
+</p>
+</div>
+
+<p>
+That was pretty good, but it was a lot of typing.
+Since most of the instructions are the same, we 
+can simply things with the "REPEAT" command.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Procedure</th>
+    <th>Example</th>
+    <th>What Happens</th>
+  </tr>
+
+  <tr>
+    <td>REPEAT <i>number</i> [ <i>instructions</i> ]</td>
+    <td>REPEAT 4 [ FORWARD 100 RIGHT 90 ]</td>
+    <td>The turtle does the following four times: moves forward 100, turns right 90&deg;.</td>
+  </tr>
+
+</table>
+
+<p>
+With the REPEAT command, we can draw a square with just one instruction.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>REPEAT 4 [ FORWARD 100 RIGHT 90 ]
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/square.png" alt="a square" />
+    </td>
+  </tr>
+</table>
+
+
+<p>
+Even though the turtle just drew a square, 
+he didn't <em>learn</em> how to draw a square.
+If you type in "SQUARE", the turtle will say 
+something like "I don't know how to SQUARE".
+<span class="activity">Try it.</span>
+</p>
+
+<p>
+If we want the turtle to learn how to draw a square,
+we have to give him an instruction that teaches him how.
+</p>
+
+<p>
+We teach the turtle new instructions with the "TO" command
+(as in, "to do this, follow this procedure").
+</p>
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Press the "Edall" button and enter the following:
+</p>
+
+<div class="code-sample">
+<pre>TO SQUARE
+  REPEAT 4 [ FORWARD 100 RIGHT 90 ]
+END
+</pre>
+</div>
+
+<p>
+Now select "File -> Save and Exit" as shown here:
+<img src="img/edall-save-and-exit.png" alt="edall" />.
+</p>
+
+</div>
+
+<p>
+You have just taught the turtle how to draw a square.  
+You can make him draw one with the new SQUARE instruction.
+</p>
+
+<p></p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>SQUARE
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/square.png" alt="a square" />
+    </td>
+  </tr>
+</table>
+
+<p></p>
+
+<div class="activity">
+   <p>
+   <b>Activity:</b>
+   Teach the turtle to draw either a picture or a design.
+   If you get stuck, you can use the sample programs below for ideas.
+   But don't limit yourself to them.
+   Explore what Logo can do and have fun!
+   </p>
+
+   <p>
+   When you're done, you can save your program
+   and the picture and we'll put it on our Web page for everyone to see.
+   </p>
+</div>
+
+<h3>Sample Programs</h3>
+
+<table>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO SQUARE
+  REPEAT 4 [ FORWARD 100 RIGHT 90 ]
+END
+
+TO SQUAREFLOWER
+  REPEAT 18 [ SQUARE RIGHT 20 ]
+END
+
+SQUAREFLOWER
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/square-flower.png" alt="SQUAREFLOWER" />
+    </td>
+  </tr>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO SEGMENT
+  FORWARD 20
+  LEFT    90
+  FORWARD 50
+  LEFT    90
+  FORWARD 10
+  LEFT    90
+  FORWARD 55
+
+  FORWARD 55
+  RIGHT   90
+  FORWARD 10
+  RIGHT   90
+  FORWARD 50
+  RIGHT   90
+  FORWARD 20
+END
+
+TO PATTERN
+  RIGHT 62
+  REPEAT 10 [ SEGMENT ]
+END
+
+PATTERN
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/slanted-pattern.png" alt="PATTERN" />
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO FANBLADE
+  REPEAT 2 [
+    FORWARD 100
+    RIGHT   135
+    FORWARD 20
+    RIGHT   45
+  ]
+END
+
+TO FAN
+  REPEAT 8 [
+    FANBLADE
+    LEFT    135
+    FORWARD 20
+  ]
+END
+
+FAN
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/fan.png" alt="FAN" />
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO SAWTOOTH
+  RIGHT   45
+  FORWARD 56.56
+  LEFT    135
+  FORWARD 40
+  RIGHT   90
+END
+
+TO SAWBLADE
+  REPEAT 12 [ SAWTOOTH RIGHT 30 ]
+END
+
+SAWBLADE
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/sawblade.png" alt="SAWBLADE" />
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO TRIANGLE
+  REPEAT 3 [ FORWARD 100 LEFT 120 ]
+END
+
+TO SQUARE
+  REPEAT 4 [ FORWARD 100 RIGHT 90 ]
+END
+
+TO DOOR
+  RIGHT   90 ; move into position
+  FORWARD 60
+  LEFT    90 ; draw the rectangle
+  FORWARD 50
+  LEFT    90
+  FORWARD 20
+  LEFT    90
+  FORWARD 50
+  RIGHT   90 ; return to where we started
+  FORWARD 40
+  RIGHT   90
+END
+
+TO ROOF
+  FORWARD 100 ; move into position
+  RIGHT   90
+  TRIANGLE    ; draw the triangle roof
+  LEFT 90     ; return to where we started
+  BACK 100
+END
+
+TO HOUSE
+  SQUARE
+  DOOR
+  ROOF
+END
+
+HOUSE
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/simple-house.png" alt="HOUSE" />
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO STAR
+  REPEAT 5 [ FORWARD 200 RIGHT 144 ]
+END
+  
+STAR
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/five-point-star.png" alt="STAR" />
+    </td>
+  </tr>
+
+</table>
+
+<h2>Challenge Questions</h2>
+<ul>
+  <li>Why is asking the turtle to turn by an amount greater than 359 unnecessary?</li>
+  <li>How can you draw something with curvy lines, like a circle?</li>
+  <li>How can you turn left by using the RIGHT command?</li>
+  <li>How can you go backwards using just the FORWARD command?</li>
+  <li>Why is giving two move instructions in a row unnecessary?</li>
+  <li>Why is giving two turn instructions in a row unnecessary?</li>
+  <li>How can you create a solid shape, like a square whose insides are completely black?</li>
+</ul>
+<hr />
+<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+       src="http://www.w3.org/Icons/valid-xhtml10"
+       alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+</p>
+
+</body>
+</html>
+

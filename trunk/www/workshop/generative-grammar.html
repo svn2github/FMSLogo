@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Lesson 10: English Sentences</title>
+  <link rel="stylesheet" type="text/css" href="logo-workshop.css" />
+</head>
+
+<body>
+
+<h1>Lesson 10: English Sentences</h1>
+
+<!-- title: English Sentences -->
+
+<p> 
+In this lesson, we are going to teach the turtle to write English.
+The turtle already knows how to write every letter in the alphabet,
+so all we have to do is each him English.
+</p>
+
+<p> 
+In the process of teaching the turtle English, we will think about
+what "English" really is and how we learned it.
+By the end, we will have a better understanding of the language
+that we all speak.
+</p>
+
+<h2>What is Language?</h2>
+
+<p>
+You learned your first language when you were very young.
+You probably started talking when you were two years old and could say
+complicated sentences by the time you were four.
+And yet, no one had to <em>teach</em> you how to speak, you figured 
+it out just by hearing other people speak.
+</p>
+
+<p>
+It's amazing when you stop to think about it.
+Speaking a language is <em>very</em> complicated and yet you figured out
+how to do it before could even tie your shoes or brush your teeth.
+And you did this with very little effort.
+There's something special about speaking a language.
+</p>
+
+<h2>Is English just a Bunch of Words?</h2>
+
+<p>
+We want to teach the turtle English.  
+Before we can do this, we have to understand <em>what</em> we're teaching.
+What does it mean to know English?
+If you say that you "know English" what is it that you really know?
+</p>
+
+<p>
+Sometimes the best way to answer a hard question like this is to 
+come up with an answer and use a computer to see if that
+answer is right.
+You may be wrong, but you'll at least understand why you're
+wrong, which gets you closer to the right answer.
+</p>
+
+<p>
+We know that English has words and those words have meaning.
+So maybe the answer is 
+"When you know English, you know a bunch of words and their meanings".
+For example, these are all English words: 
+a, the, man, dog, banana, book, ate, took, kicked, and bit.
+</p>
+
+<p></p>
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Let's teach the turtle a bunch of words.
+</p>
+<p>
+We won't be using the graphics window in this lesson, 
+so you can make the MSWLogo screen very small and make
+the commander window very large.
+</p>
+
+<p>
+Teach the turtle how to TALK by entering the following program 
+(below and left) into Logo.
+The output from the program is on the right.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO PICKWORD
+  OUTPUT PICK [
+    A THE
+    MAN DOG BANANA BOOK
+    ATE BIT TOOK KICKED
+  ]
+END
+
+TO TALK
+  PRINT (LIST PICKWORD PICKWORD PICKWORD PICKWORD PICKWORD)
+END
+
+REPEAT 10 [ TALK ]
+</pre>
+      </div>
+    </td>
+    <td>
+      <div class="code-sample">
+<pre>THE ATE KICKED BIT A
+THE KICKED THE MAN BIT
+DOG BOOK DOG BIT A
+DOG TOOK MAN ATE DOG
+A TOOK KICKED BANANA TOOK
+DOG DOG THE KICKED ATE
+BIT THE BIT DOG TOOK
+DOG BANANA DOG BOOK KICKED
+THE ATE ATE MAN TOOK
+ATE DOG THE DOG A
+</pre>
+      </div>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+<p>
+Whoa!  
+I know English and "DOG BOOK DOG BIT A" is <em>not</em> an English sentence.
+The words are right, but the order is wrong.
+So knowing English means more than just knowing a bunch of words.
+Knowing English also means knowing how to order those words.
+</p>
+
+<p>
+I know that some words can only come after other words.
+For example, "DOG", "MAN", "BANANA", and "BOOK" can only come
+after "A" or "THE".
+We can try grouping the words by where they're allowed to be in a sentence.
+These groups are sometimes called "part of speech".
+</p>
+
+<table border="1">
+  <tr>
+    <th>Part of Speech</th>
+    <th>Examples</th>
+  </tr>
+
+  <tr>
+    <td>Article</td>
+    <td>A THE</td>
+  </tr>
+
+  <tr>
+    <td>Noun</td>
+    <td>MAN DOG BOOK BANANA</td>
+  </tr>
+
+  <tr>
+    <td>Verb</td>
+    <td>ATE BIT TOOK KICKED</td>
+  </tr>
+</table>
+
+<p>
+I also know that the following is an English sentence:
+</p>
+
+<p></p>
+
+<div class="code-sample">THE DOG BIT THE MAN</div>
+
+<p>
+So maybe all sentences that follow this pattern are English:
+</p>
+
+<div class="code-sample">
+ARTICLE NOUN VERB ARTICLE NOUN
+</div>
+
+<p></p>
+
+<div class="activity">
+
+<p>
+<b>Activity:</b>
+Teach the turtle to talk by grouping words into
+parts of speech and constructing sentences 
+based on those parts of speech.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO ARTICLE
+  OUTPUT PICK [ A THE ]
+END
+
+TO NOUN
+  OUTPUT PICK [ MAN DOG BANANA BOOK ]
+END
+
+TO VERB
+  OUTPUT PICK [ ATE BIT TOOK KICKED ]
+END
+
+TO TALK
+  PRINT (LIST ARTICLE NOUN VERB ARTICLE NOUN)
+END
+
+REPEAT 10 [ TALK ]
+</pre>
+      </div>
+    </td>
+    <td>
+      <div class="code-sample">
+<pre>THE MAN KICKED THE BOOK
+THE MAN KICKED A BANANA
+A BOOK ATE THE BANANA
+A BOOK KICKED THE BANANA
+A MAN KICKED A DOG
+A BANANA TOOK A DOG
+THE BOOK KICKED THE BOOK
+THE BOOK ATE A MAN
+A BOOK ATE A DOG
+THE DOG KICKED A DOG
+</pre>
+      </div>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+<p>
+At first, it might seem like the following sentences isn't English.
+</p>
+
+<p></p>
+
+<div class="code-sample">A BOOK KICKED THE BANANA</div>
+
+<p>
+Because books can't kick things--they don't have legs.
+But I can imagine a cartoon where books have legs and go around kicking fruit.
+If someone in this cartoon said "A BOOK KICKED THE BANANA",
+I'd find the sentence perfectly acceptable.
+So, I don't want to reject the sentence just because it's nonsense,
+I only want to reject sentences where the order makes them wrong.
+</p>
+
+<p>
+So far, so good.  
+When we give the "TALK" instruction, the turtle will always say an English sentence.
+Now, let's teach the turtle to say sentences about me.
+My name is "DAVID" and I am a person.
+People are nouns.
+So maybe all we have to do is add "DAVID" to the noun list.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO ARTICLE
+  OUTPUT PICK [ A THE ]
+END
+
+TO NOUN
+  OUTPUT PICK [ MAN DOG BANANA BOOK <b>DAVID</b> ]
+END
+
+TO VERB
+  OUTPUT PICK [ ATE BIT TOOK KICKED ]
+END
+
+TO TALK
+  PRINT (LIST ARTICLE NOUN VERB ARTICLE NOUN)
+END
+
+REPEAT 10 [ TALK ]
+</pre>
+      </div>
+    </td>
+    <td>
+      <div class="code-sample">
+<pre>
+A DAVID TOOK THE BANANA
+A DAVID BIT THE MAN
+A BOOK KICKED A MAN
+THE DOG KICKED THE MAN
+THE DAVID KICKED A DOG
+THE DOG BIT THE BANANA
+A MAN TOOK THE DOG
+A DOG ATE THE BANANA
+A BOOK KICKED A DAVID
+</pre>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<p>
+Hmmm, "THE DAVID KICKED A DOG" isn't quite right.
+It should just be "DAVID KICKED A DOG".
+Maybe proper nouns should be treated differently than
+regular nouns.
+</p>
+
+<p>
+Instead of modelling a sentence as five slots, I'm going
+to model it with "rewriting rules", shown below.
+</p>
+
+<div class="code-sample"><pre>
+TALK        -> NOUN_PHRASE VERB NOUN_PHRASE
+NOUN_PHRASE -> ARTICLE NOUN
+NOUN_PHRASE -> PROPER_NOUN
+VERB        -> ate
+VERB        -> bit
+VERB        -> took 
+VERB        -> kicked
+NOUN        -> man
+NOUN        -> dog
+NOUN        -> bananna
+NOUN        -> book
+PROPER_NOUN -> david
+ARTICLE     -> a
+ARTICLE     -> the
+</pre></div>
+
+<p>
+Rewriting rules define a sort of game.
+You start with the word "TALK".
+If you have a word that is all CAPITAL LETTERS, you find a
+rule with that word on the left of the arrow and replace
+it with what's on the right of the arrow.
+When all you have left are lower-case words, you're done.
+</p>
+
+<p>
+In Logo, the these rewriting rules look like:
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO ARTICLE
+  OUTPUT PICK [ A THE ]
+END
+
+TO NOUN
+  OUTPUT PICK [ MAN DOG BANANNA BOOK ]
+END
+
+<b>TO NOUN_PHRASE
+  OUTPUT RUN PICK [
+    [ (LIST ARTICLE NOUN) ]
+    [ (LIST PROPER_NOUN)  ]
+  ]
+END</b>
+
+TO PROPER_NOUN
+  OUTPUT PICK [ DAVID JIM ]
+END
+
+TO VERB
+  OUTPUT PICK [ ATE BIT TOOK KICKED ]
+END
+
+TO TALK
+  PRINT (LIST NOUN_PHRASE VERB NOUN_PHRASE)
+END
+
+REPEAT 10 [ TALK ]
+</pre>
+      </div>
+    </td>
+    <td>
+      <div class="code-sample">
+<pre>[JIM] KICKED [A BOOK]
+[DAVID] KICKED [THE MAN]
+[A BANANNA] TOOK [DAVID]
+[JIM] TOOK [DAVID]
+[DAVID] TOOK [JIM]
+[DAVID] ATE [DAVID]
+[DAVID] ATE [THE MAN]
+[JIM] ATE [THE BANANNA]
+[THE MAN] BIT [A BOOK]
+[JIM] ATE [DAVID]
+</pre>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<p>
+The interesting part of this is the code for "NOUN_PHRASE".
+Observe how it picks between two different rewriting rules.
+</p>
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+So far we have taught the turtle some English.
+The turtle can say lots of sentences and everything the 
+turtle says is good English.  Even so, there are still
+many sentences that the turtle will never say.
+</p>
+
+<p>
+Think of a type of sentence that the turtle doesn't know how 
+to say and teach him to say those sentences.
+If you can't think of any, here are a few ideas below.
+</p>
+
+<ul>
+  <li>Sentences that use "describing words", 
+      like "GREEN", "HAPPY", and "TALL".</li>
+  <li>Sentences with "joining words", like
+      "AND" or "OR".</li>
+  <li>Sentences with "location words", like
+      "ON", "UNDER", and "NEAR".</li>
+  <li>Sentences with "action words" that only
+      use one noun, like "RUN", and "SLEEP".</li>
+  <li>Sentences with "action words" that use
+      three nouns, like "GIVE" 
+      (as in "THE MAN GAVE THE BANANA TO THE DOG").</li>
+</ul>
+
+</div>
+<hr />
+<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+       src="http://www.w3.org/Icons/valid-xhtml10"
+       alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+</p>
+
+</body>
+</html>
+

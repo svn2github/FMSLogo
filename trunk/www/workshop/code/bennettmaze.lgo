@@ -1,0 +1,641 @@
+to aaa
+; The author disclaims all copyrights associated with this code (hereafter
+; referred to as the "Work").
+;
+; The author makes this dedication for the benefit of the public at large
+; and to the detriment of the author's heirs and successors. The author
+; intends this dedication to be an overt act of relinquishment in
+; perpetuity of all present and future rights under copyright law,
+; whether vested or contingent, in the Work. The author understands that
+; such relinquishment of all rights includes the relinquishment of all
+; rights to enforce (by lawsuit or otherwise) those copyrights in the
+; Work.
+;
+; The author recognizes that, once placed in the public domain, the
+; Work may be freely reproduced, distributed, transmitted, used,
+; modified, built upon, or otherwise exploited by anyone for any
+; purpose, commercial or non-commercial, and in any way, including by
+; methods that have not yet been invented or conceived.
+end
+
+To Crashed? :oldpos :newpos
+
+   ForEach :walls [ 
+      If CrashedInWall? :oldpos :newpos ? [Output "true]
+   ]
+   Output "false
+End
+
+To CrashedInWall? :oldpos :newpos :wall
+   If (Count :wall) < 2 [Output "false]
+   Repeat (Count :wall) - 1 [
+      If Intersect? :oldpos :newpos (item repcount :wall) (item (repcount + 1) :wall) [ 
+         Output "true
+      ]
+   ]
+
+   Output "false
+End
+
+To DrawGrid :granularity [:oldpen pen] [:oldpos pos] [:oldheading heading]
+
+   HideTurtle ; to speed up drawing
+
+   SetPenSize  [1 1]
+   SetPenColor [125 225 255] ; light blue
+
+   ; draw vertical lines
+   For [i :granularity 500 :granularity] [
+      ; draw a horizontal line in the positive X half
+      MoveTo :i -500
+      SetXY  :i  500
+
+      ; draw a horizontal line in the negative X half
+      MoveTo -:i -500
+      SetXY  -:i  500
+
+      ; draw a vertical line in the positive Y half
+      MoveTo -500 :i
+      SetXY   500 :i
+
+      ; draw a horizontal line in the negative Y half
+      MoveTo -500 -:i
+      SetXY   500 -:i 
+   ]
+
+   SetPenColor [0 180 232] ; darker blue for X/Y axes
+
+   ; draw the X axis
+   MoveTo 0 -500
+   SetXY  0  500
+
+   ; draw the Y axis
+   MoveTo -500 0
+   SetXY   500 0
+
+   ; restore the turtle's original position and heading
+   PenUp
+   SetPos     :oldpos
+   SetHeading :oldheading
+   PenDown
+
+   ; restore the original pen color/size
+   SetPen :oldpen
+
+   ShowTurtle
+End
+
+To DrawWall :wall
+
+   If Not Empty? :wall [ PenUp SetPos First :wall PenDown ]
+   ForEach :wall [ SetPos ? ]
+
+End
+
+To DrawWalls :walls
+
+   SetPenSize  [1 1]
+   SetPenColor [255 0 0] ; red
+
+   ForEach :walls [ DrawWall ? ]
+
+End
+
+To finished? :oldpos :newpos
+   Output inbox? :newpos :finishLowerLeft :finishUpperRight
+End
+
+To InBox? :p :p0 :p1
+  Output (and (InRange? Item 1 :p Item 1 :p0 Item 1 :p1)
+              (InRange? Item 2 :p Item 2 :p0 Item 2 :p1))
+End
+
+To InRange? :x :x0 :x1
+
+  ; allow a tolerance of 1e-5 to account for floating point precision problems
+
+  If :x0 < :x1 [
+     Output And (:x0 - 1e-5 < :x) (:x < :x1 + 1e-5)
+  ]
+
+  Output And (:x1 - 1e-5 < :x) (:x < :x0 + 1e-5)
+End
+
+To Intersect? :L1P1 :L1P2 :L2P1 :L2P2
+ 
+   Make "L1 normalize :L1P1 :L1P2
+   Make "a1 item 1 :L1
+   Make "b1 item 2 :L1
+   Make "c1 item 3 :L1
+
+   Make "L2 normalize :L2P1 :L2P2
+   Make "a2 item 1 :L2
+   Make "b2 item 2 :L2
+   Make "c2 item 3 :L2
+
+   Make "det (:a1 * :b2) - (:a2 * :b1)
+
+   if :det = 0 [ Output "false ] ; parallel
+
+   Make "x ((:b2 * :c1) - (:b1 * :c2)) / :det
+   Make "y ((:a1 * :c2) - (:a2 * :c1)) / :det
+   Make "p list :x :y
+
+   ; now check if x and y are within both line segments
+   Output and (inbox? :p :L1P1 :L1P2) (inbox? :p :L2P1 :L2P2)
+End
+
+To MoveRacer :oldpos :newpos
+
+  Make "totalMoves :totalMoves + 1
+  UpdateScore
+
+  If Crashed? :oldpos :newpos [ 
+    Make "isCrashed "true
+    (Print [You crashed after] :totalMoves Word Moves ".)
+    PlayCrashSong
+    Stop
+  ]
+
+  If Finished? :oldpos :newpos [ 
+    Make "isFinished "true
+    (Print [You have finished in] :totalMoves Word Moves "!)
+    PlayFinishSong
+    Stop
+  ]
+
+End
+
+To Moves
+  If :totalMoves = 1 [ Output "move ]
+  Output "moves
+End
+
+To MoveTo :x :y
+   PenUp
+   SetXY :x :y
+   PenDown
+End
+
+To MyBack :distance
+
+  If :isCrashed [
+     PlayCrashSong
+     Stop
+  ]
+
+  If :isFinished [
+     PlayFinishSong
+     Stop
+  ]
+
+  Make "oldpos pos
+  Run (List "OriginalBack :distance)
+  Make "newpos pos
+
+  MoveRacer :oldpos :newpos
+
+End
+
+To MyForward :distance
+
+  If :isCrashed [
+     PlayCrashSong
+     Stop
+  ]
+
+  If :isFinished [
+     PlayFinishSong
+     Stop
+  ]
+
+  Make "oldpos pos
+  Run (List "OriginalForward :distance)
+  Make "newpos pos
+
+  MoveRacer :oldpos :newpos
+
+End
+
+To MyLeft :angle
+
+  If :isCrashed [
+     PlayCrashSong
+     Stop
+  ]
+
+  If :isFinished [
+     PlayFinishSong
+     Stop
+  ]
+
+  Run (List "OriginalLeft :angle)
+  Make "totalmoves :totalmoves + 1
+  UpdateScore
+
+End
+
+To MyRight :angle
+
+  If :isCrashed [
+     PlayCrashSong
+     Stop
+  ]
+
+  If :isFinished [
+     PlayFinishSong
+     Stop
+  ]
+
+  Run (List "OriginalRight :angle)
+  Make "totalmoves :totalmoves + 1
+  UpdateScore
+
+End
+
+To Next
+  ; So that the user can type "NEXT" in addition to pressing it
+  NextBoard
+End
+
+To NextBoard
+
+  ; select the board To use
+  Make "currentMaze :currentMaze + 1
+  If :currentMaze > COUNT :mazes [Make "currentMaze 1]
+
+  StartRace
+   
+End
+
+To Normalize :P1 :P2
+
+   ; convert a line of the form [x0 y0] [x1 y1] 
+   ; to [A B C], where Ax + Bx = C describes all points on the line
+
+   Make "a (item 2 :P2) - (item 2 :P1)
+   Make "b (item 1 :P1) - (item 1 :P2)
+   Make "c (:a * item 1 :P1) + (:b * item 2 :P1)
+   Output (list :a :b :c)
+
+End
+
+To PlayCrashSong
+   Tone 50 500
+   Print [Press RESET to try again.]
+End
+
+To PlayFinishSong   
+   Repeat 50 [ 
+     Tone (500 + RepCount * 5) 5 
+     OriginalRight 360 / 100
+   ]
+   Repeat 50 [ 
+     Tone (750 - RepCount * 5) 5
+     OriginalRight 360 / 100
+   ]
+   Print [Press RESET to play again.  Press NEXT to move to a new maze.]
+End
+
+To Reset
+  ; So that the user can type "RESET" in addition to pressing it
+  StartRace
+End
+
+To Setup
+
+  LocalMake "gapx 6
+  LocalMake "gapy 6
+
+  LocalMake "buttonwidthlong  60
+  LocalMake "buttonwidthshort 40
+  LocalMake "buttonheight     12
+
+  LocalMake "onebuttonx  (:width-:gapx-:buttonwidthlong)/2
+  LocalMake "twobuttonx1 :gapx
+  LocalMake "twobuttonx2 :width-:gapx-:buttonwidthshort
+
+  ; row 1
+  LocalMake "ypos :gapy
+  ButtonCreate "window "fdbutton (LIST "|FORWARD| :movedistance) :onebuttonx :ypos :buttonwidthlong  :buttonheight [MyForward :movedistance]
+
+  ; row 2
+  Make "ypos :ypos + :buttonheight + :gapy
+  ButtonCreate "window "rt90button "|LEFT  90|  :twobuttonx1 :ypos :buttonwidthshort :buttonheight [MyLeft  90]
+  ButtonCreate "window "lt90button "|RIGHT 90|  :twobuttonx2 :ypos :buttonwidthshort :buttonheight [MyRight 90]
+
+  ; row 3
+  Make "ypos :ypos + :buttonheight + :gapy
+  ButtonCreate "window "rt30button "|LEFT  30|  :twobuttonx1 :ypos :buttonwidthshort :buttonheight [MyLeft  30]
+  ButtonCreate "window "lt30button "|RIGHT 30|  :twobuttonx2 :ypos :buttonwidthshort :buttonheight [MyRight 30]
+
+  ; row 4
+  Make "ypos :ypos + :buttonheight + :gapy
+  ButtonCreate "window "bkbutton  (LIST "|BACK   | :movedistance)  :onebuttonx  :ypos :buttonwidthlong  :buttonheight [MyBack :movedistance]
+
+  ; row 5
+  Make "ypos :ypos + :buttonheight + :gapy + 10
+  ButtonCreate "window "csbutton   "|RESET| :onebuttonx  :ypos :buttonwidthlong  :buttonheight [Reset]
+
+  ; row 6
+  Make "ypos :ypos + :buttonheight + :gapy
+  ButtonCreate "window "nextbutton "|NEXT|  :onebuttonx  :ypos :buttonwidthlong  :buttonheight [Next]
+
+End
+
+To SlowDraw :slowness
+  print [SLOWDRAW is disabled to prevent cheating.]
+End
+
+To StartRace
+
+  ; select the board To use
+  RUN ITEM :currentMaze :mazes
+
+  ; pre-calculate the bounding box of the finish line
+  Make "finishLowerLeft  (list :finishX                 :finishY)
+  Make "finishUpperRight (list :finishX + :finishWidth  :finishY + :finishHeight)
+
+  ; pre-calculate the walls that surround the finish line
+  Make "finishWall (list (list :finishX                :finishY)
+                         (list :finishX + :finishWidth :finishY)
+                         (list :finishX + :finishWidth :finishY + :finishHeight)
+                         (list :finishX                :finishY + :finishHeight)
+                         (list :finishX                :finishY))
+
+  Make "isCrashed  "false
+  Make "isFinished "false
+
+  Make "totalMoves 0
+
+
+  PenUp
+  SetScreenColor 7
+  DrawGrid :moveDistance
+
+  DrawWalls  :walls
+
+
+  ; draw the finish line
+  SetFloodColor 6
+  PenUp
+  SetXY :finishX :finishY
+  PenDown
+  BitBlock :finishWidth :finishHeight
+
+  SetPenColor 0 ; black
+
+  DrawWall :finishWall
+
+  ; move the turtle into position
+  PenUp
+  SetXY      :startX :startY
+  SetHeading :startheading
+  PenDown
+
+  ; set the pen for the turtle
+  SetPenSize  [1 1]
+  SetPenColor 0
+
+
+  UpdateScore 
+
+End
+
+To TurtleMaze
+
+  Window ; use window mode to prevent wrap-around
+
+  localmake "redefp "true
+
+  If Not Primitivep "originalforward [
+    Copydef "originalforward "forward
+    Erase "fd
+    Define "fd  (list [d] (list "MyForward Word ": "d))
+    Copydef "forward "fd
+    Bury "fd
+  ]
+
+  If Not Primitivep "originalback [
+    Copydef "originalback "back
+    Erase "bk
+    Define "bk (list [d] (list "MyBack Word ": "d))
+    Copydef "back "bk
+    Bury "bk
+  ]
+
+  If Not Primitivep "originalright [
+    Copydef "originalright "right
+    Erase "rt
+    Define "rt (list [angle] (list "MyRight Word ": "angle))
+    Copydef "right "rt
+    Bury "rt
+  ]
+
+  If Not Primitivep "originalleft [
+    Copydef "originalleft "left
+    Erase "lt
+    Define "lt (list [angle] (list "MyLeft Word ": "angle))
+    Copydef "left "lt
+    Bury "lt
+  ]
+
+  Make "width        100
+  Make "height       140
+  Make "moveDistance 20
+
+  Make "currentMaze 1
+  Make "mazes       [UseMazeBunny UseMazeRocket UseMazeNiko UseMazePerry UseMazeZebra]
+
+  StartRace
+  WindowCreate "main "window [Control the Turtle] 100 100 :width :height [Setup]
+
+End
+
+To UpdateScore [:PreviousPenColor PenColor] [:PreviousTurtle Turtle]
+
+  ; Move the turtle that will keep score in place
+  SetTurtle 1
+  HideTurtle
+
+  PenUp
+  SetXY 200 220      ; move above the maze
+  SetHeading 90    ; face right
+  PenDown
+
+  ; draw a black box for the score board
+  SetFloodColor 0
+
+  localmake "boxsize labelsize [Total Moves 999]
+
+  BitBlock (item 1 :boxsize) + 40   (item 2 :boxsize) + 40
+  SetXY XCor + 20    YCor + 20 + item 2 :boxsize
+
+  SetPenColor 7
+  Label (list "Total "Moves :totalMoves)
+
+  SetTurtle   :PreviousTurtle
+  SetPenColor :PreviousPenColor
+
+End
+
+To UseMazeNiko
+
+  Make "walls []
+  Push "walls [ [ 0    280] [ 0   -120] ]
+  Push "walls [ [-160 -260] [-160  280 ] [ 120  280] [ 120  220] [100 220] 
+                [ 100  200] [ 120  200 ] [ 120  160] [ 100  160] [100 140] 
+                [ 180  140] [ 180 -260 ] [-160 -260] ]
+  Push "walls [ [ 0 -120] [ 140 -120] ]
+  Push "walls [ [ 180 -80] [ 40 -80] ]              
+  Push "walls [ [ 0 -40] [ 140 -40] ]
+  Push "walls [ [ 180 0] [ 40 0] ]
+  Push "walls [ [ 0 200] [ 40 200] ]
+  Push "walls [ [ 40 200] [ 40 240] ]
+
+  Make "startX       -140
+  Make "startY       240
+  Make "startheading 90
+
+  Make "finishX      0
+  Make "finishY      200
+  Make "finishWidth  40
+  Make "finishHeight 40
+
+End
+
+To UseMazeRocket
+
+  Make "walls []
+  Push "walls [ [ 480 0] [ 400 -80 ]  [-240 -80 ] [ -360 -200 ]
+                [ -480 -200 ] [ -480 -80 ] [ -500 -80 ]
+                [-500 80 ] [-480 80 ] [ -480 200] [ -360 200 ]
+                [-240 80 ] [ 400 80 ] [480 0]
+              ] 
+  Push "walls [ [320 80][320 10] ] 
+  Push "walls [ [320 -80][320 -10] ] 
+  Push "walls [ [320  20] [380  20] [ 380 10  ] ]  
+  Push "walls [ [320 -20] [380 -20] [ 380 -10 ] ]  
+
+  Push "walls [ [180 80][180 40][220 40][220 -40][200 -40] ] 
+
+
+  Push "walls [ [200 -60][200 -80]]
+
+
+  Make "startX       340
+  Make "startY       60
+  Make "startheading 90
+
+  Make "finishX     -480
+  Make "finishY      0
+  Make "finishWidth  40
+  Make "finishHeight 40
+
+End
+
+To UseMazeBunny
+
+  Make "walls []
+
+  ; the outline
+  Push "walls [ [ -100 -80 ]
+                [ -60  -80 ] [ -60 -40 ] [ -40 -40 ] [ -40 -20 ] [-100 -20 ]
+                [ -100  10 ] [ -60  10 ] [ -60 100 ] [-100 100 ] [-100 200 ]
+                [ -140 200 ] [-140 100 ] [-180 100 ] [-180 200 ] [-220 200 ]
+                [ -220 100 ] [-260 100 ] [-260 10  ] [-240  10 ] [-240 -60 ]
+                [ -260 -60 ] [-260 -80 ] [-220 -80 ] [-220 -40 ] [-180 -40 ]
+                [ -180 -60 ] [-200 -60 ] [-200 -80 ] [-160 -80 ] [-160 -40 ]
+                [ -120 -40 ] [-120 -60 ] [-140 -60 ] [-140 -80 ] [-100 -80 ]
+                [ -100 -40 ] [ -80 -40 ] [-80  -60 ] [-100 -60 ] ]
+
+  ; the smile
+  Push "walls [ [ -120  20 ] [ -140  20 ] [ -140 0 ] [-180 0 ] [-180 20 ]
+                [-200   20 ] ]
+
+  ; the left eye (outside)
+  Push "walls [ [ -100  40 ] [ -100 80 ] [ -140 80 ] [ -140 40 ] [ -100 40 ] ]
+
+  ; the left eye (inside)
+  Push "walls [ [ -120  40 ] [ -120 60 ] [ -140 60 ] [ -140 40 ] [ -120 40 ]
+                [ -122  40 ] [ -122 60 ] [ -124 60 ] [ -124 40 ] [ -126 40 ]
+                [ -126  60 ] [ -128 60 ] [ -128 40 ] [ -130 40 ] [ -130 60 ]
+                [ -132  60 ] [ -132 40 ] [ -134 40 ] [ -134 60 ] [ -136 60 ]
+                [ -136  40 ] [ -136 60 ] [ -138 60 ] [ -138 40 ] ]
+
+  ; the right eye (outside)
+  Push "walls [ [ -180  40 ] [ -180 80 ] [ -220 80 ] [ -220 40 ] [ -180 40 ] ]
+
+  ; the right eye (inside)
+  Push "walls [ [ -200  40 ] [ -200 60 ] [ -220 60 ] [ -220 40 ] [ -200 40 ] 
+                [ -202  40 ] [ -202 60 ] [ -204 60 ] [ -204 40 ] [ -206 40 ]
+                [ -206  60 ] [ -208 60 ] [ -208 40 ] [ -210 40 ] [ -210 60 ]
+                [ -212  60 ] [ -212 40 ] [ -214 40 ] [ -214 60 ] [ -216 60 ]
+                [ -216  40 ] [ -216 60 ] [ -218 60 ] [ -218 40 ] ]
+
+  ; the nose
+  Push "walls [ [ -150  20 ] [ -170  20 ] [ -170 40 ] [ -168 40 ] [ -168 20 ] [ -166 20 ] 
+                [ -166  40 ] [ -164 40 ] [ -164 20 ] [ -162 20 ] [ -162 40 ]
+                [ -160  40 ] [ -160 20 ] [ -158 20 ] [ -158 40 ] [ -156 40 ] 
+                [ -156  20 ] [ -154 20 ] [ -154 40 ] [ -152 40 ] [ -152 20 ]
+                [ -150  20 ] [ -150 40 ] [ -170 40 ] ]
+
+  Make "startX       -200
+  Make "startY        160
+  Make "startheading 0
+
+  Make "finishX      -160
+  Make "finishY      -40
+  Make "finishWidth  40
+  Make "finishHeight 40
+
+End
+
+To UseMazePerry
+
+  Make "walls []
+  Push "walls [ [ 0 0 ] [-330 0] [-330 -50 ] [ -430 -50 ] 
+                [ -430 -90] [ -330 -90 ] [ -330 -250 ]
+                [ -270 -250] [ -270 -90 ] [-180 -90 ]
+                [ -180 -250] [ -90 -250 ] [-90 -60]
+                [  80  -60 ] [ 80 20 ] [ 200 20 ] [ 200  0 ]
+              ]
+
+  Make "startX       30
+  Make "startY       -150
+  Make "startheading 90
+
+  Make "finishX     -430
+  Make "finishY     -70
+  Make "finishWidth  10
+  Make "finishHeight 20
+
+End
+
+To UseMazeZebra 
+
+  Make "walls []
+  Push "walls [ [ -100 -20  ] [-120  -40 ] [-120 -200] [-200 -200] [-200 -200]
+                [ -200 -160 ] [-160 -160 ] [-160   60] [-240  160] [-300  140]
+                [ -320  160 ] [-260  240 ] [-260  280] [-260  280] [-240  240]
+                [ -220  280 ] [-200  240 ] [-100  120] [ 180  120] [ 220   80]
+                [  220 -200 ] [ 140 -200 ] [ 140 -160] [ 180 -160] [ 180  -40]
+                [ 160  -20  ] [-100  -20 ] ]
+  Push "walls [ [  220   80 ] [ 260  -20 ] [ 280 -40] ]
+  Push "walls [ [  120  -20 ] [ 100   80 ] ]
+  Push "walls [ [   40   20 ] [  20  120 ] ]
+  Push "walls [ [  -20  -20 ] [ -40   80 ] ]
+  Push "walls [ [  -80   20 ] [-100  120 ] ]
+
+  Make "startX       160
+  Make "startY      -180
+  Make "startheading 90
+
+  Make "finishX     -280
+  Make "finishY      160
+  Make "finishWidth  40
+  Make "finishHeight 40
+
+End
+
+Make "startup [TurtleMaze]

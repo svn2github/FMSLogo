@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Lesson 5: Colors</title>
+  <link rel="stylesheet" type="text/css" href="logo-workshop.css" />
+</head>
+
+<body>
+
+<h1>Lesson 5: Colors</h1>
+
+<!-- title: Colors -->
+
+<p>
+The first few lessons taught us how to write programs that draw pictures.
+So far, all of our programs draw the black and white pictures.
+In this lesson, we are going to add colors to our pictures.
+</p>
+
+<p>
+Logo gives you two ways to pick a color.
+One way is to pick a color from a set of 16 commonly used colors.
+Another way is to create your own color by mixing different
+amounts of red, green, and blue.
+This gives you a choice of over 16 <i>million</i> different colors.
+</p>
+
+<h2>Pen Color and Screen Color</h2>
+
+<p>
+You can change the color of the lines that the turtle draws 
+with the SETPENCOLOR command.
+You can change the color of the screen (or background) with
+the SETSCREENCOLOR command.
+</p>
+
+
+<table border="1">
+  <tr>
+    <th>Command</th>
+    <th>Example</th>
+    <th>What Happens</th>
+  </tr>
+
+  <tr>
+    <td>SETPENCOLOR <i>color</i></td>
+    <td>SETPENCOLOR 2</td>
+    <td>Sets the color that the turtle draws to green.</td>
+  </tr>
+
+  <tr>
+    <td>SETSCREENCOLOR <i>color</i></td>
+    <td>SETSCREENCOLOR 2</td>
+    <td>Fills the entire screen with green.
+        Anything on the screen will be erased.
+        The turtle is not moved.</td>
+  </tr>
+</table>
+
+<h2>Color Index</h2>
+
+<p>
+The easy way to change the color of the turtle's pen is to
+give SETPENCOLOR a number from 0 - 15.
+Each number will set the turtle's pen to a different color,
+given in the table below.
+The number is called the "color index".
+</p>
+
+<table border="1">
+  <tr>
+    <th>Color Index</th>
+    <th>Color Name</th>
+    <th>[R G B]</th>
+    <th>Color</th>
+  </tr>
+
+  <tr>
+    <td>0</td>
+    <td>black</td>
+    <td>[0 0 0]</td>
+    <td style="background : rgb(0,0,0)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>blue</td>
+    <td>[0 0 255]</td>
+    <td style="background : rgb(0,0,255)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>green</td>
+    <td>[0 255 0]</td>
+    <td style="background : rgb(0,255,0)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>cyan (light blue)</td>
+    <td>[0 255 255]</td>
+    <td style="background : rgb(0,255,255)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>4</td>
+    <td>red</td>
+    <td>[255 0 0]</td>
+    <td style="background : rgb(255,0,0)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>5</td>
+    <td>magenta (reddish purple)</td>
+    <td>[255 0 255]</td>
+    <td style="background : rgb(255,0,255)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>6</td>
+    <td>yellow</td>
+    <td>[255 255 0]</td>
+    <td style="background : rgb(255,255,0)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>7</td>
+    <td>white</td>
+    <td>[255 255 255]</td>
+    <td style="background : rgb(255,255,255)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>8</td>
+    <td>brown</td>
+    <td>[155 96 59]</td>
+    <td style="background : rgb(155,96,59)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>9</td>
+    <td>light brown</td>
+    <td>[197 136 18]</td>
+    <td style="background : rgb(197,136,18)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>10</td>
+    <td>dark green</td>
+    <td>[100 162 64]</td>
+    <td style="background : rgb(100,162,64)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>11</td>
+    <td>darkish blue</td>
+    <td>[120 187 187]</td>
+    <td style="background : rgb(120,187,187)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>12</td>
+    <td>tan</td>
+    <td>[255 149 119]</td>
+    <td style="background : rgb(197,136,18)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>13</td>
+    <td>plum (purplish)</td>
+    <td>[144 113 208]</td>
+    <td style="background : rgb(114,113,208)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>14</td>
+    <td>orange</td>
+    <td>[255 163 0]</td>
+    <td style="background : rgb(255,163,0)">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>15</td>
+    <td>gray</td>
+    <td>[183 183 183]</td>
+    <td style="background : rgb(183,183,183)">&nbsp;</td>
+  </tr>
+
+</table>
+
+<p></p>
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Draw a blue square on a yellow background.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample"><pre>SETSCREENCOLOR 6
+SETPENCOLOR 1
+REPEAT 4 [ FORWARD 100 RIGHT 90 ]</pre></div>
+    </td>
+
+    <td>
+      <img 
+         src="img/blue-square-yellow-screen.png" 
+         alt="a blue square on a yellow background" />
+    </td>
+   </tr>
+</table>
+
+<p>
+What would happen if you switched the number that you gave to SETSCREENCOLOR and SETPENCOLOR?  Try it and see.
+</p>
+
+<p>
+What would happen if you gave SETSCREENCOLOR and SETPENCOLOR different
+numbers all-together?  Try it and see.
+</p>
+
+<p>
+What happens if you use a number that is larger than 15?
+</p>
+
+<p>
+How do you get the colors back to normal (white screen and black pen)?
+</p>
+
+</div>
+
+<h2>Red, Green, and Blue</h2>
+
+<p>
+What do we do if we want to use a color that is not in the color table?
+We can specify it using the colors red, green, and blue components.
+This is sometimes called an "RGB value".
+</p>
+
+<p>
+Every color is the world is made up of red, green, and blue.
+Taken together, red, green, and blue are called "the primary colors"
+because you can create every color just by mixing red, green, and blue
+together.
+</p>
+
+<p>
+You may be thinking "wait, I thought the primary colors were red, <em>yellow</em> and blue."
+Well, that's partly true.
+Those are actually the "primary <em>pigment</em> colors".
+They are the primary colors when dealing with paint.
+Actually, the primary pigment colors aren't exactly red, yellow, and blue; 
+they're magenta (a reddish-purple), yellow, and cyan (a light blue).
+But when you're dealing with light, the primary colors are red, green, and blue.
+</p>
+
+<p>
+The reason why red, green, and blue are so important has nothing to do with physics or computers.
+It has to do with the structure of the human eye.
+The human eye contains three types of color receptors called "cones".
+One type of cone is sensitive to red light, another is sensitive to 
+green light, and another is sensitive to blue light.
+The brain mixes the stimulus from each of these types of cones and 
+creates the perception of colors.
+</p>
+
+<p>
+That's all very interesting, but what does this have to do with Logo?
+Well, Logo lets you specify colors in terms of red, green, and blue.
+By using RGB values, you can pick any of the colors in the table above and more that 16 million others.
+Instead of specifying a number from 0 - 15, you specify a triple of
+numbers, like this "SETPENCOLOR [187 187 187]".
+</p>
+
+
+<div class="activity">
+<b>Activity:</b>
+<p>
+Let's write a program that draws a blue square on a yellow background.
+But this time, let's use RGB values, instead of a color index.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample"><pre>SETSCREENCOLOR [255 255 0]
+SETPENCOLOR [0 0 255]
+REPEAT 4 [ FORWARD 100 RIGHT 90 ]</pre></div>
+    </td>
+
+    <td>
+      <img 
+         src="img/blue-square-yellow-screen.png" 
+         alt="a blue square on a yellow background" />
+    </td>
+   </tr>
+</table>
+
+<p>
+Try changing the numbers in the square bracket and see what happens.
+</p>
+</div>
+
+
+<p></p>
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Experiment with SETPENCOLOR and SETSCREENCOLOR to create your own 
+interesting pictures.
+You can start with any program from the other lessons and
+insert a SETSCREENCOLOR command near the beginning,
+or insert a SETPENCOLOR command just before the turtle moves.
+</p>
+</div>
+
+
+<h3>Sample Programs</h3>
+
+<table>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO SQUARE
+  REPEAT 4 [ FORWARD 50 RIGHT 90 ]
+END
+
+TO SETPEN :BRIGHTNESS
+  SETPENCOLOR ( LIST
+     255                ; red
+     255 - :BRIGHTNESS  ; green
+     :BRIGHTNESS        ; blue
+  )
+END
+
+TO SQUAREFLOWER
+  REPEAT 64 [
+    SETPEN REPCOUNT * 4 - 1
+    RIGHT 360 / 64
+    SQUARE
+  ]
+END
+
+SQUAREFLOWER
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/color-square-flower.png" alt="SQUAREFLOWER" />
+    </td>
+  </tr>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO COLORSTAR
+  SETSCREENCOLOR 0
+  REPEAT 35 [
+    SETPENCOLOR INT (REPCOUNT - 1) / 5
+    FORWARD     REPCOUNT * 6
+    RIGHT       144
+  ]
+END
+
+COLORSTAR
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/colorstars.png" alt="COLORSTARS" />
+    </td>
+  </tr>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO COLORBALL
+  REPEAT 4 [
+    SETPENCOLOR REPCOUNT
+    REPEAT 120 [ FORWARD REPCOUNT * 2 RIGHT 204 ]
+    HOME
+    RIGHT 90 * REPCOUNT
+  ]
+END
+
+COLORBALL
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/colorball.png" alt="COLORBALL" />
+    </td>
+  </tr>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO RECTANGLE :HEIGHT :WIDTH
+  REPEAT 2 [
+    FORWARD :HEIGHT
+    RIGHT   90
+    FORWARD :WIDTH
+    RIGHT   90
+  ]
+END
+
+TO TRIANGLE :LENGTH
+  RIGHT 45
+  FORWARD :LENGTH * (SQRT 2) / 2
+  RIGHT 90
+  FORWARD :LENGTH * (SQRT 2) / 2
+  RIGHT 135
+  FORWARD :LENGTH
+  RIGHT 90
+END
+
+TO HOUSE
+  ; draw a red roof
+  SETPENCOLOR [255 0 0]
+  FORWARD    100
+  TRIANGLE   100
+  BACK       100
+
+  ; draw a dark green door
+  SETPENCOLOR [100 162 64]
+  RIGHT       90
+  FORWARD     60
+  LEFT        180
+  RECTANGLE   20 40
+  FORWARD     60
+  RIGHT       90
+
+  ; draw a brown house
+  SETPENCOLOR [155 96 59]
+  RECTANGLE   100 100
+
+END
+
+HOUSE
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/color-house.png" alt="HOUSE" />
+    </td>
+  </tr>
+
+</table>
+<hr />
+<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+       src="http://www.w3.org/Icons/valid-xhtml10"
+       alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+</p>
+
+</body>
+</html>
+

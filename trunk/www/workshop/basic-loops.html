@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Lesson 2: Basic Loops</title>
+  <link rel="stylesheet" type="text/css" href="logo-workshop.css" />
+</head>
+
+<body>
+
+<h1>Lesson 2: Basic Loops</h1>
+
+<!-- title: Basic Loops -->
+
+<p>
+In the first lesson, we used a command called "REPEAT" to
+draw a square one side at a time.
+In this lesson, we will use more advanced features
+of the REPEAT command to draw pictures that are much
+more interesting.
+</p>
+
+<h2>The REPEAT Loop</h2>
+
+<p>
+In Logo, a "loop" is something that the computer does many times over.
+Loops are useful when you want to draw something
+that has several parts, all of which look the same.
+For example, we can draw a square by "looping" the 
+command "FORWARD 100 RIGHT 90" four times, as in:
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>REPEAT 4 [ FORWARD 100 RIGHT 90 ]
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/square.png" alt="a sqaure" />
+    </td>
+  </tr>
+</table>
+
+ 
+<p>
+While loops are useful when a problem has parts that look exactly the same,
+the real fun starts when loops are used to draw pictures with parts 
+that look similar, but are NOT exactly the same.
+For example, to draw a square spiral, you can start at the center
+and repeatedly draw the edges of a square, making each edge a little
+longer than the previous one.
+You do this in Logo with the "REPCOUNT" loop counter.
+REPCOUNT is always equal to the number of times the loop has been run.
+It is 1 the first time the loop is run, 2 on the second, 3 on the third, and so on.
+</p>
+
+<div class="activity">
+<p>
+Here is a program that uses REPCOUNT to draw a square spiral.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>REPEAT 100 [ FORWARD REPCOUNT * 2 RIGHT 90 ]
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/square-spiral.png" alt="square spiral" />
+    </td>
+  </tr>
+</table>
+
+<p>
+<b>Activity:</b>
+</p>
+
+<ol>
+  <li>Type in the square spiral program and run it.</li>
+  <li>Modify the program to draw a triangle spiral.</li>
+  <li>Pick some other number for the angle and see what happens.</li>
+  <li>The square spiral multiplied the "FORWARD" amount by 2.
+      What do you think happens if you change the "2" to a "3"?
+      Try it and see if you're right.</li>
+</ol>
+
+</div>
+
+
+<h2>Number Sequences</h2>
+
+<p>
+Have you ever heard NASA count backwards just before they
+launch a space shuttle?  It goes something like this:
+"10, 9, 8, 7, 6, 5, 4, 3, 2, 1, BLASTOFF".
+They call this a "countdown sequence".
+The thing that makes it a "sequence" is that the order of the numbers is important.
+"9, 5, 1, 3, 6, 10, 8, 7, 3, 2" is NOT a countdown sequence,
+even though it has all the same numbers.
+</p>
+
+<p>
+The square spiral procedure multiples "REPCOUNT" by 2.
+This turns the sequence &lt;1, 2, 3, 4, 5,...> into &lt;2, 4, 6, 8, 10, ...>.
+You can do a little math to turn the &lt;1, 2, 3, 4, 5, ...> sequence into
+any other sequence that you want.
+For example, to get NASA's countdown sequence you could
+use "11 - REPCOUNT", as in:
+</p>
+
+<div class="code-sample">
+<pre>REPEAT 10 [ PRINT 11 - REPCOUNT ]
+PRINT "BLASTOFF
+</pre>
+</div>
+
+<p>
+Can you figure out how to get the sequence of numbers from 10 to 20?
+How about all odd numbers from 1 to 19?
+How about multiples of 7 between 14 and 77?
+</p>
+
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Experiment with REPEAT and REPCOUNT to create your own interesting pictures.
+You can start with any sample program that uses REPEAT and
+modify the loop to use "REPCOUNT" or you can write your own from scratch.
+</p>
+</div>
+
+
+<h3>Sample Programs</h3>
+
+<table>
+
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO STARSPIRAL
+  REPEAT 45 [ FORWARD REPCOUNT * 5 RIGHT 144 ]
+END
+  
+STARSPIRAL
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/star-spiral.png" alt="STARSPIRAL" />
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO SQUIRAL
+  REPEAT 100 [ FORWARD REPCOUNT * 2 RIGHT 91 ]
+END
+  
+SQUIRAL
+</pre>
+     </div>
+    </td>
+    <td>
+      <img src="img/squiral.png" alt="SQUIRAL" />
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO EXPLOSION
+  REPEAT 120 [ FORWARD REPCOUNT * 2 RIGHT 204 ]
+END
+
+EXPLOSION
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/explosion.png" alt="EXPLOSION" />
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO PATTERN
+  REPEAT 22 [
+    RIGHT 90
+    FORWARD 110 - REPCOUNT * 10
+    RIGHT 90
+    FORWARD REPCOUNT * 10
+  ]
+END
+
+PATTERN
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/big-small-pattern.png" alt="PATTERN" />
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO SSHAPE
+  REPEAT 750 [
+    RIGHT 90
+    REPEAT 4 [ FORWARD REPCOUNT * 3 RIGHT 72 ]
+    RIGHT REPCOUNT
+  ]
+END
+
+SSHAPE
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/s-shape.png" alt="SSHAPE" />
+    </td>
+  </tr>
+</table>
+
+
+<h2>Challenge Questions</h2>
+<ul>
+  <li>How can you create the sequence of odd numbers (1, 3, 5, 7, ...) with REPEAT and REPCOUNT?</li>
+  <li>For some values of X (for example, 90) the code <CODE>REPEAT 100 [FD REPCOUNT RT X]</CODE> 
+      draws a "stable" picture--it looks like the same shape inside itself.
+      Others values (for example, 91) draw "twisty" pictures.
+      What makes a value stable?  
+      What makes it twisty?
+      Is there a limit to the number of stable pictures can you draw with this pattern?</li>
+  <li>Why is it that, when you repeat the SQUIRAL program, it ends up going around in a circle,
+      but when you repeat the STARSPIRAL program, it goes off in a straight line?</li>
+  <li>Why does the SSHAPE command curve inward than outward (and back again), instead of either
+      spiraling inward forever or spiraling outward forever?</li>
+</ul>
+<hr />
+<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+       src="http://www.w3.org/Icons/valid-xhtml10"
+       alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+</p>
+
+</body>
+</html>
+
