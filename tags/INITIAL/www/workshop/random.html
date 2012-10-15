@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Lesson 4: Randomness</title>
+  <link rel="stylesheet" type="text/css" href="logo-workshop.css" />
+</head>
+
+<body>
+
+<h1>Lesson 4: Randomness</h1>
+
+<!-- title: Randomness -->
+
+<p>
+The first few lessons taught us how to write programs that draw pictures.
+So far, all of our programs draw the same picture every time.
+In this lesson, we are going to add randomness to our programs 
+so that they draw different pictures every time they are run.
+</p>
+
+<p>
+Logo give you two ways to add randomness.
+The first is with random numbers.
+The second is by picking an element at random from a list.
+</p>
+
+<h2>Random Numbers</h2>
+
+<p>
+Let's take a look and random numbers.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Command</th>
+    <th>Example</th>
+    <th>What Happens</th>
+  </tr>
+
+  <tr>
+    <td>RANDOM <i>number</i></td>
+    <td>RANDOM 10</td>
+    <td>Returns a random number from 0 to 9.</td>
+  </tr>
+
+</table>
+
+<p>
+The "RANDOM" command returns a random number from 0 to the number given, minus 1.
+Wherever you can put a regular number, you can put a "RANDOM" instruction.
+So, instead of "FORWARD 100", you can write "FORWARD RANDOM 100".
+</p>
+
+<div class="activity">
+<b>Activity:</b>
+Let's send the turtle on a random walk.
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample"><pre>REPEAT 1000 [ FORWARD 10 RIGHT RANDOM 360 ]</pre></div>
+    </td>
+
+    <td>
+      <img src="img/scribble.png" alt="random walk" />
+    </td>
+   </tr>
+</table>
+
+</div>
+
+<h2>More Random Numbers</h2>
+
+<p>
+We can use the RANDOM command to create random numbers in other ranges.
+For example, "(RANDOM 10) + 10" returns a random number from 10 - 19.
+Likewise, "(RANDOM 10) * 10" returns a random multiple of
+10 from 0 - 90 (a number in the set {0, 10, 20, 30, 40, 50, 60, 70, 80, 90}).
+</p>
+
+<p>
+How would you create a random number from -5 to 5?
+What about a random <em>even</em> number from 0 - 30?
+</p>
+
+<h2>Random Elements in a List</h2>
+
+<p>
+Random numbers are great, but let's say you already have some values
+in mind and you just want Logo to pick one at random.
+In this case, you use the "PICK" command.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Command</th>
+    <th>Example</th>
+    <th>What Happens</th>
+  </tr>
+
+  <tr>
+    <td>PICK <i>list</i></td>
+    <td>PICK [1, 4, 9, 16, 25]</td>
+    <td>Returns either 1, 4, 9, 16, or 25 at random.</td>
+  </tr>
+
+  <tr>
+    <td>RUN <i>instruction</i></td>
+    <td>RUN PICK [FORWARD BACK] 100</td>
+    <td>Goes either forward or backward at random.</td>
+  </tr>
+</table>
+
+<p>
+Notice how "PICK" and "RUN" can be combined to execute a command at random.
+</p>
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Let's write a program that draws a star with either 5, 7, or 11 points.
+Run the program a few times to see it draw different stars.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample"><pre>TO STAR :POINTS
+  REPEAT :POINTS [
+    FORWARD 100
+    RIGHT 180 - (180 / :POINTS)
+  ]
+END
+
+TO RANDOMSTAR
+  STAR PICK [ 5 7 11 ]
+END
+
+RANDOMSTAR
+</pre></div>
+    </td>
+
+    <td>
+      <img src="img/five-point-star.png" alt="RANDOMSTAR" />
+    </td>
+   </tr>
+</table>
+</div>
+
+<p></p>
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Experiment with RANDOM and PICK to create your own interesting pictures.
+You can start with any program from the other lessons and
+replace a number with a RANDOM instruction.
+</p>
+</div>
+
+
+<h3>Sample Programs</h3>
+
+<table>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO SQUARE :SIZE
+  REPEAT 4 [ FORWARD :SIZE RIGHT 90 ]
+END
+
+TO RANDOMBOXES
+  REPEAT 10 [ SQUARE RANDOM 100 ]
+END
+
+TO BOXPICTURE
+  REPEAT 4 [ RANDOMBOXES RIGHT 90 ]
+END
+
+BOXPICTURE
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/random-box-picture.png" alt="BOXPICTURE" />
+    </td>
+  </tr>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO DOWNSLANT
+  REPEAT 2 [
+    FORWARD 100
+    RIGHT   135
+    FORWARD 15
+    RIGHT   45
+  ]
+  RIGHT   135
+  FORWARD 15
+  LEFT    135
+END
+
+TO UPSLANT
+  REPEAT 2 [
+    FORWARD 100
+    RIGHT   45
+    FORWARD 15
+    RIGHT   135
+  ]
+  RIGHT   45
+  FORWARD 15
+  LEFT    45
+END
+
+TO RANDOMSHEET
+  REPEAT 20 [
+    RUN PICK [ UPSLANT DOWNSLANT ]
+  ]
+END
+
+RANDOMSHEET
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/random-sheet.png" alt="RANDOMSHEET" />
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO RECTANGLE :HEIGHT :WIDTH
+  REPEAT 2 [
+    FORWARD :HEIGHT
+    RIGHT   90
+    FORWARD :WIDTH
+    RIGHT   90
+  ]
+END
+
+TO TRIANGLE :LENGTH
+  RIGHT 45
+  FORWARD :LENGTH * (SQRT 2) / 2
+  RIGHT 90
+  FORWARD :LENGTH * (SQRT 2) / 2
+  RIGHT 135
+  FORWARD :LENGTH
+  RIGHT 90
+END
+
+TO HOUSE :SIZE
+  ; draw the house
+  RECTANGLE (10 * :SIZE) (10 * :SIZE)
+
+  ; draw the roof
+  FORWARD  10 * :SIZE
+  TRIANGLE 10 * :SIZE
+  BACK     10 * :SIZE
+
+  ; draw the door
+  RIGHT     90
+  FORWARD   6 * :SIZE
+  LEFT      180
+  RECTANGLE (2 * :SIZE) (4 * :SIZE)
+  BACK      4 * :SIZE
+  RIGHT     90
+END
+
+TO HOUSEROW
+  REPEAT 15 [ HOUSE RANDOM 6 ]
+END
+
+HOUSEROW
+</pre>
+      </div>
+    </td>
+    <td>
+      <img src="img/houserow.png" alt="HOUSEROW" />
+    </td>
+  </tr>
+
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO STAR :LENGTH :POINTS
+  REPEAT :POINTS [
+    FORWARD :LENGTH
+    RIGHT   180 - (180 / :POINTS)
+  ]
+END
+
+TO TELEPORT
+  PENUP
+  RIGHT   RANDOM 360
+  FORWARD RANDOM 1000
+  PENDOWN
+END
+
+TO STARRYNIGHT
+  REPEAT 30 [
+    TELEPORT
+    STAR (RANDOM 100 + 20) ((RANDOM 6) * 2 + 5)
+  ]
+END
+
+STARRYNIGHT
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/starrynight.png" alt="STARRYNIGHT" />
+    </td>
+  </tr>
+
+</table>
+
+<h2>Challenge Questions</h2>
+<ul>
+    <li>What's the difference between "RANDOM 10" and "RANDOM 5 + RANDOM 5"?</li>
+    <li>How can you randomly move forward or backward without using PICK?</li>
+    <li>How can you randomly turn either RIGHT 90 or LEFT 90 without using PICK?</li>
+
+</ul>
+<hr />
+<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+       src="http://www.w3.org/Icons/valid-xhtml10"
+       alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+</p>
+
+</body>
+</html>
+

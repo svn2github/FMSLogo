@@ -1,0 +1,649 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Lesson 6: Flags</title>
+  <link rel="stylesheet" type="text/css" href="logo-workshop.css" />
+</head>
+
+<body>
+
+<h1>Lesson 6: Flags</h1>
+
+<!-- title: Flags -->
+
+<p>
+So far, all of our drawings have had two limitations.
+First, they are entirely made up of lines (no solid shapes).
+Second, all of the lines are connected.
+In this lesson, we will overcome these limitations.
+We will learn how to move the turtle without drawing a line.
+We will also learn how to fill in the outline of a shape with a solid color.
+Then we will draw some flags of various countries.
+</p>
+
+<h2>Pen Up and Pen Down</h2>
+
+<p>
+The turtle draws a line wherever it goes because it is holding a
+pen on the ground.   If you don't want the turtle to draw a line
+when it moves, you can tell the turtle to lift the pen up.
+Likewise, if you want the turtle to start drawing again, you can tell
+the turtle to put the pen down.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Command</th>
+    <th>What Happens</th>
+  </tr>
+
+  <tr>
+    <td>PENUP</td>
+    <td>From now on, the turtle <em>won't</em> draw a line when it moves.</td>
+  </tr>
+
+  <tr>
+    <td>PENDOWN</td>
+    <td>From now on, the turtle <em>will</em> draw a line when it moves.</td>
+  </tr>
+</table>
+
+<p></p>
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Draw a dashed line using PENUP and PENDOWN.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample"><pre>REPEAT 10 [ PENUP FORWARD 5 PENDOWN FORWARD 5 ]</pre></div>
+    </td>
+
+    <td>
+      <img src="img/dashed-line.png" alt="a dashed line" />
+    </td>
+   </tr>
+</table>
+
+<p>
+Draw a square using dashed lines.
+</p>
+
+<p>
+Draw a dotted line (hint: a dot is a very short dash).
+</p>
+
+<p>
+Draw a dashed line that alternates between short dashes and long dashes.
+</p>
+</div>
+
+<p>
+By telling the turtle to lift the pen off the ground, we can draw shapes
+that aren't connected.
+</p>
+
+<h2>Filling in Solid Shapes</h2>
+
+<p>
+Now that we know how to move the turtle without drawing a line,
+we can make the turtle go inside a shape that it has drawn.
+Then we can fill the entire shape with a single color,
+using the FILL command.
+</p>
+
+<p>
+You can think of the FILL command as pouring out a bucket
+of special paint and flooding the area under the turtle.
+The paint is special in that it can't flow over pixels that have a different color 
+than the pixel that the turtle is over.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Command</th>
+    <th>Example</th>
+    <th>What Happens</th>
+  </tr>
+
+  <tr>
+    <td>SETFLOODCOLOR <i>color</i></td>
+    <td>SETFLOODCOLOR 3</td>
+    <td>From now on, whenever you give the FILL instruction, the color
+        will be filled with red.</td>
+  </tr>
+
+  <tr>
+    <td>FILL</td>
+    <td>FILL</td>
+    <td>Fill the shape under the turtle with the color set by SETFLOODCOLOR.</td>
+  </tr>
+</table>
+
+<p>
+We already know how to draw a shape like triangles and squares.
+PENUP and PENDOWN let us move into a shape without leaving a trace.
+SETFLOODCOLOR and FILL let us fill in the square with a color of our choice.
+</p>
+
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Draw a solid red square.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample"><pre>TO REDSQUARE
+  ; draw the outline
+  REPEAT 4 [FORWARD 100 RIGHT 90]
+
+  ; move into the square
+  PENUP
+  RIGHT 45
+  FORWARD 4
+
+  ; fill the square with red
+  SETFLOODCOLOR 4
+  FILL
+
+  ; move back
+  BACK 4
+  LEFT 45
+  PENDOWN
+END
+
+REDSQUARE
+</pre></div>
+    </td>
+
+    <td>
+      <img src="img/red-square.png" alt="REDSQUARE" />
+    </td>
+   </tr>
+</table>
+
+<p>
+Modify the program so that you don't see a black outline.
+</p>
+
+</div>
+
+<h2>National Flags</h2>
+<p>
+We can use the new commands to draw national flags.
+</p>
+
+<p>
+A national flag is the symbol of the most important things about that nation.
+Most flags are easy to draw and easy to recognize.
+</p>
+
+<p>
+Some flags use simple shapes to symbolize the country's ideals.
+For example, the flag of the United States of America has 50 stars in
+a blue field that symbolized the unity of the 50 states.
+Other flags just use colors to symbolize their ideals.
+The French flag uses red, white, and blue to symbolize freedom, equality, and brotherhood.
+These are the easiest to draw, so we'll start with them.
+</p>
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Draw the world's simplest national flag: Libya's flag.
+This flag is entirely green.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample"><pre>TO RECTANGLE :WIDTH :HEIGHT 
+  REPEAT 2 [
+    FORWARD :HEIGHT
+    RIGHT   90
+    FORWARD :WIDTH
+    RIGHT   90
+  ]
+END
+
+TO LIBYA_FLAG
+  ; Libya's flag is a 2:1 rectangle
+  RECTANGLE 200 100
+
+  ; position the turtle to fill in the flag
+  PENUP
+  RIGHT   45
+  FORWARD 10
+
+  ; fill in the box
+  SETFLOODCOLOR [35 158 70]
+  FILL
+
+  ; return
+  BACK 10
+  LEFT 45
+  PENDOWN
+END
+
+LIBYA_FLAG
+</pre>
+      </div>
+    </td>
+
+    <td>
+      <img src="img/flag-libya.png" alt="LIBYA_FLAG" />
+    </td>
+   </tr>
+</table>
+
+<p>
+Go to a <a href="http://www.photius.com/flags/alphabetic_list.html">Flag Website</a>
+and look for some other interesting flags to draw.
+</p>
+
+<p>
+Draw some other pictures using PENUP, PENDOWN, FILL, and SETFLOODCOLOR.
+You can create your own from scratch.
+You can start with one from another lesson and fill in some of the 
+shapes it creates.
+You can also just combine two programs from another lesson 
+using PENUP and PENDOWN, to create pictures with many disconnected shapes.
+</p>
+</div>
+
+<h3>Sample Programs</h3>
+
+<table>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO RECTANGLE :WIDTH :HEIGHT 
+  REPEAT 2 [
+    FORWARD :HEIGHT
+    RIGHT   90
+    FORWARD :WIDTH
+    RIGHT   90
+  ]
+END
+
+TO TRICOLOR_FLAG :COLOR1 :COLOR2 :COLOR3
+  ; Draw each of the three stripes
+  REPEAT 3 [ RECTANGLE REPCOUNT * 50 100 ]
+
+  ; Get set to fill in each rectangle
+  PENUP
+  FORWARD 10
+  RIGHT   90
+
+  ; fill the first stripe
+  FORWARD 25
+  SETFLOODCOLOR :COLOR1
+  FILL
+
+  ; fill the second stripe
+  FORWARD 50
+  SETFLOODCOLOR :COLOR2
+  FILL
+
+  ; fill the third stripe
+  FORWARD 50
+  SETFLOODCOLOR :COLOR3
+  FILL
+
+  ; go back where we started from
+  BACK 50 * 2 + 25
+  LEFT 90
+  BACK 10  
+  PENDOWN
+END
+
+TO ITALY_FLAG
+  ; Italy's flag is green|white|red
+  TRICOLOR_FLAG [0 140 0] [255 255 255] [247 0 0]
+END
+
+ITALY_FLAG
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/flag-italy.png" alt="ITALY_FLAG" />
+    </td>
+  </tr>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO RECTANGLE :WIDTH :HEIGHT 
+  REPEAT 2 [
+    FORWARD :HEIGHT
+    RIGHT   90
+    FORWARD :WIDTH
+    RIGHT   90
+  ]
+END
+
+TO TRIBAND_FLAG :COLOR1 :COLOR2 :COLOR3
+  ; Draw each of the three bands
+  REPEAT 3 [ RECTANGLE 150 REPCOUNT * 33 ]
+ 
+  ; Get set to fill in each rectangle
+  PENUP
+  RIGHT   45
+  FORWARD 10
+  LEFT    45
+ 
+  ; fill the first stripe
+  SETFLOODCOLOR :COLOR1
+  FILL
+ 
+  ; fill the second stripe
+  FORWARD 33
+  SETFLOODCOLOR :COLOR2
+  FILL
+ 
+  ; fill the third stripe
+  FORWARD 33
+  SETFLOODCOLOR :COLOR3
+  FILL
+ 
+  ; go back where we started from
+  BACK  33 * 2
+  RIGHT 45
+  BACK  10
+  LEFT  45
+  PENDOWN
+END
+ 
+TO RUSSIA_FLAG
+  TRIBAND_FLAG 4 1 7
+END
+
+RUSSIA_FLAG
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/flag-russia.png" alt="RUSSIA_FLAG" />
+    </td>
+  </tr>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO RECTANGLE :WIDTH :HEIGHT
+  REPEAT 2 [
+    FORWARD :HEIGHT
+    RIGHT   90
+    FORWARD :WIDTH
+    RIGHT   90
+  ]
+END
+
+TO MOROCCO_FLAG
+  ; Morocco's flag is a 2:3 rectangle
+  RECTANGLE 150 100
+
+  ; position the turtle to draw the star
+  PENUP
+  RIGHT   90
+  FORWARD 65
+  LEFT    90
+  FORWARD 33
+
+  ; fill in the box
+  SETFLOODCOLOR 4
+  FILL
+
+  ; draw the dark green star
+  SETPENCOLOR 10
+  PENDOWN
+  SETPENSIZE [3 3]
+  RIGHT 18
+  REPEAT 5 [FORWARD 40 RIGHT 144]
+  LEFT  18
+  SETPENSIZE [1 1]
+  PENUP
+
+  ; return to where we started
+  BACK  33
+  RIGHT 90
+  BACK  65
+  LEFT  90
+  PENDOWN
+END
+
+MOROCCO_FLAG
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/flag-morocco.png" alt="MOROCCO_FLAG" />
+    </td>
+  </tr>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO SQUARE :LENGTH
+  REPEAT 4 [FORWARD :LENGTH RIGHT 90]
+END
+
+TO CONCENTRIC_SQUARES
+  REPEAT 10 [
+    ; move outward
+    PENUP
+    LEFT    90
+    FORWARD 5
+    RIGHT   90
+    BACK    5
+    PENDOWN
+
+    ; draw a square
+    SQUARE REPCOUNT * 10
+  ]
+END
+
+CONCENTRIC_SQUARES
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/concentric-squares.png" alt="CONCENTRIC_SQUARES" />
+    </td>
+  </tr>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO TRIANGLE :LENGTH
+  RIGHT 45
+  FORWARD :LENGTH * (SQRT 2) / 2
+  RIGHT 90
+  FORWARD :LENGTH * (SQRT 2) / 2
+  RIGHT 135
+  FORWARD :LENGTH
+
+  ; fill in the triangle
+  PENUP
+  BACK    :LENGTH / 2
+  RIGHT   90
+  FORWARD 2
+  FILL
+  BACK    2
+  LEFT    90
+  FORWARD :LENGTH / 2
+  RIGHT   90
+  PENDOWN
+END
+
+TO RECTANGLE :HEIGHT :WIDTH
+  REPEAT 2 [
+    FORWARD :HEIGHT
+    RIGHT   90
+    FORWARD :WIDTH
+    RIGHT   90
+  ]
+
+  ; fill in the rectangle
+  PENUP
+  LEFT    90
+  BACK    :WIDTH / 4
+  RIGHT   90
+  FORWARD 2
+  FILL
+  BACK    2
+  LEFT    90
+  FORWARD :WIDTH / 4
+  RIGHT   90
+  PENDOWN
+END
+
+TO HOUSE
+  ; draw a red roof
+  SETFLOODCOLOR [255 0 0]
+  FORWARD    100
+  TRIANGLE   100
+  BACK       100
+
+  ; draw a dark green door
+  SETFLOODCOLOR [100 162 64]
+  RIGHT       90
+  FORWARD     60
+  LEFT        180
+  RECTANGLE   20 40
+  FORWARD     60
+  RIGHT       90
+
+  ; draw a brown house
+  SETFLOODCOLOR [155 96 59]
+  RECTANGLE   100 100
+END
+
+HOUSE
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/solid-house.png" alt="HOUSE" />
+    </td>
+  </tr>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO DRAW_A
+  RIGHT   15
+  FORWARD 104
+  RIGHT   150
+  FORWARD 104
+  BACK    52
+  RIGHT   105
+  FORWARD 27
+  LEFT    75
+  FORWARD 52
+  RIGHT   165
+END
+
+TO DRAW_D
+  FORWARD 100
+  RIGHT   90
+  FORWARD 20
+  RIGHT   45
+  FORWARD 30 * SQRT 2
+  RIGHT   45
+  FORWARD 40
+  RIGHT   45
+  FORWARD 30 * SQRT 2
+  RIGHT   45
+  FORWARD 20
+  RIGHT   90
+END
+
+TO DRAW_E
+  FORWARD 100
+  RIGHT   90
+  FORWARD 50
+  BACK    50
+  RIGHT   90
+  FORWARD 50
+  LEFT    90
+  FORWARD 30
+  BACK    30
+  RIGHT   90
+  FORWARD 50
+  LEFT    90
+  FORWARD 50
+  BACK    50
+  LEFT    90
+END
+
+TO DRAW_V
+  PENUP
+  RIGHT   90
+  FORWARD 33
+  PENDOWN
+
+  LEFT    75
+  FORWARD 104
+  BACK    104
+  LEFT    30
+  FORWARD 104
+  BACK    104
+  LEFT    75
+
+  PENUP
+  FORWARD 33
+  RIGHT   90
+  PENDOWN
+END
+
+TO MOVEOVER :AMOUNT
+  PENUP
+  RIGHT   90
+  FORWARD :AMOUNT
+  LEFT    90
+  PENDOWN
+END
+
+TO DRAW_DAVE
+  DRAW_D
+  MOVEOVER 60
+  DRAW_A
+  MOVEOVER 40
+  DRAW_V
+  MOVEOVER 70
+  DRAW_E
+  MOVEOVER 60
+END
+
+DRAW_DAVE
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/dave.png" alt="DRAW_DAVE" />
+    </td>
+  </tr>
+
+</table>
+<hr />
+<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+       src="http://www.w3.org/Icons/valid-xhtml10"
+       alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+</p>
+
+</body>
+</html>
+

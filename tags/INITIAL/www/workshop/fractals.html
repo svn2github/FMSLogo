@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Lesson 8: Fractals</title>
+  <link rel="stylesheet" type="text/css" href="logo-workshop.css" />
+</head>
+
+<body>
+
+<h1>Lesson 8: Fractals</h1>
+
+<!-- title: Fractals -->
+
+<p>
+Today we are going to cover fractals.
+Fractals are pictures that, when you look at a small area of 
+the picture, it looks similar to the overall picture 
+(and other small areas, too).
+This property is called "self-similar".
+Many things in nature can be drawn better with fractals than with simple polygons.
+For example, think about a pine tree.
+The main branch (or trunk) has smaller branches coming off it.
+Those branches have smaller branches coming off of it.
+And so on, until you get to the pine needles.
+That is sort of self-similarity is exactly what fractals are.
+</p>
+
+<p>
+Fractals are surprisingly easy to draw in Logo.
+</p>
+
+
+<h2>Recursion</h2>
+
+<p>
+Before we can draw fractals, we must master a new programming technique called "recursion".
+Recursion is when a command calls itself.
+Recursive commands all follow the same pattern:
+they do a little work, then call themselves with simpler inputs.
+This, in turn, will do a little more work and call itself with even simpler inputs.
+When the input is so simple that there's essentially nothing to be done,
+the command just stops without doing any work (and without calling itself).
+Don't worry if you don't see why recursion is useful,
+that will become clear when we go through a few activities.
+</p>
+
+<p>
+Anything you can do with a REPEAT loop can also be done with recursion.
+For example, let's take our routine for drawing a square from the first lesson.
+</p>
+
+<div class="code-sample">
+<pre>TO SQUARE
+  REPEAT 4 [ FORWARD 100 RIGHT 90 ]
+END
+
+SQUARE
+</pre>
+</div>
+
+<p>
+Now let's write a recursive version of it.
+</p>
+
+<div class="code-sample">
+<pre>TO SQUARE.RECURSIVE :SIDES.TO.GO
+  ; base case: do nothing
+  IF :SIDES.TO.GO = 0 [ STOP ]
+
+  ; recursive case: draw a side and call recursively
+  FORWARD 100
+  RIGHT   90
+  SQUARE.RECURSIVE :SIDES.TO.GO - 1
+END
+
+SQUARE.RECURSIVE 4
+</pre>
+</div>
+
+<p>
+SQUARE.RECURSIVE inputs the number of sides of the square to draw.
+This seems a bit silly, since all squares have four sides, but it's part
+of how the recursion works.
+</p>
+
+<p>
+Observe that there are two parts to the recursive function:
+the "base case" and the "recursive case".
+As SQUARE.RECURSIVE works, it uses the recursive case.
+The recursive case draws one side of the square, then calls SQUARE.RECURSIVE
+with an input that is one smaller than what it received.
+It's one smaller because the input represents the number of sides
+to draw and the command just drew one of them.
+</p>
+
+<p>
+The "base case" is used when SQUARE.RECURSIVE should stop calling itself.
+This happens when there are no more sides left to be drawn, that is, when :SIDES.TO.GO is 0.
+Without the base case, Logo would draw the sides of a square forever.
+</p>
+
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Type in the SQUARE.RECURSIVE and call it.
+</p>
+<ul>
+  <li>What happens when you give SQUARE.RECURSIVE a number less than 4?</li>
+  <li>What happens when you give SQUARE.RECURSIVE a number greater than 4?</li>
+  <li>What happens when you give SQUARE.RECURSIVE a negative number?</li>
+</ul>
+</div>
+
+
+<h2>Our First Fractal: Embedded Squares</h2>
+
+<p>
+Now let's use recursion to draw a fractal.
+We'll start with a square.
+We'll draw a smaller square in every corner of this square.
+In each of these smaller squares, we'll draw even smaller squares.
+And so on.
+</p>
+
+<p>
+SQUARE.FRACTAL follows the pattern of RECURSIVE.SQUARE, but it recurses on a :DEPTH
+input, instead of :SIDES.TO.GO.
+:DEPTH represents the number of times the fractal is repeated.
+The base case is when :DEPTH = 0.
+The recursive case draws a square with a familiar REPEAT instruction.
+After drawing each side, it calls RECURSIVE.SQUARE to draw a smaller sqaure in each corner.
+</p>
+
+<table>
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO SQUARE.FRACTAL :LENGTH :DEPTH
+
+  ; base case: no more squares
+  IF :DEPTH = 0 [ STOP ]
+
+  ; recursive case: draw a square such that each corner
+  ; of the square has SQUARE.FRACTAL in it.
+  REPEAT 4 [
+    FORWARD :LENGTH
+    RIGHT   90
+    SQUARE.FRACTAL :LENGTH * 0.4 :DEPTH - 1 
+  ]
+
+END
+
+SQUARE.FRACTAL 200 4
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/square-fractal.png" alt="Square Fractal" />
+    </td>
+  </tr>
+
+</table>
+
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Run SQUARE.FRACTAL.
+You may want to run SLOWDRAW 10 to see how the picture is drawn in slow motion.
+</p>
+<ul>
+  <li>What happens when you give SQUARE.FRACTAL a :DEPTH of 1?</li>
+  <li>What happens when you give SQUARE.FRACTAL a :DEPTH of 100?</li>
+  <li>What happens if you change the 0.4 in the SQUARE.FRACTAL?</li>
+  <li>What happens if you move the recrusive call to before the RIGHT 90?</li>
+  <li>Why do you think I choose 0.4?</li>
+  <li>Modify SQUARE.FRACTAL to use shapes other than squares.</li>
+  <li>Try to move the fractal to the center of each side, instead of in the corners.</li>
+</ul>
+
+</div>
+
+
+
+<h3>Sample Programs</h3>
+
+<table>
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO TRIANGLE.FRACTAL :LENGTH :DEPTH
+
+  ; base case:
+  ; just move forward, no more squares
+  IF :DEPTH = 0 [
+    FORWARD :LENGTH
+    STOP
+  ]
+
+  ; recursive case:
+  ; draw a triangle such that each side of
+  ; the triangle has TRIANGLE.FRACTAL in it.
+  REPEAT 3 [
+      FORWARD :LENGTH / 3
+      TRIANGLE.FRACTAL :LENGTH / 3 :DEPTH - 1
+      FORWARD :LENGTH / 3
+
+      RIGHT 120
+  ]
+END
+
+TRIANGLE.FRACTAL 200 4
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/triangle-fractal.png" alt="TRIANGLE.FRACTAL 200 4" />
+    </td>
+  </tr>
+
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO SNOWFLAKE.SIDE :LENGTH :DEPTH
+
+  IF :DEPTH = 0 [
+    FORWARD :LENGTH
+    STOP 
+  ]
+
+  SNOWFLAKE.SIDE :LENGTH  / 3 :DEPTH - 1
+
+  LEFT    60
+  SNOWFLAKE.SIDE :LENGTH  / 3 :DEPTH - 1
+  RIGHT   120
+  SNOWFLAKE.SIDE :LENGTH  / 3 :DEPTH - 1
+  LEFT    60
+
+  SNOWFLAKE.SIDE :LENGTH  / 3 :DEPTH - 1
+END
+
+TO SNOWFLAKE :LENGTH :DEPTH
+  REPEAT 3 [
+    SNOWFLAKE.SIDE :LENGTH :DEPTH
+    RIGHT 120
+  ]
+END
+ 
+SNOWFLAKE 200 4
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/koch-snowflake-4.png" alt="SNOWFLAKE 200 4" />
+    </td>
+  </tr>
+
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO PLANT :SIZE :ANGLE
+   IF :SIZE &lt; 1 [ STOP ] 
+
+   RIGHT :ANGLE
+   FORWARD :SIZE
+   REPEAT 4 [
+     PLANT :SIZE / 2 DIFFERENCE RANDOM 160 80
+   ]
+   BACK :SIZE
+   LEFT :ANGLE
+END
+ 
+PLANT 100 0
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/plant.png" alt="PLANT 100 0" />
+    </td>
+  </tr>
+
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO CURLY.FRACTAL :SIZE
+
+  IF :SIZE &lt; 0.5 [ STOP ]
+
+  REPEAT 360 [
+
+      IF REPCOUNT = 5 [ 
+         LEFT 90
+         CURLY.FRACTAL :SIZE / 2
+         RIGHT 90
+      ]
+
+      IF REPCOUNT = 10 [ 
+         LEFT 90
+         CURLY.FRACTAL :SIZE / 5
+         RIGHT 90
+      ]
+
+      IF REPCOUNT = 15 [ 
+         LEFT 90
+         CURLY.FRACTAL :SIZE / 5
+         RIGHT 90
+      ]
+
+      IF REPCOUNT = 20 [ 
+         LEFT 90
+         CURLY.FRACTAL :SIZE / 4
+         RIGHT 90
+      ]
+
+      IF REPCOUNT = 25 [ 
+         LEFT 90
+         CURLY.FRACTAL :SIZE / 5
+         RIGHT 90
+      ]
+
+      IF REPCOUNT = 30 [ 
+         LEFT 90
+         CURLY.FRACTAL :SIZE / 8
+         RIGHT 90
+      ]
+
+      FORWARD :SIZE
+      RIGHT REPCOUNT 
+  ]
+
+  RIGHT 180
+
+END
+
+CURLY.FRACTAL 10
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/curly-bush.png" alt="CURLY.FRACTAL 10" />
+    </td>
+  </tr>
+
+
+ <tr>
+    <td>
+      <div class="code-sample">
+<pre>TO CRISSCROSS :SIZE :DEPTH
+  IF :DEPTH = 0 [ STOP ]
+  SETPENCOLOR :DEPTH
+  REPEAT 4 [
+    FORWARD :SIZE / 2
+    CRISSCROSS :SIZE / 3 :DEPTH - 1
+    FORWARD :SIZE / 2
+
+    BACK :SIZE
+
+    RIGHT 45
+    FORWARD  :SIZE
+    BACK :SIZE
+    RIGHT 45
+  ]
+  SETPENCOLOR :DEPTH + 1
+END
+
+TO CRISSCROSSPICTURE
+  SETSCREENCOLOR 0
+  CRISSCROSS 100 4
+END
+
+CRISSCROSSPICTURE
+</pre>
+       </div>
+    </td>
+    <td>
+      <img src="img/crisscross.png" alt="CRISSCROSSPICTURE" />
+    </td>
+  </tr>
+
+
+</table>
+
+
+<h2>Online Resources</h2>
+
+<p>
+For an in-depth look at several different fractals in Logo,
+check out Vladimir Batagelj's essay entitled 
+<a href="http://vlado.fmf.uni-lj.si/educa/logo/logo2ps/spacfill.pdf"
+   target="_BLANK">Drawing space-filling curves in logo</a>.
+</p>
+
+
+<h2>Challenge Questions</h2>
+<ul>
+    <li>What are some more things that are self-similar?</li>
+    <li>How would you make the leaves of the PLANT sample green?</li>
+</ul>
+<hr />
+<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+       src="http://www.w3.org/Icons/valid-xhtml10"
+       alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+</p>
+
+</body>
+</html>
+

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Cool Place</title>
+  <link rel="stylesheet" type="text/css" href="../logo-workshop.css" />
+</head>
+
+<body>
+
+<h1>Cool Place</h1>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample"><pre>
+TO STRINGART
+  REPEAT 10 [
+    PENUP
+    SETXY (REPCOUNT * 10) 0
+    PENDOWN
+    SETXY 0 (110 - REPCOUNT * 10)
+  ]
+END
+
+TO STRINGART2
+  REPEAT 10 [
+    PENUP
+    SETXY (REPCOUNT * 10) 0
+    PENDOWN
+    SETXY 0 (-110 - REPCOUNT * -10)
+  ]
+END
+
+TO STRINGART3
+  REPEAT 10 [
+    PENUP
+    SETXY (REPCOUNT * -10) 0
+    PENDOWN
+    SETXY 0 (110 - REPCOUNT * 10)
+  ]
+END
+
+TO STRINGART4
+  REPEAT 10 [
+    PENUP
+    SETXY (REPCOUNT * -10) 0
+    PENDOWN
+    SETXY 0 (-110 - REPCOUNT * -10)
+  ]
+END
+
+to max
+stringart  setpc random 15
+stringart2 setpc random 15
+stringart3 setpc random 15
+stringart4 setpc random 15
+end
+
+max
+</pre></div>
+    </td>
+
+    <td>
+      <img src="../img/max-cool-place.png" alt="Cool Place" />
+    </td>
+  </tr>
+</table>
+
+<hr />
+<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+       src="http://www.w3.org/Icons/valid-xhtml10"
+       alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+</p>
+
+</body>
+</html>
+

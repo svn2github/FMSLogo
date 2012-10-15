@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Lesson 7: String Art</title>
+  <link rel="stylesheet" type="text/css" href="logo-workshop.css" />
+</head>
+
+<body>
+
+<h1>Lesson 7: String Art</h1>
+
+<!-- title: String Art -->
+
+<p>
+So far, we have told the turtle to draw pictures by giving it instructions
+like FORWARD, BACK, LEFT, and RIGHT.
+These instructions have something in common: 
+they are all relative to the turtle's point of view.
+</p>
+
+<p>
+In this lesson, we will give instructions that are relative to the 
+turtle's home, not the turtle's current position.
+We will use these instructions to draw pictures that resemble string art.
+</p>
+
+<h2>The Cartesian Coordinate System</h2>
+<p>
+These new instructions use something called "The Cartesian Coordinate System".
+Don't let the fancy name fool you, it's really very simple.
+It was invented by a guy named Rene Descartes while he was sick in bed.
+He did nothing all day but stare at a tile ceiling.  
+One day, there was a fly on the ceiling and he noticed that he could
+describe the fly's location by using the tiles.
+He described the fly's location relative to a tile in the corner 
+(for example, three tiles over and one tile up).
+</p>
+
+<p>
+The same system can be used to describe locations on any flat surface,
+including your computer screen.
+Each point is named by a pair of numbers called "coordinates".
+The first number is the "X" value and the second number is the "Y" value.
+The "X" value is how far you are to the <em>right</em> of the turtle's home.
+The "Y" value is how far you are <em>up</em> from the turtle's home.
+Note that the order of the numbers is important; the coordinate 
+(2,3) is different from (3,2), as seen in the image below.
+</p>
+
+<p><img src="img/cartesian-coordinate-system.png" 
+        alt="The cartesian coordinate system" /></p>
+
+<p>
+The turtle's home is at the coordinates (0,0).  
+This is sometimes called "the origin", which just means "the start".
+The horizontal line that goes through the origin is called the "x-axis".
+The vertical line that goes through the origin is called the "y-axis".
+</p>
+
+<h2>What does this have to do with Logo</h2>
+
+<p>
+You can tell the turtle to move anywhere on the screen by giving it
+the coordinates of where you want it to move to.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Command</th>
+    <th>Example</th>
+    <th>What Happens</th>
+  </tr>
+
+  <tr>
+    <td>HOME</td>
+    <td>HOME</td>
+    <td>Moves the turtle back to where it started.</td>
+  </tr>
+
+  <tr>
+    <td>SETXY <i>x-number</i> <i>y-number</i></td>
+    <td>SETXY 20 30</td>
+    <td>Moves the turtle to the point 20 steps to the right and 30 steps up from the turtle's home.</td>
+  </tr>
+
+</table>
+
+<p></p>
+
+<div class="activity">
+<b>Activity:</b>
+Draw a square using SETXY and HOME.
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample"><pre>SETXY 0 100
+SETXY 100 100
+SETXY 100 0
+HOME</pre></div>
+    </td>
+
+    <td>
+      <img src="img/square.png" alt="a square" />
+    </td>
+   </tr>
+</table>
+
+<p>
+What happens if you move the turtle before running these instructions?
+</p>
+
+<p>
+What happens if you give SETXY a negative number?
+</p>
+
+<p>
+What other shapes can you draw with SETXY?
+</p>
+
+</div>
+
+<h2>String Art</h2>
+
+<p>
+Now we're ready to make some string art!
+The idea behind string art is that you start with a simple set of points 
+and create interesting pictures just by connecting those points.
+This is called "string art" because it can be made sewing string
+through cardboard.
+</p>
+
+<p>
+Let's start off by connecting points that are along the X-axis and Y-axis.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample"><pre>TO STRINGART
+  REPEAT 10 [
+    PENUP
+    SETXY (REPCOUNT * 10) 0
+    PENDOWN
+    SETXY 0 (REPCOUNT * 10)
+  ]
+END
+</pre></div>
+    </td>
+
+    <td>
+      <img src="img/stringart-diagonal.png" alt="string art" />
+    </td>
+   </tr>
+</table>
+
+<p>
+Things get more interesting when you let the lines cross by 
+reversing the order on one of the axes.
+</p>
+
+<table>
+  <tr>
+    <td>
+      <div class="code-sample"><pre>TO STRINGART
+  REPEAT 10 [
+    PENUP
+    SETXY (REPCOUNT * 10) 0
+    PENDOWN
+    SETXY 0 (110 - REPCOUNT * 10)
+  ]
+END
+</pre></div>
+    </td>
+
+    <td>
+      <img src="img/stringart-crossing.png" alt="string art" />
+    </td>
+   </tr>
+</table>
+
+<p></p>
+
+<div class="activity">
+<p>
+<b>Activity:</b>
+Now it's your turn.  
+Come up with an interesting set of points and connect them using SETXY.
+For example, try connecting points along a "Y" shape or an "X" shape.
+You can also take an example that uses FORWARD, BACK, LEFT, and RIGHT
+and rewrite it to use SETXY, instead.
+</p>
+</div>
+
+<h3>Sample Programs</h3>
+
+<table>
+
+  <tr>
+    <td>
+      <div class="code-sample"><pre>TO CYCLE :INDEX :LAST
+  SETXY :INDEX            0
+  SETXY :LAST             :INDEX
+  SETXY (:LAST - :INDEX)  :LAST
+  SETXY 0                 (:LAST - :INDEX)
+  SETXY :INDEX            0
+END
+ 
+TO SQUAREART
+  REPEAT 10 [ CYCLE REPCOUNT * 10 100 ]
+END
+
+SQUAREART</pre></div>
+    </td>
+
+    <td>
+      <img src="img/stringart-square.png" alt="SQUAREART" />
+    </td>
+   </tr>
+
+  <tr>
+    <td>
+      <div class="code-sample"><pre>TO CYCLE :INDEX :LAST
+  PENUP
+  SETXY :INDEX 0
+  PENDOWN
+  SETXY 0        (:LAST - :INDEX)
+  SETXY -:INDEX  0
+  SETXY 0        (:INDEX - :LAST)
+  SETXY :INDEX   0
+END
+ 
+TO PLUSART
+  REPEAT 11 [ CYCLE ((REPCOUNT - 1) * 10) 100 ]
+END
+
+PLUSART</pre></div>
+    </td>
+
+    <td>
+      <img src="img/stringart-plus.png" alt="PLUSART" />
+    </td>
+   </tr>
+
+  <tr>
+    <td>
+      <div class="code-sample"><pre>TO SPIKEDSQUARE
+  ; left-right lines
+  REPEAT 20 [
+    HOME
+    SETXY (100)  (REPCOUNT * 10 - 110)
+    SETXY (-100) (110 - REPCOUNT * 10)
+    HOME
+  ]
+ 
+  ; up-down lines
+  REPEAT 20 [
+    HOME
+    SETXY (REPCOUNT * 10 - 100) (100)
+    SETXY (100 - REPCOUNT * 10) (-100)
+    HOME
+  ]
+END
+ 
+TO SQUARE :HALF_LENGTH
+  SETXY  :HALF_LENGTH   :HALF_LENGTH
+  SETXY -:HALF_LENGTH   :HALF_LENGTH
+  SETXY -:HALF_LENGTH  -:HALF_LENGTH
+  SETXY  :HALF_LENGTH  -:HALF_LENGTH
+  SETXY  :HALF_LENGTH   :HALF_LENGTH
+  HOME
+END
+
+TO PIT
+  REPEAT 20 [SQUARE REPCOUNT * 5]
+  SPIKEDSQUARE
+END
+
+PIT</pre></div>
+    </td>
+
+    <td>
+      <img src="img/stringart-pit.png" alt="PIT" />
+    </td>
+   </tr>
+
+  <tr>
+    <td>
+      <div class="code-sample"><pre>TO HOUSE
+
+  ; go to the origin
+  PENUP
+  HOME
+  PENDOWN
+
+  ; draw the main box
+  SETXY 100 0
+  SETXY 100 100
+  SETXY 0   100
+  SETXY 0   0
+
+  ; draw the roof
+  SETXY 0   100
+  SETXY 50  150
+  SETXY 100 100
+
+  ; draw the door
+  PENUP
+  SETXY      40  0
+  PENDOWN
+  SETXY      40  40
+  SETXY      60  40
+  SETXY      60  0
+END
+
+HOUSE</pre></div>
+    </td>
+
+    <td>
+      <img src="img/house.png" alt="HOUSE" />
+    </td>
+   </tr>
+
+</table>
+
+<p></p>
+
+<h2>Challenge Questions</h2>
+<ul>
+  <li>Why did I use SETXY instead of FORWARD, BACK, LEFT, and RIGHT
+      to make string art?</li>
+  <li>What type of pictures are easier to draw with SETXY than with
+      FORWARD, BACK, LEFT, and RIGHT?</li>
+  <li>What type of pictures are <em>harder</em> to draw with SETXY than with
+      FORWARD, BACK, LEFT, and RIGHT?</li>
+  <li>Why do you think I waited so long to teach you something so useful?</li>
+</ul>
+<hr />
+<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+       src="http://www.w3.org/Icons/valid-xhtml10"
+       alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+</p>
+
+</body>
+</html>
+

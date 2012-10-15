@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Lesson 2: Basic Loops - Instructor's Notes</title>
+  <link rel="stylesheet" type="text/css" href="logo-workshop.css" />
+</head>
+
+<body>
+
+<h1>Lesson 2: Basic Loops - Instructor's Notes</h1>
+
+<!-- title: Basic Loops - Instructor's Notes -->
+<p> 
+This page contains some tips and suggestions for the instructor when
+presenting lesson 2.
+</p>
+
+<h2>Lesson Goals</h2>
+
+<p>
+The goal of this lesson is for the children to:
+</p>
+<ol>
+  <li>Understand how REPEAT ... REPCOUNT can be used to make various spiral shapes.</li>
+  <li>See how a simple idea can offer a lot of room for exploration.</li>
+  <li>Review and solidify their understanding of angles.</li>
+</ol>
+
+<p>
+This lesson only contains one new idea, so it provides a good
+opportunity to review the material covered in the first lesson.
+</p>
+
+<h2>Lesson 1 Review</h2>
+
+<p>
+Ask the following questions to remind the children of what the learned
+in the previous lesson.
+</p>
+
+<ul>
+  <ol>What did you learn in the previous lesson?</ol>
+  <ol>What command moves the turtle forward?</ol>
+  <ol>What command moves the turtle backward?</ol>
+  <ol>What command turns the turtle to its right?</ol>
+  <ol>What command turns the turtle to its left?</ol>
+  <ol>How many degrees do you turn to make a corner of square?</ol>
+  <ol>How do you repeat the same command over and over again?</ol>
+  <ol>What happens if you give FORWARD a really big number?</ol>
+  <ol>What happens if you give RIGHT a really big number (trick question!)?</ol>
+  <ol>How do you teach the turtle a new command?</ol>
+  <ol>If you have a bunch of commands that draws a shapes, how can you
+      change those commands to make it draw the same shape twice is large?</ol>
+</ul>
+
+
+
+<h2>Formal Presentation</h2>
+
+<p>
+The "big idea" in this lesson is the repeat counters.
+The power of the repeat counter may be lost of you just let the children type
+in programs, so it is helpful to work through one example on the blackboard
+beforehand.
+</p>
+
+<p>
+Ask the question "what happens if I take one step, turn right, take two steps, turn right,
+take three steps, turn right, and so on?"  Then draw the pattern on the blackboard,
+one command at a time.  It is important that children see how the "REPCOUNT" leads to
+a spiral effect.
+</p>
+
+<p>
+For the older kids, you can ask them to create new sequences by doing some
+math on the basic sequence of &lt;1, 2, 3, 4, 5, 6, ...>.
+Ask how you could make the spiral wider (by multiplying REPCOUNT by some number).
+Ask how you could remove the middle part of the spiral (by adding a number to REPCOUNT).
+Ask how you could spiral inward, instead of outward--that is, how you could count backward 
+(by subtracting REPCOUNT from a number).
+</p>
+
+<h2>At The Computer</h2>
+
+<p>
+The first program that the children should enter is:
+</p>
+
+<div class="code-sample"><pre>REPEAT 100 [ FORWARD REPCOUNT * 2  RIGHT 90 ]
+</pre></div>
+
+<p>
+Ask them what would happen if you changed the turn angle by just a little bit,
+for example, just adding one.  (Let them try it).
+Then ask what would happen if you subtracted one, instead of adding one.
+Then let them explore different number.
+</p>
+<hr />
+<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+       src="http://www.w3.org/Icons/valid-xhtml10"
+       alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+</p>
+
+</body>
+</html>
+
