@@ -44,18 +44,18 @@ in the previous lesson.
 </p>
 
 <ul>
-  <ol>What did you learn in the previous lesson?</ol>
-  <ol>What command moves the turtle forward?</ol>
-  <ol>What command moves the turtle backward?</ol>
-  <ol>What command turns the turtle to its right?</ol>
-  <ol>What command turns the turtle to its left?</ol>
-  <ol>How many degrees do you turn to make a corner of square?</ol>
-  <ol>How do you repeat the same command over and over again?</ol>
-  <ol>What happens if you give FORWARD a really big number?</ol>
-  <ol>What happens if you give RIGHT a really big number (trick question!)?</ol>
-  <ol>How do you teach the turtle a new command?</ol>
-  <ol>If you have a bunch of commands that draws a shapes, how can you
-      change those commands to make it draw the same shape twice is large?</ol>
+  <li>What did you learn in the previous lesson?</li>
+  <li>What command moves the turtle forward?</li>
+  <li>What command moves the turtle backward?</li>
+  <li>What command turns the turtle to its right?</li>
+  <li>What command turns the turtle to its left?</li>
+  <li>How many degrees do you turn to make a corner of square?</li>
+  <li>How do you repeat the same command over and over again?</li>
+  <li>What happens if you give FORWARD a really big number?</li>
+  <li>What happens if you give RIGHT a really big number (trick question!)?</li>
+  <li>How do you teach the turtle a new command?</li>
+  <li>If you have a bunch of commands that draws a shapes, how can you
+      change those commands to make it draw the same shape twice is large?</li>
 </ul>
 
 
