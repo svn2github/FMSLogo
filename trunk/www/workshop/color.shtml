@@ -213,7 +213,7 @@ REPEAT 4 [ FORWARD 100 RIGHT 90 ]</pre></div>
     <td>
       <img 
          src="img/blue-square-yellow-screen.png" 
-         alt="a blue square on a yellow background" />
+         alt="a blue square on a yellow background" width="229" height="265" />
     </td>
    </tr>
 </table>
@@ -299,7 +299,7 @@ REPEAT 4 [ FORWARD 100 RIGHT 90 ]</pre></div>
     <td>
       <img 
          src="img/blue-square-yellow-screen.png" 
-         alt="a blue square on a yellow background" />
+         alt="a blue square on a yellow background" width="229" height="265" />
     </td>
    </tr>
 </table>
@@ -356,7 +356,7 @@ SQUAREFLOWER
        </div>
     </td>
     <td>
-      <img src="img/color-square-flower.png" alt="SQUAREFLOWER" />
+      <img src="img/color-square-flower.png" alt="SQUAREFLOWER" width="207" height="252" />
     </td>
   </tr>
 
@@ -377,7 +377,7 @@ COLORSTAR
        </div>
     </td>
     <td>
-      <img src="img/colorstars.png" alt="COLORSTARS" />
+      <img src="img/colorstars.png" alt="COLORSTARS" width="235" height="271" />
     </td>
   </tr>
 
@@ -398,7 +398,7 @@ COLORBALL
        </div>
     </td>
     <td>
-      <img src="img/colorball.png" alt="COLORBALL" />
+      <img src="img/colorball.png" alt="COLORBALL" width="274" height="323" />
     </td>
   </tr>
 
@@ -451,7 +451,7 @@ HOUSE
        </div>
     </td>
     <td>
-      <img src="img/color-house.png" alt="HOUSE" />
+      <img src="img/color-house.png" alt="HOUSE" width="196" height="249" />
     </td>
   </tr>
 

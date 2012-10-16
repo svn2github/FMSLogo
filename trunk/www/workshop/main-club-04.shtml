@@ -24,11 +24,11 @@ This page contains some original artwork that was created in the first workshop 
 <tr>
 
   <td>
-    <a href="img/black-sun.png"><img src="img/thumbnail/black-sun.png" alt="Black Sun"/></a>
+    <a href="img/black-sun.png"><img src="img/thumbnail/black-sun.png" alt="Black Sun" width="64" height="66" /></a>
     Black Sun <em><a href="code/black-sun.shtml">With Code</a></em>
   </td>
   <td>
-    <a href="img/taylor-ship.png"><img src="img/thumbnail/taylor-ship.png" alt="Ship by Taylor"/></a>
+    <a href="img/taylor-ship.png"><img src="img/thumbnail/taylor-ship.png" alt="Ship by Taylor" width="64" height="64" /></a>
     Ship by Taylor
   </td>
 
@@ -37,11 +37,11 @@ This page contains some original artwork that was created in the first workshop 
 <tr>
 
   <td>
-    <a href="img/color-cow.png"><img src="img/thumbnail/color-cow.png" alt="Color Cow by Griffin"/></a>
+    <a href="img/color-cow.png"><img src="img/thumbnail/color-cow.png" alt="Color Cow by Griffin" width="64" height="66" /></a>
     Color Cow by Griffin
   </td>
   <td>
-    <a href="img/colorful-picture.png"><img src="img/thumbnail/colorful-picture.png" alt="Colorful Picture by Erika"/></a>
+    <a href="img/colorful-picture.png"><img src="img/thumbnail/colorful-picture.png" alt="Colorful Picture by Erika" width="64" height="64" /></a>
     Colorful Picture by Erika
   </td>
 
@@ -50,11 +50,11 @@ This page contains some original artwork that was created in the first workshop 
 <tr>
 
   <td>
-    <a href="img/color-lines.png"><img src="img/thumbnail/color-lines.png" alt="Color Lines"/></a>
+    <a href="img/color-lines.png"><img src="img/thumbnail/color-lines.png" alt="Color Lines" width="64" height="94" /></a>
     Color Lines
   </td>
   <td>
-    <a href="img/color-stripes.png"><img src="img/thumbnail/color-stripes.png" alt="Color Stripes"/></a>
+    <a href="img/color-stripes.png"><img src="img/thumbnail/color-stripes.png" alt="Color Stripes" width="64" height="94" /></a>
     Color Stripes
   </td>
 
@@ -63,11 +63,11 @@ This page contains some original artwork that was created in the first workshop 
 <tr>
 
   <td>
-    <a href="img/cooltexture.png"><img src="img/thumbnail/cooltexture.png" alt="Cool Texture"/></a>
+    <a href="img/cooltexture.png"><img src="img/thumbnail/cooltexture.png" alt="Cool Texture" width="64" height="61" /></a>
     Cool Texture
   </td>
   <td>
-    <a href="img/donita.png"><img src="img/thumbnail/donita.png" alt=" by Donita"/></a>
+    <a href="img/donita.png"><img src="img/thumbnail/donita.png" alt=" by Donita" width="64" height="65" /></a>
      by Donita
   </td>
 
@@ -76,11 +76,11 @@ This page contains some original artwork that was created in the first workshop 
 <tr>
 
   <td>
-    <a href="img/dragon-by-nick.png"><img src="img/thumbnail/dragon-by-nick.png" alt="Dragon by Nick"/></a>
+    <a href="img/dragon-by-nick.png"><img src="img/thumbnail/dragon-by-nick.png" alt="Dragon by Nick" width="64" height="64" /></a>
     Dragon by Nick
   </td>
   <td>
-    <a href="img/our-picture.png"><img src="img/thumbnail/our-picture.png" alt=" by Erika"/></a>
+    <a href="img/our-picture.png"><img src="img/thumbnail/our-picture.png" alt=" by Erika" width="64" height="64" /></a>
      by Erika
   </td>
 
@@ -89,11 +89,11 @@ This page contains some original artwork that was created in the first workshop 
 <tr>
 
   <td>
-    <a href="img/paton.png"><img src="img/thumbnail/paton.png" alt=" by Paton"/></a>
+    <a href="img/paton.png"><img src="img/thumbnail/paton.png" alt=" by Paton" width="64" height="62" /></a>
      by Paton
   </td>
   <td>
-    <a href="img/puppies.png"><img src="img/thumbnail/puppies.png" alt="Puppies"/></a>
+    <a href="img/puppies.png"><img src="img/thumbnail/puppies.png" alt="Puppies" width="64" height="45" /></a>
     Puppies
   </td>
 
@@ -102,11 +102,11 @@ This page contains some original artwork that was created in the first workshop 
 <tr>
 
   <td>
-    <a href="img/red-and-black.png"><img src="img/thumbnail/red-and-black.png" alt="Red and Black"/></a>
+    <a href="img/red-and-black.png"><img src="img/thumbnail/red-and-black.png" alt="Red and Black" width="64" height="64" /></a>
     Red and Black
   </td>
   <td>
-    <a href="img/stripe.png"><img src="img/thumbnail/stripe.png" alt="Stripe"/></a>
+    <a href="img/stripe.png"><img src="img/thumbnail/stripe.png" alt="Stripe" width="64" height="64" /></a>
     Stripe
   </td>
 
@@ -115,11 +115,11 @@ This page contains some original artwork that was created in the first workshop 
 <tr>
 
   <td>
-    <a href="img/taylor.png"><img src="img/thumbnail/taylor.png" alt=" by Taylor"/></a>
+    <a href="img/taylor.png"><img src="img/thumbnail/taylor.png" alt=" by Taylor" width="64" height="25" /></a>
      by Taylor
   </td>
   <td>
-    <a href="img/tay.png"><img src="img/thumbnail/tay.png" alt=" by Taylor"/></a>
+    <a href="img/tay.png"><img src="img/thumbnail/tay.png" alt=" by Taylor" width="64" height="64" /></a>
      by Taylor
   </td>
 
@@ -128,11 +128,11 @@ This page contains some original artwork that was created in the first workshop 
 <tr>
 
   <td>
-    <a href="img/yellow-sun.png"><img src="img/thumbnail/yellow-sun.png" alt="Yellow Sun by Jake and Antonio"/></a>
+    <a href="img/yellow-sun.png"><img src="img/thumbnail/yellow-sun.png" alt="Yellow Sun by Jake and Antonio" width="64" height="66" /></a>
     Yellow Sun by Jake and Antonio <em><a href="code/yellow-sun.shtml">With Code</a></em>
   </td>
   <td>
-    <a href="img/campbell.png"><img src="img/thumbnail/campbell.png" alt=" by Campbell"/></a>
+    <a href="img/campbell.png"><img src="img/thumbnail/campbell.png" alt=" by Campbell" width="64" height="64" /></a>
      by Campbell
   </td>
 
@@ -141,11 +141,11 @@ This page contains some original artwork that was created in the first workshop 
 <tr>
 
   <td>
-    <a href="img/dog-by-nolan.png"><img src="img/thumbnail/dog-by-nolan.png" alt="Dog by Nolan"/></a>
+    <a href="img/dog-by-nolan.png"><img src="img/thumbnail/dog-by-nolan.png" alt="Dog by Nolan" width="64" height="65" /></a>
     Dog by Nolan <em><a href="code/dog-by-nolan.shtml">With Code</a></em>
   </td>
   <td>
-    <a href="img/julian.png"><img src="img/thumbnail/julian.png" alt=" by Julian"/></a>
+    <a href="img/julian.png"><img src="img/thumbnail/julian.png" alt=" by Julian" width="64" height="64" /></a>
      by Julian <em><a href="code/julian.shtml">With Code</a></em>
   </td>
 
@@ -154,11 +154,11 @@ This page contains some original artwork that was created in the first workshop 
 <tr>
 
   <td>
-    <a href="img/3dsquare-by-walker.png"><img src="img/thumbnail/3dsquare-by-walker.png" alt="3D Square by Walker"/></a>
+    <a href="img/3dsquare-by-walker.png"><img src="img/thumbnail/3dsquare-by-walker.png" alt="3D Square by Walker" width="64" height="64" /></a>
     3D Square by Walker <em><a href="code/3dsquare-by-walker.shtml">With Code</a></em>
   </td>
   <td>
-    <a href="img/around3d-by-walker.png"><img src="img/thumbnail/around3d-by-walker.png" alt="Around 3D by Walker"/></a>
+    <a href="img/around3d-by-walker.png"><img src="img/thumbnail/around3d-by-walker.png" alt="Around 3D by Walker" width="64" height="64" /></a>
     Around 3D by Walker <em><a href="code/around3d-by-walker.shtml">With Code</a></em>
   </td>
 

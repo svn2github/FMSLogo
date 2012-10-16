@@ -67,7 +67,7 @@ Let's send the turtle on a random walk.
     </td>
 
     <td>
-      <img src="img/scribble.png" alt="random walk" />
+      <img src="img/scribble.png" alt="random walk" width="257" height="298" />
     </td>
    </tr>
 </table>
@@ -146,7 +146,7 @@ RANDOMSTAR
     </td>
 
     <td>
-      <img src="img/five-point-star.png" alt="RANDOMSTAR" />
+      <img src="img/five-point-star.png" alt="RANDOMSTAR" width="296" height="321" />
     </td>
    </tr>
 </table>
@@ -188,7 +188,7 @@ BOXPICTURE
        </div>
     </td>
     <td>
-      <img src="img/random-box-picture.png" alt="BOXPICTURE" />
+      <img src="img/random-box-picture.png" alt="BOXPICTURE" width="257" height="298" />
     </td>
   </tr>
 
@@ -230,7 +230,7 @@ RANDOMSHEET
        </div>
     </td>
     <td>
-      <img src="img/random-sheet.png" alt="RANDOMSHEET" />
+      <img src="img/random-sheet.png" alt="RANDOMSHEET" width="257" height="298" />
     </td>
   </tr>
 
@@ -283,7 +283,7 @@ HOUSEROW
       </div>
     </td>
     <td>
-      <img src="img/houserow.png" alt="HOUSEROW" />
+      <img src="img/houserow.png" alt="HOUSEROW" width="257" height="298" />
     </td>
   </tr>
 
@@ -317,7 +317,7 @@ STARRYNIGHT
        </div>
     </td>
     <td>
-      <img src="img/starrynight.png" alt="STARRYNIGHT" />
+      <img src="img/starrynight.png" alt="STARRYNIGHT" width="257" height="298" />
     </td>
   </tr>
 

@@ -53,7 +53,7 @@ Note that the order of the numbers is important; the coordinate
 </p>
 
 <p><img src="img/cartesian-coordinate-system.png" 
-        alt="The cartesian coordinate system" /></p>
+        alt="The cartesian coordinate system" width="441" height="441" /></p>
 
 <p>
 The turtle's home is at the coordinates (0,0).  
@@ -106,7 +106,7 @@ HOME</pre></div>
     </td>
 
     <td>
-      <img src="img/square.png" alt="a square" />
+      <img src="img/square.png" alt="a square" width="242" height="251" />
     </td>
    </tr>
 </table>
@@ -154,7 +154,7 @@ END
     </td>
 
     <td>
-      <img src="img/stringart-diagonal.png" alt="string art" />
+      <img src="img/stringart-diagonal.png" alt="string art" width="191" height="227" />
     </td>
    </tr>
 </table>
@@ -179,7 +179,7 @@ END
     </td>
 
     <td>
-      <img src="img/stringart-crossing.png" alt="string art" />
+      <img src="img/stringart-crossing.png" alt="string art" width="191" height="227" />
     </td>
    </tr>
 </table>
@@ -219,7 +219,7 @@ SQUAREART</pre></div>
     </td>
 
     <td>
-      <img src="img/stringart-square.png" alt="SQUAREART" />
+      <img src="img/stringart-square.png" alt="SQUAREART" width="191" height="227" />
     </td>
    </tr>
 
@@ -243,7 +243,7 @@ PLUSART</pre></div>
     </td>
 
     <td>
-      <img src="img/stringart-plus.png" alt="PLUSART" />
+      <img src="img/stringart-plus.png" alt="PLUSART" width="250" height="287" />
     </td>
    </tr>
 
@@ -285,7 +285,7 @@ PIT</pre></div>
     </td>
 
     <td>
-      <img src="img/stringart-pit.png" alt="PIT" />
+      <img src="img/stringart-pit.png" alt="PIT" width="248" height="291" />
     </td>
    </tr>
 
@@ -322,7 +322,7 @@ HOUSE</pre></div>
     </td>
 
     <td>
-      <img src="img/house.png" alt="HOUSE" />
+      <img src="img/house.png" alt="HOUSE" width="193" height="245" />
     </td>
    </tr>
 

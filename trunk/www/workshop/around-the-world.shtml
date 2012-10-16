@@ -23,7 +23,7 @@ This page contains some artwork submitted by people who found this Web site and 
 
 <tr>
   <td>
-    <a href="img/redcross.png"><img src="img/thumbnail/redcross.png" alt="Red Cross Flag by James"/></a>
+    <a href="img/redcross.png"><img src="img/thumbnail/redcross.png" alt="Red Cross Flag by James" width="64" height="64" /></a>
     Red Cross by James from Albuquerque, NM <em><a href="code/redcross.html">With Code</a></em>
   </td>
 
@@ -31,7 +31,7 @@ This page contains some artwork submitted by people who found this Web site and 
 
 <tr>
   <td>
-    <a href="img/crazy-face.png"><img src="img/thumbnail/crazy-face.png" alt="Crazy Face by Jordan"/></a>
+    <a href="img/crazy-face.png"><img src="img/thumbnail/crazy-face.png" alt="Crazy Face by Jordan" width="60" height="61" /></a>
     Crazy Face by Jordan <em><a href="code/crazy-face.html">With Code</a></em>
   </td>
 

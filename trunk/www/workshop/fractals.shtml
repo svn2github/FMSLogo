@@ -161,7 +161,7 @@ SQUARE.FRACTAL 200 4
        </div>
     </td>
     <td>
-      <img src="img/square-fractal.png" alt="Square Fractal" />
+      <img src="img/square-fractal.png" alt="Square Fractal" width="296" height="310" />
     </td>
   </tr>
 
@@ -221,7 +221,7 @@ TRIANGLE.FRACTAL 200 4
        </div>
     </td>
     <td>
-      <img src="img/triangle-fractal.png" alt="TRIANGLE.FRACTAL 200 4" />
+      <img src="img/triangle-fractal.png" alt="TRIANGLE.FRACTAL 200 4" width="215" height="248" />
     </td>
   </tr>
 
@@ -259,7 +259,7 @@ SNOWFLAKE 200 4
        </div>
     </td>
     <td>
-      <img src="img/koch-snowflake-4.png" alt="SNOWFLAKE 200 4" />
+      <img src="img/koch-snowflake-4.png" alt="SNOWFLAKE 200 4" width="283" height="285" />
     </td>
   </tr>
 
@@ -284,7 +284,7 @@ PLANT 100 0
        </div>
     </td>
     <td>
-      <img src="img/plant.png" alt="PLANT 100 0" />
+      <img src="img/plant.png" alt="PLANT 100 0" width="265" height="285" />
     </td>
   </tr>
 
@@ -347,7 +347,7 @@ CURLY.FRACTAL 10
        </div>
     </td>
     <td>
-      <img src="img/curly-bush.png" alt="CURLY.FRACTAL 10" />
+      <img src="img/curly-bush.png" alt="CURLY.FRACTAL 10" width="265" height="255" />
     </td>
   </tr>
 
@@ -383,7 +383,7 @@ CRISSCROSSPICTURE
        </div>
     </td>
     <td>
-      <img src="img/crisscross.png" alt="CRISSCROSSPICTURE" />
+      <img src="img/crisscross.png" alt="CRISSCROSSPICTURE" width="276" height="294" />
     </td>
   </tr>
 

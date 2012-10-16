@@ -111,7 +111,7 @@ design.
       </div>
     </td>
     <td>
-      <img src="img/multi-square.png" alt="mutliple squares" />
+      <img src="img/multi-square.png" alt="mutliple squares" width="203" height="226" />
     </td>
   </tr>
 </table>
@@ -145,7 +145,7 @@ Let's look at some code for drawing polygons and try to find a pattern.
       </div>
     </td>
     <td>
-      <img src="img/triangle.png" alt="a triangle" />
+      <img src="img/triangle.png" alt="a triangle" width="193" height="245" />
     </td>
   </tr>
 
@@ -157,7 +157,7 @@ Let's look at some code for drawing polygons and try to find a pattern.
       </div>
     </td>
     <td>
-      <img src="img/square.png" alt="a sqaure" />
+      <img src="img/square.png" alt="a sqaure" width="242" height="251" />
     </td>
   </tr>
 
@@ -169,7 +169,7 @@ Let's look at some code for drawing polygons and try to find a pattern.
       </div>
     </td>
     <td>
-      <img src="img/hexagon.png" alt="a hexagon" />
+      <img src="img/hexagon.png" alt="a hexagon" width="227" height="264" />
     </td>
   </tr>
 
@@ -181,7 +181,7 @@ Let's look at some code for drawing polygons and try to find a pattern.
       </div>
     </td>
     <td>
-      <img src="img/pentagon.png" alt="a pentagon" />
+      <img src="img/pentagon.png" alt="a pentagon" width="248" height="291" />
     </td>
   </tr>
 
@@ -233,7 +233,7 @@ END
       </div>
     </td>
     <td>
-      <img src="img/triangle.png" alt="a triangle" />
+      <img src="img/triangle.png" alt="a triangle" width="193" height="245" />
     </td>
   </tr>
 
@@ -245,7 +245,7 @@ END
       </div>
     </td>
     <td>
-      <img src="img/square.png" alt="a square" />
+      <img src="img/square.png" alt="a square" width="242" height="251" />
     </td>
   </tr>
 
@@ -257,7 +257,7 @@ END
       </div>
     </td>
     <td>
-      <img src="img/hexagon.png" alt="a hexagon" />
+      <img src="img/hexagon.png" alt="a hexagon" width="227" height="264" />
     </td>
   </tr>
 
@@ -269,7 +269,7 @@ END
       </div>
     </td>
     <td>
-      <img src="img/pentagon.png" alt="a pentagon" />
+      <img src="img/pentagon.png" alt="a pentagon" width="248" height="291" />
     </td>
   </tr>
 
@@ -330,7 +330,7 @@ PYRAMID
        </div>
     </td>
     <td>
-      <img src="img/pyramid.png" alt="PYRAMID" />
+      <img src="img/pyramid.png" alt="PYRAMID" width="224" height="263" />
     </td>
   </tr>
 
@@ -356,7 +356,7 @@ HEXAGONFLOWER 10
        </div>
     </td>
     <td>
-      <img src="img/hexagon-flower.png" alt="HEXAGONFLOWER 10" />
+      <img src="img/hexagon-flower.png" alt="HEXAGONFLOWER 10" width="229" height="261" />
     </td>
   </tr>
 
@@ -402,7 +402,7 @@ SHEET
        </div>
     </td>
     <td>
-      <img src="img/sheet.png" alt="SHEET" />
+      <img src="img/sheet.png" alt="SHEET" width="245" height="259" />
     </td>
   </tr>
 
@@ -451,7 +451,7 @@ HOUSE
       </div>
     </td>
     <td>
-      <img src="img/house.png" alt="HOUSE" />
+      <img src="img/house.png" alt="HOUSE" width="193" height="245" />
     </td>
   </tr>
 
@@ -470,7 +470,7 @@ STAR 200 9
       </div>
     </td>
     <td>
-      <img src="img/nine-point-star.png" alt="STAR 200 9" />
+      <img src="img/nine-point-star.png" alt="STAR 200 9" width="296" height="321" />
     </td>
   </tr>
 
@@ -498,7 +498,7 @@ WEB
       </div>
     </td>
     <td>
-      <img src="img/web.png" alt="WEB" />
+      <img src="img/web.png" alt="WEB" width="289" height="343" />
     </td>
   </tr>
 

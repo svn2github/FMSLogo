@@ -43,7 +43,7 @@ command "FORWARD 100 RIGHT 90" four times, as in:
       </div>
     </td>
     <td>
-      <img src="img/square.png" alt="a sqaure" />
+      <img src="img/square.png" alt="a sqaure" width="242" height="251" />
     </td>
   </tr>
 </table>
@@ -75,7 +75,7 @@ Here is a program that uses REPCOUNT to draw a square spiral.
       </div>
     </td>
     <td>
-      <img src="img/square-spiral.png" alt="square spiral" />
+      <img src="img/square-spiral.png" alt="square spiral" width="264" height="288" />
     </td>
   </tr>
 </table>
@@ -156,7 +156,7 @@ STARSPIRAL
       </div>
     </td>
     <td>
-      <img src="img/star-spiral.png" alt="STARSPIRAL" />
+      <img src="img/star-spiral.png" alt="STARSPIRAL" width="273" height="311" />
     </td>
   </tr>
 
@@ -173,7 +173,7 @@ SQUIRAL
      </div>
     </td>
     <td>
-      <img src="img/squiral.png" alt="SQUIRAL" />
+      <img src="img/squiral.png" alt="SQUIRAL" width="268" height="311" />
     </td>
   </tr>
 
@@ -189,7 +189,7 @@ EXPLOSION
       </div>
     </td>
     <td>
-      <img src="img/explosion.png" alt="EXPLOSION" />
+      <img src="img/explosion.png" alt="EXPLOSION" width="269" height="317" />
     </td>
   </tr>
 
@@ -211,7 +211,7 @@ PATTERN
       </div>
     </td>
     <td>
-      <img src="img/big-small-pattern.png" alt="PATTERN" />
+      <img src="img/big-small-pattern.png" alt="PATTERN" width="268" height="311" />
     </td>
   </tr>
 
@@ -232,7 +232,7 @@ SSHAPE
       </div>
     </td>
     <td>
-      <img src="img/s-shape.png" alt="SSHAPE" />
+      <img src="img/s-shape.png" alt="SSHAPE" width="217" height="413" />
     </td>
   </tr>
 </table>

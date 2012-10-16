@@ -22,7 +22,7 @@ He doesn't have a name.
 Everyone just calls him "the turtle".
 </p>
 
-<div class="centered"><img src="img/turtle.png" alt="the turtle" /></div>
+<div class="centered"><img src="img/turtle.png" alt="the turtle" width="68" height="64" /></div>
 
 <p> 
 Sure, he looks like a triangle, but he's really a turtle.
@@ -41,14 +41,14 @@ This means you can draw pictures just by telling him to walk around.
 
 <p>
 Start Logo by double-clicking on the MSWLogo icon on your desktop.
-It looks like this: <img src="img/desktop-icon.png" alt="MSWLogo icon" />.
+It looks like this: <img src="img/desktop-icon.png" alt="MSWLogo icon" width="77" height="77" />.
 </p>
 
 <p>
 When Logo starts up, it looks like this:
 </p>
 
-<div class="centered"><img src="img/blank-screen.png" alt="logo start-up screen" /></div>
+<div class="centered"><img src="img/blank-screen.png" alt="logo start-up screen" width="600" height="474" /></div>
 
 <p>
 The window up top is where the turtle lives.
@@ -153,7 +153,7 @@ the same thing.
   <tr>
     <td valign="top">
       <div class="centered">
-        <img src="img/turn-right-0.png" alt="RIGHT 0" />
+        <img src="img/turn-right-0.png" alt="RIGHT 0" width="191" height="231" />
         <div class="code-sample"><pre>RIGHT 0</pre></div> or
         <div class="code-sample"><pre>RIGHT 360</pre></div> or
         <div class="code-sample"><pre>LEFT  0</pre></div> or
@@ -163,7 +163,7 @@ the same thing.
 
     <td valign="top">
       <div class="centered">
-        <img src="img/turn-right-45.png" alt="RIGHT 45" />
+        <img src="img/turn-right-45.png" alt="RIGHT 45" width="191" height="231" />
         <div class="code-sample"><pre>RIGHT 45</pre></div> or
         <div class="code-sample"><pre>LEFT  315</pre></div>
       </div>
@@ -171,7 +171,7 @@ the same thing.
 
     <td valign="top">
       <div class="centered">
-        <img src="img/turn-right-90.png" alt="RIGHT 90" />
+        <img src="img/turn-right-90.png" alt="RIGHT 90" width="191" height="231" />
         <div class="code-sample"><pre>RIGHT 90</pre></div> or
         <div class="code-sample"><pre>LEFT  270</pre></div>
       </div>
@@ -179,7 +179,7 @@ the same thing.
 
     <td valign="top">
       <div class="centered">
-        <img src="img/turn-right-135.png" alt="RIGHT 135" />
+        <img src="img/turn-right-135.png" alt="RIGHT 135" width="191" height="231" />
         <div class="code-sample"><pre>RIGHT 135</pre></div> or
         <div class="code-sample"><pre>LEFT  225</pre></div>
       </div>
@@ -189,7 +189,7 @@ the same thing.
   <tr>
     <td valign="top">
       <div class="centered">
-        <img src="img/turn-right-180.png" alt="RIGHT 180" />
+        <img src="img/turn-right-180.png" alt="RIGHT 180" width="191" height="231" />
         <div class="code-sample"><pre>RIGHT 180</pre></div> or
         <div class="code-sample"><pre>LEFT  180</pre></div>
       </div>
@@ -197,7 +197,7 @@ the same thing.
 
     <td valign="top">
       <div class="centered">
-        <img src="img/turn-right-225.png" alt="RIGHT 225" />
+        <img src="img/turn-right-225.png" alt="RIGHT 225" width="191" height="231" />
         <div class="code-sample"><pre>RIGHT 225</pre></div> or
         <div class="code-sample"><pre>LEFT  135</pre></div>
       </div>
@@ -205,7 +205,7 @@ the same thing.
 
     <td valign="top">
       <div class="centered">
-        <img src="img/turn-right-270.png" alt="RIGHT 270" />
+        <img src="img/turn-right-270.png" alt="RIGHT 270" width="191" height="231" />
         <div class="code-sample"><pre>RIGHT 270</pre></div> or
         <div class="code-sample"><pre>LEFT  90</pre></div>
       </div>
@@ -213,7 +213,7 @@ the same thing.
 
     <td valign="top">
       <div class="centered">
-        <img src="img/turn-right-315.png" alt="RIGHT 315" />
+        <img src="img/turn-right-315.png" alt="RIGHT 315" width="191" height="231" />
         <div class="code-sample"><pre>RIGHT 135</pre></div> or
         <div class="code-sample"><pre>LEFT  45</pre></div>
       </div>
@@ -243,7 +243,7 @@ First, we draw line.
       </div>
     </td>
     <td>
-      <img src="img/forward100.png" alt="FORWARD 100" />
+      <img src="img/forward100.png" alt="FORWARD 100" width="242" height="251" />
     </td>
   </tr>
 </table>
@@ -263,7 +263,7 @@ RIGHT   90
       </div>
     </td>
     <td>
-      <img src="img/forward100-right90.png" alt="FORWARD 100 RIGHT 90" />
+      <img src="img/forward100-right90.png" alt="FORWARD 100 RIGHT 90" width="242" height="251" />
     </td>
   </tr>
 </table>
@@ -286,7 +286,7 @@ FORWARD 100
     <td>
       <img 
          src="img/forward100-right90-forward100.png" 
-         alt="FORWARD 100 RIGHT 90 FORWARD 100" />
+         alt="FORWARD 100 RIGHT 90 FORWARD 100" width="242" height="251" />
     </td>
   </tr>
 </table>
@@ -313,7 +313,7 @@ RIGHT   90
       </div>
     </td>
     <td>
-      <img src="img/square.png" alt="a square" />
+      <img src="img/square.png" alt="a square" width="242" height="251" />
     </td>
   </tr>
 </table>
@@ -361,7 +361,7 @@ With the REPEAT command, we can draw a square with just one instruction.
       </div>
     </td>
     <td>
-      <img src="img/square.png" alt="a square" />
+      <img src="img/square.png" alt="a square" width="242" height="251" />
     </td>
   </tr>
 </table>
@@ -400,7 +400,7 @@ END
 
 <p>
 Now select "File -> Save and Exit" as shown here:
-<img src="img/edall-save-and-exit.png" alt="edall" />.
+<img src="img/edall-save-and-exit.png" alt="edall" width="349" height="181" />.
 </p>
 
 </div>
@@ -421,7 +421,7 @@ You can make him draw one with the new SQUARE instruction.
       </div>
     </td>
     <td>
-      <img src="img/square.png" alt="a square" />
+      <img src="img/square.png" alt="a square" width="242" height="251" />
     </td>
   </tr>
 </table>
@@ -463,7 +463,7 @@ SQUAREFLOWER
        </div>
     </td>
     <td>
-      <img src="img/square-flower.png" alt="SQUAREFLOWER" />
+      <img src="img/square-flower.png" alt="SQUAREFLOWER" width="336" height="362" />
     </td>
   </tr>
 
@@ -498,7 +498,7 @@ PATTERN
        </div>
     </td>
     <td>
-      <img src="img/slanted-pattern.png" alt="PATTERN" />
+      <img src="img/slanted-pattern.png" alt="PATTERN" width="237" height="253" />
     </td>
   </tr>
 
@@ -527,7 +527,7 @@ FAN
       </div>
     </td>
     <td>
-      <img src="img/fan.png" alt="FAN" />
+      <img src="img/fan.png" alt="FAN" width="264" height="305" />
     </td>
   </tr>
 
@@ -551,7 +551,7 @@ SAWBLADE
       </div>
     </td>
     <td>
-      <img src="img/sawblade.png" alt="SAWBLADE" />
+      <img src="img/sawblade.png" alt="SAWBLADE" width="231" height="267" />
     </td>
   </tr>
 
@@ -599,7 +599,7 @@ HOUSE
       </div>
     </td>
     <td>
-      <img src="img/simple-house.png" alt="HOUSE" />
+      <img src="img/simple-house.png" alt="HOUSE" width="192" height="270" />
     </td>
   </tr>
 
@@ -616,7 +616,7 @@ STAR
       </div>
     </td>
     <td>
-      <img src="img/five-point-star.png" alt="STAR" />
+      <img src="img/five-point-star.png" alt="STAR" width="296" height="321" />
     </td>
   </tr>
 

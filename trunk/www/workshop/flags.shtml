@@ -68,7 +68,7 @@ Draw a dashed line using PENUP and PENDOWN.
     </td>
 
     <td>
-      <img src="img/dashed-line.png" alt="a dashed line" />
+      <img src="img/dashed-line.png" alt="a dashed line" width="214" height="256" />
     </td>
    </tr>
 </table>
@@ -168,7 +168,7 @@ REDSQUARE
     </td>
 
     <td>
-      <img src="img/red-square.png" alt="REDSQUARE" />
+      <img src="img/red-square.png" alt="REDSQUARE" width="197" height="207" />
     </td>
    </tr>
 </table>
@@ -242,7 +242,7 @@ LIBYA_FLAG
     </td>
 
     <td>
-      <img src="img/flag-libya.png" alt="LIBYA_FLAG" />
+      <img src="img/flag-libya.png" alt="LIBYA_FLAG" width="261" height="271" />
     </td>
    </tr>
 </table>
@@ -319,7 +319,7 @@ ITALY_FLAG
        </div>
     </td>
     <td>
-      <img src="img/flag-italy.png" alt="ITALY_FLAG" />
+      <img src="img/flag-italy.png" alt="ITALY_FLAG" width="231" height="263" />
     </td>
   </tr>
 
@@ -376,7 +376,7 @@ RUSSIA_FLAG
        </div>
     </td>
     <td>
-      <img src="img/flag-russia.png" alt="RUSSIA_FLAG" />
+      <img src="img/flag-russia.png" alt="RUSSIA_FLAG" width="214" height="256" />
     </td>
   </tr>
 
@@ -430,7 +430,7 @@ MOROCCO_FLAG
        </div>
     </td>
     <td>
-      <img src="img/flag-morocco.png" alt="MOROCCO_FLAG" />
+      <img src="img/flag-morocco.png" alt="MOROCCO_FLAG" width="214" height="256" />
     </td>
   </tr>
 
@@ -461,7 +461,7 @@ CONCENTRIC_SQUARES
        </div>
     </td>
     <td>
-      <img src="img/concentric-squares.png" alt="CONCENTRIC_SQUARES" />
+      <img src="img/concentric-squares.png" alt="CONCENTRIC_SQUARES" width="218" height="227" />
     </td>
   </tr>
 
@@ -537,7 +537,7 @@ HOUSE
        </div>
     </td>
     <td>
-      <img src="img/solid-house.png" alt="HOUSE" />
+      <img src="img/solid-house.png" alt="HOUSE" width="221" height="275" />
     </td>
   </tr>
 
@@ -634,7 +634,7 @@ DRAW_DAVE
        </div>
     </td>
     <td>
-      <img src="img/dave.png" alt="DRAW_DAVE" />
+      <img src="img/dave.png" alt="DRAW_DAVE" width="275" height="260" />
     </td>
   </tr>
 

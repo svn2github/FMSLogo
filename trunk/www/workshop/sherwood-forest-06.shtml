@@ -24,11 +24,11 @@ This page contains some original artwork that was created in the Logo workshop g
 <tr>
 
   <td>
-    <a href="img/flower-by-nicole.png"><img src="img/thumbnail/flower-by-nicole.png" alt="Nicole by Nicole"/></a>
+    <a href="img/flower-by-nicole.png"><img src="img/thumbnail/flower-by-nicole.png" alt="Nicole by Nicole" width="64" height="60" /></a>
     Nicole by Nicole
   </td>
   <td>
-    <a href="img/lollipop-by-nicole.png"><img src="img/thumbnail/lollipop-by-nicole.png" alt="Lillipop by Nicole"/></a>
+    <a href="img/lollipop-by-nicole.png"><img src="img/thumbnail/lollipop-by-nicole.png" alt="Lillipop by Nicole" width="64" height="106" /></a>
     Lillipop by Nicole
   </td>
 
@@ -37,11 +37,11 @@ This page contains some original artwork that was created in the Logo workshop g
 <tr>
 
   <td>
-    <a href="img/rainbow.png"><img src="img/thumbnail/rainbow.png" alt="Rainbow"/></a>
+    <a href="img/rainbow.png"><img src="img/thumbnail/rainbow.png" alt="Rainbow" width="64" height="55" /></a>
     Rainbow
   </td>
   <td>
-    <a href="img/the-thing-by-audrey-and-kyra.png"><img src="img/thumbnail/the-thing-by-audrey-and-kyra.png" alt="The Thing by Audrey and Kyra"/></a>
+    <a href="img/the-thing-by-audrey-and-kyra.png"><img src="img/thumbnail/the-thing-by-audrey-and-kyra.png" alt="The Thing by Audrey and Kyra" width="64" height="50" /></a>
     The Thing by Audrey and Kyra
   </td>
 
@@ -50,11 +50,11 @@ This page contains some original artwork that was created in the Logo workshop g
 <tr>
 
   <td>
-    <a href="img/nicole-2.png"><img src="img/thumbnail/nicole-2.png" alt="Nicole 2 by Nicole"/></a>
+    <a href="img/nicole-2.png"><img src="img/thumbnail/nicole-2.png" alt="Nicole 2 by Nicole" width="64" height="64" /></a>
     Nicole 2 by Nicole
   </td>
   <td>
-    <a href="img/max-cool-place.png"><img src="img/thumbnail/max-cool-place.png" alt="Cool Place by Max"/></a>
+    <a href="img/max-cool-place.png"><img src="img/thumbnail/max-cool-place.png" alt="Cool Place by Max" width="64" height="64" /></a>
     Cool Place by Max <em><a href="code/max-cool-place.shtml">With Code</a></em>
   </td>
 
@@ -63,11 +63,11 @@ This page contains some original artwork that was created in the Logo workshop g
 <tr>
 
   <td>
-    <a href="img/cool-cross.png"><img src="img/thumbnail/cool-cross.png" alt="Cool Cross"/></a>
+    <a href="img/cool-cross.png"><img src="img/thumbnail/cool-cross.png" alt="Cool Cross" width="64" height="53" /></a>
     Cool Cross
   </td>
   <td>
-    <a href="img/taf-anders.png"><img src="img/thumbnail/taf-anders.png" alt="TAF by Anders"/></a>
+    <a href="img/taf-anders.png"><img src="img/thumbnail/taf-anders.png" alt="TAF by Anders" width="64" height="93" /></a>
     TAF by Anders
   </td>
 
@@ -76,11 +76,11 @@ This page contains some original artwork that was created in the Logo workshop g
 <tr>
 
   <td>
-    <a href="img/max-flag.png"><img src="img/thumbnail/max-flag.png" alt="Flag by Max"/></a>
+    <a href="img/max-flag.png"><img src="img/thumbnail/max-flag.png" alt="Flag by Max" width="64" height="45" /></a>
     Flag by Max
   </td>
   <td>
-    <a href="img/max-pen-shape.png"><img src="img/thumbnail/max-pen-shape.png" alt="Pen Shape by Max"/></a>
+    <a href="img/max-pen-shape.png"><img src="img/thumbnail/max-pen-shape.png" alt="Pen Shape by Max" width="64" height="64" /></a>
     Pen Shape by Max <em><a href="code/max-pen-shape.shtml">With Code</a></em>
   </td>
 
@@ -89,7 +89,7 @@ This page contains some original artwork that was created in the Logo workshop g
 <tr>
 
   <td>
-    <a href="img/max-wallpaper.png"><img src="img/thumbnail/max-wallpaper.png" alt="Wallpaper by Max"/></a>
+    <a href="img/max-wallpaper.png"><img src="img/thumbnail/max-wallpaper.png" alt="Wallpaper by Max" width="64" height="64" /></a>
     Wallpaper by Max <em><a href="code/max-wallpaper.shtml">With Code</a></em>
   </td>
 
