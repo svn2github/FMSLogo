@@ -16,7 +16,7 @@
 
 
 <p>
-This page contains some original artwork that was created in the first workshop given at the Main Club.
+This page contains some original artwork that was created in the first workshop given at the Main Club in Bellevue, WA.
 </p>
 
 <table width="100%">
@@ -25,7 +25,7 @@ This page contains some original artwork that was created in the first workshop 
 
   <td>
     <a href="img/black-sun.png"><img src="img/thumbnail/black-sun.png" alt="Black Sun"/></a>
-    Black Sun <em><a href="code/black-sun.html">With Code</a></em>
+    Black Sun <em><a href="code/black-sun.shtml">With Code</a></em>
   </td>
   <td>
     <a href="img/taylor-ship.png"><img src="img/thumbnail/taylor-ship.png" alt="Ship by Taylor"/></a>
@@ -129,7 +129,7 @@ This page contains some original artwork that was created in the first workshop 
 
   <td>
     <a href="img/yellow-sun.png"><img src="img/thumbnail/yellow-sun.png" alt="Yellow Sun by Jake and Antonio"/></a>
-    Yellow Sun by Jake and Antonio <em><a href="code/yellow-sun.html">With Code</a></em>
+    Yellow Sun by Jake and Antonio <em><a href="code/yellow-sun.shtml">With Code</a></em>
   </td>
   <td>
     <a href="img/campbell.png"><img src="img/thumbnail/campbell.png" alt=" by Campbell"/></a>
@@ -142,11 +142,11 @@ This page contains some original artwork that was created in the first workshop 
 
   <td>
     <a href="img/dog-by-nolan.png"><img src="img/thumbnail/dog-by-nolan.png" alt="Dog by Nolan"/></a>
-    Dog by Nolan <em><a href="code/dog-by-nolan.html">With Code</a></em>
+    Dog by Nolan <em><a href="code/dog-by-nolan.shtml">With Code</a></em>
   </td>
   <td>
     <a href="img/julian.png"><img src="img/thumbnail/julian.png" alt=" by Julian"/></a>
-     by Julian <em><a href="code/julian.html">With Code</a></em>
+     by Julian <em><a href="code/julian.shtml">With Code</a></em>
   </td>
 
 </tr>
@@ -155,11 +155,11 @@ This page contains some original artwork that was created in the first workshop 
 
   <td>
     <a href="img/3dsquare-by-walker.png"><img src="img/thumbnail/3dsquare-by-walker.png" alt="3D Square by Walker"/></a>
-    3D Square by Walker <em><a href="code/3dsquare-by-walker.html">With Code</a></em>
+    3D Square by Walker <em><a href="code/3dsquare-by-walker.shtml">With Code</a></em>
   </td>
   <td>
     <a href="img/around3d-by-walker.png"><img src="img/thumbnail/around3d-by-walker.png" alt="Around 3D by Walker"/></a>
-    Around 3D by Walker <em><a href="code/around3d-by-walker.html">With Code</a></em>
+    Around 3D by Walker <em><a href="code/around3d-by-walker.shtml">With Code</a></em>
   </td>
 
 </tr>

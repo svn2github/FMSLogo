@@ -16,7 +16,7 @@
 
 
 <p>
-This page contains some original artwork that was created in the Logo workshop given at the summer camp at Sherwood Forest Elementary School in 2006.
+This page contains some original artwork that was created in the Logo workshop given at the summer camp at Sherwood Forest Elementary School in Bellevue, WA in 2006.
 </p>
 
 <table width="100%">
@@ -55,7 +55,7 @@ This page contains some original artwork that was created in the Logo workshop g
   </td>
   <td>
     <a href="img/max-cool-place.png"><img src="img/thumbnail/max-cool-place.png" alt="Cool Place by Max"/></a>
-    Cool Place by Max <em><a href="code/max-cool-place.html">With Code</a></em>
+    Cool Place by Max <em><a href="code/max-cool-place.shtml">With Code</a></em>
   </td>
 
 </tr>
@@ -81,7 +81,7 @@ This page contains some original artwork that was created in the Logo workshop g
   </td>
   <td>
     <a href="img/max-pen-shape.png"><img src="img/thumbnail/max-pen-shape.png" alt="Pen Shape by Max"/></a>
-    Pen Shape by Max <em><a href="code/max-pen-shape.html">With Code</a></em>
+    Pen Shape by Max <em><a href="code/max-pen-shape.shtml">With Code</a></em>
   </td>
 
 </tr>
@@ -90,7 +90,7 @@ This page contains some original artwork that was created in the Logo workshop g
 
   <td>
     <a href="img/max-wallpaper.png"><img src="img/thumbnail/max-wallpaper.png" alt="Wallpaper by Max"/></a>
-    Wallpaper by Max <em><a href="code/max-wallpaper.html">With Code</a></em>
+    Wallpaper by Max <em><a href="code/max-wallpaper.shtml">With Code</a></em>
   </td>
 
 </tr>
