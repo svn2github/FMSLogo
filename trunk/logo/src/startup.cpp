@@ -18,7 +18,12 @@
  *
  */
 
+#ifndef WX_PURE
 #include <windows.h>
+#endif
+
+#include <algorithm>
+#include <string.h>
 
 #include "startup.h"
 #include "activearea.h"
@@ -29,6 +34,10 @@
 
 #include "localizedstrings.h"
 
+#ifdef WX_PURE
+#define MAX_PATH 260
+#endif
+
 Color dfld;                        // Current flood color
 Color dscn;                        // Current screen color
 
@@ -38,11 +47,13 @@ char TempBmpName[MAX_PATH + 1];    // path to temp bitmap file
 char TempClipName[MAX_PATH + 1];   // path to temp clipboard file
 char szHelpFileName[MAX_PATH + 1]; // path to help file
 
+#ifndef WX_PURE
 COLORREF scolor;                   // screen color
 COLORREF fcolor;                   // flood color
 COLORREF pcolor;                   // pen color
 
 OSVERSIONINFO g_OsVersionInformation;
+#endif
 
 char g_FmslogoBaseDirectory[MAX_PATH+1]; // The directory that contains FMSLogo.exe
 
@@ -78,18 +89,22 @@ void MakeTempFilename(char *OutBuffer, const char * TempPath, const char * FileN
 
 void init_osversion()
 {
+#ifndef WX_PURE
     memset(&g_OsVersionInformation, 0, sizeof g_OsVersionInformation);
     g_OsVersionInformation.dwOSVersionInfoSize = sizeof g_OsVersionInformation;
     GetVersionEx(&g_OsVersionInformation);
+#endif
 }
 
 
 void init_graphics()
 {
+#ifndef WX_PURE
     // set appropriate default colors
     pcolor = 0x00000000;
     scolor = 0x00FFFFFF;
     fcolor = 0x00000000;
+#endif
 
     dfld.red   = 0x00;
     dfld.green = 0x00;
@@ -100,7 +115,7 @@ void init_graphics()
     dscn.blue  = 0xFF;
 
     // initialize the global pen state
-
+#ifndef WX_PURE
     // init the font structure
     FontRec.lfHeight         = 24;
     FontRec.lfWidth          = 0;
@@ -126,6 +141,7 @@ void init_graphics()
 
     // Set handy rectangle of full bitmap
     SetRect(&FullRect, 0, 0, BitMapWidth, BitMapHeight);
+#endif
 
     // turtle coords are in center
     xoffset = BitMapWidth  / 2;
@@ -137,12 +153,19 @@ void init_graphics()
     g_PrinterAreaYLow  = -BitMapHeight / 2;
     g_PrinterAreaYHigh = +BitMapHeight / 2;
 
-    g_PrinterAreaPixels = max(BitMapWidth, BitMapHeight) / 8;
+    g_PrinterAreaPixels = std::max(BitMapWidth, BitMapHeight) / 8;
 
     // init paths to library and help files based on location of .EXE
     MakeHelpPathName(LibPathName,     "logolib\\");
     MakeHelpPathName(szHelpFileName,  "logohelp.chm");
 
+#ifdef WX_PURE
+    const char * tempPath = getenv("TMP");
+    if (tempPath == NULL)
+    {
+        tempPath = "~";
+    }
+#else
     DWORD tempPathLength;
     char  tempPath[MAX_PATH];
     bool  tempPathIsValid = false;
@@ -175,6 +198,7 @@ void init_graphics()
 
         strcpy(tempPath, "C:");
     }
+#endif
 
     // construct the name of the temporary editor file
     MakeTempFilename(TempPathName, tempPath, "mswlogo.tmp");
@@ -189,9 +213,10 @@ void init_graphics()
     g_PrinterAreaXHigh  = GetConfigurationInt("Printer.XHigh", +BitMapWidth  / 2);
     g_PrinterAreaYLow   = GetConfigurationInt("Printer.Ylow",  -BitMapHeight / 2);
     g_PrinterAreaYHigh  = GetConfigurationInt("Printer.YHigh", +BitMapHeight / 2);
-    g_PrinterAreaPixels = GetConfigurationInt("Printer.Pixels", max(BitMapWidth, BitMapHeight) / 8);
+    g_PrinterAreaPixels = GetConfigurationInt("Printer.Pixels", std::max(BitMapWidth, BitMapHeight) / 8);
 }
 
+#ifndef WX_PURE
 // Best-effort to disable Data Execution Protection.
 //
 // In general, programs shouldn't disable DEP because that would leave
@@ -242,3 +267,5 @@ void DisableDataExecutionProtection()
     // Disable the DEP policy on a best-effort basis.
     setProcessDepPolicy(PROCESS_DEP_DISABLE);
 }
+
+#endif

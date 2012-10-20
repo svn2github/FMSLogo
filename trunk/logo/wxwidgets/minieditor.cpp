@@ -8,6 +8,7 @@
 #include "minieditortextctrl.h"
 #include "logocore.h"  // for ARRAYSIZE
 #include "fontutils.h"
+#include "stringadapter.h"
 #include "localizedstrings.h"
 
 // Menu IDs
@@ -27,7 +28,7 @@ CMiniEditor::CMiniEditor(
     : wxDialog(
         Parent,
         wxID_ANY,
-        wxString(ToLineString),
+        WXSTRING(ToLineString),
         wxDefaultPosition,
         wxSize(240, 212),
         wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
@@ -39,7 +40,7 @@ CMiniEditor::CMiniEditor(
     wxTextCtrl * toLine = new wxTextCtrl(
         this,
         wxID_ANY,
-        ToLineString,
+        WXSTRING(ToLineString),
         wxDefaultPosition,
         wxDefaultSize,
         wxTE_READONLY);
@@ -84,7 +85,7 @@ CMiniEditor::CMiniEditor(
     wxButton * endButton = new wxButton(
         this,
         wxID_OK,
-        LOCALIZED_ALTERNATE_END);
+        WXSTRING(LOCALIZED_ALTERNATE_END));
     buttonRow->Add(
         endButton,
         0,
@@ -104,7 +105,7 @@ CMiniEditor::CMiniEditor(
     wxButton * cancelButton = new wxButton(
         this,
         wxID_CANCEL,
-        LOCALIZED_GENERAL_CANCELBUTTON);
+        WXSTRING(LOCALIZED_GENERAL_CANCELBUTTON));
     buttonRow->Add(
         cancelButton,
         0,

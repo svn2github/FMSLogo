@@ -21,6 +21,8 @@
 */
 #include <stdio.h>
 #include <setjmp.h>
+#include <stdlib.h> // abort()
+#include <string.h>
 
 #include "eval.h"
 #include "init.h"
@@ -1825,7 +1827,9 @@ bool process_special_conditions()
         }
         else if (System.Equals(throw_node))
         {
+#ifndef WX_PURE
             PostQuitMessage(1); // set the exit code to 1
+#endif
             prepare_to_exit(true);
         }
         else if (!Toplevel.Equals(throw_node))

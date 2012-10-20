@@ -4,12 +4,13 @@
 
 #include "logocore.h" // for IsSpace
 #include "graphwin.h" // for do_help
+#include "stringadapter.h"
 
 
 // Open the help to the topic specified in the first word of SelectedText.
 void ContextHelp(const wxString & SelectedText)
 {
-    const char * src = SelectedText.c_str();
+    const char * src = WXSTRING_TO_STRING(SelectedText);
 
     // remove leading whitespace
     while (IsSpace(*src))

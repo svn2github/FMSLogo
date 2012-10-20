@@ -22,8 +22,10 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <windows.h>
 #include <setjmp.h>
+#ifndef WX_PURE
+#include <windows.h>
+#endif
 
 #include "files.h"
 #include "fileswnd.h"
@@ -109,6 +111,7 @@ FILE *open_file(NODE *arg, const char *access)
     strnzcpy(fnstr, getstrptr(filenameNode), getstrlen(filenameNode));
 
     FILE *tstrm;
+#ifndef WX_PURE
     if (stricmp(fnstr, "clipboard") == 0)
     {
         if (stricmp(access, "r") == 0)
@@ -150,6 +153,7 @@ FILE *open_file(NODE *arg, const char *access)
         }
     }
     else
+#endif // WX_PURE
     {
         tstrm = fopen(fnstr, access);
     }
@@ -384,6 +388,7 @@ NODE *lclose(NODE *arg)
     char * fnstr = (char *) malloc((size_t) getstrlen(filename) + 1);
     strnzcpy(fnstr, getstrptr(filename), getstrlen(filename));
 
+#ifndef WX_PURE
     if (stricmp(fnstr, "clipboard") == 0)
     {
         ::OpenClipboard(GetMainWindow());
@@ -412,6 +417,7 @@ NODE *lclose(NODE *arg)
 
         remove(TempClipName);
     }
+#endif // WX_PURE
 
     free(fnstr);
 
@@ -601,11 +607,13 @@ NODE *lsave(NODE *arg)
     {
         // Notify the user that the editor is open and that 
         // the changes made in that editor won't be saved.
+#ifndef WX_PURE
         ::MessageBox(
             GetCommanderWindow(),
             LOCALIZED_EDITORISOPEN,
             LOCALIZED_INFORMATION,
             MB_OK | MB_ICONQUESTION);
+#endif // WX_PURE
     }
 
     lprint(arg);
@@ -647,9 +655,12 @@ void silent_load(NODE *arg, const char *prefix)
     }
 
     // construct the filename
+#ifdef WX_PURE
+    #define MAX_PATH 260
+#endif
     char   filename[MAX_PATH];
     char * filenamePtr   = filename;
-    char * filenameLimit = filename + MAX_PATH - 1;  // leave room for NUL
+    char * filenameLimit = filename + ARRAYSIZE(filename) - 1;  // leave room for NUL
 
     *filenamePtr = '\0';
     if (prefix != NULL)

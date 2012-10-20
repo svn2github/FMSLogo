@@ -11,6 +11,7 @@
 #include "graphics.h"
 #include "logodata.h"
 #include "main.h"
+#include "stringadapter.h"
 #include "localizedstrings.h"
 
 // ----------------------------------------------------------------------------
@@ -83,7 +84,7 @@ CSetColor::CSetColor(
     const char  *    LogoCommand,
     CSetColor   *  & ExternalReference
     )
-    : wxDialog(Parent, wxID_ANY, wxString(Title)),
+    : wxDialog(Parent, wxID_ANY, WXSTRING(Title)),
       m_ExternalReference(ExternalReference),
       m_RedSlider(NULL),
       m_GreenSlider(NULL),
@@ -121,7 +122,11 @@ CSetColor::CSetColor(
             ID_SETCOLOR_COLOR1 + i,
             wxDefaultPosition,
             wxSize(width, height),
+#ifdef WX_PURE
+            wxColor(128, 128, 128));
+#else
             wxColor(colortable[i]));
+#endif
 
         colorByPictures->Add(picture, 0, wxALIGN_CENTER | wxALL, 5);
     }
@@ -161,7 +166,7 @@ CSetColor::CSetColor(
         wxStaticText *colorText = new wxStaticText(
             this,
             wxID_ANY,
-            sliderData[i].SliderLabel,
+            WXSTRING(sliderData[i].SliderLabel),
             wxDefaultPosition,
             wxDefaultSize,
             wxALIGN_CENTRE);
@@ -174,7 +179,7 @@ CSetColor::CSetColor(
         *sliderData[i].Slider = new wxSlider(
             this,
             ID_SETCOLOR_SLIDER_RED + i,
-            sliderData[i].InitialValue, 
+            sliderData[i].InitialValue,
             0,
             255,
             wxDefaultPosition,
@@ -210,19 +215,19 @@ CSetColor::CSetColor(
     wxButton *ok = new wxButton(
         this, 
         wxID_OK,
-        LOCALIZED_SETCOLOR_OK);
+        WXSTRING(LOCALIZED_SETCOLOR_OK));
     buttonColumn->Add(ok, 0, wxALIGN_CENTER | wxALL, 5);
 
     wxButton *cancel = new wxButton(
         this, 
         wxID_CANCEL, 
-        LOCALIZED_SETCOLOR_CANCEL);
+        WXSTRING(LOCALIZED_SETCOLOR_CANCEL));
     buttonColumn->Add(cancel, 0, wxALIGN_CENTER | wxALL, 5);
 
     wxButton *apply = new wxButton(
         this, 
         ID_SETCOLOR_APPLY,
-        LOCALIZED_SETCOLOR_APPLY);
+        WXSTRING(LOCALIZED_SETCOLOR_APPLY));
     buttonColumn->Add(apply, 0, wxALIGN_CENTER | wxALL, 5);
 
     topLevelSizer->Add(buttonColumn, 0, wxALIGN_CENTER | wxALL, 5);

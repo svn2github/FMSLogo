@@ -6,23 +6,33 @@
 include ../version.mk
 include ../lcids.mk
 
-ifeq "$(HOSTNAME)" "dcostanz.davidcostanzo.com"
+ifeq "$(shell uname)" "Linux"
 
-# assume this is my Fedora Core box
 EXEEXT =
-WINDRES = 
 
-wx_top_builddir = /home/dcostanz/wxGTK-2.8.4
+#wx_top_builddir = /home/dcostanz/wxGTK-2.8.4
+wx_top_builddir = /usr
 
 TOOLKIT = GTK
-TOOLCHAIN_FULLNAME = gtk2-ansi-release-2.8
-EXTRALIBS = -pthread -Wl,--version-script,$(wx_top_builddir)/version-script -lz -ldl -lm -pthread -L/lib -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -ldl -lgthread-2.0 -lrt -lglib-2.0 -lXinerama -lSM -lpng -lz -ljpeg -ltiff -lwx_gtk2-2.8
 
-CXXFLAGS = -pthread
-CPPFLAGS = -pthread -I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/freetype2 -I/usr/include/libpng12
+# My fedora core box
+#EXTRALIBS = -pthread -Wl,--version-script,$(wx_top_builddir)/version-script -lz -ldl -lm -pthread -L/lib -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -ldl -lgthread-2.0 -lrt -lglib-2.0 -lXinerama -lSM -lpng -lz -ljpeg -ltiff -lwx_gtk2-2.8
+#CPPFLAGS += -I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/freetype2 -I/usr/include/libpng12
+
+# My Mint laptop
+ifeq "$(DEBUG)" "1"
+LDFLAGS  = -lwx_baseud-2.8 -lwx_gtk2ud_core-2.8 -lwx_gtk2ud_stc-2.8 -lwx_gtk2ud_richtext-2.8
+TOOLCHAIN_FULLNAME = gtk2-unicode-debug-2.8
+else
+LDFLAGS  = -lwx_baseu-2.8 -lwx_gtk2u_core-2.8 -lwx_gtk2u_stc-2.8 -lwx_gtk2u_richtext-2.8
+TOOLCHAIN_FULLNAME = gtk2-unicode-release-2.8
+endif
+
+CPPFLAGS += -I/usr/include/wx-2.8 -DWX_PURE
+CXXFLAGS += -pthread
+LDFLAGS  += -pthread
+
 # TODO: CPPFLAGS += -DWX_PRECOMP
-
-LDFLAGS = -pthread
 
 else
 
@@ -34,21 +44,10 @@ WINDRES = windres
 wx_top_builddir = /cygdrive/c/wxMSW-2.8.12
 
 ifeq "$(DEBUG)" "1"
-CPPFLAGS = -D__WXDEBUG__ -DMEM_DEBUG -DDEBUG
-CXXFLAGS = -O0 -g -ggdb
 LDFLAGS  = -lwx_mswd_stc-2.8 -lwx_mswd-2.8
 TOOLCHAIN_FULLNAME = msw-ansi-debug-static-2.8
 else
-CPPFLAGS = -DNDEBUG
-CXXFLAGS = -O2
 LDFLAGS  = -lwx_msw_stc-2.8 -lwx_msw-2.8 
-
-ifneq "$(PROFILE)" "1"
-# On retail builds, strip symbols unless we need them for profiling.
-# CONSIDER: using a separate variable for offiical releases to strip. 
-LDFLAGS  += -s
-endif
-
 TOOLCHAIN_FULLNAME = msw-ansi-release-static-2.8
 endif
 
@@ -62,6 +61,21 @@ EXTRALIBS = -static-libgcc -static-libstdc++ -lrpcrt4 -loleaut32 -lole32 -luuid 
 
 endif
 
+
+ifeq "$(DEBUG)" "1"
+CPPFLAGS += -D__WXDEBUG__ -DMEM_DEBUG -DDEBUG
+CXXFLAGS += -O0 -g -ggdb
+else
+CPPFLAGS += -DNDEBUG
+CXXFLAGS += -O2
+
+ifneq "$(PROFILE)" "1"
+# On retail builds, strip symbols unless we need them for profiling.
+# CONSIDER: using a separate variable for offical releases to strip. 
+LDFLAGS  += -s
+endif
+endif
+
 # Setup the build for profiling, if requested.
 ifeq "$(PROFILE)" "1"
 CFLAGS   += -pg
@@ -71,7 +85,7 @@ endif
 
 INCLUDES = . $(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) $(wx_top_builddir)/include $(wx_top_builddir)/contrib/include ../src
 CPPFLAGS += -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES $(addprefix -I, $(INCLUDES))
-CXXFLAGS += -Wall -Wundef -fno-strict-aliasing
+CXXFLAGS += -Wall -fno-strict-aliasing
 CXXFLAGS += -DFMSLOGO_WXWIDGETS
 CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
 CXXFLAGS += -I"/cygdrive/c/Program Files/HTML Help Workshop/include"
@@ -87,15 +101,29 @@ CXX = $(TARGET_PREFIX)g++
 LIBDIRNAME = $(wx_top_builddir)/lib
 CXXFLAGS  += -D__WX$(TOOLKIT)__ $(CPPFLAGS)
 
-OBJECTS =                      \
+MSW_OBJECTS =                  \
     3dsolid.o                  \
+    assembly.o                 \
+    dib.o                      \
+    dllwind.o                  \
+    fmslogo_rc.o               \
+    netwind.o                  \
+    logodialogboxes.o          \
+    mainwind.o                 \
+    messagebox.o               \
+    mmwind.o                   \
+    threed.o                   \
+
+GTK_OBJECTS =                  \
+    wxpurestubs.o              \
+
+WX_OBJECTS =                   \
     LexFmsLogo.o               \
     aboutfmslogo.o             \
     aboutmultiplesclerosis.o   \
     activearea.o               \
     appendablelist.o           \
     argumentutils.o            \
-    assembly.o                 \
     commander.o                \
     commanderbutton.o          \
     commanderhistory.o         \
@@ -104,8 +132,6 @@ OBJECTS =                      \
     coms.o                     \
     cursor.o                   \
     devwind.o                  \
-    dib.o                      \
-    dllwind.o                  \
     dynamicbuffer.o            \
     editproceduredialog.o      \
     eraseproceduredialog.o     \
@@ -131,17 +157,12 @@ OBJECTS =                      \
     localizednode.o            \
     logocodectrl.o             \
     logodata.o                 \
-    logodialogboxes.o          \
     logoeventqueue.o           \
     logomath.o                 \
     mainframe.o                \
-    mainwind.o                 \
     mem.o                      \
-    messagebox.o               \
     minieditor.o               \
     minieditortextctrl.o       \
-    mmwind.o                   \
-    netwind.o                  \
     paren.o                    \
     parse.o                    \
     print.o                    \
@@ -157,20 +178,19 @@ OBJECTS =                      \
     statusdialog.o             \
     stringprintednode.o        \
     term.o                     \
-    threed.o                   \
     unix.o                     \
     utils.o                    \
     vector.o                   \
     workspaceeditor.o          \
     wrksp.o                    \
+    debugheap.o                \
+
 
 ifeq "$(TOOLKIT)" "MSW"
-OBJECTS +=       \
-    debugheap.o  \
-    fmslogo_rc.o \
-
+OBJECTS = $(sort $(MSW_OBJECTS) $(WX_OBJECTS))
+else
+OBJECTS = $(sort $(GTK_OBJECTS) $(WX_OBJECTS)) 
 endif
-
 
 #CXXC = $(CXX)
 CXXC = $(BK_DEPS) $(CXX)
@@ -190,19 +210,28 @@ logohelp.chm : ../manual/logohelp-1033.chm
 # The "all" target is used to build all locales.
 all : $(addsuffix $(EXEEXT),$(addprefix fmslogo-,$(LCIDS)));
 
-../src/version.h : ../version.mk
-	../src/generate-version.bat $(FMSLOGO_MAJOR_VERSION) $(FMSLOGO_MINOR_VERSION) $(FMSLOGO_MICRO_VERSION) $(FMSLOGO_VERSION_SUFFIX)
-
-
 clean: 
 	rm -rf ./.deps ./.pch
 	$(RM) obj/*.o
 	$(RM) ./*.bak
 	$(RM) ./*~
 	$(RM) ./*.stackdump
-	$(RM) fmslogo-*$(EXEEXT)
+	$(RM) $(foreach lcid,$(LCIDS),fmslogo-${lcid}$(EXEEXT))
 	$(RM) fmslogo$(EXEEXT)
 	$(RM) logohelp.chm
+
+
+#
+# Rules to create version.h
+#
+../src/version.h : ../version.mk
+	echo \#define FMSLOGO_MAJOR_VERSION $(FMSLOGO_MAJOR_VERSION)  > $@
+	echo \#define FMSLOGO_MINOR_VERSION $(FMSLOGO_MINOR_VERSION) >> $@
+	echo \#define FMSLOGO_MICRO_VERSION $(FMSLOGO_MICRO_VERSION) >> $@
+ifneq "$(FMSLOGO_VERSION_SUFFIX)" ""
+	echo \#define FMSLOGO_PRIVATE_BUILD                          >> $@
+endif
+	echo \#define FMSLOGO_VERSION \"$(FMSLOGO_VERSION)\"         >> $@
 
 
 #
@@ -212,6 +241,13 @@ define FMSLOGO_template
 
 fmslogo-$(1)$$(EXEEXT) : $$(addprefix obj/$(1)-,$$(OBJECTS))
 	$(CXX) -o $$@ $$^ $(LDFLAGS) -L$(LIBDIRNAME) $(LIBS) $(EXTRALIBS)
+
+ifeq "$(TOOLKIT)" "GTK"
+
+obj/$(1)-%.o: linux/%.cpp
+	$(CXXC) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
+
+endif
 
 obj/$(1)-%.o : %.cpp ../src/version.h
 	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
@@ -225,13 +261,6 @@ obj/$(1)-%.o : ../src/scintilla/src/%.cxx
 obj/$(1)-%_rc.o : %.rc ../src/version.h
 	$(WINDRES) -i$$< -o$$@ -DLOCALE=$1 --define __WX$(TOOLKIT)__ $(addprefix --include-dir ,$(INCLUDES))
 
-
-ifeq "$(TOOLKIT)" "GTK"
-
-obj/$(1)-%.o: linux/%.cpp
-	$(CXXC) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
-
-endif
 
 fmslogo_rc.o: fmslogo.rc
 

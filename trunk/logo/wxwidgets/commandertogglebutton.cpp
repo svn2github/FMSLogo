@@ -1,6 +1,7 @@
 #include "commandertogglebutton.h"
 #include "commander.h"
 #include "commanderinput.h"
+#include "stringadapter.h"
 
 CCommanderToggleButton::CCommanderToggleButton(
     CCommander *    Parent, 
@@ -66,7 +67,7 @@ void CCommanderToggleButton::OnKeyDown(wxKeyEvent& Event)
 
 void CCommanderToggleButton::SetPressedState(bool IsPressed)
 {
-    SetLabel(IsPressed ? m_DownLabel : m_UpLabel);
+    SetLabel(WXSTRING(IsPressed ? m_DownLabel : m_UpLabel));
     SetValue(IsPressed);
 }
 

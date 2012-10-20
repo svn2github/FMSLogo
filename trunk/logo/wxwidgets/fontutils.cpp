@@ -7,6 +7,8 @@
 #include "utils.h"
 #include "graphwin.h"
 
+#ifdef __WXMSW__
+
 static
 const wxFont
 LogFontToWxFont(
@@ -38,6 +40,8 @@ LogFontToWxFont(
 
     return font;
 }
+
+#endif
 
 void
 GetConfigurationFont(
@@ -82,5 +86,10 @@ SetConfigurationFont(
 const wxFont
 GetLabelFont()
 {
+#ifdef __WXMSW__
     return LogFontToWxFont(FontRec);
+#else
+    // TODO: Figure out what to do on GNU/Linux
+    return wxFont();
+#endif
 }

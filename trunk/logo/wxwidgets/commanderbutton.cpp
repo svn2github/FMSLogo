@@ -1,16 +1,17 @@
 #include "commanderbutton.h"
 #include "commander.h"
 #include "commanderinput.h"
+#include "stringadapter.h"
 
 CCommanderButton::CCommanderButton(
     CCommander *    Parent, 
     wxWindowID      Id, 
-    const wxString& Label
+    const char *    Label
     ) :
     wxButton(
         Parent,
         Id,
-        Label,
+        WXSTRING(Label),
         wxDefaultPosition,
         wxDefaultSize,
         wxWANTS_CHARS)

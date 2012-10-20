@@ -1,4 +1,7 @@
+#ifndef WX_PURE
 #include <wx/msw/private.h> // for wxGetInstance()
+#endif
+
 #include <wx/gdicmn.h>      // for wxPoint
 #include <wx/printdlg.h>
 
@@ -7,6 +10,7 @@
 #include "logocore.h"      // for ARRAYSIZE
 #include "screenwindow.h"  // for TraceOutput
 #include "guiutils.h"
+#include "stringadapter.h"
 
 #include "wrksp.h" // for g_CharactersSuccessfullyParsedInEditor
 
@@ -53,14 +57,14 @@ CLogoCodeCtrl::SetFont(wxFont & font)
     // Apply the font
     StyleClearAll();
 
-    const wxColor black     = RGB(0,0,0);
-    const wxColor white     = RGB(0XFF, 0XFF, 0XFF);
-    const wxColor darkgreen = RGB(0,    0x80, 0);
-    const wxColor darkred   = RGB(0x80,    0, 0);
-    const wxColor red       = RGB(0xFF,    0, 0);
-    const wxColor lightgrey = RGB(0xCC, 0xCC, 0xCC);
-    const wxColor lightblue = RGB(200,   242, 255);
-    const wxColor darkblue  = RGB(  0,    0,  0x80);
+    const wxColor black        (0,       0, 0);
+    const wxColor white        (0XFF, 0XFF, 0XFF);
+    const wxColor darkgreen    (0,    0x80, 0);
+    const wxColor darkred      (0x80,    0, 0);
+    const wxColor red          (0xFF,    0, 0);
+    const wxColor lightgrey    (0xCC, 0xCC, 0xCC);
+    const wxColor lightblue    (200,   242, 255);
+    const wxColor darkblue     (  0,    0,  0x80);
 
     StyleSetForeground(SCE_FMS_COMMENT,          darkgreen);
     StyleSetForeground(SCE_FMS_COMMENTBACKSLASH, darkgreen);
@@ -360,13 +364,13 @@ CLogoCodeCtrl::DoSearchOperation(
     {
         // Notify the user that we were unable to find it.
         const wxString & notFoundMessage = wxString::Format(
-            LOCALIZED_STRINGTABLE_CANNOTFINDSTRING,
-            StringToFind.c_str());
+            WXSTRING(LOCALIZED_STRINGTABLE_CANNOTFINDSTRING),
+            WXSTRING_TO_STRING(StringToFind));
 
         ::wxMessageBox(
             notFoundMessage,
-            LOCALIZED_GENERAL_PRODUCTNAME,
-            MB_ICONWARNING | MB_OK,
+            WXSTRING(LOCALIZED_GENERAL_PRODUCTNAME),
+            wxICON_WARNING | wxOK,
             this);
     }
 }
@@ -635,7 +639,7 @@ void CLogoCodeCtrl::Print()
     pageSetup.ShowModal();
 
     CLogoCodePrintout printout(
-        LOCALIZED_GENERAL_PRODUCTNAME,
+        WXSTRING(LOCALIZED_GENERAL_PRODUCTNAME),
         *this,
         pageSetupData);
 

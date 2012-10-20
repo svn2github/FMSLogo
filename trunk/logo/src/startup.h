@@ -25,21 +25,20 @@
 extern Color dfld;
 extern Color dscn;
 
-extern HCURSOR hCursorWait;
-extern HCURSOR hCursorArrow;
-
 extern char LibPathName[];
 extern char TempPathName[];
 extern char TempBmpName[];
 extern char TempClipName[];
 extern char szHelpFileName[];
 
+#ifndef WX_PURE
 extern OSVERSIONINFO g_OsVersionInformation;
 extern char          g_FmslogoBaseDirectory[MAX_PATH+1];
+#endif // WX_PURE
 
 
 extern void DisableDataExecutionProtection();
-extern void MakeHelpPathName(char *szFileName, PCSTR);
+extern void MakeHelpPathName(char *szFileName, const char *);
 extern void init_graphics();
 extern void init_osversion();
 extern void init_cursors();

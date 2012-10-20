@@ -19,6 +19,7 @@
  *
  */
 #include <stdio.h>
+#include <string.h>
 #include <errno.h>
 
 #ifdef __GNUC__
@@ -159,6 +160,7 @@ NODE *lmkdir(NODE *arg)
 {
     CStringPrintedNode directoryName(car(arg));
 
+#ifndef WX_PURE
     if (mkdir(directoryName))
     {
         // mkdir returns -1 on error
@@ -170,6 +172,7 @@ NODE *lmkdir(NODE *arg)
         chdir(directoryName);
         printfx(LOCALIZED_FILE_MKDIRSUCCEEDED, directoryName);
     }
+#endif
 
     return Unbound;
 }
@@ -207,6 +210,7 @@ NODE *directory_helper(bool OnlyListDirectories)
 {
     NODE *directory = NIL;
 
+#ifndef WX_PURE
     WIN32_FIND_DATA findFileData;
 
     HANDLE searchHandle = FindFirstFile(
@@ -241,6 +245,7 @@ NODE *directory_helper(bool OnlyListDirectories)
 
         FindClose(searchHandle);
     }
+#endif
 
     return directory;
 }

@@ -20,6 +20,8 @@
  *
  */
 
+#include <string.h>
+
 #include "localizednode.h"
 #include "eval.h"
 #include "paren.h"
@@ -158,7 +160,7 @@ const PRIMTYPE prims[] =
     { "butfirst", 1, 1, 1, PREFIX_PRIORITY, lbutfirst, LOCALIZED_ALTERNATE_BUTFIRST },
     { "butfirsts", 1, 1, 1, PREFIX_PRIORITY, lbfs, LOCALIZED_ALTERNATE_BUTFIRSTS },
     { "butlast", 1, 1, 1, PREFIX_PRIORITY, lbutlast, LOCALIZED_ALTERNATE_BUTLAST },
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "buttoncreate", 8, 8, 8, PREFIX_PRIORITY, lbuttoncreate, LOCALIZED_ALTERNATE_BUTTONCREATE },
     { "buttondelete", 1, 1, 1, PREFIX_PRIORITY, lbuttondelete, LOCALIZED_ALTERNATE_BUTTONDELETE },
     { "buttonenable", 2, 2, 2, PREFIX_PRIORITY, lbuttonenable, LOCALIZED_ALTERNATE_BUTTONENABLE },
@@ -170,7 +172,7 @@ const PRIMTYPE prims[] =
     { "catch", 2, 2, 2, MACRO_PRIORITY, lcatch, LOCALIZED_ALTERNATE_CATCH },
     { "char", 1, 1, 1, PREFIX_PRIORITY, lchar, LOCALIZED_ALTERNATE_CHAR },
     { "chdir", 1, 1, 1, PREFIX_PRIORITY, lchdir, LOCALIZED_ALTERNATE_CHDIR },
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "checkboxcreate", 8, 8, 8, PREFIX_PRIORITY, lcheckboxcreate, LOCALIZED_ALTERNATE_CHECKBOXCREATE },
     { "checkboxdelete", 1, 1, 1, PREFIX_PRIORITY, lcheckboxdelete, LOCALIZED_ALTERNATE_CHECKBOXDELETE },
     { "checkboxenable", 2, 2, 2, PREFIX_PRIORITY, lcheckboxenable, LOCALIZED_ALTERNATE_CHECKBOXENABLE },
@@ -183,11 +185,13 @@ const PRIMTYPE prims[] =
 #if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
     { "cleartext", 0, 0, 0, PREFIX_PRIORITY, lcleartext, LOCALIZED_ALTERNATE_CLEARTEXT },
 #endif
+#if not defined WX_PURE
     { "cleartimer", 1, 1, 1, PREFIX_PRIORITY, lcleartimer, LOCALIZED_ALTERNATE_CLEARTIMER },
+#endif
     { "close", 1, 1, 1, PREFIX_PRIORITY, lclose, LOCALIZED_ALTERNATE_CLOSE },
     { "closeall", 0, 0, 0, PREFIX_PRIORITY, lcloseall, LOCALIZED_ALTERNATE_CLOSEALL },
     { "co", OK_NO_ARG, 1, 1, PREFIX_PRIORITY, lcontinue, LOCALIZED_ALTERNATE_CO },
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "comboboxaddstring", 2, 2, 2, PREFIX_PRIORITY, lcomboboxaddstring, LOCALIZED_ALTERNATE_COMBOBOXADDSTRING },
     { "comboboxcreate", 6, 6, 6, PREFIX_PRIORITY, lcomboboxcreate, LOCALIZED_ALTERNATE_COMBOBOXCREATE },
     { "comboboxdelete", 1, 1, 1, PREFIX_PRIORITY, lcomboboxdelete, LOCALIZED_ALTERNATE_COMBOBOXDELETE },
@@ -206,22 +210,24 @@ const PRIMTYPE prims[] =
     { "ct", 0, 0, 0, PREFIX_PRIORITY, lcleartext, LOCALIZED_ALTERNATE_CT },
     { "cursor", 0, 0, 0, PREFIX_PRIORITY, lcursor, LOCALIZED_ALTERNATE_CURSOR },
 #endif
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "debugwindows", 0, 0, 1, PREFIX_PRIORITY, ldebugwindows, LOCALIZED_ALTERNATE_DEBUGWINDOWS },
 #endif
     { "define", 2, 2, 2, PREFIX_PRIORITY, ldefine, LOCALIZED_ALTERNATE_DEFINE },
     { "definedp", 1, 1, 1, PREFIX_PRIORITY, ldefinedp, LOCALIZED_ALTERNATE_DEFINEDP },
     { "defined?", 1, 1, 1, PREFIX_PRIORITY, ldefinedp, LOCALIZED_ALTERNATE_DEFINED_ },
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "dialogcreate", 8, 8, 8, PREFIX_PRIORITY, ldialogcreate, LOCALIZED_ALTERNATE_DIALOGCREATE },
     { "dialogenable", 2, 2, 2, PREFIX_PRIORITY, ldialogenable, LOCALIZED_ALTERNATE_DIALOGENABLE },
     { "dialogdelete", 1, 1, 1, PREFIX_PRIORITY, ldialogdelete, LOCALIZED_ALTERNATE_DIALOGDELETE },
 #endif
+#if not defined WX_PURE
     { "dialogfileopen", 1, 1, 1, PREFIX_PRIORITY, ldialogfileopen, LOCALIZED_ALTERNATE_DIALOGFILEOPEN },
     { "dialogfilesave", 1, 1, 1, PREFIX_PRIORITY, ldialogfilesave, LOCALIZED_ALTERNATE_DIALOGFILESAVE },
+#endif
     { "difference", 2, 2, 2, PREFIX_PRIORITY, lsub, LOCALIZED_ALTERNATE_DIFFERENCE },
     { "directories", 0, 0, 0, PREFIX_PRIORITY, ldirectories, LOCALIZED_ALTERNATE_DIRECTORIES },
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "dllcall", 1, 1, 2, PREFIX_PRIORITY, ldllcall, LOCALIZED_ALTERNATE_DLLCALL },
     { "dllfree", 0, 0, 1, PREFIX_PRIORITY, ldllfree, LOCALIZED_ALTERNATE_DLLFREE },
     { "dllload", 1, 1, 1, PREFIX_PRIORITY, ldllload, LOCALIZED_ALTERNATE_DLLLOAD },
@@ -270,7 +276,7 @@ const PRIMTYPE prims[] =
     { "greaterequal?", 2, 2, 2, PREFIX_PRIORITY, lgreaterequalp, LOCALIZED_ALTERNATE_GREATEREQUAL_ },
     { "greaterequalp", 2, 2, 2, PREFIX_PRIORITY, lgreaterequalp, LOCALIZED_ALTERNATE_GREATEREQUALP },
     { "greaterp", 2, 2, 2, PREFIX_PRIORITY, lgreaterp, LOCALIZED_ALTERNATE_GREATERP },
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "groupboxcreate", 6, 6, 6, PREFIX_PRIORITY, lgroupboxcreate, LOCALIZED_ALTERNATE_GROUPBOXCREATE },
     { "groupboxdelete", 1, 1, 1, PREFIX_PRIORITY, lgroupboxdelete, LOCALIZED_ALTERNATE_GROUPBOXDELETE },
 #endif
@@ -310,7 +316,7 @@ const PRIMTYPE prims[] =
     { "lessp", 2, 2, 2, PREFIX_PRIORITY, llessp, LOCALIZED_ALTERNATE_LESSP },
     { "light", 0, 0, 0, PREFIX_PRIORITY, llight, LOCALIZED_ALTERNATE_LIGHT },
     { "list", 0, 2, -1, PREFIX_PRIORITY, llist, LOCALIZED_ALTERNATE_LIST },
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "listboxaddstring", 2, 2, 2, PREFIX_PRIORITY, llistboxaddstring, LOCALIZED_ALTERNATE_LISTBOXADDSTRING },
     { "listboxcreate", 6, 6, 6, PREFIX_PRIORITY, llistboxcreate, LOCALIZED_ALTERNATE_LISTBOXCREATE },
     { "listboxenable", 2, 2, 2, PREFIX_PRIORITY, llistboxenable, LOCALIZED_ALTERNATE_LISTBOXENABLE },
@@ -334,14 +340,18 @@ const PRIMTYPE prims[] =
     { "macrop", 1, 1, 1, PREFIX_PRIORITY, lmacrop, LOCALIZED_ALTERNATE_MACROP },
     { "macro?", 1, 1, 1, PREFIX_PRIORITY, lmacrop, LOCALIZED_ALTERNATE_MACRO_ },
     { "make", 2, 2, 2, PREFIX_PRIORITY, lmake, LOCALIZED_ALTERNATE_MAKE },
+#if not defined WX_PURE
     { "mci", 1, 1, 2, PREFIX_PRIORITY, lmci, LOCALIZED_ALTERNATE_MCI },
+#endif
     { "member", 2, 2, 2, PREFIX_PRIORITY, lmember, LOCALIZED_ALTERNATE_MEMBER },
     { "memberp", 2, 2, 2, PREFIX_PRIORITY, lmemberp, LOCALIZED_ALTERNATE_MEMBERP },
     { "member?", 2, 2, 2, PREFIX_PRIORITY, lmemberp, LOCALIZED_ALTERNATE_MEMBER_ },
+#if not defined WX_PURE
     { "messagebox", 2, 2, 2, PREFIX_PRIORITY, lmessagebox, LOCALIZED_ALTERNATE_MESSAGEBOX },
     { "midiclose", 0, 0, 0, PREFIX_PRIORITY, lmidiclose, LOCALIZED_ALTERNATE_MIDICLOSE },
     { "midimessage", 1, 1, 1, PREFIX_PRIORITY, lmidimessage, LOCALIZED_ALTERNATE_MIDIMESSAGE },
     { "midiopen", 0, 0, 1, PREFIX_PRIORITY, lmidiopen, LOCALIZED_ALTERNATE_MIDIOPEN },
+#endif
     { "minus", 1, 1, 1, PREFIX_PRIORITY, lsub, LOCALIZED_ALTERNATE_MINUS },
     { "mkdir", 1, 1, 1, PREFIX_PRIORITY, lmkdir, LOCALIZED_ALTERNATE_MKDIR },
     { "modulo", 2, 2, 2, PREFIX_PRIORITY, lmodulo, LOCALIZED_ALTERNATE_MODULO },
@@ -351,6 +361,7 @@ const PRIMTYPE prims[] =
     { "namep", 1, 1, 1, PREFIX_PRIORITY, lnamep, LOCALIZED_ALTERNATE_NAMEP },
     { "name?", 1, 1, 1, PREFIX_PRIORITY, lnamep, LOCALIZED_ALTERNATE_NAME_ },
     { "names", 0, 0, 0, PREFIX_PRIORITY, lnames, LOCALIZED_ALTERNATE_NAMES },
+#if not defined WX_PURE
     { "netacceptoff", 0, 0, 0, PREFIX_PRIORITY, lnetacceptoff, LOCALIZED_ALTERNATE_NETACCEPTOFF },
     { "netaccepton", 3, 3, 3, PREFIX_PRIORITY, lnetaccepton, LOCALIZED_ALTERNATE_NETACCEPTON },
     { "netacceptreceivevalue", 0, 0, 0, PREFIX_PRIORITY, lnetacceptreceivevalue, LOCALIZED_ALTERNATE_NETACCEPTRECEIVEVALUE },
@@ -361,6 +372,7 @@ const PRIMTYPE prims[] =
     { "netconnectsendvalue", 1, 1, 1, PREFIX_PRIORITY, lnetconnectsendvalue, LOCALIZED_ALTERNATE_NETCONNECTSENDVALUE },
     { "netshutdown", 0, 0, 0, PREFIX_PRIORITY, lnetshutdown, LOCALIZED_ALTERNATE_NETSHUTDOWN },
     { "netstartup", 0, 0, 1, PREFIX_PRIORITY, lnetstartup, LOCALIZED_ALTERNATE_NETSTARTUP },
+#endif // WX_PURE
     { "nobitmapturtle", 0, 0, 0, PREFIX_PRIORITY, lnobitmapturtle, LOCALIZED_ALTERNATE_NOBITMAPTURTLE },
     { "nodes", 0, 0, 0, PREFIX_PRIORITY, lnodes, LOCALIZED_ALTERNATE_NODES },
     { "nodribble", 0, 0, 0, PREFIX_PRIORITY, lnodribble, LOCALIZED_ALTERNATE_NODRIBBLE },
@@ -399,7 +411,9 @@ const PRIMTYPE prims[] =
     { "perspective", 0, 0, 0, PREFIX_PRIORITY, lperspective, LOCALIZED_ALTERNATE_PERSPECTIVE },
     { "pitch", 0, 0, 0, PREFIX_PRIORITY, lpitch, LOCALIZED_ALTERNATE_PITCH },
     { "pixel", 0, 0, 0, PREFIX_PRIORITY, lpixel, LOCALIZED_ALTERNATE_PIXEL },
+#if not defined WX_PURE
     { "playwave", 2, 2, 2, PREFIX_PRIORITY, lplaywave, LOCALIZED_ALTERNATE_PLAYWAVE },
+#endif
     { "plist", 1, 1, 1, PREFIX_PRIORITY, lplist, LOCALIZED_ALTERNATE_PLIST },
     { "plists", 0, 0, 0, PREFIX_PRIORITY, lplists, LOCALIZED_ALTERNATE_PLISTS },
     { "po", 1, 1, 1, PREFIX_PRIORITY, lpo, LOCALIZED_ALTERNATE_PO },
@@ -433,7 +447,7 @@ const PRIMTYPE prims[] =
     { "product", 0, 2, -1, PREFIX_PRIORITY, lmul, LOCALIZED_ALTERNATE_PRODUCT },
     { "pu", 0, 0, 0, PREFIX_PRIORITY, lpenup, LOCALIZED_ALTERNATE_PU },
     { "px", 0, 0, 0, PREFIX_PRIORITY, lpenreverse, LOCALIZED_ALTERNATE_PX },
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "questionbox", 2, 2, 2, PREFIX_PRIORITY, lquestionbox, LOCALIZED_ALTERNATE_QUESTIONBOX },
 #endif
     { "quotient", 1, 2, 2, PREFIX_PRIORITY, ldivide, LOCALIZED_ALTERNATE_QUOTIENT },
@@ -441,7 +455,7 @@ const PRIMTYPE prims[] =
     { "radarcsin", 1, 1, 1, PREFIX_PRIORITY, lradasin, LOCALIZED_ALTERNATE_RADARCSIN },
     { "radarctan", 1, 1, 2, PREFIX_PRIORITY, lradatan, LOCALIZED_ALTERNATE_RADARCTAN },
     { "radcos", 1, 1, 1, PREFIX_PRIORITY, lradcos, LOCALIZED_ALTERNATE_RADCOS },
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "radiobuttoncreate", 8, 8, 8, PREFIX_PRIORITY, lradiobuttoncreate, LOCALIZED_ALTERNATE_RADIOBUTTONCREATE },
     { "radiobuttonenable", 2, 2, 2, PREFIX_PRIORITY, lradiobuttonenable, LOCALIZED_ALTERNATE_RADIOBUTTONENABLE },
     { "radiobuttondelete", 1, 1, 1, PREFIX_PRIORITY, lradiobuttondelete, LOCALIZED_ALTERNATE_RADIOBUTTONDELETE },
@@ -480,7 +494,7 @@ const PRIMTYPE prims[] =
     { "rw", 0, 0, 0, PREFIX_PRIORITY, lreadword, LOCALIZED_ALTERNATE_RW },
     { "save", 1, 1, 1, PREFIX_PRIORITY, lsave, LOCALIZED_ALTERNATE_SAVE },
     { "screencolor", 0, 0, 0, PREFIX_PRIORITY, lscreencolor, LOCALIZED_ALTERNATE_SCREENCOLOR },
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "scrollbarcreate", 7, 7, 7, PREFIX_PRIORITY, lscrollbarcreate, LOCALIZED_ALTERNATE_SCROLLBARCREATE },
     { "scrollbarenable", 2, 2, 2, PREFIX_PRIORITY, lscrollbarenable, LOCALIZED_ALTERNATE_SCROLLBARENABLE },
     { "scrollbardelete", 1, 1, 1, PREFIX_PRIORITY, lscrollbardelete, LOCALIZED_ALTERNATE_SCROLLBARDELETE },
@@ -491,7 +505,7 @@ const PRIMTYPE prims[] =
     { "scrolly", 1, 1, 1, PREFIX_PRIORITY, lscrolly, LOCALIZED_ALTERNATE_SCROLLY },
     { "scrunch", 0, 0, 0, PREFIX_PRIORITY, lscrunch, LOCALIZED_ALTERNATE_SCRUNCH },
     { "se", 0, 2, -1, PREFIX_PRIORITY, lsentence, LOCALIZED_ALTERNATE_SE },
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "selectbox", 2, 2, 2, PREFIX_PRIORITY, lselectbox, LOCALIZED_ALTERNATE_SELECTBOX },
 #endif
     { "sentence", 0, 2, -1, PREFIX_PRIORITY, lsentence, LOCALIZED_ALTERNATE_SENTENCE },
@@ -527,7 +541,9 @@ const PRIMTYPE prims[] =
     { "setsc", 1, 1, 1, PREFIX_PRIORITY, lsetscreencolor, LOCALIZED_ALTERNATE_SETSC },
     { "setscreencolor", 1, 1, 1, PREFIX_PRIORITY, lsetscreencolor, LOCALIZED_ALTERNATE_SETSCREENCOLOR },
     { "setscrunch", 2, 2, 2, PREFIX_PRIORITY, lsetscrunch, LOCALIZED_ALTERNATE_SETSCRUNCH },
+#if not defined WX_PURE
     { "settimer", 3, 3, 3, PREFIX_PRIORITY, lsettimer, LOCALIZED_ALTERNATE_SETTIMER },
+#endif
     { "setturtle", 1, 1, 2, PREFIX_PRIORITY, lsetturtle, LOCALIZED_ALTERNATE_SETTURTLE },
     { "setturtlemode", 1, 1, 1, PREFIX_PRIORITY, lsetturtlemode, LOCALIZED_ALTERNATE_SETTURTLEMODE },
     { "setwrite", 1, 1, 1, PREFIX_PRIORITY, lsetwrite, LOCALIZED_ALTERNATE_SETWRITE },
@@ -543,7 +559,9 @@ const PRIMTYPE prims[] =
     { "shown?", 0, 0, 0, PREFIX_PRIORITY, lshownp, LOCALIZED_ALTERNATE_SHOWN_ },
     { "showturtle", 0, 0, 0, PREFIX_PRIORITY, lshowturtle, LOCALIZED_ALTERNATE_SHOWTURTLE },
     { "sin", 1, 1, 1, PREFIX_PRIORITY, lsin, LOCALIZED_ALTERNATE_SIN },
+#if not defined WX_PURE
     { "sound", 1, 1, 1, PREFIX_PRIORITY, lsound, LOCALIZED_ALTERNATE_SOUND },
+#endif
     { "splitscreen", 0, 0, 0, PREFIX_PRIORITY, lsplitscreen, LOCALIZED_ALTERNATE_SPLITSCREEN },
     { "sqrt", 1, 1, 1, PREFIX_PRIORITY, lsqrt, LOCALIZED_ALTERNATE_SQRT },
     { "ss", 0, 0, 0, PREFIX_PRIORITY, lsplitscreen, LOCALIZED_ALTERNATE_SS },
@@ -551,7 +569,7 @@ const PRIMTYPE prims[] =
 #if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
     { "standout", 1, 1, 1, PREFIX_PRIORITY, lstandout, LOCALIZED_ALTERNATE_STANDOUT },
 #endif
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "staticcreate", 7, 7, 7, PREFIX_PRIORITY, lstaticcreate, LOCALIZED_ALTERNATE_STATICCREATE },
     { "staticdelete", 1, 1, 1, PREFIX_PRIORITY, lstaticdelete, LOCALIZED_ALTERNATE_STATICDELETE },
     { "staticupdate", 2, 2, 2, PREFIX_PRIORITY, lstaticupdate, LOCALIZED_ALTERNATE_STATICUPDATE },
@@ -591,12 +609,12 @@ const PRIMTYPE prims[] =
     { "uppitch", 1, 1, 1, PREFIX_PRIORITY, luppitch, LOCALIZED_ALTERNATE_UPPITCH },
     { "wait", 1, 1, 1, PREFIX_PRIORITY, lwait, LOCALIZED_ALTERNATE_WAIT },
     { "window", 0, 0, 0, PREFIX_PRIORITY, lwindow, LOCALIZED_ALTERNATE_WINDOW },
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "windowcreate", 8, 8, 8, PREFIX_PRIORITY, lwindowcreate, LOCALIZED_ALTERNATE_WINDOWCREATE },
     { "windowenable", 2, 2, 2, PREFIX_PRIORITY, lwindowenable, LOCALIZED_ALTERNATE_WINDOWENABLE },
     { "windowdelete", 1, 1, 1, PREFIX_PRIORITY, lwindowdelete, LOCALIZED_ALTERNATE_WINDOWDELETE },
 #endif
-#if defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS
+#if (defined FMSLOGO_OWL || defined FMSLOGO_WXWIDGETS) && not defined WX_PURE
     { "windowfileedit", 2, 2, 2, PREFIX_PRIORITY, lwindowfileedit, LOCALIZED_ALTERNATE_WINDOWFILEEDIT },
 #endif
     { "windowset", 2, 2, 2, PREFIX_PRIORITY, lwindowset, LOCALIZED_ALTERNATE_WINDOWSET },
@@ -607,7 +625,9 @@ const PRIMTYPE prims[] =
     { "wrap", 0, 0, 0, PREFIX_PRIORITY, lwrap, LOCALIZED_ALTERNATE_WRAP },
     { "writepos", 0, 0, 0, PREFIX_PRIORITY, lwritepos, LOCALIZED_ALTERNATE_WRITEPOS },
     { "writer", 0, 0, 0, PREFIX_PRIORITY, lwriter, LOCALIZED_ALTERNATE_WRITER },
+#if not defined WX_PURE
     { "yesnobox", 2, 2, 2, PREFIX_PRIORITY, lyesnobox, LOCALIZED_ALTERNATE_YESNOBOX },
+#endif
     { "yield", 0, 0, 0, PREFIX_PRIORITY, lyield, LOCALIZED_ALTERNATE_YIELD },
     { "zoom", 1, 1, 1, PREFIX_PRIORITY, lzoom, LOCALIZED_ALTERNATE_ZOOM },
 };
@@ -754,8 +774,10 @@ void init()
 
 void uninit()
 {
+#ifndef WX_PURE
     // uninitialize the network subsystem
     lnetshutdown(NIL);
+#endif
 
     // uninitialize the file subsystem
     uninitialize_files();

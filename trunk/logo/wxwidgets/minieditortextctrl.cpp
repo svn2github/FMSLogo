@@ -2,6 +2,7 @@
 
 #include <wx/event.h>
 
+#include "stringadapter.h"
 #include "helputils.h" // for ContextHelp()
 
 // ----------------------------------------------------------------------------
@@ -40,7 +41,7 @@ void CMiniEditorTextCtrl::OnKeyDown(wxKeyEvent& Event)
     case WXK_RETURN:
         // Enter writes a newline, instead of pressing the default button,
         // which would close the mini-editor.
-        WriteText("\n");
+        WriteText(WXSTRING("\n"));
         break;
 
     case WXK_TAB:

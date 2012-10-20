@@ -7,18 +7,19 @@
 #include <wx/button.h>
 
 #include "localizedstrings.h"
+#include "stringadapter.h"
 
 // ----------------------------------------------------------------------------
 // CAboutMultipleSclerosis
 // ----------------------------------------------------------------------------
 
-CAboutMultipleSclerosis::CAboutMultipleSclerosis(wxWindow *parent)
-    : wxDialog(parent, wxID_ANY, wxString(LOCALIZED_ABOUTMS))
+CAboutMultipleSclerosis::CAboutMultipleSclerosis(wxWindow * Parent)
+    : wxDialog(Parent, wxID_ANY, WXSTRING(LOCALIZED_ABOUTMS))
 {
     wxStaticText *text1 = new wxStaticText(
         this,
         wxID_ANY,
-        "\n  " LOCALIZED_ABOUTMS_FMS "  \n", // add some padding to the sunken border
+        WXSTRING("\n  " LOCALIZED_ABOUTMS_FMS "  \n"), // add some padding to the sunken border
         wxDefaultPosition,
         wxDefaultSize, 
         wxALIGN_CENTRE | wxSUNKEN_BORDER);
@@ -26,12 +27,15 @@ CAboutMultipleSclerosis::CAboutMultipleSclerosis(wxWindow *parent)
     wxStaticText *text2 = new wxStaticText(
         this,
         wxID_ANY,
-        LOCALIZED_ABOUTMS_CONSIDERDONATING, 
+        WXSTRING(LOCALIZED_ABOUTMS_CONSIDERDONATING), 
         wxDefaultPosition,
         wxDefaultSize, 
         wxALIGN_CENTRE | wxSUNKEN_BORDER);
 
-    wxButton *okButton = new wxButton(this, wxID_CANCEL, LOCALIZED_ABOUTMS_OK);
+    wxButton *okButton = new wxButton(
+        this,
+        wxID_CANCEL,
+        WXSTRING(LOCALIZED_ABOUTMS_OK));
 
 
     wxBoxSizer *sizerTop = new wxBoxSizer(wxVERTICAL);

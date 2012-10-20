@@ -10,6 +10,7 @@
 #include "logodata.h"
 #include "logocore.h"
 #include "main.h"
+#include "stringadapter.h"
 #include "localizedstrings.h"
 
 // ----------------------------------------------------------------------------
@@ -98,7 +99,7 @@ CSetPenSize::CSetPenSize(
     int             InitialPenSize,
     CSetPenSize * & ExternalReference
     )
-    : wxDialog(Parent, wxID_ANY, wxString(LOCALIZED_SETPENSIZE)),
+    : wxDialog(Parent, wxID_ANY, WXSTRING(LOCALIZED_SETPENSIZE)),
       m_PenWidth(InitialPenSize),
       m_ExternalReference(ExternalReference)
 {
@@ -168,7 +169,7 @@ CSetPenSize::CSetPenSize(
     wxStaticText *thicknessText = new wxStaticText(
         this,
         wxID_ANY,
-        LOCALIZED_SETPENSIZE_SIZE,
+        WXSTRING(LOCALIZED_SETPENSIZE_SIZE),
         wxDefaultPosition,
         wxDefaultSize,
         wxALIGN_CENTRE);
@@ -218,19 +219,19 @@ CSetPenSize::CSetPenSize(
     wxButton *ok = new wxButton(
         this, 
         wxID_OK,
-        LOCALIZED_SETPENSIZE_OK);
+        WXSTRING(LOCALIZED_SETPENSIZE_OK));
     buttonColumn->Add(ok, 0, wxALIGN_CENTER | wxALL, 5);
 
     wxButton *cancel = new wxButton(
         this, 
         wxID_CANCEL, 
-        LOCALIZED_SETPENSIZE_CANCEL);
+        WXSTRING(LOCALIZED_SETPENSIZE_CANCEL));
     buttonColumn->Add(cancel, 0, wxALIGN_CENTER | wxALL, 5);
 
     wxButton *apply = new wxButton(
         this, 
         ID_SETPENSIZE_APPLY,
-        LOCALIZED_SETPENSIZE_APPLY);
+        WXSTRING(LOCALIZED_SETPENSIZE_APPLY));
     buttonColumn->Add(apply, 0, wxALIGN_CENTER | wxALL, 5);
 
     topLevelSizer->Add(buttonColumn, 0, wxALIGN_CENTER | wxALL, 5);

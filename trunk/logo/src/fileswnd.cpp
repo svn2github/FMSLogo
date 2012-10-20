@@ -40,11 +40,13 @@ void filesave(const char *FileName)
     {
         // Notify the user that they have an editor open
         // and that changes in the editor will not be saved.
+#ifndef WX_PURE
         MessageBox(
             GetCommanderWindow(),
             LOCALIZED_EDITORISOPEN,
             LOCALIZED_INFORMATION,
             MB_OK | MB_ICONQUESTION);
+#endif
     }
 
     PrintWorkspaceToFileStream(fopen(FileName, "w+"));

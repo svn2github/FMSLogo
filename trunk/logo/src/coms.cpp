@@ -21,6 +21,7 @@
 */
 #include <math.h>
 #include <time.h>
+#include <string.h>
 
 #include "coms.h"
 #include "logocore.h"
@@ -434,11 +435,16 @@ NODE *ltime(NODE *)
 /* LOGO time */
 NODE *ltimemilli(NODE *)
 {
+#ifdef WX_PURE
+    return NIL;
+#else
     return make_intnode((FIXNUM) GetTickCount());
+#endif
 }
 
 NODE *lwait(NODE *args)
 {
+#ifndef WX_PURE
     NODE * num = nonnegative_numeric_arg(args);
     if (NOT_THROWING)
     {
@@ -463,11 +469,15 @@ NODE *lwait(NODE *args)
             }
         }
     }
+#endif
     return Unbound;
 }
 
 NODE *lshell(NODE *args)
 {
+#ifdef WX_PURE
+    bool isOk = false;
+#else
     CStringPrintedNode shellCommand(car(args));
 
     bool waitForChildProcess;
@@ -520,5 +530,6 @@ NODE *lshell(NODE *args)
         CloseHandle(processInfo.hThread);
     }
 
+#endif
     return true_or_false(isOk);
 }

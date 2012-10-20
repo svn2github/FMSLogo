@@ -1,6 +1,9 @@
 // -*- c++ -*-
 #include <map>
+
+#ifndef WX_PURE
 #include <windows.h> // for COLORREF
+#endif // WX_PURE
 
 #include <wx/frame.h>
 #include <wx/print.h>
@@ -152,11 +155,13 @@ private:
 
     void OnClose(wxCloseEvent& Event);
 
+#ifndef WX_PURE
     virtual WXLRESULT MSWWindowProc(
         WXUINT   Message,
         WXWPARAM WParam,
         WXLPARAM LParam
         );
+#endif // WX_PURE
 
     // Private helper functions
     void PostCheckQueueMessage();
@@ -169,6 +174,7 @@ private:
         bool             OpenToError
         );
 
+#ifndef WX_PURE
     void
     SetColorHelper(
         CSetColor * &   SetColorDialog,
@@ -181,6 +187,7 @@ private:
     InitializeOpenFileNameForLogoFiles(
         OPENFILENAME & OpenFileData
         );
+#endif // WX_PURE
 
     bool WarnIfSavingEmptyWorkspace();
     bool FileSave();
@@ -213,9 +220,11 @@ private:
     // m_PageSetupData stores printer preferences across printouts.
     wxPageSetupDialogData m_PageSetupData;
 
+#ifndef WX_PURE
     // TODO: Make these wxString objects
     char m_FileName[MAX_PATH];
     char m_BitmapName[MAX_PATH];
+#endif // WX_PURE
 
     CSetColor * m_SetPenColorDialog;
     CSetColor * m_SetFloodColorDialog;

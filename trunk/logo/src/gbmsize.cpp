@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
+#ifdef WX_PURE
+#define O_BINARY 0
+#endif
+
 #include "gbm.h"
 #include "debugheap.h"
 

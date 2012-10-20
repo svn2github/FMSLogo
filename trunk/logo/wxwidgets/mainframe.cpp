@@ -28,7 +28,14 @@
 #endif
 
 #include <algorithm>
+
+#ifndef WX_PURE
 #include <shlobj.h>
+#endif
+
+#ifdef WX_PURE
+#define MAX_PATH (260)
+#endif
 
 #include "logorc.h" // for WM_*
 #include "guiutils.h"
@@ -69,6 +76,7 @@
 #include "fontutils.h"
 #include "netwind.h"
 #include "questionbox.h"
+#include "stringadapter.h"
 #include "debugheap.h"
 
 // ----------------------------------------------------------------------------
@@ -91,6 +99,9 @@ CMainFrame::CLogoPicturePrintout::OnPrintPage(
     int Page
     )
 {
+#ifdef WX_PURE
+    return false;
+#else
     // Must of rewrote this at least 26 times and it still does not
     // Work in some situations. This is just the "Paint" of printing.
     // See the print module for all the other stuff.
@@ -256,6 +267,7 @@ CMainFrame::CLogoPicturePrintout::OnPrintPage(
     delete screenDeviceContext;
 
     return isOk;
+#endif
 }
 
 void
@@ -378,7 +390,7 @@ CMainFrame::CMainFrame(
     ) : wxFrame(
         NULL, 
         wxID_ANY, 
-        LOCALIZED_GENERAL_PRODUCTNAME,
+        WXSTRING(LOCALIZED_GENERAL_PRODUCTNAME),
         Position,
         Size,
         wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
@@ -395,8 +407,10 @@ CMainFrame::CMainFrame(
       m_SetFloodColorDialog(NULL),
       m_SetScreenColorDialog(NULL)
 {
+#ifndef WX_PURE
     m_FileName[0]   = '\0';
     m_BitmapName[0] = '\0';
+#endif
 
 #if wxUSE_STATUSBAR
     CreateStatusBar(2);
@@ -513,9 +527,11 @@ CMainFrame::CMainFrame(
     // if the default printer is an offline network printer.
     m_PageSetupData.SetDefaultInfo(true);
 
+#ifndef WX_PURE
     // init the pens based on the color
     UpdateNormalPen(GetPenStateForSelectedTurtle().Width, pcolor);
     UpdateErasePen(GetPenStateForSelectedTurtle().Width,  scolor);
+#endif
 
     // it's show time for our little friend
     draw_turtle(true);
@@ -714,14 +730,14 @@ CMainFrame::CreateWorkspaceEditor(
     checkwindow(&x, &y, &w, &h);
 
     // Determine the title
-    const char * editorWindowTitle;
+    wxString editorWindowTitle;
     if (EditArguments != NIL || CheckForErrors)
     {
-        editorWindowTitle = LOCALIZED_EDITOR_TITLE;
+        editorWindowTitle = WXSTRING(LOCALIZED_EDITOR_TITLE);
     }
     else
     {
-        editorWindowTitle = FileName.c_str();
+        editorWindowTitle = FileName;
     }
 
     CWorkspaceEditor * editor = new CWorkspaceEditor(
@@ -743,7 +759,7 @@ CMainFrame::CreateWorkspaceEditor(
 char * CMainFrame::PromptUserForInput(const char *Prompt)
 {
     // prompt the user for input
-    CQuestionBox questionBox(this, Prompt, LOCALIZED_INPUT);
+    CQuestionBox questionBox(this, WXSTRING(Prompt), WXSTRING(LOCALIZED_INPUT));
     int exitCode = questionBox.ShowModal();
     if (exitCode != wxID_OK)
     {
@@ -751,7 +767,7 @@ char * CMainFrame::PromptUserForInput(const char *Prompt)
     }
 
     // Copy the user input to the Output string
-    return strdup(questionBox.GetAnswer().c_str());
+    return strdup(WXSTRING_TO_STRING(questionBox.GetAnswer()));
 }
 
 void
@@ -816,8 +832,8 @@ void CMainFrame::PopupEditorToError(const char *FileName)
     // Prompt the user to decide if they want to
     // open FileName in the editor.
     int rval = wxMessageBox(
-        wxString::Format(LOCALIZED_ERRORINFILEMESSAGE, FileName),
-        LOCALIZED_ERRORINFILETITLE,
+        wxString::Format(WXSTRING(LOCALIZED_ERRORINFILEMESSAGE), FileName),
+        WXSTRING(LOCALIZED_ERRORINFILETITLE),
         wxYES_NO | wxICON_ERROR);
     if (rval != wxYES)
     {
@@ -832,7 +848,7 @@ void CMainFrame::PopupEditorToError(const char *FileName)
     }
 
     CreateWorkspaceEditor(
-        TempPathName, // use the temp file name, in case the user saves changes
+        WXSTRING(TempPathName), // use the temp file, in case the user saves changes
         NIL,
         true,  // check for errors
         true); // open to the error
@@ -846,7 +862,7 @@ CreateTemplateLogoFileForEditor(
     )
 {
     // TODO: Use wxWidgets class for File I/O
-    FILE* logoFile = fopen(FileName.c_str(), "w");
+    FILE* logoFile = fopen(WXSTRING_TO_STRING(FileName), "w");
     if (logoFile != NULL)
     {
         if (EditArguments != NIL)
@@ -877,7 +893,7 @@ CMainFrame::PopupEditorForFile(
 {
     // If no file (or empty) create template
     // TODO: Use a wxWidgets class for the file I/O.
-    FILE * logoFile = fopen(FileName, "r");
+    FILE * logoFile = fopen(WXSTRING_TO_STRING(FileName), "r");
     if (logoFile != NULL)
     {
         // file exists.  check if it's empty.
@@ -1036,8 +1052,8 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
             // user unless there really are changes to save, and so
             // that we prompt for all editors.
             if (wxMessageBox(
-                    LOCALIZED_CHANGESINEDITORMAYBELOST,
-                    LOCALIZED_EDITSESSIONISRUNNING,
+                    WXSTRING(LOCALIZED_CHANGESINEDITORMAYBELOST),
+                    WXSTRING(LOCALIZED_EDITSESSIONISRUNNING),
                     wxOK | wxCANCEL | wxICON_QUESTION) != wxOK)
             {
                 // The user doesn't want to shutdown.
@@ -1067,8 +1083,8 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
             {
                 // we already tried warn user of doom
                 if (wxMessageBox(
-                        LOCALIZED_NOTHALTEDREALLYEXIT,
-                        LOCALIZED_LOGOISNOTHALTED,
+                        WXSTRING(LOCALIZED_NOTHALTEDREALLYEXIT),
+                        WXSTRING(LOCALIZED_LOGOISNOTHALTED),
                         wxOK | wxCANCEL | wxICON_QUESTION) != wxOK)
                 {
                     // The user doesn't want to shutdown.
@@ -1080,8 +1096,8 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
             {
                 // let the user optionally halt first
                 if (wxMessageBox(
-                        LOCALIZED_NOTHALTEDREALLYHALT,
-                        LOCALIZED_LOGOISNOTHALTED,
+                        WXSTRING(LOCALIZED_NOTHALTEDREALLYHALT),
+                        WXSTRING(LOCALIZED_LOGOISNOTHALTED),
                         wxOK | wxCANCEL | wxICON_QUESTION) == wxOK)
                 {
                     m_RealCommander->Halt();
@@ -1184,6 +1200,7 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
     }
 
     // Cleanup the pens
+#ifndef WX_PURE
     // REVISIT: This is where the pens were destroyed in the OWL
     // implementation, but it doesn't seem like the right place
     // for it.
@@ -1198,6 +1215,7 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
         DeleteObject(g_ErasePen);
         g_ErasePen = NULL;
     }
+#endif
 
     // Because the timer events are scheduled on
     // the main window's HWND, we must uninitialize them
@@ -1246,8 +1264,8 @@ void CMainFrame::OnFileNew(wxCommandEvent& WXUNUSED(Event))
         // of the workspace and give them a chance to cancel the
         // operation.
         if (wxMessageBox(
-                LOCALIZED_FILENEWWILLERASEWORKSPACE,
-                LOCALIZED_YOUHAVEUNSAVEDCHANGES,
+                WXSTRING(LOCALIZED_FILENEWWILLERASEWORKSPACE),
+                WXSTRING(LOCALIZED_YOUHAVEUNSAVEDCHANGES),
                 wxOK | wxCANCEL | wxICON_QUESTION,
                 GetTopLevelWindowForCommander()) == wxCANCEL)
         {
@@ -1260,6 +1278,7 @@ void CMainFrame::OnFileNew(wxCommandEvent& WXUNUSED(Event))
     EraseContentsOfWorkspace();
 }
 
+#ifndef WX_PURE
 void
 CMainFrame::InitializeOpenFileNameForLogoFiles(
     OPENFILENAME & OpenFileData
@@ -1288,6 +1307,8 @@ CMainFrame::InitializeOpenFileNameForLogoFiles(
     OpenFileData.lpTemplateName    = NULL;
 }
 
+#endif // WX_PURE
+
 void CMainFrame::OnFileLoad(wxCommandEvent& WXUNUSED(Event))
 {
     if (IsDirty)
@@ -1296,8 +1317,8 @@ void CMainFrame::OnFileLoad(wxCommandEvent& WXUNUSED(Event))
         // of the workspace and give them a chance to cancel the
         // operation.
         if (wxMessageBox(
-                LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE,
-                LOCALIZED_YOUHAVEUNSAVEDCHANGES,
+                WXSTRING(LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE),
+                WXSTRING(LOCALIZED_YOUHAVEUNSAVEDCHANGES),
                 wxOK | wxCANCEL | wxICON_QUESTION,
                 GetTopLevelWindowForCommander()) == wxCANCEL)
         {
@@ -1306,6 +1327,7 @@ void CMainFrame::OnFileLoad(wxCommandEvent& WXUNUSED(Event))
     }
 
     // show the user a file-picker dialog
+#ifndef WX_PURE
     // TODO: switch to use wxFileSelector
     OPENFILENAME openFileName;
     InitializeOpenFileNameForLogoFiles(openFileName);
@@ -1331,6 +1353,7 @@ void CMainFrame::OnFileLoad(wxCommandEvent& WXUNUSED(Event))
 
         stop_execution();
     }
+#endif // WX_PURE
 }
 
 void CMainFrame::OnFileOpen(wxCommandEvent& WXUNUSED(Event))
@@ -1341,8 +1364,8 @@ void CMainFrame::OnFileOpen(wxCommandEvent& WXUNUSED(Event))
         // of the workspace and give them a chance to cancel the
         // operation.
         if (wxMessageBox(
-                LOCALIZED_FILEOPENWILLERASEWORKSPACE,
-                LOCALIZED_YOUHAVEUNSAVEDCHANGES,
+                WXSTRING(LOCALIZED_FILEOPENWILLERASEWORKSPACE),
+                WXSTRING(LOCALIZED_YOUHAVEUNSAVEDCHANGES),
                 wxOK | wxCANCEL | wxICON_QUESTION,
                 GetTopLevelWindowForCommander()) == wxCANCEL)
         {
@@ -1350,6 +1373,7 @@ void CMainFrame::OnFileOpen(wxCommandEvent& WXUNUSED(Event))
         }
     }
 
+#ifndef WX_PURE
     // show the user a file-picker dialog
     OPENFILENAME openFileName;
     InitializeOpenFileNameForLogoFiles(openFileName);
@@ -1379,6 +1403,7 @@ void CMainFrame::OnFileOpen(wxCommandEvent& WXUNUSED(Event))
 
         stop_execution();
     }
+#endif
 }
 
 // Displays a warning if the workspace is empty
@@ -1393,6 +1418,7 @@ bool CMainFrame::WarnIfSavingEmptyWorkspace()
     // isn't buried (which would be saved).
     if (!something_is_unburied())
     {
+#ifndef WX_PURE
         // TODO: use wxMessageBox if it supports default buttons
         if (MessageBox(
                 static_cast<HWND>(GetHandle()),
@@ -1402,6 +1428,7 @@ bool CMainFrame::WarnIfSavingEmptyWorkspace()
         {
             return false;
         }
+#endif
     }
 
     return true;
@@ -1415,6 +1442,9 @@ bool CMainFrame::WarnIfSavingEmptyWorkspace()
 // file couldn't be saved for other reasons.
 bool CMainFrame::SaveFileAs()
 {
+#ifdef WX_PURE
+    return false;
+#else
     // if new the nulify File name
     if (m_IsNewFile)
     {
@@ -1438,11 +1468,14 @@ bool CMainFrame::SaveFileAs()
     }
 
     return isOk;
+#endif
 }
 
 bool CMainFrame::SaveFile()
 {
+#ifndef WX_PURE
     filesave(m_FileName);
+#endif
 
     // handle any error that may have occured
     process_special_conditions();
@@ -1492,6 +1525,8 @@ void CMainFrame::OnFileSaveAs(wxCommandEvent& WXUNUSED(Event))
     SaveFileAs();
 }
 
+#ifndef WX_PURE
+
 // Gets the full path to where the FMSLogo screensaver
 // should be located (if it's installed).
 static
@@ -1526,9 +1561,15 @@ GetScreenSaverFilePath(
     return true;
 }
 
+#endif
+
+
 static
 bool ScreenSaverIsInstalled()
 {
+#ifdef WX_PURE
+    return false;
+#else
     char screenSaverPath[MAX_PATH];
 
     if (!GetScreenSaverFilePath(screenSaverPath, ARRAYSIZE(screenSaverPath)))
@@ -1547,6 +1588,7 @@ bool ScreenSaverIsInstalled()
 
     // The screen saver exists.
     return true;
+#endif // WX_PURE
 }
 
 void CMainFrame::OnUpdateFileSetAsScreenSaver(wxUpdateUIEvent& Event)
@@ -1601,7 +1643,7 @@ void CMainFrame::OnFileSetAsScreenSaver(wxCommandEvent& WXUNUSED(Event))
             "%s \"%s [%s]",
             LOCALIZED_ALTERNATE_MAKE,
             LOCALIZED_ALTERNATE_STARTUP,
-            dialog.GetSelectedInstruction().c_str());
+            WXSTRING_TO_STRING(dialog.GetSelectedInstruction()));
         if ((int)ARRAYSIZE(makeInstruction) <= formattedStringLength)
         {
             // More than the fixed buffer size was needed
@@ -1615,7 +1657,7 @@ void CMainFrame::OnFileSetAsScreenSaver(wxCommandEvent& WXUNUSED(Event))
         }
     }
 
-
+#ifdef __WXMSW__
     LPITEMIDLIST itemIdList;
 
     // Get a handle to a folder where we can store personal documents.
@@ -1681,6 +1723,8 @@ void CMainFrame::OnFileSetAsScreenSaver(wxCommandEvent& WXUNUSED(Event))
         }
         CoTaskMemFree(itemIdList);
     }
+#endif
+
 }
 
 void CMainFrame::OnEditProcedure(wxCommandEvent& WXUNUSED(Event))
@@ -1697,6 +1741,7 @@ void CMainFrame::OnEraseProcedure(wxCommandEvent& WXUNUSED(Event))
 
 void CMainFrame::OnBitmapNew(wxCommandEvent& WXUNUSED(Event))
 {
+#ifndef WX_PURE
     // Reset the on-screen bitmap.
     HBRUSH brush = ::CreateBrushIndirect(&ScreenBrush);
     if (brush != NULL)
@@ -1712,6 +1757,7 @@ void CMainFrame::OnBitmapNew(wxCommandEvent& WXUNUSED(Event))
 
         ::DeleteObject(brush);
     }
+#endif
 
     // Refresh the screen window so that it will repainted
     // to match the memory device context.
@@ -1723,6 +1769,7 @@ void CMainFrame::OnBitmapNew(wxCommandEvent& WXUNUSED(Event))
 
 void CMainFrame::OnBitmapOpen(wxCommandEvent& WXUNUSED(Event))
 {
+#ifndef WX_PURE
     OPENFILENAME openFileName;
     ZeroMemory(&openFileName, sizeof openFileName);
     openFileName.lStructSize       = sizeof openFileName;
@@ -1771,10 +1818,12 @@ void CMainFrame::OnBitmapOpen(wxCommandEvent& WXUNUSED(Event))
             ShowErrorMessage(status);
         }
     }
+#endif // WX_PURE
 }
 
 void CMainFrame::SaveBitmap()
 {
+#ifndef WX_PURE
     ERR_TYPES status;
 
     char ext[_MAX_EXT];
@@ -1792,10 +1841,12 @@ void CMainFrame::SaveBitmap()
     {
         ShowErrorMessage(status);
     }
+#endif // WX_PURE
 }
 
 void CMainFrame::SaveBitmapAs()
 {
+#ifndef WX_PURE
     // if new then nulify File name
     if (m_IsNewBitmap)
     {
@@ -1832,6 +1883,7 @@ void CMainFrame::SaveBitmapAs()
         m_IsNewBitmap = false;
         SaveBitmap();
     }
+#endif // WX_PURE
 }
 
 void CMainFrame::OnBitmapSave(wxCommandEvent& WXUNUSED(Event))
@@ -1889,7 +1941,7 @@ void CMainFrame::OnBitmapPrint(wxCommandEvent& WXUNUSED(Event))
     printDialogData.EnablePageNumbers(false);
 
     CLogoPicturePrintout printout(
-        LOCALIZED_GENERAL_PRODUCTNAME,
+        WXSTRING(LOCALIZED_GENERAL_PRODUCTNAME),
         *m_Screen,
         m_PageSetupData);
 
@@ -1944,6 +1996,8 @@ void CMainFrame::OnSetPenSize(wxCommandEvent& WXUNUSED(Event))
     }
 }
 
+#ifndef WX_PURE
+
 void
 CMainFrame::SetColorHelper(
     CSetColor * &   SetColorDialog,
@@ -1974,31 +2028,39 @@ CMainFrame::SetColorHelper(
     }
 }
 
+#endif
+
 void CMainFrame::OnSetPenColor(wxCommandEvent& WXUNUSED(Event))
 {
+#ifndef WX_PURE
     SetColorHelper(
         m_SetPenColorDialog,
         LOCALIZED_SETCOLOR_PENCOLOR,
         pcolor,
         LOCALIZED_ALTERNATE_SETPENCOLOR);
+#endif
 }
 
 void CMainFrame::OnSetFloodColor(wxCommandEvent& WXUNUSED(Event))
 {
+#ifndef WX_PURE
     SetColorHelper(
         m_SetFloodColorDialog,
         LOCALIZED_SETCOLOR_FLOODCOLOR,
         fcolor,
         LOCALIZED_ALTERNATE_SETFLOODCOLOR);
+#endif
 }
 
 void CMainFrame::OnSetScreenColor(wxCommandEvent& WXUNUSED(Event))
 {
+#ifndef WX_PURE
     SetColorHelper(
         m_SetScreenColorDialog,
         LOCALIZED_SETCOLOR_SCREENCOLOR,
         scolor,
         LOCALIZED_ALTERNATE_SETSCREENCOLOR);
+#endif
 }
 
 void CMainFrame::ShowStatus()
@@ -2055,7 +2117,9 @@ void CMainFrame::OnSetActiveArea(wxCommandEvent& WXUNUSED(Event))
             if (xLow >= xHigh || yLow >= yHigh)
             {
                 // The settings are no good.  Notify the user and try again.
-                wxMessageBox(LOCALIZED_ERROR_BADINPUT, LOCALIZED_ACTIVEAREA);
+                wxMessageBox(
+                    WXSTRING(LOCALIZED_ERROR_BADINPUT),
+                    WXSTRING(LOCALIZED_ACTIVEAREA));
                 isOk = false;
             }
             else
@@ -2148,7 +2212,7 @@ void CMainFrame::OnSetCommanderFont(wxCommandEvent& WXUNUSED(Event))
 #if wxUSE_STATUSBAR
     // TODO: Delete this.  It's just a reminder on how to write
     // to the status bar.
-    SetStatusText("New font chosen", 1);
+    SetStatusText(WXSTRING("New font chosen"), 1);
 #endif // wxUSE_STATUSBAR
 }
 
@@ -2169,7 +2233,7 @@ void CMainFrame::OnZoomNormal(wxCommandEvent& WXUNUSED(Event))
 #if wxUSE_STATUSBAR
     // TODO: Delete this.  It's just a reminder on how to write
     // to the status bar.
-    wxLogStatus(this, "Zoom is now %f", the_zoom);
+    wxLogStatus(this, WXSTRING("Zoom is now %f"), the_zoom);
 #endif
 }
 
@@ -2208,6 +2272,7 @@ CMainFrame::OpenFileWithDefaultApplication(
     const char *  FileName
     )
 {
+#ifndef WX_PURE
     HINSTANCE childApplication = ShellExecute(
         static_cast<HWND>(GetHandle()), // handle to parent window
         "open",                         // operation to perform
@@ -2219,6 +2284,7 @@ CMainFrame::OpenFileWithDefaultApplication(
     {
         CloseHandle(childApplication);
     }
+#endif
 }
 
 void CMainFrame::OnHelpExamples(wxCommandEvent& WXUNUSED(Event))
@@ -2254,12 +2320,16 @@ void CMainFrame::OnAboutMultipleSclerosis(wxCommandEvent& WXUNUSED(Event))
 void
 CMainFrame::PostCheckQueueMessage()
 {
+#ifndef WX_PURE
     PostMessage(
         static_cast<HWND>(GetHandle()),
         WM_CHECKQUEUE,
         0,
         0);
+#endif
 }
+
+#ifndef WX_PURE
 
 WXLRESULT
 CMainFrame::MSWWindowProc(
@@ -2327,3 +2397,5 @@ CMainFrame::MSWWindowProc(
 
     return wxFrame::MSWWindowProc(Message, WParam, LParam);
 }
+
+#endif // WX_PURE

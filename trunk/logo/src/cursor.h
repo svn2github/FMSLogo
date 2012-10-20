@@ -19,13 +19,17 @@
 #ifndef __CURSOR_H_
 #define __CURSOR_H_
 
-#include <windows.h>
-
 struct NODE;
+
+#ifndef WX_PURE
+
+#include <windows.h>
 
 // global variable declarations
 extern HCURSOR hCursorWait;
 extern HCURSOR hCursorArrow;
+
+#endif // WX_PURE
 
 // function declarations
 extern void init_cursors();

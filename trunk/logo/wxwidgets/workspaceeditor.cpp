@@ -25,6 +25,7 @@
 #include "main.h"         // for putcombobox
 #include "graphwin.h"     // for do_help
 #include "helputils.h"    // for ContextHelp
+#include "stringadapter.h"
 
 enum
 {
@@ -326,9 +327,8 @@ bool CWorkspaceEditor::Save()
     return Write();
 }
 
-// A helper routine for selecting a file to read from or
-// write to.
-const wxChar *
+// A helper routine for selecting a file to read from or write to.
+const wxString
 CWorkspaceEditor::SelectFile(
     const wxString & GivenFileName
     ) const
@@ -336,18 +336,12 @@ CWorkspaceEditor::SelectFile(
     if (!GivenFileName.IsEmpty())
     {
         // We were given a file name, so use it.
-        return GivenFileName.c_str();
+        return GivenFileName;
     }
 
     // The caller didn't supply a file name, so use the
     // file name that was supplied in the constructor.
-    if (m_FileName.IsEmpty())
-    {
-        // No file name was ever given.
-        return NULL;
-    }
-
-    return m_FileName.c_str();
+    return m_FileName;
 }
 
 //
@@ -357,9 +351,9 @@ void CWorkspaceEditor::SetFileName(const wxString & NewFileName)
 {
     m_FileName = NewFileName;
 
-    const wxChar * newTitle = m_FileName.IsEmpty() ?
-        "("LOCALIZED_UNTITLED")" :
-        m_FileName.c_str();
+    const wxString newTitle = m_FileName.IsEmpty() ?
+        WXSTRING("("LOCALIZED_UNTITLED")") :
+        m_FileName;
 
     const wxString & currentTitle = GetName();
     if (currentTitle.IsEmpty())
@@ -369,7 +363,7 @@ void CWorkspaceEditor::SetFileName(const wxString & NewFileName)
     }
     else
     {
-        SetName(currentTitle + " - " + newTitle);
+        SetName(currentTitle + WXSTRING(" - ") + newTitle);
     }
 }
 
@@ -379,8 +373,8 @@ void CWorkspaceEditor::SetFileName(const wxString & NewFileName)
 //
 bool CWorkspaceEditor::Read(const wxString & FileName)
 {
-    const wxChar * fileName = SelectFile(FileName);
-    if (fileName == NULL)
+    const wxString & fileName = SelectFile(FileName);
+    if (fileName.IsEmpty())
     {
         // No file name was given.
         return false;
@@ -394,7 +388,7 @@ bool CWorkspaceEditor::Read(const wxString & FileName)
 
     // TODO: use a wxWidgets class for I/O instead of the C runtime
     bool success = false;
-    FILE * file = fopen(fileName, "rb");
+    FILE * file = fopen(WXSTRING_TO_STRING(fileName), "rb");
     if (file != NULL)
     {
         // read the entire file in 1 KB blocks
@@ -428,12 +422,12 @@ bool CWorkspaceEditor::Read(const wxString & FileName)
         // Something when wrong when trying to open the file.
         // Report the error to the user.
         const wxString & errorMessage = wxString::Format(
-            LOCALIZED_ERROR_CANTREADFILE,
-            fileName);
+            WXSTRING(LOCALIZED_ERROR_CANTREADFILE),
+            WXSTRING_TO_STRING(fileName));
 
         wxMessageBox(
             errorMessage,
-            LOCALIZED_GENERAL_PRODUCTNAME,
+            WXSTRING(LOCALIZED_GENERAL_PRODUCTNAME),
             wxICON_EXCLAMATION | wxOK);
     }
 
@@ -448,26 +442,26 @@ CWorkspaceEditor::Write(
     const wxString & FileName
     )
 {
-    const wxChar * fileName = SelectFile(FileName);
-    if (fileName == NULL)
+    const wxString & fileName = SelectFile(FileName);
+    if (fileName.IsEmpty())
     {
         // No file name was given.
         return false;
     }
 
     // TODO: Use wxWidgets file I/O instead of the C runtime.
-    FILE* file = fopen(fileName, "wb");
+    FILE* file = fopen(WXSTRING_TO_STRING(fileName), "wb");
     if (file == NULL) 
     {
         // Something when wrong when trying to open the file.
         // Report the error to the user.
         const wxString & errorMessage = wxString::Format(
-            LOCALIZED_ERROR_CANTWRITEFILE,
-            fileName);
+            WXSTRING(LOCALIZED_ERROR_CANTWRITEFILE),
+            WXSTRING_TO_STRING(fileName));
 
         wxMessageBox(
             errorMessage,
-            LOCALIZED_GENERAL_PRODUCTNAME,
+            WXSTRING(LOCALIZED_GENERAL_PRODUCTNAME),
             wxICON_EXCLAMATION | wxOK);
 
         return false;
@@ -523,8 +517,8 @@ bool CWorkspaceEditor::CanClose()
     {
         // if changed better ask user
         int result = wxMessageBox(
-            LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE,
-            LOCALIZED_CONTENTSCHANGED,
+            WXSTRING(LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE),
+            WXSTRING(LOCALIZED_CONTENTSCHANGED),
             wxYES_NO | wxCANCEL | wxICON_QUESTION);
         switch (result)
         {
@@ -583,8 +577,8 @@ void CWorkspaceEditor::OnSaveToWorkspace(wxCommandEvent& Event)
             // 2) The cursor is positioned just after the last
             //    successful definition
             ::wxMessageBox(
-                LOCALIZED_CURSORISATLASTGOODDEFINITION,
-                LOCALIZED_EDITFAILEDTOLOAD,
+                WXSTRING(LOCALIZED_CURSORISATLASTGOODDEFINITION),
+                WXSTRING(LOCALIZED_EDITFAILEDTOLOAD),
                 wxOK | wxICON_ERROR,
                 CFmsLogo::GetMainFrame()->GetCommander());
 
@@ -699,7 +693,7 @@ void CWorkspaceEditor::OnFind(wxCommandEvent& WXUNUSED(Event))
         m_FindReplaceDialog = new wxFindReplaceDialog(
             this,
             &m_FindReplaceData,
-            LOCALIZED_EDITOR_TITLE_FIND);
+            WXSTRING(LOCALIZED_EDITOR_TITLE_FIND));
 
         m_FindReplaceDialog->Show();
     }
@@ -722,7 +716,7 @@ void CWorkspaceEditor::OnReplace(wxCommandEvent& WXUNUSED(Event))
         m_FindReplaceDialog = new wxFindReplaceDialog(
             this,
             &m_FindReplaceData,
-            LOCALIZED_EDITOR_TITLE_REPLACE,
+            WXSTRING(LOCALIZED_EDITOR_TITLE_REPLACE),
             wxFR_REPLACEDIALOG);
 
         m_FindReplaceDialog->Show();
@@ -923,10 +917,11 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
             //
             // Ask if they want to reedit.
             if (::wxMessageBox(
-                    LOCALIZED_CURSORISATLASTGOODDEFINITION"\n"
+                    WXSTRING(
+                        LOCALIZED_CURSORISATLASTGOODDEFINITION"\n"
                         "\n"
-                        LOCALIZED_RETURNTOEDIT,
-                    LOCALIZED_EDITFAILEDTOLOAD,
+                        LOCALIZED_RETURNTOEDIT),
+                    WXSTRING(LOCALIZED_EDITFAILEDTOLOAD),
                     wxYES_NO | wxICON_ERROR,
                     commander) == wxYES)
             {
@@ -934,7 +929,7 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
 
                 // Give the new editor our reference on m_EditArguments
                 CFmsLogo::GetMainFrame()->PopupEditor(
-                    TempPathName,
+                    WXSTRING(TempPathName),
                     m_EditArguments,
                     m_CheckForErrors,
                     true); // open the editor to the error

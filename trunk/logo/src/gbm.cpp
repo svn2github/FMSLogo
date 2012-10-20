@@ -11,7 +11,7 @@ gbm.c - Generalised Bitmap Module
 #include <stdlib.h>
 #include <string.h>
 #include <memory.h>
-#ifdef AIX
+#ifdef WX_PURE
 #include <unistd.h>
 #else
 #include <io.h>

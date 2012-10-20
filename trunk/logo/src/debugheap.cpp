@@ -449,7 +449,9 @@ void * debug_malloc(size_t blocksize)
     if (g_break_alloc_id == g_nextid)
     {
         // The user has requested that we break on this allocation.
+#ifndef WX_PURE
         DebugBreak();
+#endif
     }
 
     // cast the data to the block header
@@ -518,8 +520,10 @@ void debug_free(void * userptr)
     }
     else
     {
+#ifndef WX_PURE
         // calling free in invalid memory
         DebugBreak();
+#endif
     }
 }
 

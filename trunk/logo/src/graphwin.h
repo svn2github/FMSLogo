@@ -22,9 +22,9 @@
 #include "logocore.h"
 #include "graphics.h"
 
+#ifndef WX_PURE
+
 // global variable declarations
-extern Color dfld;
-extern Color dscn;
 extern RECT FullRect;
 
 extern LOGFONT FontRec;
@@ -42,6 +42,8 @@ extern bool EnablePalette;
 extern HPALETTE OldPalette;
 extern HPALETTE ThePalette;
 
+#endif // WX_PURE
+
 extern int xoffset;
 extern int yoffset;
 
@@ -52,6 +54,8 @@ extern bool IsTimeToExit;
 extern bool IsTimeToPause;
 extern bool IsTimeToHalt;
 
+#ifndef WX_PURE
+
 extern HBITMAP MemoryBitMap;
 
 extern PLOGPALETTE MyLogPalette;
@@ -59,6 +63,9 @@ extern PLOGPALETTE MyLogPalette;
 extern COLORREF scolor;
 extern COLORREF fcolor;
 extern COLORREF pcolor;
+
+#endif // WX_PURE
+
 extern bool zoom_flag;
 
 extern FLONUM the_zoom;
@@ -84,10 +91,12 @@ extern NODE *lsetfocus(NODE *args);
 extern NODE *lgetfocus(NODE *arg);
 extern NODE *lwindowset(NODE *args);
 extern void logofill(bool bOld);
+#ifndef WX_PURE
 extern SIZE labelsize(const char *s);
 extern void label(const char *s);
 extern void UpdateErasePen(int Width, COLORREF Color);
 extern void UpdateNormalPen(int Width, COLORREF Color);
+#endif // WX_PURE
 extern void init_penstate();
 extern void init_bitmaps();
 extern void uninit_bitmaps();
@@ -102,8 +111,13 @@ extern void set_pen_width(int w);
 extern int get_pen_height(void);
 extern void set_pen_height(int h);
 extern void GetWorkingAreaDimensions(int & workingAreaWidth, int & workingAreaHeight);
+
+#ifndef WX_PURE
 extern COLORREF LoadColor(int dpenr, int dpeng, int dpenb);
+#endif // WX_PURE
+
 extern struct PENSTATE & GetPenStateForSelectedTurtle();
+
 extern void exit_program(void);
 extern void MyMessageScan(void);
 

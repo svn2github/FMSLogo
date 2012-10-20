@@ -20,10 +20,19 @@
  *
  */
 
+#include <algorithm>
+#include <string.h>
 #include <math.h>
 #include <float.h>
 #include <limits.h>
+
+#ifdef WX_PURE
+struct LOGPEN;
+typedef struct __PEN * HPEN;
+typedef struct __DC  * HDC;
+#else
 #include <windows.h>
+#endif
 
 #ifdef __GNUC__
 #define _finite(D) isfinite(D)
@@ -66,6 +75,7 @@
 #define turtle_bottom_max (-BitMapHeight/2)
 #define turtle_top_max    ( BitMapHeight/2)
 
+#ifndef WX_PURE
 COLORREF colortable[16] =
 {
     0x00000000, // black
@@ -85,7 +95,7 @@ COLORREF colortable[16] =
     0x0000A3FF, // orange
     0x00B7B7B7, // grey
 };
-
+#endif // WX_PURE
 
 mode_type current_mode = wrapmode;
 
@@ -116,6 +126,7 @@ static bool out_of_bounds = false;
 
 #define sq(z) ((z)*(z))
 
+#ifndef WX_PURE
 
 struct NAMEDCOLOR
 {
@@ -275,6 +286,8 @@ static const NAMEDCOLOR g_NamedColors[] =
     {"YellowGreen",           LOCALIZED_COLOR_YELLOWGREEN,           0x0032CD9A},
 };
 
+#endif
+
 bool bIndexMode = false;
 
 bool        bPolyFlag  = false;
@@ -421,7 +434,9 @@ void InitializeTurtle(Turtle * TurtleToInitialize)
 
     TurtleToInitialize->Heading    = 0.0;
 
+#ifndef WX_PURE
     TurtleToInitialize->BitmapRasterMode = 0;
+#endif
 
     TurtleToInitialize->IsShown    = true;
     TurtleToInitialize->IsPenUp    = false;
@@ -448,10 +463,12 @@ void InitializeTurtle(Turtle * TurtleToInitialize)
     TurtleToInitialize->Matrix.e32 = 0.0;
     TurtleToInitialize->Matrix.e33 = 1.0;
 
+#ifndef WX_PURE
     TurtleToInitialize->Points[0].bValid = false;
     TurtleToInitialize->Points[1].bValid = false;
     TurtleToInitialize->Points[2].bValid = false;
     TurtleToInitialize->Points[3].bValid = false;
+#endif
 }
 
 void draw_turtles(bool draw)
@@ -473,7 +490,7 @@ void draw_turtle(bool draw)
     if (g_SelectedTurtle->IsSpecial)
     {
         // either the eye, the eye fixation, or the light turtle is selected
-
+#ifndef WX_PURE
         ThreeD.SetFrom();
         ThreeD.SetAt();
         ThreeD.SetUp();
@@ -481,6 +498,7 @@ void draw_turtle(bool draw)
         ThreeD.SetEye();
         ThreeD.SetLight();
         // if (ThreeD.Tree) ThreeD.View();
+#endif
 
         // special turtles are never drawn
         return;
@@ -512,6 +530,7 @@ transline_helper(
     ToX   =  ToX   + xoffset;
     ToY   = -ToY   + yoffset;
 
+#ifndef WX_PURE
     HDC MemDC = GetMemoryDeviceContext();
 
     if (EnablePalette)
@@ -637,6 +656,7 @@ transline_helper(
         // restore the previous pen
         SelectObject(ScreenDC, oldPen);
     }
+#endif
 }
 
 
@@ -650,6 +670,7 @@ transline3d(
     const Point & to
     )
 {
+#ifndef WX_PURE
     // First, project the point from world coordinates to
     // window coordinates.
     VECTOR from3d;
@@ -691,6 +712,7 @@ transline3d(
         from2d.y,
         to2d.x,
         to2d.y);
+#endif
 }
 
 static
@@ -732,6 +754,7 @@ void move_to_3d(FLONUM x, FLONUM y, FLONUM z)
 static
 void line_to(FLONUM x, FLONUM y)
 {
+#ifndef WX_PURE
     if (g_SelectedTurtle->IsSpecial)
     {
         // special turtles don't draw lines when they move
@@ -779,11 +802,13 @@ void line_to(FLONUM x, FLONUM y)
             g_OldPos,
             toPoint);
     }
+#endif // WX_PURE
 }
 
 static
 void line_to_3d(const Point & ToPoint)
 {
+#ifndef WX_PURE
     if (g_SelectedTurtle->IsSpecial)
     {
         // special turtles don't draw lines when they move
@@ -827,6 +852,7 @@ void line_to_3d(const Point & ToPoint)
             g_OldPos,
             ToPoint);
     }
+#endif
 }
 
 
@@ -1248,7 +1274,7 @@ NODE *lellipsearc(NODE *arg)
         FLONUM tz = g_SelectedTurtle->Position.z;
 
         // calculate resolution parameters
-        FLONUM flt_count = fabs(angle * max(radius_x, radius_y) / 200.0);
+        FLONUM flt_count = fabs(angle * std::max(radius_x, radius_y) / 200.0);
         FIXNUM count;
         if (flt_count < 1.0)
         {
@@ -1606,6 +1632,7 @@ NODE *lback(NODE *arg)
 
 NODE *lbitmapturtle(NODE * arg)
 {
+#ifndef WX_PURE
     bool rotatingBitmap = false;
     if (arg != NULL)
     {
@@ -1621,15 +1648,18 @@ NODE *lbitmapturtle(NODE * arg)
     g_SelectedTurtle->BitmapRasterMode = SRCCOPY;
     g_SelectedTurtle->IsSprite         = rotatingBitmap;
     draw_turtle(true);
+#endif
     return Unbound;
 }
 
 NODE *lnobitmapturtle(NODE *)
 {
+#ifndef WX_PURE
     draw_turtle(false);
     g_SelectedTurtle->BitmapRasterMode = 0;
     g_SelectedTurtle->IsSprite         = false;
     draw_turtle(true);
+#endif
     return Unbound;
 }
 
@@ -1729,6 +1759,8 @@ NODE *lsetpitch(NODE *arg)
 
 NODE *lsetclip(NODE *args)
 {
+
+#ifndef WX_PURE
     FLONUM angle = float_arg(args);
     FLONUM zmin = float_arg(cdr(args));
     FLONUM zmax = float_arg(cdr(cdr(args)));
@@ -1736,11 +1768,11 @@ NODE *lsetclip(NODE *args)
     if (NOT_THROWING)
     {
         draw_turtle(false);
-
         ThreeD.SetClip(angle, zmin, zmax);
-
         draw_turtle(true);
     }
+#endif
+
     return Unbound;
 }
 
@@ -2159,9 +2191,11 @@ static
 void cs_helper(bool centerp, bool clearp)
 {
     bPolyFlag = false;
+#ifndef WX_PURE
     ThreeD.DisposeVertices(ThePolygon);
     ThePolygon = NULL;
     ThreeD.DisposeTree();
+#endif
     update_status_vectors();
 
     if (clearp) 
@@ -2315,6 +2349,7 @@ NODE *lwindow(NODE *)
 
 NODE *lsetlight(NODE *args)
 {
+#ifndef WX_PURE
     NODE * arg = vector_arg(args);
     if (NOT_THROWING)
     {
@@ -2328,21 +2363,26 @@ NODE *lsetlight(NODE *args)
         {
             ThreeD.View();
         }
-    }
 
+    }
+#endif
     return Unbound;
 }
 
 NODE *llight(NODE *)
 {
+#ifdef WX_PURE
+    return NIL;
+#else
     return cons_list(
         make_floatnode(ThreeD.m_Ambient),
         make_floatnode(ThreeD.m_Diffuse));
+#endif
 }
 
 NODE *lpolystart(NODE *)
 {
-
+#ifndef WX_PURE
     if (bPolyFlag)
     {
         bPolyFlag = false;
@@ -2356,23 +2396,25 @@ NODE *lpolystart(NODE *)
     {
         bPolyFlag = true;
     }
+#endif
 
     return Unbound;
 }
 
 NODE *lpolyview(NODE *)
 {
+#ifndef WX_PURE
     if (ThreeD.m_Tree) 
     {
         ThreeD.View();
     }
-
+#endif
     return Unbound;
 }
 
 NODE *lpolyend(NODE *)
 {
-
+#ifndef WX_PURE
     if (bPolyFlag)
     {
         if (ThePolygon && 
@@ -2402,7 +2444,7 @@ NODE *lpolyend(NODE *)
 
     ThePolygon = NULL;
     bPolyFlag = false;
-
+#endif
     return Unbound;
 }
 
@@ -2456,6 +2498,7 @@ NODE *lperspective(NODE *)
     g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Matrix.e32 = 0.0;
     g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Matrix.e33 = 1.0;
 
+#ifndef WX_PURE
     ThreeD.SetLight();
     ThreeD.SetFrom();
     ThreeD.SetAt();
@@ -2467,6 +2510,7 @@ NODE *lperspective(NODE *)
     {
         ThreeD.View();
     }
+#endif
 
     draw_turtle(true);
     return Unbound;
@@ -2474,6 +2518,7 @@ NODE *lperspective(NODE *)
 
 NODE *lfill(NODE *arg)
 {
+#ifndef WX_PURE
     bool bOld;
     if (arg != NIL)
     {
@@ -2493,11 +2538,13 @@ NODE *lfill(NODE *arg)
     ::InvalidateRect(screen, NULL, FALSE);
     ::UpdateWindow(screen);
     draw_turtles(true);
+#endif
     return Unbound;
 }
 
 NODE *llabelsize(NODE *arg)
 {
+#ifndef WX_PURE
     CStringPrintedNode textbuf(car(arg), CStringPrintedNode::WithPrintLimits);
 
     if (NOT_THROWING)
@@ -2507,11 +2554,13 @@ NODE *llabelsize(NODE *arg)
             make_intnode((FIXNUM) size.cx),
             make_intnode((FIXNUM) size.cy));
     }
+#endif
     return Unbound;
 }
 
 NODE *llabel(NODE *arg)
 {
+#ifndef WX_PURE
     // print the node as a string
     CStringPrintedNode textbuf(car(arg), CStringPrintedNode::WithPrintLimits);
 
@@ -2521,6 +2570,7 @@ NODE *llabel(NODE *arg)
         label(textbuf);
         draw_turtle(true);
     }
+#endif
     return Unbound;
 }
 
@@ -2676,6 +2726,7 @@ GetColorComponent(
     return colorComponent;
 }
 
+#ifndef WX_PURE
 COLORREF
 GetColorArgument(
     NODE* args
@@ -2816,21 +2867,33 @@ setcolor_helper(
 
     return Unbound;
 }
-
+#endif
 
 NODE *lsetpencolor(NODE *args)
 {
+#ifdef WX_PURE
+    return NIL;
+#else
     return setcolor_helper(args, ChangeActivePenColor);
+#endif
 }
 
 NODE *lsetfloodcolor(NODE *args)
 {
+#ifdef WX_PURE
+    return NIL;
+#else
     return setcolor_helper(args, ChangeActiveFloodColor);
+#endif
 }
 
 NODE *lsetscreencolor(NODE *args)
 {
+#ifdef WX_PURE
+    return NIL;
+#else
     return setcolor_helper(args, ChangeActiveScreenColor);
+#endif
 }
 
 NODE *lsetpensize(NODE *args)

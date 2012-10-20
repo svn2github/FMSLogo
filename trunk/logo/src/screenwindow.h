@@ -18,9 +18,13 @@
 #ifndef __SCREENWINDOW_H_
 #define __SCREENWINDOW_H_
 
+#ifndef WX_PURE
 #include <windows.h>
+#endif // WX_PURE
+
 #include "logodata.h"
 
+#ifndef WX_PURE
 HWND GetScreenWindow();
 HWND GetMainWindow();
 HWND GetEditorWindow();
@@ -29,6 +33,8 @@ HWND GetParentWindowForDialog();
 UINT GetScreenHorizontalScrollPosition();
 UINT GetScreenVerticalScrollPosition();
 void SetScreenScrollPosition(UINT x, UINT y);
+#endif
+
 bool IsEditorOpen();
 
 // This is called when FMSLogo attempts to load a file, such
@@ -36,8 +42,10 @@ bool IsEditorOpen();
 // is encountered while evaluating the contents.
 void OpenEditorToLocationOfFirstError(const char *FileName);
 
+#ifndef WX_PURE
 HDC GetScreenDeviceContext();
 HDC GetMemoryDeviceContext();
+#endif
 
 void OpenStatusWindow();
 void CloseStatusWindow();

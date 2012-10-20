@@ -66,8 +66,10 @@ CScreen::CScreen(
         // TODO: report an error
     }
 
+#ifndef WX_PURE
     // Get a pointer to the native in-memory image of the screen
     MemoryBitMap = static_cast<HBITMAP>(m_MemoryBitmap->GetHBITMAP());
+#endif
 
     // clear the bitmap to all white
     SetBackgroundColour(*wxWHITE);
@@ -80,7 +82,9 @@ CScreen::~CScreen()
     if (m_MemoryDeviceContext)
     {
         m_MemoryDeviceContext->SelectObject(wxNullBitmap);
+#ifndef WX_PURE
         MemoryBitMap = NULL;
+#endif
     }
 
     delete m_ScreenDeviceContext;
@@ -152,6 +156,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
     wxPaintDC paintContext(this);
     PrepareDC(paintContext);
 
+#ifndef WX_PURE
     // This is a compromise between speed and memory (as is most code).
     // All drawing is written to the backing store 1 to 1 even when zoomed.
     // When zoomed all drawing and painting is scaled to the display on the fly.
@@ -387,6 +392,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
             }
         }
     }
+#endif // WX_PURE
 }
 
 wxClientDC & CScreen::GetScreenDeviceContext()
@@ -455,6 +461,7 @@ WxKeyCodeToVirtualKeyCode(
         wxKeyCode WxKeyCode;
     } specialKeys[] =
     {
+#ifndef WX_PURE
         {VK_CANCEL,        WXK_CANCEL},
         {VK_BACK,          WXK_BACK},
         {VK_TAB,           WXK_TAB},
@@ -550,6 +557,7 @@ WxKeyCodeToVirtualKeyCode(
 
         {VK_DELETE,        WXK_DELETE},
         {VK_DELETE,        WXK_NUMPAD_DELETE},
+#endif
     };
 
     // check the table first

@@ -20,6 +20,8 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "logodata.h"
 #include "main.h"
@@ -59,7 +61,9 @@ void trace_node_change(struct NODE * Node)
 {
     if (Node != NULL && Node == tracked_node)
     {
+#ifndef WX_PURE
         DebugBreak();
+#endif
     }
 }
 

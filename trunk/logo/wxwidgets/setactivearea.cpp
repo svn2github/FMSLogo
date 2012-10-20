@@ -10,6 +10,7 @@
 
 #include "main.h"
 #include "localizedstrings.h"
+#include "stringadapter.h"
 
 // ----------------------------------------------------------------------------
 // CSetActiveArea::CSmallIntegerCtrl
@@ -22,7 +23,7 @@ CSetActiveArea::CSmallIntegerCtrl::CSmallIntegerCtrl(
     ) : wxTextCtrl(
         Parent,
         Id,
-        wxString::Format("%d", InitialValue),
+        wxString::Format(WXSTRING("%d"), InitialValue),
         Position)
 {
     // keep this input small--it should only hold 3-4 characters
@@ -43,7 +44,7 @@ int CSetActiveArea::CSmallIntegerCtrl::GetIntegerValue() const
 
 void CSetActiveArea::CSmallIntegerCtrl::SetIntegerValue(int NewValue)
 {
-    ChangeValue(wxString::Format("%d", NewValue));
+    ChangeValue(wxString::Format(WXSTRING("%d"), NewValue));
 }
 
 // ----------------------------------------------------------------------------
@@ -67,7 +68,7 @@ CSetActiveArea::CSetActiveArea(
     int        YLow,
     int        YHigh,
     int        PixelsPerInch
-    ) : wxDialog(Parent, wxID_ANY, wxString(LOCALIZED_SELECTACTIVEAREA)),
+    ) : wxDialog(Parent, wxID_ANY, WXSTRING(LOCALIZED_SELECTACTIVEAREA)),
       m_XLow(NULL),
       m_XHigh(NULL),
       m_YLow(NULL),
@@ -82,7 +83,7 @@ CSetActiveArea::CSetActiveArea(
     wxStaticBox *box = new wxStaticBox(
         this,
         wxID_ANY,
-        "",
+        wxEmptyString,
         wxDefaultPosition,
         boxSize);
     topLevelSizer->Add(box, 0, wxALIGN_CENTER | wxEXPAND | wxALL, 5);
@@ -95,7 +96,7 @@ CSetActiveArea::CSetActiveArea(
     new wxStaticText(
         this,
         wxID_ANY,
-        LOCALIZED_SELECTACTIVEAREA_EFFECT,
+        WXSTRING(LOCALIZED_SELECTACTIVEAREA_EFFECT),
         effectPosition,
         wxDefaultSize,
         wxALIGN_CENTRE);
@@ -124,7 +125,7 @@ CSetActiveArea::CSetActiveArea(
     new wxStaticText(
         this,
         wxID_ANY,
-        LOCALIZED_SELECTACTIVEAREA_YHIGH,
+        WXSTRING(LOCALIZED_SELECTACTIVEAREA_YHIGH),
         yHighTextPosition,
         wxDefaultSize,
         wxALIGN_CENTRE);
@@ -133,7 +134,7 @@ CSetActiveArea::CSetActiveArea(
     new wxStaticText(
         this,
         wxID_ANY,
-        LOCALIZED_SELECTACTIVEAREA_XLOW,
+        WXSTRING(LOCALIZED_SELECTACTIVEAREA_XLOW),
         xLowTextPosition,
         wxDefaultSize,
         wxALIGN_CENTRE);
@@ -142,7 +143,7 @@ CSetActiveArea::CSetActiveArea(
     new wxStaticText(
         this,
         wxID_ANY,
-        LOCALIZED_SELECTACTIVEAREA_XHIGH,
+        WXSTRING(LOCALIZED_SELECTACTIVEAREA_XHIGH),
         xHighTextPosition,
         wxDefaultSize,
         wxALIGN_CENTRE);
@@ -151,7 +152,7 @@ CSetActiveArea::CSetActiveArea(
     new wxStaticText(
         this,
         wxID_ANY,
-        LOCALIZED_SELECTACTIVEAREA_YLOW,
+        WXSTRING(LOCALIZED_SELECTACTIVEAREA_YLOW),
         yLowTextPosition,
         wxDefaultSize,
         wxALIGN_CENTRE);
@@ -191,7 +192,7 @@ CSetActiveArea::CSetActiveArea(
     wxStaticText *pixelsPerInchLabel = new wxStaticText(
         this,
         wxID_ANY,
-        LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH);
+        WXSTRING(LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH));
     pixelsPerInchRow->Add(
         pixelsPerInchLabel,
         0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxALIGN_CENTER_VERTICAL,
@@ -218,19 +219,19 @@ CSetActiveArea::CSetActiveArea(
     wxButton *reset = new wxButton(
         this, 
         ID_RESET, 
-        LOCALIZED_SELECTACTIVEAREA_RESET);
+        WXSTRING(LOCALIZED_SELECTACTIVEAREA_RESET));
     buttonRow->Add(reset, 0, wxALIGN_CENTER | wxALL, 10);
 
     wxButton *cancel = new wxButton(
         this, 
         wxID_CANCEL, 
-        LOCALIZED_SELECTACTIVEAREA_CANCEL);
+        WXSTRING(LOCALIZED_SELECTACTIVEAREA_CANCEL));
     buttonRow->Add(cancel, 0, wxALIGN_CENTER | wxALL, 10);
 
     wxButton *ok = new wxButton(
         this,
         wxID_OK,
-        LOCALIZED_SELECTACTIVEAREA_OK);
+        WXSTRING(LOCALIZED_SELECTACTIVEAREA_OK));
     buttonRow->Add(ok, 0, wxALIGN_CENTER | wxALL, 10);
 
     topLevelSizer->Add(buttonRow, 0, wxALIGN_CENTER | wxALL);

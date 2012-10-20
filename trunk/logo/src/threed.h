@@ -4,13 +4,18 @@
 #ifndef __THREED_H_
 #define __THREED_H_
 
-#include <windows.h>
+#ifndef WX_PURE
+#include <windows.h> // for POINT
+#endif
+
 #include "vector.h"
 
 // manifest constants
 const int WorldWidth = 1000;       // Current World size in X
 const int WorldHeight = 1000;      // Current World size in Y
 const int WorldDepth = 1000;       // Current World size in Z
+
+#ifndef WX_PURE
 
 // Three dimensional viewing class
 class TThreeD
@@ -58,6 +63,8 @@ private:
     double Zmin;
     double Zmax;
 };
+
+#endif // WX_PURE
 
 #endif //  __THREED_H_
 

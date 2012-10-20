@@ -19,8 +19,17 @@
  */
 
 #include <math.h>
+#include <stdlib.h>
+#include <string.h>
+
+#ifdef WX_PURE
+typedef struct __BITMAP      * HBITMAP;
+typedef struct __LOGPALLETTE * PLOGPALETTE;
+typedef struct __WND         * HWND;
+#else
 #include <windows.h>
 #include <htmlhelp.h>
+#endif
 
 #include "activearea.h"
 #include "graphwin.h"
@@ -77,6 +86,7 @@ int bAppendMode;
 int iLoop;
 int iTrans;
 
+#ifndef WX_PURE
 RECT FullRect;                         // rectangle of the full bitmap
 
 LOGFONT FontRec;                       // record for label font
@@ -93,6 +103,8 @@ LOGBRUSH ScreenBrush;                  // Handle to the "screen" background brus
 bool EnablePalette;                    // Flag to signal 256 color mode with palette
 HPALETTE OldPalette;                   // place holder for windows resources
 HPALETTE ThePalette;                   // Handle for the single color palette
+
+#endif  // WX_PURE
 
 int xoffset = 0;                       // Used to go from logo to windows coords x
 int yoffset = 0;                       // Used to go from logo to windows coords y
@@ -117,9 +129,11 @@ PLOGPALETTE MyLogPalette;              // Handle for the single logical color pa
 // focus is given to the commander's editbox.
 bool GiveFocusToEditbox = false;
 
+#ifndef WX_PURE
 typedef HWND ( __stdcall *HTMLHELPFUNC)(HWND, PCSTR, UINT, DWORD);
 static HTMLHELPFUNC g_HtmlHelpFunc;
 static HMODULE      g_HtmlHelpLib;
+#endif
 
 static CUTMAP * g_SelectedBitmap;
 static CUTMAP * g_Bitmaps;
@@ -148,7 +162,9 @@ static const LINE3D turtle_vertices[4] =
     {{  8.0, 0.0, 0.0}, {  8.0,  8.0, 0.0}},
 };
 
+#ifndef WX_PURE
 static DWORD g_BitMode = SRCCOPY;
+#endif
 
 #ifdef NDEBUG
 #  define ASSERT_TURTLE_INVARIANT
@@ -201,6 +217,7 @@ public:
                 g_Turtles[i].IsSpecial == true ||
                 g_Turtles[i].IsSpecial == false);
 
+#ifndef WX_PURE
             assert(
                 g_Turtles[i].BitmapRasterMode == 0           ||
                 g_Turtles[i].BitmapRasterMode == SRCCOPY     ||
@@ -218,6 +235,7 @@ public:
                 // make sure that the bitmap exists.
                 assert(i < g_BitmapsLimit);
             }
+#endif
         }
 
         // g_SelectedBitmap is within the g_Bitmaps array
@@ -226,6 +244,7 @@ public:
 
         assert(0 < g_BitmapsLimit);
 
+#ifndef WX_PURE
         assert(
             g_BitMode == SRCCOPY     ||
             g_BitMode == SRCPAINT    ||
@@ -236,6 +255,7 @@ public:
             g_BitMode == NOTSRCERASE ||
             g_BitMode == MERGEPAINT  ||
             g_BitMode == DSTINVERT);
+#endif
     }
 };
 
@@ -283,6 +303,8 @@ GrowBitmapsArray(int NewSize)
     g_BitmapsLimit = NewSize;
 }
 
+#ifndef WX_PURE
+
 static
 void
 UpdatePen(
@@ -320,6 +342,8 @@ UpdateNormalPen(
 {
     UpdatePen(g_LogicalNormalPen, g_NormalPen, Width, Color);
 }
+
+#endif
 
 ERR_TYPES
 gifsave_helper(
@@ -365,6 +389,7 @@ PENSTATE & GetPenStateForSelectedTurtle()
     return g_PenState;
 }
 
+#ifndef WX_PURE
 
 /* adds color to palette */
 COLORREF LoadColor(int dpenr, int dpeng, int dpenb)
@@ -406,16 +431,25 @@ COLORREF LoadColor(int dpenr, int dpeng, int dpenb)
     return color;
 }
 
+#endif // WX_PURE
+
 // returns the dimensions of the working area, that is
 // the size of the desktop without the task bar.
 void GetWorkingAreaDimensions(int & Width, int & Height)
 {
+#ifdef WX_PURE
+    Width  = 500;
+    Height = 500;
+#else
     RECT workingArea;
 
     SystemParametersInfo(SPI_GETWORKAREA, 0, &workingArea, 0);
     Width  = workingArea.right  - workingArea.left;
     Height = workingArea.bottom - workingArea.top;
+#endif
 }
+
+
 
 NODE *lgifsave(NODE *args)
 {
@@ -456,11 +490,12 @@ NODE *lgifsave(NODE *args)
                                     {
                                         iMaxColorDepth = 8;
                                     }
-
+#ifndef WX_PURE
                                     if (cdr(cdr(cdr(cdr(cdr(args))))) != NIL)
                                     {
                                         iTrans = GetColorArgument(cdr(cdr(cdr(cdr(cdr(args))))));
                                     }
+#endif
                                 }
                             }
                         }
@@ -643,6 +678,9 @@ NODE *lbitloadsize(NODE *arg)
 
 NODE *lbitsize(NODE *)
 {
+#ifdef WX_PURE
+    return NIL;
+#else
     BITMAP temp;
     temp.bmWidth  = 0;
     temp.bmHeight = 0;
@@ -697,7 +735,10 @@ NODE *lbitsize(NODE *)
     return cons_list(
         make_intnode((FIXNUM) temp.bmWidth),
         make_intnode((FIXNUM) temp.bmHeight));
+#endif
 }
+
+#ifndef WX_PURE
 
 // Fills TurtlePoint with the location of the current
 // turtle on the 2D screen (before zooming and scrolling)
@@ -766,6 +807,7 @@ static void InvalidateRectangleOnScreen(const RECT & ScreenRectangle)
 
     ::InvalidateRect(GetScreenWindow(), &adjustedRectangle, FALSE);
 }
+
 
 // ibmturt() calculates what needs to be done to either draw or erase
 // the turte, but it does not actually do either of these operations.
@@ -973,11 +1015,13 @@ void ibmturt(bool draw)
     }
 }
 
+#endif // WX_PURE
 
 NODE *lsetpixel(NODE *args)
 {
     ASSERT_TURTLE_INVARIANT;
 
+#ifndef WX_PURE
     POINT dest;
     if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
@@ -1051,9 +1095,11 @@ NODE *lsetpixel(NODE *args)
 
         draw_turtle(true);
     }
-
+#endif // WX_PURE
     return Unbound;
 }
+
+#ifndef WX_PURE
 
 static
 int
@@ -1071,12 +1117,15 @@ getindexcolor(
     return -1;
 }
 
+#endif // WX_PURE
 
 // function that returns the RGB vector of the pixel the turtle is on top of
 NODE *lpixel(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
-
+#ifdef WX_PURE
+    return NIL;
+#else
     POINT dest;
     if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
@@ -1116,7 +1165,10 @@ NODE *lpixel(NODE *)
         make_intnode((FIXNUM) GetRValue(the_color)),
         make_intnode((FIXNUM) GetGValue(the_color)),
         make_intnode((FIXNUM) GetBValue(the_color)));
+#endif
 }
+
+#ifndef WX_PURE
 
 void logofill(bool bOld)
 {
@@ -1174,9 +1226,12 @@ void logofill(bool bOld)
     DeleteObject(JunkBrush);
 }
 
+#endif // WX_PURE
+
 
 static NODE* color_helper(const Color & col)
 {
+#ifndef WX_PURE
     if (bIndexMode)
     {
         int icolor = getindexcolor(RGB(col.red, col.green, col.blue));
@@ -1185,6 +1240,7 @@ static NODE* color_helper(const Color & col)
             return make_intnode(icolor);
         }
     }
+#endif
 
     return cons_list(
         make_intnode((FIXNUM) col.red),
@@ -1195,7 +1251,6 @@ static NODE* color_helper(const Color & col)
 NODE *lpencolor(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
-
     return color_helper(GetPenStateForSelectedTurtle().Color);
 }
 
@@ -1212,6 +1267,7 @@ void ChangeActivePenColor(int Red, int Green, int Blue)
     penColor.green = Green;
     penColor.blue  = Blue;
 
+#ifndef WX_PURE
     if (EnablePalette)
     {
         pcolor = LoadColor(Red, Green, Blue);
@@ -1222,6 +1278,7 @@ void ChangeActivePenColor(int Red, int Green, int Blue)
     }
 
     UpdateNormalPen(GetPenStateForSelectedTurtle().Width, pcolor);
+#endif
 
     update_status_pencolor();
 }
@@ -1231,7 +1288,6 @@ void ChangeActivePenColor(int Red, int Green, int Blue)
 NODE *lfloodcolor(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
-
     return color_helper(dfld);
 }
 
@@ -1246,6 +1302,7 @@ void ChangeActiveFloodColor(int Red, int Green, int Blue)
     dfld.green = Green;
     dfld.blue  = Blue;
 
+#ifndef WX_PURE
     if (EnablePalette)
     {
         fcolor = LoadColor(dfld.red, dfld.green, dfld.blue);
@@ -1258,6 +1315,7 @@ void ChangeActiveFloodColor(int Red, int Green, int Blue)
     FloodBrush.lbStyle = BS_SOLID;
     FloodBrush.lbColor = fcolor;
     FloodBrush.lbHatch = HS_VERTICAL;
+#endif
 
     update_status_floodcolor();
 }
@@ -1279,6 +1337,7 @@ void ChangeActiveScreenColor(int Red, int Green, int Blue)
     dscn.green = Green;
     dscn.blue  = Blue;
 
+#ifndef WX_PURE
     if (EnablePalette)
     {
         scolor = LoadColor(dscn.red, dscn.green, dscn.blue);
@@ -1320,6 +1379,7 @@ void ChangeActiveScreenColor(int Red, int Green, int Blue)
     DeleteObject(TempBrush);
 
     ::InvalidateRect(GetScreenWindow(), NULL, TRUE);
+#endif
 
     update_status_screencolor();
 }
@@ -1337,10 +1397,11 @@ int get_pen_height()
 void set_pen_width(int w)
 {
     GetPenStateForSelectedTurtle().Width = w;
-
+#ifndef WX_PURE
     // we erase with the same pen width as we write
     UpdateNormalPen(w, pcolor);
     UpdateErasePen(w,  scolor);
+#endif
 }
 
 void set_pen_height(int h)
@@ -1350,6 +1411,7 @@ void set_pen_height(int h)
 
 NODE *lclearpalette(NODE *)
 {
+#ifndef WX_PURE
     // kill the palette and recreate it with just black and white
     if (EnablePalette)
     {
@@ -1363,6 +1425,7 @@ NODE *lclearpalette(NODE *)
 
         ::InvalidateRect(GetMainWindow(), NULL, TRUE);
     }
+#endif
 
     return Unbound;
 }
@@ -1405,6 +1468,7 @@ void UpdateZoomControlFlag()
 // screen still is. It also readjusts the ranges on the scrollers.
 void zoom_helper(FLONUM NewZoomFactor)
 {
+#ifndef WX_PURE
     if (the_zoom != NewZoomFactor)
     {
         the_zoom = NewZoomFactor;
@@ -1421,6 +1485,7 @@ void zoom_helper(FLONUM NewZoomFactor)
         // paint the entire window
         InvalidateRect(GetScreenWindow(), NULL, TRUE);
     }
+#endif
 }
 
 NODE *lzoom(NODE *arg)
@@ -1442,7 +1507,7 @@ NODE *lzoom(NODE *arg)
 NODE *lbitblock(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
-
+#ifndef WX_PURE
     POINT turtleLocation;
     if (!WorldCoordinateToScreenCoordinate(
             g_SelectedTurtle->Position, 
@@ -1509,12 +1574,14 @@ NODE *lbitblock(NODE *arg)
             DeleteObject(fillBrush);
         }
     }
-
+#endif
     return Unbound;
 }
 
 
 // Converts the FMSLogo bitmode to the Window raster mode
+
+#ifndef WX_PURE
 static
 DWORD
 BitModeToRasterMode(
@@ -1614,13 +1681,19 @@ BitModeArgsToRasterMode(
     return BitModeToRasterMode(getint(bitModeNode));
 }
 
+#endif // WX_PURE
+
 
 NODE *lbitmode(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
 
+#ifdef WX_PURE
+    FIXNUM temp = 0;
+#else
     // return the logo "code" for the bit mode
     FIXNUM temp = RasterModeToBitMode(g_BitMode);
+#endif
 
     return make_intnode(temp);
 }
@@ -1628,29 +1701,33 @@ NODE *lbitmode(NODE *)
 NODE *lsetbitmode(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
-
+#ifndef WX_PURE
     // convert from logo "code" to Windows constants
     FIXNUM bitmode = BitModeArgsToRasterMode(arg);
     if (NOT_THROWING)
     {
         g_BitMode = bitmode;
     }
+#endif
     return Unbound;
 }
 
 NODE *lturtlemode(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
-
+#ifdef WX_PURE
+    FIXNUM turtlemode = 0;
+#else
     // return the logo "code" for the bit mode
     FIXNUM turtlemode = RasterModeToBitMode(g_SelectedTurtle->BitmapRasterMode);
+#endif
     return make_intnode(turtlemode);
 }
 
 NODE *lsetturtlemode(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
-
+#ifndef WX_PURE
     if (g_SelectedTurtle->BitmapRasterMode)
     {
         draw_turtle(false);
@@ -1664,7 +1741,7 @@ NODE *lsetturtlemode(NODE *arg)
 
         draw_turtle(true);
     }
-
+#endif
     return Unbound;
 }
 
@@ -1705,6 +1782,7 @@ static
 void
 CopyFromBitmapArrayToClipboard()
 {
+#ifndef WX_PURE
     // Open the clipboard, dump what's in there and return the Bitmap
     ::OpenClipboard(GetMainWindow());
 
@@ -1738,17 +1816,17 @@ CopyFromBitmapArrayToClipboard()
     }
 
     ::CloseClipboard();
+#endif
 
     // Never mung with bitmaps that belong to ClipBoard
     g_Bitmaps[0].IsValid = false;
 }
 
-
-
 static
 void
 PasteFromClipboardToBitmapArray()
 {
+#ifndef WX_PURE
     ::OpenClipboard(GetMainWindow());
 
     // Try a DIB first
@@ -1840,6 +1918,7 @@ PasteFromClipboardToBitmapArray()
 
     // we have everything we need
     ::CloseClipboard();
+#endif
 }
 
 
@@ -1847,6 +1926,7 @@ static
 NODE *
 BitCopyOrCut(NODE *arg, bool IsCut)
 {
+#ifndef WX_PURE
     POINT dest;
     if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
@@ -1987,6 +2067,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
         }
     }
 
+#endif
     return Unbound;
 }
 
@@ -2006,6 +2087,7 @@ NODE *lbitcopy(NODE *arg)
 NODE *lbitfit(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
+#ifndef WX_PURE
 
     FIXNUM newWidth  = getint(nonnegative_int_arg(arg));
     FIXNUM newHeight = getint(nonnegative_int_arg(cdr(arg)));
@@ -2114,13 +2196,14 @@ NODE *lbitfit(NODE *arg)
             }
         }
     }
+#endif
     return Unbound;
 }
 
 NODE *lbitpaste(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
-
+#ifndef WX_PURE
     POINT dest;
     if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
@@ -2215,13 +2298,14 @@ NODE *lbitpaste(NODE *)
             ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE);
         }
     }
-
+#endif
     return Unbound;
 }
 
 NODE *lbitpastetoindex(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
+#ifndef WX_PURE
 
     // set the current bitmap index if within range
     int i = getint(nonnegative_int_arg(arg));
@@ -2297,13 +2381,14 @@ NODE *lbitpastetoindex(NODE *arg)
         // notify the user that the clipboard is empty
         ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE);
     }
-
+#endif
     return Unbound;
 }
 
 NODE *lsetturtle(NODE *args)
 {
     ASSERT_TURTLE_INVARIANT;
+#ifndef WX_PURE
 
     NODE * val = ranged_integer_arg(args, -TOTAL_SPECIAL_TURTLES, FIXNUM_MAX);
     if (stopping_flag == THROWING)
@@ -2398,6 +2483,7 @@ NODE *lsetturtle(NODE *args)
             activePenColor.green,
             activePenColor.blue);
     }
+#endif
 
     draw_turtles(false);
 
@@ -2439,6 +2525,8 @@ NODE *lhasownpenp(NODE*)
     return true_or_false(g_SelectedTurtle->HasOwnPenState);
 }
 
+#ifndef WX_PURE
+
 static COLORREF InterpolateColors(COLORREF A, COLORREF B, double Alpha)
 {
     if (A == B)
@@ -2459,10 +2547,12 @@ static COLORREF InterpolateColors(COLORREF A, COLORREF B, double Alpha)
 
     return RGB(red, green, blue);
 }
+#endif
 
 void turtlepaste(int TurtleToPaste)
 {
     ASSERT_TURTLE_INVARIANT;
+#ifndef WX_PURE
 
     POINT dest;
     if (!WorldCoordinateToScreenCoordinate(g_Turtles[TurtleToPaste].Position, dest))
@@ -2786,12 +2876,13 @@ void turtlepaste(int TurtleToPaste)
         g_Turtles[TurtleToPaste].BitmapRasterMode = 0;
         g_Turtles[TurtleToPaste].IsSprite         = false;
     }
+#endif
 }
 
 NODE *lscrollx(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
-
+#ifndef WX_PURE
     // get args and scroll the scroller
     NODE *args = numeric_arg(arg);
 
@@ -2815,13 +2906,14 @@ NODE *lscrollx(NODE *arg)
                 GetScreenVerticalScrollPosition());
         }
     }
-
+#endif
     return Unbound;
 }
 
 NODE *lscrolly(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
+#ifndef WX_PURE
 
     // get args and scroll the scroller
     NODE * args = numeric_arg(arg);
@@ -2846,6 +2938,7 @@ NODE *lscrolly(NODE *arg)
                 GetScreenVerticalScrollPosition() + delta);
         }
     }
+#endif
 
     return Unbound;
 }
@@ -2853,7 +2946,7 @@ NODE *lscrolly(NODE *arg)
 NODE *lsetfocus(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
-
+#ifndef WX_PURE
     CStringPrintedNode windowCaption(car(arg));
 
     HWND window;
@@ -2876,7 +2969,7 @@ NODE *lsetfocus(NODE *arg)
     {
         ::SetFocus(window);
     }
-
+#endif
     GiveFocusToEditbox = false;
 
     return Unbound;
@@ -2889,14 +2982,16 @@ NODE *lgetfocus(NODE *)
     char textbuf[MAX_BUFFER_SIZE];
     memset(textbuf, 0, MAX_BUFFER_SIZE);
 
+#ifndef WX_PURE
     // Get handle to active window
     HWND TempH = GetActiveWindow();
 
     // It better exist, get its caption
     if (TempH != NULL)
     {
-        ::GetWindowText(TempH, textbuf, MAX_BUFFER_SIZE);
+        ::GetWindowText(TempH, textbuf, ARRAYSIZE(textbuf));
     }
+#endif
 
     GiveFocusToEditbox = false;
 
@@ -2908,6 +3003,7 @@ NODE *lgetfocus(NODE *)
 
 NODE *lwindowset(NODE *args)
 {
+#ifndef WX_PURE
     CStringPrintedNode caption(car(args));
 
     int mode = getint(nonnegative_int_arg(cdr(args)));
@@ -2941,13 +3037,14 @@ NODE *lwindowset(NODE *args)
             GiveFocusToEditbox = false;
         }
     }
-
+#endif
     return Unbound;
 }
 
 void ibm_clear_screen(void)
 {
     ASSERT_TURTLE_INVARIANT;
+#ifndef WX_PURE
 
     HBRUSH tempBrush = ::CreateBrushIndirect(&ScreenBrush);
     if (tempBrush != NULL)
@@ -2967,8 +3064,10 @@ void ibm_clear_screen(void)
     }
 
     InvalidateRect(GetScreenWindow(), NULL, FALSE);
+#endif
 }
 
+#ifndef WX_PURE
 
 static
 int CALLBACK
@@ -3104,11 +3203,14 @@ HtmlHelpInitialize(
     return true;
 }
 
+#endif // WX_PURE
+
 void
 HtmlHelpUninitialize(
     void
     )
 {
+#ifndef WX_PURE
     if (g_HtmlHelpFunc != NULL)
     {
         g_HtmlHelpFunc(NULL, NULL, HH_CLOSE_ALL, 0);
@@ -3120,13 +3222,13 @@ HtmlHelpUninitialize(
         ::FreeLibrary(g_HtmlHelpLib);
         g_HtmlHelpLib = NULL;
     }
+#endif
 }
-
-
 
 // if arg is NULL then we jump to index
 void do_help(const char *arg)
 {
+#ifndef WX_PURE
     if (!HtmlHelpInitialize())
     {
         return;
@@ -3153,6 +3255,7 @@ void do_help(const char *arg)
         szHelpFileName,
         HH_KEYWORD_LOOKUP, 
         (DWORD) &aklink);
+#endif
 }
 
 NODE *lhelp(NODE *arg)
@@ -3175,7 +3278,7 @@ NODE *lhelp(NODE *arg)
 NODE *lwinhelp(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
-
+#ifndef WX_PURE
     CStringPrintedNode textbuf(car(arg));
 
     // if 2nd arg then pass to winhelp
@@ -3194,15 +3297,16 @@ NODE *lwinhelp(NODE *arg)
         // else just give help on file (arg 1)
         WinHelp(GetMainWindow(), textbuf, HELP_INDEX, 0L);
     }
-
+#endif
     return Unbound;
 }
 
 NODE *lfontfacenames(NODE *arg)
 {
-    HDC hdc = GetDC(::GetFocus());
-
     CAppendableList fontFaceNames; 
+
+#ifndef WX_PURE
+    HDC hdc = GetDC(::GetFocus());
 
     EnumFontFamilies(
         hdc,
@@ -3211,6 +3315,7 @@ NODE *lfontfacenames(NODE *arg)
         reinterpret_cast<LPARAM>(&fontFaceNames));
 
     ReleaseDC(::GetFocus(), hdc);
+#endif
 
     return fontFaceNames.GetList();
 }
@@ -3218,7 +3323,7 @@ NODE *lfontfacenames(NODE *arg)
 NODE *lsetlabelfont(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
-
+#ifndef WX_PURE
     NODE *args = list_arg(arg);
     if (NOT_THROWING)
     {
@@ -3284,6 +3389,7 @@ NODE *lsetlabelfont(NODE *arg)
             FontRec.lfPitchAndFamily = getint(nonnegative_int_arg(args = cdr(args)));
         }
     }
+#endif
 
     return Unbound;
 }
@@ -3291,7 +3397,9 @@ NODE *lsetlabelfont(NODE *arg)
 NODE *llabelfont(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
-
+#ifdef WX_PURE
+    return NIL;
+#else
     // put the Font name in a list
     NODE *targ = make_strnode(FontRec.lfFaceName);
     NODE *val = parser(targ, false);
@@ -3313,13 +3421,15 @@ NODE *llabelfont(NODE *)
         cons(make_intnode((FIXNUM) FontRec.lfQuality),
         cons(make_intnode((FIXNUM) FontRec.lfPitchAndFamily),
         NIL)))))))))))));
+#endif
 }
 
 NODE *lmachine(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
-
-
+#ifdef WX_PURE
+    return NIL;
+#else
     // Get the desktop dimensions
     HDC tempDC = GetDC(0);
 
@@ -3355,7 +3465,10 @@ NODE *lmachine(NODE *)
         cons(make_intnode((FIXNUM) (wrect.right - wrect.left)),
         cons(make_intnode((FIXNUM) (wrect.bottom - wrect.top)),
         NIL)))))))))))));
+#endif
 }
+
+#ifndef WX_PURE
 
 SIZE labelsize(const char *s)
 {
@@ -3482,23 +3595,28 @@ void label(const char *s)
     DeleteObject(tempFont);
 }
 
+#endif
+
 void MyMessageScan()
 {
     // depending on yield flag check for messages
     if (yield_flag)
     {
+#ifndef WX_PURE
         MSG msg;
         while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+#endif
     }
 }
 
 
 void init_videomode()
 {
+#ifndef WX_PURE
     // Get video mode parameters
     HDC screenDeviceContext = GetDC(0);
     if (screenDeviceContext)
@@ -3550,6 +3668,7 @@ void init_videomode()
 
         ThePalette = CreatePalette(MyLogPalette);
     }
+#endif
 }
 
 void init_bitmaps()
@@ -3569,7 +3688,9 @@ void uninit_bitmaps()
     {
         if (bmp->IsValid)
         {
+#ifndef WX_PURE
             DeleteObject(bmp->MemoryBitMap);
+#endif
         }
     }
 

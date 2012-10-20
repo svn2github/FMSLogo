@@ -6,6 +6,7 @@
 
 #include "localizedstrings.h"
 #include "logocore.h" // for ARRAYSIZE
+#include "stringadapter.h"
 
 // ----------------------------------------------------------------------------
 // CAboutFmsLogo
@@ -17,8 +18,8 @@
     FMSLOGO_VERSION " - UNSTABLE\n"             \
     "http://sourceforge.net/projects/fmslogo"   \
 
-CAboutFmsLogo::CAboutFmsLogo(wxWindow *parent)
-    : wxDialog(parent, wxID_ANY, wxString(LOCALIZED_ABOUTFMS))
+CAboutFmsLogo::CAboutFmsLogo(wxWindow * Parent)
+    : wxDialog(Parent, wxID_ANY, WXSTRING(LOCALIZED_ABOUTFMS))
 {
     wxBoxSizer *sizerTop = new wxBoxSizer(wxVERTICAL);
 
@@ -41,7 +42,7 @@ CAboutFmsLogo::CAboutFmsLogo(wxWindow *parent)
         wxStaticText *info = new wxStaticText(
             this,
             wxID_ANY,
-            staticText[i],
+            WXSTRING(staticText[i]),
             wxDefaultPosition,
             wxDefaultSize, 
             wxALIGN_CENTRE | wxSUNKEN_BORDER);
@@ -49,7 +50,10 @@ CAboutFmsLogo::CAboutFmsLogo(wxWindow *parent)
         sizerTop->Add(info, 0, wxALIGN_CENTER | wxALL | wxEXPAND, 5);
     }
 
-    wxButton *okButton = new wxButton(this, wxID_CANCEL, LOCALIZED_ABOUTMS_OK);
+    wxButton *okButton = new wxButton(
+        this,
+        wxID_CANCEL,
+        WXSTRING(LOCALIZED_ABOUTMS_OK));
     sizerTop->Add(okButton, 0, wxALIGN_CENTER | wxALL, 5);
 
     SetSizer(sizerTop);

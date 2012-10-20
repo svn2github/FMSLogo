@@ -19,9 +19,12 @@
 *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 *
 */
+#ifndef WX_PURE
 #include <windows.h>
+#endif
+
+#include <string.h>
 #include <algorithm>
-using namespace std;
 
 #include "devwind.h"
 #include "stringprintednode.h"
@@ -57,8 +60,10 @@ char *mouse_mousemove = NULL;          // Mouse Move cb
 char *keyboard_keydown = NULL;         // KeyBoard key down
 char *keyboard_keyup = NULL;           // KeyBoard key up
 
+#ifndef WX_PURE
 static HANDLE ComId;
 static bool   ComIsOpen = false;
+#endif
 
 // function definitions
 
@@ -185,10 +190,14 @@ void keyboard_uninit()
 
 NODE *lmousepos(NODE *)
 {
+#ifdef WX_PURE
+    return 0;
+#else
     // return current mouse position
     return cons_list(
         make_intnode(  (mouse_posx + GetScreenHorizontalScrollPosition()) / the_zoom - xoffset),
         make_intnode(-((mouse_posy + GetScreenVerticalScrollPosition())   / the_zoom - yoffset)));
+#endif
 }
 
 NODE *lkeyboardvalue(NODE *)
@@ -199,6 +208,7 @@ NODE *lkeyboardvalue(NODE *)
 
 NODE *lportclose(NODE *)
 {
+#ifndef WX_PURE
     // if port closed output error else close it
     if (!ComIsOpen)
     {
@@ -209,12 +219,13 @@ NODE *lportclose(NODE *)
         ComIsOpen = false;
         CloseHandle(ComId);
     }
-
+#endif
     return Unbound;
 }
 
 NODE *lportopen(NODE *args)
 {
+#ifndef WX_PURE
     CStringPrintedNode comport(car(args));
 
     // if port open output error else open it
@@ -260,12 +271,13 @@ NODE *lportopen(NODE *args)
             ComIsOpen = true;
         }
     }
-
+#endif
     return Unbound;
 }
 
 NODE *lportflush(NODE * /* args */)
 {
+#ifndef WX_PURE
     if (!ComIsOpen)
     {
         ShowErrorMessageAndStop(LOCALIZED_ERROR_PORTNOTOPEN);
@@ -278,12 +290,13 @@ NODE *lportflush(NODE * /* args */)
             ShowErrorMessageAndStop(LOCALIZED_ERROR_CANTFLUSHPORT);
         }
     }
-
+#endif
     return Unbound;
 }
 
 NODE *lportmode(NODE *args)
 {
+#ifndef WX_PURE
     CStringPrintedNode commode(car(args));
 
     // if closed output error else set mode
@@ -322,18 +335,19 @@ NODE *lportmode(NODE *args)
             }
         }
     }
-
+#endif
     return Unbound;
 }
 
 static
 int min3(int a, int b, int c)
 {
-    return min(min(a, b), c);
+    return std::min(std::min(a, b), c);
 }
 
 NODE *lportwritearray(NODE *args)
 {
+#ifndef WX_PURE
     NODE * val = nonnegative_int_arg(args);
     NODE * obj = cadr(args);
 
@@ -347,7 +361,6 @@ NODE *lportwritearray(NODE *args)
     {
         if (nodetype(obj) == ARRAY)
         {
-
             // if closed the error, else continue
             if (!ComIsOpen)
             {
@@ -390,12 +403,13 @@ NODE *lportwritearray(NODE *args)
                 LOCALIZED_ERROR_FIRSTINPUTNOTANARRY);
         }
     }
-
+#endif
     return Unbound;
 }
 
 NODE *lportreadarray(NODE *args)
 {
+#ifndef WX_PURE
     NODE * val = nonnegative_int_arg(args);
     NODE * obj = cadr(args);
 
@@ -454,12 +468,13 @@ NODE *lportreadarray(NODE *args)
             }
         }
     }
-
+#endif
     return make_intnode(0);
 }
 
 NODE *lportwritechar(NODE *args)
 {
+#ifndef WX_PURE
     // get arg
     char txchar[1];
     txchar[0] = getint(nonnegative_int_arg(args));
@@ -489,12 +504,13 @@ NODE *lportwritechar(NODE *args)
         // return byte count sent
         return make_intnode(status);
     }
-
+#endif
     return Unbound;
 }
 
 NODE *lportreadchar(NODE *)
 {
+#ifndef WX_PURE
     // if closed output error, else continue
     if (!ComIsOpen)
     {
@@ -521,7 +537,7 @@ NODE *lportreadchar(NODE *)
             return make_intnode(-1);
         }
     }
-
+#endif
     return Unbound;
 }
 

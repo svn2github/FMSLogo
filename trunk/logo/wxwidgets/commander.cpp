@@ -31,6 +31,7 @@
 #include "status.h"
 #include "fontutils.h"
 #include "mmwind.h"
+#include "stringadapter.h"
 
 bool g_IsOkayToUseCommanderWindow = true;
 
@@ -162,7 +163,7 @@ CCommander::CCommander(wxWindow *Parent)
         int  buttonHeight;
 
         m_EdallButton->GetTextExtent(
-            buttonLabels[i],
+            WXSTRING(buttonLabels[i]),
             &buttonWidth,
             &buttonHeight);
         if (largestWidth < buttonWidth)
@@ -380,12 +381,12 @@ void putcombobox(const char *str)
             // below, this would have the side-effect of inserting two lines.
             if (str != NULL && str[0] != '\0')
             {
-                commanderHistory->AppendText(str);
+                commanderHistory->AppendText(WXSTRING(str));
             }
 
             // Append the newline
             wxTextPos uCheck = commanderHistory->GetLastPosition();
-            commanderHistory->AppendText("\n");
+            commanderHistory->AppendText(WXSTRING("\n"));
             wxTextPos uAfter = commanderHistory->GetLastPosition();
 
             // if the newline was inserted ok, get out
@@ -408,7 +409,7 @@ void putcombobox(const char *str)
 
         // If all else fails try erasing everything.
         // We should never get here.
-        commanderHistory->SetValue(str);
+        commanderHistory->SetValue(WXSTRING(str));
     }
 }
 
@@ -457,7 +458,7 @@ void CCommander::Execute()
     m_NextInstruction->Clear();
 
     // BUG: This can potentially modify the contents of wxString's buffer
-    RunLogoInstructionFromGui(const_cast<char*>(logoInstruction.c_str()));
+    RunLogoInstructionFromGui(const_cast<char*>(WXSTRING_TO_STRING(logoInstruction)));
 }
 
 void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(Event))
@@ -476,11 +477,13 @@ void CCommander::OnEnter(wxCommandEvent & Event)
 {
     if (is_executing())
     {
+#ifndef WX_PURE
         // For compatibility with MSWLogo, simply beep if Logo is currently
         // running when the user presses Enter.  It might be preferable to
         // run the command anyway, but that was too significant a change for
         // a micro release.
         MessageBeep(MB_OK);
+#endif // WX_PURE
     }
     else
     {
@@ -622,7 +625,7 @@ CCommander::UpdateFont(const wxFont & NewFont)
 
     int width;
     int height;
-    m_NextInstruction->GetTextExtent("Tg", &width, &height);
+    m_NextInstruction->GetTextExtent(WXSTRING("Tg"), &width, &height);
 
     // font height + some padding
     m_NextInstructionHeight = height + 10;
@@ -739,7 +742,7 @@ CCommanderDialog::CCommanderDialog(wxWindow * Parent)
     : wxDialog(
         Parent,
         wxID_ANY,
-        wxString(LOCALIZED_COMMANDER),
+        WXSTRING(LOCALIZED_COMMANDER),
         wxDefaultPosition,
         wxDefaultSize,
 #ifdef __WXMSW__

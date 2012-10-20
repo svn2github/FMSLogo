@@ -7,6 +7,7 @@
 #include <wx/button.h>
 #include <wx/textctrl.h>
 
+#include "stringadapter.h"
 #include "localizedstrings.h"
 
 // ----------------------------------------------------------------------------
@@ -25,7 +26,7 @@ CQuestionBox::CQuestionBox(
     int titleWidth;
     int titleHeight;
     wxFont titleFont = GetFont();
-    titleFont.SetFaceName("System");
+    titleFont.SetFaceName(WXSTRING("System"));
     GetTextExtent(Title, &titleWidth, &titleHeight, NULL, NULL, &titleFont);
 
     // Determine a good minimum size for the dialog box,
@@ -64,13 +65,13 @@ CQuestionBox::CQuestionBox(
     wxButton *okButton = new wxButton(
         this, 
         wxID_OK,
-        LOCALIZED_QUESTIONBOX_OK);
+        WXSTRING(LOCALIZED_QUESTIONBOX_OK));
     buttonSizer->Add(okButton);
 
     wxButton *cancelButton = new wxButton(
         this, 
         wxID_CANCEL,
-        LOCALIZED_QUESTIONBOX_CANCEL);
+        WXSTRING(LOCALIZED_QUESTIONBOX_CANCEL));
     buttonSizer->Add(cancelButton, 0, wxLEFT, 4);
 
     topLevelSizer->Add(buttonSizer, 0, wxALIGN_RIGHT | wxALL, 4);

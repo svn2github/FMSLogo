@@ -11,6 +11,7 @@
 #include "logodata.h"          // for make_strnode
 #include "screenwindow.h"      // for TraceOutput
 #include "guiutils.h"
+#include "stringadapter.h"
 #include "localizedstrings.h"
 
 // Control IDs
@@ -32,7 +33,7 @@ CSelectProcedureDialog::CSelectProcedureDialog(
     : wxDialog(
         Parent,
         wxID_ANY,
-        wxString(Caption),
+        WXSTRING(Caption),
         wxDefaultPosition,
         wxDefaultSize, 
         wxCAPTION | wxCLOSE_BOX | wxDEFAULT_DIALOG_STYLE),
@@ -63,7 +64,7 @@ CSelectProcedureDialog::CSelectProcedureDialog(
         // REVISIT: the procedure name should be useable
         // as-is without further conversion.
         CStringPrintedNode procedureName(car(proclist_node));
-        m_ProcedureList->Append(procedureName.GetString());
+        m_ProcedureList->Append(WXSTRING(procedureName.GetString()));
     }
 
     gcref(proclist);
@@ -97,7 +98,7 @@ CSelectProcedureDialog::CSelectProcedureDialog(
         wxButton * button = new wxButton(
             this,
             wxID_ANY,
-            buttonInfo[i].MenuText,
+            WXSTRING(buttonInfo[i].MenuText),
             wxDefaultPosition,
             wxDefaultSize,
             wxBU_EXACTFIT);
@@ -122,7 +123,7 @@ CSelectProcedureDialog::CSelectProcedureDialog(
         wxButton * button = new wxButton(
             this,
             buttonInfo[i].MenuId,
-            buttonInfo[i].MenuText,
+            WXSTRING(buttonInfo[i].MenuText),
             wxDefaultPosition,
             buttonSize);
 
@@ -173,7 +174,7 @@ void CSelectProcedureDialog::DoDialog()
         {
             // else find what user selected
             const wxString & procedure = m_SelectedProcedure->GetValue();
-            arg = vref(cons_list(make_strnode(procedure.c_str())));
+            arg = vref(cons_list(make_strnode(WXSTRING_TO_STRING(procedure))));
         }
 
         // if something edit/erase it

@@ -18,7 +18,10 @@
 #ifndef __MAINWIND_H_
 #define __MAINWIND_H_
 
+#ifndef WX_PURE
 #include <windows.h>
+#endif // WX_PURE
+
 #include <stdio.h>
 #include "logocore.h"
 
@@ -49,10 +52,13 @@ LoadBitmapFile(
     unsigned int &
     );
 
+#ifndef WX_PURE
 void
 PaintToScreenWindow(
     HDC          PaintDC,
     const RECT & PaintRect
     );
+#endif // WX_PURE
 
 #endif // __MAINWIND_H_
+

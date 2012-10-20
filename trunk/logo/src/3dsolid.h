@@ -1,7 +1,10 @@
 #ifndef _3DSOLID_H_
 #define _3DSOLID_H_
 
+#ifndef WX_PURE
 #include <windows.h> // for COLORREF
+#endif
+
 #include "vector.h"
 #include "threed.h"
 
@@ -22,6 +25,8 @@ struct VERTEXLIST
     BOOL Hack;
 #endif
 };
+
+#ifndef WX_PURE
 
 struct POLYGON
 {
@@ -134,5 +139,7 @@ class TThreeDSolid : public TThreeD
 
 // global variables
 extern TThreeDSolid ThreeD;
+
+#endif // WX_PURE
 
 #endif // _3DSOLID_H_

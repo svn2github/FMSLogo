@@ -20,9 +20,14 @@
  *
  */
 
+#ifndef WX_PURE
 #include <windows.h>
+#endif
+
 #include <string.h>
 #include <limits.h>
+#include <ctype.h>
+#include <stdlib.h>
 
 #include "logodata.h"
 #include "version.h"
@@ -40,6 +45,12 @@
 #include "debugheap.h"
 
 #include "localizedstrings.h"
+
+#if WX_PURE
+// wxTODO: The original, non-internationalized code is used when not on Windows.
+// This should be rewritten to use the Unicode-aware C routines.
+#define upper_p(c) (c >= 'A' && c <= 'Z')
+#endif
 
 // g_SpecialCharacters[] is an array of characters that must be escaped
 // with a backslash when put in a string.
@@ -264,6 +275,9 @@ uncapital(
 {
     char lowercase;
 
+#ifdef WX_PURE
+    lowercase = tolower(Capital);
+#else
     LCMapString(
         MAKELCID(LANG_USER_DEFAULT, SORT_DEFAULT),
         LCMAP_LOWERCASE,
@@ -271,6 +285,7 @@ uncapital(
         sizeof(Capital),
         &lowercase,
         sizeof(lowercase));
+#endif
 
     return lowercase;
 }
@@ -286,6 +301,12 @@ islowercase(
 
 char *low_strnzcpy(char *dst, const char * src, int len)
 {
+#ifdef WX_PURE
+    for (int i = 0; i < len; i++)
+    {
+        dst[i] = uncapital(src[i]);
+    }
+#else
     LCMapString(
         MAKELCID(LANG_USER_DEFAULT, SORT_DEFAULT),
         LCMAP_LOWERCASE,
@@ -293,6 +314,7 @@ char *low_strnzcpy(char *dst, const char * src, int len)
         len,
         dst,
         len);
+#endif
 
     dst[len] = '\0';
     return dst;
@@ -305,6 +327,9 @@ capital(
 {
     char capital;
 
+#ifdef WX_PURE
+    capital = toupper(LowerCase);
+#else
     LCMapString(
         MAKELCID(LANG_USER_DEFAULT, SORT_DEFAULT),
         LCMAP_UPPERCASE,
@@ -312,12 +337,19 @@ capital(
         sizeof(LowerCase),
         &capital,
         sizeof(capital));
+#endif
 
     return capital;
 }
 
 char *cap_strnzcpy(char *dst, const char * src, int len)
 {
+#ifdef WX_PURE
+    for (int i = 0; i < len; i++)
+    {
+        dst[i] = capital(src[i]);
+    }
+#else
     LCMapString(
         MAKELCID(LANG_USER_DEFAULT, SORT_DEFAULT),
         LCMAP_UPPERCASE,
@@ -325,9 +357,9 @@ char *cap_strnzcpy(char *dst, const char * src, int len)
         len,
         dst,
         len);
+#endif
 
     dst[len] = '\0';
-
     return dst;
 }
 
@@ -352,6 +384,45 @@ char *noparitylow_strnzcpy(char *dst, const char *src, int len)
 
 int low_strncmp(const char *string1, const char * string2, int length)
 {
+#ifdef WX_PURE
+    for (int i = 0; i < length; i++)
+    {
+        if (*string1 != *string2)
+        {
+            if (upper_p(*string2))
+            {
+                if (upper_p(*string1))
+                {
+                    if (uncapital(*string1) != uncapital(*string2))
+                        return (uncapital(*string1) - uncapital(*string2));
+                }
+                else
+                {
+                    if (*string1 != uncapital(*string2))
+                    {
+                        return (*string1 - uncapital(*string2));
+                    }
+                }
+            }
+            else if (upper_p(*string1))
+            {
+                if (uncapital(*string1) != *string2)
+                {
+                    return (uncapital(*string1) - *string2);
+                }
+            }
+            else
+            {
+                return (*string1 - *string2);
+            }
+        }
+        string1++;
+        string2++;
+    }
+
+    return 0;
+
+#else
     int rval = CompareString(
         MAKELCID(LANG_USER_DEFAULT, SORT_DEFAULT),
         NORM_IGNORECASE,
@@ -364,6 +435,7 @@ int low_strncmp(const char *string1, const char * string2, int length)
     rval -= 2;
 
     return rval;
+#endif
 }
 
 int noparity_strncmp(const char * s1, const char * s2, int len)

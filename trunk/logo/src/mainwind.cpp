@@ -189,7 +189,7 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)
     return status;
 }
 
-ERR_TYPES DumpBitmapFile(PCSTR Filename, int MaxBitCount)
+ERR_TYPES DumpBitmapFile(const char * Filename, int MaxBitCount)
 {
     // open and check if ok
     FILE* file = fopen(Filename, "wb");

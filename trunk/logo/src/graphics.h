@@ -40,6 +40,8 @@ struct PENSTATE
     bool         IsErasing;
 };
 
+#ifndef WX_PURE
+
 struct LINEX
 {
     POINT from;
@@ -47,12 +49,16 @@ struct LINEX
     bool  bValid;
 };
 
+#endif
+
 struct Turtle
 {
     MATRIX   Matrix;
     VECTOR   Position;
     FLONUM   Heading;
+#ifndef WX_PURE
     DWORD    BitmapRasterMode; // 0 if not bitmapped.  Windows raster mode, otherwise.
+#endif
     bool     IsShown;
     bool     IsPenUp;
     bool     IsSpecial;
@@ -63,15 +69,22 @@ struct Turtle
     PENSTATE PenState;
 
     // a cache for lines that make up a turtle's body
+#ifndef WX_PURE
     LINEX    Points[4];
     bool     Padding;
+#endif
 };
 
 // global variables
 extern long vector_count;
 
+#ifndef WX_PURE
+
 // function declarations
 extern COLORREF GetColorArgument(NODE* args);
+
+#endif // WX_PURE
+
 extern FIXNUM g_round(FLONUM n);
 extern FLONUM numeric_node_to_flonum(const NODE* numeric_node);
 extern FIXNUM numeric_node_to_fixnum(const NODE* numeric_node);
@@ -198,7 +211,10 @@ extern void mouse_uninit(void);
 extern mode_type   current_mode;
 extern bool        bPolyFlag;
 extern VERTEXLIST* ThePolygon;
+
+#ifndef WX_PURE
 extern COLORREF    colortable[];
+#endif // WX_PURE
 
 extern Turtle * g_Turtles;
 extern int      g_MaxTurtle;        // the index of the largest real turtle

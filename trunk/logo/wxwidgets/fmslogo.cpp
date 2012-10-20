@@ -33,6 +33,7 @@
 #include "minieditor.h"
 #include "dynamicbuffer.h"
 #include "stringprintednode.h"
+#include "stringadapter.h"
 
 #include "screen.h"
 #include "commander.h"
@@ -45,14 +46,20 @@ int  BitMapHeight = 1000;
 bool bFixed       = false;
 int *TopOfStack   = NULL;
 
+#ifndef WX_PURE
 static HANDLE g_SingleInstanceMutex = NULL;
+#endif
 
+#ifdef WX_PURE
+#define MAX_PATH 260
+#endif
 static char g_FileToLoad[MAX_PATH] = ""; // routine to exec on start
 static bool g_EnterPerspectiveMode = false;
 static bool g_CustomWidth          = false;
 static bool g_CustomHeight         = false;
 
 #ifdef MEM_DEBUG
+#ifdef __WXMSW__
 typedef DWORD (WINAPI *GETGUIRESOURCES)(HANDLE, DWORD);
 
 static GETGUIRESOURCES g_GetGuiResources     = NULL;
@@ -60,6 +67,7 @@ static DWORD           g_OriginalGuiObjects  = 0;
 static DWORD           g_OriginalUserObjects = 0;
 static HANDLE          g_Fmslogo             = NULL;
 static HMODULE         g_User32              = NULL;
+#endif // __WXMSW__
 #endif // MEM_DEBUG
 
 
@@ -70,6 +78,8 @@ IMPLEMENT_APP(CFmsLogo)
 CFmsLogo::CFmsLogo()
 {
 }
+
+#ifndef WX_PURE
 
 // Read an integer command-line argument, given as either "-W500" or "-W 500".
 //
@@ -237,11 +247,14 @@ void CFmsLogo::ProcessCommandLine()
     }
 }
 
+#endif // WX_PURE
+
 bool CFmsLogo::OnInit()
 {
     bool rval = true;
 
 #ifdef MEM_DEBUG
+#ifdef __WXMSW__
     g_Fmslogo = NULL;
     g_User32  = GetModuleHandle("user32.dll");
     if (g_User32 != NULL)
@@ -260,6 +273,7 @@ bool CFmsLogo::OnInit()
             }
         }
     }
+#endif // __WXMSW__
 #endif // MEM_DEBUG
 
     init_osversion();
@@ -271,6 +285,7 @@ bool CFmsLogo::OnInit()
     // directory holds fmslogo.
     // In the meantime, we use the path that holds the 
     // latest installed version.
+#ifndef WX_PURE
     HKEY fmslogoKey;
     LONG result;
     result = RegOpenKeyEx(
@@ -387,6 +402,7 @@ bool CFmsLogo::OnInit()
             // of Logo, even if one is already running.
         }
     }
+#endif // WX_PURE
 
     // Get video mode parameters
     init_videomode();
@@ -485,6 +501,7 @@ bool CFmsLogo::OnInit()
 
 int CFmsLogo::OnExit()
 {
+#ifndef WX_PURE
     if (hCursorWait)
     {
         DestroyCursor(hCursorWait);
@@ -494,6 +511,7 @@ int CFmsLogo::OnExit()
     {
         DestroyCursor(hCursorArrow);
     }
+#endif // WX_PURE
 
     // cleanup all subsystems
     uninit();
@@ -505,10 +523,13 @@ int CFmsLogo::OnExit()
     // release the HTML Help subsystem
     HtmlHelpUninitialize();
 
+#ifndef WX_PURE
     CloseHandle(g_SingleInstanceMutex);
     g_SingleInstanceMutex = NULL;
+#endif // WX_PURE
 
 #ifdef MEM_DEBUG
+#ifdef __WXMSW__
     if (g_Fmslogo != NULL)
     {
         // Check if any GUI objects were leaked
@@ -531,6 +552,7 @@ int CFmsLogo::OnExit()
 
         CloseHandle(g_Fmslogo);
     }
+#endif // __WXMSW__
 #endif // MEM_DEBUG
 
 
@@ -596,8 +618,8 @@ void single_step_box(NODE * the_line)
 
     // pop up single step box showing line of code
     if (wxMessageBox(
-            printedLine.GetString(),
-            LOCALIZED_STEPPING,
+            WXSTRING(printedLine.GetString()),
+            WXSTRING(LOCALIZED_STEPPING),
             wxOK | wxCANCEL) == wxCANCEL)
     {
         if (stepflag)
@@ -617,6 +639,7 @@ char * promptuser(const char *prompt)
     return CFmsLogo::GetMainFrame()->PromptUserForInput(prompt);
 }
 
+#ifndef WX_PURE
 HWND GetScreenWindow()
 {
     CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
@@ -669,6 +692,8 @@ void SetScreenScrollPosition(UINT x, UINT y)
     CFmsLogo::GetMainFrame()->GetScreen()->Scroll(x, y);
 }
 
+#endif // WX_PURE
+
 bool IsEditorOpen()
 {
     return false;
@@ -679,6 +704,7 @@ void OpenEditorToLocationOfFirstError(const char *FileName)
     CFmsLogo::GetMainFrame()->PopupEditorToError(FileName);
 }
 
+#ifndef WX_PURE
 HDC GetScreenDeviceContext()
 {
     CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
@@ -690,6 +716,7 @@ HDC GetMemoryDeviceContext()
     CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
     return static_cast<HDC>(mainFrame->GetScreen()->GetMemoryDeviceContext().GetHDC());
 }
+#endif // WX_PURE
 
 void OpenStatusWindow()
 {
@@ -723,7 +750,7 @@ void DockCommanderWindow()
 
 int ShowEditorForFile(const char *FileName, NODE * EditArguments)
 {
-    return CMainFrame::PopupEditorForFile(FileName, EditArguments);
+    return CMainFrame::PopupEditorForFile(WXSTRING(FileName), EditArguments);
 }
 
 void 
@@ -742,7 +769,7 @@ ShowProcedureMiniEditor(
     else
     {
         // copy the new definition into the read buffer.
-        const char * src = miniEditor.GetProcedureBody().c_str();
+        const char * src = WXSTRING_TO_STRING(miniEditor.GetProcedureBody());
         while (*src != '\0')
         {
             if (src[0] == '\r' && src[1] == '\n')

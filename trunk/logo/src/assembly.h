@@ -18,7 +18,7 @@
 #ifndef __ASSEMBLY_H_
 #define __ASSEMBLY_H_
 
-extern BOOL MyBeep(DWORD dwFreq, DWORD dwDuration);
+extern void MyBeep(unsigned int dwFreq, unsigned int dwDuration);
 extern void Myoutportb(short portid, unsigned char value);
 extern unsigned char Myinportb(short portid);
 extern void Myoutport(short portid, short value);

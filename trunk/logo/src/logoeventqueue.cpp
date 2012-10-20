@@ -17,6 +17,8 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
+#include <string.h>
+#include <stdlib.h>
 
 #include "logoeventqueue.h"
 
@@ -255,14 +257,15 @@ callthing::~callthing()
 
 NODE *leventcheck(NODE *)
 {
+#ifndef WX_PURE
     // checkqueue();
-
     MSG msg;
     while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
     {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
+#endif
 
     return Unbound;
 }
@@ -304,6 +307,7 @@ void checkqueue()
               do_execution(thing->func);
               break;
 
+#ifndef WX_PURE
           case EVENTTYPE_NetworkReceiveReady:
               // Network events must not yield while processing
               yield_flag = false;
@@ -313,6 +317,7 @@ void checkqueue()
               thing->networkpacket = NULL;
 
               do_execution(thing->func);
+#endif
               break;
 
         default:

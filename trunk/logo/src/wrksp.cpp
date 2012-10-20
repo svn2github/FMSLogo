@@ -19,6 +19,8 @@
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
+#include <stdlib.h>
+#include <string.h>
 
 #include "wrksp.h"
 #include "logodata.h"
@@ -48,7 +50,7 @@ bool yield_flag = true;                // Flag to signal yield state
 bool IsDirty    = false;               // Flag to signal to query user ok to quit
 bool to_pending = false;
 
-fpos_t g_CharactersSuccessfullyParsedInEditor;
+long int g_CharactersSuccessfullyParsedInEditor;
 
 static
 NODE *make_procnode(NODE *lst, NODE *wrds, short min, short df, short max)
@@ -1557,6 +1559,7 @@ NODE *ledit(NODE *args)
 {
     if (!bExpert)
     {
+#ifndef WX_PURE
         // non-experts shouldn't have to understand the complexities of 
         // having multiple editors open.  So if an editor is open, give
         // it focus instead of opening a new one.
@@ -1571,6 +1574,7 @@ NODE *ledit(NODE *args)
                 return Unbound;
             }
         }
+#endif
     }
 
     bool save_yield_flag = yield_flag;
@@ -1645,7 +1649,7 @@ bool endedit(void)
         realsave = true;
         while (!feof(loadstream) && NOT_THROWING)
         {
-            fgetpos(loadstream, &g_CharactersSuccessfullyParsedInEditor);
+            g_CharactersSuccessfullyParsedInEditor = ftell(loadstream);
             current_line = reref(current_line, reader(loadstream, ""));
 
             NODE * exec_list = parser(current_line, true);

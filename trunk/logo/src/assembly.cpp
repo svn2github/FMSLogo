@@ -125,7 +125,7 @@ static void asm_outport(unsigned short port, unsigned short value)
 #endif // NOASM
 }
 
-BOOL MyBeep(DWORD frequency, DWORD duration)
+void MyBeep(unsigned int frequency, unsigned int duration)
 {
     // Beep() ignores frequency/duration on Win9X series
     if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
@@ -174,8 +174,6 @@ BOOL MyBeep(DWORD frequency, DWORD duration)
         status = asm_inportb(0x61);
         asm_outportb(0x61, status & 0xFC);
     }
-
-    return TRUE;
 }
 
 void Myoutportb(short portid, unsigned char value)

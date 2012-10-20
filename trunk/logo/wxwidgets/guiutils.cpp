@@ -4,6 +4,8 @@
 #include <wx/icon.h>
 #include <wx/toplevel.h>
 
+#include "stringadapter.h"
+
 #include "fmslogo-16x16.xpm"
 #include "fmslogo-32x32.xpm"
 #include "fmslogo-64x64.xpm"
@@ -38,7 +40,7 @@ FillMenu(
         {
             Menu->Append(
                 MenuItems[i].MenuId,
-                MenuItems[i].MenuText);
+                WXSTRING(MenuItems[i].MenuText));
         }
         else
         {
@@ -62,5 +64,5 @@ AppendChildMenu(
     FillMenu(childMenu, ChildMenuItems, ChildMenuItemsLength);
 
     // append the child menu to the main menu
-    MainMenu->Append(childMenu, ChildMenuText);
+    MainMenu->Append(childMenu, WXSTRING(ChildMenuText));
 }

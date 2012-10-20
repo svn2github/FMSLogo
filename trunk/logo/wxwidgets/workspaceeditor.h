@@ -28,7 +28,7 @@ private:
     bool Read(const wxString & FileName = wxEmptyString);
     bool Write(const wxString & FileName = wxEmptyString);
     void SetFileName(const wxString & FileName = wxEmptyString);
-    const wxChar * SelectFile(const wxString & GivenFileName) const;
+    const wxString SelectFile(const wxString & GivenFileName) const;
 
     // Menu commands event handlers
     void OnExit(wxCommandEvent& Event);

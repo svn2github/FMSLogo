@@ -24,20 +24,24 @@
 #include "logocore.h"
 #include "debugheap.h"
 
+#ifndef WX_PURE
 HCURSOR hCursorWait;               // handle for hourglass cursor
 HCURSOR hCursorArrow;              // handle for normal cursor
 
 static HICON hCursorSave = 0; // handle for saved cursor
+#endif
 
 NODE *lsetcursorwait(NODE *)
 {
+#ifndef WX_PURE
     hCursorSave = ::SetCursor(hCursorWait);
-
+#endif
     return Unbound;
 }
 
 NODE *lsetcursorarrow(NODE *)
 {
+#ifndef WX_PURE
     if (hCursorSave)
     {
         ::SetCursor(hCursorSave);
@@ -47,13 +51,16 @@ NODE *lsetcursorarrow(NODE *)
     {
         ::SetCursor(hCursorArrow);
     }
+#endif
 
     return Unbound;
 }
 
 void init_cursors()
 {
+#ifndef WX_PURE
     // get an hourglass cursor
     hCursorWait  = LoadCursor(NULL, IDC_WAIT);
     hCursorArrow = LoadCursor(NULL, IDC_ARROW);
+#endif
 }

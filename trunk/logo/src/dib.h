@@ -1,6 +1,8 @@
 #ifndef DIB_INCLUDED
 #define DIB_INCLUDED
 
+#ifndef WX_PURE
+
 #include <windows.h>
 
 // WIDTHBYTES takes # of bits in a scan line and rounds up to nearest
@@ -29,5 +31,7 @@ void InitBitmapInfoHeader(
     DWORD dwWidth,
     DWORD dwHeight,
     int nBPP);
+
+#endif // WX_PURE
 
 #endif // DIB_INCLUDED

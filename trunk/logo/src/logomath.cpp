@@ -23,6 +23,7 @@
 #include <setjmp.h>
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 #include <signal.h>
 #include <float.h>
 #include <errno.h>

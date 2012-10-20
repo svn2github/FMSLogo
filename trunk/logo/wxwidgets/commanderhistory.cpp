@@ -187,7 +187,7 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
 void CCommanderHistory::Duplicate(CCommanderHistory & Source)
 {
     // Copy the text over
-    SetValue(Source.GetValue() + "\n");
+    SetValue(Source.GetValue().Append('\n'));
 
     // Put the caret in the same location
     long caretPosition = Source.GetCaretPosition();

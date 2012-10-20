@@ -19,6 +19,8 @@
 #ifndef __NETWND_H_
 #define __NETWND_H_
 
+#ifndef WX_PURE
+
 #include <windows.h>
 #include <winsock.h>
 
@@ -162,5 +164,7 @@ extern NODE *lnetshutdown(NODE *arg);
 // global variables
 extern CClientNetworkConnection g_ClientConnection;
 extern CServerNetworkConnection g_ServerConnection;
+
+#endif // WX_PURE
 
 #endif // __NETWND_H_

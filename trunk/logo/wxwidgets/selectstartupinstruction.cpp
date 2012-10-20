@@ -29,6 +29,7 @@
 #include "guiutils.h"
 #include "wrksp.h"
 #include "stringprintednode.h"
+#include "stringadapter.h"
 
 enum
 {
@@ -43,8 +44,7 @@ CSelectStartupInstructionDialog::CSelectStartupInstructionDialog(
     : wxDialog(
         Parent,
         wxID_ANY,
-        wxString(LOCALIZED_SELECTSTARTUP_CAPTION)
-        ),
+        WXSTRING(LOCALIZED_SELECTSTARTUP_CAPTION)),
       m_InstructionText(NULL),
       m_ProcedureList(NULL)
 {
@@ -74,7 +74,7 @@ CSelectStartupInstructionDialog::CSelectStartupInstructionDialog(
     wxStaticText * explainTextCtrl = new wxStaticText(
         this,
         wxID_ANY,
-        explainText,
+        WXSTRING(explainText),
         wxDefaultPosition,
         wxDefaultSize);
 
@@ -107,7 +107,7 @@ CSelectStartupInstructionDialog::CSelectStartupInstructionDialog(
             // REVISIT: the procedure name should be useable
             // as-is without further conversion.
             CStringPrintedNode procedureName(car(proclist_node));
-            m_ProcedureList->Append(procedureName.GetString());
+            m_ProcedureList->Append(WXSTRING(procedureName.GetString()));
         }
 
         gcref(proclist);
@@ -115,7 +115,7 @@ CSelectStartupInstructionDialog::CSelectStartupInstructionDialog(
     else
     {
         // There are no procedures
-        m_ProcedureList->Append(LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED);
+        m_ProcedureList->Append(WXSTRING(LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED));
         m_ProcedureList->Disable();
     }
 
@@ -147,7 +147,7 @@ CSelectStartupInstructionDialog::CSelectStartupInstructionDialog(
         wxButton * button = new wxButton(
             this,
             wxID_ANY,
-            buttonInfo[i].MenuText,
+            WXSTRING(buttonInfo[i].MenuText),
             wxDefaultPosition,
             wxDefaultSize,
             wxBU_EXACTFIT);
@@ -172,7 +172,7 @@ CSelectStartupInstructionDialog::CSelectStartupInstructionDialog(
         wxButton * button = new wxButton(
             this,
             buttonInfo[i].MenuId,
-            buttonInfo[i].MenuText,
+            WXSTRING(buttonInfo[i].MenuText),
             wxDefaultPosition,
             buttonSize);
 

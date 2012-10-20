@@ -4,6 +4,7 @@
 #include <wx/stattext.h>
 #include <wx/button.h>
 
+#include "stringadapter.h"
 #include "localizedstrings.h"
 
 // ----------------------------------------------------------------------------
@@ -17,7 +18,7 @@ enum
 };
 
 CSaveBeforeExitDialog::CSaveBeforeExitDialog(wxWindow *Parent)
-    : wxDialog(Parent, wxID_ANY, wxString(LOCALIZED_UNSAVEDCHANGES))
+    : wxDialog(Parent, wxID_ANY, WXSTRING(LOCALIZED_UNSAVEDCHANGES))
 {
     wxBoxSizer *topLevelSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -25,14 +26,14 @@ CSaveBeforeExitDialog::CSaveBeforeExitDialog(wxWindow *Parent)
     wxStaticText *message1 = new wxStaticText(
         this,
         wxID_ANY,
-        LOCALIZED_UNSAVEDCHANGES_MESSAGE1);
+        WXSTRING(LOCALIZED_UNSAVEDCHANGES_MESSAGE1));
     message1->Wrap(400);
     topLevelSizer->Add(message1, 0, wxALIGN_LEFT | wxALL, 10);
 
     wxStaticText *message2 = new wxStaticText(
         this,
         wxID_ANY,
-        LOCALIZED_UNSAVEDCHANGES_MESSAGE2);
+        WXSTRING(LOCALIZED_UNSAVEDCHANGES_MESSAGE2));
     message1->Wrap(400);
     topLevelSizer->Add(message2, 0, wxALIGN_LEFT | wxALL, 10);
 
@@ -43,19 +44,19 @@ CSaveBeforeExitDialog::CSaveBeforeExitDialog(wxWindow *Parent)
     wxButton *saveAndExitButton = new wxButton(
         this, 
         wxID_OK,
-        LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT);
+        WXSTRING(LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT));
     buttonSizer->Add(saveAndExitButton, 0, wxALIGN_CENTER | wxALL, 5);
 
     wxButton *exitWithoutSavingButton = new wxButton(
         this, 
         ID_EXITWITHOUTSAVING,
-        LOCALIZED_UNSAVEDCHANGES_DONTSAVE);
+        WXSTRING(LOCALIZED_UNSAVEDCHANGES_DONTSAVE));
     buttonSizer->Add(exitWithoutSavingButton, 0, wxALIGN_CENTER | wxALL, 5);
 
     wxButton *cancelButton = new wxButton(
         this, 
         wxID_CANCEL,
-        LOCALIZED_UNSAVEDCHANGES_CANCEL);
+        WXSTRING(LOCALIZED_UNSAVEDCHANGES_CANCEL));
     buttonSizer->Add(cancelButton, 0, wxALIGN_CENTER | wxALL, 5);
 
     topLevelSizer->Add(buttonSizer, 0, wxALIGN_RIGHT | wxALL, 5);

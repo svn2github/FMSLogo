@@ -69,6 +69,6 @@ extern bool   yield_flag;
 extern bool   IsDirty;
 extern bool   bExpert;
 
-extern fpos_t g_CharactersSuccessfullyParsedInEditor;
+extern long int g_CharactersSuccessfullyParsedInEditor;
 
 #endif // __WORKSPACE_H_
