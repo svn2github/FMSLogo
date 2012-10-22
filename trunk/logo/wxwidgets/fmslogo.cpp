@@ -769,7 +769,7 @@ ShowProcedureMiniEditor(
     else
     {
         // copy the new definition into the read buffer.
-        const char * src = WXSTRING_TO_STRING(miniEditor.GetProcedureBody());
+        const wxChar * src = miniEditor.GetProcedureBody().c_str();
         while (*src != '\0')
         {
             if (src[0] == '\r' && src[1] == '\n')
@@ -779,6 +779,8 @@ ShowProcedureMiniEditor(
                 src++;
             }
 
+            // BUG: On Unicode builds, this has data loss because it
+            // converts a wchar_t to a char.
             ReadBuffer.AppendChar(*src);
             src++;
         }
