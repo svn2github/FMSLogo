@@ -487,8 +487,8 @@ CWorkspaceEditor::Write(
             i + grabSize);
 
         size_t bytesWritten = fwrite(
-            textBlock.GetData(),
-            sizeof(wxChar),
+            WXSTRING_TO_STRING(textBlock),
+            sizeof(char),
             grabSize,
             file);
         if (bytesWritten != grabSize)
