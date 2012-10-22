@@ -365,7 +365,7 @@ CLogoCodeCtrl::DoSearchOperation(
         // Notify the user that we were unable to find it.
         const wxString & notFoundMessage = wxString::Format(
             WXSTRING(LOCALIZED_STRINGTABLE_CANNOTFINDSTRING),
-            WXSTRING_TO_STRING(StringToFind));
+            StringToFind.c_str());
 
         ::wxMessageBox(
             notFoundMessage,
