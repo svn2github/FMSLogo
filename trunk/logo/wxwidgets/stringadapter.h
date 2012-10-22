@@ -9,6 +9,8 @@
 #endif
 
 // WXSTRING_TO_STRING - converts from wxString to const char *.
+// Note: because there is data loss in the conversion, every instance
+// of this macro should be considered a bug.
 #if wxUSE_UNICODE
 #define WXSTRING_TO_STRING(STRING) ((STRING).mb_str(wxConvLibc)).data()
 #else
