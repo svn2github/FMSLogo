@@ -177,7 +177,7 @@ NODE *lgoto(NODE *args)
     return make_cont(goto_continuation, car(args));
 }
 
-NODE *ltag(NODE */* args */)
+NODE *ltag(NODE * /* args */)
 {
     return Unbound;
 }
