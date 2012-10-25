@@ -154,6 +154,7 @@ clean :
 	$(RM) $(TARGET).scr $(TARGET)*.scr
 	$(RM) $(TARGET)msdbg.*
 	$(RM) *~
+	$(RM) *.pdb
 
 test : $(TARGET)d.scr
 	rundll32.exe desk.cpl,InstallScreenSaver "C:\Documents and Settings\Dave\My Documents\logo-cvs\logo\screensaver\$(TARGET)d.scr"
