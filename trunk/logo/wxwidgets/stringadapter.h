@@ -14,5 +14,5 @@
 #if wxUSE_UNICODE
 #define WXSTRING_TO_STRING(STRING) ((STRING).mb_str(wxConvLibc)).data()
 #else
-#define WXSTRING_TO_STIRNG(STRING) ((STRING).c_str())
+#define WXSTRING_TO_STRING(STRING) ((STRING).c_str())
 #endif

@@ -32,7 +32,7 @@
 #include "error.h"
 #include "main.h"
 #include "startup.h"
-#include "graphwin.h"
+#include "cursor.h"
 #include "eval.h"
 #include "logorc.h"
 #include "utils.h"

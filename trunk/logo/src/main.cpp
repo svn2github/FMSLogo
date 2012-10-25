@@ -41,6 +41,7 @@
 
 #include "mmwind.h"
 #include "mainwind.h"
+#include "cursor.h"
 #include "mainframe.h"
 #include "cmdwind.h"
 #include "status.h"

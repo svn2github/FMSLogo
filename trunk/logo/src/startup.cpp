@@ -20,6 +20,10 @@
 
 #ifndef WX_PURE
 #include <windows.h>
+
+#ifdef max // MS compilers #define max in windows.h
+#undef max
+#endif
 #endif
 
 #include <algorithm>

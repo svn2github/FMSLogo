@@ -25,6 +25,7 @@
 #include "mmwind.h"
 #include "files.h"
 #include "mainwind.h"
+#include "cursor.h"
 #include "logoeventqueue.h"
 #include "eval.h"
 #include "print.h"

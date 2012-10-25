@@ -21,6 +21,10 @@
 */
 #ifndef WX_PURE
 #include <windows.h>
+
+#ifdef min // MS compilers #define min in windows.h
+#undef min
+#endif
 #endif
 
 #include <string.h>

@@ -16,6 +16,7 @@
 #include "localizedstrings.h"
 #include "logoeventqueue.h"
 #include "mainwind.h"
+#include "cursor.h"
 #include "devwind.h"
 #include "eval.h"
 #include "logorc.h"

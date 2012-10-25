@@ -25,6 +25,7 @@
 #include "screenwindow.h"
 #include "startup.h"
 #include "graphwin.h"
+#include "cursor.h"
 #include "debugheap.h"
 
 ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)

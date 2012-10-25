@@ -25,6 +25,7 @@
 #include "mainframe.h"
 #include "logorc.h"
 #include "graphwin.h"
+#include "startup.h"
 #include "eval.h"
 #include "mem.h"
 #include "graphics.h"

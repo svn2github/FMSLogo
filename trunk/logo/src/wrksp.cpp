@@ -42,7 +42,6 @@
 
 #include "localizedstrings.h"
 #include "cursor.h"
-#include "mainwind.h"
 #include "screenwindow.h"
 
 bool bExpert    = false;               // Expert mode

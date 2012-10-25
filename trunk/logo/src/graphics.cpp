@@ -32,6 +32,10 @@ typedef struct __PEN * HPEN;
 typedef struct __DC  * HDC;
 #else
 #include <windows.h>
+
+#ifdef max // MS compilers #define max in windows.h
+#undef max
+#endif
 #endif
 
 #ifdef __GNUC__
