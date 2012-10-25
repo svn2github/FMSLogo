@@ -53,7 +53,7 @@ CAboutFmsLogo::CAboutFmsLogo(wxWindow * Parent)
     wxButton *okButton = new wxButton(
         this,
         wxID_CANCEL,
-        WXSTRING(LOCALIZED_ABOUTMS_OK));
+        WXSTRING(LOCALIZED_ABOUTFMS_OK));
     sizerTop->Add(okButton, 0, wxALIGN_CENTER | wxALL, 5);
 
     SetSizer(sizerTop);
