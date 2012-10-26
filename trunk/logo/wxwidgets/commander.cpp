@@ -231,15 +231,6 @@ void CCommander::ChooseNewFont()
     }
 }
 
-void CCommander::Duplicate(CCommander & Source)
-{
-    // Copy the text of the recall box
-    m_History->Duplicate(*Source.m_History);
-
-    // Copy the text of the commander's input field
-    m_NextInstruction->Duplicate(*Source.m_NextInstruction);
-}
-
 void CCommander::UpdateStepButtonState()
 {
     m_StepButton->SetPressedState(stepflag);
@@ -738,8 +729,11 @@ END_EVENT_TABLE()
 // CCommanderDialog
 // ----------------------------------------------------------------------------
 
-CCommanderDialog::CCommanderDialog(wxWindow * Parent)
-    : wxDialog(
+CCommanderDialog::CCommanderDialog(
+    wxWindow   * Parent,
+    CCommander * CommanderPanel
+    ) :
+    wxDialog(
         Parent,
         wxID_ANY,
         WXSTRING(LOCALIZED_COMMANDER),
@@ -751,18 +745,15 @@ CCommanderDialog::CCommanderDialog(wxWindow * Parent)
         wxCAPTION | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
 #endif
 {
-    m_Commander = new CCommander(this);
-
     // Put the commander inside the dialog box
     wxSizer * sizer = new wxBoxSizer(wxVERTICAL);
 
-    sizer->Add(m_Commander, 1, wxEXPAND);
+    sizer->Add(CommanderPanel, 1, wxEXPAND);
     SetSizer(sizer);
 
     // Set the minimum size based on what's recommended to show
     // all of the controls in the commander.
-    SetMinSize(ClientToWindowSize(m_Commander->GetRecommendedMinimumSize()));
-
+    SetMinSize(ClientToWindowSize(CommanderPanel->GetRecommendedMinimumSize()));
 
     // Configure the keyboard shortcuts
     wxAcceleratorEntry acceleratorEntries[1];
@@ -775,11 +766,6 @@ CCommanderDialog::CCommanderDialog(wxWindow * Parent)
         acceleratorEntries);
 
     SetAcceleratorTable(acceleratorTable);
-}
-
-CCommander * CCommanderDialog::GetCommander()
-{
-    return m_Commander;
 }
 
 void CCommanderDialog::OnClose(wxCloseEvent& Event)

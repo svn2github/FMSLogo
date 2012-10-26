@@ -82,11 +82,6 @@ CCommanderInput::WantsKeyEvent(
     return false;
 }
 
-void CCommanderInput::Duplicate(CCommanderInput & Source)
-{
-    SetValue(Source.GetValue());
-}
-
 void CCommanderInput::OnKeyDown(wxKeyEvent& Event)
 {
     int keyCode = Event.GetKeyCode();

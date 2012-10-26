@@ -10,7 +10,6 @@ public:
     CCommanderInput(CCommander* Parent, wxWindowID Id);
 
     static bool WantsKeyEvent(int KeyCode);
-    void Duplicate(CCommanderInput & Source);
 
 private:
     

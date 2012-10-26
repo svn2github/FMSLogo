@@ -517,6 +517,7 @@ CMainFrame::CMainFrame(
         SetClientSize(ScreenWidth, ScreenHeight);
     }
 
+    m_RealCommander = new CCommander(m_Splitter);
     DockCommanderWindow();
 
     m_Screen->Show();
@@ -546,11 +547,9 @@ void CMainFrame::UndockCommanderWindow()
 {
     if (m_CommanderIsDocked)
     {
-        CCommanderDialog * newCommander = new CCommanderDialog(this);
-
-        newCommander->GetCommander()->Duplicate(*m_RealCommander);
-        long lastPosition = newCommander->GetCommander()->GetHistory()->GetLastPosition();
-        newCommander->GetCommander()->GetHistory()->ShowPosition(lastPosition);
+        CCommanderDialog * newCommander = new CCommanderDialog(
+            this,
+            m_RealCommander);
 
         if (bFixed)
         {
@@ -592,12 +591,12 @@ void CMainFrame::UndockCommanderWindow()
             newCommander->SetSize(x, y, width, height);
         }
 
-        m_Splitter->Unsplit(m_Commander);
-
         // commit to the new commander
-        m_Commander->Destroy();
-        m_Commander     = newCommander;
-        m_RealCommander = newCommander->GetCommander();
+        m_Splitter->Unsplit(m_RealCommander);
+        m_RealCommander->Reparent(newCommander);
+        m_RealCommander->Show();
+
+        m_Commander = newCommander;
         m_Commander->Show();
 
         m_RealCommander->GiveControlToInputBox();
@@ -609,8 +608,6 @@ void CMainFrame::DockCommanderWindow()
 {
     if (!m_CommanderIsDocked) 
     {
-        CCommander * newCommander = new CCommander(m_Splitter);
-
 #ifdef __WXMSW__ // utils.cpp only builds on Windows
 
         // Restore the commander window's height.
@@ -643,30 +640,12 @@ void CMainFrame::DockCommanderWindow()
 
             SetSize(mainFrameWidth, newHeight);
         }
-
-        int clientWidth;
-        int clientHeight;
-        GetClientSize(&clientWidth, &clientHeight);
-
-        m_Splitter->SplitHorizontally(m_Screen, newCommander);
-
-        int splitterWidth = m_Splitter->GetSashSize();
-        int splitterPosition = clientHeight - commanderWindowHeight - splitterWidth;
-        m_Splitter->SetSashPosition(splitterPosition);
-
-        // copy the history the button state
-        if (m_RealCommander != NULL)
+        else
         {
-            newCommander->Duplicate(*m_RealCommander);
-
-            // Scroll to the bottom
-            long lastPosition = newCommander->GetCommander()->GetHistory()->GetLastPosition();
-            newCommander->GetCommander()->GetHistory()->ShowPosition(lastPosition);
-
-            if (!bFixed &&
+            if (m_Commander != NULL &&
                 !static_cast<CCommanderDialog*>(m_Commander)->IsIconized())
             {
-                // Save the window position
+                // Save the Commander's dialog's position
                 const wxRect windowRectangle = m_Commander->GetRect();
 
                 SetConfigurationQuadruple(
@@ -678,6 +657,18 @@ void CMainFrame::DockCommanderWindow()
             }
         }
 
+        int clientWidth;
+        int clientHeight;
+        GetClientSize(&clientWidth, &clientHeight);
+
+        m_RealCommander->Reparent(m_Splitter);
+        m_Splitter->SplitHorizontally(m_Screen, m_RealCommander);
+
+        int splitterWidth = m_Splitter->GetSashSize();
+        int splitterPosition = clientHeight - commanderWindowHeight - splitterWidth;
+        m_Splitter->SetSashPosition(splitterPosition);
+
+        m_RealCommander->GetHistory()->ScrollToBottom();
 
         // commit to the docked commander
         if (m_Commander != NULL)
@@ -685,8 +676,7 @@ void CMainFrame::DockCommanderWindow()
             // m_Commander is NULL when this is called from the constructor
             m_Commander->Destroy();
         }
-        m_Commander     = newCommander;
-        m_RealCommander = newCommander->GetCommander();
+        m_Commander = m_RealCommander;
         m_Commander->Show();
 
         m_RealCommander->GiveControlToInputBox();

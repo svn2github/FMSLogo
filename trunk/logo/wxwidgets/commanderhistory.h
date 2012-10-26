@@ -8,7 +8,7 @@ class CCommanderHistory : public wxRichTextCtrl
 {
 public:
     CCommanderHistory(CCommander* Parent, wxWindowID Id);
-    void Duplicate(CCommanderHistory & CommanderHistory);
+    void ScrollToBottom();
 
 private:
     // Event handlers

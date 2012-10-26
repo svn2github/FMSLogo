@@ -25,7 +25,6 @@ public:
     void ToggleStep();
     void Halt();
     void Execute();
-    void Duplicate(CCommander & Source);
 
     void GiveControlToInputBox();
     void GiveControlToHistoryBox();
@@ -90,16 +89,12 @@ private:
 class CCommanderDialog : public wxDialog
 {
 public:
-    CCommanderDialog(wxWindow *Parent);
-    CCommander * GetCommander();
+    CCommanderDialog(wxWindow *Parent, CCommander * CommanderPanel);
 
 private:
     // event handlers
     void OnClose(wxCloseEvent& Event);
     void OnNavigateNextWindow(wxCommandEvent& Event);
-
-    // member variables
-    CCommander * m_Commander;
 
     DECLARE_NO_COPY_CLASS(CCommanderDialog);
     DECLARE_EVENT_TABLE();

@@ -184,15 +184,10 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
     }
 }
 
-void CCommanderHistory::Duplicate(CCommanderHistory & Source)
+void CCommanderHistory::ScrollToBottom()
 {
-    // Copy the text over
-    SetValue(Source.GetValue().Append('\n'));
-
-    // Put the caret in the same location
-    long caretPosition = Source.GetCaretPosition();
-    SetInsertionPoint(caretPosition);
-    ShowPosition(caretPosition);
+    long lastPosition = GetLastPosition();
+    ShowPosition(lastPosition);
 }
 
 void CCommanderHistory::OnLeftMouseButtonDown(wxMouseEvent& Event)
