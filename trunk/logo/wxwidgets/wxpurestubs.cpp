@@ -21,6 +21,8 @@ void halt_all_timers()
 
 void checkwindow(int *x, int *y, int *w, int *h)
 {
+    // -1 tells wxWidgets to use default size and position.
+    *x = *y = *w = *h = -1;
 }
 
 void ibmturt(bool draw)
