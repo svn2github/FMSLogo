@@ -105,13 +105,13 @@ In this case, you use the "PICK" command.
 
   <tr>
     <td>PICK <i>list</i></td>
-    <td>PICK [1, 4, 9, 16, 25]</td>
+    <td>PICK [1 4 9 16 25]</td>
     <td>Returns either 1, 4, 9, 16, or 25 at random.</td>
   </tr>
 
   <tr>
     <td>RUN <i>instruction</i></td>
-    <td>RUN PICK [FORWARD BACK] 100</td>
+    <td>RUN PICK [[FORWARD 100] [BACK 100]]</td>
     <td>Goes either forward or backward at random.</td>
   </tr>
 </table>
