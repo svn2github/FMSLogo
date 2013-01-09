@@ -66,10 +66,15 @@ typedef struct NODE * (*logofunc) (struct NODE *);
 #define NIL             ((NODE *) 0)
 #define UNDEFINED       Unbound
 #define HASH_LEN        1021           /* a prime number                      */
-#define SEG_SIZE        1000           /* 1 for debugging internal leaks      */
 #define MAX_NUMBER      50             /* max number of digits in a float     */
 #define MAX_BUFFER_SIZE 256
 #define MAX_PACKET_SIZE 1024
+
+// SEG_SIZE - how many cons cells are allocated in contigious memory when
+// memory is allocated for a cons cell.  Using a large number reduces the
+// number of times malloc() and free() are called.
+// This is ignored when MEM_DEBUG is defined.
+#define SEG_SIZE 1000
 
 #define STOP_PRIORITY	0
 #define OUTPUT_PRIORITY	1

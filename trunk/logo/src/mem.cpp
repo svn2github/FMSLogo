@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "mem.h"
 #include "logodata.h"
 #include "main.h"
 #include "error.h"
@@ -37,6 +38,7 @@ struct segment
     NODE      nodes[SEG_SIZE];
 };
 
+// Global Variables
 int memory_count = 0;                  // Current amount of logo segments malloc'd
 
 static NODE    *free_list    = NIL;    // global ptr to free node list
@@ -134,8 +136,6 @@ NODE *unref(NODE *ret_var)
 static
 void addseg()
 {
-    // TODO: Change SEG_SIZE=1 when MEM_DEBUG to be able to merge
-    // the two difference code blocks.
 #ifdef MEM_DEBUG
     // allocate the nodes one at a time
     NODE* new_node = (NODE*) malloc(sizeof(*new_node));
@@ -491,7 +491,7 @@ void gc(NODE *nd)
         nd = gc_deferred_list.PopDeferredNode();
     }
 
-    // Free all of the nodes which were marked has having
+    // Free all of the nodes which were marked as having
     // no further references as a result of freeing nd.
     gc_deferred_list.Uninitialize();
 }
