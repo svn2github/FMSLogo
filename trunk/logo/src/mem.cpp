@@ -38,6 +38,17 @@ struct segment
     NODE      nodes[SEG_SIZE];
 };
 
+// A NODE* that is cast to a form that is more convenient for storing an
+// unused NODE* such that it is ready to be reused.
+struct LIST_NODE
+{
+    // Pointer to the next item in the list.
+    LIST_NODE * Next;
+
+    // As many pointers as can fit into a NODE
+    NODE * Nodes[3];
+};
+
 // Global Variables
 int memory_count = 0;                  // Current amount of logo segments malloc'd
 
@@ -134,6 +145,35 @@ NODE *unref(NODE *ret_var)
 }
 
 static
+void push_to_free_list(NODE * node)
+{
+#ifdef MEM_DEBUG
+    settype(node, NT_FREE);
+#endif
+    node->nunion.ncons.ncdr = free_list;
+    free_list = node;
+}
+
+static
+bool free_list_is_empty()
+{
+    return free_list == NIL;
+}
+
+static
+NODE * pop_from_free_list()
+{
+    assert(!free_list_is_empty());
+
+    NODE *newnd = free_list;
+    free_list = newnd->nunion.ncons.ncdr;
+#ifdef MEM_DEBUG
+    assert(newnd->type == NT_FREE);
+#endif
+    return newnd;
+}
+
+static
 void addseg()
 {
 #ifdef MEM_DEBUG
@@ -142,9 +182,7 @@ void addseg()
     if (new_node != NULL)
     {
         memcpy(&new_node->magic, "NODE", 4);
-        settype(new_node, NT_FREE);
-        new_node->nunion.ncons.ncdr = free_list;
-        free_list = new_node;
+        push_to_free_list(new_node);
     }
 #else
 
@@ -161,8 +199,7 @@ void addseg()
         segment_list = newseg;
         for (int p = 0; p < SEG_SIZE; p++)
         {
-            newseg->nodes[p].nunion.ncons.ncdr = free_list;
-            free_list = &newseg->nodes[p];
+            push_to_free_list(&newseg->nodes[p]);
         }
     }
 #endif
@@ -171,18 +208,18 @@ void addseg()
 NODE *newnode(NODETYPES type)
 {
     // Make sure that there's a node on the free list
-    if (free_list == NIL)
+    if (free_list_is_empty())
     {
         // There's nothing on the free list.
         // Try to allocate a new segment
         addseg();
-        if (free_list == NIL)
+        if (free_list_is_empty())
         {
             // There's still nothing.
             // Raise an error and see if the ERRACT
-            // routine free any nodes.
+            // routine frees any nodes.
             err_logo(OUT_OF_MEM, NIL);
-            if (free_list == NIL)
+            if (free_list_is_empty())
             {
                 // We're out of options.
                 // Log an unrecoverable error, which will exit.
@@ -192,8 +229,7 @@ NODE *newnode(NODETYPES type)
     }
 
     // Pop the top node off the free list and use it.
-    NODE *newnd = free_list;
-    free_list = newnd->nunion.ncons.ncdr;
+    NODE *newnd = pop_from_free_list();
 
     // Initialize the new node
     settype(newnd, type);
@@ -226,33 +262,21 @@ NODE *cons(NODE *x, NODE *y)
 
 class CGarbageCollectionStack
 {
-    typedef struct _LIST_NODE
-    {
-        // Pointer to the next item in the list.
-        struct _LIST_NODE * Next;
-        
-        // As many pointers as can fit into a NODE
-        NODE * Nodes[3];
-    } LIST_NODE;
 
 public:
     void Initialize()
     {
-        m_FreeList     = NULL;
         m_TopNode      = NULL;
         m_TopNodeIndex = ARRAYSIZE(m_TopNode->Nodes);
     }
 
     void AddMemory(NODE * UnusedLogoNode)
     {
-        LIST_NODE * listNode = reinterpret_cast<LIST_NODE*>(UnusedLogoNode);
-
         // Assert that we can use an unused NODE as a LIST_NODE.
-        assert(sizeof *listNode <= sizeof *UnusedLogoNode);
+        assert(sizeof(LIST_NODE) <= sizeof *UnusedLogoNode);
 
         // Add this node to the head of the free list.
-        listNode->Next = m_FreeList;
-        m_FreeList     = listNode;
+        push_to_free_list(UnusedLogoNode);
     }
 
     void PushDeferredNode(NODE * DeferredNode)
@@ -260,18 +284,18 @@ public:
         if (m_TopNodeIndex == ARRAYSIZE(m_TopNode->Nodes))
         {
             // The current stack element is full.
-            // Get another one from the FreeList.
+            // Get another one from the free list.
             // The caller is responsible for ensuring that
             // there are enough elements in the free list.
-            assert(m_FreeList != NULL);
+            assert(!free_list_is_empty());
 
             // Pop the node off the free list
-            LIST_NODE * newNode = reinterpret_cast<LIST_NODE*>(m_FreeList);
-            m_FreeList = m_FreeList->Next;
+            NODE * freedNode = pop_from_free_list();
+            LIST_NODE * newNode = reinterpret_cast<LIST_NODE*>(freedNode);
 
 #ifdef MEM_DEBUG
             // Initialize the unused node slots to a recognizable value
-            for (size_t i = 0; i < ARRAYSIZE(m_FreeList->Nodes); i++)
+            for (size_t i = 0; i < ARRAYSIZE(newNode->Nodes); i++)
             {
                 newNode->Nodes[i] = (NODE*)0xDCDCDCDC;
             }
@@ -336,8 +360,7 @@ public:
             m_TopNodeIndex = ARRAYSIZE(m_TopNode->Nodes);
 
             // Push it node onto the free list.
-            node->Next = m_FreeList;
-            m_FreeList = node;
+            push_to_free_list(reinterpret_cast<NODE*>(node));
         }
 
         return deferredNode;
@@ -350,33 +373,20 @@ public:
         assert(m_TopNode == NULL);
         assert(m_TopNodeIndex == ARRAYSIZE(m_TopNode->Nodes));
 
-        LIST_NODE * nextNode;
-        for (LIST_NODE * node = m_FreeList; node != NULL; node = nextNode)
-        {
-            // Remember what the next node is, before we free node.
-            nextNode = node->Next;
-
 #ifdef MEM_DEBUG
-            // The easiest way to debug leaks is to just free the node.
-            free(node);
-#else
-            // "free" this node by adding it to the free list
-            NODE * logoNode = reinterpret_cast<NODE*>(node);
-            logoNode->nunion.ncons.ncdr = free_list;
-            free_list = logoNode;
-#endif
+        // To make debugging memory leaks easier in debug builds,
+        // aggressively free all nodes as soon as they are no longer needed.
+        // This also ensures that gc() doesn't assume that free_list has
+        // available memory at the time it is called.
+        while (!free_list_is_empty())
+        {
+            NODE * freedNode = pop_from_free_list();
+            free(freedNode);
         }
-
-        m_FreeList = NULL;
+#endif
     }
 
 private:
-    // A pointer to a list of GC deferred list nodes that
-    // contains no NODEs.  This is a "free" list that can be
-    // used when we need to expand the stack.
-    // TODO: Merge this with the global "free list"
-    LIST_NODE * m_FreeList;
-
     // This is the first node in the GC deferred list that has
     // NODE* in it that still need to be garbage collected.
     LIST_NODE * m_TopNode;
@@ -482,7 +492,7 @@ void gc(NODE *nd)
         // that we wish to free.
         gc_deferred_list.AddMemory(nd);
 
-        // Check if any of the child noded can be garbage collected
+        // Check if any of the child nodes can be garbage collected
         gc_deferred_list.MaybeGarbageCollect(tcar);
         gc_deferred_list.MaybeGarbageCollect(tcdr);
         gc_deferred_list.MaybeGarbageCollect(tobj);
