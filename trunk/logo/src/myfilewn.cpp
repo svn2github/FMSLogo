@@ -42,6 +42,7 @@
 
 #include "mainframe.h"
 #include "cmdwind.h"
+#include "graphwin.h" // for do_help()
 #include "debugheap.h"
 
 
