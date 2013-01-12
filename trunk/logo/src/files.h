@@ -51,10 +51,10 @@ public:
     }
 
 private:
-    FILE *  m_Stream;
-    bool    m_StreamIsBinary;
     NODE *  m_Name;
+    FILE *  m_Stream;
     FILE *  m_DefaultStream;
+    bool    m_StreamIsBinary;
 };
 
 // global variables
