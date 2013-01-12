@@ -27,7 +27,6 @@ extern NODETYPES nodetype(const NODE *nd);
 extern void setobject(NODE *nd, NODE *newobj);
 extern void setcar(NODE *nd, NODE *newcar);
 extern void setcdr(NODE *nd, NODE *newcdr);
-extern NODE *reref(NODE *proc_var, NODE *newval);
 extern NODE *unref(NODE *ret_var);
 extern NODE *newnode(NODETYPES type);
 extern NODE *cons(NODE *x, NODE *y);

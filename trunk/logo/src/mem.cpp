@@ -123,16 +123,6 @@ void setcdr(NODE *nd, NODE *newcdr)
     nd->nunion.ncons.ncdr = newcdr;
 }
 
-NODE *reref(NODE *oldval, NODE *newval)
-{
-    // reference newval
-    ref(newval);
-
-    // dereference proc_var
-    deref(oldval);
-
-    return newval;
-}
 
 // Decrements the reference count and returns the object, but will not free it.
 NODE *unref(NODE *ret_var)

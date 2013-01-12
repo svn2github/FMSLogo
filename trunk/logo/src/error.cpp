@@ -215,13 +215,13 @@ err_logo(
     case DIDNT_OUTPUT:
         if (didnt_output_name != NIL)
         {
-            last_call = reref(last_call, didnt_output_name);
+            assign(last_call, didnt_output_name);
         }
         if (ErrorMessageParameters == NIL)
         {
             ErrorMessageParameters = vref(car(didnt_get_output));
-            ufun = reref(ufun, cadr(didnt_get_output));
-            this_line = reref(this_line, cadr(cdr(didnt_get_output)));
+            assign(ufun,      cadr(didnt_get_output));
+            assign(this_line, cadr(cdr(didnt_get_output)));
         }
 
         g_ErrorFormatString = LOCALIZED_ERROR_DIDNTOUTPUT;
@@ -463,8 +463,8 @@ err_logo(
     didnt_output_name = NIL;
     if (IsUpLevel && ufun != NIL)
     {
-        ufun = reref(ufun, last_ufun);
-        this_line = reref(this_line, last_line);
+        assign(ufun,      last_ufun);
+        assign(this_line, last_line);
     }
 
     g_ErrorCode = vref(make_intnode((FIXNUM) ErrorType));
@@ -548,8 +548,8 @@ err_logo(
     }
 
     stopping_flag = THROWING;
-    throw_node  = reref(throw_node, new_throw_node);
-    output_node = reref(output_node, Unbound);
+    assign(throw_node, new_throw_node);
+    assign(output_node, Unbound);
     return Unbound;
 }
 
@@ -630,11 +630,11 @@ NODE *lpause(NODE*)
         NODE * elist = vref(reader(stdin, "? "));
         if (NOT_THROWING) 
         {
-            elist = reref(elist, parser(elist, true));
+            assign(elist, parser(elist, true));
         }
         else 
         {
-            elist = reref(elist, NIL);
+            assign(elist, NIL);
         }
         input_mode = INPUTMODE_None;
 
@@ -662,7 +662,7 @@ NODE *lpause(NODE*)
                 // throwing to the "Pause" label.
                 // Reset back to a running node, cleanup, and return.
                 NODE * val = vref(output_node);
-                output_node = reref(output_node, Unbound);
+                assign(output_node, Unbound);
                 stopping_flag = RUN;
 
                 // REVISIT: This is the same cleanup logic
@@ -674,7 +674,7 @@ NODE *lpause(NODE*)
                 g_ValueStatus  = saved_value_status;
                 if (uname != NIL)
                 {
-                    ufun = reref(ufun, uname);
+                    assign(ufun, uname);
                     deref(uname);
                 }
 
@@ -703,7 +703,7 @@ NODE *lpause(NODE*)
     g_ValueStatus = saved_value_status;
     if (uname != NIL)
     {
-        ufun = reref(ufun, uname);
+        assign(ufun, uname);
         deref(uname);
     }
    
@@ -742,14 +742,14 @@ NODE *lnoyield(NODE *)
 NODE *lcontinue(NODE *args)
 {
     stopping_flag = THROWING;
-    throw_node = reref(throw_node, Pause);
+    assign(throw_node, Pause);
     if (args != NIL)
     {
-        output_node = reref(output_node, car(args));
+        assign(output_node, car(args));
     }
     else
     {
-        output_node = reref(output_node, Unbound);
+        assign(output_node, Unbound);
     }
 
     return Unbound;

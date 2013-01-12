@@ -2943,7 +2943,7 @@ NODE *lsetpenpattern(NODE *args)
     ref(arg);
     while ((arg == NIL || !is_list(arg)) && NOT_THROWING)
     {
-        arg = reref(arg, err_logo(BAD_DATA, arg));
+        assign(arg, err_logo(BAD_DATA, arg));
     }
 
     if (NOT_THROWING)

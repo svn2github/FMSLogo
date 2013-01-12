@@ -56,7 +56,7 @@ NODE *loutput(NODE *arg)
     if (NOT_THROWING)
     {
         stopping_flag = OUTPUT;
-        output_node = reref(output_node, car(arg));
+        assign(output_node, car(arg));
     }
     return Unbound;
 }
@@ -130,14 +130,14 @@ NODE *lthrow(NODE *arg)
         else
         {
             stopping_flag = THROWING;
-            throw_node = reref(throw_node, car(arg));
+            assign(throw_node, car(arg));
             if (cdr(arg) != NIL)
             {
-                output_node = reref(output_node, cadr(arg));
+                assign(output_node, cadr(arg));
             }
             else
             {
-                output_node = reref(output_node, Unbound);
+                assign(output_node, Unbound);
             }
         }
     }

@@ -776,7 +776,7 @@ NODE *cnv_node_to_strnode(NODE *nd)
 
     case QUOTE:
         nd = vref(cnv_node_to_strnode(node__quote(nd)));
-        nd = reref(
+        assign(
             nd, 
             make_strnode(getstrptr(nd), getstrlen(nd) + 1, nodetype(nd), quote_strnzcpy));
         unref(nd);
@@ -784,7 +784,7 @@ NODE *cnv_node_to_strnode(NODE *nd)
          
     case COLON:
         nd = vref(cnv_node_to_strnode(node__colon(nd)));
-        nd = reref(
+        assign(
             nd, 
             make_strnode(getstrptr(nd), getstrlen(nd) + 1, nodetype(nd), colon_strnzcpy));
         unref(nd);

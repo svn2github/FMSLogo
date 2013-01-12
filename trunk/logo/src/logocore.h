@@ -758,6 +758,26 @@ gcref(NODE * object)
     }
 }
 
+inline
+void
+assign(
+    NODE * & To,
+    NODE *   From
+    )
+{
+    // Reference the new value.
+    // Do this before dereferencing the old value because
+    // the old value may hold the only reference on the new
+    // value.  For example: assign(nd, car(nd))
+    ref(From);
+
+    // Dereference the old value.
+    deref(To);
+
+    // Make the assignment.
+    To = From;
+}
+
 #define push(obj, stack)    spush(obj, &stack)
 #define pop(stack)          spop(&stack)
 

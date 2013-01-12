@@ -940,7 +940,7 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
                 // The user doesn't care about the error.
 
                 // Release our reference on m_EditArguments
-                m_EditArguments = reref(m_EditArguments, NIL);
+                assign(m_EditArguments, NIL);
 
                 // Clear the error flag, since it was handled by the user.
                 m_ErrorDetected = false;
@@ -967,7 +967,7 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
                 }
 
                 // free up m_EditArguments
-                m_EditArguments = reref(m_EditArguments, NIL);
+                assign(m_EditArguments, NIL);
             }
 
             // Delete the temporary file which held the workspace

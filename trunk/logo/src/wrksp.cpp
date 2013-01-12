@@ -225,7 +225,7 @@ NODE *lfulltext(NODE *args)
 static
 void set_new_generation()
 {
-    the_generation = reref(the_generation, cons_list(NIL));
+    assign(the_generation, cons_list(NIL));
 }
 
 static
@@ -532,7 +532,7 @@ NODE *to_helper(NODE *args, bool is_macro)
         NODE * body_list          = cons_list(formals);
         NODE * body_list_lastnode = body_list;
 
-        g_ToLine    = reref(g_ToLine, body_words);
+        assign(g_ToLine, body_words);
         to_pending = true;      // for int or quit signal
         while (NOT_THROWING && to_pending && !feof(loadstream))
         {
@@ -605,7 +605,7 @@ NODE *to_helper(NODE *args, bool is_macro)
         }
 
         rd_clearbuffer(loadstream);
-        g_ToLine   = reref(g_ToLine, NIL);
+        assign(g_ToLine, NIL);
         to_pending = false;
     }
     else
@@ -613,7 +613,7 @@ NODE *to_helper(NODE *args, bool is_macro)
         gcref(formals);
     }
 
-    deepend_proc_name = reref(deepend_proc_name, NIL);
+    assign(deepend_proc_name, NIL);
     input_mode = INPUTMODE_None;
     return Unbound;
 }
@@ -1649,7 +1649,7 @@ bool endedit(void)
         while (!feof(loadstream) && NOT_THROWING)
         {
             g_CharactersSuccessfullyParsedInEditor = ftell(loadstream);
-            current_line = reref(current_line, reader(loadstream, ""));
+            assign(current_line, reader(loadstream, ""));
 
             NODE * exec_list = parser(current_line, true);
 
@@ -1669,7 +1669,7 @@ bool endedit(void)
     lsetcursorarrow(NIL);
     yield_flag = save_yield_flag;
     loadstream = holdstrm;
-    current_line = reref(current_line, tmp_line);
+    assign(current_line, tmp_line);
 
     return realsave;
 }

@@ -1432,7 +1432,7 @@ void TMyFileWindow::EvDestroy()
             else
             {
                 // free up args_list
-                args_list = reref(args_list, NIL);
+                assign(args_list, NIL);
 
                 error_happen = false;
                 MainWindowx->CommandWindow->Editbox.SetFocus();
@@ -1453,7 +1453,7 @@ void TMyFileWindow::EvDestroy()
                 }
 
                 // free up args_list
-                args_list = reref(args_list, NIL);
+                assign(args_list, NIL);
             }
 
             unlink(TempPathName);

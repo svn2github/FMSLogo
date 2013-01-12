@@ -31,8 +31,6 @@
 #include "logocore.h"
 #include "debugheap.h"
 
-#define assign(to, from)    to = reref(to, from)
-
 NODE *the_generation;
 bool tree_dk_how;
 

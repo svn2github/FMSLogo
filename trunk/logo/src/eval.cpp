@@ -46,8 +46,6 @@
 #include "startup.h"
 #include "debugheap.h"
 
-#define assign(to, from)    (to = reref(to, from))
-
 // save/restore a NODE
 #define save(register)      push(register, stack)
 #define restore(register)   (assign(register, car(stack)), pop(stack))
@@ -86,8 +84,6 @@
            reg1=(FIXNUM)car(stack); numpop(&stack)
 
 #define newcont(tag)        (numsave(cont), cont = (FIXNUM)tag)
-
-#define nameis(x,y)         ((object__caseobj(x)) == (object__caseobj(y)))
 
 inline
 bool
@@ -1362,7 +1358,7 @@ NODE *evaluator(NODE *list, enum labels where)
     {
         repcountup++;
         save2(list,var);
-        var = reref(var, var_stack);
+        assign(var, var_stack);
         num2save(repcount,repcountup);
         num2save(g_ValueStatus,tailcall);
         g_ValueStatus = VALUE_STATUS_NoValueInMacro;
@@ -1475,7 +1471,7 @@ NODE *evaluator(NODE *list, enum labels where)
         if (compare_node(throw_node, catch_tag, true) == 0 ||
             Error.Equals(catch_tag) && Error.Equals(throw_node))
             {
-                throw_node = reref(throw_node, Unbound);
+                assign(throw_node, Unbound);
                 stopping_flag = RUN;
                 assign(val, output_node);
             }

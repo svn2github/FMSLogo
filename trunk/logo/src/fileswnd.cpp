@@ -81,7 +81,7 @@ bool fileload(const char *Filename)
 
         while (!feof(loadstream) && NOT_THROWING)
         {
-            current_line = reref(current_line, reader(loadstream, ""));
+            assign(current_line, reader(loadstream, ""));
             NODE * exec_list = parser(current_line, true);
             g_ValueStatus = VALUE_STATUS_NotOk;
             eval_driver(exec_list);
