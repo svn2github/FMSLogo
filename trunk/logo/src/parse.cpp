@@ -143,7 +143,15 @@ void CStringNodeBuffer::TakeOwnershipOfBuffer()
     ASSERT_STRINGNODE_INVARIANT;
 
     // Reduce the size of the buffer to only what is needed.
-    realloc(m_Buffer, m_StringLimit - m_Buffer + 1);
+    size_t newBufferSize = m_StringLimit - m_Buffer + 1;
+    void * smallerBuffer = realloc(m_Buffer, newBufferSize);
+    if (smallerBuffer != NULL)
+    {
+        // The reallocation should always succeed, but the C standard
+        // does not guarantee this.
+        m_Buffer      = static_cast<char *>(smallerBuffer);
+        m_StringLimit = m_Buffer + newBufferSize - 1;
+    }
 
     // initialize the reference count to zero.
     *reinterpret_cast<unsigned short *>(m_Buffer) = 0;
