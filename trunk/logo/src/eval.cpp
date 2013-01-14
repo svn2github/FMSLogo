@@ -811,7 +811,6 @@ NODE *evaluator(NODE *list, enum labels where)
     NODE * formals;             // list of formal parameters
     FIXNUM repcount;            // count for repeat
 
-    int i;
     bool tracing;                 // are we tracing the current procedure?
 
     FIXNUM oldtailcall;           // in case of reentrant use of evaluator
@@ -839,15 +838,15 @@ NODE *evaluator(NODE *list, enum labels where)
     goto begin_seq;
 
  begin_seq:
+    assign(val, Unbound);
+
     // Parenthesize the Logo list into something more like LISP
     treeify_line(list);
     if (!is_tree(list))
     {
-        assign(val, Unbound);
         goto fetch_cont;
     }
     assign(unev, tree__tree(list));
-    assign(val, Unbound);
     goto eval_sequence;
 
  end_line:
@@ -902,11 +901,11 @@ NODE *evaluator(NODE *list, enum labels where)
             goto non_tail_eval;
         }
 
-        // the first element in the list is the function
-        assign(fun, car(exp));
-
         // Initialize the argument list
         assign(argl, NIL);
+
+        // the first element in the list is the function
+        assign(fun, car(exp));
 
         // the rest of the elements are the function's inputs
         if (cdr(exp) == NIL)
@@ -1019,6 +1018,12 @@ NODE *evaluator(NODE *list, enum labels where)
         this_line,
         last_line);
 
+    // If val is Unbound, then either an error was thrown, or
+    // an expression did not output a value.  Since the expression
+    // was an argument to another procedure, it's an error for
+    // the expression not to ouput something.  Throw a
+    // "didn't ouptut" error and give the ERRACT routine a chance
+    // to supply the missing value.
     while (NOT_THROWING && val == Unbound)
     {
         assign(val, err_logo(DIDNT_OUTPUT, NIL));
@@ -1154,7 +1159,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
     if (tracing = flag__caseobj(fun, PROC_TRACED) || traceflag)
     {
-        for (i = 0; i < trace_level; i++) 
+        for (int i = 0; i < trace_level; i++) 
         {
             print_space(g_Writer.GetStream());
         }
@@ -1505,7 +1510,7 @@ NODE *evaluator(NODE *list, enum labels where)
         is_list(exp) && 
         is_tailform(procnode__caseobj(car(exp))))
     {
-        // "exp" is a procedure call.  car(exp) is the proceedure's case object.
+        // "exp" is a procedure call.  car(exp) is the procedure's case object.
         NODE * const caseobj = car(exp);
 
         // Get the priority of the primitive to get the "true identity".
@@ -1754,7 +1759,7 @@ NODE *evaluator(NODE *list, enum labels where)
     --trace_level;
     if (NOT_THROWING)
     {
-        for (i = 0; i < trace_level; i++) 
+        for (int i = 0; i < trace_level; i++) 
         {
             print_space(g_Writer.GetStream());
         }
@@ -1812,6 +1817,10 @@ NODE *evaluator(NODE *list, enum labels where)
         }
         else
         {
+            // Macros output lists that are to be evaluated
+            // within the context of the caller.  Now that the
+            // macro has returned, we can evaluate the list, which
+            // is currently in "val".
             assign(list, val);
             goto begin_seq;
         }
