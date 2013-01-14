@@ -156,7 +156,7 @@ NODE * pop_from_free_list()
     assert(!free_list_is_empty());
 
     NODE *newnd = free_list;
-    free_list = newnd->nunion.ncons.ncdr;
+    free_list = free_list->nunion.ncons.ncdr;
 #ifdef MEM_DEBUG
     assert(newnd->type == NT_FREE);
 #endif
@@ -258,6 +258,10 @@ public:
     {
         m_TopNode      = NULL;
         m_TopNodeIndex = ARRAYSIZE(m_TopNode->Nodes);
+
+#ifdef MEM_DEBUG
+        assert(free_list_is_empty());
+#endif
     }
 
     void AddMemory(NODE * UnusedLogoNode)
