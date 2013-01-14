@@ -46,45 +46,6 @@
 #include "startup.h"
 #include "debugheap.h"
 
-// save/restore a NODE
-#define save(register)      push(register, stack)
-#define restore(register)   (assign(register, car(stack)), pop(stack))
-
-// save/restore two NODEs
-#define save2(reg1,reg2)    (push(reg1,stack),setobject(stack,reg2))
-#define restore2(reg1,reg2) (assign(reg2,getobject(stack)), \
-           assign(reg1,car(stack)), pop(stack))
-
-// save/restore two NODEs, only one of which is reference counted.
-#define mixednodesave(unreferenced_node,referenced_node) \
-       (numpush((FIXNUM)unreferenced_node,&stack), \
-        setobject(stack,referenced_node))
-#define mixednoderestore(unreferenced_node,referenced_node) \
-       deref(referenced_node); referenced_node=getobject(stack); \
-       unreferenced_node=car(stack); numpop(&stack)
-
-// save/restore an unreferenced node
-#define unreferencednodesave(unreferenced_node)   \
-        numpush((FIXNUM)unreferenced_node, &stack)
-#define unreferencednoderestore(unreferenced_node) \
-        (unreferenced_node=car(stack), numpop(&stack))
-
-// save/restore a FIXNUM
-#define numsave(register)   numpush(register, &stack)
-#define numrestore(register) (register=(FIXNUM)car(stack), numpop(&stack))
-
-// save/restore two FIXNUMs
-#define num2save(reg1,reg2) (numpush(reg1,&stack),stack->nunion.ncons.nobj=(NODE *)reg2)
-#define num2restore(reg1,reg2) (reg2=(FIXNUM)getobject(stack), \
-           reg1=(FIXNUM)car(stack), numpop(&stack))
-
-// save/restore a FIXNUM (reg1) and a NODE (reg2)
-#define mixsave(reg1,reg2)  (numpush(reg1,&stack),setobject(stack,reg2))
-#define mixrestore(reg1,reg2) deref(reg2); reg2=getobject(stack); \
-           reg1=(FIXNUM)car(stack); numpop(&stack)
-
-#define newcont(tag)        (numsave(cont), cont = (FIXNUM)tag)
-
 inline
 bool
 IsInMacro(
@@ -202,30 +163,6 @@ void spush(NODE *obj, NODE **stack)
     *stack = temp;
 }
 
-static
-void numpop(NODE **stack)
-{
-    NODE *temp = (*stack)->nunion.ncons.ncdr;
-
-    (*stack)->nunion.ncons.ncar = NIL;
-    (*stack)->nunion.ncons.ncdr = NIL;
-    (*stack)->nunion.ncons.nobj = NIL;
-    deref(*stack);
-    *stack = temp;
-}
-
-static
-void numpush(FIXNUM obj, NODE **stack)
-{
-    NODE *temp = newnode(CONS);
-
-    temp->nunion.ncons.ncar = (NODE *) obj;
-    temp->nunion.ncons.ncdr = *stack;
-    ref(temp);
-    *stack = temp;
-}
-
-
 // Check if a local variable is already in this frame 
 static
 bool not_local(NODE *name, NODE *sp)
@@ -264,21 +201,20 @@ void create_local_variable(NODE * caseobject, NODE * var_stack_position)
     }
 }
 
-// reverse a list destructively
+// reverse a stack in-place
 static
 NODE *reverse(NODE *list)
 {
-    NODE *ret = NIL, *temp;
+    NODE *ret = NIL;
 
-    ref(list);
     while (list != NIL)
     {
-        temp = list;
+        NODE * temp = list;
         list = cdr(list);
         temp->nunion.ncons.ncdr = ret;
         ret = temp;
     }
-    return unref(ret);
+    return ret;
 }
 
 // Returns a new list with the members of "a", followed by the members of "b".
@@ -342,52 +278,568 @@ void trace_input(NODE * UnquotedArgument)
     print_space(g_Writer.GetStream());
 }
 
+class CEvaluatorStack
+{
+private:
+    struct EVALUATOR_STACK_FRAME
+    {
+        EVALUATOR_STACK_FRAME * NextFrame;
+        enum labels             ReturnLabel; 
+
+        NODE * ReferencedNode1;
+        NODE * ReferencedNode2;
+        NODE * ReferencedNode3;
+        NODE * ReferencedNode4;
+        NODE * ReferencedNode5;
+        NODE * ReferencedNode6;
+        NODE * ReferencedNode7;
+        NODE * ReferencedNode8;
+        NODE * ReferencedNode9;
+        NODE * ReferencedNode10;
+
+        FIXNUM Number1;
+        FIXNUM Number2;
+        FIXNUM Number3;
+        FIXNUM Number4;
+
+        NODE * UnreferencedNode1;
+        NODE * UnreferencedNode2;
+    };
+
+    EVALUATOR_STACK_FRAME * m_StackTop;
+
+public:
+    CEvaluatorStack() :
+        m_StackTop(NULL)
+    {
+    }
+
+    ~CEvaluatorStack()
+    {
+        // Assert that the number of calls to PushFrame() matched
+        // match the calls to PopFrame().
+        assert(m_StackTop == NULL);
+    }
+
+    enum labels
+    GetReturnLabel() const
+    {
+        return m_StackTop->ReturnLabel;
+    }
+
+
+    void
+    PushFrame(
+        enum labels  ReturnLabel
+        )
+    {
+        // Allocate the stack frame
+        EVALUATOR_STACK_FRAME * stackFrame = static_cast<EVALUATOR_STACK_FRAME *>(malloc(sizeof(*stackFrame)));
+        if (stackFrame == NULL)
+        {
+            err_logo(OUT_OF_MEM_UNREC, NIL);
+        }
+
+        // Push the new node on top of the stack.
+        stackFrame->NextFrame = m_StackTop;
+        m_StackTop = stackFrame;
+
+        // Set the return point.
+        stackFrame->ReturnLabel = ReturnLabel;
+    }
+
+    void
+    PushFrame(
+        enum labels  ReturnLabel,
+        NODE       * Node1
+        )
+    {
+        // Allocate the new stack frame.
+        PushFrame(ReturnLabel);
+
+        // Save the registers.
+        m_StackTop->ReferencedNode1 = vref(Node1);
+    }
+
+    void
+    PushFrame(
+        enum labels  ReturnLabel,
+        NODE       * Node1,
+        NODE       * Node2,
+        NODE       * Node3,
+        NODE       * Node4
+        )
+    {
+        // Allocate the new stack frame
+        PushFrame(ReturnLabel);
+
+        // Save the registers.
+        m_StackTop->ReferencedNode1 = vref(Node1);
+        m_StackTop->ReferencedNode2 = vref(Node2);
+        m_StackTop->ReferencedNode3 = vref(Node3);
+        m_StackTop->ReferencedNode4 = vref(Node4);
+    }
+
+    void
+    PushFrame(
+        enum labels  ReturnLabel,
+        NODE       * Node1,
+        NODE       * Node2,
+        NODE       * Node3,
+        NODE       * Node4,
+        NODE       * Node5,
+        NODE       * Node6,
+        NODE       * Node7,
+        NODE       * Node8
+        )
+    {
+        // Allocate the new stack frame
+        PushFrame(ReturnLabel);
+
+        // Save the registers.
+        m_StackTop->ReferencedNode1 = vref(Node1);
+        m_StackTop->ReferencedNode2 = vref(Node2);
+        m_StackTop->ReferencedNode3 = vref(Node3);
+        m_StackTop->ReferencedNode4 = vref(Node4);
+        m_StackTop->ReferencedNode5 = vref(Node5);
+        m_StackTop->ReferencedNode6 = vref(Node6);
+        m_StackTop->ReferencedNode7 = vref(Node7);
+        m_StackTop->ReferencedNode8 = vref(Node8);
+    }
+
+    void
+    PushFrame(
+        enum labels  ReturnLabel,
+        NODE       * Node1,
+        NODE       * Node2,
+        NODE       * Node3,
+        FIXNUM       Number1,
+        FIXNUM       Number2,
+        FIXNUM       Number3
+        )
+    {
+        // Allocate the new stack frame
+        PushFrame(ReturnLabel);
+
+        // Save the registers
+        m_StackTop->ReferencedNode1 = vref(Node1);
+        m_StackTop->ReferencedNode2 = vref(Node2);
+        m_StackTop->ReferencedNode3 = vref(Node3);
+
+        m_StackTop->Number1 = Number1;
+        m_StackTop->Number2 = Number2;
+        m_StackTop->Number3 = Number3;
+    }
+
+    void
+    PushFrame(
+        enum labels  ReturnLabel,
+        NODE       * Node1,
+        NODE       * Node2,
+        NODE       * Node3,
+        NODE       * Node4,
+        NODE       * Node5,
+        NODE       * Node6,
+        NODE       * Node7,
+        NODE       * Node8,
+        NODE       * Node9,
+        FIXNUM       Number1,
+        FIXNUM       Number2,
+        NODE       * UnreferencedNode1,
+        NODE       * UnreferencedNode2
+        )
+    {
+        // Allocate the new stack frame.
+        PushFrame(ReturnLabel);
+
+        // Save the registers.
+        m_StackTop->ReferencedNode1 = vref(Node1);
+        m_StackTop->ReferencedNode2 = vref(Node2);
+        m_StackTop->ReferencedNode3 = vref(Node3);
+        m_StackTop->ReferencedNode4 = vref(Node4);
+        m_StackTop->ReferencedNode5 = vref(Node5);
+        m_StackTop->ReferencedNode6 = vref(Node6);
+        m_StackTop->ReferencedNode7 = vref(Node7);
+        m_StackTop->ReferencedNode8 = vref(Node8);
+        m_StackTop->ReferencedNode9 = vref(Node9);
+
+        m_StackTop->Number1 = Number1;
+        m_StackTop->Number2 = Number2;
+
+        m_StackTop->UnreferencedNode1 = UnreferencedNode1;
+        m_StackTop->UnreferencedNode2 = UnreferencedNode2;
+    }
+
+    void
+    PushFrame(
+        enum labels  ReturnLabel,
+        NODE       * Node1,
+        NODE       * Node2,
+        NODE       * Node3,
+        NODE       * Node4,
+        NODE       * Node5,
+        NODE       * Node6,
+        NODE       * Node7,
+        NODE       * Node8,
+        NODE       * Node9,
+        NODE       * Node10,
+        FIXNUM       Number1,
+        FIXNUM       Number2
+        )
+    {
+        // Allocate the new stack frame.
+        PushFrame(ReturnLabel);
+
+        // Save the registers.
+        m_StackTop->ReferencedNode1  = vref(Node1);
+        m_StackTop->ReferencedNode2  = vref(Node2);
+        m_StackTop->ReferencedNode3  = vref(Node3);
+        m_StackTop->ReferencedNode4  = vref(Node4);
+        m_StackTop->ReferencedNode5  = vref(Node5);
+        m_StackTop->ReferencedNode6  = vref(Node6);
+        m_StackTop->ReferencedNode7  = vref(Node7);
+        m_StackTop->ReferencedNode8  = vref(Node8);
+        m_StackTop->ReferencedNode9  = vref(Node9);
+        m_StackTop->ReferencedNode10 = vref(Node10);
+
+        m_StackTop->Number1 = Number1;
+        m_StackTop->Number2 = Number2;
+    }
+
+    void
+    PushFrame(
+        enum labels  ReturnLabel,
+        FIXNUM       Number1,
+        FIXNUM       Number2
+        )
+    {
+        // Allocate the new stack frame
+        PushFrame(ReturnLabel);
+
+        // Save the registers
+        m_StackTop->Number1 = Number1;
+        m_StackTop->Number2 = Number2;
+    }
+
+
+    void
+    PushFrame(
+        enum labels  ReturnLabel,
+        NODE       * Node1,
+        NODE       * Node2,
+        FIXNUM       Number1,
+        FIXNUM       Number2,
+        FIXNUM       Number3,
+        FIXNUM       Number4
+        )
+    {
+        // Allocate the new stack frame
+        PushFrame(ReturnLabel);
+
+        // Save the registers
+        m_StackTop->ReferencedNode1 = vref(Node1);
+        m_StackTop->ReferencedNode2 = vref(Node2);
+
+        m_StackTop->Number1 = Number1;
+        m_StackTop->Number2 = Number2;
+        m_StackTop->Number3 = Number3;
+        m_StackTop->Number4 = Number4;
+    }
+
+    void
+    PushFrame(
+        enum labels  ReturnLabel,
+        NODE       * Node1,
+        NODE       * Node2,
+        NODE       * Node3,
+        FIXNUM       Number1,
+        FIXNUM       Number2
+        )
+    {
+        // Allocate the new stack frame
+        PushFrame(ReturnLabel);
+
+        // Save the registers.
+        m_StackTop->ReferencedNode1  = vref(Node1);
+        m_StackTop->ReferencedNode2  = vref(Node2);
+        m_StackTop->ReferencedNode3  = vref(Node3);
+
+        m_StackTop->Number1 = Number1;
+        m_StackTop->Number2 = Number2;
+    }
+
+    static
+    void
+    RestoreReferencedNode(
+        NODE  *& TargetLocation,
+        NODE  *  ReferencedNode
+        )
+    {
+        deref(TargetLocation);
+        TargetLocation = ReferencedNode;
+    }
+
+    void
+    PopFrame()
+    {
+        // Pop the stack frame
+        EVALUATOR_STACK_FRAME * poppedFrame = m_StackTop;
+        m_StackTop = m_StackTop->NextFrame;
+
+        // Free the old top
+        free(poppedFrame);
+    }
+
+    void
+    PopFrame(
+        NODE *& Node1
+        )
+    {
+        RestoreReferencedNode(Node1, m_StackTop->ReferencedNode1);
+
+        PopFrame();
+    }
+
+    void
+    PopFrame(
+        NODE *& Node1,
+        NODE *& Node2,
+        NODE *& Node3,
+        NODE *& Node4
+        )
+    {
+        RestoreReferencedNode(Node1, m_StackTop->ReferencedNode1);
+        RestoreReferencedNode(Node2, m_StackTop->ReferencedNode2);
+        RestoreReferencedNode(Node3, m_StackTop->ReferencedNode3);
+        RestoreReferencedNode(Node4, m_StackTop->ReferencedNode4);
+
+        PopFrame();
+    }
+
+    void
+    PopFrame(
+        NODE      *& Node1,
+        NODE      *& Node2,
+        NODE      *& Node3,
+        NODE      *& Node4,
+        NODE      *& Node5,
+        NODE      *& Node6,
+        NODE      *& Node7,
+        NODE      *& Node8
+        )
+    {
+        RestoreReferencedNode(Node1, m_StackTop->ReferencedNode1);
+        RestoreReferencedNode(Node2, m_StackTop->ReferencedNode2);
+        RestoreReferencedNode(Node3, m_StackTop->ReferencedNode3);
+        RestoreReferencedNode(Node4, m_StackTop->ReferencedNode4);
+        RestoreReferencedNode(Node5, m_StackTop->ReferencedNode5);
+        RestoreReferencedNode(Node6, m_StackTop->ReferencedNode6);
+        RestoreReferencedNode(Node7, m_StackTop->ReferencedNode7);
+        RestoreReferencedNode(Node8, m_StackTop->ReferencedNode8);
+
+        PopFrame();
+    }
+
+    void
+    PopFrame(
+        NODE      *& Node1,
+        NODE      *& Node2,
+        NODE      *& Node3,
+        NODE      *& Node4,
+        NODE      *& Node5,
+        NODE      *& Node6,
+        NODE      *& Node7,
+        NODE      *& Node8,
+        NODE      *& Node9,
+        FIXNUM     & Number1,
+        FIXNUM     & Number2,
+        NODE      *& UnreferencedNode1,
+        NODE      *& UnreferencedNode2
+        )
+    {
+        RestoreReferencedNode(Node1, m_StackTop->ReferencedNode1);
+        RestoreReferencedNode(Node2, m_StackTop->ReferencedNode2);
+        RestoreReferencedNode(Node3, m_StackTop->ReferencedNode3);
+        RestoreReferencedNode(Node4, m_StackTop->ReferencedNode4);
+        RestoreReferencedNode(Node5, m_StackTop->ReferencedNode5);
+        RestoreReferencedNode(Node6, m_StackTop->ReferencedNode6);
+        RestoreReferencedNode(Node7, m_StackTop->ReferencedNode7);
+        RestoreReferencedNode(Node8, m_StackTop->ReferencedNode8);
+        RestoreReferencedNode(Node9, m_StackTop->ReferencedNode9);
+
+        Number1 = m_StackTop->Number1;
+        Number2 = m_StackTop->Number2;
+
+        UnreferencedNode1 = m_StackTop->UnreferencedNode1;
+        UnreferencedNode2 = m_StackTop->UnreferencedNode2;
+
+        PopFrame();
+    }
+
+    void
+    PopFrame(
+        NODE       *& Node1,
+        NODE       *& Node2,
+        NODE       *& Node3,
+        FIXNUM      & Number1,
+        FIXNUM      & Number2,
+        FIXNUM      & Number3
+        )
+    {
+        RestoreReferencedNode(Node1, m_StackTop->ReferencedNode1);
+        RestoreReferencedNode(Node2, m_StackTop->ReferencedNode2);
+        RestoreReferencedNode(Node3, m_StackTop->ReferencedNode3);
+
+        Number1 = m_StackTop->Number1;
+        Number2 = m_StackTop->Number2;
+        Number3 = m_StackTop->Number3;
+
+        PopFrame();
+    }
+
+    void
+    PopFrame(
+        NODE      *& Node1,
+        NODE      *& Node2,
+        NODE      *& Node3,
+        NODE      *& Node4,
+        NODE      *& Node5,
+        NODE      *& Node6,
+        NODE      *& Node7,
+        NODE      *& Node8,
+        NODE      *& Node9,
+        NODE      *& Node10,
+        FIXNUM     & Number1,
+        FIXNUM     & Number2
+        )
+    {
+        RestoreReferencedNode(Node1,  m_StackTop->ReferencedNode1);
+        RestoreReferencedNode(Node2,  m_StackTop->ReferencedNode2);
+        RestoreReferencedNode(Node3,  m_StackTop->ReferencedNode3);
+        RestoreReferencedNode(Node4,  m_StackTop->ReferencedNode4);
+        RestoreReferencedNode(Node5,  m_StackTop->ReferencedNode5);
+        RestoreReferencedNode(Node6,  m_StackTop->ReferencedNode6);
+        RestoreReferencedNode(Node7,  m_StackTop->ReferencedNode7);
+        RestoreReferencedNode(Node8,  m_StackTop->ReferencedNode8);
+        RestoreReferencedNode(Node9,  m_StackTop->ReferencedNode9);
+        RestoreReferencedNode(Node10, m_StackTop->ReferencedNode10);
+
+        Number1 = m_StackTop->Number1;
+        Number2 = m_StackTop->Number2;
+
+        PopFrame();
+    }
+
+    void
+    PopFrame(
+        FIXNUM      & Number1,
+        FIXNUM      & Number2
+        )
+    {
+        Number1 = m_StackTop->Number1;
+        Number2 = m_StackTop->Number2;
+
+        PopFrame();
+    }
+
+    void
+    PopFrame(
+        NODE       *& Node1,
+        NODE       *& Node2,
+        FIXNUM      & Number1,
+        FIXNUM      & Number2,
+        FIXNUM      & Number3,
+        FIXNUM      & Number4
+        )
+    {
+        RestoreReferencedNode(Node1, m_StackTop->ReferencedNode1);
+        RestoreReferencedNode(Node2, m_StackTop->ReferencedNode2);
+
+        Number1 = m_StackTop->Number1;
+        Number2 = m_StackTop->Number2;
+        Number3 = m_StackTop->Number3;
+        Number4 = m_StackTop->Number4;
+
+        PopFrame();
+    }
+
+    void
+    PopFrame(
+        NODE      *& Node1,
+        NODE      *& Node2,
+        NODE      *& Node3,
+        FIXNUM     & Number1,
+        FIXNUM     & Number2
+        )
+    {
+        RestoreReferencedNode(Node1, m_StackTop->ReferencedNode1);
+        RestoreReferencedNode(Node2, m_StackTop->ReferencedNode2);
+        RestoreReferencedNode(Node3, m_StackTop->ReferencedNode3);
+
+        Number1 = m_StackTop->Number1;
+        Number2 = m_StackTop->Number2;
+
+        PopFrame();
+    }
+};
+
+
 // An explicit control evaluator, taken almost directly from SICP, section
 // 5.2.  list is a flat list of expressions to evaluate.  where is a label to
 // begin at.  Return value depends on where.
 static
 NODE *evaluator(NODE *list, enum labels where)
 {
+    CEvaluatorStack Stack;
+
     // Registers
     NODE *exp = NIL;          // the current expression
     NODE *val = NIL;          // the value of the last expression
     NODE *proc = NIL;         // the procedure definition
     NODE *argl = NIL;         // evaluated argument list
     NODE *unev = NIL;         // list of unevaluated expressions
-    NODE *stack = NIL;        // register stack
     NODE *parm = NIL;         // the current formal
     NODE *catch_tag = NIL;
     NODE *arg = NIL;          // the current actual
 
     // Registers that don't get reference counted.
-    // These be saved/restored as numbers so that we
-    // don't try to increment/decrement the ref count.
+    // These are saved/restored without changing the reference
+    // count.
     NODE * var_stack_position;  // temp ptr into var_stack
-    FIXNUM cont;                // where to go next (an enum label)
     NODE * formals;             // list of formal parameters
+    FIXNUM repcount;            // count for repeat
 
     int i;
     bool tracing;                 // are we tracing the current procedure?
     FIXNUM oldtailcall;           // in case of reentrant use of evaluator
-    FIXNUM repcount;              // count for repeat
     FIXNUM old_ift_iff;
 
     oldtailcall = tailcall;
     old_ift_iff = ift_iff_flag;
-    save2(var, this_line);
+
+    Stack.PushFrame(
+        all_done,
+        var,
+        this_line,
+        fun,
+        ufun);
+
     assign(var, var_stack);
-    save2(fun, ufun);
-    cont = (FIXNUM) all_done;
-    numsave((FIXNUM) cont);
     ref(list);
 
-    newcont(where);
+    Stack.PushFrame(where);
     goto fetch_cont;
 
  begin_line:
+    Stack.PopFrame();
     assign(this_line, list);
-    newcont(end_line);
+    Stack.PushFrame(end_line);
+    goto begin_seq_popped;
+
  begin_seq:
+    Stack.PopFrame();
+
+ begin_seq_popped:
     // Parenthesize the Logo list into something more like LISP
     treeify_line(list);
     if (!is_tree(list))
@@ -400,6 +852,7 @@ NODE *evaluator(NODE *list, enum labels where)
     goto eval_sequence;
 
  end_line:
+    Stack.PopFrame();
     if (val != Unbound)
     {
         if (NOT_THROWING)
@@ -497,10 +950,19 @@ NODE *evaluator(NODE *list, enum labels where)
     assign(unev, cdr(exp));
     assign(argl, NIL);
 
-    // Note: these values are restored in eval_args_done
-    mixsave(tailcall, var);
-    num2save(g_ValueStatus, ift_iff_flag);
-    save2(didnt_get_output, didnt_output_name);
+    // Note: These values are restored in eval_args_done, but the control
+    // flow is managed by goto, not fetch_cont, so the ReturnLabel parameter
+    // is ignored.  Since eval_args_done is not part of the labels enumeration,
+    // we must use some other value.
+    Stack.PushFrame(
+        static_cast<enum labels>(-1),
+        var,
+        didnt_get_output,
+        didnt_output_name,
+        tailcall,
+        g_ValueStatus,
+        ift_iff_flag);
+
  eval_arg_loop:
     // Evaluates each of the expression in "unev" as arguments to
     // a procedure call.  In each iteration, moves the first
@@ -524,16 +986,23 @@ NODE *evaluator(NODE *list, enum labels where)
         }
         goto eval_args_done;
     }
-    save2(argl, qm_list);
-    save2(unev, fun);
-    save2(ufun, last_ufun);
-    save2(this_line, last_line);
+
+    Stack.PushFrame(
+        accumulate_arg,
+        argl,
+        qm_list,
+        unev,
+        fun,
+        ufun,
+        last_ufun,
+        this_line,
+        last_line);
+
     assign(var, var_stack);
     tailcall = -1;
     g_ValueStatus = VALUE_STATUS_Required;
     assign(didnt_get_output, cons_list(fun, ufun, this_line));
     assign(didnt_output_name, NIL);
-    newcont(accumulate_arg);
     goto eval_dispatch;                 // evaluate the current argument
 
  accumulate_arg:
@@ -542,17 +1011,24 @@ NODE *evaluator(NODE *list, enum labels where)
     // Reset the local variable state to where it was before this
     // argument was evaluated.
     reset_args(var);
-    restore2(this_line, last_line);
-    restore2(ufun, last_ufun);
+
     assign(last_call, fun);
-    restore2(unev, fun);
-    restore2(argl, qm_list);
+    Stack.PopFrame(
+        argl,
+        qm_list,
+        unev,
+        fun,
+        ufun,
+        last_ufun,
+        this_line,
+        last_line);
+
     while (NOT_THROWING && val == Unbound)
     {
         assign(val, err_logo(DIDNT_OUTPUT, NIL));
     }
 
-    // Move "var" into the list of evaluated arguments
+    // Move "val" into the list of evaluated arguments
     push(val, argl);
 
     // Remove the unevaluated expression, since it has now been
@@ -565,9 +1041,14 @@ NODE *evaluator(NODE *list, enum labels where)
     // or encountered an error.
     assert(unev == NIL || stopping_flag == THROWING);
 
-    restore2(didnt_get_output, didnt_output_name);
-    num2restore(g_ValueStatus, ift_iff_flag);
-    mixrestore(tailcall, var);
+    Stack.PopFrame(
+        var,
+        didnt_get_output,
+        didnt_output_name,
+        tailcall,
+        g_ValueStatus,
+        ift_iff_flag);
+
     if (stopping_flag == THROWING)
     {
         assign(val, Unbound);
@@ -577,7 +1058,7 @@ NODE *evaluator(NODE *list, enum labels where)
     // Reverse "argl" because we had treated it as a stack,
     // popping from "unev" as we evaluated each argument expression
     // and prepending the result to "argl".
-    assign(argl, reverse(argl));
+    argl = reverse(argl);
 
 
     /* --------------------- APPLY ---------------------------- */
@@ -607,10 +1088,13 @@ NODE *evaluator(NODE *list, enum labels where)
             // whatever the macro returns in the caller's
             // context, or jump to a special continuation for the
             // primitive macros that need special evaluation logic.
-            num2save(g_ValueStatus, tailcall);
+            Stack.PushFrame(
+                macro_return,
+                g_ValueStatus,
+                tailcall);
             // BUG: save didnt_get_output, current_unode like UCBLogo?
+
             g_ValueStatus = VALUE_STATUS_Required;
-            newcont(macro_return);
         }
     }
 
@@ -652,10 +1136,7 @@ NODE *evaluator(NODE *list, enum labels where)
  fetch_cont:
     // Jumps back to the current continuation point, stored in "stack"
     {
-        enum labels x = (enum labels) cont;
-        cont = (FIXNUM) car(stack);
-        numpop(&stack);
-        switch (x)
+        switch (Stack.GetReturnLabel())
         {
 #define do_case(x) case x: goto x;
             do_list(do_case)
@@ -791,14 +1272,21 @@ NODE *evaluator(NODE *list, enum labels where)
                 // so we use the parameter's default value, which
                 // means evaluating cdr(parm).
 
-                // These register values are stored in set_args_continue.
-                save2(fun, var);
-                save2(ufun, last_ufun);
-                save2(this_line, last_line);
-                save2(didnt_output_name, didnt_get_output);
-                num2save(ift_iff_flag, g_ValueStatus);
-                mixednodesave(formals, argl);
-                unreferencednodesave(var_stack_position);
+                Stack.PushFrame(
+                    set_args_continue,
+                    fun,
+                    var,
+                    ufun,
+                    last_ufun,
+                    this_line,
+                    last_line,
+                    didnt_output_name,
+                    didnt_get_output,
+                    argl,
+                    ift_iff_flag,
+                    g_ValueStatus,
+                    formals,
+                    var_stack_position);
 
                 tailcall = -1;
                 g_ValueStatus = VALUE_STATUS_Required;
@@ -814,26 +1302,30 @@ NODE *evaluator(NODE *list, enum labels where)
                 }
 
                 assign(val, Unbound);
-                if (is_tree(list))
-                {
-                    // the default value is an expression, which must be run
-                    assign(unev, tree__tree(list));
-                    newcont(set_args_continue);
-                    goto eval_sequence;
-                }
+
+                // The default value is an expression, which must be run.
+                assign(unev, tree__tree(list));
+                goto eval_sequence;
 
             set_args_continue:
-                // We have evaluated the default value, which is
-                // now in "val".
-                unreferencednoderestore(var_stack_position);
-                mixednoderestore(formals, argl);
-                parm = car(formals);
+                // We have evaluated the default value, which is now in "val".
                 reset_args(var);
-                num2restore(ift_iff_flag, g_ValueStatus);
-                restore2(didnt_output_name, didnt_get_output);
-                restore2(this_line, last_line);
-                restore2(ufun, last_ufun);
-                restore2(fun, var);
+                Stack.PopFrame(
+                    fun,
+                    var,
+                    ufun,
+                    last_ufun,
+                    this_line,
+                    last_line,
+                    didnt_output_name,
+                    didnt_get_output,
+                    argl,
+                    ift_iff_flag,
+                    g_ValueStatus,
+                    formals,
+                    var_stack_position);
+
+                parm = car(formals);
 
                 // Act like the evaluated default value for this parameter
                 // was passed in as an argument.
@@ -874,8 +1366,10 @@ NODE *evaluator(NODE *list, enum labels where)
             print_char(g_Writer.GetStream(), ')');
         }
         new_line(g_Writer.GetStream());
-        save(fun);
-        newcont(compound_apply_continue);
+
+        Stack.PushFrame(
+            compound_apply_continue,
+            fun);
     }
     assign(val, Unbound);
     assign(last_ufun, ufun);
@@ -1129,15 +1623,23 @@ NODE *evaluator(NODE *list, enum labels where)
     }
  non_tail_eval:
     // REVISIT: copy after_constant optimization from UCBLogo?
-    save2(unev, fun);
-    num2save(ift_iff_flag, g_ValueStatus);
-    save2(ufun, last_ufun);
-    save2(this_line, last_line);
-    save2(var, proc);
-    save2(qm_list, argl);
+    Stack.PushFrame(
+        eval_sequence_continue,
+        unev,
+        fun,
+        ufun,
+        last_ufun,
+        this_line,
+        last_line,
+        var,
+        proc,
+        qm_list,
+        argl,
+        ift_iff_flag,
+        g_ValueStatus);
+
     assign(var, var_stack);
     tailcall = 0;
-    newcont(eval_sequence_continue);
     goto eval_dispatch;
 
  eval_sequence_continue:
@@ -1145,22 +1647,22 @@ NODE *evaluator(NODE *list, enum labels where)
     // dispatched to eval_dispatch or tail_eval_dispatch.
     // It is responsible for splicing the return value from a macro into
     // "unev", then jumping to eval_sequence to evaluate the next expression.
-
     reset_args(var);
-    restore2(qm_list, argl);
-    restore2(var, proc);
-    restore2(this_line, last_line);
-    restore2(ufun, last_ufun);
-    if (dont_fix_ift)
-    {
-        num2restore(dont_fix_ift, g_ValueStatus);
-        dont_fix_ift = 0;
-    }
-    else
-    {
-        num2restore(ift_iff_flag, g_ValueStatus);
-    }
-    restore2(unev, fun);
+    Stack.PopFrame(
+        unev,
+        fun,
+        ufun,
+        last_ufun,
+        this_line,
+        last_line,
+        var,
+        proc,
+        qm_list,
+        argl,
+        dont_fix_ift ? dont_fix_ift : ift_iff_flag,
+        g_ValueStatus);
+
+    dont_fix_ift = 0;
 
     // If we dispatched to a macro, then we must splice the
     // output of the macro (which is held in "val") into
@@ -1250,7 +1752,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
  compound_apply_continue:
     /* Only get here if tracing */
-    restore(fun);
+    Stack.PopFrame(fun);
     --trace_level;
     if (NOT_THROWING)
     {
@@ -1279,7 +1781,10 @@ NODE *evaluator(NODE *list, enum labels where)
     /* --------------------- MACROS ---------------------------- */
 
  macro_return:
-    num2restore(g_ValueStatus, tailcall);
+    Stack.PopFrame(
+        g_ValueStatus,
+        tailcall);
+
     while (!is_list(val) && NOT_THROWING)
     {
         assign(val, err_logo(ERR_MACRO, val));
@@ -1289,7 +1794,7 @@ NODE *evaluator(NODE *list, enum labels where)
         if (is_cont(val))
         {
             // continue to the continuation within val
-            newcont(cont__cont(val));
+            Stack.PushFrame(static_cast<enum labels>(cont__cont(val)));
             assign(val, val__cont(val));
             goto fetch_cont;
         }
@@ -1310,7 +1815,7 @@ NODE *evaluator(NODE *list, enum labels where)
         else
         {
             assign(list, val);
-            goto begin_seq;
+            goto begin_seq_popped;
         }
     }
     else
@@ -1324,12 +1829,14 @@ NODE *evaluator(NODE *list, enum labels where)
     /* --------------------- RUNRESULT ---------------------------- */
 
  runresult_continuation:
+    Stack.PopFrame();
     assign(list, val);
-    newcont(runresult_followup);
+    Stack.PushFrame(runresult_followup);
     g_ValueStatus = VALUE_STATUS_ValueMaybeOkInMacro;
-    goto begin_seq;
+    goto begin_seq_popped;
 
  runresult_followup:
+    Stack.PopFrame();
     if (val == Unbound)
     {
         // If the input to RUNRESULT doesn't output, 
@@ -1347,9 +1854,19 @@ NODE *evaluator(NODE *list, enum labels where)
 
    /* --------------------- REPEAT ---------------------------- */
  repeat_continuation:
+    Stack.PopFrame();
     assign(list, cdr(val));
-    num2save(repcount,repcountup);
-    repcount = getint(car(val));
+
+    // Note: These values are restored in repeat_done, but the control
+    // flow is managed by goto, not fetch_cont, so the ReturnLabel parameter
+    // is ignored.  Since repeat_done is not part of the labels enumeration,
+    // we must use some other value.
+    Stack.PushFrame(
+        static_cast<enum labels>(-2),
+        repcount,
+        repcountup);
+
+    repcount   = getint(car(val));
     repcountup = 0;
 
  repeat_again:
@@ -1357,17 +1874,26 @@ NODE *evaluator(NODE *list, enum labels where)
     if (repcount != 0)
     {
         repcountup++;
-        save2(list,var);
+        Stack.PushFrame(
+            repeat_followup,
+            list,
+            var,
+            repcount,
+            repcountup,
+            g_ValueStatus,
+            tailcall);
+
         assign(var, var_stack);
-        num2save(repcount,repcountup);
-        num2save(g_ValueStatus,tailcall);
         g_ValueStatus = VALUE_STATUS_NoValueInMacro;
-        newcont(repeat_followup);
-        goto begin_seq;
+        goto begin_seq_popped;
     }
 
  repeat_done:
-    num2restore(repcount,repcountup);
+    // Restore the state that was set up in repeat_continuation in case
+    // this was a nested REPEAT.
+    Stack.PopFrame(
+        repcount,
+        repcountup);
     goto fetch_cont;
 
  repeat_followup:
@@ -1377,9 +1903,15 @@ NODE *evaluator(NODE *list, enum labels where)
         err_logo(DK_WHAT, val);
         unref(val);
     }
-    num2restore(g_ValueStatus, tailcall);
-    num2restore(repcount, repcountup);
-    restore2(list,var);
+
+    Stack.PopFrame(
+        list,
+        var,
+        repcount,
+        repcountup,
+        g_ValueStatus,
+        tailcall);
+
     if (!IsInMacro(g_ValueStatus) && tailcall != 0)
     {
         if (STOPPING || RUNNING) 
@@ -1414,6 +1946,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
     /* --------------------- CATCH/THROW ---------------------------- */
  catch_continuation:
+    Stack.PopFrame();
     assign(list, cdr(val));
     assign(catch_tag, car(val));
     if (Error.Equals(catch_tag))
@@ -1423,17 +1956,26 @@ NODE *evaluator(NODE *list, enum labels where)
         // between throwing an error or using the value of ERRACT.
         g_CatchErrorCount++;
     }
-    save(catch_tag);
-    save2(didnt_output_name, didnt_get_output);
-    num2save(g_ValueStatus, tailcall);
-    newcont(catch_followup);
+
+    Stack.PushFrame(
+        catch_followup,
+        catch_tag,
+        didnt_output_name,
+        didnt_get_output,
+        g_ValueStatus,
+        tailcall);
+
     g_ValueStatus = VALUE_STATUS_ValueMaybeOkInMacro;
-    goto begin_seq;
+    goto begin_seq_popped;
 
  catch_followup:
-    num2restore(g_ValueStatus, tailcall);
-    restore2(didnt_output_name, didnt_get_output);
-    restore(catch_tag);
+    Stack.PopFrame(
+        catch_tag,
+        didnt_output_name,
+        didnt_get_output,
+        g_ValueStatus,
+        tailcall);
+
     if (!IsInMacro(g_ValueStatus) && tailcall != 0)
     {
         if (STOPPING || RUNNING) 
@@ -1479,6 +2021,7 @@ NODE *evaluator(NODE *list, enum labels where)
     goto fetch_cont;
 
  goto_continuation:
+    Stack.PopFrame();
     check_stop(true);
 
     if (ufun == NIL)
@@ -1515,6 +2058,7 @@ NODE *evaluator(NODE *list, enum labels where)
     /* --------------------- APPLY ---------------------------- */
  begin_apply:
     /* This is for lapply. */
+    Stack.PopFrame();
     assign(fun, car(val));
     while (nodetype(fun) == ARRAY && NOT_THROWING)
     {
@@ -1556,9 +2100,10 @@ NODE *evaluator(NODE *list, enum labels where)
                         // Create a new local variable scope for 
                         // the lambda function call before binding
                         // the formal inputs.
-                        save(var);
+                        Stack.PushFrame(
+                            after_lambda,
+                            var);
                         assign(var, var_stack);
-                        newcont(after_lambda);
                     }
 
                     //numsave(tailcall);
@@ -1613,9 +2158,10 @@ NODE *evaluator(NODE *list, enum labels where)
 
                     // Create a new local variable scope for 
                     // the lambda function call.
-                    save(var);
+                    Stack.PushFrame(
+                        after_lambda,
+                        var);
                     assign(var, var_stack);
-                    newcont(after_lambda);
                 }
                 goto eval_sequence;
             }
@@ -1679,19 +2225,23 @@ NODE *evaluator(NODE *list, enum labels where)
 
  after_lambda:
     reset_args(var);
-    restore(var);
+    Stack.PopFrame(var);
     goto fetch_cont;
 
  all_done:
     deref(list);
     tailcall = oldtailcall;
     ift_iff_flag = old_ift_iff;
-    restore2(fun, ufun);
+
     reset_args(var);
-    restore2(var, this_line);
+    Stack.PopFrame(
+        var,
+        this_line,
+        fun,
+        ufun);
+
     deref(argl);
     deref(unev);
-    deref(stack);
     deref(catch_tag);
     deref(exp);
     deref(proc);
