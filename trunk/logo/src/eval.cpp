@@ -568,6 +568,7 @@ public:
         m_StackTop->Number2 = Number2;
     }
 
+private:
     static
     void
     RestoreReferencedNode(
@@ -579,6 +580,7 @@ public:
         TargetLocation = ReferencedNode;
     }
 
+public:
     void
     PopFrame()
     {
@@ -811,6 +813,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
     int i;
     bool tracing;                 // are we tracing the current procedure?
+
     FIXNUM oldtailcall;           // in case of reentrant use of evaluator
     FIXNUM old_ift_iff;
 
@@ -827,19 +830,15 @@ NODE *evaluator(NODE *list, enum labels where)
     assign(var, var_stack);
     ref(list);
 
-    Stack.PushFrame(where);
-    goto fetch_cont;
+    // Jump to the label described by "where".
+    goto goto_cont;
 
  begin_line:
-    Stack.PopFrame();
     assign(this_line, list);
     Stack.PushFrame(end_line);
-    goto begin_seq_popped;
+    goto begin_seq;
 
  begin_seq:
-    Stack.PopFrame();
-
- begin_seq_popped:
     // Parenthesize the Logo list into something more like LISP
     treeify_line(list);
     if (!is_tree(list))
@@ -1135,13 +1134,15 @@ NODE *evaluator(NODE *list, enum labels where)
 
  fetch_cont:
     // Jumps back to the current continuation point, stored in "stack"
+    where = Stack.GetReturnLabel();
+
+ goto_cont:
+    // Jumps to the label described by "where"
+    switch (where)
     {
-        switch (Stack.GetReturnLabel())
-        {
 #define do_case(x) case x: goto x;
-            do_list(do_case)
-        default : abort();
-        }
+        do_list(do_case)
+    default : abort();
     }
 
  compound_apply:
@@ -1794,9 +1795,9 @@ NODE *evaluator(NODE *list, enum labels where)
         if (is_cont(val))
         {
             // continue to the continuation within val
-            Stack.PushFrame(static_cast<enum labels>(cont__cont(val)));
+            where = static_cast<enum labels>(cont__cont(val));
             assign(val, val__cont(val));
-            goto fetch_cont;
+            goto goto_cont;
         }
         else if (tailcall == 0)
         {
@@ -1815,7 +1816,7 @@ NODE *evaluator(NODE *list, enum labels where)
         else
         {
             assign(list, val);
-            goto begin_seq_popped;
+            goto begin_seq;
         }
     }
     else
@@ -1829,11 +1830,10 @@ NODE *evaluator(NODE *list, enum labels where)
     /* --------------------- RUNRESULT ---------------------------- */
 
  runresult_continuation:
-    Stack.PopFrame();
     assign(list, val);
     Stack.PushFrame(runresult_followup);
     g_ValueStatus = VALUE_STATUS_ValueMaybeOkInMacro;
-    goto begin_seq_popped;
+    goto begin_seq;
 
  runresult_followup:
     Stack.PopFrame();
@@ -1854,7 +1854,6 @@ NODE *evaluator(NODE *list, enum labels where)
 
    /* --------------------- REPEAT ---------------------------- */
  repeat_continuation:
-    Stack.PopFrame();
     assign(list, cdr(val));
 
     // Note: These values are restored in repeat_done, but the control
@@ -1885,7 +1884,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
         assign(var, var_stack);
         g_ValueStatus = VALUE_STATUS_NoValueInMacro;
-        goto begin_seq_popped;
+        goto begin_seq;
     }
 
  repeat_done:
@@ -1946,7 +1945,6 @@ NODE *evaluator(NODE *list, enum labels where)
 
     /* --------------------- CATCH/THROW ---------------------------- */
  catch_continuation:
-    Stack.PopFrame();
     assign(list, cdr(val));
     assign(catch_tag, car(val));
     if (Error.Equals(catch_tag))
@@ -1966,7 +1964,7 @@ NODE *evaluator(NODE *list, enum labels where)
         tailcall);
 
     g_ValueStatus = VALUE_STATUS_ValueMaybeOkInMacro;
-    goto begin_seq_popped;
+    goto begin_seq;
 
  catch_followup:
     Stack.PopFrame(
@@ -2021,7 +2019,6 @@ NODE *evaluator(NODE *list, enum labels where)
     goto fetch_cont;
 
  goto_continuation:
-    Stack.PopFrame();
     check_stop(true);
 
     if (ufun == NIL)
@@ -2058,7 +2055,6 @@ NODE *evaluator(NODE *list, enum labels where)
     /* --------------------- APPLY ---------------------------- */
  begin_apply:
     /* This is for lapply. */
-    Stack.PopFrame();
     assign(fun, car(val));
     while (nodetype(fun) == ARRAY && NOT_THROWING)
     {
