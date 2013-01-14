@@ -132,21 +132,25 @@ void spop(NODE **stack)
     assert(stack != NULL && "bad input");
     assert(*stack != NIL && "popping from an empty stack");
 
-    NODE *temp = (*stack)->nunion.ncons.ncdr;
+    NODE *newTop = (*stack)->nunion.ncons.ncdr;
 
     if (decrefcnt(*stack) == 0)
     {
+        // Free this node in the stack, without freeing
+        // the rest of the stack.
         (*stack)->nunion.ncons.ncdr = NIL;
         gc(*stack);
     }
     else
     {
-        if (temp != NIL) 
+        // Reference the new top of the stack for the
+        // caller's reference.
+        if (newTop != NIL) 
         {
-            increfcnt(temp);
+            increfcnt(newTop);
         }
     }
-    *stack = temp;
+    *stack = newTop;
 }
 
 // Pushes "obj" onto the front of *stack, then updates
@@ -155,12 +159,12 @@ void spush(NODE *obj, NODE **stack)
 {
     assert(stack != NULL && "bad input");
 
-    NODE *temp = newnode(CONS);
+    NODE *newTop = newnode(CONS);
 
-    setcar(temp, obj);
-    temp->nunion.ncons.ncdr = *stack;
-    ref(temp);
-    *stack = temp;
+    setcar(newTop, obj);
+    newTop->nunion.ncons.ncdr = *stack;
+    ref(newTop);
+    *stack = newTop;
 }
 
 // Check if a local variable is already in this frame 
@@ -307,10 +311,12 @@ private:
     };
 
     EVALUATOR_STACK_FRAME * m_StackTop;
+    EVALUATOR_STACK_FRAME * m_FreeList;
 
 public:
     CEvaluatorStack() :
-        m_StackTop(NULL)
+        m_StackTop(NULL),
+        m_FreeList(NULL)
     {
     }
 
@@ -319,6 +325,16 @@ public:
         // Assert that the number of calls to PushFrame() matched
         // match the calls to PopFrame().
         assert(m_StackTop == NULL);
+
+        // Free all of the nodes that we were keeping around in
+        // case we needed to reuse them.
+        EVALUATOR_STACK_FRAME * currentNode = m_FreeList;
+        while (currentNode != NULL)
+        {
+            EVALUATOR_STACK_FRAME * nextNode = currentNode->NextFrame;
+            free(currentNode);
+            currentNode = nextNode;
+        }
     }
 
     enum labels
@@ -333,14 +349,27 @@ public:
         enum labels  ReturnLabel
         )
     {
-        // Allocate the stack frame
-        EVALUATOR_STACK_FRAME * stackFrame = static_cast<EVALUATOR_STACK_FRAME *>(malloc(sizeof(*stackFrame)));
-        if (stackFrame == NULL)
+        EVALUATOR_STACK_FRAME * stackFrame;
+
+        // First, check the free list for a block of memory
+        if (m_FreeList != NULL)
         {
-            err_logo(OUT_OF_MEM_UNREC, NIL);
+            // Pop the top node off the free list and use it.
+            stackFrame = m_FreeList;
+            m_FreeList = m_FreeList->NextFrame;
+        }
+        else
+        {
+            // There's nothing in the free list,
+            // so allocate the stack frame from the heap.
+            stackFrame = static_cast<EVALUATOR_STACK_FRAME *>(malloc(sizeof(*stackFrame)));
+            if (stackFrame == NULL)
+            {
+                err_logo(OUT_OF_MEM_UNREC, NIL);
+            }
         }
 
-        // Push the new node on top of the stack.
+        // Push the new node on top of the in-use stack.
         stackFrame->NextFrame = m_StackTop;
         m_StackTop = stackFrame;
 
@@ -584,12 +613,13 @@ public:
     void
     PopFrame()
     {
-        // Pop the stack frame
+        // Pop the stack frame.
         EVALUATOR_STACK_FRAME * poppedFrame = m_StackTop;
         m_StackTop = m_StackTop->NextFrame;
 
-        // Free the old top
-        free(poppedFrame);
+        // Put this node onto the free list, in case we need another one.
+        poppedFrame->NextFrame = m_FreeList;
+        m_FreeList = poppedFrame;
     }
 
     void
@@ -794,30 +824,26 @@ NODE *evaluator(NODE *list, enum labels where)
 {
     CEvaluatorStack Stack;
 
-    // Registers
+    // Registers that get reference counted.
     NODE *exp = NIL;          // the current expression
     NODE *val = NIL;          // the value of the last expression
     NODE *proc = NIL;         // the procedure definition
     NODE *argl = NIL;         // evaluated argument list
     NODE *unev = NIL;         // list of unevaluated expressions
-    NODE *parm = NIL;         // the current formal
     NODE *catch_tag = NIL;
-    NODE *arg = NIL;          // the current actual
 
     // Registers that don't get reference counted.
-    // These are saved/restored without changing the reference
-    // count.
+    // These are saved/restored without changing the reference count.
     NODE * var_stack_position;  // temp ptr into var_stack
     NODE * formals;             // list of formal parameters
     FIXNUM repcount;            // count for repeat
 
-    bool tracing;                 // are we tracing the current procedure?
+    bool tracing;               // are we tracing the current procedure?
 
-    FIXNUM oldtailcall;           // in case of reentrant use of evaluator
-    FIXNUM old_ift_iff;
-
-    oldtailcall = tailcall;
-    old_ift_iff = ift_iff_flag;
+    // Preserve global state, in case of reentrant use of evaluator.
+    // TODO: use Stack.PushFrame for this
+    FIXNUM oldtailcall = tailcall;
+    FIXNUM old_ift_iff = ift_iff_flag;
 
     Stack.PushFrame(
         all_done,
@@ -1190,6 +1216,8 @@ NODE *evaluator(NODE *list, enum labels where)
          formals != NIL;
          formals = cdr(formals))
     {
+        NODE *parm;  // the current formal parameter
+
         parm = car(formals);
         if (nodetype(parm) == INTEGER) 
         {
@@ -1200,7 +1228,7 @@ NODE *evaluator(NODE *list, enum labels where)
             break;
         }
 
-
+        NODE * arg; // the current argument to bind to parm
         if (argl != NIL)
         {
             // An argument was supplied by the caller.
@@ -1462,7 +1490,7 @@ NODE *evaluator(NODE *list, enum labels where)
                     linenum++;
                 }
                 assign(this_line, cdr(this_line));
-	    }
+            }
 
             treeify_body(bodylist__procnode(proc));
             assign(unev, tree__tree(bodylist__procnode(proc)));
