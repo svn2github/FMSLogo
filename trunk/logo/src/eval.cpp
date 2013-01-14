@@ -905,14 +905,34 @@ NODE *evaluator(NODE *list, enum labels where)
         // the first element in the list is the function
         assign(fun, car(exp));
 
+        // Initialize the argument list
+        assign(argl, NIL);
+
         // the rest of the elements are the function's inputs
-        if (cdr(exp) != NIL)
+        if (cdr(exp) == NIL)
         {
-            goto ev_application;
+            // Evaluate an application of a procedure with no arguments.
+            goto apply_dispatch;
         }
         else
         {
-            goto ev_no_args;
+            // Evaluate an application of a procedure with arguments.
+            assign(unev, cdr(exp));
+
+            // Note: These values are restored in eval_args_done, but the control
+            // flow is managed by goto, not fetch_cont, so the ReturnLabel parameter
+            // is ignored.  Since eval_args_done is not part of the labels enumeration,
+            // we must use some other value.
+            Stack.PushFrame(
+                static_cast<enum labels>(-1),
+                var,
+                didnt_get_output,
+                didnt_output_name,
+                tailcall,
+                g_ValueStatus,
+                ift_iff_flag);
+
+            goto eval_arg_loop;
         }
 
     case ARRAY:
@@ -938,29 +958,6 @@ NODE *evaluator(NODE *list, enum labels where)
     }
 
     assert(0 && !"can't fall through");
-
- ev_no_args:
-    // Evaluate an application of a procedure with no arguments.
-    assign(argl, NIL);
-    goto apply_dispatch;   // apply the procedure
-
- ev_application:
-    // Evaluate an application of a procedure with arguments.
-    assign(unev, cdr(exp));
-    assign(argl, NIL);
-
-    // Note: These values are restored in eval_args_done, but the control
-    // flow is managed by goto, not fetch_cont, so the ReturnLabel parameter
-    // is ignored.  Since eval_args_done is not part of the labels enumeration,
-    // we must use some other value.
-    Stack.PushFrame(
-        static_cast<enum labels>(-1),
-        var,
-        didnt_get_output,
-        didnt_output_name,
-        tailcall,
-        g_ValueStatus,
-        ift_iff_flag);
 
  eval_arg_loop:
     // Evaluates each of the expression in "unev" as arguments to
