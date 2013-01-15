@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.29.1 for Microsoft Windows
+FMSLogo Version 6.30.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -14,31 +14,14 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.29.1.exe   - Installer for the mainline Logo environment
-  fmslogo-6.29.1.zip   - ZIP of the mainline Logo environment
-  wxfmslogo-6.29.1.exe - Installer for the Beta wxWidgets-based Logo environment
+  fmslogo-6.30.0.exe   - Installer for the mainline Logo environment
+  fmslogo-6.30.0.zip   - ZIP of the mainline Logo environment
+  wxfmslogo-6.30.0.exe - Installer for the Beta wxWidgets-based Logo environment
 
 II. New features/bugs fixed:
 
   * Changed in 6.29.1
-    o Fix a bug in the wxWidgets version of FMSLogo where double-clicking on
-      the commander history box to run TEXTSCREEN could crash.
-    o Fix bug #3576174; The commander's splitter is now visible on Windows 7
-      when using the wxWidgets version of FMSLogo.
-    o Fix bug #3575314; The FMSLogo icon now appears in the Alt+Tab task
-      selector in high DPI modes ("large text size" on Vista or later)
-      when using the wxWidgets version of FMSLogo.
-    o Fix bug #3575313; In the wxWidgets version of FMSLogo, the commander
-      buttons can now be pressed with Enter.  Pressing them with Spacebar
-      no longer presses them twice.  Pressing the Edall button with Spacebar
-      no longer crashes.
-    o Fix bug #3575310; The wxWidgets-based version of FMSLogo now works when
-      installed to a folder with an even number of characters.
-    o Fix bug #1602922; The commander buttons can now be pressed with the
-      spacebar.  This is only fixed in the wxWidgets version of FMSLogo.
-    o Fix bug #1327746; FMSLogo no longer beeps if you press a key when a
-      commander button has focus.  This is only fixed in the wxWidgets
-      version of FMSLogo.
+    o Improve the speed of the evaluation engine by 40%.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
