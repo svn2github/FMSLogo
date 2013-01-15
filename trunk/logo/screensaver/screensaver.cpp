@@ -8,7 +8,6 @@
 #include "graphwin.h"
 #include "startup.h"
 #include "main.h"
-#include "mem.h"
 #include "mmwind.h"
 #include "wrksp.h"
 #include "utils.h"

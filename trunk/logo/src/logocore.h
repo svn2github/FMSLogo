@@ -738,6 +738,19 @@ deref(NODE * object)
     }
 }
 
+// Decrements the reference count and returns the object, but will not free it.
+inline
+NODE *
+unref(NODE *ret_var)
+{
+    if (ret_var != NIL) 
+    {
+        decrefcnt(ret_var);
+    }
+    return ret_var;
+}
+
+
 // Deletes an object if its reference count is 0.
 // Does nothting, otherwise.
 inline 
@@ -756,6 +769,54 @@ gcref(NODE * object)
         TRACE_NODE_CHANGE(object);
         gc(object);
     }
+}
+
+inline
+NODETYPES
+nodetype(const NODE *nd)
+{
+    if (nd == NIL) 
+    {
+        return PNIL;
+    }
+
+    return nd->type;
+}
+
+inline
+void
+setobject(NODE *nd, NODE *newobj)
+{
+    NODE *oldobj = getobject(nd);
+   
+    ref(newobj);
+    deref(oldobj);
+
+    nd->nunion.ncons.nobj = newobj;
+}
+
+inline
+void
+setcar(NODE *nd, NODE *newcar)
+{
+    NODE *oldcar = car(nd);
+
+    ref(newcar);
+    deref(oldcar);
+
+    nd->nunion.ncons.ncar = newcar;
+}
+
+inline
+void
+setcdr(NODE *nd, NODE *newcdr)
+{
+    NODE *oldcdr = cdr(nd);
+
+    ref(newcdr);
+    deref(oldcdr);
+
+    nd->nunion.ncons.ncdr = newcdr;
 }
 
 inline

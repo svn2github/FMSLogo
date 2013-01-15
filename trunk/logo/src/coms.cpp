@@ -25,7 +25,7 @@
 
 #include "coms.h"
 #include "logocore.h"
-#include "mem.h"
+#include "logodata.h"
 #include "eval.h"
 #include "init.h"
 #include "error.h"

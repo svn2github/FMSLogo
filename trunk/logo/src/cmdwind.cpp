@@ -34,7 +34,6 @@
 #include "coms.h"
 #include "print.h"
 #include "logodata.h"
-#include "mem.h"
 #include "parse.h"
 #include "mainframe.h"
 #include "mmwind.h"

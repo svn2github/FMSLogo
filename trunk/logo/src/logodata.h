@@ -59,6 +59,7 @@ extern NODE *make_floatnode(FLONUM f);
 extern NODE *cnv_node_to_numnode(NODE *ndi);
 extern NODE *cnv_node_to_strnode(NODE *nd);
 extern NODE *make_static_strnode(const char *strptr);
+extern NODE *cons(NODE *x, NODE *y);
 extern NODE *cons_list(void);
 extern NODE *cons_list(NODE * node1);
 extern NODE *cons_list(NODE * node1, NODE * node2);

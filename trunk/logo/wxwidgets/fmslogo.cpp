@@ -21,7 +21,6 @@
 #include "main.h"
 #include "startup.h"
 #include "utils.h"
-#include "mem.h"
 #include "mmwind.h"
 #include "files.h"
 #include "mainwind.h"

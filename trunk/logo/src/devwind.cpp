@@ -42,7 +42,6 @@
 #include "localizedstrings.h"
 #include "lists.h"
 #include "eval.h"
-#include "mem.h"
 #include "error.h"
 #include "screenwindow.h"
 #include "assembly.h"

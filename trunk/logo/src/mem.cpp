@@ -82,58 +82,6 @@ void trace_node_change(struct NODE * Node)
 
 #endif // DEBUG
 
-
-NODETYPES nodetype(const NODE *nd)
-{
-    if (nd == NIL) 
-    {
-        return PNIL;
-    }
-
-    return nd->type;
-}
-
-void setobject(NODE *nd, NODE *newobj)
-{
-    NODE *oldobj = getobject(nd);
-   
-    ref(newobj);
-    deref(oldobj);
-
-    nd->nunion.ncons.nobj = newobj;
-}
-
-void setcar(NODE *nd, NODE *newcar)
-{
-    NODE *oldcar = car(nd);
-
-    ref(newcar);
-    deref(oldcar);
-
-    nd->nunion.ncons.ncar = newcar;
-}
-
-void setcdr(NODE *nd, NODE *newcdr)
-{
-    NODE *oldcdr = cdr(nd);
-
-    ref(newcdr);
-    deref(oldcdr);
-
-    nd->nunion.ncons.ncdr = newcdr;
-}
-
-
-// Decrements the reference count and returns the object, but will not free it.
-NODE *unref(NODE *ret_var)
-{
-    if (ret_var != NIL) 
-    {
-        decrefcnt(ret_var);
-    }
-    return ret_var;
-}
-
 static
 void push_to_free_list(NODE * node)
 {
@@ -237,17 +185,6 @@ NODE *newnode(NODETYPES type)
 
     // Return the new node
     return newnd;
-}
-
-// Returns a NODE with refcount=0.
-// Caller must free.
-NODE *cons(NODE *x, NODE *y)
-{
-    NODE *val = newnode(CONS);
-
-    setcar(val, x);
-    setcdr(val, y);
-    return val;
 }
 
 class CGarbageCollectionStack

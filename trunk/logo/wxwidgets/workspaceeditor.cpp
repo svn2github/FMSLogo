@@ -21,7 +21,6 @@
 #include "screenwindow.h" // for TraceOutput
 #include "eval.h"         // for process_special_conditions
 #include "startup.h"      // for TempPathName
-#include "mem.h"          // for reref
 #include "main.h"         // for putcombobox
 #include "graphwin.h"     // for do_help
 #include "helputils.h"    // for ContextHelp

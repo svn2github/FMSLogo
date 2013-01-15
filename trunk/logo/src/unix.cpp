@@ -33,7 +33,6 @@
 #include "main.h"
 #include "init.h"
 #include "logodata.h"
-#include "mem.h"
 #include "parse.h"
 #include "stringprintednode.h"
 #include "dynamicbuffer.h"

@@ -42,7 +42,6 @@ typedef struct __WND         * HWND;
 #include "utils.h"
 #include "stringprintednode.h"
 #include "appendablelist.h"
-#include "mem.h"
 #include "logomath.h"
 #include "dib.h"
 #include "logodata.h"

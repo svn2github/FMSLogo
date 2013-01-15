@@ -17,19 +17,13 @@
 #ifndef __MEM_H_
 #define __MEM_H_
 
-#include "logodata.h"
+#include "logocore.h"
 
 // global variables
 extern int memory_count;
 
 // function declarations
-extern NODETYPES nodetype(const NODE *nd);
-extern void setobject(NODE *nd, NODE *newobj);
-extern void setcar(NODE *nd, NODE *newcar);
-extern void setcdr(NODE *nd, NODE *newcdr);
-extern NODE *unref(NODE *ret_var);
 extern NODE *newnode(NODETYPES type);
-extern NODE *cons(NODE *x, NODE *y);
 extern void gc(NODE *nd);
 extern NODE *lnodes(NODE *args);
 extern void fill_reserve_tank(void);

@@ -24,7 +24,6 @@
 #include <stdlib.h>
 
 #include "logodata.h"
-#include "mem.h"
 #include "eval.h"
 #include "init.h"
 #include "logomath.h"

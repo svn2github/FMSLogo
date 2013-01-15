@@ -34,7 +34,6 @@
 #include "files.h"
 #include "ibmterm.h"
 #include "utils.h"
-#include "mem.h"
 #include "init.h"
 #include "graphwin.h"
 #include "wrksp.h"

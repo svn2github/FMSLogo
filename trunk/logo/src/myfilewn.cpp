@@ -38,7 +38,6 @@
 #include "utils.h"
 #include "localizedstrings.h"
 #include "wrksp.h"
-#include "mem.h"
 
 #include "mainframe.h"
 #include "cmdwind.h"

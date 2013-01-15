@@ -25,7 +25,6 @@
 #include "logodata.h"
 #include "init.h"
 #include "eval.h"
-#include "mem.h"
 #include "error.h"
 #include "ibmterm.h"
 #include "logomath.h"

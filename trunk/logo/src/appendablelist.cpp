@@ -17,7 +17,6 @@
 
 #include "appendablelist.h"
 #include "logodata.h"
-#include "mem.h"
 #include "debugheap.h"
 
 CAppendableList::CAppendableList()

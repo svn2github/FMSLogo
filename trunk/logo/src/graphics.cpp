@@ -49,7 +49,6 @@ typedef struct __DC  * HDC;
 #include "logodata.h"
 #include "init.h"
 #include "eval.h"
-#include "mem.h"
 #include "lists.h"
 #include "error.h"
 #include "ibmterm.h"

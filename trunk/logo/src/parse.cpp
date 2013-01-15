@@ -39,7 +39,6 @@ using namespace std;
 #include "lists.h"
 #include "eval.h"
 #include "intern.h"
-#include "mem.h"
 #include "logomath.h"
 #include "appendablelist.h"
 #include "stringprintednode.h"
