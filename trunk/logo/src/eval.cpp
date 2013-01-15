@@ -29,6 +29,8 @@
 #include "files.h"
 #include "main.h"
 #include "graphwin.h"
+#include "logocore.h"
+#include "logodata.h"
 #include "mem.h"
 #include "error.h"
 #include "print.h"
@@ -396,7 +398,9 @@ public:
         NODE       * Node1,
         NODE       * Node2,
         NODE       * Node3,
-        NODE       * Node4
+        NODE       * Node4,
+        FIXNUM       Number1,
+        FIXNUM       Number2
         )
     {
         // Allocate the new stack frame
@@ -407,6 +411,9 @@ public:
         m_StackTop->ReferencedNode2 = vref(Node2);
         m_StackTop->ReferencedNode3 = vref(Node3);
         m_StackTop->ReferencedNode4 = vref(Node4);
+
+        m_StackTop->Number1 = Number1;
+        m_StackTop->Number2 = Number2;
     }
 
     void
@@ -634,16 +641,21 @@ public:
 
     void
     PopFrame(
-        NODE *& Node1,
-        NODE *& Node2,
-        NODE *& Node3,
-        NODE *& Node4
+        NODE   *& Node1,
+        NODE   *& Node2,
+        NODE   *& Node3,
+        NODE   *& Node4,
+        FIXNUM  & Number1,
+        FIXNUM  & Number2
         )
     {
         RestoreReferencedNode(Node1, m_StackTop->ReferencedNode1);
         RestoreReferencedNode(Node2, m_StackTop->ReferencedNode2);
         RestoreReferencedNode(Node3, m_StackTop->ReferencedNode3);
         RestoreReferencedNode(Node4, m_StackTop->ReferencedNode4);
+
+        Number1 = m_StackTop->Number1;
+        Number2 = m_StackTop->Number2;
 
         PopFrame();
     }
@@ -840,17 +852,14 @@ NODE *evaluator(NODE *list, enum labels where)
 
     bool tracing;               // are we tracing the current procedure?
 
-    // Preserve global state, in case of reentrant use of evaluator.
-    // TODO: use Stack.PushFrame for this
-    FIXNUM oldtailcall = tailcall;
-    FIXNUM old_ift_iff = ift_iff_flag;
-
     Stack.PushFrame(
         all_done,
         var,
         this_line,
         fun,
-        ufun);
+        ufun,
+        tailcall,
+        ift_iff_flag);
 
     assign(var, var_stack);
     ref(list);
@@ -2260,15 +2269,15 @@ NODE *evaluator(NODE *list, enum labels where)
 
  all_done:
     deref(list);
-    tailcall = oldtailcall;
-    ift_iff_flag = old_ift_iff;
 
     reset_args(var);
     Stack.PopFrame(
         var,
         this_line,
         fun,
-        ufun);
+        ufun,
+        tailcall,
+        ift_iff_flag);
 
     deref(argl);
     deref(unev);
