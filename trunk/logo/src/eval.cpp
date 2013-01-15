@@ -1328,24 +1328,25 @@ NODE *evaluator(NODE *list, enum labels where)
                     formals,
                     var_stack_position);
 
+                // The expression should be processed as an argument.
                 tailcall = -1;
                 g_ValueStatus = VALUE_STATUS_Required;
-                assign(var, var_stack);
-                assign(list, cdr(parm));
-                if (NOT_THROWING)
-                {
-                    treeify_line(list);
-                }
-                else
-                {
-                    assign(list, NIL);
-                }
 
+                // Reset the local variables
+                assign(var, var_stack);
+
+                // Clear any return value that may exist.
                 assign(val, Unbound);
 
-                // The default value is an expression, which must be run.
-                assign(unev, tree__tree(list));
-                goto eval_sequence;
+                // Treeify the expression so that it can be evaluated.
+                assign(list, cdr(parm));
+                treeify_line(list);
+                if (is_tree(list))
+                {
+                    // Run the expression to get the default value.
+                    assign(unev, tree__tree(list));
+                    goto eval_sequence;
+                }
 
             set_args_continue:
                 // We have evaluated the default value, which is now in "val".
