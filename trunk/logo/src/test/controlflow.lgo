@@ -83,6 +83,14 @@ TO #TEST
   RUNTOOMANYINPUTSTEST [(# "toomany)]
 END
 
+TO TESTTEST.FORCETAILCALL [:a 0]
+  IF EQUAL? :a 0 [
+    TEST "false
+    STOP
+  ]
+  TESTTEST.FORCETAILCALL 0
+END
+
 TO TESTTEST.SMOKETEST
 
   LOCAL [iftrue.was.run iffalse.was.run]
@@ -93,7 +101,7 @@ TO TESTTEST.SMOKETEST
 
   ; must call TEST in this procedure or else effects won't be visible.
   REPORTTESTINFO [Running [TEST "true]]
-  TEST "true 
+  TEST "true
 
   TRACEINSTRUCTION [MAKE "iftrue.was.run  "false]
   TRACEINSTRUCTION [MAKE "iffalse.was.run "false]
@@ -102,7 +110,7 @@ TO TESTTEST.SMOKETEST
   SIMPLEREPORTTEST [:iftrue.was.run]  "true
   SIMPLEREPORTTEST [:iffalse.was.run] "false
 
-  ; the value should persist until another TEST call is made
+  ; The value should persist until another TEST call is made.
   TRACEINSTRUCTION [MAKE "iftrue.was.run  "false]
   TRACEINSTRUCTION [MAKE "iffalse.was.run "false]
   TRACEINSTRUCTION [ IFTRUE  [MAKE "iftrue.was.run  "true ] ]
@@ -110,6 +118,38 @@ TO TESTTEST.SMOKETEST
   SIMPLEREPORTTEST [:iftrue.was.run]  "true
   SIMPLEREPORTTEST [:iffalse.was.run] "false
 
+  ;
+  ; Run TEST "false in cases where the result should be ignored.
+  ;
+  REPORTTESTINFO [
+     Running TEST within a child evaluator should not overwrite
+     the result of the current TEST.
+  ]
+  TRACEINSTRUCTION [ TEST "false ]
+
+  REPORTTESTINFO [
+     Running TEST as an argument should not overwrite
+     the result of the current TEST.
+  ]
+  REPORTTESTINFO [Running [FORWARD TEST "false]]
+  CATCH "ERROR [ FORWARD TEST "false ]
+
+  ; I'm not sure why tailcalls don't evaluate TEST, but
+  ; unless there's a good reason to change it, it's better
+  ; to preserve the current behavior for compatibility.
+  REPORTTESTINFO [
+     Running TEST in the context of a tailcall should not overwrite
+     the result of the current TEST.
+  ]
+  REPORTTESTINFO [Running TESTTEST.FORCETAILCALL]
+  TESTTEST.FORCETAILCALL
+
+  TRACEINSTRUCTION [MAKE "iftrue.was.run  "false]
+  TRACEINSTRUCTION [MAKE "iffalse.was.run "false]
+  TRACEINSTRUCTION [ IFTRUE  [MAKE "iftrue.was.run  "true ] ]
+  TRACEINSTRUCTION [ IFFALSE [MAKE "iffalse.was.run "true ] ]
+  SIMPLEREPORTTEST [:iftrue.was.run]  "true
+  SIMPLEREPORTTEST [:iffalse.was.run] "false
 
   ;
   ; TEST with a false condition
