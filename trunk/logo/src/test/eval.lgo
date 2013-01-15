@@ -116,10 +116,27 @@ TO EVALTEST.PARAMSDONTPOLLUTEVARIABLES
    EVALTEST.PARAMSDONTPOLLUTEVARIABLES.INNER
 END
 
+TO EVALTEST.CANNOTTREEIFYDEFAULTVALUE.WORKER [:a ()]
+  ; Tests when treeifying the expression for a default value
+  ; encounters an error.  During some refactoring, this caused
+  ; an access violation, so it's a good regression test to keep.
+END
+
+TO EVALTEST.CANNOTTREEIFYDEFAULTVALUE
+   ; The procedure shouldn't run if the expression for the default
+   ; value cannot be treeified.
+   RUNUNEXPECTEDCLOSEPARENTEST [ EVALTEST.CANNOTTREEIFYDEFAULTVALUE.WORKER ]
+
+   ; The procedure should run if an argument is explicitly supplied,
+   ; so that the expression for the default value does not need to be run.
+   (EVALTEST.CANNOTTREEIFYDEFAULTVALUE.WORKER 1)
+END
+
 TO EVALTEST
    EVALTEST.CATCHERRORMANYTIMES
    EVALTEST.TAILRECURSIVE
    EVALTEST.NONTAILRECURSIVE
    EVALTEST.BUG1471162
    EVALTEST.PARAMSDONTPOLLUTEVARIABLES
+   EVALTEST.CANNOTTREEIFYDEFAULTVALUE
 END
