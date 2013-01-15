@@ -135,6 +135,9 @@ TO TRACEINSTRUCTION :instruction
   ; restore the current writer
   SETWRITE :previouswriter
 
+  ; clear the last error
+  IGNORE ERROR
+
   ; run the instructions
   CATCH "ERROR [IGNORE RUNRESULT :instruction]
 
