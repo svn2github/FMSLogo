@@ -1557,7 +1557,18 @@ NODE *evaluator(NODE *list, enum labels where)
         short expression_priority = getprimpri(procnode__caseobj(caseobj));
         if (expression_priority == OUTPUT_PRIORITY)
         {
-            // they are calling some form of OUTPUT
+            // They are calling some form of OUTPUT.
+
+            if (cadr(exp) == Not_Enough_Node)
+            {
+                // There was a parse error when this instruction list
+                // was being treeified.  We delayed reporting this error
+                // until now so that any previous instructions, which were
+                // parsed successfully, could be run.
+                err_logo(NOT_ENOUGH, caseobj);
+                assign(val, Unbound);
+                goto fetch_cont;
+            }
 
             assign(didnt_get_output, cons_list(caseobj, ufun, this_line));
             assign(didnt_output_name, NIL);
@@ -1841,16 +1852,16 @@ NODE *evaluator(NODE *list, enum labels where)
         }
         else if (tailcall == 0)
         {
+            // This is a probably a macroized primative, such as
+            // IF or IFELSE, which output an instructionlist to run
+            // or NIL if nothing should be run.
+            // Treeify the output, then continue with normal execution.
             treeify_line(val);
-            stopping_flag = MACRO_RETURN;
-            if (!is_tree(val)) 
-            {
-                assign(val, NIL);
-            }
-            else 
+            if (is_tree(val)) 
             {
                 assign(val, tree__tree(val));
             }
+            stopping_flag = MACRO_RETURN;
             goto fetch_cont;
         }
         else
