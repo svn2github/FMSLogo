@@ -197,7 +197,9 @@ public:
         m_TopNodeIndex = ARRAYSIZE(m_TopNode->Nodes);
 
 #ifdef MEM_DEBUG
-        assert(free_list_is_empty());
+        // BUG: cannot enable this until gc of arrays uses
+        // the garbage collection stack, instead of deref()
+        //assert(free_list_is_empty());
 #endif
     }
 
