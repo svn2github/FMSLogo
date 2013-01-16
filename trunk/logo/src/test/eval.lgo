@@ -132,6 +132,24 @@ TO EVALTEST.CANNOTTREEIFYDEFAULTVALUE
    (EVALTEST.CANNOTTREEIFYDEFAULTVALUE.WORKER 1)
 END
 
+TO EVALTEST.NOINPUTSTOOUTPUT.HELPER
+   IF LOCALETRUE [ 
+     MAKE "instructionlistran 1 ; This should be run
+     (OutPut)                   ; error: not enough inputs given
+     MAKE "instructionlistran 2 ; This should not be run
+   ]
+END
+
+TO EVALTEST.NOINPUTSTOOUTPUT
+   LOCALMAKE "instructionlistran 0
+
+   ; This is a regression test for bug #356, which is when OUTPUT
+   ; is not given enough inputs within an instruction list.
+   ; This used to crash.
+   RUNNOTENOUGHINPUTSTEST [ EVALTEST.NOINPUTSTOOUTPUT.HELPER ]
+   SIMPLEREPORTTEST [:instructionlistran] 1
+END
+
 TO EVALTEST
    EVALTEST.CATCHERRORMANYTIMES
    EVALTEST.TAILRECURSIVE
@@ -139,4 +157,5 @@ TO EVALTEST
    EVALTEST.BUG1471162
    EVALTEST.PARAMSDONTPOLLUTEVARIABLES
    EVALTEST.CANNOTTREEIFYDEFAULTVALUE
+   EVALTEST.NOINPUTSTOOUTPUT
 END
