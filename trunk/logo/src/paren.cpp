@@ -400,6 +400,9 @@ NODE *gather_some_args(int min, int max, NODE **args, bool inparen, NODE **ifnod
     {
         // We weren't able to find enough inputs.
         gcref(inputs.GetList());
+
+        // Set a special marker at this point in the parse
+        // tree so that evaluator() knows to report the error.        
         return cons_list(Not_Enough_Node);
     }
    
@@ -408,7 +411,7 @@ NODE *gather_some_args(int min, int max, NODE **args, bool inparen, NODE **ifnod
 
 // Gather the correct number of inputs to proc starting at *args.
 // Upon exit, this sets *args to immediately after the last arg.
-// If inparen is true, then *args is set to Right_Parn.
+// If inparen is true, then *args is set to Right_Paren.
 //
 // ifnode is a hack that allows for IF->IFELSE conversion.
 // If proc is IF, then *ifnode is a pointer to the proc.
@@ -449,10 +452,15 @@ NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
 }
 
 // Treeify a list of tokens (runparsed or not).
+// This essentially tokenizes the list and builds a parse tree according
+// to how many inputs each procedure currently expects.
+//
 // On success is_tree(newtree) will be non-zero.
+// On some errors, stopping_node is set to THROWING.
+//
+// Note that NIL cannot be tree'ified, but it can be run.
 void treeify_line(NODE *newtree)
 {
-
     if (newtree == NIL ||
         (is_tree(newtree) && generation__tree(newtree) == the_generation))
     {
