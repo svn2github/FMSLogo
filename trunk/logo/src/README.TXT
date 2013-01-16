@@ -20,15 +20,16 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
 II. New features/bugs fixed:
 
-  * Changed in 6.29.1
+  * Changed in 6.30.0
     o Improve the speed of the evaluation engine by 40%.
+    o Fix bug #356; Logo no longer crashes when OUTPUT is not given any inputs.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
 
 III. Standard features
 
-  * Supports Windows 95/98/ME/NT/2000/XP/WS03/Vista/Windows 7.
+  * Supports Windows 95/98/ME/NT/2000/XP/WS03/Vista/Windows 7/Windows 8.
   * Supports TCP/IP WinSock Networking.
   * Supports Text in all available fonts and sizes.
   * Supports 1024 independent Turtles.
