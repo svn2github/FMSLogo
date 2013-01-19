@@ -1790,7 +1790,9 @@ NODE *evaluator(NODE *list, enum labels where)
     }
     if (NOT_THROWING && (unev == NIL || unev == Unbound))
     {
-        if (g_ValueStatus != VALUE_STATUS_NoValueInMacro) 
+        // unev is NIL or Unbound, which means that there
+        // is nothing to evaluate to turn into a value.
+        if (g_ValueStatus == VALUE_STATUS_Required) 
         {
             err_logo(DIDNT_OUTPUT, NIL);
         }

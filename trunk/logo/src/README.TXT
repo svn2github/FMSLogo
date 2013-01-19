@@ -23,6 +23,7 @@ II. New features/bugs fixed:
   * Changed in 6.30.0
     o Improve the speed of the evaluation engine by 40%.
     o Fix bug #356; Logo no longer crashes when OUTPUT is not given any inputs.
+    o Fix bug #133; Logo no longer crashes when marcos output nothing.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
