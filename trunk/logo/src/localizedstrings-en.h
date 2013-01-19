@@ -1186,7 +1186,9 @@
 #define LOCALIZED_UNTITLED      "Untitled"
 #define LOCALIZED_UNKNOWN       "Unknown"
 
-#define LOCALIZED_UNBOUND       "Unbound"
+// The text which is shown when the Unbound node is formatted.
+// This happens when a macro outputs nothing (instead of a list)
+#define LOCALIZED_UNBOUND       "nothing"
 
 //
 // Strings that explain the purpose of each menu option.
