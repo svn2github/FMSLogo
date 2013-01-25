@@ -50,11 +50,11 @@ void TColorControl::EvPaint()
     if (EnablePalette)
     {
         int oldentries = MyLogPalette->palNumEntries;
-        COLORREF lColor = LoadColor(GetRValue(m_Color), GetGValue(m_Color), GetBValue(m_Color));
+        RGBCOLOR lColor = LoadColor(GetRValue(m_Color), GetGValue(m_Color), GetBValue(m_Color));
         OldPalette = SelectPalette(dc, ThePalette, FALSE);
         RealizePalette(dc);
 
-        dc.FillRect(GetClientRect(), TBrush(lColor));
+        dc.FillRect(GetClientRect(), TBrush((COLORREF)lColor));
 
         SelectPalette(dc, OldPalette, FALSE);
         MyLogPalette->palNumEntries = oldentries;

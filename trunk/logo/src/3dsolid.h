@@ -1,15 +1,24 @@
 #ifndef _3DSOLID_H_
 #define _3DSOLID_H_
 
-#ifndef WX_PURE
-#include <windows.h> // for COLORREF
-#endif
-
 #include "vector.h"
 #include "threed.h"
 
 #define NUM_SHADES 255
 #define SHARE
+
+// 32-bit number in 0x00BBGGRR form
+typedef unsigned int RGBCOLOR;
+
+#define MAKERGB(Red, Green, Blue)  static_cast<RGBCOLOR>( \
+     ((Red)   & 0xFF)        |                            \
+    (((Green) & 0xFF) <<  8) |                            \
+    (((Blue)  & 0xFF  << 16))                             \
+    )                                                     \
+
+#define RedValue(RgbColor)    (0xFF & (RgbColor))
+#define GreenValue(RgbColor)  (0xFF & ((RgbColor) >> 8))
+#define BlueValue(RgbColor)   (0xFF & ((RgbColor) >> 16))
 
 typedef VECTOR Point;
 
@@ -26,15 +35,13 @@ struct VERTEXLIST
 #endif
 };
 
-#ifndef WX_PURE
-
 struct POLYGON
 {
     VERTEXLIST* Vertices;  // The vertices of the polygon
     VECTOR      Normal;    // The normal of the POLYGON
     double      d;         // The d term of the plane which contains the POLYGON
     Point       Centroid;  // Centroid of the POLYGON
-    COLORREF    ColorNdx;  // Index of POLYGON's color
+    RGBCOLOR    ColorNdx;  // POLYGON's color
 };
 
 // Points to the POLYGON list data in TriL
@@ -51,17 +58,14 @@ struct BSPNode
     BSPNode* Outside;
 };
 
-struct RGBCOLOR
-{
-    BYTE r, g, b;
-};
-
 #define MAXPOLYDEPTH 660 // Actual limit 
 
 #define HC_ON       0
 #define HC_IN       1
 #define HC_OUT      2
 #define HC_SPANNING 3
+
+#ifndef WX_PURE
 
 // This class supports solid three-dimensional objects
 class TThreeDSolid : public TThreeD
@@ -114,7 +118,7 @@ class TThreeDSolid : public TThreeD
     void DisposeVertices(VERTEXLIST* v);
     void DisposeTree();
     void View();
-    void AddPolygon(VERTEXLIST* Vertices, COLORREF ColorNdx);
+    void AddPolygon(VERTEXLIST* Vertices, RGBCOLOR ColorNdx);
     void AddPoint(VERTEXLIST** v, Point &pt);
 
  private:
@@ -132,7 +136,7 @@ class TThreeDSolid : public TThreeD
     void Intersect(POLYGON* Poly, Point& v1, Point& v2, Point& bc);
     void AddToBSPTree(POLYGON* T, BSPNode** Root);
     BOOL WorldToDisplay(double x, double y, double z, POINT& disp);
-    COLORREF ComputeColor(Point& p, VECTOR& normal, COLORREF colorNdx);
+    RGBCOLOR ComputeColor(Point& p, VECTOR& normal, RGBCOLOR colorNdx);
     void DisplayPolygon(POLYGON* Poly);
     void TraverseTree(BSPNode* tree);
 };

@@ -78,12 +78,8 @@ struct Turtle
 // global variables
 extern long vector_count;
 
-#ifndef WX_PURE
-
 // function declarations
-extern COLORREF GetColorArgument(NODE* args);
-
-#endif // WX_PURE
+extern RGBCOLOR GetColorArgument(NODE* args);
 
 extern FIXNUM g_round(FLONUM n);
 extern FLONUM numeric_node_to_flonum(const NODE* numeric_node);
@@ -212,9 +208,7 @@ extern mode_type   current_mode;
 extern bool        bPolyFlag;
 extern VERTEXLIST* ThePolygon;
 
-#ifndef WX_PURE
-extern COLORREF    colortable[];
-#endif // WX_PURE
+extern RGBCOLOR    colortable[];
 
 extern Turtle * g_Turtles;
 extern int      g_MaxTurtle;        // the index of the largest real turtle

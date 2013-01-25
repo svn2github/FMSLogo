@@ -51,11 +51,11 @@ char TempBmpName[MAX_PATH + 1];    // path to temp bitmap file
 char TempClipName[MAX_PATH + 1];   // path to temp clipboard file
 char szHelpFileName[MAX_PATH + 1]; // path to help file
 
-#ifndef WX_PURE
-COLORREF scolor;                   // screen color
-COLORREF fcolor;                   // flood color
-COLORREF pcolor;                   // pen color
+RGBCOLOR scolor;                   // screen color
+RGBCOLOR fcolor;                   // flood color
+RGBCOLOR pcolor;                   // pen color
 
+#ifndef WX_PURE
 OSVERSIONINFO g_OsVersionInformation;
 #endif
 

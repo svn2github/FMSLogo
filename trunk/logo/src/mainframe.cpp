@@ -2123,7 +2123,7 @@ void TMainFrame::CMSetPenSize()
 void
 TMainFrame::ShowColorPicker(
     class TColorDialog * & ColorPickerDialog,
-    COLORREF               InitialColor,
+    RGBCOLOR               InitialColor,
     const char *           EnglishDescription,
     const char *           LogoCommand
     )
@@ -2134,7 +2134,7 @@ TMainFrame::ShowColorPicker(
         // Create it.
         ColorPickerDialog = new TColorDialog(
             this, 
-            InitialColor, 
+            (COLORREF)InitialColor, 
             EnglishDescription,
             LogoCommand,
             ColorPickerDialog);

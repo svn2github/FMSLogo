@@ -64,7 +64,7 @@ void TThreeDSolid::DisposeTree()
 }
 
 // Sets up the dimensions of the window and various default values
-void TThreeDSolid::AddPolygon(VERTEXLIST* Vertices, COLORREF ColorNdx)
+void TThreeDSolid::AddPolygon(VERTEXLIST* Vertices, RGBCOLOR ColorNdx)
 {
     POLYGON *t = new POLYGON;
     t->Vertices = Vertices;
@@ -946,7 +946,7 @@ BOOL TThreeDSolid::WorldToDisplay(double x, double y, double z, POINT& disp)
 // lighting is used. You are looking at point p and the variable
 // "normal" is the normal of the polygon. colorNdx specifies the
 // desired color of the polygon.
-COLORREF TThreeDSolid::ComputeColor(Point& p, VECTOR& normal, COLORREF colorNdx)
+RGBCOLOR TThreeDSolid::ComputeColor(Point& p, VECTOR& normal, RGBCOLOR colorNdx)
 {
     VECTOR l = Subtract(Light, p);  // Find vector from light to point p
     Normalize(l);
@@ -980,7 +980,7 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
 {
     // PrecomputeCentroid(Poly);
 
-    COLORREF color = ComputeColor(Poly->Centroid, Poly->Normal, Poly->ColorNdx);
+    RGBCOLOR color = ComputeColor(Poly->Centroid, Poly->Normal, Poly->ColorNdx);
 
     if (EnablePalette)
     {

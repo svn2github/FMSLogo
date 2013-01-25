@@ -78,8 +78,7 @@ typedef struct __DC  * HDC;
 #define turtle_bottom_max (-BitMapHeight/2)
 #define turtle_top_max    ( BitMapHeight/2)
 
-#ifndef WX_PURE
-COLORREF colortable[16] =
+RGBCOLOR colortable[] =
 {
     0x00000000, // black
     0x00FF0000, // blue
@@ -98,7 +97,6 @@ COLORREF colortable[16] =
     0x0000A3FF, // orange
     0x00B7B7B7, // grey
 };
-#endif // WX_PURE
 
 mode_type current_mode = wrapmode;
 
@@ -135,7 +133,7 @@ struct NAMEDCOLOR
 {
     const    char * EnglishName;
     const    char * LocalizedName;
-    COLORREF        Color;
+    RGBCOLOR        Color;
 };
 
 static const NAMEDCOLOR g_NamedColors[] =
@@ -2729,15 +2727,14 @@ GetColorComponent(
     return colorComponent;
 }
 
-#ifndef WX_PURE
-COLORREF
+RGBCOLOR
 GetColorArgument(
     NODE* args
     )
 {
     NODE * arg = car(args);
 
-    COLORREF color;
+    RGBCOLOR color;
 
     bool haveColor = false;
     while (stopping_flag != THROWING && !haveColor)
@@ -2855,7 +2852,7 @@ setcolor_helper(
     void (*setcolorfunc)  (int, int, int)
     )
 {
-    COLORREF color = GetColorArgument(args);
+    RGBCOLOR color = GetColorArgument(args);
 
     if (stopping_flag != THROWING)
     {
@@ -2870,33 +2867,20 @@ setcolor_helper(
 
     return Unbound;
 }
-#endif
 
 NODE *lsetpencolor(NODE *args)
 {
-#ifdef WX_PURE
-    return NIL;
-#else
     return setcolor_helper(args, ChangeActivePenColor);
-#endif
 }
 
 NODE *lsetfloodcolor(NODE *args)
 {
-#ifdef WX_PURE
-    return NIL;
-#else
     return setcolor_helper(args, ChangeActiveFloodColor);
-#endif
 }
 
 NODE *lsetscreencolor(NODE *args)
 {
-#ifdef WX_PURE
-    return NIL;
-#else
     return setcolor_helper(args, ChangeActiveScreenColor);
-#endif
 }
 
 NODE *lsetpensize(NODE *args)

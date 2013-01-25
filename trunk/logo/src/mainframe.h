@@ -21,6 +21,7 @@
 #include <owl\decframe.h>
 #include <owl\panespli.h>
 
+#include "3dsolid.h"          // for RGBCOLOR
 #include "logocore.h"         // for FLONUM
 #include "logoeventqueue.h"   // for qlist
 #include "localizedstrings.h" // for MANUAL_HAS_TRANSLATION_TABLES
@@ -206,7 +207,7 @@ private:
     void
     ShowColorPicker(
         class TColorDialog * & ColorPickerDialog,
-        COLORREF               InitialColor,
+        RGBCOLOR               InitialColor,
         const char *           EnglishDescription,
         const char *           LogoCommand
         );

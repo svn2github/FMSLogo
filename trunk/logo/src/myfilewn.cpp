@@ -695,14 +695,14 @@ void TMyFileWindow::SetEditorFont(const LOGFONT & LogFont)
     // apply the font
     SendEditor(SCI_STYLECLEARALL);
 
-    const COLORREF black   = RGB(0,0,0);
-    const COLORREF white   = RGB(0xff,0xff,0xff);
-    const COLORREF darkgreen = RGB(0,0x80,0);
-    const COLORREF darkred   = RGB(0x80, 0, 0);
-    const COLORREF red       = RGB(0xFF, 0, 0);
-    const COLORREF lightgrey = RGB(0xCC, 0xCC, 0xCC);
-    const COLORREF lightblue = RGB(200,  242,  255);
-    const COLORREF darkblue  = RGB(  0,  0,   0x80);
+    const RGBCOLOR black   = RGB(0,0,0);
+    const RGBCOLOR white   = RGB(0xff,0xff,0xff);
+    const RGBCOLOR darkgreen = RGB(0,0x80,0);
+    const RGBCOLOR darkred   = RGB(0x80, 0, 0);
+    const RGBCOLOR red       = RGB(0xFF, 0, 0);
+    const RGBCOLOR lightgrey = RGB(0xCC, 0xCC, 0xCC);
+    const RGBCOLOR lightblue = RGB(200,  242,  255);
+    const RGBCOLOR darkblue  = RGB(  0,  0,   0x80);
 
     SendEditor(SCI_STYLESETFORE, SCE_FMS_COMMENT,          darkgreen);
     SendEditor(SCI_STYLESETFORE, SCE_FMS_COMMENTBACKSLASH, darkgreen);

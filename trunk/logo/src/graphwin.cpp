@@ -310,7 +310,7 @@ UpdatePen(
     LOGPEN   & LogicalPen,
     HPEN     & Pen,
     int        Width,
-    COLORREF   Color
+    RGBCOLOR   Color
     )
 {
     LogicalPen.lopnStyle   = PS_INSIDEFRAME;
@@ -327,7 +327,7 @@ UpdatePen(
 void
 UpdateErasePen(
     int      Width,
-    COLORREF Color
+    RGBCOLOR Color
     )
 {
     UpdatePen(g_LogicalErasePen, g_ErasePen, Width, Color);
@@ -336,7 +336,7 @@ UpdateErasePen(
 void
 UpdateNormalPen(
     int      Width,
-    COLORREF Color
+    RGBCOLOR Color
     )
 {
     UpdatePen(g_LogicalNormalPen, g_NormalPen, Width, Color);
@@ -391,10 +391,10 @@ PENSTATE & GetPenStateForSelectedTurtle()
 #ifndef WX_PURE
 
 /* adds color to palette */
-COLORREF LoadColor(int dpenr, int dpeng, int dpenb)
+RGBCOLOR LoadColor(int dpenr, int dpeng, int dpenb)
 {
     /* convert to color and find nearest match */
-    COLORREF color = PALETTERGB(dpenr, dpeng, dpenb);
+    RGBCOLOR color = PALETTERGB(dpenr, dpeng, dpenb);
     int Index = GetNearestPaletteIndex(ThePalette, color);
 
     /* if not exact and room for more then allocate it */
@@ -1028,7 +1028,7 @@ NODE *lsetpixel(NODE *args)
     }
 
     // get args
-    COLORREF color = GetColorArgument(args);
+    RGBCOLOR color = GetColorArgument(args);
 
     if (NOT_THROWING)
     {
@@ -1103,7 +1103,7 @@ NODE *lsetpixel(NODE *args)
 static
 int
 getindexcolor(
-    const COLORREF & color
+    const RGBCOLOR & color
     )
 {
     for (int i=0;i<16;i++)
@@ -1144,7 +1144,7 @@ NODE *lpixel(NODE *)
         RealizePalette(MemDC);
     }
 
-    COLORREF the_color = GetPixel(MemDC, dest.x + xoffset, -dest.y + yoffset);
+    RGBCOLOR the_color = GetPixel(MemDC, dest.x + xoffset, -dest.y + yoffset);
 
     if (EnablePalette)
     {
@@ -1204,7 +1204,9 @@ void logofill(bool bOld)
     }
     else
     {
-        COLORREF tcolor = GetPixel(MemDC, dest.x + xoffset, -dest.y + yoffset) | 0x02000000;
+        RGBCOLOR tcolor =
+            GetPixel(MemDC, dest.x + xoffset, -dest.y + yoffset) |
+            0x02000000;
 
         ExtFloodFill(
             MemDC,
@@ -2524,9 +2526,7 @@ NODE *lhasownpenp(NODE*)
     return true_or_false(g_SelectedTurtle->HasOwnPenState);
 }
 
-#ifndef WX_PURE
-
-static COLORREF InterpolateColors(COLORREF A, COLORREF B, double Alpha)
+static RGBCOLOR InterpolateColors(RGBCOLOR A, RGBCOLOR B, double Alpha)
 {
     if (A == B)
     {
@@ -2546,7 +2546,6 @@ static COLORREF InterpolateColors(COLORREF A, COLORREF B, double Alpha)
 
     return RGB(red, green, blue);
 }
-#endif
 
 void turtlepaste(int TurtleToPaste)
 {
@@ -2645,7 +2644,7 @@ void turtlepaste(int TurtleToPaste)
             // Now do the rotating, one pixel at a time.
             // Find the pixel that cooresponds to each point in the destination
             // rectangle to guarantee that each pixel gets covered.
-            const COLORREF TRANSPARENT_COLOR = RGB(255, 255, 255);
+            const RGBCOLOR TRANSPARENT_COLOR = RGB(255, 255, 255);
             if (EnablePalette)
             {
                 // The display has a palette, so bilinear interpolation would not work.
@@ -2659,7 +2658,7 @@ void turtlepaste(int TurtleToPaste)
                         if (0 <= sourcex && sourcex < g_Bitmaps[TurtleToPaste].Width &&
                             0 <= sourcey && sourcey < g_Bitmaps[TurtleToPaste].Height)
                         {
-                            const COLORREF pixel = ::GetPixel(TempMemDC, sourcex, sourcey);
+                            const RGBCOLOR pixel = ::GetPixel(TempMemDC, sourcex, sourcey);
                             if (pixel != TRANSPARENT_COLOR)
                             {
                                 SetPixelV(
@@ -2691,10 +2690,10 @@ void turtlepaste(int TurtleToPaste)
                                 FLONUM xFraction = modf(sourcex, &sourcex);
                                 FLONUM yFraction = modf(sourcey, &sourcey);
 
-                                COLORREF pixelx0y0 = ::GetPixel(TempMemDC, sourcex,     sourcey);
-                                COLORREF pixelx0y1 = ::GetPixel(TempMemDC, sourcex,     sourcey + 1);
-                                COLORREF pixelx1y0 = ::GetPixel(TempMemDC, sourcex + 1, sourcey);
-                                COLORREF pixelx1y1 = ::GetPixel(TempMemDC, sourcex + 1, sourcey + 1);
+                                RGBCOLOR pixelx0y0 = ::GetPixel(TempMemDC, sourcex,     sourcey);
+                                RGBCOLOR pixelx0y1 = ::GetPixel(TempMemDC, sourcex,     sourcey + 1);
+                                RGBCOLOR pixelx1y0 = ::GetPixel(TempMemDC, sourcex + 1, sourcey);
+                                RGBCOLOR pixelx1y1 = ::GetPixel(TempMemDC, sourcex + 1, sourcey + 1);
 
                                 if (pixelx0y0 == pixelx0y1 &&
                                     pixelx0y0 == pixelx1y0 &&
@@ -2716,7 +2715,10 @@ void turtlepaste(int TurtleToPaste)
                                 else
                                 {
                                     // get the screen's value for each of the transparent pixels
-                                    const COLORREF screenPixel = GetPixel(ScreenDC, x + xScreenOffset, y + yScreenOffset);
+                                    const RGBCOLOR screenPixel = GetPixel(
+                                        ScreenDC,
+                                        x + xScreenOffset,
+                                        y + yScreenOffset);
 
                                     if (pixelx0y0 == TRANSPARENT_COLOR)
                                     {
@@ -2736,9 +2738,9 @@ void turtlepaste(int TurtleToPaste)
                                     }
 
                                     // interpolate in the X direction, then the Y direction
-                                    COLORREF pixely0 = InterpolateColors(pixelx0y0, pixelx1y0, xFraction);
-                                    COLORREF pixely1 = InterpolateColors(pixelx0y1, pixelx1y1, xFraction);
-                                    COLORREF pixel   = InterpolateColors(pixely0, pixely1, yFraction);
+                                    RGBCOLOR pixely0 = InterpolateColors(pixelx0y0, pixelx1y0, xFraction);
+                                    RGBCOLOR pixely1 = InterpolateColors(pixelx0y1, pixelx1y1, xFraction);
+                                    RGBCOLOR pixel   = InterpolateColors(pixely0, pixely1, yFraction);
 
                                     SetPixelV(
                                         ScreenDC,
@@ -2753,11 +2755,11 @@ void turtlepaste(int TurtleToPaste)
                                 // We're at the right edge, so linear interpolation in Y is sufficient.
                                 FLONUM yFraction = modf(sourcey, &sourcey);
 
-                                COLORREF pixely0 = ::GetPixel(TempMemDC, g_Bitmaps[TurtleToPaste].Width - 1, sourcey);
-                                COLORREF pixely1 = ::GetPixel(TempMemDC, g_Bitmaps[TurtleToPaste].Width - 1, sourcey + 1);
+                                RGBCOLOR pixely0 = ::GetPixel(TempMemDC, g_Bitmaps[TurtleToPaste].Width - 1, sourcey);
+                                RGBCOLOR pixely1 = ::GetPixel(TempMemDC, g_Bitmaps[TurtleToPaste].Width - 1, sourcey + 1);
 
                                 // get the screen's value for each of the transparent pixels
-                                const COLORREF screenPixel = GetPixel(ScreenDC, x + xScreenOffset, y + yScreenOffset);
+                                const RGBCOLOR screenPixel = GetPixel(ScreenDC, x + xScreenOffset, y + yScreenOffset);
 
                                 if (pixely0 == TRANSPARENT_COLOR)
                                 {
@@ -2769,7 +2771,7 @@ void turtlepaste(int TurtleToPaste)
                                 }
 
                                 // interpolate in the Y direction
-                                COLORREF pixel = InterpolateColors(pixely0, pixely1, yFraction);
+                                RGBCOLOR pixel = InterpolateColors(pixely0, pixely1, yFraction);
                                 SetPixelV(
                                     ScreenDC,
                                     x + xScreenOffset,
@@ -2782,11 +2784,11 @@ void turtlepaste(int TurtleToPaste)
                                 // We're at the bottom edge, so linear interpolation in X is sufficient.
                                 FLONUM xFraction = modf(sourcex, &sourcex);
 
-                                COLORREF pixelx0 = ::GetPixel(TempMemDC, sourcex,     g_Bitmaps[TurtleToPaste].Height - 1);
-                                COLORREF pixelx1 = ::GetPixel(TempMemDC, sourcex + 1, g_Bitmaps[TurtleToPaste].Height - 1);
+                                RGBCOLOR pixelx0 = ::GetPixel(TempMemDC, sourcex,     g_Bitmaps[TurtleToPaste].Height - 1);
+                                RGBCOLOR pixelx1 = ::GetPixel(TempMemDC, sourcex + 1, g_Bitmaps[TurtleToPaste].Height - 1);
 
                                 // get the screen's value for each of the transparent pixels
-                                const COLORREF screenPixel = GetPixel(ScreenDC, x + xScreenOffset, y + yScreenOffset);
+                                const RGBCOLOR screenPixel = GetPixel(ScreenDC, x + xScreenOffset, y + yScreenOffset);
 
                                 if (pixelx0 == TRANSPARENT_COLOR)
                                 {
@@ -2798,7 +2800,7 @@ void turtlepaste(int TurtleToPaste)
                                 }
 
                                 // interpolate in the X direction
-                                COLORREF pixel = InterpolateColors(pixelx0, pixelx1, xFraction);
+                                RGBCOLOR pixel = InterpolateColors(pixelx0, pixelx1, xFraction);
                                 SetPixelV(
                                     ScreenDC,
                                     x + xScreenOffset,
@@ -2809,7 +2811,7 @@ void turtlepaste(int TurtleToPaste)
                                      sourcey < g_Bitmaps[TurtleToPaste].Height)
                             {
                                 // we're at the corner, so we don't need any interpolation
-                                const COLORREF pixel = ::GetPixel(TempMemDC, sourcex, sourcey);
+                                const RGBCOLOR pixel = ::GetPixel(TempMemDC, sourcex, sourcey);
                                 if (pixel != TRANSPARENT_COLOR)
                                 {
                                     SetPixelV(
