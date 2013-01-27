@@ -127,8 +127,6 @@ static bool out_of_bounds = false;
 
 #define sq(z) ((z)*(z))
 
-#ifndef WX_PURE
-
 struct NAMEDCOLOR
 {
     const    char * EnglishName;
@@ -286,8 +284,6 @@ static const NAMEDCOLOR g_NamedColors[] =
     {"Yellow",                LOCALIZED_COLOR_YELLOW,                0x0000FFFF},
     {"YellowGreen",           LOCALIZED_COLOR_YELLOWGREEN,           0x0032CD9A},
 };
-
-#endif
 
 bool bIndexMode = false;
 
@@ -660,6 +656,7 @@ transline_helper(
 #endif
 }
 
+#ifndef WX_PURE
 
 static
 void 
@@ -671,7 +668,6 @@ transline3d(
     const Point & to
     )
 {
-#ifndef WX_PURE
     // First, project the point from world coordinates to
     // window coordinates.
     VECTOR from3d;
@@ -713,7 +709,6 @@ transline3d(
         from2d.y,
         to2d.x,
         to2d.y);
-#endif
 }
 
 static
@@ -736,6 +731,8 @@ transline(
         g_round(to.y));
 }
 
+#endif
+
 
 static
 void move_to(FLONUM x, FLONUM y)
@@ -755,7 +752,6 @@ void move_to_3d(FLONUM x, FLONUM y, FLONUM z)
 static
 void line_to(FLONUM x, FLONUM y)
 {
-#ifndef WX_PURE
     if (g_SelectedTurtle->IsSpecial)
     {
         // special turtles don't draw lines when they move
@@ -770,6 +766,8 @@ void line_to(FLONUM x, FLONUM y)
         Point toPoint;
         toPoint.x = x;
         toPoint.y = y;
+
+#ifndef WX_PURE
 
         HPEN           pen;
         const LOGPEN * logicalPen;
@@ -802,14 +800,14 @@ void line_to(FLONUM x, FLONUM y)
             rasterMode,
             g_OldPos,
             toPoint);
-    }
+
 #endif // WX_PURE
+    }
 }
 
 static
 void line_to_3d(const Point & ToPoint)
 {
-#ifndef WX_PURE
     if (g_SelectedTurtle->IsSpecial)
     {
         // special turtles don't draw lines when they move
@@ -821,6 +819,7 @@ void line_to_3d(const Point & ToPoint)
         vector_count++;
         update_status_vectors();
 
+#ifndef WX_PURE
         HPEN           pen;
         const LOGPEN * logicalPen;
         int            rasterMode;
@@ -852,8 +851,8 @@ void line_to_3d(const Point & ToPoint)
             rasterMode,
             g_OldPos,
             ToPoint);
-    }
 #endif
+    }
 }
 
 
@@ -1633,7 +1632,6 @@ NODE *lback(NODE *arg)
 
 NODE *lbitmapturtle(NODE * arg)
 {
-#ifndef WX_PURE
     bool rotatingBitmap = false;
     if (arg != NULL)
     {
@@ -1646,21 +1644,22 @@ NODE *lbitmapturtle(NODE * arg)
     }
 
     draw_turtle(false);
+#ifndef WX_PURE
     g_SelectedTurtle->BitmapRasterMode = SRCCOPY;
     g_SelectedTurtle->IsSprite         = rotatingBitmap;
-    draw_turtle(true);
 #endif
+    draw_turtle(true);
     return Unbound;
 }
 
 NODE *lnobitmapturtle(NODE *)
 {
-#ifndef WX_PURE
     draw_turtle(false);
+#ifndef WX_PURE
     g_SelectedTurtle->BitmapRasterMode = 0;
     g_SelectedTurtle->IsSprite         = false;
-    draw_turtle(true);
 #endif
+    draw_turtle(true);
     return Unbound;
 }
 
@@ -1760,8 +1759,6 @@ NODE *lsetpitch(NODE *arg)
 
 NODE *lsetclip(NODE *args)
 {
-
-#ifndef WX_PURE
     FLONUM angle = float_arg(args);
     FLONUM zmin = float_arg(cdr(args));
     FLONUM zmax = float_arg(cdr(cdr(args)));
@@ -1769,10 +1766,11 @@ NODE *lsetclip(NODE *args)
     if (NOT_THROWING)
     {
         draw_turtle(false);
+#ifndef WX_PURE
         ThreeD.SetClip(angle, zmin, zmax);
+#endif
         draw_turtle(true);
     }
-#endif
 
     return Unbound;
 }
@@ -2350,13 +2348,13 @@ NODE *lwindow(NODE *)
 
 NODE *lsetlight(NODE *args)
 {
-#ifndef WX_PURE
     NODE * arg = vector_arg(args);
     if (NOT_THROWING)
     {
         NODE * ambient = car(arg);
         NODE * diffuse = cadr(arg);
 
+#ifndef WX_PURE
         ThreeD.m_Ambient = numeric_node_to_flonum(ambient);
         ThreeD.m_Diffuse = numeric_node_to_flonum(diffuse);
 
@@ -2364,9 +2362,9 @@ NODE *lsetlight(NODE *args)
         {
             ThreeD.View();
         }
-
+#endif // WX_PURE
     }
-#endif
+
     return Unbound;
 }
 
@@ -2383,21 +2381,21 @@ NODE *llight(NODE *)
 
 NODE *lpolystart(NODE *)
 {
-#ifndef WX_PURE
     if (bPolyFlag)
     {
         bPolyFlag = false;
+#ifndef WX_PURE
         ThreeD.DisposeVertices(ThePolygon);
         ThePolygon = NULL;
         ShowMessageAndStop(
             LOCALIZED_ERROR_POLYSTART, 
             LOCALIZED_ERROR_POLYSTARTALREADYSTARTED);
+#endif
     }
     else
     {
         bPolyFlag = true;
     }
-#endif
 
     return Unbound;
 }
@@ -2760,7 +2758,7 @@ GetColorArgument(
                         if (blue != -1)
                         {
                             // got a value color vector
-                            color = RGB(red, green, blue);
+                            color = MAKERGB(red, green, blue);
                             haveColor  = true;
                             bIndexMode = false;
                         }
@@ -2835,12 +2833,14 @@ GetColorArgument(
         }
     }
 
+#ifndef WX_PURE
     if (EnablePalette)
     {
         // We're using a palette, so use the closest matching
         // color that is available.
         color = LoadColor(GetRValue(color), GetGValue(color), GetBValue(color));
     }
+#endif
 
     return color;
 }
@@ -2859,9 +2859,9 @@ setcolor_helper(
         if (!GetPenStateForSelectedTurtle().IsErasing)
         {
             setcolorfunc(
-                GetRValue(color),
-                GetGValue(color),
-                GetBValue(color));
+                RedValue(color),
+                GreenValue(color),
+                BlueValue(color));
         }
     }
 

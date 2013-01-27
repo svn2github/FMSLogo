@@ -103,12 +103,10 @@ void init_osversion()
 
 void init_graphics()
 {
-#ifndef WX_PURE
     // set appropriate default colors
     pcolor = 0x00000000;
     scolor = 0x00FFFFFF;
     fcolor = 0x00000000;
-#endif
 
     dfld.red   = 0x00;
     dfld.green = 0x00;
@@ -220,7 +218,7 @@ void init_graphics()
     g_PrinterAreaPixels = GetConfigurationInt("Printer.Pixels", std::max(BitMapWidth, BitMapHeight) / 8);
 }
 
-#ifndef WX_PURE
+#ifdef FMSLOGO_OWL
 // Best-effort to disable Data Execution Protection.
 //
 // In general, programs shouldn't disable DEP because that would leave

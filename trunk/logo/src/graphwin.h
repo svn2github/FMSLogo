@@ -91,7 +91,9 @@ extern NODE *lsetfocus(NODE *args);
 extern NODE *lgetfocus(NODE *arg);
 extern NODE *lwindowset(NODE *args);
 extern void logofill(bool bOld);
+#ifndef WX_PURE // for SIZE
 extern SIZE labelsize(const char *s);
+#endif
 extern void label(const char *s);
 extern void UpdateErasePen(int Width, RGBCOLOR Color);
 extern void UpdateNormalPen(int Width, RGBCOLOR Color);

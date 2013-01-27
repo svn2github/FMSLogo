@@ -36,8 +36,11 @@ extern OSVERSIONINFO g_OsVersionInformation;
 extern char          g_FmslogoBaseDirectory[MAX_PATH+1];
 #endif // WX_PURE
 
-
+#ifdef FMSLOGO_OWL
+// OWL's thunking for window message handling triggers DEP exceptions.
 extern void DisableDataExecutionProtection();
+#endif
+
 extern void MakeHelpPathName(char *szFileName, const char *);
 extern void init_graphics();
 extern void init_osversion();

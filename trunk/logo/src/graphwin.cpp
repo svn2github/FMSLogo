@@ -324,13 +324,19 @@ UpdatePen(
     Pen = CreatePenIndirect(&LogicalPen);
 }
 
+#endif
+
+
+
 void
 UpdateErasePen(
     int      Width,
     RGBCOLOR Color
     )
 {
+#ifndef WX_PURE
     UpdatePen(g_LogicalErasePen, g_ErasePen, Width, Color);
+#endif
 }
 
 void
@@ -339,10 +345,10 @@ UpdateNormalPen(
     RGBCOLOR Color
     )
 {
+#ifndef WX_PURE
     UpdatePen(g_LogicalNormalPen, g_NormalPen, Width, Color);
-}
-
 #endif
+}
 
 ERR_TYPES
 gifsave_helper(
@@ -489,12 +495,11 @@ NODE *lgifsave(NODE *args)
                                     {
                                         iMaxColorDepth = 8;
                                     }
-#ifndef WX_PURE
+
                                     if (cdr(cdr(cdr(cdr(cdr(args))))) != NIL)
                                     {
                                         iTrans = GetColorArgument(cdr(cdr(cdr(cdr(cdr(args))))));
                                     }
-#endif
                                 }
                             }
                         }
@@ -1098,15 +1103,13 @@ NODE *lsetpixel(NODE *args)
     return Unbound;
 }
 
-#ifndef WX_PURE
-
 static
 int
 getindexcolor(
     const RGBCOLOR & color
     )
 {
-    for (int i=0;i<16;i++)
+    for (size_t i = 0; i < 16; i++)
     {
         if (color == colortable[i])
         {
@@ -1115,8 +1118,6 @@ getindexcolor(
     }
     return -1;
 }
-
-#endif // WX_PURE
 
 // function that returns the RGB vector of the pixel the turtle is on top of
 NODE *lpixel(NODE *)
@@ -1232,16 +1233,14 @@ void logofill(bool bOld)
 
 static NODE* color_helper(const Color & col)
 {
-#ifndef WX_PURE
     if (bIndexMode)
     {
-        int icolor = getindexcolor(RGB(col.red, col.green, col.blue));
+        int icolor = getindexcolor(MAKERGB(col.red, col.green, col.blue));
         if (icolor >= 0)
         {
             return make_intnode(icolor);
         }
     }
-#endif
 
     return cons_list(
         make_intnode((FIXNUM) col.red),
@@ -1274,12 +1273,12 @@ void ChangeActivePenColor(int Red, int Green, int Blue)
         pcolor = LoadColor(Red, Green, Blue);
     }
     else
+#endif
     {
-        pcolor = RGB(Red, Green, Blue);
+        pcolor = MAKERGB(Red, Green, Blue);
     }
 
     UpdateNormalPen(GetPenStateForSelectedTurtle().Width, pcolor);
-#endif
 
     update_status_pencolor();
 }
@@ -1398,11 +1397,10 @@ int get_pen_height()
 void set_pen_width(int w)
 {
     GetPenStateForSelectedTurtle().Width = w;
-#ifndef WX_PURE
+
     // we erase with the same pen width as we write
     UpdateNormalPen(w, pcolor);
     UpdateErasePen(w,  scolor);
-#endif
 }
 
 void set_pen_height(int h)
@@ -1469,7 +1467,6 @@ void UpdateZoomControlFlag()
 // screen still is. It also readjusts the ranges on the scrollers.
 void zoom_helper(FLONUM NewZoomFactor)
 {
-#ifndef WX_PURE
     if (the_zoom != NewZoomFactor)
     {
         the_zoom = NewZoomFactor;
@@ -1483,10 +1480,11 @@ void zoom_helper(FLONUM NewZoomFactor)
 
         draw_turtle(true);
 
+#ifndef WX_PURE
         // paint the entire window
         InvalidateRect(GetScreenWindow(), NULL, TRUE);
-    }
 #endif
+    }
 }
 
 NODE *lzoom(NODE *arg)
@@ -2306,7 +2304,6 @@ NODE *lbitpaste(NODE *)
 NODE *lbitpastetoindex(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
-#ifndef WX_PURE
 
     // set the current bitmap index if within range
     int i = getint(nonnegative_int_arg(arg));
@@ -2318,6 +2315,7 @@ NODE *lbitpastetoindex(NODE *arg)
         return Unbound;
     }
 
+#ifndef WX_PURE
     if (g_BitmapsLimit <= i)
     {
         // notify the user that the bitmap index is out of range
@@ -2389,7 +2387,6 @@ NODE *lbitpastetoindex(NODE *arg)
 NODE *lsetturtle(NODE *args)
 {
     ASSERT_TURTLE_INVARIANT;
-#ifndef WX_PURE
 
     NODE * val = ranged_integer_arg(args, -TOTAL_SPECIAL_TURTLES, FIXNUM_MAX);
     if (stopping_flag == THROWING)
@@ -2484,7 +2481,6 @@ NODE *lsetturtle(NODE *args)
             activePenColor.green,
             activePenColor.blue);
     }
-#endif
 
     draw_turtles(false);
 
@@ -2540,11 +2536,11 @@ static RGBCOLOR InterpolateColors(RGBCOLOR A, RGBCOLOR B, double Alpha)
     const int alphaInt         = (int)(Alpha * 4096.5);
     const int oneMinusAlphaInt = 4096 - alphaInt;
 
-    BYTE red   = (GetRValue(A) * oneMinusAlphaInt + GetRValue(B) * alphaInt) / 4096;
-    BYTE green = (GetGValue(A) * oneMinusAlphaInt + GetGValue(B) * alphaInt) / 4096;
-    BYTE blue  = (GetBValue(A) * oneMinusAlphaInt + GetBValue(B) * alphaInt) / 4096;
+    unsigned char red   = (RedValue(A)   * oneMinusAlphaInt + RedValue(B)   * alphaInt) / 4096;
+    unsigned char green = (GreenValue(A) * oneMinusAlphaInt + GreenValue(B) * alphaInt) / 4096;
+    unsigned char blue  = (BlueValue(A)  * oneMinusAlphaInt + BlueValue(B)  * alphaInt) / 4096;
 
-    return RGB(red, green, blue);
+    return MAKERGB(red, green, blue);
 }
 
 void turtlepaste(int TurtleToPaste)
@@ -2914,7 +2910,6 @@ NODE *lscrollx(NODE *arg)
 NODE *lscrolly(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
-#ifndef WX_PURE
 
     // get args and scroll the scroller
     NODE * args = numeric_arg(arg);
@@ -2922,7 +2917,7 @@ NODE *lscrolly(NODE *arg)
     if (NOT_THROWING)
     {
         int delta = getint(args);
-
+#ifndef WX_PURE
         if (delta == 0)
         {
             RECT screenRect;
@@ -2938,8 +2933,8 @@ NODE *lscrolly(NODE *arg)
                 GetScreenHorizontalScrollPosition(),
                 GetScreenVerticalScrollPosition() + delta);
         }
-    }
 #endif
+    }
 
     return Unbound;
 }
@@ -3324,10 +3319,11 @@ NODE *lfontfacenames(NODE *arg)
 NODE *lsetlabelfont(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
-#ifndef WX_PURE
+
     NODE *args = list_arg(arg);
     if (NOT_THROWING)
     {
+#ifndef WX_PURE
         if (args == NIL)
         {
             // no font name was given.
@@ -3389,8 +3385,8 @@ NODE *lsetlabelfont(NODE *arg)
         {
             FontRec.lfPitchAndFamily = getint(nonnegative_int_arg(args = cdr(args)));
         }
-    }
 #endif
+    }
 
     return Unbound;
 }
