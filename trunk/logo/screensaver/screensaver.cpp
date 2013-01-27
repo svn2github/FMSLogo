@@ -171,8 +171,6 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 
         init_osversion();
 
-        DisableDataExecutionProtection();
-
         // Figure out the path that contains fmslogo.exe
         HKEY fmslogoKey;
         LONG result;
