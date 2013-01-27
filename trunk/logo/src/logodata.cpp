@@ -345,7 +345,7 @@ capital(
 char *cap_strnzcpy(char *dst, const char * src, int len)
 {
 #ifdef WX_PURE
-    for (int i = 0; i < len; i++)
+    for (size_t i = 0; i < len; i++)
     {
         dst[i] = capital(src[i]);
     }
@@ -385,7 +385,7 @@ char *noparitylow_strnzcpy(char *dst, const char *src, int len)
 int low_strncmp(const char *string1, const char * string2, int length)
 {
 #ifdef WX_PURE
-    for (int i = 0; i < length; i++)
+    for (size_t i = 0; i < length; i++)
     {
         if (*string1 != *string2)
         {
