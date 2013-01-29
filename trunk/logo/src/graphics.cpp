@@ -78,7 +78,7 @@ typedef struct __DC  * HDC;
 #define turtle_bottom_max (-BitMapHeight/2)
 #define turtle_top_max    ( BitMapHeight/2)
 
-RGBCOLOR colortable[] =
+const RGBCOLOR colortable[] =
 {
     0x00000000, // black
     0x00FF0000, // blue
@@ -2774,7 +2774,7 @@ GetColorArgument(
             int colorIndex = -1;
             if (nodetype(cnode) == INTEGER)
             {
-                colorIndex = getint(cnode) % 16;
+                colorIndex = getint(cnode) % COLORTABLESIZE;
             }
             else
             {
@@ -2783,7 +2783,7 @@ GetColorArgument(
                 FLONUM f = getfloat(cnode);
                 if (0 <= f && f <= FIXNUM_MAX && fmod(f, 1.0) == 0.0)
                 {
-                    colorIndex = ((int) f) % 16;
+                    colorIndex = ((int) f) % COLORTABLESIZE;
                 }
             }
 
@@ -2838,7 +2838,7 @@ GetColorArgument(
     {
         // We're using a palette, so use the closest matching
         // color that is available.
-        color = LoadColor(GetRValue(color), GetGValue(color), GetBValue(color));
+        color = LoadColor(RedValue(color), GreenValue(color), BlueValue(color));
     }
 #endif
 

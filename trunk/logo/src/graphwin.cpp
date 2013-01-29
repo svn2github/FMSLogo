@@ -1106,12 +1106,12 @@ NODE *lsetpixel(NODE *args)
 static
 int
 getindexcolor(
-    const RGBCOLOR & color
+    RGBCOLOR Color
     )
 {
-    for (size_t i = 0; i < 16; i++)
+    for (size_t i = 0; i < COLORTABLESIZE; i++)
     {
-        if (color == colortable[i])
+        if (Color == colortable[i])
         {
             return i;
         }

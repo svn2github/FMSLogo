@@ -208,7 +208,8 @@ extern mode_type   current_mode;
 extern bool        bPolyFlag;
 extern VERTEXLIST* ThePolygon;
 
-extern RGBCOLOR    colortable[];
+const int COLORTABLESIZE = 16;
+extern const RGBCOLOR colortable[];
 
 extern Turtle * g_Turtles;
 extern int      g_MaxTurtle;        // the index of the largest real turtle
