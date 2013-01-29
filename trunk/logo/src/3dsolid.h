@@ -13,7 +13,7 @@ typedef unsigned int RGBCOLOR;
 #define MAKERGB(Red, Green, Blue)  static_cast<RGBCOLOR>( \
      ((Red)   & 0xFF)        |                            \
     (((Green) & 0xFF) <<  8) |                            \
-    (((Blue)  & 0xFF  << 16))                             \
+    (((Blue)  & 0xFF) << 16)                              \
     )                                                     \
 
 #define RedValue(RgbColor)    (0xFF & (RgbColor))
