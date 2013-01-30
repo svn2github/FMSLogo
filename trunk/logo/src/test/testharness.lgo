@@ -18,6 +18,7 @@ LOAD "butfirst.lgo
 LOAD "butfirsts.lgo
 LOAD "butlast.lgo
 LOAD "last.lgo
+LOAD "setbf.lgo
 LOAD "array.lgo
 LOAD "queue.lgo
 LOAD "stack.lgo
@@ -176,6 +177,7 @@ TO TESTALL
   BUTFIRSTSTEST        ; from butfirsts.lgo
   BUTLASTTEST          ; from butlast.lgo
   LASTTEST             ; from last.lgo
+  SETBFTEST            ; from setbf.lgo
   ARRAYTEST            ; from array.lgo
   QUEUETEST            ; from queue.lgo
   STACKTEST            ; from stack.lgo
