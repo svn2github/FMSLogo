@@ -685,6 +685,11 @@ void CMainFrame::DockCommanderWindow()
     }
 }
 
+bool CMainFrame::IsEditorOpen() const
+{
+    return !m_Editors.empty();
+}
+
 CWorkspaceEditor * CMainFrame::GetWorkspaceEditor()
 {
     if (m_Editors.empty())

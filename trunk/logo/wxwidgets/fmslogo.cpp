@@ -696,7 +696,14 @@ void SetScreenScrollPosition(UINT x, UINT y)
 
 bool IsEditorOpen()
 {
-    return false;
+    CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
+
+    if (mainFrame == NULL)
+    {
+        return false;
+    }
+
+    return mainFrame->IsEditorOpen();
 }
 
 void OpenEditorToLocationOfFirstError(const char *FileName)

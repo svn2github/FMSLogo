@@ -48,6 +48,8 @@ public:
     wxWindow   * GetTopLevelWindowForCommander();
     CScreen    * GetScreen();
 
+    bool IsEditorOpen() const;
+
     CWorkspaceEditor * GetWorkspaceEditor();
 
     void
