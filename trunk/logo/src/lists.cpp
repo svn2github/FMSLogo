@@ -1102,7 +1102,12 @@ NODE *l_setfirst(NODE *args)
         setcar(args, err_logo(BAD_DATA, list));
         list = car(args);
     }
-    setcar(list, newval);
+
+    if (NOT_THROWING)
+    {
+        setcar(list, newval);
+    }
+
     return Unbound;
 }
 
@@ -1115,6 +1120,11 @@ NODE *l_setbf(NODE *args)
         setcar(args, err_logo(BAD_DATA, list));
         list = car(args);
     }
-    setcdr(list, newval);
+
+    if (NOT_THROWING)
+    {
+        setcdr(list, newval);
+    }
+
     return Unbound;
 }
