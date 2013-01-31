@@ -14,7 +14,11 @@
 <listitem>
 
 <para>
-Changes the first member of list to be value.
+Changes the first member of <parameter>list</parameter> to be <parameter>value</parameter>.
+</para>
+
+<para>
+The <parameter>list</parameter> input must be list and cannot be empty.
 </para>
 
 <para>
@@ -36,5 +40,4 @@ SHOW :mylist</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>
