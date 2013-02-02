@@ -403,7 +403,7 @@ NODE *gather_some_args(int min, int max, NODE **args, bool inparen, NODE **ifnod
 
         // Set a special marker at this point in the parse
         // tree so that evaluator() knows to report the error.        
-        return cons_list(Not_Enough_Node);
+        return cons_list(g_ParseErrorNotEnoughInputs);
     }
    
     return inputs.GetList();

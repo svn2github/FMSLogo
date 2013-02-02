@@ -85,7 +85,6 @@ CLocalizedNode To;
 NODE *Macro;
 NODE *Unbound;         // a special node that means nothing (or void) was returned
                        // This is different from NIL, which is the empty list.
-NODE *Not_Enough_Node;
 NODE *Minus_Sign;
 NODE *Minus_Tight;
 CLocalizedNode Startup;
@@ -95,6 +94,11 @@ NODE *Stop;
 NODE *Goto;
 NODE *Tag;
 NODE *Null_Word = NIL;
+
+// A special node that acts as a marker of where a parse error occured.
+// This is set by the parser and interpreted by the evaluator when it
+// reaches the point of the error.
+NODE *g_ParseErrorNotEnoughInputs;
 
 const PRIMTYPE prims[] =
 {
@@ -767,7 +771,7 @@ void init()
     Goto = intern(make_static_strnode("goto"));
     Tag = intern(make_static_strnode("Tag"));
     the_generation = vref(cons_list(NIL));   // some unique pointer
-    Not_Enough_Node = vref(cons_list(NIL));  // some unique pointer
+    g_ParseErrorNotEnoughInputs = vref(cons_list(NIL));  // some unique pointer
 
     repcountup = -1;
 }
@@ -782,7 +786,7 @@ void uninit()
     // uninitialize the file subsystem
     uninitialize_files();
 
-    deref(Not_Enough_Node);
+    deref(g_ParseErrorNotEnoughInputs);
     deref(the_generation);
 
     // free the nodes associated with error handling

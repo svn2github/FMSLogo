@@ -45,7 +45,6 @@ extern NODE *Ifelse;
 extern CLocalizedNode To;
 extern NODE *Macro;
 extern NODE *Unbound;
-extern NODE *Not_Enough_Node;
 extern NODE *Minus_Sign;
 extern NODE *Minus_Tight;
 extern CLocalizedNode Startup;
@@ -54,6 +53,8 @@ extern NODE *Output;
 extern NODE *Stop;
 extern NODE *Goto;
 extern NODE *Tag;
+
+extern NODE *g_ParseErrorNotEnoughInputs;
 
 extern void init(void);
 extern void uninit(void);

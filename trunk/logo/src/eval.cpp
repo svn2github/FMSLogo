@@ -1008,7 +1008,7 @@ NODE *evaluator(NODE *list, enum labels where)
         goto eval_args_done;
     }
     assign(exp, car(unev));
-    if (exp == Not_Enough_Node)
+    if (exp == g_ParseErrorNotEnoughInputs)
     {
         if (NOT_THROWING)
         {
@@ -1128,7 +1128,7 @@ NODE *evaluator(NODE *list, enum labels where)
                 macro_return,
                 g_ValueStatus,
                 tailcall);
-            // BUG: save didnt_get_output, current_unode like UCBLogo?
+            // BUG: save didnt_get_output like UCBLogo?
 
             g_ValueStatus = VALUE_STATUS_Required;
         }
@@ -1559,7 +1559,7 @@ NODE *evaluator(NODE *list, enum labels where)
         {
             // They are calling some form of OUTPUT.
 
-            if (cadr(exp) == Not_Enough_Node)
+            if (cadr(exp) == g_ParseErrorNotEnoughInputs)
             {
                 // There was a parse error when this instruction list
                 // was being treeified.  We delayed reporting this error
