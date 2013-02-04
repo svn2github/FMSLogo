@@ -164,6 +164,49 @@ TO EVALTEST.NOOUTPUTTOOUTPUTTHROWSERROR
    RUNDIDNTOUTPUTTEST [EVALTEST.DIDNTOUTPUTTOOUTPUT]
 END
 
+
+TO EVALTEST.UNKNOWNPROCINMACROLIST.HELPER
+   ; RUN is a macroized primative, so the instruction list is treeified
+   ; as part of the "macro_return" label.  This tests when the treeification
+   ; fails because the procedure is unknown.
+
+   ; This particular repro is a regression test for a crash.
+   ; The parameter to UNKNOWNPROC must be a list and there must
+   ; be a procedure call after it.
+   RUN [(UNKNOWNPROC [1 2 3])]
+   HOME
+END
+
+TO EVALTEST.UNKNOWNPROCINMACROLIST
+  ; NOTE: cannot use RUNNONRECOVERABLEIDONTKNOWHOWTOTEST because RUNRESULT makes
+  ; the error uncatchable.  This is probably bug #418.  Until this is fixed,
+  ; the logic is duplicated.
+  REPORTTESTINFO "|Running invalid instruction: EVALTEST.UNKNOWNPROCINMACROLIST.HELPER|
+
+  ; clear the value of ERROR
+  IGNORE ERROR
+
+  CATCH "ERROR [ 
+    RUN [EVALTEST.UNKNOWNPROCINMACROLIST.HELPER]
+    REPORTTESTFAILED "|Running EVALTEST.UNKNOWNPROCINMACROLIST.HELPER did not throw an error.|
+    STOP
+  ]
+
+  CHECKERROR ~
+    "EVALTEST.UNKNOWNPROCINMACROLIST.HELPER ~
+    24 ~
+    "|I don't know how to UNKNOWNPROC| ~
+    "EVALTEST.UNKNOWNPROCINMACROLIST.HELPER ~
+    [RUN [(UNKNOWNPROC [1 2 3] )]]
+
+END
+
+
+TO EVALTEST.TOOMANYINPUTSINMACROLIST
+  RUNTOOMANYINPUTSTEST [RUN [(FD 10 "toomany)] ]
+END
+
+
 TO EVALTEST
    EVALTEST.CATCHERRORMANYTIMES
    EVALTEST.TAILRECURSIVE
@@ -173,4 +216,6 @@ TO EVALTEST
    EVALTEST.CANNOTTREEIFYDEFAULTVALUE
    EVALTEST.NOINPUTSTOOUTPUT
    EVALTEST.NOOUTPUTTOOUTPUTTHROWSERROR
+   EVALTEST.UNKNOWNPROCINMACROLIST
+   EVALTEST.TOOMANYINPUTSINMACROLIST
 END
