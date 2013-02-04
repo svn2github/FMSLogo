@@ -191,34 +191,30 @@ NODE *paren_expr(NODE **expr, bool inparen)
         if (first == Left_Paren)
         {
             deref(first);
+
+            // Parse this sub-expression.
             NODE * tree = paren_expr(expr, true);
             tree = paren_infix(tree, expr, -1, true);
+
             if (*expr == NIL)
             {
                 err_logo(PAREN_MISMATCH, NIL);
             }
             else if (car(*expr) != Right_Paren)
             {
-                // there are too many inputs
-                err_logo(TOO_MUCH, NIL);
-
-                // throw away the rest of the line
-                // REVISIT: Why does ths matter?  
-                // REVISIT: Don't we cleanup when we error-out?
-                for (int parens = 0; *expr; pop(*expr))
+                // There was a problem parenthesizing expr.
+                NODE * proc = car(tree);
+                if (nodetype(proc) != CASEOBJ ||
+                    procnode__caseobj(proc) == Unbound)
                 {
-                    if (car(*expr) == Left_Paren)
-                    {
-                        parens++;
-                    }
-                    else if (car(*expr) == Right_Paren)
-                    {
-                        if (parens-- == 0) 
-                        {
-                            pop(*expr);
-                            break;
-                        }
-                    }
+                    // The procedure is not defined, so we don't know
+                    // how many parameters it takes.
+                    err_logo(DK_HOW_UNREC, proc);
+                }
+                else
+                {
+                    // There were too many inputs.
+                    err_logo(TOO_MUCH, NIL);
                 }
             }
             else
@@ -405,7 +401,7 @@ NODE *gather_some_args(int min, int max, NODE **args, bool inparen, NODE **ifnod
         // tree so that evaluator() knows to report the error.        
         return cons_list(g_ParseErrorNotEnoughInputs);
     }
-   
+
     return inputs.GetList();
 }
 

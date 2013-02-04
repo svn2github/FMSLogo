@@ -22,6 +22,8 @@ II. New features/bugs fixed:
 
   * Changed in 6.30.0
     o Improve the speed of the evaluation engine by 40%.
+    o Fix bug #419; Logo once again throws an error when the instruction list
+      output by a macro calls an undefined procedure.
     o Fix bug #412; The wxWidgets version of FMSLogo now displays a warning
       when saving the workspace while a workspace editor is open.
     o Fix bug #356; Logo no longer crashes when OUTPUT is not given any inputs.

@@ -1863,7 +1863,10 @@ NODE *evaluator(NODE *list, enum labels where)
             {
                 assign(val, tree__tree(val));
             }
-            stopping_flag = MACRO_RETURN;
+            if (stopping_flag != THROWING)
+            {
+                stopping_flag = MACRO_RETURN;
+            }
             goto fetch_cont;
         }
         else
@@ -2067,11 +2070,11 @@ NODE *evaluator(NODE *list, enum labels where)
         // equal if they both equal Error.
         if (compare_node(throw_node, catch_tag, true) == 0 ||
             Error.Equals(catch_tag) && Error.Equals(throw_node))
-            {
-                assign(throw_node, Unbound);
-                stopping_flag = RUN;
-                assign(val, output_node);
-            }
+        {
+            assign(throw_node, Unbound);
+            stopping_flag = RUN;
+            assign(val, output_node);
+        }
     }
     goto fetch_cont;
 
