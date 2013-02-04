@@ -127,7 +127,7 @@ TO ERRORTEST
 
    ; error 28: is "can't initialize graphics", which is never thrown in FMSLogo
 
-   (RUNEXPECTERRORTEST [MACRO.RETURN.UNBOUND.INSTEAD.OF.LIST] 29 "|Macro output Unbound instead of a list|)
+   (RUNEXPECTERRORTEST [MACRO.RETURN.UNBOUND.INSTEAD.OF.LIST] 29 "|Macro output nothing instead of a list|)
 
    ; error 30: can't be caught, but this exercises the code
    IGNORE ERROR.30.TEST
