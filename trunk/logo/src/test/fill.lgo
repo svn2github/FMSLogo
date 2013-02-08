@@ -21,7 +21,7 @@ TO FILLTEST
   SETTIMER 1 0 "FILLTIMEREVENT
   WAIT 10 * 30 + 60 ; wait for the timer event to finish
 
-  MAKE "isok YESNOBOX [Question] [Did the picture fill in one circle at a time (10 in all)?]
+  LOCALMAKE "isok YESNOBOX [Question] [Did the picture fill in one circle at a time (10 in all)?]
   IFELSE :isok [
     REPORTTESTPASSED (sentence "|The circle was drawn correctly|) 
   ] [

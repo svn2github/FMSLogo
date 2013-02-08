@@ -1,10 +1,5 @@
 LOAD "testlib.lgo
 
-TO TESTLIB.REPEATWORD :word :repeat
-   IF :repeat = 0 [ OUTPUT "|| ]
-   OUTPUT WORD :word TESTLIB.REPEATWORD :word :repeat - 1
-END
-
 TO NETWORKTEST.HOSTNAME
    OUTPUT "LAPPY
 END
@@ -38,7 +33,7 @@ TO NETWORKTEST.SMOKETEST
   IGNORE NETACCEPTON :serverport [print [ready to send]] [print (list "|Received:| NETCONNECTRECEIVEVALUE)]
 
   ; connect to the port 5960
-  make "NetConnectOnCall 0
+  LOCALMAKE "NetConnectOnCall 0
 
   (print "Connecting)
   localmake "isok NETCONNECTON NETWORKTEST.HOSTNAME :serverport "CLIENT.ONREADYTOSEND []
@@ -144,7 +139,7 @@ END
 
 TO NETWORKTEST.CLIENT.SMOKETEST
 
-   LOCAL [localport client.data shellcommand]
+   LOCAL [remoteport client.data shellcommand]
 
    MAKE "remoteport  5556
    MAKE "client.data []
@@ -171,7 +166,7 @@ END
 
 TO NETWORKTEST.CLIENT.ECHO
 
-   LOCAL [localport client.data onsendreadycounter shellcommand]
+   LOCAL [remoteport client.data onsendreadycounter shellcommand]
 
    MAKE "remoteport  5557
    MAKE "client.data []
@@ -210,15 +205,13 @@ TO NETWORKTEST.CLIENT.ECHO
    TRACEINSTRUCTION  [ NETCONNECTOFF ]
    TRACEINSTRUCTION  [ NETSHUTDOWN   ]
 
-   MAKE "expecteddata TESTLIB.REPEATWORD "abcdefghijklmnopqrstuvwxyz 1000
-
    SIMPLEREPORTTEST [:onsendreadycounter ] 4
    SIMPLEREPORTTEST [:client.data]         [[yodle]]
 END
 
 TO NETWORKTEST.CLIENT.RECEIVELARGEPACKET
 
-   LOCAL [localport client.data onsendreadycounter shellcommand]
+   LOCAL [remoteport client.data onsendreadycounter shellcommand expecteddata]
 
    MAKE "remoteport  5556
    MAKE "client.data []
@@ -248,7 +241,7 @@ TO NETWORKTEST.CLIENT.RECEIVELARGEPACKET
    TRACEINSTRUCTION  [ NETCONNECTOFF ]
    TRACEINSTRUCTION  [ NETSHUTDOWN   ]
 
-   MAKE "expecteddata TESTLIB.REPEATWORD "abcdefghijklmnopqrstuvwxyz 1000
+   MAKE "expecteddata REPEATWORD "abcdefghijklmnopqrstuvwxyz 1000
 
    SIMPLEREPORTTEST [:onsendreadycounter ] 3
 
@@ -260,7 +253,7 @@ END
 
 TO NETWORKTEST.CLIENT.RECEIVEUNFRAMEDPACKET
 
-   LOCAL [localport client.data shellcommand]
+   LOCAL [remoteport client.data shellcommand]
 
    MAKE "remoteport  5555
    MAKE "client.data []

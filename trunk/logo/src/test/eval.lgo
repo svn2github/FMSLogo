@@ -6,6 +6,8 @@ LOAD "testlib.lgo
 
 TO EVALTEST.NONTAILRECURSIVECOUNT :depth
 
+   LOCAL [count something.to.break.tail.recursion]
+
    ; base-case
    if :depth = 0  [ output 0 ]
 
