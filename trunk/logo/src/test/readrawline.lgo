@@ -65,7 +65,7 @@ END
 
 TO READRAWLINETEST.SMOKETEST
 
-  make "previousreader reader
+  LOCALMAKE "previousreader reader
 
   TRACEINSTRUCTION [ OPENREAD "readrawlinetestfile.txt ]
   TRACEINSTRUCTION [ SETREAD  "readrawlinetestfile.txt ]
