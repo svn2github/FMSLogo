@@ -275,7 +275,7 @@ TO PARSETEST.MANYINPUTS
 
    ; bug #1539716 (this used to crash)
    LOCALMAKE "longsequence (SENTENCE "\( "SUM ISEQ 1 100000 "\))
-   MAKE "sum RUN :longsequence 
+   LOCALMAKE "sum RUN :longsequence 
 
    SIMPLEREPORTTEST [ :sum ] 5000050000
    REPORTTESTPASSED [|Bug #1539716 is fixed; running an expression with a long list of inputs didn't crash.|]

@@ -21,9 +21,7 @@ END
 
 TO EQUALPTEST.SMOKETEST
 
-  LOCAL "CASEIGNOREDP
-
-  MAKE "CASEIGNOREDP LOCALETRUE
+  LOCALMAKE "CASEIGNOREDP LOCALETRUE
 
   LOCAL "myarray
   FAILIFNOTTRUE [EQUALP 1    1                      ]
@@ -84,6 +82,7 @@ TO EQUALPTEST.SMOKETEST
   FAILIFNOTFALSE [ EQUALP    0     -1e-16 ]
 
   ; now test case-sensitive comparisons
+  LOCAL "CASEIGNOREDP
   TRACEINSTRUCTION [MAKE "CASEIGNOREDP LOCALEFALSE]
 
   ; Even "true and "false obey the rules of caseignoredp
@@ -124,7 +123,7 @@ TO EQUALPTEST.INTERNATIONAL
 
   ; NOTE: We can't put the characters in here directly or else this
   ;       won't look like a text file to CVS, so we use their numeric value
-  local [pairs lowercase capital]
+  local [pairs lowercase capital word1 word2]
 
   make "pairs [
     [253 221]
@@ -173,9 +172,7 @@ END
 
 TO NOTEQUALPTEST.SMOKETEST
 
-  LOCAL "CASEIGNOREDP
-
-  MAKE "CASEIGNOREDP LOCALETRUE
+  LOCALMAKE "CASEIGNOREDP LOCALETRUE
 
   LOCAL "myarray
   FAILIFNOTFALSE [NOTEQUALP 1    1                      ]
@@ -231,6 +228,7 @@ TO NOTEQUALPTEST.SMOKETEST
 
 
   ; now test case-sensitive comparisons
+  LOCAL "CASEIGNOREDP
   TRACEINSTRUCTION [MAKE "CASEIGNOREDP LOCALEFALSE]
 
   ; Even "true and "false obey the rules of caseignoredp
@@ -395,7 +393,7 @@ END
 
 TO BEFOREPTEST 
 
-  MAKE "CASEIGNOREDP LOCALETRUE
+  LOCALMAKE "CASEIGNOREDP LOCALETRUE
 
   FAILIFNOTTRUE  [BEFOREP "ABC "ABD ]
   FAILIFNOTTRUE  [BEFORE? "ABC "ABD ]
