@@ -57,7 +57,7 @@ END
 TO PRINTTEST.RUNPRINTDEPTHLIMITTEST :depthlimit :printfunction :whattoprint :expectedstring
 
    ; declare printdepthlimit local so that there are no side-effects
-   local "printdephlimit
+   local "printdepthlimit
 
    ; trace the value of printdepthlimit
    TRACEINSTRUCTION (list "make QUOTED "printdepthlimit :depthlimit)
