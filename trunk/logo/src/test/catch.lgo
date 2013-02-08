@@ -179,7 +179,7 @@ TO THROWTEST.USERERROR
       [CATCH "ERROR [THROWTEST.USERERROR.ACTUALTHROWLOCATION [a b c]]]
 
    ; throw an array (which should be converted to a string)
-   MAKE "array {a b c}
+   LOCALMAKE "array {a b c}
    CATCH "ERROR [THROWTEST.USERERROR.ACTUALTHROWLOCATION :array]
    CHECKERROR ~
       [CATCH "ERROR [THROWTEST.USERERROR.ACTUALTHROWLOCATION :array]] ~

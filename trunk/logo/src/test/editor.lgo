@@ -14,7 +14,7 @@ TO EDALLTEST.DISPLAYBYHWND
   TEXTSCREEN
   SPLITSCREEN
 
-  MAKE "isok YESNOBOX [Question] [Is the editor showing?  If so, close it before pressing "Yes".]
+  LOCALMAKE "isok YESNOBOX [Question] [Is the editor showing?  If so, close it before pressing "Yes".]
   IFELSE :isok [
     REPORTTESTPASSED [The editor window was displayed, as expected.]
   ][

@@ -34,7 +34,7 @@ TO COMMANDLINETEST.RUNTEST :commandline [:expectedwidth 1000] [:expectedheight 1
    IF NOT FILEEXISTS "commandline-createfile.txt [ STOP ]
 
    ; read the contents of the file to confirm the width and height
-   make "savedReader READER
+   localmake "savedReader READER
 
    OPENREAD  "commandline-createfile.txt
    SETREAD   "commandline-createfile.txt

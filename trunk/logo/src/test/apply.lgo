@@ -169,6 +169,8 @@ END
 
 TO APPLYTEST.QUESTIONMARKTEMPLATE
 
+   LOCAL [lambda.function.ran]
+
    ;
    ; question-mark template
    ;
