@@ -28,6 +28,8 @@ II. New features/bugs fixed:
       when saving the workspace while a workspace editor is open.
     o Fix bug #356; Logo no longer crashes when OUTPUT is not given any inputs.
     o Fix bug #133; Logo no longer crashes when marcos output nothing.
+    o Make SORT stable when sorting with LESSP and BEFOREP, instead of
+      LESSEQUALP and [OR BEFOREP ?1 ?2 EQUALP ?1 ?2].
     o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see

@@ -3,21 +3,16 @@ to .fmslogo.sort.listtoword :list
 end
 
 to .fmslogo.sort.wordtolist :word
-  local "list
-  make "list []
-  repeat count :word [
-    make "list fput item (count :word) - repcount + 1 :word :list
-  ]
-  op :list
+  op map.se [?] :word
 end
 
 to .fmslogo.sort.merge :.fmslogo.sort.list1 :.fmslogo.sort.list2 :.fmslogo.sort.cmp
   if empty? :.fmslogo.sort.list1 [op :.fmslogo.sort.list2]
   if empty? :.fmslogo.sort.list2 [op :.fmslogo.sort.list1]
-  if apply :.fmslogo.sort.cmp (list first :.fmslogo.sort.list1 first :.fmslogo.sort.list2) [
-     op fput first :.fmslogo.sort.list1 .fmslogo.sort.merge butfirst :.fmslogo.sort.list1 :.fmslogo.sort.list2 :.fmslogo.sort.cmp
+  if apply :.fmslogo.sort.cmp (list first :.fmslogo.sort.list2 first :.fmslogo.sort.list1) [
+      op fput first :.fmslogo.sort.list2 .fmslogo.sort.merge :.fmslogo.sort.list1 butfirst :.fmslogo.sort.list2 :.fmslogo.sort.cmp
   ]
-  op fput first :.fmslogo.sort.list2 .fmslogo.sort.merge :.fmslogo.sort.list1 butfirst :.fmslogo.sort.list2 :.fmslogo.sort.cmp
+  op fput first :.fmslogo.sort.list1 .fmslogo.sort.merge butfirst :.fmslogo.sort.list1 :.fmslogo.sort.list2 :.fmslogo.sort.cmp
 end
 
 to .fmslogo.sort.mergepairwise :.fmslogo.sort.listoflists :.fmslogo.sort.cmp

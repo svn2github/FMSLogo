@@ -62,13 +62,19 @@ TO SORTTEST.REGRESSION
   ; make a database of records {name #legs #eyes}
   ; and sort the records with different sort routines
   ;
-  LOCALMAKE "cat    {"cat    4 2}
-  LOCALMAKE "spider {"spider 8 8}
-  LOCALMAKE "human  {"human  2 2}
+  LOCALMAKE "cat    {cat    4 2}
+  LOCALMAKE "spider {spider 8 8}
+  LOCALMAKE "human  {human  2 2}
   LOCALMAKE "database (list :cat :spider :human)
 
   SIMPLEREPORTTEST [(SORT :database "SORTTEST.SORTBYNAME)] (list :cat :human :spider)
   SIMPLEREPORTTEST [(SORT :database "SORTTEST.SORTBYLEGS)] (list :human :cat :spider)
+
+  ; Test that sorting with BEFOREP is stable
+  SIMPLEREPORTTEST [(SORT [[B 3] [A 1] [B 4] [A 2]] [BEFOREP first ?1 first ?2])] [[A 1] [A 2] [B 3] [B 4]]
+
+  ; Test that sorting with LESSP is stable
+  SIMPLEREPORTTEST [(SORT [[1 A] [2 C] [2 D] [1 B]] [LESSP first ?1 first ?2])] [[1 A] [1 B] [2 C] [2 D]]
 
 
   ;
