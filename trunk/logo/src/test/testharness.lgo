@@ -282,7 +282,19 @@ TO TESTALL
   TESTSMALLWINDOWHANG  ; from smallwindowhang.lgo
   SETPENSIZEDIALOGTEST ; from setpensizedialog.lgo
   BYETEST              ; from bye.lgo
-  
+
+  ; Make sure that no test case accidently leaks a variable name.
+  IF NOT EQUAL? NAMES [[] [endnodes startnodes startup testlog]] [
+    REPORTTESTBUG  (se [The following variables are defined] BUTFIRST NAMES)
+    REPORTTESTINFO [Only [endnodes startnodes startup testlog] should be defined.]
+  ]
+
+  ; Make sure that no test case accidently leaks a plist.
+  IF NOT EQUAL? PLISTS [[] [] []] [
+    REPORTTESTBUG  (se [The following property lists are defined] BUTFIRST BUTFIRST PLISTS)
+    REPORTTESTINFO [No property lists should be defined.]
+  ]
+
   ; Determine if any nodes were leaked.
   make "endnodes ITEM 1 NODES
   IFELSE EQUALP :startnodes :endnodes [
