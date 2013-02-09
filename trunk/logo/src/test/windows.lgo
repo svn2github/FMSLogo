@@ -3,9 +3,9 @@ LOAD "uiautomationlib.lgo
 
 TO WINDOWSTEST.SETUP :toplevelwindow
 
-  make "width 100
-  make "xpos  10
-  make "ypos  0
+  localmake "width 100
+  localmake "xpos  10
+  localmake "ypos  0
 
   STATICCREATE :toplevelwindow "statictext [This is static text] :xpos :ypos :width 10
   make "ypos :ypos + 15
