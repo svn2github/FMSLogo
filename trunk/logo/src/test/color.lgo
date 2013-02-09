@@ -282,11 +282,8 @@ TO COLORTEST.OUTPUT.5
 END
 
 TO COLORERRACTTEST
-   ; backup the current value of :ERRACT
-   LOCALMAKE "savederract []
-   IF NAME? "ERRACT [MAKE "savederract :erract]
 
-   make "erract [COLORTEST.OUTPUT.5]
+   localmake "erract [COLORTEST.OUTPUT.5]
 
    ; make sure that {} throws a recoverable error
    SETPENCOLOR 1
@@ -303,9 +300,6 @@ TO COLORERRACTTEST
    SETPENCOLOR 1
    SETPENCOLOR [12]
    SIMPLEREPORTTEST [ PENCOLOR ] 5
-
-   ; restore the previous value of :ERRACT
-   MAKE "ERRACT :savederract
 END
 
 TO COLORTEST

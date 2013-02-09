@@ -18,7 +18,7 @@ TO ZOOMTEST.ZOOMSTAYSCENTERED
   REPEAT 50 [ ZOOM 1 ZOOM 16 ]
 
   ; ask the tester to verify the fix
-  MAKE "isok YESNOBOX [Question] [Is the screen zoomed to the center of the circles?]
+  LOCALMAKE "isok YESNOBOX [Question] [Is the screen zoomed to the center of the circles?]
   IFELSE :isok [
     REPORTTESTPASSED [Bug #1599097 is fixed.  ZOOM did not change scrollbar positions.]
   ] [
