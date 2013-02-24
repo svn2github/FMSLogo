@@ -177,10 +177,10 @@ TO SIMPLEREPORTTEST :instruction :expectedresult
   ; that throwing an error just fails 
   ; (instead of halt the tests)
   CATCH "ERROR [MAKE "result RUN :instruction]
-  
+
   IF FAILIFERROR :instruction [ STOP ]
 
-  IF NOT EQUAL? :result :expectedresult [
+  IF NOTEQUAL? :result :expectedresult [
     REPORTTESTFAILED (LIST :instruction "output :result "|. We expected| :expectedresult ".)
     STOP
   ]
@@ -198,7 +198,7 @@ TO SIMPLEREPORTTESTNOCATCH :instruction :expectedresult
 
   MAKE "result RUN :instruction
 
-  IF NOT EQUAL? :result :expectedresult [
+  IF NOTEQUAL? :result :expectedresult [
     REPORTTESTFAILED (LIST :instruction "output :result "|. We expected| :expectedresult ".)
     STOP
   ]
@@ -283,7 +283,7 @@ TO CHECKERROR :instructions :expectederror :expectedtext :expectedprocedure :exp
     STOP
   ]
 
-  IF NOT EQUALP (COUNT :lasterror) 4 [
+  IF NOTEQUALP (COUNT :lasterror) 4 [
     REPORTTESTFAILED [ERROR did not return a list of four values.]
     STOP
   ]
@@ -534,7 +534,7 @@ TO FILESAREEQUAL :filea :fileb
       SETREAD :filea
       MAKE "bytea READCHAR
 
-      IF NOT EQUAL? :bytea :byteb [
+      IF NOTEQUAL? :bytea :byteb [
          ; found a discrepency
 
          ; cleanup
@@ -624,7 +624,7 @@ TO RUNPRINTTEST.HELPER :printinstruction :expectedword
 
   ; require strict case correctness
   LOCALMAKE "caseignoredp "false
-  IF NOT EQUAL? :actualword :expectedword [
+  IF NOTEQUAL? :actualword :expectedword [
       REPORTTESTFAILED (LIST "Running :printinstruction "printed :actualword "|.  We expected| :expectedword)
       STOP
   ]
@@ -683,7 +683,7 @@ TO RUNPRINTTEST :printinstruction :expectedvalue [:outputfilename []]
       ; we only expect one line to be printed
       RUNPRINTTEST.HELPER :printinstruction :expectedvalue
 
-      IF NOT EQUAL? READWORD [] [
+      IF NOTEQUAL? READWORD [] [
           REPORTTESTFAILED (LIST "Running :printinstruction "|printed more than one line.|)
       ]
   ][
@@ -692,7 +692,7 @@ TO RUNPRINTTEST :printinstruction :expectedvalue [:outputfilename []]
           RUNPRINTTEST.HELPER :printinstruction ITEM REPCOUNT :expectedvalue
       ]
 
-      IF NOT EQUAL? READWORD [] [
+      IF NOTEQUAL? READWORD [] [
           REPORTTESTFAILED (LIST "Running :printinstruction "|printed more than| COUNT :expectedvalue "lines.)
       ]
   ]
@@ -705,6 +705,53 @@ TO RUNPRINTTEST :printinstruction :expectedvalue [:outputfilename []]
   ]
 END
 BURY [RUNPRINTTEST]
+
+TO RUNRECOVERABLEERRORTEST.ERRACTROUTINE
+  ; Output the next item in the list provided to RUNERRACTTEST.
+  MAKE "erractindex :erractindex + 1
+
+  ; If we've run out of items, log an error and output
+  ; the empty list.
+  IF :erractindex > COUNT :erractoutputs [
+    REPORTTESTFAILED (LIST "|ERRACT routine was called| :erractindex "times.)
+
+    ; Best effort to recover by outputting a value that most commands like.
+    OUTPUT 1
+  ]
+
+  ; Log the next value to output, then output it.
+  REPORTTESTINFO (LIST "|ERRACT routine outputs| ITEM :erractindex :erractoutputs)
+  OUTPUT ITEM :erractindex :erractoutputs
+END
+BURY [RUNRECOVERABLEERRORTEST.ERRACTROUTINE]
+
+TO RUNRECOVERABLEERRORTEST :instructions :erractoutputs :expectedoutput
+
+   ; Setup the erract routine
+   LOCALMAKE "erractindex 0
+   LOCALMAKE "erract [RUNRECOVERABLEERRORTEST.ERRACTROUTINE]
+
+   ; Log what we're about to do
+   REPORTTESTINFO (LIST "|Running instruction with recoverable error:| :instructions)
+
+   ; NOTE: ERRACT doesn't get invoked within a CATCH "ERROR block,
+   ; so we cannot use SIMPLEREPORTTEST.
+   localmake "actualoutput RUN :instructions
+
+   ; Make sure that ERRACT was called the right number of times.
+   IF NOTEQUAL? :erractindex COUNT :erractoutputs [
+      REPORTTESTFAILED (LIST "|ERRACT routine was called| :erractindex "|times.  We expected| COUNT :erractoutputs ".)
+   ]
+
+   ; Verify the output
+   IFELSE EQUAL? :actualoutput :expectedoutput [
+     REPORTTESTPASSED (LIST :instructions "output :actualoutput "|, as expected.|)
+   ][
+     REPORTTESTFAILED (LIST :instructions "output :actualoutput "|. We expected| :expectedoutput ".)
+   ]
+
+END
+BURY [RUNRECOVERABLEERRORTEST]
 
 TO WRITEBINARYDATA :filename :data
 
