@@ -14,12 +14,16 @@
 <listitem>
 <para>
 Outputs the remainder of dividing <parameter>dividend</parameter> divided by <parameter>divisor</parameter>.
-Both <parameter>dividend</parameter> and <parameter>divisor</parameter> must be integers.
-The result is an integer with the same sign as <parameter>divisor</parameter> (unlike <link linkend="command-remainder">REMAINDER</link>, which uses the sign of <parameter>dividend</parameter>).
+Both <parameter>dividend</parameter> and <parameter>divisor</parameter> must be numbers and <parameter>divisor</parameter> must not be 0.
 </para>
 
 <para>
-It is an error to call MODULO with a <parameter>divisor</parameter> of 0.
+Mathematically, a remainder is a number such that
+<informalequation>dividend = quotient * divisor + remainder</informalequation>
+Where quotient is an integer and -divisor &lt; remainder &lt; divisor.
+By this definition, two remainders may be possible for a given divisor and dividend, one positive and one negative.
+To make MODULO well-defined, it always outputs the remainder whose sign matches that of <parameter>divisor</parameter>.
+In contrast, <link linkend="command-remainder">REMAINDER</link> uses the sign of <parameter>dividend</parameter>.
 </para>
 
 </listitem>
@@ -27,13 +31,22 @@ It is an error to call MODULO with a <parameter>divisor</parameter> of 0.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW MODULO 6 4</userinput>
+<programlisting><userinput>SHOW MODULO 5 3</userinput>
 2</programlisting>
-<programlisting><userinput>SHOW MODULO 6 2</userinput>
-0</programlisting>
+
+<programlisting><userinput>SHOW MODULO -5 3</userinput>
+1</programlisting>
+
+<programlisting><userinput>SHOW MODULO 3.8 1.2</userinput>
+0.2</programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-remainder">REMAINDER</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>
