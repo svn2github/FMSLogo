@@ -247,8 +247,6 @@ NODE * get_arg_for_function(NODE * args, char fcn)
 
     switch (fcn)
     {
-    case MATHFUNC_Remainder:
-    case MATHFUNC_Modulo:
     case MATHFUNC_BitAnd:
     case MATHFUNC_BitOr:
     case MATHFUNC_BitXor:
@@ -261,6 +259,7 @@ NODE * get_arg_for_function(NODE * args, char fcn)
     default:
         // any number is good input
         arg = numeric_arg(args);
+        break;
     }
 
     return arg;
@@ -296,6 +295,7 @@ NODE *binary(NODE *args, char fcn)
         // one argument supplied
         if (imode)
         {
+            // Perform the operation as an integer operation
             switch (fcn)
             {
             case MATHFUNC_Difference: 
@@ -323,6 +323,8 @@ NODE *binary(NODE *args, char fcn)
             case MATHFUNC_Log10:
             case MATHFUNC_Ln:
             case MATHFUNC_Quotient:
+                // We will use a math library routine whose
+                // parameters are floating point types.
                 imode = false;
                 fval = (FLONUM) ival;
                 break;
@@ -331,6 +333,7 @@ NODE *binary(NODE *args, char fcn)
 
         if (!imode)
         {
+            // Perform the operation as a floating-point operation.
             if (!setjmp(oflo_buf))
             {
                 switch (fcn)
@@ -501,6 +504,7 @@ NODE *binary(NODE *args, char fcn)
 
             if (imode)
             {
+                // Perform the operation as an integer operation.
                 FIXNUM oval = ival;
 
                 signal(SIGFPE, handle_oflo);
@@ -585,6 +589,9 @@ NODE *binary(NODE *args, char fcn)
                         else
                         {
                             ival %= iarg;
+
+                            // Unlike REMAINDER, MODULO outputs a number
+                            // with the same sign as the divisor (iarg).
                             if ((ival < 0) != (iarg < 0))
                             {
                                 ival += iarg;
@@ -650,17 +657,18 @@ NODE *binary(NODE *args, char fcn)
 
             if (!imode)
             {
+                // Perform the operation as a floating-point operation.
                 signal(SIGFPE, handle_oflo);
                 if (setjmp(oflo_buf) == 0)
                 {
                     switch (fcn)
                     {
-                    case MATHFUNC_Sum: 
-                        fval += farg; 
+                    case MATHFUNC_Sum:
+                        fval += farg;
                         break;
 
-                    case MATHFUNC_Difference: 
-                        fval -= farg; 
+                    case MATHFUNC_Difference:
+                        fval -= farg;
                         break;
 
                     case MATHFUNC_Product:
@@ -711,6 +719,35 @@ NODE *binary(NODE *args, char fcn)
                         else
                         {
                             errchk(fval = pow(fval, farg));
+                        }
+                        break;
+
+                    case MATHFUNC_Remainder:
+                        if (farg == 0.0)
+                        {
+                            err_logo(BAD_DATA_UNREC, arg);
+                        }
+                        else
+                        {
+                            errchk(fval = fmod(fval, farg));
+                        }
+                        break;
+
+                    case MATHFUNC_Modulo:
+                        if (farg == 0.0)
+                        {
+                            err_logo(BAD_DATA_UNREC, arg);
+                        }
+                        else
+                        {
+                            errchk(fval = fmod(fval, farg));
+                        }
+
+                        // Unlike REMAINDER, MODULO outputs a number
+                        // with the same sign as the divisor (farg).
+                        if ((fval < 0.0) != (farg < 0.0))
+                        {
+                            fval += farg;
                         }
                         break;
 

@@ -22,6 +22,7 @@ II. New features/bugs fixed:
 
   * Changed in 6.30.0
     o Improve the speed of the evaluation engine by 40%.
+    o Implement feature #93; REMAINDER and MODULO now accept non-integer numbers.
     o Fix bug #419; Logo once again throws an error when the instruction list
       output by a macro calls an undefined procedure.
     o Fix bug #412; The wxWidgets version of FMSLogo now displays a warning
