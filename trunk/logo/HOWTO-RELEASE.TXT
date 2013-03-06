@@ -10,7 +10,8 @@ Build the Release Files
 1.d) Checkin all changes, "cvs up -APd", and tag the tree VER-X-Y-Z
 1.e) Open up a fresh command prompt and cleanly build everything with:
 
-     gmake clean binaryexe binaryzip
+     gmake clean
+     gmake binaryexe binaryzip
 
 1.f) Copy resulting fmslogo-X-Y-Z.exe, fmslogo-X-Y-Z.zip, and wxfmslogo-X-Y-Z.exe
      to \\dcostanz\dcostanz\logo
