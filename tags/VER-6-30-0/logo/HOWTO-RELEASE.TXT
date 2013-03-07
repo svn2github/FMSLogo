@@ -1,0 +1,47 @@
+This file contains the steps for doing a formal release.
+
+Build the Release Files
+==================================================================================
+
+1) Build the Candidate Release Files
+1.a) Copy the latest changes from README.TXT to CHANGELOG.TXT
+1.b) Update version.mk and logoversion.lgo
+1.c) Update the translation tables in the manual
+1.d) Checkin all changes, "cvs up -APd", and tag the tree VER-X-Y-Z
+1.e) Open up a fresh command prompt and cleanly build everything with:
+
+     gmake clean
+     gmake binaryexe binaryzip
+
+1.f) Copy resulting fmslogo-X-Y-Z.exe, fmslogo-X-Y-Z.zip, and wxfmslogo-X-Y-Z.exe
+     to \\dcostanz\dcostanz\logo
+
+
+Test the Candidate Release
+==================================================================================
+
+1) Test the Borland and wxWidgets versions on Windows XP and
+   test the Borland version Windows 95
+1.a) Install FMSLogo and run "test\testharness.lgo".
+1.b) Do a file comparison against the testlog.baseline.txt to look for regressions
+1.c) Run DEMO
+
+
+Release the files
+==================================================================================
+1) Release the files on sourceforge.net
+1.a) Create a new folder on sourceforge and call it FMSLogo X-Y-Z
+1.b) Upload the following files:
+       README.TXT 
+       fmslogo-x-y-z.exe
+       fmslogo-x-y-z.zip
+       wxfmslogo-x-y-z.exe
+1.c) Set fmslogo-x-y-z.exe as the default file for Windows.
+1.d) Set fmslogo-x-y-z.zip as the default file for Linux.
+1.e) Add an artifact group to the bug tracker called "v x-y-X"
+
+2) Update the manual on the Web site
+2.a) Build an updated manual ("gmake website" within "manual")
+2.b) Open an SSH2/SFTP connection to web.sourceforge.net
+2.c) Browse to /home/groups/f/fm/fmslogo/htdocs/manual on the remote machine.
+2.d) Upload all of the HTML files in the www directory.
