@@ -11,27 +11,16 @@ FMSLogo Version 6.30.0 for Microsoft Windows
  VII. Minimum System Requirements
 VIII. Acknowledgements
 
-
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.30.0.exe   - Installer for the mainline Logo environment
-  fmslogo-6.30.0.zip   - ZIP of the mainline Logo environment
-  wxfmslogo-6.30.0.exe - Installer for the Beta wxWidgets-based Logo environment
+  fmslogo-6.31.0.exe   - Installer for the mainline Logo environment
+  fmslogo-6.31.0.zip   - ZIP of the mainline Logo environment
+  wxfmslogo-6.31.0.exe - Installer for the Beta wxWidgets-based Logo environment
 
 II. New features/bugs fixed:
 
-  * Changed in 6.30.0
-    o Improve the speed of the evaluation engine by 40%.
-    o Add feature #93; REMAINDER and MODULO now accept non-integer numbers.
-    o Fix bug #419; Logo once again throws an error when the instruction list
-      output by a macro calls an undefined procedure.
-    o Fix bug #412; The wxWidgets version of FMSLogo now displays a warning
-      when saving the workspace while a workspace editor is open.
-    o Fix bug #356; Logo no longer crashes when OUTPUT is not given any inputs.
-    o Fix bug #133; Logo no longer crashes when marcos output nothing.
-    o Make SORT stable when sorting with LESSP and BEFOREP, instead of
-      LESSEQUALP and [OR BEFOREP ?1 ?2 EQUALP ?1 ?2].
-    o Minor improvements to the manual.
+  * Changed in 6.31.0
+    o Various updates to the German translation.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
