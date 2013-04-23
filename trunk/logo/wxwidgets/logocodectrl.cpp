@@ -183,8 +183,8 @@ CLogoCodeCtrl::FindMatchingParen(
     }
 }
 
-// Moves the caret to the matching parent, bracket, if the caret is
-// currently adject to a paren, bracket, etc. 
+// Moves the caret to the matching paren/bracket/brace if the caret is
+// currently adject to a paren/bracket/brace. 
 void CLogoCodeCtrl::FindMatchingParen()
 {
     int currentParenPosition;
@@ -196,8 +196,8 @@ void CLogoCodeCtrl::FindMatchingParen()
     }
 }
 
-// Moves the caret to the matching parent, bracket, if the caret is
-// currently adject to a paren, bracket, etc.  Also selects the entire
+// Moves the caret to the matching paren/bracket/brace, if the caret is
+// currently adject to a paren/bracket/brace.  Also selects the entire
 // text within the parens.
 void CLogoCodeCtrl::SelectMatchingParen()
 {
