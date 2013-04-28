@@ -34,12 +34,12 @@ CLogoCodeCtrl::CLogoCodeCtrl(
     SetLexer(SCLEX_FMSLOGO);
     Colourise(0, -1);
 
-    // override the CTRL+<LETTER> sequences to do nothing so that they
-    // don't insert control characters.
+    // Override the Ctrl+<LETTER> sequences to do the default platform
+    // action so that they don't insert control characters.
     for (int i = 0; i < 26; i++)
     {
-        // I'm not sure why, but CTRL+Y for "Redo" is special and if
-        // we set the handler to SCI_NULL, it stops working.
+        // I'm not sure why, but Ctrl+Y for "Redo" is special and if
+        // we set its handler to 0, it stops working.
         const int key = 'A' + i;
         if (key != 'Y')
         {
