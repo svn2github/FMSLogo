@@ -10,25 +10,19 @@ ifeq "$(shell uname)" "Linux"
 
 EXEEXT =
 
-#wx_top_builddir = /home/dcostanz/wxGTK-2.8.4
-wx_top_builddir = /usr
-
 TOOLKIT = GTK
 
-# My fedora core box
-#EXTRALIBS = -pthread -Wl,--version-script,$(wx_top_builddir)/version-script -lz -ldl -lm -pthread -L/lib -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -ldl -lgthread-2.0 -lrt -lglib-2.0 -lXinerama -lSM -lpng -lz -ljpeg -ltiff -lwx_gtk2-2.8
-#CPPFLAGS += -I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/freetype2 -I/usr/include/libpng12
+wx_top_builddir = $(shell wx-config --prefix)
 
-# My Mint laptop
 ifeq "$(DEBUG)" "1"
-LDFLAGS  = -lwx_baseud-2.8 -lwx_gtk2ud_core-2.8 -lwx_gtk2ud_stc-2.8 -lwx_gtk2ud_richtext-2.8
-TOOLCHAIN_FULLNAME = gtk2-unicode-debug-2.8
+LDFLAGS  = $(shell wx-config --debug=yes --libs base,core,stc,richtext)
+TOOLCHAIN_FULLNAME = gtk2-unicode-debug-$(shell wx-config --release)
 else
-LDFLAGS  = -lwx_baseu-2.8 -lwx_gtk2u_core-2.8 -lwx_gtk2u_stc-2.8 -lwx_gtk2u_richtext-2.8
-TOOLCHAIN_FULLNAME = gtk2-unicode-release-2.8
+LDFLAGS  = $(shell wx-config --debug=no --libs base,core,stc,richtext)
+TOOLCHAIN_FULLNAME = gtk2-unicode-release-$(shell wx-config --release)
 endif
 
-CPPFLAGS += -I/usr/include/wx-2.8 -DWX_PURE
+CPPFLAGS += $(shell wx-config --cppflags) -DWX_PURE
 CXXFLAGS += -pthread
 LDFLAGS  += -pthread
 
