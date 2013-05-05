@@ -643,7 +643,10 @@ NODE *make_quote(NODE *qnd)
 
 NODE *maybe_quote(NODE *nd)
 {
-    if (nd == Unbound || is_aggregate(nd) || numberp(nd)) return (nd);
+    if (nd == Unbound || is_aggregate(nd) || numberp(nd))
+    {
+        return nd;
+    }
     return make_quote(nd);
 }
 
@@ -941,39 +944,43 @@ NODE *luppercase(NODE *args)
     return Unbound;
 }
 
-/* property list stuff */
-NODE *getprop(NODE *plist, NODE *name, bool before)
+// *****************************************************
+// Property list stuff 
+// *****************************************************
+
+// Gets the name/value node pair in a property list.
+static
+NODE *getprop(NODE *plist, NODE *name)
 {
     bool caseig = isCaseIgnored();
 
-    NODE *prev = NIL;
+    // Search the property list looking a node named "name"
     while (plist != NIL)
     {
-        if (compare_node(name, car(plist), caseig) == 0)
+        if (equalp_help(name, car(plist), caseig))
         {
-            return (before ? prev : plist);
+            return plist;
         }
-        prev = plist;
+
+        // Advance two nodes to get to the next name.
         plist = cddr(plist);
     }
+
+    // Didn't find it.
     return NIL;
 }
 
 NODE *lgprop(NODE *args)
 {
-    NODE *val = NIL;
-
     NODE * plname = string_arg(args);
-    NODE * pname = string_arg(cdr(args));
+    NODE * pname  = cadr(args);
     if (NOT_THROWING)
     {
         plname = intern(plname);
 
         NODE * plist = plist__caseobj(plname);
-        if (plist != NIL)
-        {
-            val = getprop(plist, pname, FALSE);
-        }
+
+        NODE *val = getprop(plist, pname);
         if (val != NIL)
         {
             return cadr(val);
@@ -984,13 +991,12 @@ NODE *lgprop(NODE *args)
 
 NODE *lpprop(NODE *args)
 {
-    NODE *val = NIL;
-
     NODE * plname = string_arg(args);
-    NODE * pname = string_arg(cdr(args));
+    NODE * pname  = cadr(args);
     NODE * newval = car(cddr(args));
     if (NOT_THROWING)
     {
+        // Create/find the propety list with this name.
         plname = intern(plname);
         if (flag__caseobj(plname, PLIST_TRACED))
         {
@@ -1023,17 +1029,21 @@ NODE *lpprop(NODE *args)
             new_line(g_Writer.GetStream());
         }
 
+        // Get the location of this property's value,
+        // if it already exists.
         NODE * plist = plist__caseobj(plname);
-        if (plist != NIL)
-        {
-            val = getprop(plist, pname, FALSE);
-        }
+
+        NODE * val = getprop(plist, pname);
         if (val != NIL)
         {
+            // The value already exists, so we can just
+            // set the new value in its place in the list.
             setcar(cdr(val), newval);
         }
         else
         {
+            // The value does not exist in the list, so
+            // prepend it to the beginning.
             setplist__caseobj(plname, cons(pname, cons(newval, plist)));
         }
     }
@@ -1043,28 +1053,48 @@ NODE *lpprop(NODE *args)
 NODE *lremprop(NODE *args)
 {
     NODE * plname = string_arg(args);
-    NODE * pname = string_arg(cdr(args));
+    NODE * pname = cadr(args);
     if (NOT_THROWING)
     {
         plname = intern(plname);
+
+        bool caseig = isCaseIgnored();
+
+        // Search the property list looking a node named "name"
+        NODE *prev = NIL;
         NODE * plist = plist__caseobj(plname);
-        if (plist != NIL)
+        while (plist != NIL)
         {
-            bool caseig = isCaseIgnored();
-            if (compare_node(car(plist), pname, caseig) == 0)
+            // The next name-value pair will be two nodes forward.
+            NODE * next = cddr(plist);
+
+            if (equalp_help(pname, car(plist), caseig))
             {
-                setplist__caseobj(plname, cddr(plist));
-            }
-            else
-            {
-                NODE * val = getprop(plist, pname, true);
-                if (val != NIL)
+                // We found the node to remove.
+                // Remove the name/value pair by setting
+                // the previous node's CDR to the node
+                // three elements after it.
+                if (prev == NIL)
                 {
-                    setcdr(cdr(val), cddr(cddr(val)));
+                    // Special case for removing the first node in the list.
+                    setplist__caseobj(plname, next);
                 }
+                else
+                {
+                    // Remove this name-value pair by setting the previous node's
+                    // cdr to point to the next name-value pair.
+                    setcdr(prev, next);
+                }
+
+                break;
             }
+
+            // Advance two nodes to get to the next name.
+            prev  = cdr(plist);
+            plist = next;
         }
     }
+
     return Unbound;
 }
 

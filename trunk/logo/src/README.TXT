@@ -20,6 +20,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Changed in 6.31.0
+    o Property lists now support list and array property names.
     o Various updates to the German translation.
 
   For a complete history of changes across all versions of FMSLogo, see
