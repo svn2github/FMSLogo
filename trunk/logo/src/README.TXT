@@ -21,6 +21,9 @@ II. New features/bugs fixed:
 
   * Changed in 6.31.0
     o Property lists now support list and array property names.
+    o Fix bug #421; The FMSLogo icon now appears in the Alt+Tab task selector
+      in high DPI modes on Windows Vista when using the Windows Classic theme.
+      This only affects the wxWidgets version of FMSLogo.
     o Various updates to the German translation.
 
   For a complete history of changes across all versions of FMSLogo, see
