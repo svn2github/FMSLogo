@@ -6,18 +6,26 @@
 
 #include "stringadapter.h"
 
-#include "fmslogo-16x16.xpm"
-#include "fmslogo-32x32.xpm"
-#include "fmslogo-64x64.xpm"
-
 void
 SetFmsLogoIcon(
     wxTopLevelWindow & TopLevelWindow
     )
 {
-    wxIcon icon64x64(fmslogo_64x64_xpm);
-    wxIcon icon32x32(fmslogo_32x32_xpm);
+#ifdef __WXMSW__
+    // On Windows use the .ico in the resource.
+    // This ensures that an icon is created, even at
+    // high DPI.  See bug #421.
+    wxIcon icon(wxICON(fmslogo));
+
+    TopLevelWindow.SetIcon(icon);
+#else
+    #include "fmslogo-16x16.xpm"
+    #include "fmslogo-32x32.xpm"
+    #include "fmslogo-64x64.xpm"
+
     wxIcon icon16x16(fmslogo_16x16_xpm);
+    wxIcon icon32x32(fmslogo_32x32_xpm);
+    wxIcon icon64x64(fmslogo_64x64_xpm);
 
     wxIconBundle icons;
     icons.AddIcon(icon16x16);
@@ -25,7 +33,9 @@ SetFmsLogoIcon(
     icons.AddIcon(icon64x64);
 
     TopLevelWindow.SetIcons(icons);
+#endif
 }
+
 
 void
 FillMenu(
