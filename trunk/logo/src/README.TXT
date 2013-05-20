@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.30.0 for Microsoft Windows
+FMSLogo Version 6.31.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
