@@ -593,68 +593,64 @@ void CWorkspaceEditor::OnPrint(wxCommandEvent& WXUNUSED(Event))
     m_LogoCodeControl->Print();
 }
 
-void CWorkspaceEditor::OnUndo(wxCommandEvent& WXUNUSED(Event))
+void CWorkspaceEditor::OnUndo(wxCommandEvent& Event)
 {
-    m_LogoCodeControl->Undo();
+    m_LogoCodeControl->OnUndo(Event);
 }
 
 void CWorkspaceEditor::OnUpdateUndo(wxUpdateUIEvent& Event)
 {
-    Event.Enable(m_LogoCodeControl->CanUndo());
+    m_LogoCodeControl->OnUpdateUndo(Event);
 }
 
-void CWorkspaceEditor::OnRedo(wxCommandEvent& WXUNUSED(Event))
+void CWorkspaceEditor::OnRedo(wxCommandEvent& Event)
 {
-    m_LogoCodeControl->Redo();
+    m_LogoCodeControl->OnRedo(Event);
 }
 
 void CWorkspaceEditor::OnUpdateRedo(wxUpdateUIEvent& Event)
 {
-    Event.Enable(m_LogoCodeControl->CanRedo());
+    m_LogoCodeControl->OnUpdateRedo(Event);
 }
 
-void CWorkspaceEditor::OnCut(wxCommandEvent& WXUNUSED(Event))
+void CWorkspaceEditor::OnCut(wxCommandEvent& Event)
 {
-    m_LogoCodeControl->Cut();
+    m_LogoCodeControl->OnCut(Event);
 }
 
 void CWorkspaceEditor::OnUpdateCut(wxUpdateUIEvent& Event)
 {
-    Event.Enable(m_LogoCodeControl->IsTextSelected());
+    m_LogoCodeControl->OnUpdateCut(Event);
 }
 
-void CWorkspaceEditor::OnCopy(wxCommandEvent& WXUNUSED(Event))
+void CWorkspaceEditor::OnCopy(wxCommandEvent& Event)
 {
-    m_LogoCodeControl->Copy();
+    m_LogoCodeControl->OnCopy(Event);
 }
 
 void CWorkspaceEditor::OnUpdateCopy(wxUpdateUIEvent& Event)
 {
-    Event.Enable(m_LogoCodeControl->IsTextSelected());
+    m_LogoCodeControl->OnUpdateCopy(Event);
 }
 
-void CWorkspaceEditor::OnPaste(wxCommandEvent& WXUNUSED(Event))
+void CWorkspaceEditor::OnPaste(wxCommandEvent& Event)
 {
-    m_LogoCodeControl->Paste();
+    m_LogoCodeControl->OnPaste(Event);
 }
 
 void CWorkspaceEditor::OnUpdatePaste(wxUpdateUIEvent& Event)
 {
-    Event.Enable(m_LogoCodeControl->CanPaste());
+    m_LogoCodeControl->OnUpdatePaste(Event);
 }
 
-void CWorkspaceEditor::OnDelete(wxCommandEvent& WXUNUSED(Event))
+void CWorkspaceEditor::OnDelete(wxCommandEvent& Event)
 {
-    m_LogoCodeControl->Clear();
+    m_LogoCodeControl->OnDelete(Event);
 }
 
 void CWorkspaceEditor::OnUpdateDelete(wxUpdateUIEvent& Event)
 {
-    // "Delete" is enabled if there is anything selected,
-    // or if a character appears after the cursor.
-    Event.Enable(
-        m_LogoCodeControl->IsTextSelected() || 
-        m_LogoCodeControl->GetCurrentPos() != m_LogoCodeControl->GetLength());
+    m_LogoCodeControl->OnUpdateDelete(Event);
 }
 
 void CWorkspaceEditor::OnClear(wxCommandEvent& WXUNUSED(Event))
@@ -670,15 +666,14 @@ void CWorkspaceEditor::OnUpdateClear(wxUpdateUIEvent& Event)
     Event.Enable(m_LogoCodeControl->GetLength() != 0);
 }
 
-void CWorkspaceEditor::OnSelectAll(wxCommandEvent& WXUNUSED(Event))
+void CWorkspaceEditor::OnSelectAll(wxCommandEvent& Event)
 {
-    m_LogoCodeControl->SelectAll();
+    m_LogoCodeControl->OnSelectAll(Event);
 }
 
 void CWorkspaceEditor::OnUpdateSelectAll(wxUpdateUIEvent& Event)
 {
-    // Enable if text exists
-    Event.Enable(m_LogoCodeControl->GetLength() != 0);
+    m_LogoCodeControl->OnUpdateSelectAll(Event);
 }
 
 void CWorkspaceEditor::OnFind(wxCommandEvent& WXUNUSED(Event))
@@ -885,9 +880,9 @@ void CWorkspaceEditor::OnHelpEditor(wxCommandEvent& WXUNUSED(Event))
     do_help("Editor");
 }
 
-void CWorkspaceEditor::OnHelpTopicSearch(wxCommandEvent& WXUNUSED(Event))
+void CWorkspaceEditor::OnHelpTopicSearch(wxCommandEvent& Event)
 {
-    ContextHelp(m_LogoCodeControl->GetSelectedText());
+    m_LogoCodeControl->OnHelpTopicSearch(Event);
 }
 
 

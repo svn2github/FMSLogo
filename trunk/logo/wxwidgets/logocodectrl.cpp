@@ -8,8 +8,8 @@
 #include "logocodectrl.h"
 #include "localizedstrings.h"
 #include "logocore.h"      // for ARRAYSIZE
-#include "screenwindow.h"  // for TraceOutput
 #include "guiutils.h"
+#include "helputils.h"     // for ContextHelp
 #include "stringadapter.h"
 
 #include "wrksp.h" // for g_CharactersSuccessfullyParsedInEditor
@@ -48,11 +48,12 @@ CLogoCodeCtrl::CLogoCodeCtrl(
     }
 }
 
-void
-CLogoCodeCtrl::SetFont(wxFont & font)
+bool
+CLogoCodeCtrl::SetFont(const wxFont & Font)
 {
     // Set the font
-    StyleSetFont(STYLE_DEFAULT, font);
+    wxFont fontCopy(Font);
+    StyleSetFont(STYLE_DEFAULT, fontCopy);
 
     // Apply the font
     StyleClearAll();
@@ -79,6 +80,8 @@ CLogoCodeCtrl::SetFont(wxFont & font)
 
     StyleSetForeground(STYLE_BRACEBAD,      red);
     StyleSetBackground(STYLE_BRACEBAD,      lightblue);
+
+    return true;
 }
 
 bool
@@ -686,10 +689,6 @@ void CLogoCodeCtrl::ReopenAfterError()
 
 void CLogoCodeCtrl::OnContextMenu(wxContextMenuEvent& Event)
 {
-    // The handlers for these event IDs are handled in CWorkspaceEditor.
-    // TODO: Move them into this class so that if this class is used
-    // in other contexts (for example, the mini-editor), the handlers
-    // won't need to be duplicated.
     static const MENUITEM contextMenuItems[] = {
         {LOCALIZED_POPUP_UNDO,      wxID_UNDO},
         {LOCALIZED_POPUP_REDO,      wxID_REDO},
@@ -709,9 +708,102 @@ void CLogoCodeCtrl::OnContextMenu(wxContextMenuEvent& Event)
     PopupMenu(&menu);
 }
 
+void CLogoCodeCtrl::OnUndo(wxCommandEvent& WXUNUSED(Event))
+{
+    Undo();
+}
+
+void CLogoCodeCtrl::OnUpdateUndo(wxUpdateUIEvent& Event)
+{
+    Event.Enable(CanUndo());
+}
+
+void CLogoCodeCtrl::OnRedo(wxCommandEvent& WXUNUSED(Event))
+{
+    Redo();
+}
+
+void CLogoCodeCtrl::OnUpdateRedo(wxUpdateUIEvent& Event)
+{
+    Event.Enable(CanRedo());
+}
+
+void CLogoCodeCtrl::OnCut(wxCommandEvent& WXUNUSED(Event))
+{
+    Cut();
+}
+
+void CLogoCodeCtrl::OnUpdateCut(wxUpdateUIEvent& Event)
+{
+    Event.Enable(IsTextSelected());
+}
+
+void CLogoCodeCtrl::OnCopy(wxCommandEvent& WXUNUSED(Event))
+{
+    Copy();
+}
+
+void CLogoCodeCtrl::OnUpdateCopy(wxUpdateUIEvent& Event)
+{
+    Event.Enable(IsTextSelected());
+}
+
+void CLogoCodeCtrl::OnPaste(wxCommandEvent& WXUNUSED(Event))
+{
+    Paste();
+}
+
+void CLogoCodeCtrl::OnUpdatePaste(wxUpdateUIEvent& Event)
+{
+    Event.Enable(CanPaste());
+}
+
+void CLogoCodeCtrl::OnDelete(wxCommandEvent& WXUNUSED(Event))
+{
+    Clear();
+}
+
+void CLogoCodeCtrl::OnUpdateDelete(wxUpdateUIEvent& Event)
+{
+    // "Delete" is enabled if there is anything selected,
+    // or if a character appears after the cursor.
+    Event.Enable(IsTextSelected() || GetCurrentPos() != GetLength());
+}
+
+void CLogoCodeCtrl::OnSelectAll(wxCommandEvent& WXUNUSED(Event))
+{
+    SelectAll();
+}
+
+void CLogoCodeCtrl::OnUpdateSelectAll(wxUpdateUIEvent& Event)
+{
+    // Enable if text exists
+    Event.Enable(GetLength() != 0);
+}
+
+void CLogoCodeCtrl::OnHelpTopicSearch(wxCommandEvent& WXUNUSED(Event))
+{
+    ContextHelp(GetSelectedText());
+}
+
 BEGIN_EVENT_TABLE(CLogoCodeCtrl, wxStyledTextCtrl)
     EVT_STC_UPDATEUI(wxID_ANY,         CLogoCodeCtrl::OnUpdateUi)
     EVT_STC_SAVEPOINTREACHED(wxID_ANY, CLogoCodeCtrl::OnSavePointReached)
     EVT_STC_SAVEPOINTLEFT(wxID_ANY,    CLogoCodeCtrl::OnSavePointLeft)
     EVT_CONTEXT_MENU(CLogoCodeCtrl::OnContextMenu)
+    EVT_MENU(wxID_UNDO,                CLogoCodeCtrl::OnUndo)
+    EVT_UPDATE_UI(wxID_UNDO,           CLogoCodeCtrl::OnUpdateUndo)
+    EVT_MENU(wxID_REDO,                CLogoCodeCtrl::OnRedo)
+    EVT_UPDATE_UI(wxID_REDO,           CLogoCodeCtrl::OnUpdateRedo)
+    EVT_MENU(wxID_CUT,                 CLogoCodeCtrl::OnCut)
+    EVT_UPDATE_UI(wxID_CUT,            CLogoCodeCtrl::OnUpdateCut)
+    EVT_MENU(wxID_COPY,                CLogoCodeCtrl::OnCopy)
+    EVT_UPDATE_UI(wxID_COPY,           CLogoCodeCtrl::OnUpdateCopy)
+    EVT_MENU(wxID_PASTE,               CLogoCodeCtrl::OnPaste)
+    EVT_UPDATE_UI(wxID_PASTE,          CLogoCodeCtrl::OnUpdatePaste)
+    EVT_MENU(wxID_DELETE,              CLogoCodeCtrl::OnDelete)
+    EVT_UPDATE_UI(wxID_DELETE,         CLogoCodeCtrl::OnUpdateDelete)
+    EVT_MENU(wxID_SELECTALL,           CLogoCodeCtrl::OnSelectAll)
+    EVT_UPDATE_UI(wxID_SELECTALL,      CLogoCodeCtrl::OnUpdateSelectAll)
+    EVT_MENU(wxID_HELP_INDEX,          CLogoCodeCtrl::OnHelpTopicSearch)
 END_EVENT_TABLE()
