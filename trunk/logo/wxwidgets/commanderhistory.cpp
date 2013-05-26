@@ -57,7 +57,7 @@ void CCommanderHistory::CopyCurrentLineToCommanderInput() const
 
             const wxString & text = GetRange(range.GetStart(), range.GetEnd());
 
-            GetCommander()->GetInput()->SetValue(text);
+            GetCommander()->GetInput()->SetText(text);
         }
     }
 }

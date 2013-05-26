@@ -442,13 +442,22 @@ RunLogoInstructionFromGui(
 
 void CCommander::Execute()
 {
-    // read what's in the input control
-    wxString logoInstruction(m_NextInstruction->GetValue());
+    // Read what's in the input control.
+    wxString logoInstruction(m_NextInstruction->GetText());
 
-    // clear the input control, now that we have read its contents
-    m_NextInstruction->Clear();
+    // Clear the input control, now that we have read its contents.
+    m_NextInstruction->ClearAll();
 
-    // BUG: This can potentially modify the contents of wxString's buffer
+    // Block Undo from working across executions.  To get back to a
+    // previously executed instruction, the user should use the commander
+    // history.
+    m_NextInstruction->EmptyUndoBuffer();
+
+    // In the event that multiple lines were pasted into the input control,
+    // we must replace CRLF with LF, since that's what do_execution expects.
+    logoInstruction.Replace("\r\n", "\n");
+
+    // BUG: This can modify the contents of wxString's buffer
     RunLogoInstructionFromGui(const_cast<char*>(WXSTRING_TO_STRING(logoInstruction)));
 }
 
@@ -614,12 +623,12 @@ CCommander::UpdateFont(const wxFont & NewFont)
     m_History->SetFont(NewFont);
     m_NextInstruction->SetFont(NewFont);
 
-    int width;
-    int height;
-    m_NextInstruction->GetTextExtent(WXSTRING("Tg"), &width, &height);
+    // HACK: We need to force an internal Scintilla ViewStule::Refresh() after
+    // setting the font before TextHeight() will reflect the size of NewFont.
+    m_NextInstruction->SetSize(0, 0);
 
     // font height + some padding
-    m_NextInstructionHeight = height + 10;
+    m_NextInstructionHeight = m_NextInstruction->TextHeight(0) + 6;
 }
 
 void CCommander::OnSize(wxSizeEvent& Event)
@@ -637,10 +646,11 @@ void CCommander::ProcessKeyDownEventAtInputControl(wxKeyEvent& Event)
     // with the OWL-based FMSLogo.
     if (keyCode == WXK_RIGHT || keyCode == WXK_NUMPAD_RIGHT)
     {
-        m_NextInstruction->SetInsertionPoint(0);
+        m_NextInstruction->SetCurrentPos(0);
     }
+
     m_NextInstruction->SetFocus();
-    m_NextInstruction->EmulateKeyPress(Event);
+    m_NextInstruction->SimulateKeyPress(Event);
 }
 
 void CCommander::GiveControlToInputBox()
