@@ -24,6 +24,8 @@ II. New features/bugs fixed:
     o Fix bug #421; The FMSLogo icon now appears in the Alt+Tab task selector
       in high DPI modes on Windows Vista when using the Windows Classic theme.
       This only affects the wxWidgets version of FMSLogo.
+    o Add syntax coloring, multiline pasting, infinite undo buffer, and paren
+      matching to the commander's input box in the wxWidgets version of FMSLogo.
     o Various updates to the German translation.
 
   For a complete history of changes across all versions of FMSLogo, see
