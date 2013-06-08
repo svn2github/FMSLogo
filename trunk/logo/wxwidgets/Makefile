@@ -35,7 +35,7 @@ else
 EXEEXT = .exe
 WINDRES = windres
 
-wx_top_builddir = /cygdrive/c/wxMSW-2.8.12
+wx_top_builddir = /cygdrive/e/wxMSW-2.8.12
 
 ifeq "$(DEBUG)" "1"
 LDFLAGS  = -lwx_mswd_stc-2.8 -lwx_mswd-2.8
