@@ -28,6 +28,16 @@
 #include "cursor.h"
 #include "debugheap.h"
 
+// Writes the contents of the screen window that is
+// within the ACTIVEAREA window to the screen to the given
+// file stream as a Windows Bitmap.
+//
+// File - a FILE* that was opened for binary writing.
+// MaxBitCount - the bitcount to use for the bitmap.
+//
+// Returns SUCCESS if the bitmap was successfully written.
+// Returns an error code, otherwise.
+static
 ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)
 {
     ERR_TYPES status = SUCCESS;
@@ -39,6 +49,8 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)
     WORD SavebitCount = GetDeviceCaps(screen, BITSPIXEL);
     SavebitCount *= GetDeviceCaps(screen, PLANES);
 
+    // If we were asked to save a bitmap with a very low bit-depth
+    // (one that uses a palette), then honor the request.
     if (MaxBitCount < SavebitCount)
     {
         if ((MaxBitCount == 1) || (MaxBitCount == 4) || (MaxBitCount == 8))
@@ -47,7 +59,7 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)
         }
     }
 
-    // compute size of bitmap
+    // If we're saving a true-color bitmap, use 24bpp.
     if (SavebitCount == 16)
     {
         SavebitCount = 24;
@@ -98,6 +110,8 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)
     // if custom then use custom dimensions
     if (!IsActiveAreaOneToOneWithScreen())
     {
+        // Create a bitmap of the right size that matches the screen's format.
+        // This will also match the memory bitmap's format.
         HBITMAP areaMemoryBitMap = CreateCompatibleBitmap(
             screen,
             g_PrinterAreaXHigh - g_PrinterAreaXLow,
@@ -109,13 +123,16 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)
         }
         else
         {
+            // Select the in-memory image of the picture.
             HDC     memoryDC          = GetMemoryDeviceContext();
             HBITMAP savedMemoryBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
 
+            // Select the correctly-size screen image.
             HDC     areaMemoryDC          = CreateCompatibleDC(screen);
             HBITMAP savedAreaMemoryBitmap = (HBITMAP) SelectObject(areaMemoryDC, areaMemoryBitMap);
 
-            BitBlt(
+            // Copy the correct portion from memory to the temporary bitmap.
+            BOOL isOk = BitBlt(
                 areaMemoryDC,
                 0,
                 0,
@@ -125,21 +142,32 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)
                 +g_PrinterAreaXLow  + xoffset,
                 -g_PrinterAreaYHigh + yoffset,
                 SRCCOPY);
+            if (!isOk)
+            {
+                status = IMAGE_GENERAL;
+            } 
 
+            // Restore the original HBITMAP objects.
             SelectObject(areaMemoryDC, savedAreaMemoryBitmap);
             DeleteDC(areaMemoryDC);
 
             SelectObject(memoryDC, savedMemoryBitmap);
 
-            // convert logo bitmap to raw DIB in bitsPtr
-            GetDIBits(
-                screen,
-                areaMemoryBitMap,
-                0,
-                g_PrinterAreaYHigh - g_PrinterAreaYLow,
-                bitsPtr,
-                SaveBitmapInfo,
-                DIB_RGB_COLORS);
+            if (status == SUCCESS) {
+                // convert logo bitmap to raw DIB in bitsPtr
+                int rval = GetDIBits(
+                    screen,
+                    areaMemoryBitMap,
+                    0,
+                    g_PrinterAreaYHigh - g_PrinterAreaYLow,
+                    bitsPtr,
+                    SaveBitmapInfo,
+                    DIB_RGB_COLORS);
+                if (rval != g_PrinterAreaYHigh - g_PrinterAreaYLow)
+                {
+                    status = IMAGE_GENERAL;
+                }
+            }
 
             DeleteObject(areaMemoryBitMap);
         }
@@ -148,7 +176,7 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)
     {
         // else do whole thing
         // convert logo bitmap to raw DIB in bitsPtr
-        GetDIBits(
+        int rval = GetDIBits(
             screen,
             MemoryBitMap,
             0,
@@ -156,6 +184,10 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)
             bitsPtr,
             SaveBitmapInfo,
             DIB_RGB_COLORS);
+        if (rval != BitMapHeight)
+        {
+            status = IMAGE_GENERAL;
+        }
     }
 
     // restore some of the resources
@@ -166,9 +198,9 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)
 
     DeleteDC(screen);
 
-    // build header
     if (status == SUCCESS)
     {
+        // build file header
         BITMAPFILEHEADER BitmapFileHeader;
         BitmapFileHeader.bfType = 19778;
         BitmapFileHeader.bfSize = size + sizeof(BITMAPFILEHEADER) + (int) (SaveBitmapInfo->bmiHeader.biWidth * SaveBitmapInfo->bmiHeader.biHeight * (SavebitCount / 8));
@@ -212,6 +244,14 @@ ERR_TYPES DumpBitmapFile(const char * Filename, int MaxBitCount)
     if (rval != 0)
     {
         status = IMAGE_BMP_WRITE_FAILED;
+    }
+
+    if (status != SUCCESS)
+    {
+        // The bitmap was not written out correctly.
+        // Remove the file that we created, instead
+        // of leaving around a corrupt file.
+        remove(Filename);
     }
 
     return status;

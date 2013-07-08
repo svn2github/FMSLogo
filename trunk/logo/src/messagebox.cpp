@@ -50,10 +50,18 @@ ShowErrorMessage(
     ERR_TYPES  ErrorCode
     )
 {
-    const char * errorMessage = NULL;
+    const char * errorMessage;
 
     switch (ErrorCode)
     {
+    case IMAGE_GENERAL:
+        // This happens when one of the Win32 API fails when trying to
+        // save a bitmap.  It would be nice to show an error that
+        // indicates the problem, but since I don't expect this to happen
+        // showing a generic "unknown error happened" is sufficient.
+        errorMessage = LOCALIZED_ERROR_UNKNOWN;
+        break;
+
     case IMAGE_GIF_LOAD_FAILED:
         errorMessage = LOCALIZED_ERROR_GIFREADFAILED;
         break;
@@ -77,12 +85,20 @@ ShowErrorMessage(
     case IMAGE_BMP_INVALID:
         errorMessage = LOCALIZED_NOTVALIDBMP;
         break;
+
+    case OUT_OF_MEM:
+        errorMessage = LOCALIZED_ERROR_OUTOFMEMORY;
+        break;
+
+    default:
+        // This should never happen, but if it does, showing a general error
+        // message is better than showing no error message.
+        assert(0);
+        errorMessage = LOCALIZED_ERROR_UNKNOWN;
+        break;
     }
 
-    if (errorMessage != NULL)
-    {
-        ShowErrorMessage(errorMessage);
-    }
+    ShowErrorMessage(errorMessage);
 }
 
 // Shows a message box and sets the logo error.

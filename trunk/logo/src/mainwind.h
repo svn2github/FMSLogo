@@ -40,12 +40,6 @@ DumpBitmapFile(
     );
 
 ERR_TYPES
-WriteDIB(
-    FILE* File,
-    int   MaxBitCount
-    );
-
-ERR_TYPES
 LoadBitmapFile(
     const char *,
     unsigned int &,
