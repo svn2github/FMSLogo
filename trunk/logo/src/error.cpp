@@ -408,6 +408,10 @@ err_logo(
         g_ErrorFormatString = LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE;
         break;
 
+    case IMAGE_GENERAL:
+        g_ErrorFormatString = LOCALIZED_ERROR_UNKNOWN;
+        break;
+
     case IMAGE_GIF_LOAD_FAILED:
         g_ErrorFormatString = LOCALIZED_ERROR_GIFREADFAILED;
         break;
@@ -454,6 +458,7 @@ err_logo(
         break;
 
     default:
+        assert(!"Unexpected error code in err_logo()");
         prepare_to_exit(FALSE);
         printfx(LOCALIZED_ERROR_UNKNOWN);
         exit(1);
