@@ -260,29 +260,29 @@ TO BITSAVE.4BPP
     BITSAVE.TESTHELPER 4 :activearea :pictureinstructions
 END
 
-TO BITSAVE.DRAWFULLCOLORPICTURE
-END
-
 TO BITSAVE.HIGHBPP :bitdepth
     ; Use a width that isn't DWORD-aligned to test that
     ; BITSAVE adds the necessary padding.
     LOCALMAKE "activearea [ -200 -200 203 203 ]
 
-    ; Draw the picture with 24-bit colors to make it obvious
-    ; that it gets saved in 8 colors.
+    ; Draw a picture with 24-bit colors to make it obvious
+    ; if it gets saved with a lower bit-depth.
     LOCALMAKE "counter 0
     LOCALMAKE "pictureinstructions [
-        REPEAT 1000 [
-            REPEAT REPCOUNT [
-                FORWARD 0.5
-                SETPENCOLOR (LIST
-                    BITAND 255 ASHIFT :counter -16 
+
+        PENUP
+        REPEAT 512 [
+            SETXY REPCOUNT-210 -210
+            REPEAT 512 [
+                SETPIXEL (LIST
+                    BITAND 255 (SUM 128 ASHIFT :counter -16)
                     BITAND 255 ASHIFT :counter -8
                     BITAND 255 :counter)
-                make "counter :counter + 1
+                FORWARD 1
+                MAKE "counter :counter + 1
             ]
-            RIGHT 90 
         ]
+        PENDOWN
     ]
 
     BITSAVE.TESTHELPER :bitdepth :activearea :pictureinstructions
@@ -336,15 +336,10 @@ TO BITSAVE.LARGEBITMAP
 
     ; Spawn an instance of FMSLogo with a large with and height that will
     ; create a bitmap.
-    SIMPLEREPORTTEST [ (SHELL [fmslogo -w 6614 -h 4677 -l bitsave-largebitmap.lgo] "true) ] "true
+    SIMPLEREPORTTEST [ (SHELL [fmslogo -w 6614 -h 4677 -l bitsave-largebitmap.lgo] LOCALETRUE) ] LOCALETRUE
 
     ; Confirm that the bitmap was saved as expected.
-    IFELSE FILEEXISTS "bitsave-largebitmap.bmp [
-       ; A file was created.  Confirm that it looks correct.
-       CHECKFILEAGAINSTBASELINE "bitsave-largebitmap.bmp "testimage-bitsave-largebitmap.bmp
-    ][
-       REPORTTESTFAILED [bitsave-largebitmap.lgo did not create bitsave-largebitmap.bmp]
-    ]
+    CHECKFILEAGAINSTBASELINE "bitsave-largebitmap.bmp "testimage-bitsave-largebitmap.bmp
 END
 
 TO SETBITINDEX.SMOKETEST
