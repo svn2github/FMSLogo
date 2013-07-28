@@ -1,0 +1,17 @@
+; This is a helper program for the BITSAVE.LARGEBITMAP procedure in bitmap.lgo.
+; It should not be invoked directly.
+
+; Set the active area to whatever was passed in on the command line.
+make "width  (item 3 MACHINE)
+make "height (item 4 MACHINE)
+SETACTIVEAREA (list -(:width / 2) -(:height / 2) (:width / 2) (:height / 2))
+
+; Draw something on the screen.
+CLEARSCREEN
+REPEAT 1000 [ FORWARD REPCOUNT RT 91 ]
+
+; Save the picture
+BITSAVE "bitsave-largebitmap.bmp
+
+; Quit
+BYE
