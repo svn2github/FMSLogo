@@ -513,50 +513,52 @@ TO FILEEXISTS :filename
 END
 BURY [FILEEXISTS]
 
+; A utility routine for comparing files.
+; This is separated from FILESAREEQUAL so that it can use FOREVER/OUTPUT.
+; This is much faster than using WHILE, which is important for large files.
+TO FILESAREEQUAL.HELPER :filea :fileb
+   LOCAL [bytea byteb]
+
+   SETREAD :filea
+   FOREVER [
+      IF EOFP [
+         ; made it to the end of filea with no differences
+         OUTPUT "true
+      ]
+
+      SETREAD :fileb
+      MAKE "byteb READCHAR
+
+      SETREAD :filea
+      IF NOTEQUAL? READCHAR :byteb [
+         ; found a difference
+         OUTPUT "false
+      ]
+   ]
+END
+BURY [FILESAREEQUAL.HELPER]
+
 TO FILESAREEQUAL :filea :fileb
 
-   ; do a binary byte-for-byte comparison of the files
+   ; Do a binary byte-for-byte comparison of the files
    ; OUTPUT "true if the files have the same content
    ; OUTPUT "false, otherwise
 
-   LOCAL [oldreader bytea byteb]
+   LOCAL [oldreader isequal]
 
    MAKE "oldreader READER
 
    (OPENREAD :filea "true)
    (OPENREAD :fileb "true)
 
-   SETREAD :filea
-   WHILE [NOT EOFP] [
-      SETREAD :fileb
-      MAKE "byteb READCHAR
-
-      SETREAD :filea
-      MAKE "bytea READCHAR
-
-      IF NOTEQUAL? :bytea :byteb [
-         ; found a discrepency
-
-         ; cleanup
-         CLOSE   :filea
-         CLOSE   :fileb
-         SETREAD :oldreader
-
-         OUTPUT "false
-      ]
-   ]
+   MAKE "isequal FILESAREEQUAL.HELPER :filea :fileb
 
    SETREAD :fileb
    IF NOT EOFP [
-      ; fileb is shorter than filea
-      CLOSE :filea
-      CLOSE :fileb
-      OUTPUT "false
+      ; We didn't compare all of fileb.
+      ; It may be shorter than filea.
+      MAKE "isequal "false
    ]
-
-   ;
-   ; no file differences were found
-   ;
 
    ; cleanup
    CLOSE :filea
@@ -564,7 +566,7 @@ TO FILESAREEQUAL :filea :fileb
 
    SETREAD :oldreader
 
-   OUTPUT "true
+   OUTPUT :isEqual
 END
 BURY [FILESAREEQUAL]
 
