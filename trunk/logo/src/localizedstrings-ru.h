@@ -934,6 +934,7 @@
 #define LOCALIZED_ERRORINFILETITLE              "Error in File" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERRORINFILEMESSAGE            "There was a problem loading the contents of the file \"%s\".\n\nCheck the Commander for possible error message.\n\nDo you want to open the file in the editor to see the error?" // NOT_YET_LOCALIZED
 
+#define LOCALIZED_CANNOTALLOCATESCREEN          "Unable to allocate memory for the screen window.  You may have requested a width and height that exceeds the amount of available video RAM.\n\n" LOCALIZED_GENERAL_PRODUCTNAME " can't continue." // NOT_YET_LOCALIZED
 
 
 // 
@@ -1186,6 +1187,8 @@
 #define LOCALIZED_UNTITLED      "Без заголовка" 
 #define LOCALIZED_UNKNOWN       "Неизвестно" 
 
+// The text which is shown when the Unbound node is formatted.
+// This happens when a macro outputs nothing (instead of a list)
 #define LOCALIZED_UNBOUND       "Неограниченно" 
 
 //

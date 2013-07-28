@@ -148,6 +148,17 @@ void TScreenWindow::SetupWindow()
         m_ScreenDeviceContext,
         BitMapWidth,
         BitMapHeight);
+    if (MemoryBitMap == NULL)
+    {
+        // If we don't have a memory bitmap to save the drawing, then
+        // most of FMSLogo won't work.  Notify the user and exit.
+        MessageBox(
+            LOCALIZED_CANNOTALLOCATESCREEN,
+            NULL,
+            MB_OK | MB_ICONERROR);
+
+        TXWindow::Raise(this);
+    }
 
     // set the bitmap object of the screen
     SelectObject(m_MemoryDeviceContext, MemoryBitMap);
