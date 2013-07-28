@@ -568,8 +568,54 @@ TO FILESAREEQUAL :filea :fileb
 END
 BURY [FILESAREEQUAL]
 
+; Compares a generated file against an expected baseline file.
+; Logs an error if the baseline exists and is not equal to the
+; generated file.  If the baseline does not exist, the user
+; is given the opportunity to create it from the generated file.
+TO CHECKFILEAGAINSTBASELINE :actualfilename :baselinefilename
+   LOCAL [isok]
+
+    IF NOT FILEEXISTS :actualfilename [
+       ; A file wasn't created when one was expected.
+       ; Report a failure.
+       REPORTTESTFAILED (sentence :actualfilename "|does not exist.|)
+       STOP
+    ]
+
+   IFELSE FILEEXISTS :baselinefilename [
+
+      ; Do a binary byte-for-byte comparison of the files.
+      MAKE "isok FILESAREEQUAL :baselinefilename :actualfilename
+
+      ; If the file is not correct, then we don't erase
+      ; it so that the difference can be investigated.
+      if :isOk [ ERASEFILE :actualfilename ]
+   ][
+       ; The baseline file does not exist.
+       ; We must ask the user if the file looks correct.
+       MAKE "isok UNLIMITEDYESNOBOX :actualfilename (
+          LIST "Does :actualfilename "look "correct?
+       )
+
+       IF :isok [
+         ; Everything is good.
+         ; Save the generated file as the baseline.
+         IGNORE SHELL (LIST "cmd.exe "/C "move :actualfilename :baselinefilename)
+       ]
+   ]
+
+   IFELSE :isok [
+      ; Everything is good.
+      REPORTTESTPASSED (sentence :actualfilename "|was created correctly.|)
+   ] [
+      ; Something is wrong.  Fail this test.
+      REPORTTESTFAILED (sentence :actualfilename "|was not created correctly.|)
+   ]
+END
+BURY [CHECKFILEAGAINSTBASELINE]
+
 TO CHECKSCREEN :screenname
-   
+
    LOCAL [baselinefilename newfilename isok]
 
    ; set the active area to the entire screen
