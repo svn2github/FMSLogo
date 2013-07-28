@@ -194,8 +194,118 @@ TO BITPASTETOINDEXTEST.BADINPUT
 
 END
 
+TO BITSAVE.TESTHELPER :bitdepth :activearea :pictureinstructions
+
+    LOCALMAKE "savedActiveArea ACTIVEAREA
+    LOCALMAKE "savedPenColor   PENCOLOR
+    LOCALMAKE "filename (WORD "bitsave- :bitdepth "bpp.bmp)
+
+    ; Draw a distinctive picture.
+    CLEARPALETTE
+    CLEARSCREEN
+    HIDETURTLE
+    RUN :pictureinstructions
+    SHOWTURTLE
+
+    ; save the picture
+    SETACTIVEAREA :activearea
+    (BITSAVE :filename :bitdepth)
+
+    ; Check that the bitmap was saved correctly.
+    IF FILEEXISTS :filename [
+
+       LOCALMAKE "expectedDimensions (LIST 
+           (ITEM 3 :activearea) - (ITEM 1 :activearea)
+           (ITEM 4 :activearea) - (ITEM 2 :activearea))
+
+       SIMPLEREPORTTEST [ BITLOADSIZE :filename ] :expectedDimensions
+    ]
+    CHECKFILEAGAINSTBASELINE :filename (word "testimage- :filename)
+
+    ; cleanup
+    SETACTIVEAREA :savedActiveArea
+    SETPENCOLOR   :savedPenColor
+    ERASEFILE     :filename
+END
+
+TO BITSAVE.1BPP
+
+    ; Use a width that isn't DWORD-aligned to test that
+    ; BITSAVE adds the necessary padding.
+    LOCALMAKE "activearea [ -100 -100 103 203 ]
+
+    ; Draw the picture in blue to make it obvious that it gets
+    ; saved in monochrome.
+    LOCALMAKE "pictureinstructions [
+       SETPENCOLOR 1
+       REPEAT 500 [ FORWARD REPCOUNT RIGHT 90 ]
+    ]
+
+    ; Run the test
+    BITSAVE.TESTHELPER 1 :activearea :pictureinstructions
+END
+
+TO BITSAVE.4BPP
+
+    ; Use a width that isn't DWORD-aligned to test that
+    ; BITSAVE adds the necessary padding.
+    LOCALMAKE "activearea [ -50 -50 103 203 ]
+
+    ; Draw the picture with 16 colors to make it obvious
+    ; that it gets saved in four colors.
+    LOCALMAKE "pictureinstructions [
+       REPEAT 500 [ FORWARD REPCOUNT RIGHT 90 SETPENCOLOR REPCOUNT ]
+    ]
+
+    BITSAVE.TESTHELPER 4 :activearea :pictureinstructions
+END
+
+TO BITSAVE.DRAWFULLCOLORPICTURE
+END
+
+TO BITSAVE.HIGHBPP :bitdepth
+    ; Use a width that isn't DWORD-aligned to test that
+    ; BITSAVE adds the necessary padding.
+    LOCALMAKE "activearea [ -200 -200 203 203 ]
+
+    ; Draw the picture with 24-bit colors to make it obvious
+    ; that it gets saved in 8 colors.
+    LOCALMAKE "counter 0
+    LOCALMAKE "pictureinstructions [
+        REPEAT 1000 [
+            REPEAT REPCOUNT [
+                FORWARD 0.5
+                SETPENCOLOR (LIST
+                    BITAND 255 ASHIFT :counter -16 
+                    BITAND 255 ASHIFT :counter -8
+                    BITAND 255 :counter)
+                make "counter :counter + 1
+            ]
+            RIGHT 90 
+        ]
+    ]
+
+    BITSAVE.TESTHELPER :bitdepth :activearea :pictureinstructions
+END
+
+TO BITSAVE.8BPP
+    BITSAVE.HIGHBPP 8
+END
+
+TO BITSAVE.16BPP
+    BITSAVE.HIGHBPP 16
+END
+
+TO BITSAVE.24BPP
+    BITSAVE.HIGHBPP 24
+END
+
+TO BITSAVE.32BPP
+    BITSAVE.HIGHBPP 32
+END
+
 TO BITSAVE.WITHACTIVEAREA
-    ; this is a regression test for bug #1813051.
+    ; This is a regression test for bug #1813051.
 
     LOCALMAKE "savedActiveArea ACTIVEAREA
     LOCALMAKE "savedPenColor   PENCOLOR
@@ -205,7 +315,7 @@ TO BITSAVE.WITHACTIVEAREA
     
     SETACTIVEAREA [ 0 0 200 200 ]
     BITSAVE "bitsave-withactivearea.bmp
-    
+
     CLEARSCREEN
     BITLOAD  "bitsave-withactivearea.bmp
 
@@ -216,6 +326,25 @@ TO BITSAVE.WITHACTIVEAREA
     SETACTIVEAREA :savedActiveArea
     SETPENCOLOR   :savedPenColor
     ERASEFILE     "bitsave-withactivearea.bmp
+END
+
+TO BITSAVE.LARGEBITMAP
+    ; This is a regression test for bug #425
+
+    ; Erase the bitmap, if it exists.
+    TRACEINSTRUCTION [ERASEFILE "bitsave-largebitmap.bmp]
+
+    ; Spawn an instance of FMSLogo with a large with and height that will
+    ; create a bitmap.
+    SIMPLEREPORTTEST [ (SHELL [fmslogo -w 6614 -h 4677 -l bitsave-largebitmap.lgo] "true) ] "true
+
+    ; Confirm that the bitmap was saved as expected.
+    IFELSE FILEEXISTS "bitsave-largebitmap.bmp [
+       ; A file was created.  Confirm that it looks correct.
+       CHECKFILEAGAINSTBASELINE "bitsave-largebitmap.bmp "testimage-bitsave-largebitmap.bmp
+    ][
+       REPORTTESTFAILED [bitsave-largebitmap.lgo did not create bitsave-largebitmap.bmp]
+    ]
 END
 
 TO SETBITINDEX.SMOKETEST
@@ -311,6 +440,12 @@ TO BITMAPTEST
   SETBITINDEX.SMOKETEST
   SETBITINDEX.BADINPUT
 
+  BITSAVE.1BPP
+  BITSAVE.4BPP
+  BITSAVE.8BPP
+  BITSAVE.16BPP
+  BITSAVE.24BPP
+  BITSAVE.32BPP
   BITSAVE.WITHACTIVEAREA
+  ;BITSAVE.LARGEBITMAP
 END
-
