@@ -33,191 +33,192 @@
 // file stream as a Windows Bitmap.
 //
 // File - a FILE* that was opened for binary writing.
-// MaxBitCount - the bitcount to use for the bitmap.
+// MaxBitmapBitDepth - the bitcount to use for the bitmap.
 //
 // Returns SUCCESS if the bitmap was successfully written.
 // Returns an error code, otherwise.
 static
-ERR_TYPES WriteDIB(FILE* File, int MaxBitCount)
+ERR_TYPES WriteDIB(FILE* File, int MaxBitmapBitDepth)
 {
     ERR_TYPES status = SUCCESS;
 
-    // grab a DC 
-    HDC screen = CreateDC("DISPLAY", NULL, NULL, NULL);
+    // grab a DC
+    HDC dc = GetMemoryDeviceContext();
 
-    // hard code to screen mode
-    WORD SavebitCount = GetDeviceCaps(screen, BITSPIXEL);
-    SavebitCount *= GetDeviceCaps(screen, PLANES);
+    // Determine the bit depth of the screen.
+    WORD bitmapBitDepth = GetDeviceCaps(dc, BITSPIXEL);
+    bitmapBitDepth *= GetDeviceCaps(dc, PLANES);
 
     // If we were asked to save a bitmap with a very low bit-depth
     // (one that uses a palette), then honor the request.
-    if (MaxBitCount < SavebitCount)
+    if (MaxBitmapBitDepth < bitmapBitDepth)
     {
-        if ((MaxBitCount == 1) || (MaxBitCount == 4) || (MaxBitCount == 8))
+        if ((MaxBitmapBitDepth == 1) || (MaxBitmapBitDepth == 4) || (MaxBitmapBitDepth == 8))
         {
-            SavebitCount = MaxBitCount;
+            bitmapBitDepth = MaxBitmapBitDepth;
         }
     }
 
     // If we're saving a true-color bitmap, use 24bpp.
-    if (SavebitCount == 16)
+    if (bitmapBitDepth == 16 || bitmapBitDepth == 32)
     {
-        SavebitCount = 24;
-    }
-    if (SavebitCount == 32)
-    {
-        SavebitCount = 24;
+        bitmapBitDepth = 24;
     }
 
-    WORD size;
-    if (SavebitCount <= 8)
+    size_t size;
+    if (bitmapBitDepth <= 8)
     {
-        // Allocate space for a palette of 2^SavebitCount colors
-        size = sizeof(BITMAPINFOHEADER) + ((1 << SavebitCount) * sizeof(RGBQUAD));
+        // Allocate space for a palette of 2^bitmapBitDepth colors
+        size = sizeof(BITMAPINFOHEADER) + ((1 << bitmapBitDepth) * sizeof(RGBQUAD));
     }
     else
     {
         size = sizeof(BITMAPINFOHEADER);
     }
 
-    BITMAPINFO * SaveBitmapInfo = (BITMAPINFO *) new char[size];
+    char * bitmapInfoBuffer = new char[size];
+    BITMAPINFO * bitmapInfo = reinterpret_cast<BITMAPINFO *>(bitmapInfoBuffer);
 
-    SaveBitmapInfo->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-    SaveBitmapInfo->bmiHeader.biWidth  = g_PrinterAreaXHigh - g_PrinterAreaXLow;
-    SaveBitmapInfo->bmiHeader.biHeight = g_PrinterAreaYHigh - g_PrinterAreaYLow;
-    SaveBitmapInfo->bmiHeader.biPlanes = 1;
-    SaveBitmapInfo->bmiHeader.biBitCount = SavebitCount;
-    SaveBitmapInfo->bmiHeader.biCompression = BI_RGB;
-    SaveBitmapInfo->bmiHeader.biXPelsPerMeter = 0;
-    SaveBitmapInfo->bmiHeader.biYPelsPerMeter = 0;
-    SaveBitmapInfo->bmiHeader.biClrUsed = 0;
-    SaveBitmapInfo->bmiHeader.biClrImportant = 0;
+    bitmapInfo->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+    bitmapInfo->bmiHeader.biWidth  = g_PrinterAreaXHigh - g_PrinterAreaXLow;
+    bitmapInfo->bmiHeader.biHeight = g_PrinterAreaYHigh - g_PrinterAreaYLow;
+    bitmapInfo->bmiHeader.biPlanes = 1;
+    bitmapInfo->bmiHeader.biBitCount = bitmapBitDepth;
+    bitmapInfo->bmiHeader.biCompression = BI_RGB;
+    bitmapInfo->bmiHeader.biXPelsPerMeter = 0;
+    bitmapInfo->bmiHeader.biYPelsPerMeter = 0;
+    bitmapInfo->bmiHeader.biClrUsed = 0;
+    bitmapInfo->bmiHeader.biClrImportant = 0;
 
-    SaveBitmapInfo->bmiHeader.biSizeImage = ((((SaveBitmapInfo->bmiHeader.biWidth * SaveBitmapInfo->bmiHeader.biBitCount) + 31) / 32) * 4) * SaveBitmapInfo->bmiHeader.biHeight;
+    const int rowBits = bitmapInfo->bmiHeader.biWidth * bitmapInfo->bmiHeader.biBitCount;
+    const int lineBytes = ((rowBits + 31) / 32) * 4; // pad to 32-bit alignment
+    bitmapInfo->bmiHeader.biSizeImage = lineBytes * bitmapInfo->bmiHeader.biHeight;
 
     // allocate space for the raw DIB data
-    unsigned char * bitsPtr = new unsigned char[SaveBitmapInfo->bmiHeader.biSizeImage];
-    memset(bitsPtr, 0x00, SaveBitmapInfo->bmiHeader.biSizeImage);
-
-    // if palette yank it in 
-    HPALETTE oldPalette2;
-    if (EnablePalette)
+    void * dibBuffer = malloc(bitmapInfo->bmiHeader.biSizeImage);
+    if (dibBuffer == NULL)
     {
-        oldPalette2 = SelectPalette(screen, ThePalette, FALSE);
-        RealizePalette(screen);
-    }
-
-    // if custom then use custom dimensions
-    if (!IsActiveAreaOneToOneWithScreen())
-    {
-        // Create a bitmap of the right size that matches the screen's format.
-        // This will also match the memory bitmap's format.
-        HBITMAP areaMemoryBitMap = CreateCompatibleBitmap(
-            screen,
-            g_PrinterAreaXHigh - g_PrinterAreaXLow,
-            g_PrinterAreaYHigh - g_PrinterAreaYLow);
-
-        if (!areaMemoryBitMap)
-        {
-            status = OUT_OF_MEM;
-        }
-        else
-        {
-            // Select the in-memory image of the picture.
-            HDC     memoryDC          = GetMemoryDeviceContext();
-            HBITMAP savedMemoryBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
-
-            // Select the correctly-size screen image.
-            HDC     areaMemoryDC          = CreateCompatibleDC(screen);
-            HBITMAP savedAreaMemoryBitmap = (HBITMAP) SelectObject(areaMemoryDC, areaMemoryBitMap);
-
-            // Copy the correct portion from memory to the temporary bitmap.
-            BOOL isOk = BitBlt(
-                areaMemoryDC,
-                0,
-                0,
-                g_PrinterAreaXHigh - g_PrinterAreaXLow,
-                g_PrinterAreaYHigh - g_PrinterAreaYLow,
-                memoryDC,
-                +g_PrinterAreaXLow  + xoffset,
-                -g_PrinterAreaYHigh + yoffset,
-                SRCCOPY);
-            if (!isOk)
-            {
-                status = IMAGE_GENERAL;
-            } 
-
-            // Restore the original HBITMAP objects.
-            SelectObject(areaMemoryDC, savedAreaMemoryBitmap);
-            DeleteDC(areaMemoryDC);
-
-            SelectObject(memoryDC, savedMemoryBitmap);
-
-            if (status == SUCCESS) {
-                // convert logo bitmap to raw DIB in bitsPtr
-                int rval = GetDIBits(
-                    screen,
-                    areaMemoryBitMap,
-                    0,
-                    g_PrinterAreaYHigh - g_PrinterAreaYLow,
-                    bitsPtr,
-                    SaveBitmapInfo,
-                    DIB_RGB_COLORS);
-                if (rval != g_PrinterAreaYHigh - g_PrinterAreaYLow)
-                {
-                    status = IMAGE_GENERAL;
-                }
-            }
-
-            DeleteObject(areaMemoryBitMap);
-        }
+        status = OUT_OF_MEM;
     }
     else
     {
-        // else do whole thing
-        // convert logo bitmap to raw DIB in bitsPtr
-        int rval = GetDIBits(
-            screen,
-            MemoryBitMap,
-            0,
-            BitMapHeight,
-            bitsPtr,
-            SaveBitmapInfo,
-            DIB_RGB_COLORS);
-        if (rval != BitMapHeight)
+        // if palette yank it in 
+        HPALETTE oldPalette2;
+        if (EnablePalette)
         {
-            status = IMAGE_GENERAL;
+            oldPalette2 = SelectPalette(dc, ThePalette, FALSE);
+            RealizePalette(dc);
         }
+
+        // if custom then use custom dimensions
+        if (!IsActiveAreaOneToOneWithScreen())
+        {
+            // Create a bitmap of the right size that matches the memory
+            // bitmap's format.
+            HBITMAP areaMemoryBitMap = CreateCompatibleBitmap(
+                dc,
+                g_PrinterAreaXHigh - g_PrinterAreaXLow,
+                g_PrinterAreaYHigh - g_PrinterAreaYLow);
+            if (areaMemoryBitMap == NULL)
+            {
+                status = OUT_OF_MEM;
+            }
+            else
+            {
+                // Select the in-memory image of the picture.
+                HBITMAP savedMemoryBitmap = (HBITMAP) SelectObject(dc, MemoryBitMap);
+
+                // Select the correctly-size bitmap.
+                HDC areaMemoryDC = CreateCompatibleDC(dc);
+                SelectObject(areaMemoryDC, areaMemoryBitMap);
+
+                // Copy the correct portion from memory to the temporary bitmap.
+                BOOL isOk = BitBlt(
+                    areaMemoryDC,
+                    0,
+                    0,
+                    g_PrinterAreaXHigh - g_PrinterAreaXLow,
+                    g_PrinterAreaYHigh - g_PrinterAreaYLow,
+                    dc,
+                    +g_PrinterAreaXLow  + xoffset,
+                    -g_PrinterAreaYHigh + yoffset,
+                    SRCCOPY);
+                if (!isOk)
+                {
+                    status = IMAGE_GENERAL;
+                }
+
+                // Release the device context that we created
+                DeleteDC(areaMemoryDC);
+
+                // Restore the original bitmap
+                SelectObject(dc, savedMemoryBitmap);
+
+                if (status == SUCCESS) {
+                    // convert logo bitmap to raw DIB in bitsPtr
+                    int rval = GetDIBits(
+                        dc,
+                        areaMemoryBitMap,
+                        0,
+                        g_PrinterAreaYHigh - g_PrinterAreaYLow,
+                        dibBuffer,
+                        bitmapInfo,
+                        DIB_RGB_COLORS);
+                    if (rval != g_PrinterAreaYHigh - g_PrinterAreaYLow)
+                    {
+                        status = IMAGE_GENERAL;
+                    }
+                }
+
+                DeleteObject(areaMemoryBitMap);
+            }
+        }
+        else
+        {
+            // else do whole thing
+            // convert logo bitmap to raw DIB in dibBuffer
+            int rval = GetDIBits(
+                dc,
+                MemoryBitMap,
+                0,
+                BitMapHeight,
+                dibBuffer,
+                bitmapInfo,
+                DIB_RGB_COLORS);
+            if (rval != BitMapHeight)
+            {
+                status = IMAGE_GENERAL;
+            }
+        }
+
+        // restore some of the resources
+        if (EnablePalette)
+        {
+            SelectPalette(dc, oldPalette2, FALSE);
+        }
+
+        if (status == SUCCESS)
+        {
+            // build file header
+            BITMAPFILEHEADER BitmapFileHeader;
+            BitmapFileHeader.bfType = 19778;
+            BitmapFileHeader.bfSize = sizeof(BitmapFileHeader) + size + bitmapInfo->bmiHeader.biSizeImage;
+            BitmapFileHeader.bfReserved1 = 0;
+            BitmapFileHeader.bfReserved2 = 0;
+            BitmapFileHeader.bfOffBits = size + sizeof(BITMAPFILEHEADER);
+
+            // write headers
+            fwrite(&BitmapFileHeader, sizeof(char), sizeof(BitmapFileHeader), File);
+            fwrite(bitmapInfo, sizeof(char), size, File);
+
+            // write out raw DIB data to file
+            fwrite(dibBuffer, sizeof(char), bitmapInfo->bmiHeader.biSizeImage, File);
+        }
+
+        free(dibBuffer);
     }
 
-    // restore some of the resources
-    if (EnablePalette)
-    {
-        SelectPalette(screen, oldPalette2, FALSE);
-    }
-
-    DeleteDC(screen);
-
-    if (status == SUCCESS)
-    {
-        // build file header
-        BITMAPFILEHEADER BitmapFileHeader;
-        BitmapFileHeader.bfType = 19778;
-        BitmapFileHeader.bfSize = size + sizeof(BITMAPFILEHEADER) + (int) (SaveBitmapInfo->bmiHeader.biWidth * SaveBitmapInfo->bmiHeader.biHeight * (SavebitCount / 8));
-        BitmapFileHeader.bfReserved1 = 0;
-        BitmapFileHeader.bfReserved2 = 0;
-        BitmapFileHeader.bfOffBits = size + sizeof(BITMAPFILEHEADER);
-
-        // write headers
-        fwrite(&BitmapFileHeader, sizeof(char), sizeof(BitmapFileHeader), File);
-        fwrite(SaveBitmapInfo, sizeof(char), size, File);
-
-        // write out raw DIB data to file
-        fwrite(bitsPtr, sizeof(char), SaveBitmapInfo->bmiHeader.biSizeImage, File);
-    }
-
-    delete [] bitsPtr;
-    delete SaveBitmapInfo; // BUG: should use delete [] on char *.
+    delete [] bitmapInfoBuffer;
 
     return status;
 }
