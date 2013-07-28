@@ -600,7 +600,7 @@ TO CHECKFILEAGAINSTBASELINE :actualfilename :baselinefilename
        IF :isok [
          ; Everything is good.
          ; Save the generated file as the baseline.
-         IGNORE SHELL (LIST "cmd.exe "/C "move :actualfilename :baselinefilename)
+         IGNORE (SHELL (LIST "cmd.exe "/C "move :actualfilename :baselinefilename) "true)
        ]
    ]
 
