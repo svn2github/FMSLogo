@@ -110,16 +110,17 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitmapBitDepth)
             RealizePalette(dc);
         }
 
-        // if custom then use custom dimensions
+        HBITMAP bitmapToSave;
         if (!IsActiveAreaOneToOneWithScreen())
         {
-            // Create a bitmap of the right size that matches the memory
-            // bitmap's format.
-            HBITMAP areaMemoryBitMap = CreateCompatibleBitmap(
+            // The active area has a different size than the screen,
+            // so we must BLIT the area we want to a bitmap of the desired
+            // size that matches the memory bitmap's format.
+            bitmapToSave = CreateCompatibleBitmap(
                 dc,
-                g_PrinterAreaXHigh - g_PrinterAreaXLow,
-                g_PrinterAreaYHigh - g_PrinterAreaYLow);
-            if (areaMemoryBitMap == NULL)
+                bitmapInfo->bmiHeader.biWidth,
+                bitmapInfo->bmiHeader.biHeight);
+            if (bitmapToSave == NULL)
             {
                 status = OUT_OF_MEM;
             }
@@ -130,18 +131,18 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitmapBitDepth)
 
                 // Select the correctly-size bitmap.
                 HDC areaMemoryDC = CreateCompatibleDC(dc);
-                SelectObject(areaMemoryDC, areaMemoryBitMap);
+                SelectObject(areaMemoryDC, bitmapToSave);
 
                 // Copy the correct portion from memory to the temporary bitmap.
                 BOOL isOk = BitBlt(
                     areaMemoryDC,
                     0,
                     0,
-                    g_PrinterAreaXHigh - g_PrinterAreaXLow,
-                    g_PrinterAreaYHigh - g_PrinterAreaYLow,
+                    bitmapInfo->bmiHeader.biWidth,
+                    bitmapInfo->bmiHeader.biHeight,
                     dc,
-                    +g_PrinterAreaXLow  + xoffset,
-                    -g_PrinterAreaYHigh + yoffset,
+                    xoffset + g_PrinterAreaXLow,
+                    yoffset - g_PrinterAreaYHigh,
                     SRCCOPY);
                 if (!isOk)
                 {
@@ -153,42 +154,34 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitmapBitDepth)
 
                 // Restore the original bitmap
                 SelectObject(dc, savedMemoryBitmap);
-
-                if (status == SUCCESS) {
-                    // convert logo bitmap to raw DIB in bitsPtr
-                    int rval = GetDIBits(
-                        dc,
-                        areaMemoryBitMap,
-                        0,
-                        g_PrinterAreaYHigh - g_PrinterAreaYLow,
-                        dibBuffer,
-                        bitmapInfo,
-                        DIB_RGB_COLORS);
-                    if (rval != g_PrinterAreaYHigh - g_PrinterAreaYLow)
-                    {
-                        status = IMAGE_GENERAL;
-                    }
-                }
-
-                DeleteObject(areaMemoryBitMap);
             }
         }
         else
         {
-            // else do whole thing
-            // convert logo bitmap to raw DIB in dibBuffer
+            // Save the entire memory bitmap.
+            bitmapToSave = MemoryBitMap;
+        }
+
+        // Convert the device-dependent bitmap to raw DIB in dibBuffer.
+        if (status == SUCCESS) {
             int rval = GetDIBits(
                 dc,
-                MemoryBitMap,
+                bitmapToSave,
                 0,
-                BitMapHeight,
+                bitmapInfo->bmiHeader.biHeight,
                 dibBuffer,
                 bitmapInfo,
                 DIB_RGB_COLORS);
-            if (rval != BitMapHeight)
+            if (rval != bitmapInfo->bmiHeader.biHeight)
             {
                 status = IMAGE_GENERAL;
             }
+        }
+
+        if (bitmapToSave != MemoryBitMap && bitmapToSave != NULL)
+        {
+            // Cleanup the bitmap, if we created it.
+            DeleteObject(bitmapToSave);
         }
 
         // restore some of the resources
