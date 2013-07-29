@@ -34,6 +34,7 @@
 //
 // File - a FILE* that was opened for binary writing.
 // MaxBitmapBitDepth - the bitcount to use for the bitmap.
+//    Must be 1, 4, 8, 16, 24, or 32.
 //
 // Returns SUCCESS if the bitmap was successfully written.
 // Returns an error code, otherwise.
@@ -79,53 +80,134 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitmapBitDepth)
     char * bitmapInfoBuffer = new char[size];
     BITMAPINFO * bitmapInfo = reinterpret_cast<BITMAPINFO *>(bitmapInfoBuffer);
 
-    bitmapInfo->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-    bitmapInfo->bmiHeader.biWidth  = g_PrinterAreaXHigh - g_PrinterAreaXLow;
-    bitmapInfo->bmiHeader.biHeight = g_PrinterAreaYHigh - g_PrinterAreaYLow;
-    bitmapInfo->bmiHeader.biPlanes = 1;
-    bitmapInfo->bmiHeader.biBitCount = bitmapBitDepth;
-    bitmapInfo->bmiHeader.biCompression = BI_RGB;
+    const int bitmapWidth  = g_PrinterAreaXHigh - g_PrinterAreaXLow;
+    const int bitmapHeight = g_PrinterAreaYHigh - g_PrinterAreaYLow;
+
+    bitmapInfo->bmiHeader.biSize          = sizeof(BITMAPINFOHEADER);
+    bitmapInfo->bmiHeader.biWidth         = bitmapWidth;
+    bitmapInfo->bmiHeader.biHeight        = bitmapHeight;
+    bitmapInfo->bmiHeader.biPlanes        = 1;
+    bitmapInfo->bmiHeader.biBitCount      = bitmapBitDepth;
+    bitmapInfo->bmiHeader.biCompression   = BI_RGB;
     bitmapInfo->bmiHeader.biXPelsPerMeter = 0;
     bitmapInfo->bmiHeader.biYPelsPerMeter = 0;
-    bitmapInfo->bmiHeader.biClrUsed = 0;
-    bitmapInfo->bmiHeader.biClrImportant = 0;
+    bitmapInfo->bmiHeader.biClrUsed       = 0;
+    bitmapInfo->bmiHeader.biClrImportant  = 0;
 
     const int rowBits = bitmapInfo->bmiHeader.biWidth * bitmapInfo->bmiHeader.biBitCount;
     const int lineBytes = ((rowBits + 31) / 32) * 4; // pad to 32-bit alignment
     bitmapInfo->bmiHeader.biSizeImage = lineBytes * bitmapInfo->bmiHeader.biHeight;
 
-    // allocate space for the raw DIB data
-    void * dibBuffer = malloc(bitmapInfo->bmiHeader.biSizeImage);
-    if (dibBuffer == NULL)
+    // If the bitmap is too large, then the call to GetDIBits() below will fail.
+    // To account for this, we repeatedly call it for a smaller region until we
+    // have extracted the entire bitmap.
+    const size_t TARGET_BUFFER_SIZE = 1024 * 1024;
+    size_t dibBufferSize;
+    size_t areaBitmapHeight;
+    HBITMAP bitmapToSave;
+    if (8 < bitmapBitDepth && TARGET_BUFFER_SIZE < bitmapInfo->bmiHeader.biSizeImage)
+    {
+        // Get enough lines so that we reach our target buffer size.
+        // Always round up, so that we won't ever end up getting zero
+        // bytes in each iteration.
+        areaBitmapHeight = (TARGET_BUFFER_SIZE + lineBytes - 1) / lineBytes;
+        dibBufferSize    = lineBytes * areaBitmapHeight;
+
+        // GetDiBits() fails if we try to get the bitmap data in a piecemiel
+        // fashion, so we must BLT the parts we want to a separate bitmap
+        // and then call GetDiBits() on that.
+        bitmapToSave = CreateCompatibleBitmap(
+            dc,
+            bitmapWidth,
+            areaBitmapHeight);
+
+    }
+    else
+    {
+        // Put the entire bitmap into a single buffer.
+        areaBitmapHeight = bitmapInfo->bmiHeader.biHeight;
+        dibBufferSize    = bitmapInfo->bmiHeader.biSizeImage;
+
+        if (IsActiveAreaOneToOneWithScreen())
+        {
+            // As an optimization, we can extract the bitmap data directly from
+            // the memory bitmap without any BLTs.
+            bitmapToSave = MemoryBitMap;
+        }
+        else
+        {
+            // The active area has a different size than the screen,
+            // so we must BLT the area we want to a bitmap of the desired
+            // size that matches the memory bitmap's format.
+            bitmapToSave = CreateCompatibleBitmap(
+                dc,
+                bitmapWidth,
+                areaBitmapHeight);
+        }
+    }
+    if (bitmapToSave == NULL)
     {
         status = OUT_OF_MEM;
     }
     else
     {
-        // if palette yank it in 
-        HPALETTE oldPalette2;
-        if (EnablePalette)
+        // Allocate space for the raw DIB data
+        void * dibBuffer = malloc(dibBufferSize);
+        if (dibBuffer == NULL)
         {
-            oldPalette2 = SelectPalette(dc, ThePalette, FALSE);
-            RealizePalette(dc);
+            status = OUT_OF_MEM;
         }
-
-        HBITMAP bitmapToSave;
-        if (!IsActiveAreaOneToOneWithScreen())
+        else
         {
-            // The active area has a different size than the screen,
-            // so we must BLIT the area we want to a bitmap of the desired
-            // size that matches the memory bitmap's format.
-            bitmapToSave = CreateCompatibleBitmap(
-                dc,
-                bitmapInfo->bmiHeader.biWidth,
-                bitmapInfo->bmiHeader.biHeight);
-            if (bitmapToSave == NULL)
+            // if palette yank it in 
+            HPALETTE oldPalette2;
+            if (EnablePalette)
             {
-                status = OUT_OF_MEM;
+                oldPalette2 = SelectPalette(dc, ThePalette, FALSE);
+                RealizePalette(dc);
+            }
+
+
+            // build file header
+            BITMAPFILEHEADER bitmapFileHeader;
+            bitmapFileHeader.bfType = 19778;
+            bitmapFileHeader.bfSize = sizeof(bitmapFileHeader) + size + bitmapInfo->bmiHeader.biSizeImage;
+            bitmapFileHeader.bfReserved1 = 0;
+            bitmapFileHeader.bfReserved2 = 0;
+            bitmapFileHeader.bfOffBits = size + sizeof(BITMAPFILEHEADER);
+
+            // Write out the file header.
+            fwrite(&bitmapFileHeader, sizeof bitmapFileHeader, 1, File);
+
+            if (bitmapToSave == MemoryBitMap)
+            {
+                // Convert the device-dependent bitmap to raw DIB in dibBuffer.
+                int rval = GetDIBits(
+                    dc,
+                    bitmapToSave,
+                    0,
+                    bitmapHeight,
+                    dibBuffer,
+                    bitmapInfo,
+                    DIB_RGB_COLORS);
+                if (rval != bitmapHeight)
+                {
+                    status = IMAGE_GENERAL;
+                }
+
+                // Write out the bitmap header (and optional palette)
+                fwrite(bitmapInfo, sizeof(char), size, File);
+
+                // write out raw DIB data to file
+                fwrite(dibBuffer, sizeof(char), dibBufferSize, File);
             }
             else
             {
+                // Write out the bitmap header.  For large bitmaps, we change the
+                // header below, so we want to write it out while it still reflects
+                // the overall bitmap.
+                fwrite(bitmapInfo, sizeof(bitmapInfo->bmiHeader), 1, File);
+
                 // Select the in-memory image of the picture.
                 HBITMAP savedMemoryBitmap = (HBITMAP) SelectObject(dc, MemoryBitMap);
 
@@ -133,20 +215,71 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitmapBitDepth)
                 HDC areaMemoryDC = CreateCompatibleDC(dc);
                 SelectObject(areaMemoryDC, bitmapToSave);
 
-                // Copy the correct portion from memory to the temporary bitmap.
-                BOOL isOk = BitBlt(
-                    areaMemoryDC,
-                    0,
-                    0,
-                    bitmapInfo->bmiHeader.biWidth,
-                    bitmapInfo->bmiHeader.biHeight,
-                    dc,
-                    xoffset + g_PrinterAreaXLow,
-                    yoffset - g_PrinterAreaYHigh,
-                    SRCCOPY);
-                if (!isOk)
+                // Read the bitmap in chunks of areaBitmapHeight scanlines
+                // so that GetDIBits() doesn't fail.
+                for (int linesWritten = 0;
+                     linesWritten < bitmapHeight;
+                     linesWritten += areaBitmapHeight)
                 {
-                    status = IMAGE_GENERAL;
+                    // Figure out how many lines we should read, being
+                    // careful to not read past the end of the bitmap.
+                    int linesToGet;
+                    if (bitmapHeight < linesWritten + areaBitmapHeight)
+                    {
+                        linesToGet = bitmapHeight - linesWritten;
+                    }
+                    else
+                    {
+                        linesToGet = areaBitmapHeight;
+                    }
+
+                    // Copy the correct portion from memory to the temporary bitmap.
+                    // Because the bits in a bitmap are drawn bottom-up, we request
+                    // the bottom chunks first and then move up chunk by chunk.
+                    BOOL isOk = BitBlt(
+                        areaMemoryDC,
+                        0,
+                        0,
+                        bitmapWidth,
+                        linesToGet,
+                        dc,
+                        xoffset + g_PrinterAreaXLow,
+                        yoffset - g_PrinterAreaYLow - linesWritten - linesToGet,
+                        SRCCOPY);
+                    if (!isOk)
+                    {
+                        status = IMAGE_GENERAL;
+                        break;
+                    }
+
+                    bitmapInfo->bmiHeader.biHeight    = linesToGet;
+                    bitmapInfo->bmiHeader.biSizeImage = lineBytes * linesToGet;
+                    
+                    // Convert the device-dependent bitmap to raw DIB in dibBuffer.
+                    int rval = GetDIBits(
+                        areaMemoryDC,
+                        bitmapToSave,
+                        0,
+                        linesToGet,
+                        dibBuffer,
+                        bitmapInfo,
+                        DIB_RGB_COLORS);
+                    if (rval != linesToGet)
+                    {
+                        status = IMAGE_GENERAL;
+                        break;
+                    }
+
+                    // Write out the palette for paletted bitmaps.
+                    // We always write out the entire bitmap in one iteration for paletted
+                    // bitmaps, so there's no risk of writing the palette more than once.
+                    if (bitmapBitDepth <= 8)
+                    {
+                        fwrite(&bitmapInfo->bmiColors, sizeof(char), size - sizeof(bitmapInfo->bmiHeader), File);
+                    }
+
+                    // write out raw DIB data to file
+                    fwrite(dibBuffer, sizeof(char), linesToGet * lineBytes, File);
                 }
 
                 // Release the device context that we created
@@ -155,60 +288,21 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitmapBitDepth)
                 // Restore the original bitmap
                 SelectObject(dc, savedMemoryBitmap);
             }
-        }
-        else
-        {
-            // Save the entire memory bitmap.
-            bitmapToSave = MemoryBitMap;
-        }
 
-        // Convert the device-dependent bitmap to raw DIB in dibBuffer.
-        if (status == SUCCESS) {
-            int rval = GetDIBits(
-                dc,
-                bitmapToSave,
-                0,
-                bitmapInfo->bmiHeader.biHeight,
-                dibBuffer,
-                bitmapInfo,
-                DIB_RGB_COLORS);
-            if (rval != bitmapInfo->bmiHeader.biHeight)
+            if (bitmapToSave != MemoryBitMap && bitmapToSave != NULL)
             {
-                status = IMAGE_GENERAL;
+                // Cleanup the bitmap, if we created it.
+                DeleteObject(bitmapToSave);
             }
+
+            // restore some of the resources
+            if (EnablePalette)
+            {
+                SelectPalette(dc, oldPalette2, FALSE);
+            }
+
+            free(dibBuffer);
         }
-
-        if (bitmapToSave != MemoryBitMap && bitmapToSave != NULL)
-        {
-            // Cleanup the bitmap, if we created it.
-            DeleteObject(bitmapToSave);
-        }
-
-        // restore some of the resources
-        if (EnablePalette)
-        {
-            SelectPalette(dc, oldPalette2, FALSE);
-        }
-
-        if (status == SUCCESS)
-        {
-            // build file header
-            BITMAPFILEHEADER BitmapFileHeader;
-            BitmapFileHeader.bfType = 19778;
-            BitmapFileHeader.bfSize = sizeof(BitmapFileHeader) + size + bitmapInfo->bmiHeader.biSizeImage;
-            BitmapFileHeader.bfReserved1 = 0;
-            BitmapFileHeader.bfReserved2 = 0;
-            BitmapFileHeader.bfOffBits = size + sizeof(BITMAPFILEHEADER);
-
-            // write headers
-            fwrite(&BitmapFileHeader, sizeof(char), sizeof(BitmapFileHeader), File);
-            fwrite(bitmapInfo, sizeof(char), size, File);
-
-            // write out raw DIB data to file
-            fwrite(dibBuffer, sizeof(char), bitmapInfo->bmiHeader.biSizeImage, File);
-        }
-
-        free(dibBuffer);
     }
 
     delete [] bitmapInfoBuffer;
