@@ -225,7 +225,6 @@ TO BITSAVE.TESTHELPER :bitdepth :activearea :pictureinstructions
     ; cleanup
     SETACTIVEAREA :savedActiveArea
     SETPENCOLOR   :savedPenColor
-    ERASEFILE     :filename
 END
 
 TO BITSAVE.1BPP
@@ -442,5 +441,5 @@ TO BITMAPTEST
   BITSAVE.24BPP
   BITSAVE.32BPP
   BITSAVE.WITHACTIVEAREA
-  ;BITSAVE.LARGEBITMAP
+  BITSAVE.LARGEBITMAP
 END
