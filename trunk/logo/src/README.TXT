@@ -23,6 +23,8 @@ II. New features/bugs fixed:
     o Property lists now support list and array property names.
     o Fix bug #426 "Bitmap - Save" now shows an error message if it fails.
     o Fix bug #425; FMSLogo can now save high resolution bitmaps.
+    o Fix bug #422; The wxWidgets version of FMSLogo now handles Ctrl+Right
+      in the commander history the same as the mainline version on Vista.
     o Fix bug #421; The FMSLogo icon now appears in the Alt+Tab task selector
       in high DPI modes on Windows Vista when using the Windows Classic theme.
       This only affects the wxWidgets version of FMSLogo.
