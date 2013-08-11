@@ -252,6 +252,27 @@ void CCommanderInput::OnKeyDown(wxKeyEvent& Event)
     }
 }
 
+void CCommanderInput::OnChar(wxKeyEvent& Event)
+{
+    int keyCode = Event.GetKeyCode();
+    switch (keyCode)
+    {
+    case WXK_RETURN:
+    case WXK_NUMPAD_ENTER:
+        // Do nothing -- we already handled this on OnKeyDown().
+        // According to the wxWidgets documentation, this isn't supposed to
+        // generate a call to OnChar() because we didn't call Event.Skip(),
+        // but it does.  To prevent a carriage return from being written to
+        // the input field, we need to ignore this event.
+        break;
+
+    default:
+        // default processing
+        Event.Skip();
+        break;
+    }
+}
+
 void CCommanderInput::OnFindMatchingParen(wxCommandEvent& WXUNUSED(Event))
 {
     FindMatchingParen();
@@ -279,6 +300,7 @@ void CCommanderInput::OnSetFocus(wxFocusEvent & Event)
 
 BEGIN_EVENT_TABLE(CCommanderInput, CLogoCodeCtrl)
     EVT_KEY_DOWN(CCommanderInput::OnKeyDown)
+    EVT_CHAR(CCommanderInput::OnChar)
     EVT_SET_FOCUS(CCommanderInput::OnSetFocus)
     EVT_KILL_FOCUS(CCommanderInput::OnKillFocus)
     EVT_MENU(ID_FINDMATCHINGPAREN,   CCommanderInput::OnFindMatchingParen)

@@ -14,6 +14,7 @@ public:
 private:
     // event handlers
     void OnKeyDown(wxKeyEvent & Event);
+    void OnChar(wxKeyEvent & Event);
     void OnSetFocus(wxFocusEvent & Event);
     void OnKillFocus(wxFocusEvent & Event);
     void OnFindMatchingParen(wxCommandEvent& Event);
