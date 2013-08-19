@@ -1,0 +1,30 @@
+to aaa
+;
+; Function:
+;
+; This routine will allow you to play a Video (.AVI) file
+; The :arg is the video file you wish to play
+;
+; To run:
+;
+; load "video.lgo
+; Call VIDEO file
+;
+; Example:
+;
+video "c:/windows/help/whatson.avi
+;
+end
+
+to video :a
+print sentence [opened video on channel] mci (sentence [open] :a [type avivideo alias video])
+print sentence [playing the video] :a
+mci [play video wait]
+mci [close video]
+end
+
+to zzz
+ifelse YesNoBox [Welcome] [Choose YES to run example now, Choose NO Study it now.] [aaa] [edall]
+end
+
+Make "startup [zzz]
