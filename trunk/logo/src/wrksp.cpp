@@ -1107,7 +1107,7 @@ char *expand_slash(const NODE *wd)
 }
 
 static
-NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
+void po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
 {
     print_backslashes = true;
 
@@ -1337,7 +1337,6 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
     gcref(proclst);
     gcref(varlst);
     gcref(plistlst);
-    return Unbound;
 }
 
 NODE *lpo(NODE *arg)
