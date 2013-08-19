@@ -1,5 +1,18 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
+Changed in 6.31.0
+o Property lists now support list and array property names.
+o Fix bug #426 "Bitmap - Save" now shows an error message if it fails.
+o Fix bug #425; FMSLogo can now save high resolution bitmaps.
+o Fix bug #422; The wxWidgets version of FMSLogo now handles Ctrl+Right
+  in the commander history the same as the mainline version on Vista.
+o Fix bug #421; The FMSLogo icon now appears in the Alt+Tab task selector
+  in high DPI modes on Windows Vista when using the Windows Classic theme.
+  This only affects the wxWidgets version of FMSLogo.
+o Add syntax coloring, multiline pasting, infinite undo buffer, and paren
+  matching to the commander's input box in the wxWidgets version of FMSLogo.
+o Various updates to the German translation.
+
 Changed in 6.30.0
 o Improve the speed of the evaluation engine by 40%.
 o Add feature #93; REMAINDER and MODULO now accept non-integer numbers.
