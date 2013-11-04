@@ -7,7 +7,8 @@ TO PLISTTEST.SMOKETEST
    ; for both the name and values.
    LOCALMAKE "myarray   {a b c}
 
-   LOCALMAKE "property6 {property [6]}
+   LOCALMAKE "property6    {property [6]}
+   LOCALMAKE "mutablearray {1 2 3}
 
    PPROP "testplist1 "property1     1
    PPROP "testplist1 "property2     "abc
@@ -15,13 +16,17 @@ TO PLISTTEST.SMOKETEST
    PPROP "testplist1 [4]            :myarray
    PPROP "testplist1 [property [5]] []
    PPROP "testplist1 :property6     "||
-   PPROP "testplist1 "||            "empty
+   PPROP "testplist1 "||            "emptystring
+   PPROP "testplist1 []             "emptylist
+   PPROP "testplist1 [a b c]        "abclist
+   PPROP "testplist1 :mutablearray  "mutablearray
 
    ; Get properties that don't exist.
    SIMPLEREPORTTEST [ GPROP "nonexistent "prop1        ] []
    SIMPLEREPORTTEST [ GPROP "testplist1  "nonexistent  ] []
    SIMPLEREPORTTEST [ GPROP "testplist1  [no existent] ] []
    SIMPLEREPORTTEST [ GPROP "testplist1  4             ] []
+   SIMPLEREPORTTEST [ GPROP "testplist1  {1 2 3}       ] []
 
    ; Get properties that do exist
    SIMPLEREPORTTEST [ GPROP "testplist1  "property1        ] 1
@@ -30,7 +35,16 @@ TO PLISTTEST.SMOKETEST
    SIMPLEREPORTTEST [ GPROP "testplist1  [ 4 ]             ] :myarray
    SIMPLEREPORTTEST [ GPROP "testplist1  [property [ 5 ] ] ] []
    SIMPLEREPORTTEST [ GPROP "testplist1  :property6        ] "||
-   SIMPLEREPORTTEST [ GPROP "testplist1  "||               ] "empty
+   SIMPLEREPORTTEST [ GPROP "testplist1  "||               ] "emptystring
+   SIMPLEREPORTTEST [ GPROP "testplist1  []                ] "emptylist
+   SIMPLEREPORTTEST [ GPROP "testplist1  [a b c]           ] "abclist
+   SIMPLEREPORTTEST [ GPROP "testplist1  :mutablearray     ] "mutablearray
+
+   ; Change something in the array that is acting as a key.
+   ; Since arrays are compared by their reference, not by their contents,
+   ; the value should still be locatable.
+   SETITEM 1 :mutablearray "newfirst
+   SIMPLEREPORTTEST [ GPROP "testplist1  :mutablearray     ] "mutablearray
 
    ; overwrite a property
    PPROP "testplist1 "property1  "one
@@ -40,7 +54,7 @@ TO PLISTTEST.SMOKETEST
    SIMPLEREPORTTEST [ PLIST "nonexistent ] []
 
    LOCALMAKE "listcontents PLIST "testplist1
-   SIMPLEREPORTTEST [ COUNT :listcontents ] 14
+   SIMPLEREPORTTEST [ COUNT :listcontents ] 20
 
    ; verify each name-value pair in the list
    REPEAT 7 [
@@ -73,7 +87,19 @@ TO PLISTTEST.SMOKETEST
         MAKE "found 1
      ]
      IF :name = "|| [
-        SIMPLEREPORTTEST [ :value ] "empty
+        SIMPLEREPORTTEST [ :value ] "emptystring
+        MAKE "found 1
+     ]
+     IF :name = [] [
+        SIMPLEREPORTTEST [ :value ] "emptylist
+        MAKE "found 1
+     ]
+     IF :name = [a b c] [
+        SIMPLEREPORTTEST [ :value ] "abclist
+        MAKE "found 1
+     ]
+     IF :name = :mutablearray [
+        SIMPLEREPORTTEST [ :value ] "mutablearray
         MAKE "found 1
      ]
 
@@ -96,7 +122,7 @@ TO PLISTTEST.SMOKETEST
    TRACEINSTRUCTION [ REMPROP "testplist1 "property2 ]
    SIMPLEREPORTTEST [ GPROP "testplist1 "property2 ] []
    SIMPLEREPORTTEST [ GPROP "testplist1 "property3 ] [a b c]
-   SIMPLEREPORTTEST [ COUNT PLIST "testplist1 ] 12
+   SIMPLEREPORTTEST [ COUNT PLIST "testplist1 ] 18
 
    ; Attempt to get/remove a property by its value.
    ; This should fail, but confirms that only the name
@@ -104,13 +130,13 @@ TO PLISTTEST.SMOKETEST
    SIMPLEREPORTTEST [ GPROP   "testplist1 "one ] []
    TRACEINSTRUCTION [ REMPROP "testplist1 "one ]
    SIMPLEREPORTTEST [ GPROP "testplist1 "property1 ] "one
-   SIMPLEREPORTTEST [ COUNT PLIST "testplist1 ] 12
+   SIMPLEREPORTTEST [ COUNT PLIST "testplist1 ] 18
 
    ; Remove the first element from the property list.
    ; (There's special case for this).
    TRACEINSTRUCTION [ REMPROP "testplist1 "property1 ]
    SIMPLEREPORTTEST [ GPROP "testplist1 "property1 ] []
-   SIMPLEREPORTTEST [ COUNT PLIST "testplist1 ] 10
+   SIMPLEREPORTTEST [ COUNT PLIST "testplist1 ] 16
 
    ; Remove the remaining properties from the plist.
    REMPROP "testplist1 "property3
@@ -118,6 +144,9 @@ TO PLISTTEST.SMOKETEST
    REMPROP "testplist1 [property [5]]
    REMPROP "testplist1 :property6
    REMPROP "testplist1 "||
+   REMPROP "testplist1 []
+   REMPROP "testplist1 [a b c]
+   REMPROP "testplist1 :mutablearray
    REMPROP "nonexistent "||
 
    ; Once the final propery is removed the PLIST should be erased.
@@ -135,6 +164,9 @@ TO PLISTTEST.SMOKETEST
    SIMPLEREPORTTEST [ GPROP "testplist1  [property [5]] ] []
    SIMPLEREPORTTEST [ GPROP "testplist1  :property6     ] []
    SIMPLEREPORTTEST [ GPROP "testplist1  "||            ] []
+   SIMPLEREPORTTEST [ GPROP "testplist1  []             ] []
+   SIMPLEREPORTTEST [ GPROP "testplist1  [a b c]        ] []
+   SIMPLEREPORTTEST [ GPROP "testplist1  :mutablearray  ] []
    SIMPLEREPORTTEST [ PLIST "testplist1 ]                 []
 
    ; removing the properties again should have no effect
@@ -145,6 +177,85 @@ TO PLISTTEST.SMOKETEST
    REMPROP "testplist1 [property [5]]
    REMPROP "testplist1 :property6
    REMPROP "testplist1 "||
+   REMPROP "testplist1 []
+   REMPROP "testplist1 [a b c]
+   REMPROP "testplist1 :mutablearray
+END
+
+TO PLISTTEST.RANDOMOBJECT [:maxdepth 5]
+
+   IF :maxdepth = 0 [
+       OUTPUT []
+   ]
+
+   LOCALMAKE "choice RANDOM 100
+   IF :choice < 50 [
+       ; 50% chance of a random word
+       LOCALMAKE "randomword CHAR SUM 1 RANDOM 255
+       REPEAT RANDOM 50 [
+           MAKE "randomword WORD :randomword CHAR SUM 1 RANDOM 255
+       ]
+       OUTPUT :randomword
+   ]
+   IF :choice < 90 [
+       ; 40% chance of random list
+       LOCALMAKE "randomlist []
+       REPEAT RANDOM 5 [
+           ; Add an element at random
+           PUSH "randomlist (PLISTTEST.RANDOMOBJECT :maxdepth - 1)
+       ]
+       OUTPUT :randomlist
+   ]
+   IF :choice < 100 [
+       ; 10% chance of random array
+       LOCALMAKE "origin      DIFFERENCE RANDOM 10 RANDOM 10
+       LOCALMAKE "size        RANDOM 5
+       LOCALMAKE "randomarray (ARRAY :size :origin)
+       REPEAT :size [
+           SETITEM (SUM REPCOUNT -1 :origin) :randomarray (PLISTTEST.RANDOMOBJECT :maxdepth - 1)
+       ]
+       OUTPUT :randomarray
+   ]
+
+END
+
+TO PLISTTEST.RANDOMADDREMOVETEST
+
+   LOCALMAKE "plist "plisttest.keytest
+
+   ; Generate 1000 random propery names
+   LOCALMAKE "randomproperties (ARRAY 1000 0)
+   REPEAT 1000 [
+       SETITEM REPCOUNT-1 :randomproperties PLISTTEST.RANDOMOBJECT
+   ]
+
+   ; Add these keys at random (with random values)
+   REPEAT 500 [
+      PPROP :plist ITEM RANDOM 1000 :randomproperties PLISTTEST.RANDOMOBJECT
+   ]
+
+   ; Add a well-known values (one that isn't set at random
+   LOCALMAKE "arrayproperty {1 2 3}
+   PPROP :plist [hidden]       "listvalue
+   PPROP :plist "hidden        "wordvalue
+   PPROP :plist :arrayproperty "arrayvalue
+
+   ; Randomly add/remove the name/value pairs
+   REPEAT 5000 [
+      IFELSE EQUAL? 0 RANDOM 2 [
+        PPROP :plist ITEM RANDOM 1000 :randomproperties PLISTTEST.RANDOMOBJECT
+      ][
+        REMPROP :plist ITEM RANDOM 1000 :randomproperties
+      ]
+   ]
+
+   ; Confirm that well-known properties can still be found
+   SIMPLEREPORTTEST [ GPROP :plist [hidden]       ] "listvalue
+   SIMPLEREPORTTEST [ GPROP :plist "hidden        ] "wordvalue
+   SIMPLEREPORTTEST [ GPROP :plist :arrayproperty ] "arrayvalue
+
+   ; Cleanup
+   ERASE PLLIST :plist
 END
 
 TO PLISTTEST.CASEIGNORE
@@ -240,6 +351,7 @@ TO PLISTTEST
 
    PLISTTEST.SMOKETEST
    PLISTTEST.CASEIGNORE
+   PLISTTEST.RANDOMADDREMOVETEST
 
    PLISTTEST.BADINPUT
    REMPROPTEST.BADINPUT
