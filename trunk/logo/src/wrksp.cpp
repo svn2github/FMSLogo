@@ -749,7 +749,7 @@ contents_map(
             return;
         }
 
-        // shift up one bit to the corresonding
+        // shift up one bit to the corresponding
         // flag for variables.
         flag_check <<= 1;
         if (bck(flag__object(sym, flag_check))) 
@@ -766,7 +766,7 @@ contents_map(
             return;
         }
 
-        // shift up one bit to the corresonding
+        // shift up one bit to the corresponding
         // flag for property lists.
         flag_check <<= 2;
         if (bck(flag__object(sym, flag_check))) 
@@ -925,7 +925,7 @@ get_contents(
 // that match the given filter: PROC_BURIED, PROC_TRACED,
 // or PROC_STEPPED.  The returned list takes the following
 // form.
-//  [ [matching procs] [matching variables] [maching plists] ]
+//  [ [matching procs] [matching variables] [matching plists] ]
 //
 static
 NODE *get_contents_list(int filter)
