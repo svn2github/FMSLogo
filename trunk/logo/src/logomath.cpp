@@ -1083,6 +1083,16 @@ NODE *lgreaterequalp(NODE *args)
    Many calls to this function are just to see if a node is "True.
    We could write a special-case function for this.
 */
+
+// Compares two word nodes (numbers, string, backslashed strings, etc.)
+// for strict ordering.
+//
+// Always returns "less" (not equal) when given a non-word node.
+//
+// Returns:
+//  < 0, if nd1 < nd2
+//    0, if nd1 = nd2
+//  > 0, if nd1 > nd2
 int compare_node(NODE *n1, NODE *n2, bool ignorecase)
 {
     int icmp;
