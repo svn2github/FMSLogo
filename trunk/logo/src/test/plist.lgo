@@ -254,6 +254,14 @@ TO PLISTTEST.RANDOMADDREMOVETEST
    SIMPLEREPORTTEST [ GPROP :plist "hidden        ] "wordvalue
    SIMPLEREPORTTEST [ GPROP :plist :arrayproperty ] "arrayvalue
 
+   ; Remove all of the random properties
+   REPEAT COUNT :randomproperties [
+      REMPROP :plist ITEM (SUM FIRST :randomproperties REPCOUNT -1) :randomproperties
+   ]
+
+   ; Only the well-known properties should remain
+   SIMPLEREPORTTEST [ COUNT PLIST :plist ] 6
+
    ; Cleanup
    ERASE PLLIST :plist
 END
