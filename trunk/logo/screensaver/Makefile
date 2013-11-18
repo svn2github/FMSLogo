@@ -21,6 +21,7 @@ OBJECTS=\
     appendablelist.o    \
     argumentutils.o     \
     assembly.o          \
+    avltree.o           \
     coms.o              \
     cursor.o            \
     devwind.o           \

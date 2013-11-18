@@ -42,9 +42,12 @@
 #include "print.h"
 #include "files.h"
 #include "appendablelist.h"
+#include "avltree.h"
 #include "debugheap.h"
 
 #include "localizedstrings.h"
+
+#define TREE_BASED_PROPERTY_LIST 0
 
 #if WX_PURE
 // wxTODO: The original, non-internationalized code is used when not on Windows.
@@ -948,6 +951,145 @@ NODE *luppercase(NODE *args)
 // Property list stuff 
 // *****************************************************
 
+// A well-ordered comparison function for arbitrary nodes
+//
+// Return Value:
+// <0, if NodeA < NodeB
+// 0,  if NodeA == NodeB
+// >0, if NodeA > NodeB
+int CompareProperyListKeys(NODE * NodeA, NODE * NodeB)
+{
+    const int A_EQUALS_B       = 0;
+    const int A_LESS_THAN_B    = -1;
+    const int A_GREATER_THAN_B = 1;
+
+    if (NodeA == NIL)
+    {
+        if (NodeB == NIL)
+        {
+            // Both keys are NIL.
+            return A_EQUALS_B;
+        }
+        else
+        {
+            // NIL is smaller than everything
+            return A_LESS_THAN_B;
+        }
+    }
+    else
+    {
+        if (NodeB == NIL)
+        {
+            // NIL is smaller than everything
+            return A_GREATER_THAN_B;
+        }
+        else
+        {
+            if (is_word(NodeA))
+            {
+                if (is_word(NodeB))
+                {
+                    // compare two words
+                    bool ignoreCase = isCaseIgnored();
+                    return compare_node(NodeA, NodeB, ignoreCase);
+                }
+                else
+                {
+                    // words are the next smaller entites
+                    return A_LESS_THAN_B;
+                }
+            }
+            else
+            {
+                if (is_word(NodeB))
+                {
+                    // words are the next smaller entites
+                    return A_GREATER_THAN_B;
+                }
+                else
+                {
+                    // NodeA and NodeB are neither NIL nor words.
+                    if (is_list(NodeA))
+                    {
+                        if (is_list(NodeB))
+                        {
+                            // Both nodes are lists.  Compare them member-by-member.
+                            NODE * cursorA = NodeA; 
+                            NODE * cursorB = NodeB; 
+                            while (cursorA != NIL && cursorB != NIL)
+                            {
+                                NODE * elementA = car(cursorA);
+                                NODE * elementB = car(cursorB);
+                                int rval = CompareProperyListKeys(elementA, elementB);
+                                if (rval != A_EQUALS_B)
+                                {
+                                    // we found a way to distinguish the lists.
+                                    return rval;
+                                }
+
+                                // Advance to the next element
+                                cursorA = cdr(cursorA);
+                                cursorB = cdr(cursorB);
+                            }
+
+                            // We made it to the end of at least one of the lists
+                            // without finding any differences.
+                            if (cursorA == NULL && cursorB == NULL)
+                            {
+                                // Both lists are the same size and equal.
+                                return A_EQUALS_B;
+                            }
+                            else if (cursorA == NULL)
+                            {
+                                // List B is longer than List A.
+                                // Return that List A is smaller.
+                                return A_LESS_THAN_B;
+                            }
+                            else
+                            {
+                                // List A is longer than List B.
+                                // Return that List A is larger.
+                                return A_GREATER_THAN_B;
+                            }
+                        }
+                        else
+                        {
+                            // lists are smaller than whatever types remain.
+                            return A_LESS_THAN_B;
+                        }
+                    }
+                    else
+                    {
+                        if (is_list(NodeB))
+                        {
+                            // lists are smaller than whatever types remain.
+                            return A_GREATER_THAN_B;
+                        }
+                        else
+                        {
+                            assert(is_aggregate(NodeA));
+                            assert(is_aggregate(NodeB));
+                            // Arrays are always compared by pointer
+                            if (NodeA == NodeB)
+                            {
+                                return A_EQUALS_B;
+                            }
+                            else if (NodeA < NodeB)
+                            {
+                                return A_LESS_THAN_B;
+                            }
+                            else
+                            {
+                                return A_GREATER_THAN_B;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 // Gets the name/value node pair in a property list.
 static
 NODE *getprop(NODE *plist, NODE *name)
@@ -980,11 +1122,15 @@ NODE *lgprop(NODE *args)
 
         NODE * plist = plist__caseobj(plname);
 
+#if TREE_BASED_PROPERTY_LIST
+        return AvlTreeSearch(plist, CompareProperyListKeys, pname);
+#else
         NODE *val = getprop(plist, pname);
         if (val != NIL)
         {
             return cadr(val);
         }
+#endif
     }
     return NIL;
 }
@@ -1033,6 +1179,20 @@ NODE *lpprop(NODE *args)
         // if it already exists.
         NODE * plist = plist__caseobj(plname);
 
+#if TREE_BASED_PROPERTY_LIST
+        NODE * newRoot = AvlTreeInsert(
+            plist,
+            CompareProperyListKeys,
+            pname,
+            newval);
+        if (newRoot != plist)
+        {
+            // After inserting the node, the tree was rebalanced
+            // and there's a new root.  Use this, instead.
+            setplist__caseobj(plname, newRoot);
+        }
+#else
+
         NODE * val = getprop(plist, pname);
         if (val != NIL)
         {
@@ -1046,6 +1206,7 @@ NODE *lpprop(NODE *args)
             // prepend it to the beginning.
             setplist__caseobj(plname, cons(pname, cons(newval, plist)));
         }
+#endif
     }
     return Unbound;
 }
@@ -1058,6 +1219,20 @@ NODE *lremprop(NODE *args)
     {
         plname = intern(plname);
 
+#if TREE_BASED_PROPERTY_LIST
+        NODE * plist = plist__caseobj(plname);
+
+        NODE * newRoot = AvlTreeDelete(
+            plist,
+            CompareProperyListKeys,
+            pname);
+        if (newRoot != plist)
+        {
+            // After removing the node, the tree was rebalanced
+            // and there's a new root.  Use this, instead.
+            setplist__caseobj(plname, newRoot);
+        }
+#else
         bool caseig = isCaseIgnored();
 
         // Search the property list looking a node named "name"
@@ -1093,6 +1268,7 @@ NODE *lremprop(NODE *args)
             prev  = cdr(plist);
             plist = next;
         }
+#endif
     }
 
     return Unbound;
@@ -1121,7 +1297,11 @@ NODE *lplist(NODE *args)
     {
         plname = intern(plname);
         NODE * plist = plist__caseobj(plname);
+#if TREE_BASED_PROPERTY_LIST
+        val = AvlTreeFlatten(plist);
+#else
         val = copy_list(plist);
+#endif
     }
     return val;
 }

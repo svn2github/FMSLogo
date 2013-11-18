@@ -102,6 +102,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\areawind.obj\
    $(IntermediateDirectory)\argumentutils.obj\
    $(IntermediateDirectory)\assembly.obj\
+   $(IntermediateDirectory)\avltree.obj\
    $(IntermediateDirectory)\cmdwind.obj\
    $(IntermediateDirectory)\colordlg.obj\
    $(IntermediateDirectory)\commanderbutton.obj\
@@ -205,6 +206,7 @@ $(IntermediateDirectory)\activearea.obj+
 $(IntermediateDirectory)\areawind.obj+
 $(IntermediateDirectory)\argumentutils.obj+
 $(IntermediateDirectory)\assembly.obj+
+$(IntermediateDirectory)\avltree.obj+
 $(IntermediateDirectory)\cmdwind.obj+
 $(IntermediateDirectory)\colordlg.obj+
 $(IntermediateDirectory)\commanderbutton.obj+
@@ -314,6 +316,7 @@ $(IntermediateDirectory)\3dsolid.obj                  : version.h
 $(IntermediateDirectory)\appendablelist.obj           : version.h
 $(IntermediateDirectory)\argumentutils.obj            : version.h
 $(IntermediateDirectory)\assembly.obj                 : version.h
+$(IntermediateDirectory)\avltree.obj                  : version.h
 $(IntermediateDirectory)\activearea.obj               : version.h
 $(IntermediateDirectory)\areawind.obj                 : version.h
 $(IntermediateDirectory)\cmdwind.obj                  : version.h

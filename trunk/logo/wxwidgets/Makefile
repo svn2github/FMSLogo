@@ -118,6 +118,7 @@ WX_OBJECTS =                   \
     activearea.o               \
     appendablelist.o           \
     argumentutils.o            \
+    avltree.o                  \
     commander.o                \
     commanderbutton.o          \
     commanderhistory.o         \
