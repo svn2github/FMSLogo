@@ -20,32 +20,37 @@
 
 struct NODE;
 
+typedef int (*NODE_COMPARE_FUNCTION) (
+    NODE * NodeA,
+    NODE * NodeB
+    );
+
 // function declarations
 NODE *
 AvlTreeSearch(
-    NODE * AvlNode,
-    int (*CompareFunction) (NODE *, NODE*),
-    NODE * SearchKey
+    NODE                  * AvlNode,
+    NODE_COMPARE_FUNCTION   CompareFunction,
+    NODE                  * SearchKey
     );
 
 NODE *
 AvlTreeInsert(
-    NODE * AvlNode,
-    int (*CompareFunction) (NODE *, NODE*),
-    NODE * Key,
-    NODE * Value
+    NODE                  * AvlNode,
+    NODE_COMPARE_FUNCTION   CompareFunction,
+    NODE                  * Key,
+    NODE                  * Value
     );
 
 NODE *
 AvlTreeDelete(
-    NODE * AvlNode,
-    int (*CompareFunction) (NODE *, NODE*),
-    NODE * Key
+    NODE                  * AvlNode,
+    NODE_COMPARE_FUNCTION   CompareFunction,
+    NODE                  * Key
     );
 
 NODE *
 AvlTreeFlatten(
-    NODE * AvlNode
+    NODE                  * AvlNode
     );
 
 #endif // __AVLTREE_H_

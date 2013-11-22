@@ -14,6 +14,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
+#include <algorithm>
 
 #include "avltree.h"
 #include "mem.h"
@@ -155,31 +156,96 @@ AvlSetValue(
     setobject(cdr(AvlNode), NewValue);
 }
 
-inline
-bool
-AvlInvariant(
-    const NODE * AvlNode
-    )
+
+#ifdef NDEBUG
+#  define ASSERT_AVLNODE_INVARIANT(NODE, COMPAREFUNC)
+#else
+#  define ASSERT_AVLNODE_INVARIANT(NODE, COMPAREFUNC) CAvlNodeInvariant::AssertInvariant(NODE, COMPAREFUNC)
+
+class CAvlNodeInvariant
 {
-    NODE * rightNode = AvlGetRight(AvlNode);
-    NODE * leftNode  = AvlGetLeft(AvlNode);
-
-    int rightHeight = rightNode ? AvlGetHeight(rightNode) : 0;
-    int leftHeight  = leftNode  ? AvlGetHeight(leftNode)  : 0;
-
-    int balance = leftHeight - rightHeight;
-    if (balance < -1)
+public:
+    CAvlNodeInvariant(
+        const NODE            * AvlNode,
+        NODE_COMPARE_FUNCTION   CompareFunction
+        )
+        : m_AvlNode(AvlNode),
+          m_CompareFunction(CompareFunction)
     {
-        return false;
+        AssertInvariant();
     }
 
-    if (1 < rightHeight)
+    ~CAvlNodeInvariant()
     {
-        return false;
+        AssertInvariant();
     }
 
-    return true;
-}
+    void AssertInvariant() const
+    {
+        AssertInvariant(m_AvlNode, m_CompareFunction);
+    }
+
+    static
+    void
+    AssertInvariant(
+        const NODE            * AvlNode, 
+        NODE_COMPARE_FUNCTION   CompareFunction
+        )
+    {
+        assert(AvlNode != NULL);
+
+        NODE * key       = AvlGetKey(AvlNode);
+        NODE * rightNode = AvlGetRight(AvlNode);
+        NODE * leftNode  = AvlGetLeft(AvlNode);
+
+        int rightHeight;
+        if (rightNode != NULL)
+        {
+            // This node should compare less than the right node.
+            NODE * rightKey = AvlGetKey(rightNode);
+            assert(CompareFunction(key, rightKey) < 0);
+            assert(CompareFunction(rightKey, key) > 0);
+
+            rightHeight = AvlGetHeight(rightNode);
+        }
+        else
+        {
+            rightHeight = 0;
+        }
+
+        int leftHeight;
+        if (leftNode != NULL)
+        {
+            // This node should compare greater than the left node.
+            NODE * leftKey = AvlGetKey(leftNode);
+            assert(CompareFunction(key, leftKey) > 0);
+            assert(CompareFunction(leftKey, key) < 0);
+
+            leftHeight = AvlGetHeight(leftNode);
+        }
+        else
+        {
+            leftHeight = 0;
+        }
+
+        int calculatedHeight = std::max(rightHeight, leftHeight) + 1;
+        int actualHeight = AvlGetHeight(AvlNode);
+        //assert(calculatedHeight == actualHeight);
+
+        // An AVL node may have a balance of 0, 1, or -1.
+        // TODO: Once rebalancing logic is implemented.
+        //int balance = leftHeight - rightHeight;
+        //assert(-1 <= balance);
+        //assert(balance <= 1);
+    }
+
+private:
+    const NODE            * m_AvlNode;
+    NODE_COMPARE_FUNCTION   m_CompareFunction;
+};
+
+#endif
+
 
 // Returns the NODE associated with SearchKey.
 // Sets ParentNode to the location above where the node is located.
@@ -192,11 +258,11 @@ AvlInvariant(
 static
 NODE *
 AvlTreeFindInsertionPoint(
-    NODE *  AvlNode,
-    int (*CompareFunction) (NODE *, NODE*),
-    NODE *  SearchKey,
-    NODE ** ParentNode,
-    bool *  IsLeftSide
+    NODE                  *  AvlNode,
+    NODE_COMPARE_FUNCTION    CompareFunction,
+    NODE                  *  SearchKey,
+    NODE                  ** ParentNode,
+    bool                  *  IsLeftSide
     )
 {
     *ParentNode = NULL;
@@ -204,6 +270,8 @@ AvlTreeFindInsertionPoint(
 
     while (AvlNode != NIL)
     {
+        ASSERT_AVLNODE_INVARIANT(AvlNode, CompareFunction);
+
         NODE * nodeKey = AvlGetKey(AvlNode);
         int compareValue = CompareFunction(SearchKey, nodeKey);
         if (compareValue == 0)
@@ -233,9 +301,9 @@ AvlTreeFindInsertionPoint(
 // Returns the node associated with SearchKey
 NODE *
 AvlTreeSearch(
-    NODE * AvlNode,
-    int (*CompareFunction) (NODE *, NODE*),
-    NODE * SearchKey
+    NODE                  * AvlNode,
+    NODE_COMPARE_FUNCTION   CompareFunction,
+    NODE                  * SearchKey
     )
 {
     bool isLeft;
@@ -263,10 +331,10 @@ AvlTreeSearch(
 // Returns the new root node.
 NODE *
 AvlTreeInsert(
-    NODE * AvlNode,
-    int (*CompareFunction) (NODE *, NODE*),
-    NODE * Key,
-    NODE * Value
+    NODE                  * AvlNode,
+    NODE_COMPARE_FUNCTION   CompareFunction,
+    NODE                  * Key,
+    NODE                  * Value
     )
 {
     // Special case for a inserting into an empty tree.
@@ -281,6 +349,8 @@ AvlTreeInsert(
     NODE * currentNode = AvlNode;
     for (;;)
     {
+        ASSERT_AVLNODE_INVARIANT(currentNode, CompareFunction);
+
         NODE * nodeKey = AvlGetKey(currentNode);
         int compareValue = CompareFunction(Key, nodeKey);
         if (compareValue == 0)
@@ -334,9 +404,9 @@ AvlTreeInsert(
 // returns the new root node
 NODE *
 AvlTreeDelete(
-    NODE * AvlNode,
-    int (*CompareFunction) (NODE *, NODE*),
-    NODE * Key
+    NODE                  * AvlNode,
+    NODE_COMPARE_FUNCTION   CompareFunction,
+    NODE                  * Key
     )
 {
     NODE * parentNode = NULL;
