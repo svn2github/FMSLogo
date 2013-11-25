@@ -36,7 +36,6 @@
 //       [key object]
 //
 
-
 inline
 NODE *
 AvlCreateNode(
@@ -46,13 +45,13 @@ AvlCreateNode(
 {
     NODE * firstNode  = newnode(CONS);
     NODE * secondNode = newnode(CONS);
-    NODE * balance    = make_intnode(0);
+    NODE * height     = make_intnode(1);
 
     setcar(firstNode, NIL);
     setcdr(firstNode, secondNode);
     setobject(firstNode, Key);
 
-    setcar(secondNode, balance);
+    setcar(secondNode, height);
     setcdr(secondNode, NIL);
     setobject(secondNode, Value);
 
@@ -69,13 +68,21 @@ AvlGetLeft(
 }
 
 inline
-void
-AvlSetLeft(
-    NODE * AvlNode,
-    NODE * NewLeftNode
+NODE *
+AvlGetRight(
+    const NODE *  AvlNode
     )
 {
-    setcar(AvlNode, NewLeftNode);
+    return cddr(AvlNode);
+}
+
+inline
+int
+AvlGetHeight(
+    const NODE * Node
+    )
+{
+    return getint(cadr(Node));
 }
 
 inline
@@ -88,56 +95,6 @@ AvlGetKey(
 }
 
 inline
-void
-AvlSetKey(
-    NODE * AvlNode,
-    NODE * NewKey
-    )
-{
-    setobject(AvlNode, NewKey);
-}
-
-inline
-NODE *
-AvlGetRight(
-    const NODE *  AvlNode
-    )
-{
-    return cddr(AvlNode);
-}
-
-inline
-void
-AvlSetRight(
-    NODE * AvlNode,
-    NODE * NewRightNode
-    )
-{
-    setcdr(cdr(AvlNode), NewRightNode);
-}
-
-inline
-int
-AvlGetHeight(
-    const NODE * Node
-    )
-{
-    return getint(cadr(Node));
-}
-
-
-inline
-void
-AvlSetHeight(
-    NODE *  Node,
-    int     NewHeight
-    )
-{
-    NODE * newHeightNode = make_intnode(NewHeight);
-    setcar(cdr(Node), newHeightNode);
-}
-
-inline
 NODE *
 AvlGetValue(
     const NODE *  AvlNode
@@ -145,17 +102,6 @@ AvlGetValue(
 {
     return getobject(cdr(AvlNode));
 }
-
-inline
-void
-AvlSetValue(
-    NODE * AvlNode,
-    NODE * NewValue
-    )
-{
-    setobject(cdr(AvlNode), NewValue);
-}
-
 
 #ifdef NDEBUG
 #  define ASSERT_AVLNODE_INVARIANT(NODE, COMPAREFUNC)
@@ -230,7 +176,7 @@ public:
 
         int calculatedHeight = std::max(rightHeight, leftHeight) + 1;
         int actualHeight = AvlGetHeight(AvlNode);
-        //assert(calculatedHeight == actualHeight);
+        assert(calculatedHeight == actualHeight);
 
         // An AVL node may have a balance of 0, 1, or -1.
         // TODO: Once rebalancing logic is implemented.
@@ -247,56 +193,97 @@ private:
 #endif
 
 
-// Returns the NODE associated with SearchKey.
-// Sets ParentNode to the location above where the node is located.
-// If the return value is NULL, then ParentNode is the parent of where
-// the node should be inserted.
-// 
-// IsLeftSide is set to true if the SearchKey is on the left side of
-// ParentNode.  IsLeftNode is set to false if SearchKey is on the
-// right side.
-static
-NODE *
-AvlTreeFindInsertionPoint(
-    NODE                  *  AvlNode,
-    NODE_COMPARE_FUNCTION    CompareFunction,
-    NODE                  *  SearchKey,
-    NODE                  ** ParentNode,
-    bool                  *  IsLeftSide
+inline
+void
+AvlSetHeight(
+    NODE *  Node,
+    int     NewHeight
     )
 {
-    *ParentNode = NULL;
-    *IsLeftSide = false;
+    NODE * newHeightNode = make_intnode(NewHeight);
+    setcar(cdr(Node), newHeightNode);
+}
 
-    while (AvlNode != NIL)
+inline
+void
+AvlSetLeft(
+    NODE * AvlNode,
+    NODE * NewLeftNode
+    )
+{
+    // Update the height
+    NODE * rightNode = AvlGetRight(AvlNode);
+    int rightHeight = (rightNode == NULL) ? 0 : AvlGetHeight(rightNode);
+    if (NewLeftNode == NULL)
     {
-        ASSERT_AVLNODE_INVARIANT(AvlNode, CompareFunction);
-
-        NODE * nodeKey = AvlGetKey(AvlNode);
-        int compareValue = CompareFunction(SearchKey, nodeKey);
-        if (compareValue == 0)
+        // We're removing the left node, so the height
+        // is based on the right node.
+        AvlSetHeight(AvlNode, rightHeight + 1);
+    }
+    else
+    {
+        // We're replacing the left node.
+        int leftHeight = AvlGetHeight(NewLeftNode);
+        if (rightHeight < leftHeight)
         {
-            // Found it
-            return AvlNode;
-        }
-        else if (compareValue < 0)
-        {
-            // Search down the left side
-            *IsLeftSide = true;
-            *ParentNode = AvlNode;
-            AvlNode = AvlGetLeft(AvlNode);
-        }
-        else
-        {
-            // Search down the right side
-            *IsLeftSide = false;
-            *ParentNode = AvlNode;
-            AvlNode = AvlGetRight(AvlNode);
+            AvlSetHeight(AvlNode, leftHeight + 1);
         }
     }
 
-    return AvlNode;
+    // Set the left node
+    setcar(AvlNode, NewLeftNode);
 }
+
+inline
+void
+AvlSetRight(
+    NODE * AvlNode,
+    NODE * NewRightNode
+    )
+{
+    // Update the height
+    NODE * leftNode = AvlGetLeft(AvlNode);
+    int leftHeight = (leftNode == NULL) ? 0 : AvlGetHeight(leftNode);
+    if (NewRightNode == NULL)
+    {
+        // We're removing the right node, so the height
+        // is based on the left node.
+        AvlSetHeight(AvlNode, leftHeight + 1);
+    }
+    else
+    {
+        // We're replacing the right node.
+        int rightHeight = AvlGetHeight(NewRightNode);
+        if (leftHeight < rightHeight)
+        {
+            AvlSetHeight(AvlNode, rightHeight + 1);
+        }
+    }
+
+    // Set the right node
+    setcdr(cdr(AvlNode), NewRightNode);
+}
+
+inline
+void
+AvlSetKey(
+    NODE * AvlNode,
+    NODE * NewKey
+    )
+{
+    setobject(AvlNode, NewKey);
+}
+
+inline
+void
+AvlSetValue(
+    NODE * AvlNode,
+    NODE * NewValue
+    )
+{
+    setobject(cdr(AvlNode), NewValue);
+}
+
 
 // Returns the node associated with SearchKey
 NODE *
@@ -306,25 +293,106 @@ AvlTreeSearch(
     NODE                  * SearchKey
     )
 {
-    bool isLeft;
-    NODE * parentNode;
-
-    NODE * node = AvlTreeFindInsertionPoint(
-        AvlNode,
-        CompareFunction,
-        SearchKey,
-        &parentNode,
-        &isLeft);
-    if (node == NULL)
+    while (AvlNode != NIL)
     {
-        // No such key exists in the tree.
-        return NULL;
+        ASSERT_AVLNODE_INVARIANT(AvlNode, CompareFunction);
+
+        NODE * nodeKey = AvlGetKey(AvlNode);
+        int compareValue = CompareFunction(SearchKey, nodeKey);
+        if (compareValue == 0)
+        {
+            // Found it
+            return AvlGetValue(AvlNode);
+        }
+        else if (compareValue < 0)
+        {
+            // Search down the left side
+            AvlNode = AvlGetLeft(AvlNode);
+        }
+        else
+        {
+            // Search down the right side
+            AvlNode = AvlGetRight(AvlNode);
+        }
     }
 
-    // Return the value for SearchKey.
-    return AvlGetValue(node);
+    // No such key exists in the tree.
+    return NIL;
 }
 
+static
+void
+AvlTreeInsertRecursive(
+    NODE                  * AvlNode,
+    NODE_COMPARE_FUNCTION   CompareFunction,
+    NODE                  * SearchKey,
+    NODE                  * Value
+    )
+{
+    ASSERT_AVLNODE_INVARIANT(AvlNode, CompareFunction);
+
+    assert(AvlNode != NIL);
+
+    NODE * nodeKey = AvlGetKey(AvlNode);
+    int compareValue = CompareFunction(SearchKey, nodeKey);
+    if (compareValue == 0)
+    {
+        // Found it. Replace the existing Value.
+        AvlSetValue(AvlNode, Value);
+
+        // TODO: we don't need to rebalance the tree.
+        return;
+    } 
+
+    NODE * leftNode  = AvlGetLeft(AvlNode);
+    NODE * rightNode = AvlGetRight(AvlNode);
+    NODE * nextNode;
+
+    if (compareValue < 0) 
+    {
+        // This value belongs down the left side
+        if (leftNode == NIL)
+        {
+            // We found where the value belongs
+            NODE * newNode = AvlCreateNode(SearchKey, Value);
+            AvlSetLeft(AvlNode, newNode);
+            return;
+        }
+
+        // keep looking
+        nextNode = leftNode;
+    }
+    else
+    {
+        // This value belongs down the right side
+        if (rightNode == NIL)
+        {
+            // We found where the value belongs
+            NODE * newNode = AvlCreateNode(SearchKey, Value);
+            AvlSetRight(AvlNode, newNode);
+            return;
+        }
+
+        // keep looking
+        nextNode = rightNode;
+    }
+
+    // Keep looking
+    AvlTreeInsertRecursive(
+        nextNode,
+        CompareFunction,
+        SearchKey,
+        Value);
+
+    // TODO: rebalance the tree
+
+    // Update the height of this branch.
+    // TODO: take advantage of whether we inserted on the left or right.
+    int leftHeight  = leftNode  ? AvlGetHeight(leftNode)  : 0;
+    int rightHeight = rightNode ? AvlGetHeight(rightNode) : 0;
+    int newHeight   = std::max(leftHeight, rightHeight) + 1;
+    AvlSetHeight(AvlNode, newHeight);
+}
 
 // Inserts Value into a tree.
 // If a value already exists for Key, it is replaced.
@@ -346,58 +414,255 @@ AvlTreeInsert(
         return AvlCreateNode(Key, Value);
     }
 
-    NODE * currentNode = AvlNode;
-    for (;;)
+    AvlTreeInsertRecursive(
+        AvlNode,
+        CompareFunction,
+        Key,
+        Value);
+
+    // TODO: rebalance the tree
+    return AvlNode;
+}
+
+static
+void
+AvlTreeInsertNode(
+    NODE                  *  AvlNode,
+    NODE_COMPARE_FUNCTION    CompareFunction,
+    NODE                  *  SearchKey,
+    NODE                  *  NodeToInsert
+    )
+{
+    assert(AvlNode != NIL);
+
+    NODE * leftNode  = AvlGetLeft(AvlNode);
+    NODE * rightNode = AvlGetRight(AvlNode);
+    NODE * nodeKey   = AvlGetKey(AvlNode);
+    int compareValue = CompareFunction(SearchKey, nodeKey);
+
+    // This is only called for nodes that don't exist in the tree.
+    assert(compareValue != 0);
+
+    NODE * nextNode;
+    if (compareValue < 0) 
     {
-        ASSERT_AVLNODE_INVARIANT(currentNode, CompareFunction);
-
-        NODE * nodeKey = AvlGetKey(currentNode);
-        int compareValue = CompareFunction(Key, nodeKey);
-        if (compareValue == 0)
+        // This value belongs down the left side
+        if (leftNode == NIL)
         {
-            // Found it. Replace the existing Value.
-            AvlSetValue(currentNode, Value);
+            // We found where the value belongs
+            AvlSetLeft(AvlNode, NodeToInsert);
+            return;
+        }
 
-            // TODO: rebalance the tree
-            return AvlNode;
-        } 
-        else if (compareValue < 0) 
+        // keep looking
+        nextNode = leftNode;
+    }
+    else
+    {
+        // This value belongs down the right side
+        if (rightNode == NIL)
         {
-            // This value belongs down the left side
-            NODE * leftNode = AvlGetLeft(currentNode);
-            if (leftNode == NIL)
+            // We found where the value belongs
+            AvlSetRight(AvlNode, NodeToInsert);
+            return;
+        }
+
+        // keep looking
+        nextNode = rightNode;
+    }
+
+    AvlTreeInsertNode(
+        nextNode,
+        CompareFunction,
+        SearchKey,
+        NodeToInsert);
+
+    // Update the height of this branch.
+    // TODO: take advantage of whether we inserted on the left or right.
+    int leftHeight  = leftNode  ? AvlGetHeight(leftNode)  : 0;
+    int rightHeight = rightNode ? AvlGetHeight(rightNode) : 0;
+    int newHeight   = std::max(leftHeight, rightHeight) + 1;
+    AvlSetHeight(AvlNode, newHeight);
+
+    ASSERT_AVLNODE_INVARIANT(AvlNode, CompareFunction);
+}
+
+// Deletes a value from the tree.
+// Returns the new root node
+//
+// Parameters:
+// RootNode        - the root node of the tree.
+// CurrentNode     - the node we're currently on, as we descend down the tree.
+// CompareFunction - the tree's comparison function.
+// Key             - the key of the node that we want to delete.
+// ParentNode      - the node just above CurrentNode, or NIL
+//                   if CurrentNode is the root.
+// WentLeft        - true if CurrentNode is on the left side of ParentNode.
+//                 - false if CurrentNode is on the right side of ParentNode.
+static
+NODE *
+AvlTreeDeleteRecursive(
+    NODE                  * RootNode,
+    NODE                  * CurrentNode,
+    NODE_COMPARE_FUNCTION   CompareFunction,
+    NODE                  * Key,
+    NODE                  * ParentNode,
+    bool                    WentLeft
+    )
+{
+    // If we reached the end of the tree, then the node
+    // is not in the key, so we can keep the tree the same.
+    if (CurrentNode == NIL)
+    {
+        return RootNode;
+    }
+
+    ASSERT_AVLNODE_INVARIANT(CurrentNode, CompareFunction);
+
+    NODE * nodeKey = AvlGetKey(CurrentNode);
+    int compareValue = CompareFunction(Key, nodeKey);
+    if (compareValue == 0)
+    {
+        // Found it
+        NODE * leftNode  = AvlGetLeft(CurrentNode);
+        NODE * rightNode = AvlGetRight(CurrentNode);
+
+        if (leftNode == NIL)
+        {
+            // Since there is no left node, the right node
+            // can take the place of the deleted node.
+            if (ParentNode == NIL)
             {
-                // We found where the value belongs
-                NODE * newNode = AvlCreateNode(Key, Value);
-                AvlSetLeft(currentNode, newNode);
-
-                // TODO: rebalance the tree
-                return AvlNode;
+                // We are deleting the root node.
+                return rightNode;
             }
 
-            // keep looking
-            currentNode = leftNode;
+            if (WentLeft)
+            {
+                AvlSetLeft(ParentNode, rightNode);
+            }
+            else
+            {
+                AvlSetRight(ParentNode, rightNode);
+            }
+
+            // TODO: rebalance the tree
+            return RootNode;
+        }
+        else if (rightNode == NIL)
+        {
+            if (ParentNode == NULL)
+            {
+                // We are deleting the root node.
+                return leftNode;
+            }
+
+            // The left node can take the place of this node
+            if (WentLeft)
+            {
+                AvlSetLeft(ParentNode, leftNode);
+            }
+            else
+            {
+                AvlSetRight(ParentNode, leftNode);
+            }
+
+            // TODO: rebalance the tree
+            return RootNode;
         }
         else
         {
-            // This value belongs down the right side
-            NODE * rightNode = AvlGetRight(currentNode);
-            if (rightNode == NIL)
-            {
-                // We found where the value belongs
-                NODE * newNode = AvlCreateNode(Key, Value);
-                AvlSetRight(currentNode, newNode);
+            NODE * rightNodeKey = AvlGetKey(rightNode);
 
-                // TODO: rebalance the tree
-                return AvlNode;
+            // This node has two childern.
+            // Only one of these can be replace this node.
+            // The other node must be moved to the correct
+            // location (as an insert)
+            if (ParentNode == NIL)
+            {
+                // We will replace the top node with whatever is to the left of it.
+
+                // Insert the right node into the new tree.
+                AvlTreeInsertNode(
+                    leftNode,
+                    CompareFunction,
+                    rightNodeKey,
+                    rightNode);
+
+                // Use the left node as the new root.
+                return leftNode;
             }
 
-            // keep looking
-            currentNode = rightNode;
+            // Reference right node because setting the left node
+            // into the parent would otherise orphan it and leave
+            // it with no refrences.
+            ref(rightNode);
+
+            // Replace this node with the left node
+            if (WentLeft)
+            {
+                AvlSetLeft(ParentNode, leftNode);
+            }
+            else
+            {
+                AvlSetRight(ParentNode, leftNode);
+            }
+
+            // Find where the right node goes
+            AvlTreeInsertNode(
+                RootNode,
+                CompareFunction,
+                rightNodeKey,
+                rightNode);
+
+            // Remove the reference we added above.
+            deref(rightNode);
+
+            // TODO: rebalance the tree
+            return RootNode;
         }
     }
-}
 
+
+    NODE * nextNode;
+    bool   wentLeft;
+
+    if (compareValue < 0)
+    {
+        // Search down the left side
+        wentLeft = true;
+        nextNode = AvlGetLeft(CurrentNode);
+    }
+    else
+    {
+        // Search down the right side
+        wentLeft = false;
+        nextNode = AvlGetRight(CurrentNode);
+    }
+
+    NODE * newRoot = AvlTreeDeleteRecursive(
+        RootNode,
+        nextNode,
+        CompareFunction,
+        Key,
+        CurrentNode, // the new parent node
+        wentLeft);   // If we went left to get to nextNode
+
+    // TODO: rebalance the tree
+
+    // Update the height of this branch.
+    // TODO: take advantage of whether we inserted on the left or right.
+    NODE * leftNode  = AvlGetLeft(CurrentNode);
+    NODE * rightNode = AvlGetRight(CurrentNode);
+    int leftHeight  = leftNode  ? AvlGetHeight(leftNode)  : 0;
+    int rightHeight = rightNode ? AvlGetHeight(rightNode) : 0;
+    int newHeight   = std::max(leftHeight, rightHeight) + 1;
+    AvlSetHeight(CurrentNode, newHeight);
+
+    ASSERT_AVLNODE_INVARIANT(CurrentNode, CompareFunction);
+
+    return newRoot;
+}
 
 // Deletes a value from the tree.
 // If a value already exists for Key, it is replaced.
@@ -409,171 +674,19 @@ AvlTreeDelete(
     NODE                  * Key
     )
 {
-    NODE * parentNode = NULL;
-    bool   wentLeft   = false;
-
-    NODE * searchNode = AvlNode;
-    while (searchNode != NULL)
+    // Special case for when the tree is empty.
+    if (AvlNode == NIL)
     {
-        NODE * nodeKey = AvlGetKey(searchNode);
-        int compareValue = CompareFunction(Key, nodeKey);
-        if (compareValue == 0)
-        {
-            // Found it
-            NODE * leftNode  = AvlGetLeft(searchNode);
-            NODE * rightNode = AvlGetRight(searchNode);
-
-            if (leftNode == NIL)
-            {
-                // Since there is no left node, the right node
-                // can take the place of the deleted node.
-
-                if (parentNode == NULL)
-                {
-                    // We are deleting the root node.
-                    return rightNode;
-                }
-
-                if (wentLeft)
-                {
-                    AvlSetLeft(parentNode, rightNode);
-                }
-                else
-                {
-                    AvlSetRight(parentNode, rightNode);
-                }
-
-                // TODO: rebalance the tree
-                return AvlNode;
-            }
-            else if (rightNode == NIL)
-            {
-                if (parentNode == NULL)
-                {
-                    // We are deleting the root node.
-                    return leftNode;
-                }
-
-                // The left node can take the place of this node
-                if (wentLeft)
-                {
-                    AvlSetLeft(parentNode, leftNode);
-                }
-                else
-                {
-                    AvlSetRight(parentNode, leftNode);
-                }
-
-
-                // TODO: rebalance the tree
-                return AvlNode;
-            }
-            else
-            {
-                NODE * rightNodeKey = AvlGetKey(rightNode);
-
-                // This node has two childern.
-                // Only one of these can be replace this node.
-                // The other node must be moved to the correct
-                // location (as an insert)
-                if (parentNode == NULL)
-                {
-                    // We will replace the top node with whatever is to the left of it.
-
-                    // Find where the right node goes in the new tree.
-                    bool setRightNodeOnLeftOfParent;
-                    NODE * rightParentNode;
-                    NODE * node = AvlTreeFindInsertionPoint(
-                        leftNode,
-                        CompareFunction,
-                        rightNodeKey,
-                        &rightParentNode,
-                        &setRightNodeOnLeftOfParent);
-
-                    // Because we orphanded the right side, it's values
-                    // should not be found in the tree.
-                    assert(node == NULL);
-
-                    if (setRightNodeOnLeftOfParent)
-                    {
-                        assert(AvlGetLeft(rightParentNode) == NULL);
-                        AvlSetLeft(rightParentNode, rightNode);
-                    }
-                    else
-                    {
-                        assert(AvlGetRight(rightParentNode) == NULL);
-                        AvlSetRight(rightParentNode, rightNode);
-                    }
-
-                    // Use the left node as the new root.
-                    return leftNode;
-                }
-
-                // Reference right node because setting the left node
-                // into the parent would otherise orphan it and leave
-                // it with no refrences.
-                ref(rightNode);
-
-                // Replace this node with the left node
-                if (wentLeft)
-                {
-                    AvlSetLeft(parentNode, leftNode);
-                }
-                else
-                {
-                    AvlSetRight(parentNode, leftNode);
-                }
-
-                // Find where the right node goes
-                bool setRightNodeOnLeftOfParent;
-                NODE * rightParentNode;
-                NODE * node = AvlTreeFindInsertionPoint(
-                    AvlNode,
-                    CompareFunction,
-                    rightNodeKey,
-                    &rightParentNode,
-                    &setRightNodeOnLeftOfParent);
-
-                // Because we orphanded the right side, it's values
-                // should not be found in the tree.
-                assert(node == NULL);
-
-                if (setRightNodeOnLeftOfParent)
-                {
-                    assert(AvlGetLeft(rightParentNode) == NULL);
-                    AvlSetLeft(rightParentNode, rightNode);
-                }
-                else
-                {
-                    assert(AvlGetRight(rightParentNode) == NULL);
-                    AvlSetRight(rightParentNode, rightNode);
-                }
-
-                // Remove the reference we added above.
-                deref(rightNode);
-
-                // TODO: rebalance the tree
-                return AvlNode;
-            }
-        }
-        else if (compareValue < 0)
-        {
-            // Search down the left side
-            parentNode = searchNode;
-            wentLeft   = true;
-            searchNode = AvlGetLeft(searchNode);
-        }
-        else
-        {
-            // Search down the right side
-            parentNode = searchNode;
-            wentLeft   = false;
-            searchNode = AvlGetRight(searchNode);
-        }
+        return NIL;
     }
 
-    // The node was not in the tree.
-    return AvlNode;
+    return AvlTreeDeleteRecursive(
+        AvlNode, // tree root
+        AvlNode, // current node
+        CompareFunction,
+        Key,
+        NIL,    // parent node
+        false); // no meaning when parent node == NIL
 }
 
 static
