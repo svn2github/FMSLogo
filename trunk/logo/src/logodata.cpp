@@ -1220,18 +1220,12 @@ NODE *lremprop(NODE *args)
         plname = intern(plname);
 
 #if TREE_BASED_PROPERTY_LIST
-        NODE * plist = plist__caseobj(plname);
+        NODE ** plistptr = plistptr__caseobj(plname);
 
-        NODE * newRoot = AvlTreeDelete(
-            plist,
+        AvlTreeDelete(
+            plistptr,
             CompareProperyListKeys,
             pname);
-        if (newRoot != plist)
-        {
-            // After removing the node, the tree was rebalanced
-            // and there's a new root.  Use this, instead.
-            setplist__caseobj(plname, newRoot);
-        }
 #else
         bool caseig = isCaseIgnored();
 

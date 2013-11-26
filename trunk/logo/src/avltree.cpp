@@ -59,21 +59,42 @@ AvlCreateNode(
 }
 
 inline
-NODE *
-AvlGetLeft(
-    const NODE * AvlNode
+NODE **
+AvlGetLeftPtr(
+    NODE * AvlNode
     )
 {
-    return car(AvlNode);
+    assert(AvlNode != NULL);
+    return &AvlNode->nunion.ncons.ncar;
+}
+
+inline
+NODE *
+AvlGetLeft(
+    NODE * AvlNode
+    )
+{
+    assert(AvlNode != NULL);
+    return *AvlGetLeftPtr(AvlNode);
+}
+
+inline
+NODE **
+AvlGetRightPtr(
+    NODE * AvlNode
+    )
+{
+    return &cdr(AvlNode)->nunion.ncons.ncdr;
 }
 
 inline
 NODE *
 AvlGetRight(
-    const NODE *  AvlNode
+    NODE *  AvlNode
     )
 {
-    return cddr(AvlNode);
+    assert(AvlNode != NULL);
+    return *AvlGetRightPtr(AvlNode);
 }
 
 inline
@@ -112,7 +133,7 @@ class CAvlNodeInvariant
 {
 public:
     CAvlNodeInvariant(
-        const NODE            * AvlNode,
+        NODE                  * AvlNode,
         NODE_COMPARE_FUNCTION   CompareFunction
         )
         : m_AvlNode(AvlNode),
@@ -134,7 +155,7 @@ public:
     static
     void
     AssertInvariant(
-        const NODE            * AvlNode, 
+        NODE                  * AvlNode, 
         NODE_COMPARE_FUNCTION   CompareFunction
         )
     {
@@ -186,7 +207,7 @@ public:
     }
 
 private:
-    const NODE            * m_AvlNode;
+    NODE                  * m_AvlNode;
     NODE_COMPARE_FUNCTION   m_CompareFunction;
 };
 
@@ -491,84 +512,58 @@ AvlTreeInsertNode(
 // Returns the new root node
 //
 // Parameters:
-// RootNode        - the root node of the tree.
-// CurrentNode     - the node we're currently on, as we descend down the tree.
+// RootNode        - A pointer to the root node of the tree.
+//                   If the root nodes of the tree changes, this will be
+//                   updated to point to the new root node.
+// CurrentNode     - A pointer to the node we're currently on, as we descend
+//                   down the tree.
 // CompareFunction - the tree's comparison function.
 // Key             - the key of the node that we want to delete.
-// ParentNode      - the node just above CurrentNode, or NIL
-//                   if CurrentNode is the root.
-// WentLeft        - true if CurrentNode is on the left side of ParentNode.
-//                 - false if CurrentNode is on the right side of ParentNode.
 static
-NODE *
+void
 AvlTreeDeleteRecursive(
-    NODE                  * RootNode,
-    NODE                  * CurrentNode,
-    NODE_COMPARE_FUNCTION   CompareFunction,
-    NODE                  * Key,
-    NODE                  * ParentNode,
-    bool                    WentLeft
+    NODE                  ** RootNodePtr,
+    NODE                  ** CurrentNodePtr,
+    NODE_COMPARE_FUNCTION    CompareFunction,
+    NODE                  *  Key
     )
 {
-    // If we reached the end of the tree, then the node
-    // is not in the key, so we can keep the tree the same.
-    if (CurrentNode == NIL)
+    assert(RootNodePtr != NULL);
+    assert(CurrentNodePtr != NULL);
+
+    if (*CurrentNodePtr == NIL)
     {
-        return RootNode;
+        // We reached the bottom of the tree, so there's no
+        // value with the given key.
+        return;
     }
 
-    ASSERT_AVLNODE_INVARIANT(CurrentNode, CompareFunction);
+    NODE * currentNode = *CurrentNodePtr;
+    ASSERT_AVLNODE_INVARIANT(currentNode, CompareFunction);
 
-    NODE * nodeKey = AvlGetKey(CurrentNode);
+    NODE * nodeKey = AvlGetKey(currentNode);
     int compareValue = CompareFunction(Key, nodeKey);
     if (compareValue == 0)
     {
         // Found it
-        NODE * leftNode  = AvlGetLeft(CurrentNode);
-        NODE * rightNode = AvlGetRight(CurrentNode);
+        NODE * leftNode  = AvlGetLeft(currentNode);
+        NODE * rightNode = AvlGetRight(currentNode);
 
         if (leftNode == NIL)
         {
             // Since there is no left node, the right node
             // can take the place of the deleted node.
-            if (ParentNode == NIL)
-            {
-                // We are deleting the root node.
-                return rightNode;
-            }
-
-            if (WentLeft)
-            {
-                AvlSetLeft(ParentNode, rightNode);
-            }
-            else
-            {
-                AvlSetRight(ParentNode, rightNode);
-            }
+            setnode(CurrentNodePtr, rightNode);
 
             // TODO: rebalance the tree
-            return RootNode;
         }
         else if (rightNode == NIL)
         {
-            if (ParentNode == NULL)
-            {
-                // We are deleting the root node.
-                return leftNode;
-            }
-
-            // The left node can take the place of this node
-            if (WentLeft)
-            {
-                AvlSetLeft(ParentNode, leftNode);
-            }
-            else
-            {
-                AvlSetRight(ParentNode, leftNode);
-            }
+            // Since there is no right node, the left node
+            // can take the place of the deleted node.
+            setnode(CurrentNodePtr, leftNode);
 
             // TODO: rebalance the tree
-            return RootNode;
         }
         else
         {
@@ -578,8 +573,9 @@ AvlTreeDeleteRecursive(
             // Only one of these can be replace this node.
             // The other node must be moved to the correct
             // location (as an insert)
-            if (ParentNode == NIL)
+            if (RootNodePtr == CurrentNodePtr)
             {
+                // TODO: is this really a special case?
                 // We will replace the top node with whatever is to the left of it.
 
                 // Insert the right node into the new tree.
@@ -590,27 +586,21 @@ AvlTreeDeleteRecursive(
                     rightNode);
 
                 // Use the left node as the new root.
-                return leftNode;
+                setnode(RootNodePtr, leftNode);
+                return;
             }
 
             // Reference right node because setting the left node
-            // into the parent would otherise orphan it and leave
+            // into the parent would otherwise orphan it and leave
             // it with no refrences.
             ref(rightNode);
 
             // Replace this node with the left node
-            if (WentLeft)
-            {
-                AvlSetLeft(ParentNode, leftNode);
-            }
-            else
-            {
-                AvlSetRight(ParentNode, leftNode);
-            }
+            setnode(CurrentNodePtr, leftNode);
 
             // Find where the right node goes
             AvlTreeInsertNode(
-                RootNode,
+                *RootNodePtr,
                 CompareFunction,
                 rightNodeKey,
                 rightNode);
@@ -619,74 +609,53 @@ AvlTreeDeleteRecursive(
             deref(rightNode);
 
             // TODO: rebalance the tree
-            return RootNode;
         }
+
+        return;
     }
 
-
-    NODE * nextNode;
-    bool   wentLeft;
-
+    NODE ** nextNodePtr;
     if (compareValue < 0)
     {
         // Search down the left side
-        wentLeft = true;
-        nextNode = AvlGetLeft(CurrentNode);
+        nextNodePtr = AvlGetLeftPtr(currentNode);
     }
     else
     {
         // Search down the right side
-        wentLeft = false;
-        nextNode = AvlGetRight(CurrentNode);
+        nextNodePtr = AvlGetRightPtr(currentNode);
     }
 
-    NODE * newRoot = AvlTreeDeleteRecursive(
-        RootNode,
-        nextNode,
+    AvlTreeDeleteRecursive(
+        RootNodePtr,
+        nextNodePtr,
         CompareFunction,
-        Key,
-        CurrentNode, // the new parent node
-        wentLeft);   // If we went left to get to nextNode
+        Key);
 
     // TODO: rebalance the tree
 
     // Update the height of this branch.
     // TODO: take advantage of whether we inserted on the left or right.
-    NODE * leftNode  = AvlGetLeft(CurrentNode);
-    NODE * rightNode = AvlGetRight(CurrentNode);
+    NODE * leftNode  = AvlGetLeft(currentNode);
+    NODE * rightNode = AvlGetRight(currentNode);
     int leftHeight  = leftNode  ? AvlGetHeight(leftNode)  : 0;
     int rightHeight = rightNode ? AvlGetHeight(rightNode) : 0;
     int newHeight   = std::max(leftHeight, rightHeight) + 1;
-    AvlSetHeight(CurrentNode, newHeight);
+    AvlSetHeight(currentNode, newHeight);
 
-    ASSERT_AVLNODE_INVARIANT(CurrentNode, CompareFunction);
-
-    return newRoot;
+    ASSERT_AVLNODE_INVARIANT(currentNode, CompareFunction);
 }
 
 // Deletes a value from the tree.
 // If a value already exists for Key, it is replaced.
-// returns the new root node
-NODE *
+void
 AvlTreeDelete(
-    NODE                  * AvlNode,
-    NODE_COMPARE_FUNCTION   CompareFunction,
-    NODE                  * Key
+    NODE                  ** AvlNode,
+    NODE_COMPARE_FUNCTION    CompareFunction,
+    NODE                  *  Key
     )
 {
-    // Special case for when the tree is empty.
-    if (AvlNode == NIL)
-    {
-        return NIL;
-    }
-
-    return AvlTreeDeleteRecursive(
-        AvlNode, // tree root
-        AvlNode, // current node
-        CompareFunction,
-        Key,
-        NIL,    // parent node
-        false); // no meaning when parent node == NIL
+    AvlTreeDeleteRecursive(AvlNode, AvlNode, CompareFunction, Key);
 }
 
 static

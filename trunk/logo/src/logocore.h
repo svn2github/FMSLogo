@@ -620,21 +620,23 @@ enum CTRLTYPE
 #define setprocnode__object(o,v) setcar(cdr(o), v)
 #define valnode__object(o)      cadr(cdr(o))
 #define setvalnode__object(o,v) setcar(cddr(o), v)
-#define plist__object(o)        cadr(cddr(o))
-#define setplist__object(o,v)   setcar(cdr(cddr(o)), v)
+#define plistptr__object(o)     (&(cdr(cddr(o))->nunion.ncons.ncar))
+#define plist__object(o)        (*plistptr__object(o))
+#define setplist__object(o,v)   setnode(plistptr__object(o), v)
 #define obflags__object(o)      car(cddr(cddr(o)))
 #define caselistptr__object(o)  cddr(cddr(o))
 #define caselist__object(o)     cdr(cddr(cddr(o)))
 
-#define strnode__caseobj(co)    car(co)
-#define object__caseobj(c)      cdr(c)
-#define procnode__caseobj(c)    procnode__object(object__caseobj(c))
+#define strnode__caseobj(co)      car(co)
+#define object__caseobj(c)        cdr(c)
+#define procnode__caseobj(c)      procnode__object(object__caseobj(c))
 #define setprocnode__caseobj(c,v) setprocnode__object(object__caseobj(c),v)
-#define valnode__caseobj(c)     valnode__object(object__caseobj(c))
-#define setvalnode__caseobj(c,v) setvalnode__object(object__caseobj(c),v)
-#define plist__caseobj(c)       plist__object(object__caseobj(c))
-#define setplist__caseobj(c,v)  setplist__object(object__caseobj(c),v)
-#define obflags__caseobj(c)     obflags__object(object__caseobj(c))
+#define valnode__caseobj(c)       valnode__object(object__caseobj(c))
+#define setvalnode__caseobj(c,v)  setvalnode__object(object__caseobj(c),v)
+#define plistptr__caseobj(c)      plistptr__object(object__caseobj(c))
+#define plist__caseobj(c)         (*plistptr__caseobj(c))
+#define setplist__caseobj(c,v)    setnode(plistptr__caseobj(c), v)
+#define obflags__caseobj(c)       obflags__object(object__caseobj(c))
 
 #define text__procnode(p)       car(p)
 #define formals__procnode(p)    caar(p)
@@ -785,38 +787,53 @@ nodetype(const NODE *nd)
 
 inline
 void
-setobject(NODE *nd, NODE *newobj)
+setnode(NODE ** oldptr, NODE *newnode)
 {
-    NODE *oldobj = getobject(nd);
-   
-    ref(newobj);
-    deref(oldobj);
+    assert(oldptr != NULL);
 
-    nd->nunion.ncons.nobj = newobj;
+    ref(newnode);
+    deref(*oldptr);
+
+    *oldptr = newnode;
 }
 
 inline
 void
-setcar(NODE *nd, NODE *newcar)
+setobject(NODE *node, NODE *newobj)
 {
-    NODE *oldcar = car(nd);
+    assert(node != NULL);
+    assert(!is_freed(node));
+    assert(node->type != STRING);
+    assert(node->type != INTEGER);
+    assert(node->type != FLOATINGPOINT);
 
-    ref(newcar);
-    deref(oldcar);
-
-    nd->nunion.ncons.ncar = newcar;
+    setnode(&node->nunion.ncons.nobj, newobj);
 }
 
 inline
 void
-setcdr(NODE *nd, NODE *newcdr)
+setcar(NODE *node, NODE *newcar)
 {
-    NODE *oldcdr = cdr(nd);
+    assert(node != NULL);
+    assert(!is_freed(node));
+    assert(node->type != STRING);
+    assert(node->type != INTEGER);
+    assert(node->type != FLOATINGPOINT);
 
-    ref(newcdr);
-    deref(oldcdr);
+    setnode(&node->nunion.ncons.ncar, newcar);
+}
 
-    nd->nunion.ncons.ncdr = newcdr;
+inline
+void
+setcdr(NODE *node, NODE *newcdr)
+{
+    assert(node != NULL);
+    assert(!is_freed(node));
+    assert(node->type != STRING);
+    assert(node->type != INTEGER);
+    assert(node->type != FLOATINGPOINT);
+
+    setnode(&node->nunion.ncons.ncdr, newcdr);
 }
 
 inline

@@ -41,11 +41,11 @@ AvlTreeInsert(
     NODE                  * Value
     );
 
-NODE *
+void
 AvlTreeDelete(
-    NODE                  * AvlNode,
-    NODE_COMPARE_FUNCTION   CompareFunction,
-    NODE                  * Key
+    NODE                  ** AvlNode,
+    NODE_COMPARE_FUNCTION    CompareFunction,
+    NODE                  *  Key
     );
 
 NODE *
