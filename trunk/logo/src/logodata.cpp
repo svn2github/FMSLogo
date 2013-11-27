@@ -1174,24 +1174,15 @@ NODE *lpprop(NODE *args)
             }
             new_line(g_Writer.GetStream());
         }
-
+#if TREE_BASED_PROPERTY_LIST
+        // Get the location of this property's value,
+        // if it already exists.
+        NODE ** plistptr = plistptr__caseobj(plname);
+        AvlTreeInsert(plistptr, CompareProperyListKeys, pname, newval);
+#else
         // Get the location of this property's value,
         // if it already exists.
         NODE * plist = plist__caseobj(plname);
-
-#if TREE_BASED_PROPERTY_LIST
-        NODE * newRoot = AvlTreeInsert(
-            plist,
-            CompareProperyListKeys,
-            pname,
-            newval);
-        if (newRoot != plist)
-        {
-            // After inserting the node, the tree was rebalanced
-            // and there's a new root.  Use this, instead.
-            setplist__caseobj(plname, newRoot);
-        }
-#else
 
         NODE * val = getprop(plist, pname);
         if (val != NIL)
@@ -1221,11 +1212,7 @@ NODE *lremprop(NODE *args)
 
 #if TREE_BASED_PROPERTY_LIST
         NODE ** plistptr = plistptr__caseobj(plname);
-
-        AvlTreeDelete(
-            plistptr,
-            CompareProperyListKeys,
-            pname);
+        AvlTreeDelete(plistptr, CompareProperyListKeys, pname);
 #else
         bool caseig = isCaseIgnored();
 

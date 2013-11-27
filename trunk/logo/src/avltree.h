@@ -33,17 +33,17 @@ AvlTreeSearch(
     NODE                  * SearchKey
     );
 
-NODE *
+void
 AvlTreeInsert(
-    NODE                  * AvlNode,
-    NODE_COMPARE_FUNCTION   CompareFunction,
-    NODE                  * Key,
-    NODE                  * Value
+    NODE                  ** RootNodePtr,
+    NODE_COMPARE_FUNCTION    CompareFunction,
+    NODE                  *  Key,
+    NODE                  *  Value
     );
 
 void
 AvlTreeDelete(
-    NODE                  ** AvlNode,
+    NODE                  ** RootNodePtr,
     NODE_COMPARE_FUNCTION    CompareFunction,
     NODE                  *  Key
     );

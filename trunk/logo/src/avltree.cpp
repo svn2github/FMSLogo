@@ -341,108 +341,76 @@ AvlTreeSearch(
     return NIL;
 }
 
-static
+// Inserts Value into a tree.
+// If a value already exists for Key, it is replaced.
+//
+// Parameters:
+// RootNodePtr     - A pointer to the root node.
+//                   This may be updated to point to a different node
+//                   depending on if the tree needs to be rebalanced.
+// CompareFunction - A function that defines a strict ordering for keys.
+// Key             - The key of the node to insert.
+// Value           - The value of the node to insert.
+//
 void
-AvlTreeInsertRecursive(
-    NODE                  * AvlNode,
-    NODE_COMPARE_FUNCTION   CompareFunction,
-    NODE                  * SearchKey,
-    NODE                  * Value
+AvlTreeInsert(
+    NODE                  ** RootNodePtr,
+    NODE_COMPARE_FUNCTION    CompareFunction,
+    NODE                  *  Key,
+    NODE                  *  Value
     )
 {
-    ASSERT_AVLNODE_INVARIANT(AvlNode, CompareFunction);
+    assert(RootNodePtr != NULL);
 
-    assert(AvlNode != NIL);
+    NODE * currentNode = *RootNodePtr;
 
-    NODE * nodeKey = AvlGetKey(AvlNode);
-    int compareValue = CompareFunction(SearchKey, nodeKey);
+    // We've reached the bottom of the tree without finding
+    // a matching node.  Insert a new node here.
+    if (currentNode == NIL)
+    {
+        NODE * newNode = AvlCreateNode(Key, Value);
+        setnode(RootNodePtr, newNode);
+        // TODO: rebalance the tree.
+        return;
+    }
+
+
+    ASSERT_AVLNODE_INVARIANT(currentNode, CompareFunction);
+
+    NODE * nodeKey = AvlGetKey(currentNode);
+    int compareValue = CompareFunction(Key, nodeKey);
     if (compareValue == 0)
     {
         // Found it. Replace the existing Value.
-        AvlSetValue(AvlNode, Value);
-
-        // TODO: we don't need to rebalance the tree.
+        AvlSetValue(currentNode, Value);
         return;
     } 
 
-    NODE * leftNode  = AvlGetLeft(AvlNode);
-    NODE * rightNode = AvlGetRight(AvlNode);
-    NODE * nextNode;
-
-    if (compareValue < 0) 
+    NODE ** nextNodePtr;
+    if (compareValue < 0)
     {
-        // This value belongs down the left side
-        if (leftNode == NIL)
-        {
-            // We found where the value belongs
-            NODE * newNode = AvlCreateNode(SearchKey, Value);
-            AvlSetLeft(AvlNode, newNode);
-            return;
-        }
-
-        // keep looking
-        nextNode = leftNode;
+        // Search down the left side
+        nextNodePtr = AvlGetLeftPtr(currentNode);
     }
     else
     {
-        // This value belongs down the right side
-        if (rightNode == NIL)
-        {
-            // We found where the value belongs
-            NODE * newNode = AvlCreateNode(SearchKey, Value);
-            AvlSetRight(AvlNode, newNode);
-            return;
-        }
-
-        // keep looking
-        nextNode = rightNode;
+        // Search down the right side
+        nextNodePtr = AvlGetRightPtr(currentNode);
     }
 
     // Keep looking
-    AvlTreeInsertRecursive(
-        nextNode,
-        CompareFunction,
-        SearchKey,
-        Value);
-
-    // TODO: rebalance the tree
+    AvlTreeInsert(nextNodePtr, CompareFunction, Key, Value);
 
     // Update the height of this branch.
     // TODO: take advantage of whether we inserted on the left or right.
+    NODE * leftNode  = AvlGetLeft(currentNode);
+    NODE * rightNode = AvlGetRight(currentNode);
     int leftHeight  = leftNode  ? AvlGetHeight(leftNode)  : 0;
     int rightHeight = rightNode ? AvlGetHeight(rightNode) : 0;
     int newHeight   = std::max(leftHeight, rightHeight) + 1;
-    AvlSetHeight(AvlNode, newHeight);
-}
+    AvlSetHeight(currentNode, newHeight);
 
-// Inserts Value into a tree.
-// If a value already exists for Key, it is replaced.
-// Returns the new root node.
-NODE *
-AvlTreeInsert(
-    NODE                  * AvlNode,
-    NODE_COMPARE_FUNCTION   CompareFunction,
-    NODE                  * Key,
-    NODE                  * Value
-    )
-{
-    // Special case for a inserting into an empty tree.
-    // This shouldn't be necessary, but the way we set
-    // left and right nodes (without double pointer)
-    // make it necessary.
-    if (AvlNode == NULL)
-    {
-        return AvlCreateNode(Key, Value);
-    }
-
-    AvlTreeInsertRecursive(
-        AvlNode,
-        CompareFunction,
-        Key,
-        Value);
-
-    // TODO: rebalance the tree
-    return AvlNode;
+    ASSERT_AVLNODE_INVARIANT(currentNode, CompareFunction);
 }
 
 static
@@ -634,12 +602,12 @@ AvlTreeDeleteRecursive(
 // If a value already exists for Key, it is replaced.
 void
 AvlTreeDelete(
-    NODE                  ** AvlNode,
+    NODE                  ** RootNodePtr,
     NODE_COMPARE_FUNCTION    CompareFunction,
     NODE                  *  Key
     )
 {
-    AvlTreeDeleteRecursive(AvlNode, AvlNode, CompareFunction, Key);
+    AvlTreeDeleteRecursive(RootNodePtr, RootNodePtr, CompareFunction, Key);
 }
 
 static
