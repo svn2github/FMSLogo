@@ -573,22 +573,6 @@ AvlTreeDeleteRecursive(
             // Only one of these can be replace this node.
             // The other node must be moved to the correct
             // location (as an insert)
-            if (RootNodePtr == CurrentNodePtr)
-            {
-                // TODO: is this really a special case?
-                // We will replace the top node with whatever is to the left of it.
-
-                // Insert the right node into the new tree.
-                AvlTreeInsertNode(
-                    leftNode,
-                    CompareFunction,
-                    rightNodeKey,
-                    rightNode);
-
-                // Use the left node as the new root.
-                setnode(RootNodePtr, leftNode);
-                return;
-            }
 
             // Reference right node because setting the left node
             // into the parent would otherwise orphan it and leave
@@ -598,7 +582,7 @@ AvlTreeDeleteRecursive(
             // Replace this node with the left node
             setnode(CurrentNodePtr, leftNode);
 
-            // Find where the right node goes
+            // Find where the right node goes in the new tree
             AvlTreeInsertNode(
                 *RootNodePtr,
                 CompareFunction,
