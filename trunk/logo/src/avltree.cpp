@@ -230,8 +230,14 @@ AvlSetHeight(
     int     NewHeight
     )
 {
-    NODE * newHeightNode = make_intnode(NewHeight);
-    setcar(cdr(Node), newHeightNode);
+    int currentHeight = AvlGetHeight(Node);
+    if (currentHeight != NewHeight)
+    {
+        // We are changing the height, so we need to create
+        // a new node.
+        NODE * newHeightNode = make_intnode(NewHeight);
+        setcar(cdr(Node), newHeightNode);
+    }
 }
 
 inline
@@ -241,25 +247,6 @@ AvlSetLeft(
     NODE * NewLeftNode
     )
 {
-    // Update the height
-    NODE * rightNode = AvlGetRight(AvlNode);
-    int rightHeight = (rightNode == NULL) ? 0 : AvlGetHeight(rightNode);
-    if (NewLeftNode == NULL)
-    {
-        // We're removing the left node, so the height
-        // is based on the right node.
-        AvlSetHeight(AvlNode, rightHeight + 1);
-    }
-    else
-    {
-        // We're replacing the left node.
-        int leftHeight = AvlGetHeight(NewLeftNode);
-        if (rightHeight < leftHeight)
-        {
-            AvlSetHeight(AvlNode, leftHeight + 1);
-        }
-    }
-
     // Set the left node
     setcar(AvlNode, NewLeftNode);
 }
@@ -271,25 +258,6 @@ AvlSetRight(
     NODE * NewRightNode
     )
 {
-    // Update the height
-    NODE * leftNode = AvlGetLeft(AvlNode);
-    int leftHeight = (leftNode == NULL) ? 0 : AvlGetHeight(leftNode);
-    if (NewRightNode == NULL)
-    {
-        // We're removing the right node, so the height
-        // is based on the left node.
-        AvlSetHeight(AvlNode, leftHeight + 1);
-    }
-    else
-    {
-        // We're replacing the right node.
-        int rightHeight = AvlGetHeight(NewRightNode);
-        if (leftHeight < rightHeight)
-        {
-            AvlSetHeight(AvlNode, rightHeight + 1);
-        }
-    }
-
     // Set the right node
     setcdr(cdr(AvlNode), NewRightNode);
 }
@@ -367,7 +335,7 @@ HackFixHeight(
 //           | 1   3             3   5  |
 //           |+-------------------------+
 //
-// This helps balance a tree, while maintaining the order requirement
+// This helps balance a tree, while maintaining the order property
 // of a search tree.
 static
 void
@@ -382,6 +350,12 @@ AvlRotateRight(
     NODE *  oldLeftRight  = AvlGetRight(oldLeft);  // node #3
     NODE ** oldTopLeftPtr = AvlGetLeftPtr(oldTop); // where node #3 belongs
 
+    const int height3    = AvlSafeGetHeight(AvlGetRight(oldLeft));
+    const int height5    = AvlSafeGetHeight(AvlGetRight(oldTop));
+    const int newHeight4 = std::max(height3, height5) + 1;
+    const int height1    = AvlSafeGetHeight(AvlGetLeft(oldLeft));
+    const int newHeight2 = std::max(height1, newHeight4) + 1;
+
     ref(oldTop); // keep the node alive for this rotation
 
     setnode(AvlNodePtr,    oldLeft);      // move #2 to the top
@@ -390,9 +364,8 @@ AvlRotateRight(
 
     deref(oldTop);
 
-    // TODO: update the heights in the logic above.
-    HackFixHeight(oldTop);   // fix the height of #4
-    HackFixHeight(oldLeft);  // fix the height of #2
+    AvlSetHeight(oldTop, newHeight4);  // fix the height of #4
+    AvlSetHeight(oldLeft, newHeight2); // fix the height of #2
 }
 
 // Performs a left rotation, which is best understood pictorially.
@@ -405,7 +378,7 @@ AvlRotateRight(
 //           |    3   5       1   3     |
 //           +--------------------------+
 //
-// This helps balance a tree, while maintaining the order requirement
+// This helps balance a tree, while maintaining the order property
 // of a search tree.
 static
 void
@@ -420,6 +393,12 @@ AvlRotateLeft(
     NODE *  oldRightLeft   = AvlGetLeft(oldRight);   // node #3
     NODE ** oldTopRightPtr = AvlGetRightPtr(oldTop); // where node #3 belongs
 
+    const int height1    = AvlSafeGetHeight(AvlGetLeft(oldTop));
+    const int height3    = AvlSafeGetHeight(AvlGetLeft(oldRight));
+    const int newHeight2 = std::max(height1, height3) + 1;
+    const int height5    = AvlSafeGetHeight(AvlGetRight(oldRight));
+    const int newHeight4 = std::max(newHeight2, height5) + 1;
+
     ref(oldTop); // keep the node alive for this rotation
 
     setnode(AvlNodePtr,     oldRight);     // move #4 to the top
@@ -428,9 +407,8 @@ AvlRotateLeft(
 
     deref(oldTop);
 
-    // TODO: update the heights in the logic above.
-    HackFixHeight(oldTop);    // fix the height of #2
-    HackFixHeight(oldRight);  // fix the height of #4
+    AvlSetHeight(oldTop,   newHeight2); // fix the height of #2
+    AvlSetHeight(oldRight, newHeight4); // fix the height of #4
 }
 
 // Returns the node associated with SearchKey
