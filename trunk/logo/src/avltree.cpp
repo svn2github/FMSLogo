@@ -107,6 +107,15 @@ AvlGetHeight(
 }
 
 inline
+int
+AvlSafeGetHeight(
+    const NODE * Node
+    )
+{
+    return (Node == NULL) ? 0 : AvlGetHeight(Node);
+}
+
+inline
 NODE *
 AvlGetKey(
     const NODE * AvlNode
@@ -288,7 +297,7 @@ AvlSetRight(
 /// Return LEFT - RIGHT
 inline
 int
-AvlGetBalance(
+AvlSafeGetBalance(
     NODE * AvlNode
     )
 {
@@ -300,8 +309,8 @@ AvlGetBalance(
     {
         NODE * leftNode  = AvlGetLeft(AvlNode);
         NODE * rightNode = AvlGetRight(AvlNode);
-        int leftHeight  = leftNode  ? AvlGetHeight(leftNode)  : 0;
-        int rightHeight = rightNode ? AvlGetHeight(rightNode) : 0;
+        int leftHeight  = AvlSafeGetHeight(leftNode);
+        int rightHeight = AvlSafeGetHeight(rightNode);
         return leftHeight - rightHeight;
     }
 }
@@ -513,11 +522,11 @@ AvlTreeInsert(
         // If we inserted on the left side, then
         // the only possible imbalance is a skew to the left
         // (balance of 2).
-        int currentBalance = AvlGetBalance(currentNode);
+        int currentBalance = AvlSafeGetBalance(currentNode);
         if (1 < currentBalance)
         {
             // The current node is now out of balance.
-            int leftBalance = AvlGetBalance(*leftNodePtr);
+            int leftBalance = AvlSafeGetBalance(*leftNodePtr);
             if (leftBalance < 0)
             {
                 // The left tree is skewed to the right.
@@ -543,11 +552,11 @@ AvlTreeInsert(
         // If we inserted on the right side, then
         // the only possible imbalance is a skew to the right
         // (balance of -2).
-        int currentBalance = AvlGetBalance(currentNode);
+        int currentBalance = AvlSafeGetBalance(currentNode);
         if (currentBalance < -1)
         {
             // The current node is now out of balance.
-            int rightBalance = AvlGetBalance(*rightNodePtr);
+            int rightBalance = AvlSafeGetBalance(*rightNodePtr);
             if (0 < rightBalance)
             {
                 // The right tree is skewed to the left.
@@ -583,8 +592,8 @@ AvlTreeDeleteWithValueExchange(
     ASSERT_AVLNODE_INVARIANT(*CurrentNodePtr, CompareFunction);
 
     NODE * currentNode = *CurrentNodePtr;
-    NODE ** nextNodePtr = AvlGetLeftPtr(currentNode);
-    if (*nextNodePtr == NIL)
+    NODE ** leftNodePtr = AvlGetLeftPtr(currentNode);
+    if (*leftNodePtr == NIL)
     {
         // There is no left child, so *SearchNode is the node we've been
         // looking for.  Put its values into AvlNodeToSwap, which effectively
@@ -596,25 +605,25 @@ AvlTreeDeleteWithValueExchange(
         // the tree, we need to remove the node.
         // Since we know that its left child is NIL, we can
         // remove the node, by replacing it with its right child.
-        setnode(CurrentNodePtr, AvlGetRight(currentNode));
+        NODE * rightNode = AvlGetRight(currentNode);
+        setnode(CurrentNodePtr, rightNode);
         ASSERT_AVLNODE_INVARIANT(*CurrentNodePtr, CompareFunction);
         return;
     }
 
     // Keep looking (recursively)
-    AvlTreeDeleteWithValueExchange(nextNodePtr, CompareFunction, AvlNodeToDelete);
+    AvlTreeDeleteWithValueExchange(leftNodePtr, CompareFunction, AvlNodeToDelete);
 
     // Rebalance the tree, if necessary.
     // Since we deleted from the left side, the
     // only possible imbalance is a skew to the right
     // (balance of -2).
-    int currentBalance = AvlGetBalance(currentNode);
+    int currentBalance = AvlSafeGetBalance(currentNode);
     if (currentBalance < -1)
     {
         // The current node is now out of balance.
         NODE ** rightNodePtr = AvlGetRightPtr(currentNode);
-        // TODO: does rightNodePtr==nextNodePtr?
-        int rightBalance = AvlGetBalance(*rightNodePtr);
+        int rightBalance = AvlSafeGetBalance(*rightNodePtr);
         if (0 < rightBalance)
         {
             // The right tree is skewed to the left.
@@ -627,7 +636,7 @@ AvlTreeDeleteWithValueExchange(
     }
     else
     {
-        // If no rebalancing is necessary, then we only need to update the height.
+        // No rebalancing is necessary, so we only need to update the height.
         // TODO: take advantage of the fact that we deleted a node from the left side.
         HackFixHeight(currentNode);
     }
@@ -705,12 +714,12 @@ AvlTreeDeleteRecursive(
             // If we deleted from the right side, then
             // the only possible imbalance is a skew to the left
             // (balance of 2).
-            int currentBalance = AvlGetBalance(currentNode);
+            int currentBalance = AvlSafeGetBalance(currentNode);
             if (1 < currentBalance)
             {
                 // The current node is now out of balance.
                 NODE ** leftNodePtr = AvlGetLeftPtr(currentNode);
-                int leftBalance = AvlGetBalance(*leftNodePtr);
+                int leftBalance = AvlSafeGetBalance(*leftNodePtr);
                 if (leftBalance < 0)
                 {
                     // The left tree is skewed to the right.
@@ -741,12 +750,12 @@ AvlTreeDeleteRecursive(
         // If we deleted from the left side, then
         // the only possible imbalance is a skew to the right
         // (balance of -2).
-        int currentBalance = AvlGetBalance(currentNode);
+        int currentBalance = AvlSafeGetBalance(currentNode);
         if (currentBalance < -1)
         {
             // The current node is now out of balance.
             NODE ** rightNodePtr = AvlGetRightPtr(currentNode);
-            int rightBalance = AvlGetBalance(*rightNodePtr);
+            int rightBalance = AvlSafeGetBalance(*rightNodePtr);
             if (0 < rightBalance)
             {
                 // The right tree is skewed to the left.
@@ -772,12 +781,12 @@ AvlTreeDeleteRecursive(
         // If we deleted from the right side, then
         // the only possible imbalance is a skew to the left
         // (balance of 2).
-        int currentBalance = AvlGetBalance(currentNode);
+        int currentBalance = AvlSafeGetBalance(currentNode);
         if (1 < currentBalance)
         {
             // The current node is now out of balance.
             NODE ** leftNodePtr = AvlGetLeftPtr(currentNode);
-            int leftBalance = AvlGetBalance(*leftNodePtr);
+            int leftBalance = AvlSafeGetBalance(*leftNodePtr);
             if (leftBalance < 0)
             {
                 // The left tree is skewed to the right.
