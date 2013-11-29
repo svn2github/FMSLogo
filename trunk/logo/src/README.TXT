@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.31.0 for Microsoft Windows
+FMSLogo Version 6.32.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -13,24 +13,15 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.31.0.exe   - Installer for the mainline Logo environment
-  fmslogo-6.31.0.zip   - ZIP of the mainline Logo environment
-  wxfmslogo-6.31.0.exe - Installer for the Beta wxWidgets-based Logo environment
+  fmslogo-6.32.0.exe   - Installer for the mainline Logo environment
+  fmslogo-6.32.0.zip   - ZIP of the mainline Logo environment
+  wxfmslogo-6.32.0.exe - Installer for the Beta wxWidgets-based Logo environment
 
 II. New features/bugs fixed:
 
-  * Changed in 6.31.0
-    o Property lists now support list and array property names.
-    o Fix bug #426 "Bitmap - Save" now shows an error message if it fails.
-    o Fix bug #425; FMSLogo can now save high resolution bitmaps.
-    o Fix bug #422; The wxWidgets version of FMSLogo now handles Ctrl+Right
-      in the commander history the same as the mainline version on Vista.
-    o Fix bug #421; The FMSLogo icon now appears in the Alt+Tab task selector
-      in high DPI modes on Windows Vista when using the Windows Classic theme.
-      This only affects the wxWidgets version of FMSLogo.
-    o Add syntax coloring, multiline pasting, infinite undo buffer, and paren
-      matching to the commander's input box in the wxWidgets version of FMSLogo.
-    o Various updates to the German translation.
+  * Changed in 6.32.0
+    o Implement feature #94; PPROP, GPROP, and REMPROP now run in O(log N).
+    o Various updates to the German manual.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
