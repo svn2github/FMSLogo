@@ -47,8 +47,6 @@
 
 #include "localizedstrings.h"
 
-#define TREE_BASED_PROPERTY_LIST 0
-
 #if WX_PURE
 // wxTODO: The original, non-internationalized code is used when not on Windows.
 // This should be rewritten to use the Unicode-aware C routines.
@@ -957,7 +955,7 @@ NODE *luppercase(NODE *args)
 // <0, if NodeA < NodeB
 // 0,  if NodeA == NodeB
 // >0, if NodeA > NodeB
-int CompareProperyListKeys(NODE * NodeA, NODE * NodeB)
+int ComparePropertyListKeys(NODE * NodeA, NODE * NodeB)
 {
     const int A_EQUALS_B       = 0;
     const int A_LESS_THAN_B    = -1;
@@ -1020,7 +1018,7 @@ int CompareProperyListKeys(NODE * NodeA, NODE * NodeB)
                             {
                                 NODE * elementA = car(cursorA);
                                 NODE * elementB = car(cursorB);
-                                int rval = CompareProperyListKeys(elementA, elementB);
+                                int rval = ComparePropertyListKeys(elementA, elementB);
                                 if (rval != A_EQUALS_B)
                                 {
                                     // we found a way to distinguish the lists.
@@ -1090,28 +1088,6 @@ int CompareProperyListKeys(NODE * NodeA, NODE * NodeB)
     }
 }
 
-// Gets the name/value node pair in a property list.
-static
-NODE *getprop(NODE *plist, NODE *name)
-{
-    bool caseig = isCaseIgnored();
-
-    // Search the property list looking a node named "name"
-    while (plist != NIL)
-    {
-        if (equalp_help(name, car(plist), caseig))
-        {
-            return plist;
-        }
-
-        // Advance two nodes to get to the next name.
-        plist = cddr(plist);
-    }
-
-    // Didn't find it.
-    return NIL;
-}
-
 NODE *lgprop(NODE *args)
 {
     NODE * plname = string_arg(args);
@@ -1121,16 +1097,7 @@ NODE *lgprop(NODE *args)
         plname = intern(plname);
 
         NODE * plist = plist__caseobj(plname);
-
-#if TREE_BASED_PROPERTY_LIST
-        return AvlTreeSearch(plist, CompareProperyListKeys, pname);
-#else
-        NODE *val = getprop(plist, pname);
-        if (val != NIL)
-        {
-            return cadr(val);
-        }
-#endif
+        return AvlTreeSearch(plist, ComparePropertyListKeys, pname);
     }
     return NIL;
 }
@@ -1174,30 +1141,10 @@ NODE *lpprop(NODE *args)
             }
             new_line(g_Writer.GetStream());
         }
-#if TREE_BASED_PROPERTY_LIST
-        // Get the location of this property's value,
-        // if it already exists.
-        NODE ** plistptr = plistptr__caseobj(plname);
-        AvlTreeInsert(plistptr, CompareProperyListKeys, pname, newval);
-#else
-        // Get the location of this property's value,
-        // if it already exists.
-        NODE * plist = plist__caseobj(plname);
 
-        NODE * val = getprop(plist, pname);
-        if (val != NIL)
-        {
-            // The value already exists, so we can just
-            // set the new value in its place in the list.
-            setcar(cdr(val), newval);
-        }
-        else
-        {
-            // The value does not exist in the list, so
-            // prepend it to the beginning.
-            setplist__caseobj(plname, cons(pname, cons(newval, plist)));
-        }
-#endif
+        // Insert the property into the tree.
+        NODE ** plistptr = plistptr__caseobj(plname);
+        AvlTreeInsert(plistptr, ComparePropertyListKeys, pname, newval);
     }
     return Unbound;
 }
@@ -1210,63 +1157,12 @@ NODE *lremprop(NODE *args)
     {
         plname = intern(plname);
 
-#if TREE_BASED_PROPERTY_LIST
+        // Remove the property from the list
         NODE ** plistptr = plistptr__caseobj(plname);
-        AvlTreeDelete(plistptr, CompareProperyListKeys, pname);
-#else
-        bool caseig = isCaseIgnored();
-
-        // Search the property list looking a node named "name"
-        NODE *prev = NIL;
-        NODE * plist = plist__caseobj(plname);
-        while (plist != NIL)
-        {
-            // The next name-value pair will be two nodes forward.
-            NODE * next = cddr(plist);
-
-            if (equalp_help(pname, car(plist), caseig))
-            {
-                // We found the node to remove.
-                // Remove the name/value pair by setting
-                // the previous node's CDR to the node
-                // three elements after it.
-                if (prev == NIL)
-                {
-                    // Special case for removing the first node in the list.
-                    setplist__caseobj(plname, next);
-                }
-                else
-                {
-                    // Remove this name-value pair by setting the previous node's
-                    // cdr to point to the next name-value pair.
-                    setcdr(prev, next);
-                }
-
-                break;
-            }
-
-            // Advance two nodes to get to the next name.
-            prev  = cdr(plist);
-            plist = next;
-        }
-#endif
+        AvlTreeDelete(plistptr, ComparePropertyListKeys, pname);
     }
 
     return Unbound;
-}
-
-static
-NODE *copy_list(NODE *arg)
-{
-    CAppendableList copy;
-
-    while (arg != NIL)
-    {
-        copy.AppendElement(car(arg));
-        arg = cdr(arg);
-    }
-
-    return copy.GetList();
 }
 
 NODE *lplist(NODE *args)
@@ -1278,11 +1174,7 @@ NODE *lplist(NODE *args)
     {
         plname = intern(plname);
         NODE * plist = plist__caseobj(plname);
-#if TREE_BASED_PROPERTY_LIST
         val = AvlTreeFlatten(plist);
-#else
-        val = copy_list(plist);
-#endif
     }
     return val;
 }
