@@ -503,12 +503,11 @@ AvlTreeInsert(
         return;
     } 
 
-    NODE ** nextNodePtr;
     if (compareValue < 0)
     {
         // Search down the left side
-        nextNodePtr = AvlGetLeftPtr(currentNode);
-        AvlTreeInsert(nextNodePtr, CompareFunction, Key, Value);
+        NODE ** leftNodePtr = AvlGetLeftPtr(currentNode);
+        AvlTreeInsert(leftNodePtr, CompareFunction, Key, Value);
 
         // Rebalance the tree, if necessary.
         // If we inserted on the left side, then
@@ -518,8 +517,6 @@ AvlTreeInsert(
         if (1 < currentBalance)
         {
             // The current node is now out of balance.
-            NODE ** leftNodePtr = AvlGetLeftPtr(currentNode);
-            // TODO: does leftNodePtr==nextNodePtr?
             int leftBalance = AvlGetBalance(*leftNodePtr);
             if (leftBalance < 0)
             {
@@ -539,8 +536,8 @@ AvlTreeInsert(
     else
     {
         // Search down the right side
-        nextNodePtr = AvlGetRightPtr(currentNode);
-        AvlTreeInsert(nextNodePtr, CompareFunction, Key, Value);
+        NODE ** rightNodePtr = AvlGetRightPtr(currentNode);
+        AvlTreeInsert(rightNodePtr, CompareFunction, Key, Value);
 
         // Rebalance the tree, if necessary.
         // If we inserted on the right side, then
@@ -550,8 +547,6 @@ AvlTreeInsert(
         if (currentBalance < -1)
         {
             // The current node is now out of balance.
-            NODE ** rightNodePtr = AvlGetRightPtr(currentNode);
-            // TODO: does rightNodePtr==nextNodePtr?
             int rightBalance = AvlGetBalance(*rightNodePtr);
             if (0 < rightBalance)
             {
