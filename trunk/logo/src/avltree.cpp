@@ -200,7 +200,7 @@ public:
         assert(calculatedHeight == actualHeight);
 
         // An AVL node may have a balance of 0, 1, or -1.
-        // TODO: Once rebalancing logic is implemented.
+        // TODO: Renable this once rebalancing logic is implemented.
         //int balance = leftHeight - rightHeight;
         //assert(-1 <= balance);
         //assert(balance <= 1);
@@ -285,6 +285,27 @@ AvlSetRight(
     setcdr(cdr(AvlNode), NewRightNode);
 }
 
+/// Return LEFT - RIGHT
+inline
+int
+AvlGetBalance(
+    NODE * AvlNode
+    )
+{
+    if (AvlNode == NULL)
+    {
+        return 0;
+    }
+    else
+    {
+        NODE * leftNode  = AvlGetLeft(AvlNode);
+        NODE * rightNode = AvlGetRight(AvlNode);
+        int leftHeight  = leftNode  ? AvlGetHeight(leftNode)  : 0;
+        int rightHeight = rightNode ? AvlGetHeight(rightNode) : 0;
+        return leftHeight - rightHeight;
+    }
+}
+
 inline
 void
 AvlSetKey(
@@ -305,6 +326,103 @@ AvlSetValue(
     setobject(cdr(AvlNode), NewValue);
 }
 
+
+// Update the height of this node based on the heights of its children.
+// I'll figure out a more elengant way to do this in the future,
+// but for, brute forcing the correction of the height helps me
+// write the balancing logic.
+inline
+void
+HackFixHeight(
+    NODE * AvlNode
+    )
+{
+    if (AvlNode != NULL)
+    {
+        NODE * leftNode  = AvlGetLeft(AvlNode);
+        NODE * rightNode = AvlGetRight(AvlNode);
+        int leftHeight  = leftNode  ? AvlGetHeight(leftNode)  : 0;
+        int rightHeight = rightNode ? AvlGetHeight(rightNode) : 0;
+        int newHeight   = std::max(leftHeight, rightHeight) + 1;
+        AvlSetHeight(AvlNode, newHeight);
+    }
+}
+
+// Performs a right rotation, which is best understood pictorially.
+//
+//           +--------------------------+
+//           |     4             2      |
+//           |    / \           / \     |
+//           |   2   5   --->  1   4    |
+//           |  / \               / \   |
+//           | 1   3             3   5  |
+//           |+-------------------------+
+//
+// This helps balance a tree, while maintaining the order requirement
+// of a search tree.
+static
+void
+AvlRotateRight(
+    NODE ** AvlNodePtr
+    )
+{
+    assert(AvlNodePtr != NULL);
+
+    NODE *  oldTop  = *AvlNodePtr;                 // node #4
+    NODE *  oldLeft = AvlGetLeft(oldTop);          // node #2
+    NODE *  oldLeftRight  = AvlGetRight(oldLeft);  // node #3
+    NODE ** oldTopLeftPtr = AvlGetLeftPtr(oldTop); // where node #3 belongs
+
+    ref(oldTop); // keep the node alive for this rotation
+
+    setnode(AvlNodePtr,    oldLeft);      // move #2 to the top
+    setnode(oldTopLeftPtr, oldLeftRight); // move #3 under #4 (where #2 was)
+    AvlSetRight(oldLeft,   oldTop);       // move #4 under #2 (where #3 was)
+
+    deref(oldTop);
+
+    // TODO: update the heights in the logic above.
+    HackFixHeight(oldTop);   // fix the height of #4
+    HackFixHeight(oldLeft);  // fix the height of #2
+}
+
+// Performs a left rotation, which is best understood pictorially.
+//
+//           +--------------------------+
+//           |    2               4     |
+//           |   / \             / \    |
+//           |  1   4    --->   2   5   |
+//           |     / \         / \      |
+//           |    3   5       1   3     |
+//           +--------------------------+
+//
+// This helps balance a tree, while maintaining the order requirement
+// of a search tree.
+static
+void
+AvlRotateLeft(
+    NODE ** AvlNodePtr
+    )
+{
+    assert(AvlNodePtr != NULL);
+
+    NODE *  oldTop   = *AvlNodePtr;                  // node #2
+    NODE *  oldRight = AvlGetRight(oldTop);          // node #4
+    NODE *  oldRightLeft   = AvlGetLeft(oldRight);   // node #3
+    NODE ** oldTopRightPtr = AvlGetRightPtr(oldTop); // where node #3 belongs
+
+    ref(oldTop); // keep the node alive for this rotation
+
+    setnode(AvlNodePtr,     oldRight);     // move #4 to the top
+    setnode(oldTopRightPtr, oldRightLeft); // move #3 under #2 (where #4 was)
+    AvlSetLeft(oldRight,    oldTop);       // move #2 under #4 (where #3 was)
+
+    deref(oldTop);
+
+    // TODO: update the heights in the logic above.
+    HackFixHeight(oldTop);    // fix the height of #2
+    HackFixHeight(oldRight);  // fix the height of #4
+}
 
 // Returns the node associated with SearchKey
 NODE *
@@ -370,7 +488,6 @@ AvlTreeInsert(
     {
         NODE * newNode = AvlCreateNode(Key, Value);
         setnode(RootNodePtr, newNode);
-        // TODO: rebalance the tree.
         return;
     }
 
@@ -391,26 +508,68 @@ AvlTreeInsert(
     {
         // Search down the left side
         nextNodePtr = AvlGetLeftPtr(currentNode);
+        AvlTreeInsert(nextNodePtr, CompareFunction, Key, Value);
+
+        // Rebalance the tree, if necessary.
+        // If we inserted on the left side, then
+        // the only possible imbalance is a skew to the left
+        // (balance of 2).
+        int currentBalance = AvlGetBalance(currentNode);
+        if (1 < currentBalance)
+        {
+            // The current node is now out of balance.
+            NODE ** leftNodePtr = AvlGetLeftPtr(currentNode);
+            // TODO: does leftNodePtr==nextNodePtr?
+            int leftBalance = AvlGetBalance(*leftNodePtr);
+            if (leftBalance < 0)
+            {
+                // The left tree is skewed to the right.
+                // Rotate it left to balance it.
+                AvlRotateLeft(leftNodePtr);
+            }
+
+            // Now balance the current node.
+            AvlRotateRight(RootNodePtr);
+        }
+        else
+        {
+            HackFixHeight(currentNode);
+        }
     }
     else
     {
         // Search down the right side
         nextNodePtr = AvlGetRightPtr(currentNode);
+        AvlTreeInsert(nextNodePtr, CompareFunction, Key, Value);
+
+        // Rebalance the tree, if necessary.
+        // If we inserted on the right side, then
+        // the only possible imbalance is a skew to the right
+        // (balance of -2).
+        int currentBalance = AvlGetBalance(currentNode);
+        if (currentBalance < -1)
+        {
+            // The current node is now out of balance.
+            NODE ** rightNodePtr = AvlGetRightPtr(currentNode);
+            // TODO: does rightNodePtr==nextNodePtr?
+            int rightBalance = AvlGetBalance(*rightNodePtr);
+            if (0 < rightBalance)
+            {
+                // The right tree is skewed to the left.
+                // Rotate it right to balance it.
+                AvlRotateRight(rightNodePtr);
+            }
+
+            // Now balance the current node.
+            AvlRotateLeft(RootNodePtr);
+        }
+        else
+        {
+            HackFixHeight(currentNode);
+        }
     }
 
-    // Keep looking
-    AvlTreeInsert(nextNodePtr, CompareFunction, Key, Value);
-
-    // Update the height of this branch.
-    // TODO: take advantage of whether we inserted on the left or right.
-    NODE * leftNode  = AvlGetLeft(currentNode);
-    NODE * rightNode = AvlGetRight(currentNode);
-    int leftHeight  = leftNode  ? AvlGetHeight(leftNode)  : 0;
-    int rightHeight = rightNode ? AvlGetHeight(rightNode) : 0;
-    int newHeight   = std::max(leftHeight, rightHeight) + 1;
-    AvlSetHeight(currentNode, newHeight);
-
-    ASSERT_AVLNODE_INVARIANT(currentNode, CompareFunction);
+    ASSERT_AVLNODE_INVARIANT(*RootNodePtr, CompareFunction);
 }
 
 static
