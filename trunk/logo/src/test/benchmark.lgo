@@ -64,6 +64,26 @@ TO BENCHMARK.READWORD :bytesperline :totallines
    ERASEFILE "benchmark.readword.txt
 END
 
+TO BENCHMARK.PLIST :totalvalues
+   ; Add a lot of values
+   REPEAT :totalvalues [
+      PPROP "benchmark.plist REPCOUNT REPCOUNT
+   ]
+
+   ; Remove half of the values
+   REPEAT :totalvalues/2 [
+      REMPROP "benchmark.plist REPCOUNT*2
+   ]
+
+   ; Get the remaining values
+   REPEAT :totalvalues [
+      IGNORE GPROP "benchmark.plist REPCOUNT
+   ]
+
+   ; Erase the property list
+   ERN "benchmark.plist
+END
+
 TO BENCHMARK 
 
    REPORTTESTINFO LOGOVERSION ; put the version into the test log
@@ -71,6 +91,9 @@ TO BENCHMARK
    ; for consistent results when drawing
    ICON "Commander
    BENCHMARK.RESIZECONSOLE 600 800
+
+   ; time property lists
+   IGNORE TIMECOMMAND [BENCHMARK.PLIST 100000]
 
    ; time file IO
    BENCHMARK.READWORD 1024 1024
