@@ -21,6 +21,9 @@ II. New features/bugs fixed:
 
   * Changed in 6.32.0
     o Implement feature #94; PPROP, GPROP, and REMPROP now run in O(log N).
+    o Fix inconsistent behavior in the wxWidgets version where pressing
+      the up arrow from the commander input to the history didn't clear
+      the commander input.
     o Various updates to the German manual.
 
   For a complete history of changes across all versions of FMSLogo, see

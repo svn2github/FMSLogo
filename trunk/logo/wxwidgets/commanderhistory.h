@@ -17,6 +17,7 @@ private:
     void OnLeftMouseButtonDown(wxMouseEvent& Event);
     void OnLeftMouseButtonDoubleClick(wxMouseEvent& Event);
     void OnContextMenu(wxContextMenuEvent& Event);
+    void OnSetFocus(wxFocusEvent & Event);
 
     // Private helper functions
     CCommander * GetCommander() const;

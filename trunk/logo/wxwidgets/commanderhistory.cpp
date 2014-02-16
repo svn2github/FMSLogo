@@ -233,10 +233,19 @@ void CCommanderHistory::OnContextMenu(wxContextMenuEvent& Event)
     PopupMenu(&menu);
 }
 
+void CCommanderHistory::OnSetFocus(wxFocusEvent & Event)
+{
+    // When the control gets keyboard focus, copy the current selection
+    // to the commander input control.
+    CopyCurrentLineToCommanderInput();
+    Event.Skip();
+}
+
 BEGIN_EVENT_TABLE(CCommanderHistory, wxRichTextCtrl)
     EVT_MENU(wxID_HELP_INDEX, CCommanderHistory::OnContextHelp)
     EVT_KEY_DOWN(CCommanderHistory::OnKeyDown)
     EVT_LEFT_DOWN(CCommanderHistory::OnLeftMouseButtonDown)
     EVT_LEFT_DCLICK(CCommanderHistory::OnLeftMouseButtonDoubleClick)
     EVT_CONTEXT_MENU(CCommanderHistory::OnContextMenu)
+    EVT_SET_FOCUS(CCommanderHistory::OnSetFocus)
 END_EVENT_TABLE()

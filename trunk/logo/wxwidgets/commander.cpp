@@ -666,7 +666,9 @@ void CCommander::GiveControlToHistoryBox()
     wxTextPos endPosition = m_History->GetLastPosition();
     m_History->ShowPosition(endPosition);
 
-    // give focus to the listbox
+    // give focus to the listbox.
+    // This will copy the current line (which is blank) to
+    // the commander input, as it did in the OWL-based version.
     m_History->SetFocus();
 }
 
