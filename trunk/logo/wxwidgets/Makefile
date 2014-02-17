@@ -164,6 +164,7 @@ WX_OBJECTS =                   \
     questionbox.o              \
     savebeforeexitdialog.o     \
     screen.o                   \
+    selectbox.o                \
     selectproceduredialog.o    \
     selectstartupinstruction.o \
     setactivearea.o            \

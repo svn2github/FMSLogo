@@ -22,7 +22,6 @@
 #include <commctrl.h> // for combobox style manifest constants
 
 #include <wx/app.h>
-#include <wx/choicdlg.h>
 #include <wx/button.h>
 #include <wx/listbox.h>
 #include <wx/combobox.h>
@@ -53,6 +52,7 @@
 #include "stringprintednode.h"
 #include "screenwindow.h"
 #include "questionbox.h"
+#include "selectbox.h"
 #include "debugheap.h"
 
 enum WINDOWTYPE 
@@ -2545,14 +2545,12 @@ NODE *lselectbox(NODE *args)
         choices.Add(choice.GetString());
     }
 
-    // TODO: Implement our own version of this
-    // routine that doesn't leave a blank space
-    // where the question should be placed.
-    int status = ::wxGetSingleChoiceIndex(
-        wxEmptyString,
+    CSelectBox selectBox(
+        CFmsLogo::GetMainFrame(),
         banner.GetString(),
-        choices,
-        CFmsLogo::GetMainFrame());
+        choices);
+
+    int status = selectBox.DoDialog();
     if (status < 0)
     {
         // the user pressed cancel
