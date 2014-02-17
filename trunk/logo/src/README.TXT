@@ -24,6 +24,9 @@ II. New features/bugs fixed:
     o Fix inconsistent behavior in the wxWidgets version where pressing
       the up arrow from the commander input to the history didn't clear
       the commander input.
+    o Fix inconsistent behavior in the wxWidgets version of SELECTBOX
+      where pressing OK when there were no choices threw a Stopping error,
+      instead of outputting 1, as the OWL version does.
     o Various updates to the German manual.
 
   For a complete history of changes across all versions of FMSLogo, see
