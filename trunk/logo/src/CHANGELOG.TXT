@@ -1,4 +1,14 @@
-This file contains the changes that were made in each revision of FMSLogo.
+This file contains the changes that were made in each version of FMSLogo.
+
+Changed in 6.32.0
+o Implement feature #94; PPROP, GPROP, and REMPROP now run in O(log N).
+o Fix inconsistent behavior in the wxWidgets version where pressing
+  the up arrow from the commander input to the history didn't clear
+  the commander input.
+o Fix inconsistent behavior in the wxWidgets version of SELECTBOX
+  where pressing OK when there were no choices threw a Stopping error,
+  instead of outputting 1, as the OWL version does.
+o Various updates to the German manual.
 
 Changed in 6.31.0
 o Property lists now support list and array property names.
