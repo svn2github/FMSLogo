@@ -4,10 +4,14 @@ Build the Release Files
 ==================================================================================
 
 1) Build the Candidate Release Files
-1.a) Copy the latest changes from README.TXT to CHANGELOG.TXT
+1.a) Copy the latest changes from src\README.TXT to src\CHANGELOG.TXT
 1.b) Update version.mk and logoversion.lgo
 1.c) Update the translation tables in the manual
-1.d) Checkin all changes, "cvs up -APd", and tag the tree VER-X-Y-Z
+   cd src
+   perl make-translation-tables.pl
+   copy /Y translation-*.xml ..\manual
+
+1.d) Commit all changes, "cvs up -APd", and tag the tree VER-X-Y-Z
 1.e) Open up a fresh command prompt and cleanly build everything with:
 
      gmake clean
