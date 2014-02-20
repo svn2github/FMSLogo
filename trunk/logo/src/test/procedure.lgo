@@ -273,7 +273,8 @@ END
 
 TO POTEST.SMOKETEST
 
-   LOCALMAKE "namepvariable 0
+   LOCAL     "UnboundVariable
+   LOCALMAKE "BoundVariable 0
 
    OPENWRITE "po.dump.txt
    LOCALMAKE "previouswriter WRITER
@@ -291,14 +292,14 @@ TO POTEST.SMOKETEST
    TRACEINSTRUCTION [PONS]
    TRACEINSTRUCTION [POPLS]
 
-   ; test POT
+   ; test POT (for procedures)
    RUNPRINTTEST [POT "SAMPLEPROC ] ~
                 "|TO SAMPLEPROC  :a  :b|
 
    RUNPRINTTEST [POT "PROCEDURETEST.COMPLEXPROC] ~
                 "|TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] [:e] 2  |
 
-   ; test PO
+   ; test PO for procedures
    RUNPRINTTEST [PO "SAMPLEPROC ] (list
       "|TO SAMPLEPROC  :a  :b|
       "|  PRINT :a ; print|
@@ -315,9 +316,27 @@ TO POTEST.SMOKETEST
       "|END|
       "||)
 
-   ; test PON
-   RUNPRINTTEST [PON "namepvariable  ] "|Make "namepvariable 0|
-   RUNPRINTTEST [PON [namepvariable] ] "|Make "namepvariable 0|
+   RUNPRINTTEST [PO [SAMPLEPROC PROCEDURETEST.COMPLEXPROC]] (list
+      "|TO SAMPLEPROC  :a  :b|
+      "|  PRINT :a ; print|
+      "|  SHOW  :b ; show|
+      "|END|
+      "||
+      "|TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] [:e] 2  |
+      "|  PRINT :a ; print|
+      "|  SHOW  :b ; show|
+      "||
+      "|  OUTPUT SUM :c :d ; output|
+      "|END|
+      "||)
+
+   ; test PON (PO for variables)
+   RUNPRINTTEST [PON "boundvariable  ] "|Make "boundvariable 0|
+   RUNPRINTTEST [PON [boundvariable] ] "|Make "boundvariable 0|
+
+   ; test POT (for variables
+   RUNPRINTTEST [POT NAMELIST "boundvariable] "|Make "boundvariable 0|
+
 
    ; create some property lists for testing POPL
    TRACEINSTRUCTION [ PPROP "wordtonumber "one 1 ]
@@ -325,27 +344,51 @@ TO POTEST.SMOKETEST
    TRACEINSTRUCTION [ PPROP "numbertoword 1 "one ]
    TRACEINSTRUCTION [ PPROP "numbertoword 2 "two ]
 
-   ; test POPL
+   TRACEINSTRUCTION [ PPROP "plist "number 1     ]
+   TRACEINSTRUCTION [ PPROP "plist "list   [a 1] ]
+   TRACEINSTRUCTION [ PPROP "plist "array  {1}   ]
+
+   ; test POPL (PO for property lists)
    RUNPRINTTEST [POPL "wordtonumber] (list
+      "|Pprop "wordtonumber "one 1| 
       "|Pprop "wordtonumber "two 2|
-      "|Pprop "wordtonumber "one 1| )
+   )
 
    RUNPRINTTEST [POPL "numbertoword] (list
+      "|Pprop "numbertoword 1 "one|
       "|Pprop "numbertoword 2 "two|
-      "|Pprop "numbertoword 1 "one| )
+   )
 
    RUNPRINTTEST [POPL [wordtonumber numbertoword nonexistent]] (list
-      "|Pprop "wordtonumber "two 2|
       "|Pprop "wordtonumber "one 1| 
+      "|Pprop "wordtonumber "two 2|
+      "|Pprop "numbertoword 1 "one|
       "|Pprop "numbertoword 2 "two|
-      "|Pprop "numbertoword 1 "one| )
+   )
 
+   ; test POT for property lists
+   RUNPRINTTEST [POT PLLIST "wordtonumber] (list
+      "|Plist "wordtonumber = [one 1 two 2]|
+   )
+
+   RUNPRINTTEST [POT PLLIST "plist] (list
+      "|Plist "plist = [list [a 1] number 1 array {1}]|
+   )
+
+   RUNPRINTTEST [POT PLLIST [wordtonumber nonexistent plist]] (list
+      "|Plist "wordtonumber = [one 1 two 2]|
+      "|Plist "plist = [list [a 1] number 1 array {1}]|
+   )
 
    ; remove the property lists
    REMPROP "wordtonumber "one
    REMPROP "wordtonumber "two
    REMPROP "numbertoword 1
    REMPROP "numbertoword 2
+
+   REMPROP "plist  "number
+   REMPROP "plist "list
+   REMPROP "plist "array
 
    ; try to print the properly lists, now that all properties have been removed
    RUNPRINTTEST [POPL "wordtonumber]                           []
@@ -461,17 +504,24 @@ END
 
 TO POTEST.BADINPUT
 
+   LOCAL     "UnboundVariable
+   LOCALMAKE "BoundVariable 0
+
+   PPROP "plist "one 1
+
    RUNNOTENOUGHINPUTSTEST               [(PO)]
    RUNTOOMANYINPUTSTEST                 [(PO [[][][]] "toomany)]
-   RUNISAPRIMITIVETEST                  [PO [[forward]     []             []]]
-   RUNNONRECOVERABLEIDONTKNOWHOWTOTEST  [PO [[nonexistent] []             []]]
-   RUNHASNOVALUETEST                    [PO [[]            [nonexistent]  []]]
-   RUNBADINPUTTEST                      [PO {PROCEDURETEST}]
-   RUNBADINPUTTEST                      [PO [[PROCEDURETEST][namepvariable]{c}] ]
-   RUNBADINPUTTEST                      [PO [PROCEDURETEST SAMPLEPROC {c}]   ]
-   RUNBADINPUTTEST                      [PO [[PROCEDURETEST SAMPLEPROC {c}]]]
-   RUNBADINPUTTEST                      [PO [[PROCEDURETEST][namepvariable][c][d]]]
-   RUNBADINPUTTEST                      [PO [[[PROCEDURETEST]]]]
+   RUNISAPRIMITIVETEST                  [PO [[forward]     []                []]       ]
+   RUNNONRECOVERABLEIDONTKNOWHOWTOTEST  [PO [[nonexistent] []                []]       ]
+   RUNHASNOVALUETEST                    [PO [[]            [nonexistent]     []]       ]
+   RUNHASNOVALUETEST                    [PO [[]            [unboundvariable] []]       ]
+   RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [PO {PROCEDURETEST}                            ]
+   RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [PO [[PROCEDURETEST]{boundvariable}]           ]
+   RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [PO [[PROCEDURETEST][boundvariable]{plist}]    ]
+   RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [PO [PROCEDURETEST SAMPLEPROC {array}]         ]
+   RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [PO [[PROCEDURETEST SAMPLEPROC {array}]]       ]
+   RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [PO [[PROCEDURETEST][boundvariable][plist][d]] ]
+   RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [PO [[[PROCEDURETEST]]]                        ]
 
    RUNTOOMANYINPUTSTEST [(POALL "toomany)]
    RUNTOOMANYINPUTSTEST [(POPS  "toomany)]
@@ -479,16 +529,20 @@ TO POTEST.BADINPUT
    RUNTOOMANYINPUTSTEST [(POTS  "toomany)]
 
    RUNNOTENOUGHINPUTSTEST [(PON)]
-   RUNBADINPUTTEST        [PON "sampleproc]
+   RUNUSERTHROWTEST       [PON "sampleproc]
    RUNTOOMANYINPUTSTEST   [(PON "too "many)]
-   RUNBADINPUTTEST        [PON {a b}]
+   RUNUSERTHROWTEST       [PON {a b}]
 
-   RUNNOTENOUGHINPUTSTEST [(POT)]
-   RUNTOOMANYINPUTSTEST   [(POT "pot "pots)]
-   RUNBADINPUTTEST        [POT "forward]
-   RUNBADINPUTTEST        [POT "nonexistent]
-   RUNBADINPUTTEST        [POT [nonexistent]]
-   RUNBADINPUTTEST        [POT {a}]
+   RUNNOTENOUGHINPUTSTEST               [(POT)]
+   RUNTOOMANYINPUTSTEST                 [(POT "pot "pots)]
+   RUNISAPRIMITIVETEST                  [POT "forward]
+   RUNNONRECOVERABLEIDONTKNOWHOWTOTEST  [POT "nonexistent]
+   RUNNONRECOVERABLEIDONTKNOWHOWTOTEST  [POT [nonexistent]]
+   RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [POT {a}]
+   RUNHASNOVALUETEST                    [POT NAMELIST "nonexistent     ]
+   RUNHASNOVALUETEST                    [POT NAMELIST "unboundvariable ]
+
+   REMPROP "plist "one
 END
 
 TO POTEST
