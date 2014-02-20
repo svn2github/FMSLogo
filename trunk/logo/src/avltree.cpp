@@ -796,11 +796,11 @@ AvlTreeDelete(
     AvlTreeDeleteRecursive(RootNodePtr, CompareFunction, Key);
 }
 
-static
 void
-AvlTreeFlatten(
-    NODE *            AvlNode,
-    CAppendableList & AccumulatedList
+AvlTreeEach(
+    NODE                  *  AvlNode,
+    void *                   Context,
+    PLIST_EACH_FUNCTION      ForEachFunction
     )
 {
     // Iterate down the left side of the tree
@@ -811,18 +811,35 @@ AvlTreeFlatten(
     while (AvlNode != NIL)
     {
         NODE * key   = AvlGetKey(AvlNode);
-        AccumulatedList.AppendElement(key);
-
         NODE * value = AvlGetValue(AvlNode);
-        AccumulatedList.AppendElement(value);
+
+        ForEachFunction(Context, key, value);
 
         // recurse down the right side
-        NODE * rightNode = AvlGetRight(AvlNode);
-        AvlTreeFlatten(rightNode, AccumulatedList);
+        AvlTreeEach(
+            AvlGetRight(AvlNode),
+            Context,
+            ForEachFunction);
 
         // Iterate down the left side
         AvlNode = AvlGetLeft(AvlNode);
     }
+}
+
+static
+void
+AvlTreeFlattenEachFunction(
+    void * Context,
+    NODE * Key,
+    NODE * Value
+    )
+{
+    CAppendableList * const accumulatedList = static_cast<CAppendableList *>(Context);
+
+    // Append the key, then the value to the list.
+    // This create a list like [key1 value1 key2 value2 ... ]
+    accumulatedList->AppendElement(Key);
+    accumulatedList->AppendElement(Value);
 }
 
 // Gets a list of name-value pairs from the tree.
@@ -832,8 +849,6 @@ AvlTreeFlatten(
     )
 {
     CAppendableList flatList;
-
-    AvlTreeFlatten(AvlNode, flatList);
-
+    AvlTreeEach(AvlNode, &flatList, AvlTreeFlattenEachFunction); 
     return flatList.GetList();
 }

@@ -38,6 +38,7 @@
 #include "print.h"
 #include "files.h"
 #include "unix.h"
+#include "avltree.h"
 #include "debugheap.h"
 
 #include "localizedstrings.h"
@@ -1107,7 +1108,32 @@ char *expand_slash(const NODE *wd)
 }
 
 static
-void po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
+void
+po_helper_print_plist(
+    void * Context,
+    NODE * Key,
+    NODE * Value
+    )
+{
+    NODE * const quoted_plist_name = static_cast<NODE *>(Context);
+    NODE * quoted_property_name  = maybe_quote(Key);
+    NODE * quoted_property_value = maybe_quote(Value);
+
+    // PPROP "list "name "value
+    ndprintf(
+        g_Writer.GetStream(), 
+        "%t %s %s %s\n",
+        LOCALIZED_ALTERNATE_PPROP,
+        quoted_plist_name,
+        quoted_property_name,
+        quoted_property_value);
+
+    gcref(quoted_property_name);
+    gcref(quoted_property_value);
+}
+
+static
+void po_helper(NODE *arg, int just_titles)  /* >0 for POT, 0 for PO, <0 for EDIT */
 {
     print_backslashes = true;
 
@@ -1297,35 +1323,24 @@ void po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
         NODE * plist = plist__caseobj(intern(plist_name));
         if (plist != NIL && just_titles > 0)
         {
+            NODE * flat_plist = AvlTreeFlatten(plist);
+
             // PLIST "name = [name1 value1 name2 value2]
             ndprintf(
                 g_Writer.GetStream(), 
                 "%t %s = %s\n",
                 LOCALIZED_ALTERNATE_PLIST,
                 quoted_plist_name, 
-                plist);
+                flat_plist);
+
+            gcref(flat_plist);
         }
         else 
         {
-            while (plist != NIL)
-            {
-                NODE * quoted_property_name  = maybe_quote(car(plist));
-                NODE * quoted_property_value = maybe_quote(cadr(plist));
-
-                // PPROP "list "name "value
-                ndprintf(
-                    g_Writer.GetStream(), 
-                    "%t %s %s %s\n",
-                    LOCALIZED_ALTERNATE_PPROP,
-                    quoted_plist_name,
-                    quoted_property_name,
-                    quoted_property_value);
-
-                gcref(quoted_property_name);
-                gcref(quoted_property_value);
-                plist = cddr(plist);
-            }
+            // PPROP "list "name "value
+            AvlTreeEach(plist, quoted_plist_name, po_helper_print_plist);
         }
+
         gcref(quoted_plist_name);
 
         plistlst = cdr(plistlst);

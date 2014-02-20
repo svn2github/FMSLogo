@@ -25,6 +25,12 @@ typedef int (*NODE_COMPARE_FUNCTION) (
     NODE * NodeB
     );
 
+typedef void (*PLIST_EACH_FUNCTION) (
+    void * Context,
+    NODE * Key,
+    NODE * Value
+    );
+
 // function declarations
 NODE *
 AvlTreeSearch(
@@ -46,6 +52,13 @@ AvlTreeDelete(
     NODE                  ** RootNodePtr,
     NODE_COMPARE_FUNCTION    CompareFunction,
     NODE                  *  Key
+    );
+
+void
+AvlTreeEach(
+    NODE                  *  RootNode,
+    void *                   Context,
+    PLIST_EACH_FUNCTION      ForEachFunction
     );
 
 NODE *
