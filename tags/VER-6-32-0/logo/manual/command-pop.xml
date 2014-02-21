@@ -1,0 +1,38 @@
+<section id="command-pop">
+<title>POP</title>
+<indexterm><primary>POP</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>POP</command> <parameter>stackname</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the most recent thing that was pushed on, using <link linkend="command-push">PUSH</link>, off the stack whose name is <parameter>stackname</parameter> and removes that member from the stack.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>MAKE "mystack []
+PUSH "mystack 1
+PUSH "mystack 2
+SHOW :mystack</userinput>
+[2 1]</programlisting>
+
+<programlisting><userinput>SHOW POP "mystack</userinput>
+2</programlisting>
+
+<programlisting><userinput>SHOW POP "mystack</userinput>
+1</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>

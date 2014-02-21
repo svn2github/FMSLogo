@@ -1,0 +1,68 @@
+<section id="command-netaccepton">
+<title>NETACCEPTON</title>
+<indexterm><primary>NETACCEPTON</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>NETACCEPTON</command> <parameter>socket</parameter> <parameter>sendready</parameter> <parameter>receiveready</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Enables you to accept a connection over the network on the <parameter>socket</parameter>.
+To obtain the data received call <link linkend="command-netacceptreceivevalue">NETACCEPTRECEIVEVALUE</link> in your <parameter>receiveready</parameter> code.
+To turn off accept call <link linkend="command-netacceptoff">NETACCEPTOFF</link>.
+When data are available, &PRODUCTNAME; will run the <parameter>receiveready</parameter> instruction list.
+When you actually send data with <link linkend="command-netacceptsendvalue">NETACCEPTSENDVALUE</link> it might output FALSE (meaning that it's not ready to send).
+If this happens you must wait until &PRODUCTNAME; runs the <parameter>sendready</parameter> instruction list before trying to send the data again.
+Note you cannot just send data from the <parameter>sendready</parameter> callback, it won't be run unless the previous send was blocked.
+</para>
+
+<para>
+NETACCEPTON outputs TRUE if the operation was successful.
+Otherwise, it outputs FALSE.
+</para>
+
+<para>
+The <parameter>socket</parameter> input is an integer that is used to identify which socket to listen on.
+This is used as the local port.
+</para>
+
+<para>
+The <parameter>sendready</parameter> input is an instruction list (a list of instructions or a procedure name) to run when data is ready to send again.
+The first time <parameter>sendready</parameter> is run is when &PRODUCTNAME; successfully issued an accept.
+The second time <parameter>sendready</parameter> is run is when &PRODUCTNAME; accepts a connection.
+The third time <parameter>sendready</parameter> is run is when &PRODUCTNAME; is ready to send data.
+After that, <parameter>sendready</parameter> is run when &PRODUCTNAME; is ready to send after an earlier call to NETACCEPTSENDVALUE failed.
+</para>
+
+<para>
+The <parameter>receiveready</parameter> input is an instruction list (a list of instructions or a procedure name) to run when data are available.
+&PRODUCTNAME; runs it whenever data is received and is ready to be read.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>NETSTARTUP ; Start up the network
+
+; Wait for someone to connect to you on socket 5124
+SHOW NETACCEPTON 5124 [PRINT [Ready to send]] [PRINT [Ready to receive]]</userinput>
+true
+
+<userinput>NETACCEPTOFF
+NETSHUTDOWN</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+
+</variablelist>
+
+</section>
