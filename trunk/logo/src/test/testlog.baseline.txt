@@ -8216,10 +8216,10 @@ PASS: [SHELL {1}] output false , as expected.
 PASS: [SHELL [1]] output false , as expected.
 PASS: [SHELL 1] output false , as expected.
 INFO: [MAKE "rval (SHELL [perl -e "sleep 5"] "true)] took 5197 ms to execute
-PASS: [MAKE "rval (SHELL [perl -e "sleep 5"] "true)] output true . , as expected.
+PASS: [MAKE "rval (SHELL [perl -e "sleep 5"] "true)] output true , as expected.
 PASS: [MAKE "rval (SHELL [perl -e "sleep 5"] "true)] ran in 5197 ms. Anywhere between 4000 ms and 6000 is acceptable.
 INFO: [MAKE "rval (SHELL [perl -e "sleep 5"] "false)] took 10 ms to execute
-PASS: [MAKE "rval (SHELL [perl -e "sleep 5"] "false)] output true . , as expected.
+PASS: [MAKE "rval (SHELL [perl -e "sleep 5"] "false)] output true , as expected.
 PASS: [MAKE "rval (SHELL [perl -e "sleep 5"] "false)] ran in 10 ms. Anywhere between 0 ms and 500 is acceptable.
 INFO: [MAKE "rval SHELL [perl -e "sleep 5"]] took 0 ms to execute
 PASS: [MAKE "rval SHELL [perl -e "sleep 5"]] output true , as expected.
