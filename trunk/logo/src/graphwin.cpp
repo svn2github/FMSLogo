@@ -2475,7 +2475,7 @@ NODE *lsetturtle(NODE *args)
 
         // Update the current brush.
         // ChangeActivePenColor() updates the brushes color and width.
-        Color & activePenColor = GetPenStateForSelectedTurtle().Color;
+        const Color & activePenColor = GetPenStateForSelectedTurtle().Color;
         ChangeActivePenColor(
             activePenColor.red,
             activePenColor.green,
