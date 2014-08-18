@@ -205,8 +205,6 @@ extern void mouse_uninit(void);
 
 // global variables
 extern mode_type   current_mode;
-extern bool        bPolyFlag;
-extern VERTEXLIST* ThePolygon;
 
 const int COLORTABLESIZE = 16;
 extern const RGBCOLOR colortable[];

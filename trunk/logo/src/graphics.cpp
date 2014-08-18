@@ -287,8 +287,8 @@ static const NAMEDCOLOR g_NamedColors[] =
 
 bool bIndexMode = false;
 
-bool        bPolyFlag  = false;
-VERTEXLIST* ThePolygon = NULL;
+static bool        bPolyFlag  = false;
+static VERTEXLIST* ThePolygon = NULL;
 
 static void forward_helper(FLONUM d);
 
@@ -1210,7 +1210,6 @@ setpos_helper(
     NODE *znode
     )
 {
-
     if (NOT_THROWING)
     {
         draw_turtle(false);
