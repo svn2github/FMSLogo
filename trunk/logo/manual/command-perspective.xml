@@ -74,12 +74,11 @@ Many commands are repeated in both columns because they are designed for 2D mode
     </thead>
     <tbody>
 
-      <row>
+      <row rowsep="0">
         <entry>SETXY</entry>
         <entry>SETXY (does not change z-coordinate)</entry>
       </row>
-
-      <row rowsep="0">
+      <row>
         <entry></entry>
         <entry>SETXYZ</entry>
       </row>
@@ -88,38 +87,33 @@ Many commands are repeated in both columns because they are designed for 2D mode
         <entry>SETX (does not change y-coordinate)</entry>
         <entry>SETX (does not change y-coordinate or z-coordinate)</entry>
       </row>
-
       <row rowsep="0">
         <entry>SETY (does not change x-coordinate)</entry>
         <entry>SETY (does not change x-coordinate or z-coordinate)</entry>
       </row>
-
-      <row rowsep="0">
+      <row>
         <entry></entry>
         <entry>SETZ (does not change x-coordinate or y-coordinate)</entry>
       </row>
 
+      <row rowsep="0">
+        <entry>XCOR</entry>
+        <entry>XCOR</entry>
+      </row>
+      <row rowsep="0">
+        <entry>YCOR</entry>
+        <entry>YCOR</entry>
+      </row>
       <row>
-        <entry>XCOR</entry>
-        <entry>XCOR</entry>
-      </row>
-
-      <row rowsep="0">
-        <entry>YCOR</entry>
-        <entry>YCOR</entry>
-      </row>
-
-      <row rowsep="0">
         <entry></entry>
         <entry>ZCOR</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry>POS</entry>
         <entry>POS (z-coordinate is ignored)</entry>
       </row>
-
-      <row rowsep="0">
+      <row>
         <entry></entry>
         <entry>POSXYZ</entry>
       </row>
@@ -128,169 +122,140 @@ Many commands are repeated in both columns because they are designed for 2D mode
         <entry>SETPOS</entry>
         <entry>SETPOS (does not change z-coordinate)</entry>
       </row>
-
-      <row rowsep="0">
+      <row>
         <entry></entry>
         <entry>SETPOSXYZ</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry>TOWARDS</entry>
         <entry>TOWARDS</entry>
       </row>
-
       <row>
         <entry></entry>
         <entry>TOWARDSXYZ</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry>DISTANCE</entry>
         <entry>DISTANCE</entry>
       </row>
-
       <row>
         <entry></entry>
         <entry>DISTANCEXYZ</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry>HEADING</entry>
         <entry>HEADING</entry>
       </row>
-
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>ROLL</entry>
       </row>
-
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>PITCH</entry>
       </row>
-
       <row>
         <entry></entry>
         <entry>ORIENTATION</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry>SETHEADING</entry>
         <entry>SETHEADING</entry>
       </row>
-
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>SETROLL</entry>
       </row>
-
-
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>SETPITCH</entry>
       </row>
-
-
       <row>
         <entry></entry>
         <entry>SETORIENTATION</entry>
       </row>
 
 
-      <row>
+      <row rowsep="0">
         <entry>RIGHT</entry>
         <entry>RIGHT (on current plane)</entry>
       </row>
-
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>RIGHTROLL</entry>
       </row>
-
       <row>
         <entry></entry>
         <entry>UPPITCH</entry>
       </row>
 
 
-      <row>
+      <row rowsep="0">
         <entry>LEFT</entry>
         <entry>LEFT (on current plane)</entry>
       </row>
-
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>LEFTROLL</entry>
       </row>
-
       <row>
         <entry></entry>
         <entry>DOWNPITCH</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry>WINDOW</entry>
         <entry>PERSPECTIVE</entry>
       </row>
-
-      <row>
+      <row rowsep="0">
         <entry>WRAP</entry>
         <entry></entry>
       </row>
-
       <row>
         <entry>FENCE</entry>
         <entry></entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry>SETTURTLE 0-1023</entry>
         <entry>SETTURTLE 0-1023</entry>
       </row>
-
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>SETTURTLE -1 (the eye position)</entry>
       </row>
-
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>SETTURTLE -2 (where the eye is looking)</entry>
       </row>
-
       <row>
         <entry></entry>
         <entry>SETTURTLE -3 (the position of the light)</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>POLYSTART</entry>
       </row>
-
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>POLYEND</entry>
       </row>
-
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>POLYVIEW</entry>
       </row>
-
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>LIGHT</entry>
       </row>
-
       <row>
         <entry></entry>
         <entry>SETLIGHT</entry>
-      </row>
-
-      <row>
-        <entry></entry>
-        <entry>SETTURTLE -2 (where the eye is looking)</entry>
       </row>
 
       <row>
