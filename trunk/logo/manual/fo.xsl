@@ -5,7 +5,7 @@
   <xsl:import href="/usr/share/sgml/docbook/xsl-stylesheets/fo/docbook.xsl"/>
 -->
 
-  <xsl:param name="fop.extensions"             select="1"/>
+  <xsl:param name="fop1.extensions"            select="1"/>
 
   <xsl:param name="generate.section.toc.level" select="3"/>
 

@@ -29,7 +29,7 @@ index.html : $(SOURCEFILES) $(HTML_STYLESHEET)
 logohelp.fo : $(SOURCEFILES) $(FO_STYLESHEET)
 	cp translations-1033.xml translations.xml
 	echo -n $* > locale.xml
-	$(XSLTPROC) --stringparam fop.extensions 0 --stringparam fop1.extensions 1 --nonet --output $@ $(FO_STYLESHEET) $(ROOTFILE)
+	$(XSLTPROC) --nonet --output $@ $(FO_STYLESHEET) $(ROOTFILE)
 
 logohelp-%.chm : htmlhelp-%.hhp logohelp.css
 	perl -W clean-html.pl
