@@ -10,7 +10,7 @@ SOURCEFILES     = $(filter-out $(TEMPORARY_FILES), $(wildcard *.xml)) logoversio
 
 XSLTPROC = xsltproc
 HHC      = 'C:\Program Files\HTML Help Workshop\hhc.exe'
-FOP      = 'C:\Program Files\fop-0.20.5\fop.bat'
+FOP      = 'E:\fop-1.1\fop.bat'
 
 # prevent the hhp files from being automatically deleted
 .SECONDARY : $(addprefix htmlhelp-, $(addsuffix .hhp, $(LCIDS)))
@@ -29,7 +29,7 @@ index.html : $(SOURCEFILES) $(HTML_STYLESHEET)
 logohelp.fo : $(SOURCEFILES) $(FO_STYLESHEET)
 	cp translations-1033.xml translations.xml
 	echo -n $* > locale.xml
-	$(XSLTPROC) --nonet --output $@ $(FO_STYLESHEET) $(ROOTFILE)
+	$(XSLTPROC) --stringparam fop.extensions 0 --stringparam fop1.extensions 1 --nonet --output $@ $(FO_STYLESHEET) $(ROOTFILE)
 
 logohelp-%.chm : htmlhelp-%.hhp logohelp.css
 	perl -W clean-html.pl
