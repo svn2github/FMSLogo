@@ -26,7 +26,7 @@ You can switch out perspective mode by entering any of the 2D modes: <link linke
 
 <para>
 Everything that works in 2D applies in 3D (perspective mode).
-For example, if you had code that drew a 2D picture, say a star, you can run the same code and place that star on six sides of a cube by getting the turtle to the correct 3D coordinate and orientation before you call your 2D command for drawing a star.
+For example, if you had code that drew a 2D picture, say a star, you can run the same code and place that star on six sides of a cube by getting the turtle to the correct 3D coordinate and orientation before you run your 2D command for drawing a star.
 </para>
 
 
@@ -65,7 +65,7 @@ Load it, run it, and understand it thoroughly before moving on.
 
 <para>
 The table below summarizes of the relationship between commands in 2D mode and 3D mode.
-Many commands are repeated in both columns because they are effected by being in 3D mode.
+Many commands are repeated in both columns because they are designed for 2D mode but their behavior is affected by being in 3D mode.
 
 <informaltable frame='all'>
   <tgroup cols='2'>
@@ -79,17 +79,22 @@ Many commands are repeated in both columns because they are effected by being in
         <entry>SETXY (does not change z-coordinate)</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
+        <entry></entry>
+        <entry>SETXYZ</entry>
+      </row>
+
+      <row rowsep="0">
         <entry>SETX (does not change y-coordinate)</entry>
         <entry>SETX (does not change y-coordinate or z-coordinate)</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry>SETY (does not change x-coordinate)</entry>
         <entry>SETY (does not change x-coordinate or z-coordinate)</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>SETZ (does not change x-coordinate or y-coordinate)</entry>
       </row>
@@ -99,12 +104,12 @@ Many commands are repeated in both columns because they are effected by being in
         <entry>XCOR</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry>YCOR</entry>
         <entry>YCOR</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>ZCOR</entry>
       </row>
@@ -114,14 +119,19 @@ Many commands are repeated in both columns because they are effected by being in
         <entry>POS (z-coordinate is ignored)</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry></entry>
         <entry>POSXYZ</entry>
       </row>
 
-      <row>
+      <row rowsep="0">
         <entry>SETPOS</entry>
         <entry>SETPOS (does not change z-coordinate)</entry>
+      </row>
+
+      <row rowsep="0">
+        <entry></entry>
+        <entry>SETPOSXYZ</entry>
       </row>
 
       <row>
@@ -241,6 +251,41 @@ Many commands are repeated in both columns because they are effected by being in
       <row>
         <entry></entry>
         <entry>SETTURTLE -1 (the eye position)</entry>
+      </row>
+
+      <row>
+        <entry></entry>
+        <entry>SETTURTLE -2 (where the eye is looking)</entry>
+      </row>
+
+      <row>
+        <entry></entry>
+        <entry>SETTURTLE -3 (the position of the light)</entry>
+      </row>
+
+      <row>
+        <entry></entry>
+        <entry>POLYSTART</entry>
+      </row>
+
+      <row>
+        <entry></entry>
+        <entry>POLYEND</entry>
+      </row>
+
+      <row>
+        <entry></entry>
+        <entry>POLYVIEW</entry>
+      </row>
+
+      <row>
+        <entry></entry>
+        <entry>LIGHT</entry>
+      </row>
+
+      <row>
+        <entry></entry>
+        <entry>SETLIGHT</entry>
       </row>
 
       <row>
