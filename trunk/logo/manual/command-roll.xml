@@ -18,6 +18,7 @@ It is important to <link linkend="understand-your-orientation-in-3D">understand 
 </para>
 <para>
 ROLL is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+In 2D modes, ROLL outputs zero.
 </para>
 </listitem>
 </varlistentry>
