@@ -17,7 +17,8 @@ Outputs a number, the distance the turtle must travel along a straight line to r
 The <parameter>position</parameter> input must be a three item list containing the position's X, Y, and Z coordinates.
 </para>
 <para>
-This operation is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+DISTANCE is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+In 2D modes, DISTANCEXYZ ignores the Z-axis and outputs the straight-line distance between the turtle and the given X and Y coordinates.
 </para>
 </listitem>
 </varlistentry>
