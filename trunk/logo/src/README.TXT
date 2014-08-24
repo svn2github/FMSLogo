@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.32.0 for Microsoft Windows
+FMSLogo Version 6.33.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -13,21 +13,14 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.32.0.exe   - Installer for the mainline Logo environment
-  fmslogo-6.32.0.zip   - ZIP of the mainline Logo environment
-  wxfmslogo-6.32.0.exe - Installer for the Beta wxWidgets-based Logo environment
+  fmslogo-6.33.0.exe   - Installer for the mainline Logo environment
+  fmslogo-6.33.0.zip   - ZIP of the mainline Logo environment
+  wxfmslogo-6.33.0.exe - Installer for the Beta wxWidgets-based Logo environment
 
 II. New features/bugs fixed:
 
-  Changed in 6.32.0
-  o Implement feature #94; PPROP, GPROP, and REMPROP now run in O(log N).
-  o Fix inconsistent behavior in the wxWidgets version where pressing
-    the up arrow from the commander input to the history didn't clear
-    the commander input.
-  o Fix inconsistent behavior in the wxWidgets version of SELECTBOX
-    where pressing OK when there were no choices threw a Stopping error,
-    instead of outputting 1, as the OWL version does.
-  o Various updates to the German manual.
+  Changed in 6.33.0
+  o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
