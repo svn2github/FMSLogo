@@ -42,6 +42,15 @@ SHOW ORIENTATION</userinput>
 </listitem>
 </varlistentry>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-orientation">ORIENTATION</link></member>
+<member><link linkend="command-setroll">SETROLL</link></member>
+<member><link linkend="command-setpitch">SETPITCH</link></member>
+<member><link linkend="command-setheading">SETHEADING</link></member>
+</simplelist></listitem>
+</varlistentry>
+
 </variablelist>
 
 </section>
