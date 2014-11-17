@@ -457,6 +457,10 @@ $Exceptions{'command-selectbox.xml'}{'allcaps'}{'OK'} = 1;
 
 $Exceptions{'command-setbitmode.xml'}{'allcaps'}{'XOR'} = 1;
 
+$Exceptions{'command-setpitch.xml'}{'allcaps'}{'BADWHEEL'} = 1;
+$Exceptions{'command-setpitch.xml'}{'allcaps'}{'GOODWHEEL1'} = 1;
+$Exceptions{'command-setpitch.xml'}{'allcaps'}{'GOODWHEEL2'} = 1;
+
 $Exceptions{'command-setlight.xml'}{'allcaps'}{'SQUARE'} = 1;
 
 $Exceptions{'command-setmargins.xml'}{'allcaps'}{'TV'} = 1;
