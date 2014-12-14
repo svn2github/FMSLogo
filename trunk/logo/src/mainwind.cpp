@@ -19,6 +19,8 @@
  */
 #include "mainwind.h"
 
+#include <algorithm>
+
 #include "main.h"
 #include "const.h"
 #include "activearea.h"
@@ -728,10 +730,10 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
         // Make sure that none of rectangle's borders are off-screen
         // after we inflated it.
         RECT sourceRect;
-        sourceRect.left   = (int) (min(max(scaledSourceRectLeft,   0.0), (double)BitMapWidth));
-        sourceRect.top    = (int) (min(max(scaledSourceRectTop,    0.0), (double)BitMapHeight));
-        sourceRect.right  = (int) (min(max(scaledSourceRectRight,  0.0), (double)BitMapWidth));
-        sourceRect.bottom = (int) (min(max(scaledSourceRectBottom, 0.0), (double)BitMapHeight));
+        sourceRect.left   = (int) (std::min(std::max(scaledSourceRectLeft,   0.0), (double)BitMapWidth));
+        sourceRect.top    = (int) (std::min(std::max(scaledSourceRectTop,    0.0), (double)BitMapHeight));
+        sourceRect.right  = (int) (std::min(std::max(scaledSourceRectRight,  0.0), (double)BitMapWidth));
+        sourceRect.bottom = (int) (std::min(std::max(scaledSourceRectBottom, 0.0), (double)BitMapHeight));
 
         RECT destRect;
         destRect.left   = sourceRect.left   * the_zoom;

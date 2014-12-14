@@ -21,6 +21,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <algorithm>
 
 #ifdef WX_PURE
 typedef struct __BITMAP      * HBITMAP;
@@ -953,10 +954,10 @@ void ibmturt(bool draw)
                 FLONUM y3 = Y_ROTATED(turtleBitmap.Width/2, -turtleBitmap.Height/2, cosine, sine);
 
                 // Compute the bounding box.  We grow the box by one to account for rounding errors.
-                leftOffset   = min(x0,min(x1, min(x2,x3))) - 1;
-                topOffset    = min(y0,min(y1, min(y2,y3))) - 1;
-                rightOffset  = max(x0,max(x1, max(x2,x3))) + 1;
-                bottomOffset = max(y0,max(y1, max(y2,y3))) + 1;
+                leftOffset   = std::min(x0,std::min(x1, std::min(x2,x3))) - 1;
+                topOffset    = std::min(y0,std::min(y1, std::min(y2,y3))) - 1;
+                rightOffset  = std::max(x0,std::max(x1, std::max(x2,x3))) + 1;
+                bottomOffset = std::max(y0,std::max(y1, std::max(y2,y3))) + 1;
             }
             else
             {
@@ -1004,10 +1005,10 @@ void ibmturt(bool draw)
         {
             if (g_SelectedTurtle->Points[j].bValid)
             {
-                invalidationBoundingBox.left   = min(invalidationBoundingBox.left,   (long) (g_SelectedTurtle->Points[j].from.x));
-                invalidationBoundingBox.top    = min(invalidationBoundingBox.top,    (long) (g_SelectedTurtle->Points[j].from.y));
-                invalidationBoundingBox.right  = max(invalidationBoundingBox.right,  (long) (g_SelectedTurtle->Points[j].from.x));
-                invalidationBoundingBox.bottom = max(invalidationBoundingBox.bottom, (long) (g_SelectedTurtle->Points[j].from.y));
+                invalidationBoundingBox.left   = std::min(invalidationBoundingBox.left,   (long) (g_SelectedTurtle->Points[j].from.x));
+                invalidationBoundingBox.top    = std::min(invalidationBoundingBox.top,    (long) (g_SelectedTurtle->Points[j].from.y));
+                invalidationBoundingBox.right  = std::max(invalidationBoundingBox.right,  (long) (g_SelectedTurtle->Points[j].from.x));
+                invalidationBoundingBox.bottom = std::max(invalidationBoundingBox.bottom, (long) (g_SelectedTurtle->Points[j].from.y));
                 needsInvalidation = true;
             }
         }
@@ -2628,10 +2629,10 @@ void turtlepaste(int TurtleToPaste)
             FLONUM y3 = Y_ROTATED(xOrigin, -yOrigin, cosine, sine);
 
             // Compute the bounding box.  We grow the box by one to account for rounding errors.
-            const int minx = (int) ((min(x0,min(x1, min(x2,x3))) - 1) * the_zoom);
-            const int miny = (int) ((min(y0,min(y1, min(y2,y3))) - 1) * the_zoom);
-            const int maxx = (int) ((max(x0,max(x1, max(x2,x3))) + 1) * the_zoom);
-            const int maxy = (int) ((max(y0,max(y1, max(y2,y3))) + 1) * the_zoom);
+            const int minx = (int) ((std::min(x0,std::min(x1, std::min(x2,x3))) - 1) * the_zoom);
+            const int miny = (int) ((std::min(y0,std::min(y1, std::min(y2,y3))) - 1) * the_zoom);
+            const int maxx = (int) ((std::max(x0,std::max(x1, std::max(x2,x3))) + 1) * the_zoom);
+            const int maxy = (int) ((std::max(y0,std::max(y1, std::max(y2,y3))) + 1) * the_zoom);
 
             // Figure out where on the screen window the turtle belongs.
             const int xScreenOffset = (+dest.x + xoffset) * the_zoom - GetScreenHorizontalScrollPosition();

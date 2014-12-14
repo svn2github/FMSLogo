@@ -21,6 +21,7 @@
 #include "threed.h"
 
 #include <math.h>
+#include <algorithm>
 
 #include "graphics.h"
 #include "graphwin.h"
@@ -85,10 +86,10 @@ void TThreeD::SetUp()
 
 void TThreeD::SetVolume()
 {
-    long Vt =  max(xoffset, yoffset);
-    long Vb = -max(xoffset, yoffset);
-    long Vr =  max(xoffset, yoffset);
-    long Vl = -max(xoffset, yoffset);
+    long Vt =  std::max(xoffset, yoffset);
+    long Vb = -std::max(xoffset, yoffset);
+    long Vr =  std::max(xoffset, yoffset);
+    long Vl = -std::max(xoffset, yoffset);
 
     A = (Vr - Vl) / 2.0;
     B = Vl + A;
