@@ -6,6 +6,7 @@
 #   bash
 #   cd <wxwidgets_top_dir>
 #   <path_to_this_script>/configure-wxwidgets.sh
+#   Patch wxwidgets with <path_to_this_script>/wxwidgets-2.8.12.patch
 #   gmake clean all
 #   gmake -C contrib/src/stc clean all
 #
