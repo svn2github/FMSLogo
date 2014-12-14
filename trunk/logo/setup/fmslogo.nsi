@@ -81,6 +81,7 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\Greek.nlf"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\Portuguese.nlf"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\Russian.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Croatian.nlf"
 
 LangString DesktopShortcut ${LANG_ENGLISH}    "Desktop Shortcut"
 LangString DesktopShortcut ${LANG_GERMAN}     "Desktop Shortcut" ; NOT_YET_LOCALIZED
@@ -90,6 +91,7 @@ LangString DesktopShortcut ${LANG_PORTUGUESE} "Atalho no Desktop"
 LangString DesktopShortcut ${LANG_FRENCH}     "Raccourci Bureau" 
 LangString DesktopShortcut ${LANG_GREEK}      "”хнфьмехуз ≈рйц№нейбт ≈сгбуябт"
 LangString DesktopShortcut ${LANG_RUSSIAN}    "ярлык рабочего стола" 
+LangString DesktopShortcut ${LANG_CROATIAN}   "Desktop Shortcut" ; NOT_YET_LOCALIZED
 
 LangString StartMenuShortcuts ${LANG_ENGLISH}    "Start Menu Shortcuts"
 LangString StartMenuShortcuts ${LANG_GERMAN}     "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
@@ -99,6 +101,7 @@ LangString StartMenuShortcuts ${LANG_PORTUGUESE} "Atalho no Menu Iniciar"
 LangString StartMenuShortcuts ${LANG_FRENCH}     "Raccourcis Menu Dйmarrer" 
 LangString StartMenuShortcuts ${LANG_GREEK}      "”хнфпмеэуейт ћенпэ Єнбсоз" 
 LangString StartMenuShortcuts ${LANG_RUSSIAN}    "ярлык меню ѕуск" 
+LangString StartMenuShortcuts ${LANG_CROATIAN}   "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
 
 LangString ScreenSaver ${LANG_ENGLISH}    "Screen Saver"
 LangString ScreenSaver ${LANG_GERMAN}     "Screen Saver" ; NOT_YET_LOCALIZED
@@ -108,6 +111,7 @@ LangString ScreenSaver ${LANG_PORTUGUESE} "Screen Saver" ; NOT_YET_LOCALIZED
 LangString ScreenSaver ${LANG_FRENCH}     "Screen Saver" ; NOT_YET_LOCALIZED 
 LangString ScreenSaver ${LANG_GREEK}      "Screen Saver" ; NOT_YET_LOCALIZED 
 LangString ScreenSaver ${LANG_RUSSIAN}    "Screen Saver" ; NOT_YET_LOCALIZED 
+LangString ScreenSaver ${LANG_CROATIAN}   "Screen Saver" ; NOT_YET_LOCALIZED 
 
 ; uninstall must be able to remove all traces of any previous installation.
 Function uninstall
@@ -125,6 +129,7 @@ Function uninstall
   Delete $previousinstalldir\fmslogo-${LANG_GREEK}.exe
   Delete $previousinstalldir\fmslogo-${LANG_FRENCH}.exe
   Delete $previousinstalldir\fmslogo-${LANG_RUSSIAN}.exe
+  Delete $previousinstalldir\fmslogo-${LANG_CROATIAN}.exe
 
   Delete $previousinstalldir\startup.logoscript
   Delete $previousinstalldir\startup-${LANG_ENGLISH}.logoscript
@@ -135,6 +140,7 @@ Function uninstall
   Delete $previousinstalldir\startup-${LANG_GREEK}.logoscript
   Delete $previousinstalldir\startup-${LANG_FRENCH}.logoscript
   Delete $previousinstalldir\startup-${LANG_RUSSIAN}.logoscript
+  Delete $previousinstalldir\startup-${LANG_CROATIAN}.logoscript
 
   Delete $previousinstalldir\logohelp.chm
   Delete $previousinstalldir\logohelp-${LANG_ENGLISH}.chm
@@ -145,6 +151,7 @@ Function uninstall
   Delete $previousinstalldir\logohelp-${LANG_GREEK}.chm
   Delete $previousinstalldir\logohelp-${LANG_FRENCH}.chm
   Delete $previousinstalldir\logohelp-${LANG_RUSSIAN}.chm
+  Delete $previousinstalldir\logohelp-${LANG_CROATIAN}.chm
 
   Delete $SYSDIR\fmslogo.scr
   Delete $previousinstalldir\fmslogo-${LANG_ENGLISH}.scr
@@ -155,6 +162,7 @@ Function uninstall
   Delete $previousinstalldir\fmslogo-${LANG_GREEK}.scr
   Delete $previousinstalldir\fmslogo-${LANG_FRENCH}.scr
   Delete $previousinstalldir\fmslogo-${LANG_RUSSIAN}.scr
+  Delete $previousinstalldir\fmslogo-${LANG_CROATIAN}.scr
 
   ; For FMSLogo 6.27.0, Windows applied a compatibility shim that disabled
   ; file system redirection, resulting in FMSLogo.scr, the screen saver
@@ -241,6 +249,7 @@ FunctionEnd
   !insertmacro InstallLanguageFile.PerLanguage ${LANG_FRENCH}     ${build_path} ${filename_stem} ${filename_extension}
   !insertmacro InstallLanguageFile.PerLanguage ${LANG_GREEK}      ${build_path} ${filename_stem} ${filename_extension}
   !insertmacro InstallLanguageFile.PerLanguage ${LANG_RUSSIAN}    ${build_path} ${filename_stem} ${filename_extension}
+  !insertmacro InstallLanguageFile.PerLanguage ${LANG_CROATIAN}   ${build_path} ${filename_stem} ${filename_extension}
 !macroend
 
 ;--------------------------------
@@ -320,6 +329,7 @@ Function .onInit
   ${GetParameters} $R0
   ClearErrors
   ${GetOptions} $R0 /LCID= $LANGUAGE
+  StrCmp $LANGUAGE ${LANG_CROATIAN}   SetupUser
   StrCmp $LANGUAGE ${LANG_ENGLISH}    SetupUser
   StrCmp $LANGUAGE ${LANG_FRENCH}     SetupUser
   StrCmp $LANGUAGE ${LANG_GERMAN}     SetupUser
@@ -333,14 +343,16 @@ Function .onInit
   ; An LCID was specified, but it's not one that we support
 
   StrCmp $LANGUAGE "" SelectLanguage
-  MessageBox MB_OK|MB_ICONEXCLAMATION "Unrecognized LCID $LANGUAGE.$\nLCID must be one of the following:$\n  ${LANG_ENGLISH} (English),$\n  ${LANG_FRENCH} (French),$\n  ${LANG_GERMAN} (German),$\n  ${LANG_GREEK} (Greek),$\n  ${LANG_ITALIAN} (Italian),$\n  ${LANG_PORTUGUESE} (Portuguese),$\n  ${LANG_RUSSIAN} (Russian), and$\n  ${LANG_SPANISH} (Spanish).$\n"
+  MessageBox MB_OK|MB_ICONEXCLAMATION "Unrecognized LCID $LANGUAGE.$\nLCID must be one of the following:$\n  ${LANG_CROATIAN} (Croatian),$\n$\n  ${LANG_ENGLISH} (English),$\n  ${LANG_FRENCH} (French),$\n  ${LANG_GERMAN} (German),$\n  ${LANG_GREEK} (Greek),$\n  ${LANG_ITALIAN} (Italian),$\n  ${LANG_PORTUGUESE} (Portuguese),$\n  ${LANG_RUSSIAN} (Russian), and$\n  ${LANG_SPANISH} (Spanish).$\n"
   Abort
 
 SelectLanguage:
   ; Language selection dialog
   Push ""
   Push ${LANG_ENGLISH}
-  Push English
+  Push " English" ; HACK: put a space in before "English" to make it appear first and be the default
+  Push ${LANG_CROATIAN}
+  Push Croatian
   Push ${LANG_FRENCH}
   Push French
   Push ${LANG_GERMAN}
@@ -428,6 +440,9 @@ SetupUser.Done:
   StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "»ли инсталл€тор или FMSLogo в насто€щее врем€ запущены.$\n”становка не может быть продолжена." 
      Abort
+  StrCmp $LANGUAGE ${LANG_CROATIAN} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
+     Abort
   ; default to English
   MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
   Abort
@@ -461,13 +476,15 @@ checkifinstalled:
   StrCmp $LANGUAGE ${LANG_ITALIAN} 0 +2
     MessageBox MB_YESNO "La versione attualmente installata di FMSLogo deve essere disinstallata prima di procedere.$\nVuoi procedere con la disinstallazione?$\n$\n(Selezionando No verrа interrotta l'installazione)" IDYES uninstall IDNO abort
   StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +2
-    MessageBox MB_YESNO "Jб existe uma cуpia do FMSLogo e precisa ser desinstalada para prosseguir.$\nDeseja desinstalб-la?$\n$\n(Escolher Nгo cessarб a instalaзгo)" IDYES uninstall IDNO abort 
+    MessageBox MB_YESNO "Jб existe uma cуpia do FMSLogo e precisa ser desinstalada para prosseguir.$\nDeseja desinstalб-la?$\n$\n(Escolher Nгo cessarб a instalaзгo)" IDYES uninstall IDNO abort
   StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
-    MessageBox MB_YESNO "La version existante de FMSLogo doit кtre dйsinstallйe pour continuer.$\nVoulez-vous la dйsinstaller?$\n$\n(Choisir Non terminera l'installation)" IDYES uninstall IDNO abort 
+    MessageBox MB_YESNO "La version existante de FMSLogo doit кtre dйsinstallйe pour continuer.$\nVoulez-vous la dйsinstaller?$\n$\n(Choisir Non terminera l'installation)" IDYES uninstall IDNO abort
   StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
     MessageBox MB_YESNO "‘п хр№счпн бнфягсбцп фзт FMSLogo рсЁрей нб брегкбфбуфбиея рсйн ухнечйуфея бхфё з егкбф№уфбуз.$\n»Ёлефе нб фп егкбфбуфёуефе;$\n$\n(≈рйлЁгпнфбт Љчй з егкбф№уфбуз иб клеяуей.)" IDYES uninstall IDNO abort
   StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +2
-    MessageBox MB_YESNO "—уществующа€ копи€ FMSLogo должна быть удалена, чтобы продолжить.$\n¬ы хотите удалить ее?$\n$\n(¬ыбор Ќет прервет установку)" IDYES uninstall IDNO abort 
+    MessageBox MB_YESNO "—уществующа€ копи€ FMSLogo должна быть удалена, чтобы продолжить.$\n¬ы хотите удалить ее?$\n$\n(¬ыбор Ќет прервет установку)" IDYES uninstall IDNO abort
+  StrCmp $LANGUAGE ${LANG_CROATIAN} 0 +2
+    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
  ; default to English
  MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort
 
@@ -516,6 +533,9 @@ Function un.onInit
      Abort
   StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "»ли инсталл€тор или FMSLogo в насто€щее врем€ запущены.$\nн”даление не может быть продолжено."
+     Abort
+  StrCmp $LANGUAGE ${LANG_CROATIAN} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
      Abort
   ; default to English
   MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue."
@@ -574,6 +594,8 @@ CheckIfInstallExists.ShowError:
   StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "»ли FMSLogo был уже удален, или ¬ы не имеете прав удал€ть ее.$\n¬ любом случае, удаление не может быть продолжено." 
      Abort
+  StrCmp $LANGUAGE ${LANG_CROATIAN} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
   ; default to English
   MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue."
   Abort
@@ -597,6 +619,7 @@ Section "Uninstall"
   Delete $INSTDIR\fmslogo-${LANG_GREEK}.exe
   Delete $INSTDIR\fmslogo-${LANG_FRENCH}.exe
   Delete $INSTDIR\fmslogo-${LANG_RUSSIAN}.exe
+  Delete $INSTDIR\fmslogo-${LANG_CROATIAN}.exe
 
   Delete $INSTDIR\startup.logoscript
   Delete $INSTDIR\startup-${LANG_ENGLISH}.logoscript
@@ -607,6 +630,7 @@ Section "Uninstall"
   Delete $INSTDIR\startup-${LANG_GREEK}.logoscript
   Delete $INSTDIR\startup-${LANG_FRENCH}.logoscript
   Delete $INSTDIR\startup-${LANG_RUSSIAN}.logoscript
+  Delete $INSTDIR\startup-${LANG_CROATIAN}.logoscript
 
   Delete $INSTDIR\logohelp.chm
   Delete $INSTDIR\logohelp-${LANG_ENGLISH}.chm
@@ -617,6 +641,7 @@ Section "Uninstall"
   Delete $INSTDIR\logohelp-${LANG_GREEK}.chm
   Delete $INSTDIR\logohelp-${LANG_FRENCH}.chm
   Delete $INSTDIR\logohelp-${LANG_RUSSIAN}.chm
+  Delete $INSTDIR\logohelp-${LANG_CROATIAN}.chm
 
   Delete $SYSDIR\fmslogo.scr
   Delete $INSTDIR\fmslogo-${LANG_ENGLISH}.scr
@@ -627,6 +652,7 @@ Section "Uninstall"
   Delete $INSTDIR\fmslogo-${LANG_GREEK}.scr
   Delete $INSTDIR\fmslogo-${LANG_FRENCH}.scr
   Delete $INSTDIR\fmslogo-${LANG_RUSSIAN}.scr
+  Delete $INSTDIR\fmslogo-${LANG_CROATIAN}.scr
 
   Delete $INSTDIR\README.TXT
   Delete $INSTDIR\LICENSE.TXT
