@@ -51,6 +51,11 @@ logohelp-1049.chm : htmlhelp-1049.hhp logohelp.css
 	perl -W clean-html.pl windows-1251
 	-$(HHC) htmlhelp-1049.hhp
 
+# Croatian builds require a different character set
+logohelp-1050.chm : htmlhelp-1050.hhp logohelp.css
+	perl -W clean-html.pl windows-1250
+	-$(HHC) htmlhelp-1050.hhp
+
 htmlhelp-%.hhp : translations-%.xml $(SOURCEFILES) $(HHP_STYLESHEET)
 	cp translations-$*.xml translations.xml
 	echo -n $* > locale.xml
