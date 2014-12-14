@@ -122,4 +122,4 @@ fi
     --disable-sysoptions          \
     --enable-no_deps              \
     --disable-dependency-tracking \
-    --host=i686-pc-mingw32        \
+    --host=i686-w64-mingw32       \

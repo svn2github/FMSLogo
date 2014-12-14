@@ -33,7 +33,9 @@ else
 # assume this is my Windows XP box
 
 EXEEXT = .exe
-WINDRES = windres
+
+# Compile with MinGW
+RC = windres --preprocessor=$(CXX) --preprocessor-arg=-E --preprocessor-arg=-xc-header
 
 wx_top_builddir = /cygdrive/e/wxMSW-2.8.12
 
@@ -45,7 +47,7 @@ LDFLAGS  = -lwx_msw_stc-2.8 -lwx_msw-2.8
 TOOLCHAIN_FULLNAME = msw-ansi-release-static-2.8
 endif
 
-TARGET_PREFIX=i686-pc-mingw32-
+TARGET_PREFIX=i686-w64-mingw32-
 
 LDFLAGS  += -mwindows
 
@@ -255,7 +257,7 @@ obj/$(1)-%.o : ../src/scintilla/src/%.cxx
 	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 -I../src/scintilla/include $$<
 
 obj/$(1)-%_rc.o : %.rc ../src/version.h
-	$(WINDRES) -i$$< -o$$@ -DLOCALE=$1 --define __WX$(TOOLKIT)__ $(addprefix --include-dir ,$(INCLUDES))
+	$(RC) -i$$< -o$$@ -DLOCALE=$1 --define __WX$(TOOLKIT)__ $(addprefix --include-dir ,$(INCLUDES))
 
 
 fmslogo_rc.o: fmslogo.rc
