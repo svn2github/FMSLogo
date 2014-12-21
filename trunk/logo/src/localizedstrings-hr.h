@@ -616,59 +616,59 @@
 //
 // General localized strings
 //
-#define LOCALIZED_GENERAL_OKBUTTON      "OK" // NOT_YET_LOCALIZED
-#define LOCALIZED_GENERAL_CANCELBUTTON  "Cancel" // NOT_YET_LOCALIZED
+#define LOCALIZED_GENERAL_OKBUTTON      "OK"
+#define LOCALIZED_GENERAL_CANCELBUTTON  "Poništi"
 #define LOCALIZED_GENERAL_APPLYBUTTON   "&Apply" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo" // NOT_YET_LOCALIZED
+#define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo"
 
 // Embedded description of fmslogo.exe
-#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "The FMSLogo programming environment" // NOT_YET_LOCALIZED
+#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "FMSLogo programsko okruženje"
 
 //
 // The menu options on the main window 
 //
-#define LOCALIZED_FILE                  "&File" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_NEW              "&New\t(erase workspace)" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_LOAD             "&Load...\t(merge into workspace)" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_OPEN             "&Open...\t(replace workspace)"  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_SAVE             "&Save"  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_SAVEAS           "Save &As..." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_SETASSCREENSAVER "Se&t As Screen Saver" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_EDIT             "&Edit..." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_ERASE            "E&rase..." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_EXIT             "E&xit" // NOT_YET_LOCALIZED
+#define LOCALIZED_FILE                  "&Datoteka"
+#define LOCALIZED_FILE_NEW              "&Nova\t(izbriši radni prostor)"
+#define LOCALIZED_FILE_LOAD             "&Uèitaj...\t(dodaj u radni prostor)"
+#define LOCALIZED_FILE_OPEN             "&Otvori...\t(Zamijeni radni prostor)"
+#define LOCALIZED_FILE_SAVE             "&Spremi"
+#define LOCALIZED_FILE_SAVEAS           "Spremi K&ao..."
+#define LOCALIZED_FILE_SETASSCREENSAVER "Pos&tavi kao èuvar ekrana"
+#define LOCALIZED_FILE_EDIT             "Ur&edi..."
+#define LOCALIZED_FILE_ERASE            "Ob&riši..."
+#define LOCALIZED_FILE_EXIT             "I&zlaz"
 
-#define LOCALIZED_BITMAP               "&Bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_NEW           "&New" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_LOAD          "&Load..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_SAVE          "&Save" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_SAVEAS        "Save &As..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_PRINT         "&Print..." // NOT_YET_LOCALIZED
+#define LOCALIZED_BITMAP               "&Bitmapa"
+#define LOCALIZED_BITMAP_NEW           "&Nova"
+#define LOCALIZED_BITMAP_LOAD          "&Uèitaj..."
+#define LOCALIZED_BITMAP_SAVE          "&Spremi"
+#define LOCALIZED_BITMAP_SAVEAS        "Spremi K&ao..."
+#define LOCALIZED_BITMAP_PRINT         "Is&piši..."
 #define LOCALIZED_BITMAP_PRINTERSETUP  "P&rinter Setup..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_ACTIVEAREA    "A&ctive Area..." // NOT_YET_LOCALIZED
+#define LOCALIZED_BITMAP_ACTIVEAREA    "A&ktivno podruèje..."
 
-#define LOCALIZED_SET                  "&Set" // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_PENSIZE          "Pen Si&ze..." // NOT_YET_LOCALIZED
+#define LOCALIZED_SET                  "&Namjesti"
+#define LOCALIZED_SET_PENSIZE          "&Debljina pera..."
 #define LOCALIZED_SET_LABELFONT        "&Label Font..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_COMMANDERFONT    "&Commander Font..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_PENCOLOR         "&Pen Color..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_FLOODCOLOR       "F&lood Color..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_SCREENCOLOR      "&Screen Color..." // NOT_YET_LOCALIZED
+#define LOCALIZED_SET_COMMANDERFONT    "&Font naredbenog retka..."
+#define LOCALIZED_SET_PENCOLOR         "&Boja pera..."
+#define LOCALIZED_SET_FLOODCOLOR       "Boja &ispune..."
+#define LOCALIZED_SET_SCREENCOLOR      "Boja &ekrana..."
 
-#define LOCALIZED_ZOOM                 "&Zoom"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_IN              "&In" // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_OUT             "&Out" // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_NORMAL          "&Normal" // NOT_YET_LOCALIZED
+#define LOCALIZED_ZOOM                 "&Zum"
+#define LOCALIZED_ZOOM_IN              "&Poveæaj"
+#define LOCALIZED_ZOOM_OUT             "&Smanji"
+#define LOCALIZED_ZOOM_NORMAL          "&Normalno"
 
-#define LOCALIZED_HELP                 "&Help"  // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_INDEX           "&Index" // NOT_YET_LOCALIZED
+#define LOCALIZED_HELP                 "&Pomoæ"
+#define LOCALIZED_HELP_INDEX           "&Indeks"
 #define LOCALIZED_HELP_TUTORIAL        "&Tutorial" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_DEMO            "&Demo"  // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_EXAMPLE         "&Examples" // NOT_YET_LOCALIZED
+#define LOCALIZED_HELP_DEMO            "&Demo"
+#define LOCALIZED_HELP_EXAMPLE         "&Primjeri"
 #define LOCALIZED_HELP_RELEASENOTES    "&Release Notes" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_ABOUTFMSLOGO    "&About "LOCALIZED_GENERAL_PRODUCTNAME"..." // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_MS              "&About MS..." // NOT_YET_LOCALIZED
+#define LOCALIZED_HELP_ABOUTFMSLOGO    "&O "LOCALIZED_GENERAL_PRODUCTNAME"..."
+#define LOCALIZED_HELP_MS              "&O Multiploj sklerozi..."
 // The following two help options display tables for translating to/from English
 // These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
 // and startup-xxxx.logoscript file.
@@ -710,25 +710,25 @@
 //
 // Menu options in the popup menu
 //
-#define LOCALIZED_POPUP_COPY                     "Copy" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_CUT                      "Cut" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_PASTE                    "Paste" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_DELETE                   "Delete" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_UNDO                     "Undo" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_REDO                     "Redo" // NOT_YET_LOCALIZED
+#define LOCALIZED_POPUP_COPY                     "Kopiraj"
+#define LOCALIZED_POPUP_CUT                      "Izreži"
+#define LOCALIZED_POPUP_PASTE                    "Zalijepi"
+#define LOCALIZED_POPUP_DELETE                   "Izbriši" // NOT_YET_LOCALIZED
+#define LOCALIZED_POPUP_UNDO                     "Poništi"
+#define LOCALIZED_POPUP_REDO                     "Ponovi"
 #define LOCALIZED_POPUP_SELECTALL                "Select All" // NOT_YET_LOCALIZED
 #define LOCALIZED_POPUP_HELP                     "Topic Search" // NOT_YET_LOCALIZED
 
 //
 // The menu options on the editor
 //
-#define LOCALIZED_EDITOR_TITLE                   "Editor" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_TITLE                   "Ureðivaè teksta"
 
-#define LOCALIZED_EDITOR_FILE                    "&File" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "&Save and Exit\tCtrl+D" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "Save to &Workspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_PRINT              "&Print..."  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_EXIT               "E&xit"  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_FILE                    "&Datoteka"
+#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "&Spremi i izlaz\tCtrl+D"
+#define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "Spremi u &radni prostor"
+#define LOCALIZED_EDITOR_FILE_PRINT              "Is&piši..."
+#define LOCALIZED_EDITOR_FILE_EXIT               "I&zlaz"
 
 #define LOCALIZED_EDITOR_EDIT                    "&Edit" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_EDIT_UNDO               "&Undo\tCtrl+Z" // NOT_YET_LOCALIZED
@@ -987,13 +987,13 @@
 #define LOCALIZED_ERROR_DIDNTOUTPUT            "%p didn't output to %p" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_NOTENOUGHINPUTS        "not enough inputs to %p" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_TOOMUCH                "too much inside ()'s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "You don't say what to do with %s" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "Ne kažeš što da napravim s %s"
 #define LOCALIZED_ERROR_PARENMISMATCH          "too many ('s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOVALUE                "%s has no value" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_NOVALUE                "%s nema zadanu vrijednost"
 #define LOCALIZED_ERROR_UNEXPECTEDPAREN        "unexpected ')'" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_UNEXPECTEDBRACKET      "unexpected ']'" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_UNEXPECTEDBRACE        "unexpected '}'" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DONTKNOWHOWTO          "I don't know how to %p" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_DONTKNOWHOWTO          "Ne znam što je %p"
 #define LOCALIZED_ERROR_NOCATCHTAG             "Can't find catch tag for %p" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_ALREADYDEFINED         "%p is already defined" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_STOPPING               "Stopping..." // NOT_YET_LOCALIZED
