@@ -105,7 +105,7 @@ LangString StartMenuShortcuts ${LANG_CROATIAN}   "Start Menu Shortcuts" ; NOT_YE
 
 LangString ScreenSaver ${LANG_ENGLISH}    "Screen Saver"
 LangString ScreenSaver ${LANG_GERMAN}     "Screen Saver" ; NOT_YET_LOCALIZED
-LangString ScreenSaver ${LANG_SPANISH}    "Screen Saver" ; NOT_YET_LOCALIZED
+LangString ScreenSaver ${LANG_SPANISH}    "Salvapantallas"
 LangString ScreenSaver ${LANG_ITALIAN}    "Screen Saver" ; NOT_YET_LOCALIZED
 LangString ScreenSaver ${LANG_PORTUGUESE} "Screen Saver" ; NOT_YET_LOCALIZED
 LangString ScreenSaver ${LANG_FRENCH}     "Screen Saver" ; NOT_YET_LOCALIZED 
