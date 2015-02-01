@@ -443,9 +443,7 @@ void InitializeTurtle(Turtle * TurtleToInitialize)
 
     TurtleToInitialize->Heading    = 0.0;
 
-#ifndef WX_PURE
     TurtleToInitialize->BitmapRasterMode = 0;
-#endif
 
     TurtleToInitialize->IsShown    = true;
     TurtleToInitialize->IsPenUp    = false;
@@ -472,12 +470,10 @@ void InitializeTurtle(Turtle * TurtleToInitialize)
     TurtleToInitialize->Matrix.e32 = 0.0;
     TurtleToInitialize->Matrix.e33 = 1.0;
 
-#ifndef WX_PURE
     TurtleToInitialize->Points[0].bValid = false;
     TurtleToInitialize->Points[1].bValid = false;
     TurtleToInitialize->Points[2].bValid = false;
     TurtleToInitialize->Points[3].bValid = false;
-#endif
 }
 
 void draw_turtles(bool draw)
@@ -499,7 +495,6 @@ void draw_turtle(bool draw)
     if (g_SelectedTurtle->IsSpecial)
     {
         // either the eye, the eye fixation, or the light turtle is selected
-#ifndef WX_PURE
         ThreeD.SetFrom();
         ThreeD.SetAt();
         ThreeD.SetUp();
@@ -507,7 +502,6 @@ void draw_turtle(bool draw)
         ThreeD.SetEye();
         ThreeD.SetLight();
         // if (ThreeD.Tree) ThreeD.View();
-#endif
 
         // special turtles are never drawn
         return;
@@ -867,11 +861,11 @@ void line_to_3d(const Point & ToPoint)
         vector_count++;
         update_status_vectors();
 
-#ifndef WX_PURE
         HPEN           pen;
         const LOGPEN * logicalPen;
         int            rasterMode;
 
+#ifndef WX_PURE
         if (GetPenStateForSelectedTurtle().IsErasing)
         {
             pen        = g_ErasePen;
@@ -892,6 +886,7 @@ void line_to_3d(const Point & ToPoint)
                 rasterMode = R2_COPYPEN;
             }
         }
+#endif
 
         transline3d(
             *logicalPen,
@@ -899,7 +894,6 @@ void line_to_3d(const Point & ToPoint)
             rasterMode,
             g_OldPos,
             ToPoint);
-#endif
     }
 }
 
@@ -1693,8 +1687,8 @@ NODE *lbitmapturtle(NODE * arg)
     draw_turtle(false);
 #ifndef WX_PURE
     g_SelectedTurtle->BitmapRasterMode = SRCCOPY;
-    g_SelectedTurtle->IsSprite         = rotatingBitmap;
 #endif
+    g_SelectedTurtle->IsSprite         = rotatingBitmap;
     draw_turtle(true);
     return Unbound;
 }
@@ -1702,10 +1696,8 @@ NODE *lbitmapturtle(NODE * arg)
 NODE *lnobitmapturtle(NODE *)
 {
     draw_turtle(false);
-#ifndef WX_PURE
     g_SelectedTurtle->BitmapRasterMode = 0;
     g_SelectedTurtle->IsSprite         = false;
-#endif
     draw_turtle(true);
     return Unbound;
 }
@@ -1813,9 +1805,7 @@ NODE *lsetclip(NODE *args)
     if (NOT_THROWING)
     {
         draw_turtle(false);
-#ifndef WX_PURE
         ThreeD.SetClip(angle, zmin, zmax);
-#endif
         draw_turtle(true);
     }
 
@@ -2237,11 +2227,10 @@ static
 void cs_helper(bool centerp, bool clearp)
 {
     bPolyFlag = false;
-#ifndef WX_PURE
     ThreeD.DisposeVertices(ThePolygon);
     ThePolygon = NULL;
     ThreeD.DisposeTree();
-#endif
+
     update_status_vectors();
 
     if (clearp) 
@@ -2401,7 +2390,6 @@ NODE *lsetlight(NODE *args)
         NODE * ambient = car(arg);
         NODE * diffuse = cadr(arg);
 
-#ifndef WX_PURE
         ThreeD.m_Ambient = numeric_node_to_flonum(ambient);
         ThreeD.m_Diffuse = numeric_node_to_flonum(diffuse);
 
@@ -2409,7 +2397,6 @@ NODE *lsetlight(NODE *args)
         {
             ThreeD.View();
         }
-#endif // WX_PURE
     }
 
     return Unbound;
@@ -2417,13 +2404,9 @@ NODE *lsetlight(NODE *args)
 
 NODE *llight(NODE *)
 {
-#ifdef WX_PURE
-    return NIL;
-#else
     return cons_list(
         make_floatnode(ThreeD.m_Ambient),
         make_floatnode(ThreeD.m_Diffuse));
-#endif
 }
 
 NODE *lpolystart(NODE *)
@@ -2431,13 +2414,11 @@ NODE *lpolystart(NODE *)
     if (bPolyFlag)
     {
         bPolyFlag = false;
-#ifndef WX_PURE
         ThreeD.DisposeVertices(ThePolygon);
         ThePolygon = NULL;
         ShowMessageAndStop(
             LOCALIZED_ERROR_POLYSTART, 
             LOCALIZED_ERROR_POLYSTARTALREADYSTARTED);
-#endif
     }
     else
     {
@@ -2449,18 +2430,16 @@ NODE *lpolystart(NODE *)
 
 NODE *lpolyview(NODE *)
 {
-#ifndef WX_PURE
     if (ThreeD.m_Tree) 
     {
         ThreeD.View();
     }
-#endif
+
     return Unbound;
 }
 
 NODE *lpolyend(NODE *)
 {
-#ifndef WX_PURE
     if (bPolyFlag)
     {
         if (ThePolygon && 
@@ -2490,7 +2469,7 @@ NODE *lpolyend(NODE *)
 
     ThePolygon = NULL;
     bPolyFlag = false;
-#endif
+
     return Unbound;
 }
 
@@ -2544,7 +2523,6 @@ NODE *lperspective(NODE *)
     g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Matrix.e32 = 0.0;
     g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Matrix.e33 = 1.0;
 
-#ifndef WX_PURE
     ThreeD.SetLight();
     ThreeD.SetFrom();
     ThreeD.SetAt();
@@ -2556,7 +2534,6 @@ NODE *lperspective(NODE *)
     {
         ThreeD.View();
     }
-#endif
 
     draw_turtle(true);
     return Unbound;
@@ -2564,7 +2541,6 @@ NODE *lperspective(NODE *)
 
 NODE *lfill(NODE *arg)
 {
-#ifndef WX_PURE
     bool bOld;
     if (arg != NIL)
     {
@@ -2575,16 +2551,17 @@ NODE *lfill(NODE *arg)
         bOld = false;
     }
 
-    HWND screen = GetScreenWindow();
-
     draw_turtles(false);
+#ifndef WX_PURE
+    HWND screen = GetScreenWindow();
     ::UpdateWindow(screen);
 
     logofill(bOld);
     ::InvalidateRect(screen, NULL, FALSE);
     ::UpdateWindow(screen);
-    draw_turtles(true);
 #endif
+    draw_turtles(true);
+
     return Unbound;
 }
 

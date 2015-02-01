@@ -17,7 +17,9 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
+#ifndef WX_PURE
 #include <windows.h>
+#endif
 
 #include "messagebox.h"
 #include "screenwindow.h"
@@ -33,7 +35,9 @@ ShowMessage(
     const char * Message
     )
 {
+#ifndef WX_PURE
     ::MessageBox(GetCommanderWindow(), Message, Title, MB_OK);
+#endif
 }
 
 void

@@ -105,7 +105,6 @@ MSW_OBJECTS =                  \
     netwind.o                  \
     logodialogboxes.o          \
     mainwind.o                 \
-    messagebox.o               \
     mmwind.o                   \
 
 GTK_OBJECTS =                  \
@@ -157,6 +156,7 @@ WX_OBJECTS =                   \
     logomath.o                 \
     mainframe.o                \
     mem.o                      \
+    messagebox.o               \
     minieditor.o               \
     minieditortextctrl.o       \
     paren.o                    \
