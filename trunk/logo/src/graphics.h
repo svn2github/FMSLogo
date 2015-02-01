@@ -40,7 +40,17 @@ struct PENSTATE
     bool         IsErasing;
 };
 
-#ifndef WX_PURE
+
+#ifdef WX_PURE
+
+typedef unsigned int DWORD;
+
+struct POINT
+{
+    int x;
+    int y;
+};
+#endif
 
 struct LINEX
 {
@@ -49,16 +59,12 @@ struct LINEX
     bool  bValid;
 };
 
-#endif
-
 struct Turtle
 {
     MATRIX   Matrix;
     VECTOR   Position;
     FLONUM   Heading;
-#ifndef WX_PURE
     DWORD    BitmapRasterMode; // 0 if not bitmapped.  Windows raster mode, otherwise.
-#endif
     bool     IsShown;
     bool     IsPenUp;
     bool     IsSpecial;
@@ -69,10 +75,8 @@ struct Turtle
     PENSTATE PenState;
 
     // a cache for lines that make up a turtle's body
-#ifndef WX_PURE
     LINEX    Points[4];
     bool     Padding;
-#endif
 };
 
 // global variables

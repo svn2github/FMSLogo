@@ -23,7 +23,7 @@ TOOLCHAIN_FULLNAME = gtk2-unicode-release-$(shell wx-config --release)
 endif
 
 CPPFLAGS += $(shell wx-config --cppflags) -DWX_PURE
-CXXFLAGS += -pthread
+CXXFLAGS += -pthread -Wno-unused-variable -Wno-unused-local-typedefs -Wno-unused-function -Wno-unused-but-set-variable
 LDFLAGS  += -pthread
 
 # TODO: CPPFLAGS += -DWX_PRECOMP
@@ -98,7 +98,6 @@ LIBDIRNAME = $(wx_top_builddir)/lib
 CXXFLAGS  += -D__WX$(TOOLKIT)__ $(CPPFLAGS)
 
 MSW_OBJECTS =                  \
-    3dsolid.o                  \
     assembly.o                 \
     dib.o                      \
     dllwind.o                  \
@@ -108,13 +107,13 @@ MSW_OBJECTS =                  \
     mainwind.o                 \
     messagebox.o               \
     mmwind.o                   \
-    threed.o                   \
 
 GTK_OBJECTS =                  \
     wxpurestubs.o              \
 
 WX_OBJECTS =                   \
     LexFmsLogo.o               \
+    3dsolid.o                  \
     aboutfmslogo.o             \
     aboutmultiplesclerosis.o   \
     activearea.o               \
@@ -176,6 +175,7 @@ WX_OBJECTS =                   \
     statusdialog.o             \
     stringprintednode.o        \
     term.o                     \
+    threed.o                   \
     unix.o                     \
     utils.o                    \
     vector.o                   \

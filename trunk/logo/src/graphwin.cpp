@@ -27,6 +27,23 @@
 typedef struct __BITMAP      * HBITMAP;
 typedef struct __LOGPALLETTE * PLOGPALETTE;
 typedef struct __WND         * HWND;
+
+typedef int LONG;
+
+struct RECT {
+    int left;
+    int top;
+    int right;
+    int bottom;
+};
+
+#include <algorithm>
+
+#include <wx/gdicmn.h>
+#include "fmslogo.h"
+#include "screen.h"
+#include "../wxwidgets/mainframe.h"
+
 #else
 #include <windows.h>
 #include <htmlhelp.h>
@@ -57,6 +74,7 @@ typedef struct __WND         * HWND;
 #include "coms.h"
 #include "unix.h"
 #include "const.h"
+#include "threed.h"
 #include "screenwindow.h"
 #include "startup.h"
 #include "debugheap.h"
@@ -743,8 +761,6 @@ NODE *lbitsize(NODE *)
 #endif
 }
 
-#ifndef WX_PURE
-
 // Fills TurtlePoint with the location of the current
 // turtle on the 2D screen (before zooming and scrolling)
 //
@@ -779,7 +795,6 @@ WorldCoordinateToScreenCoordinate(
     return true;
 }
 
-
 // Invalidates a rectangle on the screen.
 // It adjusts for the zoom factor and scroll position.
 static void InvalidateRectangleOnScreen(const RECT & ScreenRectangle)
@@ -810,9 +825,17 @@ static void InvalidateRectangleOnScreen(const RECT & ScreenRectangle)
     adjustedRectangle.top    -= scrollerY;
     adjustedRectangle.bottom -= scrollerY;
 
+#ifdef WX_PURE
+    wxRect refreshRegion;
+    refreshRegion.SetLeft(adjustedRectangle.left);
+    refreshRegion.SetRight(adjustedRectangle.right);
+    refreshRegion.SetTop(adjustedRectangle.top);
+    refreshRegion.SetBottom(adjustedRectangle.bottom);
+    CFmsLogo::GetMainFrame()->GetScreen()->RefreshRect(refreshRegion);
+#else
     ::InvalidateRect(GetScreenWindow(), &adjustedRectangle, FALSE);
+#endif
 }
-
 
 // ibmturt() calculates what needs to be done to either draw or erase
 // the turte, but it does not actually do either of these operations.
@@ -1005,10 +1028,10 @@ void ibmturt(bool draw)
         {
             if (g_SelectedTurtle->Points[j].bValid)
             {
-                invalidationBoundingBox.left   = std::min(invalidationBoundingBox.left,   (long) (g_SelectedTurtle->Points[j].from.x));
-                invalidationBoundingBox.top    = std::min(invalidationBoundingBox.top,    (long) (g_SelectedTurtle->Points[j].from.y));
-                invalidationBoundingBox.right  = std::max(invalidationBoundingBox.right,  (long) (g_SelectedTurtle->Points[j].from.x));
-                invalidationBoundingBox.bottom = std::max(invalidationBoundingBox.bottom, (long) (g_SelectedTurtle->Points[j].from.y));
+                invalidationBoundingBox.left   = std::min(invalidationBoundingBox.left,   (LONG) (g_SelectedTurtle->Points[j].from.x));
+                invalidationBoundingBox.top    = std::min(invalidationBoundingBox.top,    (LONG) (g_SelectedTurtle->Points[j].from.y));
+                invalidationBoundingBox.right  = std::max(invalidationBoundingBox.right,  (LONG) (g_SelectedTurtle->Points[j].from.x));
+                invalidationBoundingBox.bottom = std::max(invalidationBoundingBox.bottom, (LONG) (g_SelectedTurtle->Points[j].from.y));
                 needsInvalidation = true;
             }
         }
@@ -1019,8 +1042,6 @@ void ibmturt(bool draw)
         InvalidateRectangleOnScreen(invalidationBoundingBox);
     }
 }
-
-#endif // WX_PURE
 
 NODE *lsetpixel(NODE *args)
 {

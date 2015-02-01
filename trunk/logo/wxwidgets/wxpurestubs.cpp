@@ -25,10 +25,6 @@ void checkwindow(int *x, int *y, int *w, int *h)
     *x = *y = *w = *h = -1;
 }
 
-void ibmturt(bool draw)
-{
-}
-
 ERR_TYPES DumpBitmapFile(const char * Filename, int MaxBitCount)
 {
     return FILE_ERROR;

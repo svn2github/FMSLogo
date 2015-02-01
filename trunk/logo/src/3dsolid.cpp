@@ -11,6 +11,13 @@
 
 #include <stdio.h>
 
+#ifdef WX_PURE
+#define GetRValue(rgb) (((rgb) >> 0)  & 0xFF)
+#define GetGValue(rgb) (((rgb) >> 8)  & 0xFF)
+#define GetBValue(rgb) (((rgb) >> 16) & 0xFF)
+#define RGB(r, g, b) (((r) & 0xFF) | (((g) & 0xFF) << 8) | (((b) & 0xFF) << 16))
+#endif
+
 #include "status.h"
 #include "graphics.h"
 #include "graphwin.h"
@@ -159,11 +166,13 @@ void TThreeDSolid::AddList(PLIST** tlist, POLYGON* Poly)
     PLIST *nuL = new PLIST;
     if (!nuL)
     {
+#ifndef WX_PURE
         MessageBox(
             GetActiveWindow(), 
             LOCALIZED_ERROR_OUTOFMEMORY,
             LOCALIZED_GENERAL_PRODUCTNAME, 
             MB_OK | MB_ICONEXCLAMATION);
+#endif
         return;
     }
     nuL->T = Poly;
@@ -917,21 +926,21 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
 }
 
 // Convert world coordinates to display coordinates
-BOOL TThreeDSolid::WorldToDisplay(double x, double y, double z, POINT& disp)
+bool TThreeDSolid::WorldToDisplay(double x, double y, double z, POINT& disp)
 {
     double xc = (x * A1.x + A1.y * y + A1.z * z + Offset.x) * DVal;
     double yc = (x * A2.x + A2.y * y + A2.z * z + Offset.y) * DVal;
     double zc = (x * A3.x + A3.y * y + A3.z * z + Offset.z);
 
-    if (zc == 0.0) return FALSE;
+    if (zc == 0.0) return false;
 
     double xm = xc /  zc;
     double ym = yc / -zc;
 
-    if (xm >  1.0) return FALSE;
-    else if (xm < -1.0) return FALSE;
-    else if (ym >  1.0) return FALSE;
-    else if (ym < -1.0) return FALSE;
+    if (xm >  1.0) return false;
+    else if (xm < -1.0) return false;
+    else if (ym >  1.0) return false;
+    else if (ym < -1.0) return false;
 
 //   disp.x = ((long) cut_error((A * xm + B))) + xoffset;
 //   disp.y = ((long) cut_error((C * ym + D))) + yoffset;
@@ -939,7 +948,7 @@ BOOL TThreeDSolid::WorldToDisplay(double x, double y, double z, POINT& disp)
     disp.y = ((long) g_round((C * ym + D))) + yoffset;
 //    disp.x = ((long) ((A * xm + B))) + xoffset;
 //    disp.y = ((long) ((C * ym + D))) + yoffset;
-    return TRUE;
+    return true;
 }
 
 // Return the color to paint a polygon. Only ambient and diffuse
@@ -978,6 +987,7 @@ POINT t[MAXVERT];   // Screen coordinates of POLYGON to display
 // Display the POLYGON
 void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
 {
+#ifndef WX_PURE
     // PrecomputeCentroid(Poly);
 
     RGBCOLOR color = ComputeColor(Poly->Centroid, Poly->Normal, Poly->ColorNdx);
@@ -1098,11 +1108,13 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
     DeleteObject(hBrush);
 
     // DeleteObject(hPen);
+#endif
 }
 
 // Display the figure stored in the BSP tree
 void TThreeDSolid::View()
 {
+#ifndef WX_PURE
     erase_screen();
 
     // memory
@@ -1132,6 +1144,7 @@ void TThreeDSolid::View()
     SelectObject(m_MemDC, oldBitmap);
 
     ::InvalidateRect(GetScreenWindow(), NULL, FALSE);
+#endif
 }
 
 // Traverse a BSP tree, rendering a three-dimensional scene

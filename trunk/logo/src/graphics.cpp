@@ -27,10 +27,22 @@
 #include <limits.h>
 
 #ifdef WX_PURE
+
+#ifndef WX_PRECOMP
+    #include <wx/dc.h>
+    #include <wx/dcmemory.h>
+#endif
+
 struct LOGPEN;
 typedef struct __PEN * HPEN;
 typedef struct __DC  * HDC;
-#else
+
+#include "fmslogo.h"
+#include "screen.h"
+#include "../wxwidgets/mainframe.h"
+
+#else // WX_PURE
+
 #include <windows.h>
 
 #ifdef max // MS compilers #define max in windows.h
@@ -527,7 +539,51 @@ transline_helper(
     ToX   =  ToX   + xoffset;
     ToY   = -ToY   + yoffset;
 
-#ifndef WX_PURE
+#ifdef WX_PURE
+    if (!zoom_flag)
+    {
+        // Draw the line in the memory back buffer.
+        CScreen * screen = CFmsLogo::GetMainFrame()->GetScreen();
+        wxMemoryDC & memoryDeviceContext = screen->GetMemoryDeviceContext();
+        memoryDeviceContext.DrawLine(FromX, FromY, ToX, ToY);
+
+        // Determine the part of the screen that we need to invalidate so that the
+	// memory device context is copied to the screen.
+        wxRect screenRect;
+        if (FromX < ToX)
+        {
+            screenRect.x      = FromX;
+            screenRect.width  = ToX - FromX;
+        }
+        else
+        {
+            screenRect.x      = ToX;
+            screenRect.width  = FromX - ToX;
+        }
+
+        if (FromY < ToY)
+        {
+            screenRect.y      = FromY;
+            screenRect.height = ToY - FromY;
+        }
+        else
+        {
+            screenRect.y      = ToY;
+            screenRect.height = FromY - ToY;
+        }
+
+        // Invalidate enough to cover the thickness of the pen
+	PENSTATE & penState = GetPenStateForSelectedTurtle();
+	screenRect.Inflate(penState.Width);
+
+        // Reposition the invalidated rectangle, accounting for scrolling.
+        const UINT scrollerX = GetScreenHorizontalScrollPosition();
+        const UINT scrollerY = GetScreenVerticalScrollPosition();
+        screenRect.Offset(-scrollerX, -scrollerY);
+
+	screen->RefreshRect(screenRect);
+    }
+#else
     HDC MemDC = GetMemoryDeviceContext();
 
     if (EnablePalette)
@@ -656,8 +712,6 @@ transline_helper(
 #endif
 }
 
-#ifndef WX_PURE
-
 static
 void 
 transline3d(
@@ -731,8 +785,6 @@ transline(
         g_round(to.y));
 }
 
-#endif
-
 
 static
 void move_to(FLONUM x, FLONUM y)
@@ -767,12 +819,10 @@ void line_to(FLONUM x, FLONUM y)
         toPoint.x = x;
         toPoint.y = y;
 
-#ifndef WX_PURE
-
         HPEN           pen;
         const LOGPEN * logicalPen;
         int            rasterMode;
-
+#ifndef WX_PURE
         if (GetPenStateForSelectedTurtle().IsErasing)
         {
             pen        = g_ErasePen;
@@ -793,15 +843,13 @@ void line_to(FLONUM x, FLONUM y)
                 rasterMode = R2_COPYPEN;
             }
         }
-
+#endif
         transline(
             *logicalPen,
             pen,
             rasterMode,
             g_OldPos,
             toPoint);
-
-#endif // WX_PURE
     }
 }
 

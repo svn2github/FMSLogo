@@ -4,7 +4,9 @@
 #ifndef __THREED_H_
 #define __THREED_H_
 
-#ifndef WX_PURE
+#ifdef WX_PURE
+struct POINT;
+#else
 #include <windows.h> // for POINT
 #endif
 
@@ -14,8 +16,6 @@
 const int WorldWidth = 1000;       // Current World size in X
 const int WorldHeight = 1000;      // Current World size in Y
 const int WorldDepth = 1000;       // Current World size in Z
-
-#ifndef WX_PURE
 
 // Three dimensional viewing class
 class TThreeD
@@ -64,7 +64,4 @@ private:
     double Zmax;
 };
 
-#endif // WX_PURE
-
 #endif //  __THREED_H_
-

@@ -677,6 +677,8 @@ HWND GetEditorWindow()
     return reinterpret_cast<HWND>(editor->GetHandle());
 }
 
+#endif // WX_PURE
+
 UINT GetScreenHorizontalScrollPosition()
 {
     return CFmsLogo::GetMainFrame()->GetScreen()->GetScrollPos(wxHORIZONTAL);
@@ -691,8 +693,6 @@ void SetScreenScrollPosition(UINT x, UINT y)
 {
     CFmsLogo::GetMainFrame()->GetScreen()->Scroll(x, y);
 }
-
-#endif // WX_PURE
 
 bool IsEditorOpen()
 {

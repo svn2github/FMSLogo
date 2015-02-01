@@ -9,7 +9,6 @@
     #include <wx/event.h>
     #include <wx/dc.h>
     #include <wx/dcmemory.h>
-    #include <wx/event.h>
 #endif
 
 #include "devwind.h"
@@ -156,6 +155,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
     wxPaintDC paintContext(this);
     PrepareDC(paintContext);
 
+
 #ifndef WX_PURE
     // This is a compromise between speed and memory (as is most code).
     // All drawing is written to the backing store 1 to 1 even when zoomed.
@@ -184,6 +184,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
         oldPalette2 = SelectPalette(memoryDC, ThePalette, FALSE);
         RealizePalette(memoryDC);
     }
+#endif
 
     // Determine the top left corner of where the window is scrolled
     int vbX;
@@ -245,6 +246,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
                 y + vbY);
         }
     }
+#ifndef WX_PURE
     else
     {
         // We are zoomed.  Compute scaling and then display
@@ -367,6 +369,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
 
     // draw the turtles on top of the image
     SetROP2(PaintDC, R2_NOT);
+#endif // WX_PURE
 
     for (int j = 0; j <= g_MaxTurtle; j++)
     {
@@ -392,8 +395,8 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
             }
         }
     }
-#endif // WX_PURE
 }
+
 
 wxClientDC & CScreen::GetScreenDeviceContext()
 {
