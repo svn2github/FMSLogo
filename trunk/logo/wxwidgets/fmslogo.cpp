@@ -806,10 +806,12 @@ TraceOutput(
     // Format the message into a wxString
     va_list args;
     va_start(args, FormatString);
-    wxString message = wxString::FormatV(FormatString, args);
+    wxString message = wxString::FormatV(WXSTRING(FormatString), args);
     va_end(args);
 
     // print the string
-    fputs(message.c_str(), stderr);
+    fputs(WXSTRING_TO_STRING(message), stderr);
+#ifndef WX_PURE
     OutputDebugString(message.c_str());
+#endif
 }

@@ -455,7 +455,7 @@ void CCommander::Execute()
 
     // In the event that multiple lines were pasted into the input control,
     // we must replace CRLF with LF, since that's what do_execution expects.
-    logoInstruction.Replace("\r\n", "\n");
+    logoInstruction.Replace(WXSTRING("\r\n"), WXSTRING("\n"));
 
     // BUG: This can modify the contents of wxString's buffer
     RunLogoInstructionFromGui(const_cast<char*>(WXSTRING_TO_STRING(logoInstruction)));
