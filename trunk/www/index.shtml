@@ -1,80 +1,47 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--#include virtual="header.html" -->
 
-<html>
+			<article>
+				<h2>Welcome to the world of FMSLogo!</h2>
+				<img src="media/logoexample.png" />
+				<p>FMSLogo is a free implementation of a computing environment called Logo, which is an interactive programming language that is simple, powerful, and best of all fun.
+				You can download FMSLogo from the project portal on SourceForge.
+				</p>
+				<p>
+				FMSLogo includes support for:
+				</p>
 
- <head>
-   <title>FMSLogo: An Educational Programming Environment</title>
-   <link rel="stylesheet" type="text/css" href="fmslogo.css" >
- </head>
-
- <body onload="onPageLoad('home')" >
-
-   <script src="fmslogo.js" type="text/javascript"></script>
-
-   <div id="body">
-     <!--#include virtual="banner.html" -->
-
-     <table border="0" cellspacing="0" cellpadding="0"><tr>
-
-       <!--#include virtual="navbar.html" -->
-
-       <td id="content">
-
-       <h2>Welcome to the world of FMSLogo!</h2>
-
-
-       <p>FMSLogo is a free implementation of a computing environment called Logo, which is an interactive programming language that is simple, powerful, and best of all fun.
-       You can download FMSLogo from the <a href="http://sourceforge.net/projects/fmslogo">project portal on SourceForge</a>.
-       </p>
-
-       <p>
-       FMSLogo includes support for
-       </p>
-
-       <ul>
-         <li>"Standard" Logo parsing</li>
-         <li>Turtle Graphics</li>
-         <li>Exception handling</li>
-         <li>TCP/IP networking</li>
-         <li>Text in all available system fonts</li>
-         <li>1024 independent turtles</li>
-         <li>Bitmapped turtles</li>
-         <li>MIDI devices</li>
-         <li>Direct I/O for controlling external hardware (must be admin)</li>
-         <li>Serial and parallel port communications</li>
-         <li>Saving and loading images in BMP format</li>
-         <li>Calling into native DLLs</li>
-         <li>Creating windows dialog boxes</li>
-         <li>Event driven programming (mouse, keyboard, timer)</li>
-         <li>Controlling multimedia devices (WAV sound files, CD-ROM control, etc.)</li>
-         <li>3D Perspective drawing (wire-frame and solids)</li>
-         <li>Creating animated GIFs</li>
-       </ul>
+				<ul>
+					<li>"Standard" Logo parsing</li>
+					<li>Turtle Graphics</li>
+					<li>Exception handling</li>
+					<li>TCP/IP networking</li>
+					<li>Text in all available system fonts</li>
+					<li>1024 independent turtles</li>
+					<li>Bitmapped turtles</li>
+					<li>MIDI devices</li>
+					<li>Direct I/O for controlling external hardware (must be admin)</li>
+					<li>Serial and parallel port communications</li>
+					<li>Saving and loading images in BMP format</li>
+					<li>Calling into native DLLs</li>
+					<li>Creating windows dialog boxes</li>
+					<li>Event driven programming (mouse, keyboard, timer)</li>
+					<li>Controlling multimedia devices (WAV sound files, CD-ROM control, etc.)</li>
+					<li>3D Perspective drawing (wire-frame and solids)</li>
+					<li>Creating animated GIFs</li>
+				</ul>
+				
+				<h2>Why FMSLogo?</h2>
+				<ul>
+					<li>FMSLogo has a simple GUI that encourages learning.</li>
+					<li>FMSLogo provides support for exploring diverse disciplines, including mathematics, engineering, art, music, and robotics.</li>
+					<li>FMSLogo runs fine on computers that are 10 years old.</li>
+					<li>FMSLogo has a strong, international user community with over a decade of classroom experience.</li>
+				</ul>
+				
+				<p>
+				Because of this, FMSLogo is ideal for elementary school computer labs.
+				</p>
+			</article>
 
 
-
-       <p>
-       There are many Logo environments to choose from, so why choose FMSLogo?
-       </p>
-
-       <ul>
-         <li>FMSLogo has a simple GUI that encourages learning.</li>
-         <li>FMSLogo provides support for exploring diverse disciplines, including mathematics, engineering, art, music, and robotics.
-         <li>FMSLogo runs fine on computers that are 10 years old.</li>
-         <li>FMSLogo has a strong, international user community with over a decade of classroom experience.
-       </ul>
-
-       <p>
-       Because of this, FMSLogo is ideal for elementary school computer labs.
-       </p>
- 
-       </td>
-
-     </tr></table>
-
-     <!--#include virtual="footer.html" -->
-
-   </div>
-
- </body>
-</html>
+<!--#include virtual="footer.html" -->

@@ -1,44 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--#include virtual="header.html" -->
 
-<html>
+			<article>
+				<h2>A Brief History Of Logo</h2>
+				<p>
+				Seymour Papert designed Logo to be powerful enough for computer research, but simple enough so that it could be enjoyed by children.
+				Papert used Logo to conduct Artificial Intelligence and Robotics research at the Massachusetts Institute of Technology.
+				One of the robots that Logo controlled had a dome-shaped protective casing over its electronics that made it resemble a turtle.
+				As personal	computers became more affordable, the physical turtle was replaced by a virtual turtle on a computer screen.
+				The virtual turtle was given a pen to help it fit into the familiar	world of childhood learning.
+				Drawing is already a natural part of childhood, but drawing	with Logo is different than drawing with crayons.
+				To draw with Logo, you must learn to think about drawing, enough so that you can teach a complete idiot (the turtle) how to draw.
+				</p>
+			</article>
 
- <head>
-   <title>FMSLogo: A Brief History of Logo</title>
-   <link rel="stylesheet" type="text/css" href="fmslogo.css">
- </head>
-
- <body onload="onPageLoad('history')" >
-
-   <script src="fmslogo.js" type="text/javascript"></script>
-
-   <div id="body">
-
-     <!--#include virtual="banner.html" -->
-
-     <table border="0" cellspacing="0" cellpadding="0"><tr>
-
-       <!--#include virtual="navbar.html" -->
-
-       <td id="content">
-
-        <h2>A Brief History Of Logo</h2>
-         <p>
-         Seymour Papert designed Logo to be powerful enough for computer research, but simple enough so that it could be enjoyed by children.
-         Papert used Logo to conduct Artificial Intelligence and Robotics research at the Massachusetts Institute of Technology.
-         One of the robots that Logo controlled had a dome-shaped protective casing over its electronics that made it resemble a turtle.
-         As personal computers became more affordable, the physical turtle was replaced by a virtual turtle on a computer screen.
-         The virtual turtle was given a pen to help it fit into the familiar world of childhood learning.
-         Drawing is already a natural part of childhood, but drawing with Logo is different than drawing with crayons.
-         To draw with Logo, you must learn to think about drawing, enough so that you can teach a complete idiot (the turtle) how to draw.
-         </p>
-
-       </td>
-
-     </tr></table>
-
-   <!--#include virtual="footer.html" -->
-
-   </div>
-
- </body>
-</html>
+<!--#include virtual="footer.html" -->

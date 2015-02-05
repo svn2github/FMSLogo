@@ -1,91 +1,26 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--#include virtual="header.html" -->
 
-<html>
+			<article>
+				<h2>Development Plan</h2>
+				
+				<p>
+				There is a lot of work to do on FMSLogo.
+				The code base lay in atrophy for five years before I picked it up.
+				It will take a lot of work just to bring it up to date, even without making any major updates in functionality.
+				Below is a rough outline of the development steps that I intend to take.
+				Of course, I will always be looking to fix bugs and make small updates that enhance the usability along the way.
+				</p>
+				
+				<ol style="list-style-type:decimal">
+					<li><b>Use the GNU tools to find performance bottlenecks and fix memory leaks.</b><br>
+					This purpose of this step is to gain a better understanding of where FMSLogo's problems lie.</li>
+					<li><b>Update the language engine to the latest from UCBLogo.</b><br>					
+					FMSLogo is based on UCBLogo's language engine. However, while UCBLogo has made many advances, FMSLogo is still using a snapshot of UCBLogo that is at least ten years old. There are some major benefits to updating the language engine. Just adding a "not equals" operator would make FMSLogo a significantly better programming environment.</li>
+					
+					<li><b>Begin implementing new features.</b><br>
+				
+					By the time I get here, FMSLogo will still be roughly the same as MSWLogo 6.5b, but it will be ready to be extended. The possibilities are limitless, but I'd like to start by adding a good sprite library, better support for 3D drawing, an interface for text to speech, a clean networking API, etc.</li>
+				</ol>
+			</article>
 
- <head>
-   <title>FMSLogo: Development Plan</title>
-   <link rel="stylesheet" type="text/css" href="fmslogo.css">
- </head>
-
- <body onload="onPageLoad('devplan')" >
-
-   <script src="fmslogo.js" type="text/javascript" ></script>
-
-   <div id="body">
-
-     <!--#include virtual="banner.html" -->
-
-     <table border="0" cellspacing="0" cellpadding="0"><tr>
-
-       <!--#include virtual="navbar.html" -->
-
-       <td id="content">
-
-       <h2>Development Plan</h2>
-
-        <p>
-        There is a lot of work to do on FMSLogo.
-        The code base lay in atrophy for five years before I picked it up.
-        It will take a lot of work just to bring it up to date, even without making any major updates in functionality.
-        Below is a rough outline of the development steps that I intend to take.
-        Of course, I will always be looking to fix bugs and make small updates that enhance the usability along the way.
-        </p>
-
-
-        <ol>
-         <li>
-          <span class="devplan-item">Port the documentation from RTF to DocBook.</span>
-          <span class="devplan-update">Completed on 2006-02-19.</span>
-          <br>
-          This will make the manual easier to update.
-          It also gives me an opportunity to carefully read the documentation, learn what FMSLogo is capable of, and fix typos.</li>
-
-         <li>
-           <span class="devplan-item">Write an extensive set of automated tests.</span>
-           <span class="devplan-update">Completed on 2012-10-3.</span>
-           <br>
-           Without a good test suite, I cannot confidently update FMSLogo without introducing regressions.
-           Because FMSLogo has a lot of features, writing a comprehensive set of tests is very time consuming.</li>
-
-         <li>
-           <span class="devplan-item">Port FMSLogo to gcc and wxWidgets.</span>
-           <span class="devplan-update">Completed on 2012-10-3.</span>
-           <br>
-           Currently FMSLogo is built with a defunct compiler and links to a proprietary window toolkit.
-           Porting FMSLogo to gcc and wxWidgets will open up development to more people.</li>
-
-         <li>
-           <span class="devplan-item">Use the GNU tools to find performance bottlenecks and fix memory leaks.</span>
-           <br>
-           This purpose of this step is to gain a better understanding of where FMSLogo's problems lie.</li>
-
-         <li>
-           <span class="devplan-item">Update the language engine to the latest from UCBLogo.</span>
-           <br>
-           FMSLogo is based on UCBLogo's language engine.
-           However, while UCBLogo has made many advances, FMSLogo is still using a snapshot of UCBLogo that is at least ten years old.
-           There are some major benefits to updating the language engine.
-           Just adding a "not equals" operator would make FMSLogo a significantly better programming environment.</li>
-
-         <li>
-           <span class="devplan-item">Internationalize FMSLogo.</span>
-           <span class="devplan-update">Completed on 2006-12-26 (out-of-order).</span>
-           <br>
-           This will make it easier for third-parties to localize FMSLogo.
-           Localization is a requirement for adoption within schools systems.</li>
-
-         <li>
-           <span class="devplan-item">Begin implementing new features.</span>
-           <br>
-           By the time I get here, FMSLogo will still be roughly the same as MSWLogo 6.5b, but it will be ready to be extended.
-           The possibilities are limitless, but I'd like to start by adding a good sprite library, better support for 3D drawing, an interface for text to speech, a clean networking API, etc.</li>
-        </ol>
-
-      </td>
-
-     </tr></table>
-
-     <!--#include virtual="footer.html" -->
-   </div>
- </body>
-</html>
+<!--#include virtual="footer.html" -->
