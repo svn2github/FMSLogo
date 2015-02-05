@@ -1,5 +1,9 @@
 <!--#include virtual="header.html" -->
-
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$('#nav-credits').addClass('active');
+				});
+			</script>
 			<article>
 				<h2>Credits</h2>
 				<p>

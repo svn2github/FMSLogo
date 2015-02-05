@@ -1,5 +1,9 @@
-<!--#include virtual="header.html" -->
-
+<!--#include virtual="header.html" -->	
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$('#nav-howtohelp').addClass('active');
+				});
+			</script>
 			<article>
 				<h2>How You Can Help</h2>
 

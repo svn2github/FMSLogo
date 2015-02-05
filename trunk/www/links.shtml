@@ -1,4 +1,9 @@
 <!--#include virtual="header.html" -->
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$('#nav-links').addClass('active');
+				});
+			</script>
 			<article>
 				<h2>Useful Links</h2>
 				<ul>

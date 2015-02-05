@@ -1,5 +1,9 @@
 <!--#include virtual="header.html" -->
-
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$('#nav-index').addClass('active');
+				});
+			</script>
 			<article>
 				<h2>Welcome to the world of FMSLogo!</h2>
 				<img src="media/logoexample.png" />
