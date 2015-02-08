@@ -57,7 +57,7 @@ staticupdate "st13 sentence [Blue] scrollbarget "s3
 end
 
 to myend
-windowdelete "d1
+dialogdelete "d1
 end
 
 to mygreen
