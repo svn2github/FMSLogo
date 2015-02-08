@@ -2,7 +2,7 @@ to aaa
 ;
 ; Function:
 ;
-;   This routine will play a couple Windows supplied WAVE files.
+;   The SOUNDS command plays some WAVE files.
 ;
 ; To run:
 ;
@@ -20,21 +20,21 @@ sounds
 end
 
 to sounds
-print mci [open c:/windows/media/chimes.wav type waveaudio alias wa]
-print mci [open c:/windows/media/ding.wav type waveaudio alias w2] 
-mci [seek wa to start] 
-mci [play wa wait] 
-repeat 2 [
-  mci [seek w2 to start]
-  mci [play w2 wait]
-]
-mci [close w2] 
-mci [seek wa to start] 
-(mci [play wa notify] [mci [close wa]]) 
+  print mci [open frogs.wav type waveaudio alias wa]
+  print mci [open water.wav type waveaudio alias w2] 
+  mci [seek wa to start] 
+  mci [play wa wait] 
+  repeat 2 [
+    mci [seek w2 to start]
+    mci [play w2 wait]
+  ]
+  mci [close w2] 
+  mci [seek wa to start] 
+  (mci [play wa notify] [mci [close wa]]) 
 end
 
 to zzz
-ifelse YesNoBox [Welcome] [Choose YES to run example now, Choose NO Study it now.] [aaa] [edall]
+  ifelse YesNoBox [Welcome] [Choose YES to run example now, Choose NO Study it now.] [aaa] [edall]
 end
 
 Make "startup [zzz]
