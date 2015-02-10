@@ -20,6 +20,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 6.33.0
+  o Fix bug #426; examples now run on Windows 7.
   o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
