@@ -803,15 +803,10 @@ wxWindow * CLogoWidget::GetWindow() const
 
 bool CLogoWidget::IsRootWindow() const
 {
-    if (m_Parent == (char*)CFmsLogo::GetMainFrame())
+    if (m_Parent == NULL)
     {
-        // This is a top-level WINDOW or DIALOG.
-        return true;
-    }
-
-    if (m_Parent == (char *)CFmsLogo::GetMainFrame()->GetScreen())
-    {
-        // This is a widget that was placed on the screen window
+        // This is a top-level WINDOW or DIALOG or
+        // a widget that was placed on the screen window.
         return true;
     }
 
@@ -1123,7 +1118,7 @@ bool CLogoWidgetList::OnScreenControlsExist()
     do
     {
         // Check if the control is on the screen window
-        if (l->m_Parent == (char *)CFmsLogo::GetMainFrame()->GetScreen())
+        if (l->m_Parent == NULL)
         {
             return true;
         }
@@ -1193,18 +1188,19 @@ NODE *lwindowcreate(NODE *args)
     if (parent != NULL)
     {
         wxParent = parent->Dialog;
+        child->m_Parent = reinterpret_cast<char*>(parent->Dialog);
     }
     else
     {
         // The parent doesn't exist.  Use the top-level window as the parent.
         wxParent = CFmsLogo::GetMainFrame();
+        child->m_Parent = NULL;
     }
 
     child->Dialog = new CLogoDialog(
         wxParent,
         titlename.GetString(),
         clientrect);
-    child->m_Parent = (char*) wxParent;
 
     g_LogoWidgets.insert(child);
 
@@ -1463,7 +1459,7 @@ NODE *llistboxcreate(NODE *args)
         // else the parent does not exist -- put the control on the screen
         clientrect.ConvertToScreenCoordinates();
 
-        child->m_Parent = (char *)CFmsLogo::GetMainFrame()->GetScreen();
+        child->m_Parent = NULL;
 
         child->ListBox = new CLogoListBox(
             CFmsLogo::GetMainFrame()->GetScreen(),
@@ -1632,7 +1628,7 @@ NODE *lcomboboxcreate(NODE *args)
         // else the parent does not exist -- put the control on the screen
         clientrect.ConvertToScreenCoordinates();
 
-        child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
+        child->m_Parent = NULL;
 
         child->ComboBox = new CLogoComboBox(
             CFmsLogo::GetMainFrame()->GetScreen(),
@@ -1800,7 +1796,7 @@ NODE *lscrollbarcreate(NODE *args)
     {
         clientrect.ConvertToScreenCoordinates();
 
-        child->m_Parent = (char*) CFmsLogo::GetMainFrame()->GetScreen();
+        child->m_Parent = NULL;
 
         child->ScrollBar = new CLogoScrollBar(
             CFmsLogo::GetMainFrame()->GetScreen(),
@@ -1941,7 +1937,7 @@ NODE *lstaticcreate(NODE *args)
     {
         clientrect.ConvertToScreenCoordinates();
 
-        child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
+        child->m_Parent = NULL;
             
         child->StaticText = new CLogoStaticText(
             CFmsLogo::GetMainFrame()->GetScreen(),
@@ -2046,7 +2042,7 @@ NODE *lbuttoncreate(NODE *args)
     {
         clientrect.ConvertToScreenCoordinates();
 
-        child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
+        child->m_Parent = NULL;
 
         child->Button = new CLogoButton(
             CFmsLogo::GetMainFrame()->GetScreen(),
@@ -2144,7 +2140,7 @@ NODE *lgroupboxcreate(NODE *args)
     {
         clientrect.ConvertToScreenCoordinates();
 
-        child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
+        child->m_Parent = NULL;
             
         child->GroupBox = new CLogoGroupBox(
             CFmsLogo::GetMainFrame()->GetScreen(), 
@@ -2230,7 +2226,7 @@ NODE *lradiobuttoncreate(NODE *args)
     {
         clientrect.ConvertToScreenCoordinates();
 
-        child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
+        child->m_Parent = NULL;
 
         child->RadioButton = new CLogoRadioButton(
             CFmsLogo::GetMainFrame()->GetScreen(),
@@ -2370,7 +2366,7 @@ NODE *lcheckboxcreate(NODE *args)
     {
         clientrect.ConvertToScreenCoordinates();
 
-        child->m_Parent = (char *) CFmsLogo::GetMainFrame()->GetScreen();
+        child->m_Parent = NULL;
 
         child->CheckBox = new CLogoCheckBox(
             CFmsLogo::GetMainFrame()->GetScreen(),
