@@ -217,15 +217,21 @@ TO WINDOWSTEST.DIALOG.BADINPUT
 
 END
 
+TO WINDOWSTEST.MAINWINDOW.SMOKETEST.MODALSETUP
+  BUTTONCREATE "mydialog "myok [Press to continue tests] 10 10 100 20 [ WINDOWDELETE "main ]
+END
+
 TO WINDOWSTEST.MAINWINDOW.SMOKETEST
 
   ; pull a widget of each type onto the screen window
   WINDOWSTEST.SETUP "main
 
-  wait 60
+  ; create a non-modal window on the desktop
+  WINDOWCREATE "main "mywindow [This should disappear when you click the button] 0 0 150 30 []
 
-  ; delete all of the windows
-  windowdelete "main
+  ; Create a modal window on the desktop and delete all windows.
+
+  DIALOGCREATE "main "mydialog "mytitle 0 50 130 50 [WINDOWSTEST.MAINWINDOW.SMOKETEST.MODALSETUP]
 
 END
 
