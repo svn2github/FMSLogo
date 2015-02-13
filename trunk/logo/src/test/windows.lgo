@@ -75,7 +75,7 @@ TO WINDOWSTEST.WINDOW.SMOKETEST
   windowdelete "testwindow
 
   ; Delete a window from the context of its callback
-  ; Commented out because of bug #3560750
+  ; Commented out because of bug #385
   ; windowcreate "root "testwindow [delete window from callback] 0 0 120 400 [
   ;   windowdelete "testwindow
   ; ]
