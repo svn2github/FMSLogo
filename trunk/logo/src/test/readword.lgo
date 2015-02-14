@@ -63,6 +63,9 @@ TO READWORDTEST.SMOKETEST
   ; read two words
   RUNPRINTTEST [SHOW "|Hello Hello|]      "|Hello Hello|
 
+  ; a file with a blank line
+  RUNPRINTTEST [SHOW "|| ]           "||
+
   ; empty files reads as the empty list
   RUNPRINTTEST [IGNORE 1]            []
 
@@ -84,12 +87,35 @@ TO READWORDTEST.SMOKETEST
   ; vertical bars in comments are treated normally
   RUNPRINTTEST [SHOW "A\;B\|C\nD\| ] "A\;B\|C\nD\|
 
-  ; not having a closing vertical bar is like having an empty file
-  RUNPRINTTEST [SHOW "A\|B\nC ]   []
+  ; an end-of-file reached within a vertical bar preserves the bar.
+  RUNPRINTTEST [SHOW "A\|B\nC ]   "A\|B\nC\n
 
   ; backslashes are not preserved
-  RUNPRINTTEST [SHOW "A\\B\\C ]    "ABC
+  RUNPRINTTEST [SHOW "A\\B\\C ]   "ABC
 
+END
+
+TO READWORDTEST.FILEWITHNOEOL.HELPER :data
+
+   LOCALMAKE "filename "readwordtest.txt
+
+   WRITEBINARYDATA :filename :data
+
+   OPENREAD :filename
+   SETREAD  :filename
+   SIMPLEREPORTTEST [ READWORD ] :data
+   SIMPLEREPORTTEST [ READWORD ] []
+   CLOSE    :filename
+
+   ERASEFILE :filename
+END
+
+TO READWORDTEST.FILEWITHNOEOL
+
+   ; Test READWORD on files that has no newline at the end.
+   ; This is a regression test for bug #439.
+   READWORDTEST.FILEWITHNOEOL.HELPER "|This file has no newline character|
+   READWORDTEST.FILEWITHNOEOL.HELPER "|This file ends in a continuation character~|
 END
 
 TO READWORDTEST.BADINPUT
@@ -102,6 +128,7 @@ END
 TO READWORDTEST
 
    READWORDTEST.SMOKETEST
+   READWORDTEST.FILEWITHNOEOL
    READWORDTEST.UI
    READWORDTEST.UICANCEL
    READWORDTEST.BADINPUT
