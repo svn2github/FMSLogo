@@ -810,7 +810,7 @@ NODE *lreadlist(NODE *)
 NODE *lreadword(NODE *)
 {
     NODE * val = reader(g_Reader.GetStream(), "RW");  // fake prompt flags no auto-continue
-    if (feof(g_Reader.GetStream()))
+    if (feof(g_Reader.GetStream()) && getstrlen(val) == 0)
     {
         gcref(val);
         return NIL;
