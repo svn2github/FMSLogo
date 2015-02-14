@@ -20,7 +20,9 @@ The line is separated into items as though it were typed in square brackets in a
 If the read stream is a file and the end of file is reached, then READLIST outputs the empty word (not the empty list).
 </para>
 <para>
-READLIST processes backslash, vertical bar, and tilde characters in the read stream; the output list will not contain these characters but they will have had their usual effect.
+READLIST processes backslash, vertical bar, and tilde characters in the read stream; the output list does not contain these characters but they have their usual effect.
+Similarly, square brackets have their usual effect of spanning multiple lines and every open bracket must be matched by a close bracket.
+The contents enclosed in square brackets appear in the output list as a nested list.
 READLIST does not, however, treat semicolon as a comment character.
 </para>
 </listitem>
