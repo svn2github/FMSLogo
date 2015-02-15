@@ -86,10 +86,10 @@ TO READLISTTEST.SMOKETEST
    READLISTTEST.HELPER "|Hello~\nHello\n| [HelloHello]
 
    ; linear whitespace after a tilde is ignored
-   READLISTTEST.HELPER "|Hello~  \nHello\n"| [HelloHello]
+   READLISTTEST.HELPER "|Hello~  \nHello\n| [HelloHello]
 
    ; linear whitespace on the line after a tilde is honored
-   READLISTTEST.HELPER "|Hello~  \n Hello\n"| [Hello Hello]
+   READLISTTEST.HELPER "|Hello~  \n Hello\n| [Hello Hello]
 
    ; vertical bars are removed from the input stream,
    ; but their effect remains
@@ -105,7 +105,7 @@ TO READLISTTEST.SMOKETEST
    ;READLISTTEST.HELPER "A\;B\|C\nD\|\n (LIST "A "|;| "BC\nD )
 
    ; an end-of-file reached within a vertical bar preserves the bar.
-   ;READLISTTEST.HELPER "A\|B\nC\n (LIST "A "|;| "B\nC )
+   ;BUG? READLISTTEST.HELPER "A\|B\nC\n (LIST "A "|;| "B\nC )
 
    ; backslashes are not preserved
    READLISTTEST.HELPER "A\\B\\C\n [ABC]
@@ -119,15 +119,18 @@ TO READLISTTEST.SMOKETEST
    ; nested brackets are honored and the outermost bracket determines the line brake.
    READLISTTEST.HELPER "A\[B\[\nC\n\]D\]E\n [A [B [C] D] E]
 
+   ; brackets can nest across a semi-colon because comments are ignored
+   READLISTTEST.HELPER "A\[\;B\]C\n         (LIST "A (LIST "|;|B) "C)
+
 END
 
 TO READLISTTEST.FILEWITHNOEOL
 
    ; Test READLIST on files that has no newline at the end.
    ; This is a regression test for bug #439.
-   READLISTTEST.HELPER  "|No Newline|             [No Newline]
-   READLISTTEST.HELPER  "|End With Continuation~| [End With Continuation]
-   READLISTTEST.HELPER  "|End \| In Bar|          [End In Bar]
+   READLISTTEST.HELPER  "No\ Newline               [No Newline]
+   READLISTTEST.HELPER  "End\ With\ Continuation~  [End With Continuation]
+   ;BUG? READLISTTEST.HELPER  "End\ \|\ In\ Bar    [End In Bar]
 
 END
 
@@ -151,6 +154,13 @@ TO READLISTTEST.PARSEERROR
    ; Unexpected ]
    READLISTTEST.PARSEERROR.HELPER "A\ \]\ B\n" 26
 
+   ; Unexpected }
+   READLISTTEST.PARSEERROR.HELPER "A\ \}\ B\n" 27
+
+   ; Brackets after semi-colons are treated as brackets,
+   ; because comment characters are ignored.
+   READLISTTEST.PARSEERROR.HELPER "A\;\] 26
+
 END
 
 TO READLISTTEST.BADINPUT
@@ -163,7 +173,7 @@ END
 TO READLISTTEST
 
    READLISTTEST.SMOKETEST
-   ;READLISTTEST.FILEWITHNOEOL
+   READLISTTEST.FILEWITHNOEOL
    READLISTTEST.PARSEERROR
    READLISTTEST.UI
    READLISTTEST.UICANCEL
