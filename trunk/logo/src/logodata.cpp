@@ -63,7 +63,7 @@
 //
 //                                            1         2           3
 //                                   3 4 56789012345678901234 5 678901
-static char g_SpecialCharacters[] = " \t\n(?????+++~)[]-*/=<>\"\\:;|{}";
+static char const g_SpecialCharacters[] = " \t\n(?????+++~)[]-*/=<>\"\\:;|{}";
 
 bool
 is_special_character(char ch)
@@ -127,7 +127,7 @@ void init_ecma_array()
     // Override the special characters to map to ecma_begin+index.
     // Characters a "backslashed" by replacing them with very small 
     // values that are usually used for control characters.
-    for (int i = 0; i < sizeof(g_SpecialCharacters) - 1; i++)
+    for (unsigned char i = 0; i < sizeof(g_SpecialCharacters) - 1; i++)
     {
         ecma_array[g_SpecialCharacters[i]] = ecma_begin+i;
     }
