@@ -28,6 +28,9 @@ still-dark-red
   ; backslash'd space
   "dark\ red
 
+  ; vbar in bar
+  "dark| red |still| red |red
+
   ; backslashed vbar in vbar
   "|dark red \| dark read \| dark red|
 
@@ -127,6 +130,10 @@ TO TILDAINLINE
   OUTPUT 4
 END
 
+TO VBARINANDOUT
+   OUTPUT "A||B| |C|
+ D|E| F|
+END
 
 TO PARSETEST.FUNC
 
@@ -141,6 +148,7 @@ TO PARSETEST.FUNC
    SIMPLEREPORTTEST [LINECONTINUATIONLIST1]  [A [BC] ]
    SIMPLEREPORTTEST [LINECONTINUATIONLIST2]  [A]
    SIMPLEREPORTTEST [TILDAINLINE]            4
+   SIMPLEREPORTTEST [VBARINANDOUT]           "|AB C\n DE F|
 
    SIMPLEREPORTTEST [:~IGNOREMEWASCALLED] 0
    SIMPLEREPORTTEST [:~CALLMEWASCALLED]   1
