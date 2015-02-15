@@ -61,24 +61,33 @@ TO READRAWLINETEST.UICANCEL
 
 END
 
-
-
 TO READRAWLINETEST.SMOKETEST
 
-  LOCALMAKE "previousreader reader
+   LOCALMAKE "filename "readrawlinetestfile.txt
 
-  TRACEINSTRUCTION [ OPENREAD "readrawlinetestfile.txt ]
-  TRACEINSTRUCTION [ SETREAD  "readrawlinetestfile.txt ]
+   ; Write out a single file with interesting test cases
+   WRITEBINARYDATA :filename (WORD
+     "|Simple\n|
+     "|Two Words\n|
+     "|Line \| With ; Special ) ( Characters ] [ } {\n|
+     "|Line \\ With \\\\ Backslashes\n|
+     "|Line with no EOL at end|
+   )
 
-  ; readrawlinetestfile.txt contains the following lines
-  SIMPLEREPORTTEST [ READRAWLINE ] "|Simple|
-  SIMPLEREPORTTEST [ READRAWLINE ] "|Two Words|
-  SIMPLEREPORTTEST [ READRAWLINE ] "|Line \| With \; Special ( Characters ) [ ]|
-  SIMPLEREPORTTEST [ READRAWLINE ] "|Line \\ With \\\\ Backslashes|
-  SIMPLEREPORTTEST [ READRAWLINE ] []
+   OPENREAD :filename
+   SETREAD  :filename
 
-  SETREAD :previousreader
+   SIMPLEREPORTTEST [ READRAWLINE ] "|Simple|
+   SIMPLEREPORTTEST [ READRAWLINE ] "|Two Words|
+   SIMPLEREPORTTEST [ READRAWLINE ] "|Line \| With ; Special ) ( Characters ] [ } {|
+   SIMPLEREPORTTEST [ READRAWLINE ] "|Line \\ With \\\\ Backslashes|
+   ;SIMPLEREPORTTEST [ READRAWLINE ] "|Line with no EOL at end|
+   SIMPLEREPORTTEST [ READRAWLINE ] [] 
+   SIMPLEREPORTTEST [ READRAWLINE ] [] 
 
+   CLOSE    :filename
+
+   ERASEFILE :filename
 END
 
 TO READRAWLINETEST.BADINPUT
