@@ -189,19 +189,30 @@ char *mend_strnzcpy(char *dst, const char * src, int len)
         }
         else
         {
+            // Advance the "src" pointer to the next non-comment
+            // or next non-continuation character.
             while (*src == ';' || (*src == '~' && *(src + 1) == '\n'))
             {
+                // Advance beyond any simple line continuation sequences.
                 while (*src == '~' && *(src + 1) == '\n') 
                 {
                     src += 2;
                 }
+
+                // Advance past the comment until the EOL (the normal
+                // comment ender) or until we reach a line continuation sequence
                 if (*src == ';')
+                {
                     do
                     {
                         src++;
                     } while (*src != '\0' && *src != '~' && *(src + 1) != '\n');
+                }
             }
 
+            // If we're not on a vbar, copy the character to the output string.
+            // Otherwise, continue the loop and enter the special vbar handling
+            // above.
             if (*src != '|') 
             {
                 dst[i++] = *src++;

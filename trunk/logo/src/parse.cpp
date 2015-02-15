@@ -648,7 +648,9 @@ NODE *list_to_array(NODE *list)
 #define white_space(ch) (ch == ' ' || ch == '\t' || ch == '\n')
 
 // Parses the text from "*inln" to "inlimit", or until the first "endchar" is found.
-// If endchar==-1, then the only limit is inlimit.
+// If endchar==-1, then the only limit is inlimit, which is interpreted as the EOF.
+// *inln is updated to be the character on which parsing stopped and it may end up pointing
+// to a NUL character that it not within the original string.
 // The parsed text is returned as a NODE* list.
 // Nested arrays and lists are parsed into their structured form.
 // parser_iterate() sets stopping_flag to THROWING if it encounters a syntax error.
@@ -695,34 +697,42 @@ parser_iterate(
         while (!vbar && 
                ((ignore_comments && ch == ';') || (ch == '~' && **inln == '\n')))
         {
-
             // If this is a line continuation, keep going 
             // until we reach the end of the next line
             while (ch == '~' && **inln == '\n')
             {
+                // Advance to the next character.
                 if (++ (*inln) >= inlimit) 
                 {
                     // Fake a NUL terminator
                     *inln = inlimit = &terminate;
                 }
                 ch = **inln;
+
                 if (word_length == 0)
                 {
+                    // The line continuation character wasn't inserted in the
+                    // middle of a word, so start a new one.
                     word_start = *inln;
                 }
                 else
                 {
-                    if (**inln == ']' || **inln == '[' ||
-                        **inln == '{' || **inln == '}')
+                    // if we are in the middle of a word and we continued into
+                    // the start of an array/list, then set "ch" to insert a word
+                    // boundary.
+                    if (ch == '[' || ch == ']' || ch == '{' || ch == '}')
                     {
                         ch = ' ';
                         break;
                     }
                     else
                     {
+                        // The logical line requires mending across physical lines.
                         broken = true;
                     }
                 }
+
+                // Mark the we have processed "ch".
                 if (++ (*inln) >= inlimit) 
                 {
                     // Fake a NUL terminator
@@ -730,8 +740,8 @@ parser_iterate(
                 }
             }
 
-            // If this is a comment and we're supposed to ignore comments, 
-            // keep going until the end of the line.
+            // If this is a comment and we're supposed to ignore
+            // comments keep going until the end of the line.
             if (ignore_comments && ch == ';')
             {
                 // While ch is not the end of the string and
@@ -742,10 +752,14 @@ parser_iterate(
                     ch = **inln;
                     if (word_length == 0) 
                     {
+                        // The comment character wasn't inserted in the
+                        // middle of a word, so start a new one.
                         word_start = *inln;
                     }
                     else 
                     {
+                        // The comment character was inserted in the middle of a word,
+                        // so flag that this line needs mending.
                         broken = true;
                     }
 
@@ -776,11 +790,13 @@ parser_iterate(
             this_type = VBAR_STRING;
             broken = true;   // so we'll copy the chars
         }
-
         else if (vbar || (!white_space(ch) && ch != ']' &&
                           ch != '{' && ch != '}' &&
                           ch != '[' && ch != '\0'))
         {
+            // This is another character in a simple word, like "abc
+            // or a vbar quoted word like "| abc |
+            // Either way, extend the word to include this character.
             word_length++;
         }
 
@@ -804,7 +820,7 @@ parser_iterate(
         }
         else if (ch == '[')
         {
-            // this is a '[', parse a new list 
+            // this is a '[', parse a new list (until we see a ])
             tnode = cons_list(parser_iterate(inln, inlimit, ignore_comments, ']'));
             if (**inln == '\0') 
             {
@@ -813,6 +829,7 @@ parser_iterate(
         }
         else if (ch == '{')
         {
+            // this is a '{', parse a new array (until we see a })
             NODE * array_as_list = parser_iterate(inln, inlimit, ignore_comments, '}');
             NODE * array         = list_to_array(array_as_list);
             gcref(array_as_list);
@@ -843,10 +860,10 @@ parser_iterate(
                  **inln == ']' || **inln == '[' ||
                  **inln == '{' || **inln == '}')
         {
-            // this character or the next one will terminate string, make the word 
+            // this character or the next one will terminate string
             if (word_length > 0)
             {
-
+                // Create any word that we have parsed up until now.
                 char * (*copyRoutine) (char *, const char *, int);
 
                 if (broken)
@@ -883,14 +900,14 @@ parser_iterate(
     return return_list.GetList();
 }
 
-NODE *parser(NODE *nd, bool semi)
+NODE *parser(NODE *nd, bool ignore_comments)
 {
     NODE * string_node = cnv_node_to_strnode(nd);
     ref(string_node);
 
     int          slen  = getstrlen(string_node);
     const char * lnsav = getstrptr(string_node);
-    NODE * rtn = parser_iterate(&lnsav, lnsav + slen, semi, -1);
+    NODE * rtn = parser_iterate(&lnsav, lnsav + slen, ignore_comments, -1);
 
     gcref(nd);
     deref(string_node);
