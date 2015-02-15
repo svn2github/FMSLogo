@@ -799,7 +799,7 @@ NODE *lreadlist(NODE *)
     input_mode = INPUTMODE_List;
     NODE * val = parser(reader(g_Reader.GetStream(), ""), false);
     input_mode = INPUTMODE_None;
-    if (feof(g_Reader.GetStream()))
+    if (feof(g_Reader.GetStream()) && val == NIL)
     {
         gcref(val);
         return Null_Word;
