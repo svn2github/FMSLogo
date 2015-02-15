@@ -442,6 +442,8 @@ $Exceptions{'command-radiobuttonget.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 
 $Exceptions{'command-radiobuttonset.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 
+$Exceptions{'command-readlist.xml'}{'logo'} = 1;
+
 $Exceptions{'command-reduce.xml'}{'allcaps'}{'MAX'} = 1;
 
 $Exceptions{'command-save.xml'}{'allcaps'}{'MYPROGRAM1'} = 1;

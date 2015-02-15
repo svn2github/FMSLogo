@@ -17,13 +17,19 @@
 <para>
 Reads a line from the read stream (initially the popup dialog) and outputs that line as a list.
 The line is separated into items as though it were typed in square brackets in an instruction.
-If the read stream is a file and the end of file is reached, then READLIST outputs the empty word (not the empty list).
+If the read stream is a file and the last character in the file is not an end-of-line sequence, then READLIST treats the end-of-file as an end-of-line.
+After the file as been completely read, READLIST outputs the empty word (not the empty list).
 </para>
 <para>
 READLIST processes backslash, vertical bar, and tilde characters in the read stream; the output list does not contain these characters but they have their usual effect.
 Similarly, square brackets have their usual effect of spanning multiple lines and every open bracket must be matched by a close bracket.
 The contents enclosed in square brackets appear in the output list as a nested list.
-READLIST does not, however, treat semicolon as a comment character.
+</para>
+<para>
+READLIST treats curly braces analogously to how it treats brackets, except the the enclosed content appears in the output as a nested array.
+</para>
+<para>
+READLIST does not treat semicolon as a comment character, so the semicolon and whatever follows it will appear in the output list.
 </para>
 </listitem>
 </varlistentry>
