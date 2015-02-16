@@ -86,16 +86,14 @@ GBMEXPORT int  GBMENTRY gbm_io_write(int fd, const void *buf, int len)
 
 GBMEXPORT GBM_ERR GBMENTRY gbm_guess_filetype(const char *fn, int *ft)
 {
-    int i;
-    char *ext;
-
     if ( fn == NULL || ft == NULL )
         return GBM_ERR_BAD_ARG;
 
+    const char *ext;
     if ( (ext = extension(fn)) == NULL )
         ext = "";
 
-    for ( i = 0; i < N_FT; i++ )
+    for (int i = 0; i < N_FT; i++ )
     {
         GBMFT	gbmft;
         char	buf[100+1], *s;
