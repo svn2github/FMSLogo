@@ -23,6 +23,8 @@ II. New features/bugs fixed:
   o Fix bug #435; examples now run on Windows 7.
   o Fix bug #436; The wxWidgets version of FMSLogo now closes modal windows
     when WINDOWDELETE is run with an unknown window name as input.
+  o Fix bug #439; READWORD, READLIST, and READRAWLINE can now process the last
+    line of a text file, even if it doesn't end in a newline.
   o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
