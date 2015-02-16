@@ -44,17 +44,17 @@ TO DIRECTORYSMOKETEST
    MKDIR "!FirstDirectory
    POPDIR
    SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
-   SIMPLEREPORTTEST [DIRECTORIES] [!FirstDirectory . .. dir1 Dir2]
+   SIMPLEREPORTTEST [DIRECTORIES] [. .. !FirstDirectory dir1 Dir2]
 
    ; Remove a directory
    RMDIR "Dir2
    SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
-   SIMPLEREPORTTEST [DIRECTORIES] [!FirstDirectory . .. dir1]
+   SIMPLEREPORTTEST [DIRECTORIES] [. .. !FirstDirectory dir1]
 
    ; Remove another directory
    RMDIR "dir1
    SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
-   SIMPLEREPORTTEST [DIRECTORIES] [!FirstDirectory . ..]
+   SIMPLEREPORTTEST [DIRECTORIES] [. .. !FirstDirectory]
 
    ; Remove the last directory
    RMDIR "!FirstDirectory
@@ -118,10 +118,40 @@ TO CHDIRTEST
 
 END
 
+TO CURRENTWORKINGDIRECTORY
+   ; FMSLogo has no built-in "cwd" command, so it must be done with a Perl callout.
+   ; Use Perl to write out a file that contains the current working directory.  
+   IGNORE (SHELL "|perl.exe -e \"use Cwd\; open OUT, '>currentdirectory.txt'; print OUT cwd()"| LOCALETRUE)
+
+   ; Read the file into a variable
+   OPENREAD  "currentdirectory.txt
+   SETREAD   "currentdirectory.txt
+   LOCALMAKE "currentworkingdirectory READRAWLINE
+   CLOSE     "currentdirectory.txt
+
+   ERASEFILE "currentdirectory.txt
+
+   OUTPUT :currentworkingdirectory
+END
+
+TO DIRECTROYTEST.WITHOUTDOTS
+   LOCAL [cwd listing]
+
+   MAKE "cwd CURRENTWORKINGDIRECTORY
+
+   ; Confirm that DIRECTORIES in the device root does not output "." or ".."
+   TRACEINSTRUCTION [CHDIR "C:\\ ]
+   SIMPLEREPORTTEST [MEMBERP ".  DIRECTORIES] LOCALEFALSE
+   SIMPLEREPORTTEST [MEMBERP ".. DIRECTORIES] LOCALEFALSE
+
+   CHDIR :cwd
+
+END
 
 TO DIRECTORYTEST
 
    DIRECTORYSMOKETEST
+   DIRECTROYTEST.WITHOUTDOTS
 
    MKDIRTEST
    RMDIRTEST
