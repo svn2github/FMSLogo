@@ -36,6 +36,8 @@
 #include "parse.h"
 #include "stringprintednode.h"
 #include "dynamicbuffer.h"
+#include "appendablelist.h"
+#include "sort.h"
 #include "debugheap.h"
 #include "localizedstrings.h"
 
@@ -207,7 +209,7 @@ NODE *lrmdir(NODE *arg)
 static
 NODE *directory_helper(bool OnlyListDirectories)
 {
-    NODE *directory = NIL;
+    CAppendableList directory; 
 
 #ifndef WX_PURE
     WIN32_FIND_DATA findFileData;
@@ -228,14 +230,7 @@ NODE *directory_helper(bool OnlyListDirectories)
             {
                 // found what we're looking for
                 NODE* file = make_strnode(findFileData.cFileName);
-                if (directory == NIL)
-                {
-                    directory = cons_list(file);
-                }
-                else
-                {
-                    directory = cons(file,directory);
-                }
+                directory.AppendElement(file);
             }
          
             // iterate to the next file
@@ -246,7 +241,24 @@ NODE *directory_helper(bool OnlyListDirectories)
     }
 #endif
 
-    return directory;
+    NODE * list = directory.GetList();
+
+    // The MSDN reports that FindNextFile doesn't guarantee a order, so we sort
+    // the list according to the locale.
+    // CONSIDER FOR SPEED: From what I've seen, FindNextFile usually does sort
+    // the list.  If this is too slow, we could track if sorting is needed above
+    // and only sort when necessary.
+    NODE * sortedList = mergesort(list, true);
+
+    // mergesort returns a list with a single reference.
+    // Since we aren't going to keep that reference we must remove it.
+    // The evaluator will re-reference this list and, when it's done,
+    // dereference the list and free it.
+    if (sortedList != list)
+    {
+        decrefcnt(sortedList);
+    }
+    return sortedList;
 }
 
 NODE *lfiles(NODE *)
