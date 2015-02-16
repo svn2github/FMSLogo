@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Outputs a list of the names of each file in the current working directory.
-The order in which the files are listed is undefined.
+The file names are sorted alphabetically.
 </para>
 </listitem>
 </varlistentry>
@@ -22,9 +22,15 @@ The order in which the files are listed is undefined.
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>SHOW FILES</userinput>
-[uninstall.exe turtle.bmp startup.logoscript README.TXT logohelp.chm LICENSE.TXT fmslogo.exe]
+[fmslogo.exe LICENSE.TXT logohelp.chm README.TXT startup.logoscript turtle.bmp uninstall.exe]
 </programlisting>
 </listitem>
+</varlistentry>
+
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-directories">DIRECTORIES</link></member>
+</simplelist></listitem>
 </varlistentry>
 
 </variablelist>

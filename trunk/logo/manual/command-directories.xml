@@ -14,7 +14,9 @@
 <listitem>
 <para>
 Outputs a list of the names of each directory in the current working directory.
-The order in which the directories are listed is undefined.
+</para>
+<para>
+The directory names are sorted alphabetically, except that the special entries "." and ".." always appear first, if present.
 </para>
 </listitem>
 </varlistentry>
@@ -22,9 +24,15 @@ The order in which the directories are listed is undefined.
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>SHOW DIRECTORIES</userinput>
-[Logolib Examples .. .]
+[. .. Examples Logolib]
 </programlisting>
 </listitem>
+</varlistentry>
+
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-files">FILES</link></member>
+</simplelist></listitem>
 </varlistentry>
 
 </variablelist>
