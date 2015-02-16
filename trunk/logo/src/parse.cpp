@@ -323,7 +323,7 @@ void rd_print_prompt(const char * /*str*/)
 // Reads the next complete line from FileStream into a string node.
 // This may be more than a physical line of text if the line contains
 // an open delimiter, such as "|", "[", or "(",  or if it ends in the
-// line continuation character "~".  In this case, the phsyical lines
+// line continuation character "~".  In this case, the physical lines
 // will be concatenated into a single line.
 //
 // Note that reader() does not parse the line.
@@ -655,7 +655,7 @@ NODE *list_to_array(NODE *list)
 // Nested arrays and lists are parsed into their structured form.
 // parser_iterate() sets stopping_flag to THROWING if it encounters a syntax error.
 //
-// if "ignore_comments" is true then comments should be ignored
+// if "ignore_comments" is true then comments should be stripped out of the parsed stream.
 //
 static
 NODE *
@@ -667,7 +667,7 @@ parser_iterate(
     )
 {
     const char *word_start = NULL;
-    static char terminate = '\0'; // KLUDGE
+    static const char terminate = '\0'; // KLUDGE
 
     int word_length = 0;
 
@@ -802,12 +802,28 @@ parser_iterate(
 
         NODE *tnode = NIL;
 
+        if (endchar == -1 && **inln == '\0')
+        {
+            // We have reached the EOF for the outermost invocation.
+            if (ch == '~')
+            {
+                // We were parsing a line continuation.
+                // Since there's nothing to continue to, close the
+                // string where we are.
+                word_length--;
+                ch = '\0';
+            }
+        }
+
         if (vbar) 
         {
             continue;
         }
-        else if (ch == endchar && endchar != -1) 
+        else if (ch == endchar && endchar != -1)
         {
+            // We have reached the character that we were seeking.
+            // Break out of the loop, leaving endchar for the caller
+            // to process.
             break;
         }
         else if (ch == ']') 
