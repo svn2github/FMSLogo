@@ -85,8 +85,7 @@ TO MKDIRTEST
   RUNTOOMANYINPUTSTEST   [(MKDIR "too "many)]
 
   ; MKDIR a very long directory name (regression test for bug #1343397)
-  localmake "longdirname "||
-  repeat 5000 [ make "longdirname word :longdirname "A ]
+  localmake "longdirname REPEATWORD "A 5000
   MKDIR :longdirname
 
 END
@@ -100,8 +99,7 @@ TO RMDIRTEST
   RUNTOOMANYINPUTSTEST   [(RMDIR "too "many)]
 
   ; RMDIR a very long directory name (regression test for bug #1343397)
-  localmake "longdirname "||
-  repeat 5000 [ make "longdirname word :longdirname "A ]
+  localmake "longdirname REPEATWORD "A 5000
   RMDIR :longdirname
 
 END
@@ -115,8 +113,7 @@ TO CHDIRTEST
   RUNTOOMANYINPUTSTEST   [(CHDIR "too "many)]
 
   ; CHDIR a very long directory name (regression test for bug #1343397)
-  localmake "longdirname "||
-  repeat 5000 [ make "longdirname word :longdirname "A ]
+  localmake "longdirname REPEATWORD "A 5000
   CHDIR :longdirname
 
 END
