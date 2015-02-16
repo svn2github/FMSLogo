@@ -7,7 +7,7 @@ TO YESNOBOXTEST.SMOKETEST
 
    CATCH "ERROR [
 
-     localmake "title [YESNOBOX Test]
+     localmake "title [Automated YESNOBOX Test]
 
      ; press YES
      UIAUTOMATION.POSTBUTTONPUSHTOWINDOW :title "&Yes
