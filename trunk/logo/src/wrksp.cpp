@@ -670,12 +670,6 @@ NODE *lmake(NODE *args)
     return Unbound;
 }
 
-// cnt_list is an accumulator for one part of a contents list
-// that is appeneded to as selected objects are found.
-// cnt_list is the final NODE* in the list.
-static NODE *cnt_list = NIL;
-static NODE *cnt_last = NIL;
-
 // want_buried can be one of four values:
 //  0            - get unburied objects
 //  PROC_BURIED  - get buried objects
@@ -697,16 +691,18 @@ int bck(int flag)
     return (want_buried ? !flag : flag);
 }
 
-// Appends the canonical form of sym into cnt_list
+// Appends the canonical form of sym into contents_list
 // if it matches the given filter.
 //
+// contents_list      - The list to which matching symbols should be appened.
 // sym                - The object from the symbol table
 // contents_list_type - The type of object we're looking for.
 static
 void 
 contents_map(
-    NODE *    sym,
-    CNTLSTTYP contents_list_type
+    CAppendableList & contents_list,
+    NODE *            sym,
+    CNTLSTTYP         contents_list_type
     )
 {
     // flag_check starts out as one of three values,
@@ -779,18 +775,8 @@ contents_map(
         break;
     }
 
-    if (cnt_list == NIL)
-    {
-        // create the contents list and append the symbol
-        cnt_list = cons_list(canonical__object(sym));
-        cnt_last = vref(cnt_list);
-    }
-    else
-    {
-        // append the object to the contents list
-        setcdr(cnt_last, cons_list(canonical__object(sym)));
-        cnt_last = cdr(cnt_last);
-    }
+    // Append the canonical form of symbol
+    contents_list.AppendElement(canonical__object(sym));
 }
 
 static
@@ -799,22 +785,31 @@ get_contents(
     CNTLSTTYP contents_type
     )
 {
-    deref(cnt_list);
-    cnt_list = NIL;
-    cnt_last = NIL;
+    CAppendableList contents_list;
 
     for (int i = 0; i < HASH_LEN; i++)
     {
         for (NODE * nd = hash_table[i]; nd != NIL; nd = cdr(nd))
         {
-            contents_map(car(nd), contents_type);
+            contents_map(contents_list, car(nd), contents_type);
         }
     }
 
+    NODE * list = contents_list.GetList();
+
     // We can ignore the case when sorting because the contents
     // list is already mapping into lower-case.
-    cnt_list = mergesort(cnt_list, false);
-    return cnt_list;
+    NODE * sorted_contents_list = mergesort(list, false);
+
+    // mergesort returns a list with a single reference.
+    // Since we aren't going to keep that reference we must remove it.
+    // The evaluator will re-reference this list and, when it's done,
+    // dereference the list and free it.
+    if (sorted_contents_list != list)
+    {
+        decrefcnt(sorted_contents_list);
+    }
+    return sorted_contents_list;
 }
 
 // Return a contents list (a list of three lists)
@@ -842,9 +837,6 @@ NODE *get_contents_list(int filter)
     // and prepend them to the contents list
     ret = cons(get_contents(c_PROCS), ret);
 	
-    deref(cnt_list);
-    cnt_list = NIL;
-
     return ret;
 }
 
@@ -872,33 +864,21 @@ NODE *lprocedures(NODE *)
 {
     want_buried = 0;
 
-    NODE * ret = get_contents(c_PROCS);
-    ref(ret);
-    deref(cnt_list);
-    cnt_list = NIL;
-    return unref(ret);
+    return get_contents(c_PROCS);
 }
 
 NODE *lnames(NODE *)
 {
     want_buried = 0;
 
-    NODE * ret = cons_list(NIL, get_contents(c_VARS));
-    ref(ret);
-    deref(cnt_list);
-    cnt_list = NIL;
-    return unref(ret);
+    return cons_list(NIL, get_contents(c_VARS));
 }
 
 NODE *lplists(NODE *)
 {
     want_buried = 0;
 
-    NODE * ret = cons_list(NIL, NIL, get_contents(c_PLISTS));
-    ref(ret);
-    deref(cnt_list);
-    cnt_list = NIL;
-    return unref(ret);
+    return cons_list(NIL, NIL, get_contents(c_PLISTS));
 }
 
 static
