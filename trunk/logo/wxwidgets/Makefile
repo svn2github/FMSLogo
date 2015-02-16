@@ -171,6 +171,7 @@ WX_OBJECTS =                   \
     setactivearea.o            \
     setcolor.o                 \
     setpensize.o               \
+    sort.o                     \
     startup.o                  \
     statusdialog.o             \
     stringprintednode.o        \

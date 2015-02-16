@@ -39,6 +39,7 @@
 #include "files.h"
 #include "unix.h"
 #include "avltree.h"
+#include "sort.h"
 #include "debugheap.h"
 
 #include "localizedstrings.h"
@@ -792,114 +793,6 @@ contents_map(
     }
 }
 
-// Modify a list such that each element in the list
-// is inserted into its own, one-element list.
-static
-void ms_listlist(NODE *nd)
-{
-    while (nd != NIL)
-    {
-        NODE* temp = cons_list(car(nd));
-        setcar(nd, temp);
-        nd = cdr(nd);
-    }
-}
-
-static
-NODE *merge(NODE *a, NODE *b)
-{
-    if (a == NIL) 
-    {
-        return b;
-    }
-
-    if (b == NIL) 
-    {
-        return a;
-    }
-
-    NODE *ret;
-    NODE *tail;
-    if (compare_node(car(a), car(b), false) < 0)
-    {
-        ret = a;
-        tail = a;
-        a = cdr(a);
-    }
-    else
-    {
-        ret = b;
-        tail = b;
-        b = cdr(b);
-    }
-
-    while (a != NIL && b != NIL)
-    {
-        if (compare_node(car(a), car(b), false) < 0)
-        {
-            tail->nunion.ncons.ncdr = a;
-            a = cdr(a);
-        }
-        else
-        {
-            tail->nunion.ncons.ncdr = b;
-            b = cdr(b);
-        }
-        tail = cdr(tail);
-    }
-
-    if (b == NIL) 
-    {
-        tail->nunion.ncons.ncdr = a;
-    }
-    else
-    {
-        tail->nunion.ncons.ncdr = b;
-    }
-
-    return ret;
-}
-
-static
-void mergepairs(NODE *nd)
-{
-    NODE *temp;
-
-    while (nd != NIL && cdr(nd) != NIL)
-    {
-        nd->nunion.ncons.ncar = merge(car(nd), cadr(nd));
-        temp = cdr(nd);
-        nd->nunion.ncons.ncdr = cddr(nd);
-        temp->nunion.ncons.ncar = temp->nunion.ncons.ncdr = NIL;
-        gc(temp);
-        nd = cdr(nd);
-    }
-}
-
-static
-NODE *mergesort(NODE *nd)
-{
-    if (nd == NIL)
-    {
-        return NIL;
-    }
-
-    if (cdr(nd) == NIL) 
-    {
-        return nd;
-    }
-
-    ms_listlist(nd);
-    while (cdr(nd) != NIL)
-    {
-        mergepairs(nd);
-    }
-    NODE * ret = car(nd);
-    nd->nunion.ncons.ncar = NIL;
-    gc(nd);
-    return ret;
-}
-
 static
 NODE *
 get_contents(
@@ -918,7 +811,9 @@ get_contents(
         }
     }
 
-    cnt_list = mergesort(cnt_list);
+    // We can ignore the case when sorting because the contents
+    // list is already mapping into lower-case.
+    cnt_list = mergesort(cnt_list, false);
     return cnt_list;
 }
 

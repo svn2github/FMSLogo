@@ -55,6 +55,7 @@ OBJECTS=\
     paren.o             \
     parse.o             \
     print.o             \
+    sort.o              \
     startup.o           \
     status.o            \
     stringprintednode.o \

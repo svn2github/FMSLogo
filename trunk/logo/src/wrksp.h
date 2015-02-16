@@ -1,5 +1,5 @@
 /*
- *  wrksp.h      evaluation engine header file
+ *  wrksp.h      logo workspace management module
  *
  *    Copyright (C) 1993 by the Regents of the University of California
  *

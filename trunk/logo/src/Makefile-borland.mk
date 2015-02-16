@@ -13,8 +13,8 @@
 #
 # Borland C++ tools
 #
-BCC32   = Bcc32 +BccW32.cfg 
-BCC32I  = Bcc32i +BccW32.cfg 
+BCC32   = Bcc32 +BccW32.cfg
+BCC32I  = Bcc32i +BccW32.cfg
 ILINK32 = Ilink32
 BRC32   = Brc32
 
@@ -157,6 +157,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\selectbox.obj\
    $(IntermediateDirectory)\selectstartupinstruction.obj\
    $(IntermediateDirectory)\sizedlg.obj\
+   $(IntermediateDirectory)\sort.obj\
    $(IntermediateDirectory)\startup.obj\
    $(IntermediateDirectory)\status.obj\
    $(IntermediateDirectory)\statwind.obj\
@@ -261,6 +262,7 @@ $(IntermediateDirectory)\screenwindow.obj+
 $(IntermediateDirectory)\selectbox.obj+
 $(IntermediateDirectory)\selectstartupinstruction.obj+
 $(IntermediateDirectory)\sizedlg.obj+
+$(IntermediateDirectory)\sort.obj+
 $(IntermediateDirectory)\startup.obj+
 $(IntermediateDirectory)\status.obj+
 $(IntermediateDirectory)\statwind.obj+
