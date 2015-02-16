@@ -214,6 +214,13 @@ NODE *directory_helper(bool OnlyListDirectories)
 #ifndef WX_PURE
     WIN32_FIND_DATA findFileData;
 
+    // Flags for whether the special directories "." and ".." have been found.
+    // Because these are special entries, we always want them to be first,
+    // even if there's an entry that comes before them alphabetically,
+    // like "!MyDirectory".
+    boolean foundDot    = false;
+    boolean foundDotDot = false;
+
     HANDLE searchHandle = FindFirstFile(
         "*.*",
         &findFileData); 
@@ -228,12 +235,26 @@ NODE *directory_helper(bool OnlyListDirectories)
             if ((OnlyListDirectories && isADirectory) ||
                 (!OnlyListDirectories && !isADirectory))
             {
-                // found what we're looking for
-                NODE* file = make_strnode(findFileData.cFileName);
-                directory.AppendElement(file);
+                // We have found an entry type that we are looking for.
+                if (OnlyListDirectories && 0 == strcmp(".", findFileData.cFileName))
+                {
+                    // This the "." directory.  Flag it to be added later.
+                    foundDot = true;
+                }
+                else if (OnlyListDirectories && 0 == strcmp("..", findFileData.cFileName))
+                {
+                    // This the ".." directory.  Flag it to be added later.
+                    foundDotDot = true;
+                }
+                else
+                {
+                    // This is a regular directory entry.  Add it to the list.
+                    NODE* file = make_strnode(findFileData.cFileName);
+                    directory.AppendElement(file);
+                }
             }
-         
-            // iterate to the next file
+
+            // Iterate to the next file/directory
             moreToCome = FindNextFile(searchHandle, &findFileData);
         }
 
@@ -247,6 +268,17 @@ NODE *directory_helper(bool OnlyListDirectories)
     // the list.  If this is too slow, we could track if sorting is needed above
     // and only sort when necessary.
     NODE * sortedList = mergesort(directory.GetList(), true);
+
+    // Add "." and ".." to the front of the list, if applicable.
+    if (foundDotDot)
+    {
+        sortedList = cons(make_strnode(".."), sortedList);
+    }
+    if (foundDot)
+    {
+        sortedList = cons(make_strnode("."), sortedList);
+    }
+
     return sortedList;
 }
 
