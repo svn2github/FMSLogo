@@ -11,41 +11,65 @@ TO DIRECTORYSMOKETEST
 
    ; the directory should be empty
    SIMPLEREPORTTEST [FILES]       []
-   SIMPLEREPORTTEST [DIRECTORIES] [.. .]
+   SIMPLEREPORTTEST [DIRECTORIES] [. ..]
    DIR
 
+   ; Create a file
    OPENWRITE "file1.txt
    CLOSE     "file1.txt
    SIMPLEREPORTTEST [FILES]       [file1.txt]
-   SIMPLEREPORTTEST [DIRECTORIES] [.. .]
+   SIMPLEREPORTTEST [DIRECTORIES] [. ..]
 
-   OPENWRITE "file2.txt
-   CLOSE     "file2.txt
-   SIMPLEREPORTTEST [FILES]       [file2.txt file1.txt]
-   SIMPLEREPORTTEST [DIRECTORIES] [.. .]
+   ; Create a file whose ASCII order is less than the first
+   ; file, but whose alphabetical order is greater.
+   OPENWRITE "File2.txt
+   CLOSE     "File2.txt
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. ..]
 
+   ; Create a directory
    MKDIR "dir1
    POPDIR
-   SIMPLEREPORTTEST [FILES]       [file2.txt file1.txt]
-   SIMPLEREPORTTEST [DIRECTORIES] [dir1 .. .]
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. .. dir1]
 
-   MKDIR "dir2
+   ; Create a second directory whose ASCII order is less
+   ; than the first one but whose alphabetical order is greater.
+   MKDIR "Dir2
    POPDIR
-   SIMPLEREPORTTEST [FILES]       [file2.txt file1.txt]
-   SIMPLEREPORTTEST [DIRECTORIES] [dir2 dir1 .. .]
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. .. dir1 Dir2]
 
-   RMDIR "dir2
-   SIMPLEREPORTTEST [FILES]       [file2.txt file1.txt]
-   SIMPLEREPORTTEST [DIRECTORIES] [dir1 .. .]
+   ; Create a third directory whose ASCII order is before "."
+   MKDIR "!FirstDirectory
+   POPDIR
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [!FirstDirectory . .. dir1 Dir2]
 
+   ; Remove a directory
+   RMDIR "Dir2
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [!FirstDirectory . .. dir1]
+
+   ; Remove another directory
+   RMDIR "dir1
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [!FirstDirectory . ..]
+
+   ; Remove the last directory
+   RMDIR "!FirstDirectory
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. ..]
+
+   ; Remove a file
    ERASEFILE "file1.txt
-   SIMPLEREPORTTEST [FILES]       [file2.txt]
-   SIMPLEREPORTTEST [DIRECTORIES] [dir1 .. .]
+   SIMPLEREPORTTEST [FILES]       [File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. ..]
 
-   ERASEFILE "file2.txt
-   RMDIR     "dir1
+   ; Remove the other file
+   ERASEFILE "File2.txt
    SIMPLEREPORTTEST [FILES]       []
-   SIMPLEREPORTTEST [DIRECTORIES] [.. .]
+   SIMPLEREPORTTEST [DIRECTORIES] [. ..]
 
    CHDIR     "..
    RMDIR     "mytestdir
