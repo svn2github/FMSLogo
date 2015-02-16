@@ -111,7 +111,10 @@ void mergepairs(NODE *nd, bool ignorecase)
     }
 }
 
-/* Destructively sorts a list and returns the head of the new list */
+// Returns the head of a list that contains all elements in list sorted.
+// If the list was already sorted, it simply returns that list.
+// If the list was not sorted, then the old list is garbage collected
+// and the returned list has a reference count of 1.
 NODE * mergesort(NODE * list, bool ignorecase)
 {
     // The empty list is already sorted.
@@ -126,13 +129,24 @@ NODE * mergesort(NODE * list, bool ignorecase)
         return list;
     }
 
+    // Convert each element in the list into a single-element list
+    // that we can then merge.
     ms_listlist(list);
+    
+    // While there is more than one list, merge the lists pair-wise.
     while (cdr(list) != NIL)
     {
         mergepairs(list, ignorecase);
     }
+
+    // The original contents of the list has no been collected
+    // in car(list).  We carefully unlink it from "list" so that
+    // we can free "list" without freeing the sorted list that we
+    // are going to return.
     NODE * newHead = car(list);
     list->nunion.ncons.ncar = NIL;
     gc(list);
+
+    // Return the sorted list.  This has refcount of 1.
     return newHead;
 }
