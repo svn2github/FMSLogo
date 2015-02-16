@@ -795,21 +795,9 @@ get_contents(
         }
     }
 
-    NODE * list = contents_list.GetList();
-
     // We can ignore the case when sorting because the contents
     // list is already mapping into lower-case.
-    NODE * sorted_contents_list = mergesort(list, false);
-
-    // mergesort returns a list with a single reference.
-    // Since we aren't going to keep that reference we must remove it.
-    // The evaluator will re-reference this list and, when it's done,
-    // dereference the list and free it.
-    if (sorted_contents_list != list)
-    {
-        decrefcnt(sorted_contents_list);
-    }
-    return sorted_contents_list;
+    return mergesort(contents_list.GetList(), false);
 }
 
 // Return a contents list (a list of three lists)

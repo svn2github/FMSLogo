@@ -111,10 +111,16 @@ void mergepairs(NODE *nd, bool ignorecase)
     }
 }
 
-// Returns the head of a list that contains all elements in list sorted.
-// If the list was already sorted, it simply returns that list.
-// If the list was not sorted, then the old list is garbage collected
-// and the returned list has a reference count of 1.
+// Returns a sorted list of nodes.
+//
+// list       - A list of nodes to sort.
+//              This must have a reference count of 0.
+//              The list is consumed by this call.
+// ignorecase - true, if the sort should be case-insensitive for strings.
+//              false, otherwise.
+//
+// The returned list has a reference count of 0 and is the caller's
+// responsiblity to free.
 NODE * mergesort(NODE * list, bool ignorecase)
 {
     // The empty list is already sorted.
@@ -122,6 +128,10 @@ NODE * mergesort(NODE * list, bool ignorecase)
     {
         return NIL;
     }
+
+    // The calling contract with respect to reference counting only
+    // makes sense if given a top-level list with no references.
+    assert(getrefcnt(list) == 0);
 
     // A single element list is already sorted.
     if (cdr(list) == NIL) 
@@ -132,7 +142,7 @@ NODE * mergesort(NODE * list, bool ignorecase)
     // Convert each element in the list into a single-element list
     // that we can then merge.
     ms_listlist(list);
-    
+
     // While there is more than one list, merge the lists pair-wise.
     while (cdr(list) != NIL)
     {
@@ -146,7 +156,8 @@ NODE * mergesort(NODE * list, bool ignorecase)
     NODE * newHead = car(list);
     list->nunion.ncons.ncar = NIL;
     gc(list);
+    decrefcnt(newHead);
 
-    // Return the sorted list.  This has refcount of 1.
+    // Return the sorted list with a refcount of 0.
     return newHead;
 }

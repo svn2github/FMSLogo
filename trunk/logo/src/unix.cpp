@@ -241,23 +241,12 @@ NODE *directory_helper(bool OnlyListDirectories)
     }
 #endif
 
-    NODE * list = directory.GetList();
-
     // The MSDN reports that FindNextFile doesn't guarantee a order, so we sort
     // the list according to the locale.
     // CONSIDER FOR SPEED: From what I've seen, FindNextFile usually does sort
     // the list.  If this is too slow, we could track if sorting is needed above
     // and only sort when necessary.
-    NODE * sortedList = mergesort(list, true);
-
-    // mergesort returns a list with a single reference.
-    // Since we aren't going to keep that reference we must remove it.
-    // The evaluator will re-reference this list and, when it's done,
-    // dereference the list and free it.
-    if (sortedList != list)
-    {
-        decrefcnt(sortedList);
-    }
+    NODE * sortedList = mergesort(directory.GetList(), true);
     return sortedList;
 }
 
