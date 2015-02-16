@@ -821,7 +821,7 @@ NODE *lreadword(NODE *)
 NODE *lreadrawline(NODE *)
 {
     NODE *val = reader(g_Reader.GetStream(), "RAW"); // fake prompt flags no specials
-    if (feof(g_Reader.GetStream()))
+    if (feof(g_Reader.GetStream()) && getstrlen(val) == 0)
     {
         gcref(val);
         return NIL;
