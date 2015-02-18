@@ -2691,35 +2691,49 @@ void turtlepaste(int TurtleToPaste)
             }
             else
             {
+                const FLONUM deltaSourceX =   cosine / the_zoom;
+                const FLONUM deltaSourceY = - sine   / the_zoom;
+
                 // Use bilinear interpolation to make the picture look nice at rough angles.
                 for (int y = miny; y < maxy; y++)
                 {
+                    FLONUM sourceX = ((X_ROTATED(minx, y, cosine, sine) / the_zoom + xOrigin));
+                    FLONUM sourceY = ((Y_ROTATED(minx, y, cosine, sine) / the_zoom + yOrigin));
+
                     for (int x = minx; x < maxx; x++)
                     {
-                        FLONUM sourcex = ((X_ROTATED(x, y, cosine, sine) / the_zoom + xOrigin));
-                        FLONUM sourcey = ((Y_ROTATED(x, y, cosine, sine) / the_zoom + yOrigin));
+                        // sourceX and sourceY look like this if computed in an absolute manner.
+                        // sourceX = ((X_ROTATED(x, y, cosine, sine) / the_zoom + xOrigin));
+                        // sourceY = ((Y_ROTATED(x, y, cosine, sine) / the_zoom + yOrigin));
+                        sourceX += deltaSourceX;
+                        sourceY += deltaSourceY;
 
-                        if (0 <= sourcex && 0 <= sourcey)
+                        if (0 <= sourceX && 0 <= sourceY)
                         {
-                            if (sourcex < g_Bitmaps[TurtleToPaste].Width  - 1 &&
-                                sourcey < g_Bitmaps[TurtleToPaste].Height - 1)
+                            if (sourceX < g_Bitmaps[TurtleToPaste].Width  - 1 &&
+                                sourceY < g_Bitmaps[TurtleToPaste].Height - 1)
                             {
                                 // full bilinear interpolation is necessary
-                                FLONUM xFraction = modf(sourcex, &sourcex);
-                                FLONUM yFraction = modf(sourcey, &sourcey);
+                                FLONUM sourceXInt;
+                                FLONUM xFraction = modf(sourceX, &sourceXInt);
 
-                                RGBCOLOR pixelx0y0 = ::GetPixel(TempMemDC, sourcex,     sourcey);
-                                RGBCOLOR pixelx0y1 = ::GetPixel(TempMemDC, sourcex,     sourcey + 1);
-                                RGBCOLOR pixelx1y0 = ::GetPixel(TempMemDC, sourcex + 1, sourcey);
-                                RGBCOLOR pixelx1y1 = ::GetPixel(TempMemDC, sourcex + 1, sourcey + 1);
+                                FLONUM sourceYInt;
+                                FLONUM yFraction = modf(sourceY, &sourceYInt);
+
+                                unsigned int sourceXInteger = static_cast<unsigned int>(sourceXInt);
+                                unsigned int sourceYInteger = static_cast<unsigned int>(sourceYInt);
+                                RGBCOLOR pixelx0y0 = ::GetPixel(TempMemDC, sourceXInteger,     sourceYInteger);
+                                RGBCOLOR pixelx0y1 = ::GetPixel(TempMemDC, sourceXInteger,     sourceYInteger + 1);
+                                RGBCOLOR pixelx1y0 = ::GetPixel(TempMemDC, sourceXInteger + 1, sourceYInteger);
+                                RGBCOLOR pixelx1y1 = ::GetPixel(TempMemDC, sourceXInteger + 1, sourceYInteger + 1);
 
                                 if (pixelx0y0 == pixelx0y1 &&
                                     pixelx0y0 == pixelx1y0 &&
                                     pixelx0y0 == pixelx1y1)
                                 {
                                     // If all of the adjacent pixels are the same, then
-                                    // bilinear interpolation is unnecesasry.  For a typical
-                                    // sprite image, this optimization yeilds a 10% speed
+                                    // bilinear interpolation is unnecessary.  For a typical
+                                    // sprite image, this optimization yields a 10% speed
                                     // improvement.
                                     if (pixelx0y0 != TRANSPARENT_COLOR)
                                     {
@@ -2733,26 +2747,32 @@ void turtlepaste(int TurtleToPaste)
                                 else
                                 {
                                     // get the screen's value for each of the transparent pixels
-                                    const RGBCOLOR screenPixel = GetPixel(
-                                        ScreenDC,
-                                        x + xScreenOffset,
-                                        y + yScreenOffset);
+                                    if (pixelx0y0 == TRANSPARENT_COLOR ||
+                                        pixelx1y0 == TRANSPARENT_COLOR ||
+                                        pixelx0y1 == TRANSPARENT_COLOR ||
+                                        pixelx1y1 == TRANSPARENT_COLOR)
+                                    {
+                                        const RGBCOLOR screenPixel = GetPixel(
+                                            ScreenDC,
+                                            x + xScreenOffset,
+                                            y + yScreenOffset);
 
-                                    if (pixelx0y0 == TRANSPARENT_COLOR)
-                                    {
-                                        pixelx0y0 = screenPixel;
-                                    }
-                                    if (pixelx1y0 == TRANSPARENT_COLOR)
-                                    {
-                                        pixelx1y0 = screenPixel;
-                                    }
-                                    if (pixelx0y1 == TRANSPARENT_COLOR)
-                                    {
-                                        pixelx0y1 = screenPixel;
-                                    }
-                                    if (pixelx1y1 == TRANSPARENT_COLOR)
-                                    {
-                                        pixelx1y1 = screenPixel;
+                                        if (pixelx0y0 == TRANSPARENT_COLOR)
+                                        {
+                                            pixelx0y0 = screenPixel;
+                                        }
+                                        if (pixelx1y0 == TRANSPARENT_COLOR)
+                                        {
+                                            pixelx1y0 = screenPixel;
+                                        }
+                                        if (pixelx0y1 == TRANSPARENT_COLOR)
+                                        {
+                                            pixelx0y1 = screenPixel;
+                                        }
+                                        if (pixelx1y1 == TRANSPARENT_COLOR)
+                                        {
+                                            pixelx1y1 = screenPixel;
+                                        }
                                     }
 
                                     // interpolate in the X direction, then the Y direction
@@ -2767,14 +2787,16 @@ void turtlepaste(int TurtleToPaste)
                                         pixel);
                                 }
                             }
-                            else if (sourcex < g_Bitmaps[TurtleToPaste].Width &&
-                                     sourcey < g_Bitmaps[TurtleToPaste].Height - 1)
+                            else if (sourceX < g_Bitmaps[TurtleToPaste].Width &&
+                                     sourceY < g_Bitmaps[TurtleToPaste].Height - 1)
                             {
                                 // We're at the right edge, so linear interpolation in Y is sufficient.
-                                FLONUM yFraction = modf(sourcey, &sourcey);
+                                FLONUM sourceYInt;
+                                FLONUM yFraction = modf(sourceY, &sourceYInt);
 
-                                RGBCOLOR pixely0 = ::GetPixel(TempMemDC, g_Bitmaps[TurtleToPaste].Width - 1, sourcey);
-                                RGBCOLOR pixely1 = ::GetPixel(TempMemDC, g_Bitmaps[TurtleToPaste].Width - 1, sourcey + 1);
+                                unsigned int sourceYInteger = static_cast<unsigned int>(sourceYInt);
+                                RGBCOLOR pixely0 = ::GetPixel(TempMemDC, g_Bitmaps[TurtleToPaste].Width - 1, sourceYInteger);
+                                RGBCOLOR pixely1 = ::GetPixel(TempMemDC, g_Bitmaps[TurtleToPaste].Width - 1, sourceYInteger + 1);
 
                                 // get the screen's value for each of the transparent pixels
                                 const RGBCOLOR screenPixel = GetPixel(ScreenDC, x + xScreenOffset, y + yScreenOffset);
@@ -2796,14 +2818,16 @@ void turtlepaste(int TurtleToPaste)
                                     y + yScreenOffset,
                                     pixel);
                             }
-                            else if (sourcex < g_Bitmaps[TurtleToPaste].Width - 1 &&
-                                     sourcey < g_Bitmaps[TurtleToPaste].Height)
+                            else if (sourceX < g_Bitmaps[TurtleToPaste].Width - 1 &&
+                                     sourceY < g_Bitmaps[TurtleToPaste].Height)
                             {
                                 // We're at the bottom edge, so linear interpolation in X is sufficient.
-                                FLONUM xFraction = modf(sourcex, &sourcex);
+                                FLONUM sourceXInt;
+                                FLONUM xFraction = modf(sourceX, &sourceXInt);
 
-                                RGBCOLOR pixelx0 = ::GetPixel(TempMemDC, sourcex,     g_Bitmaps[TurtleToPaste].Height - 1);
-                                RGBCOLOR pixelx1 = ::GetPixel(TempMemDC, sourcex + 1, g_Bitmaps[TurtleToPaste].Height - 1);
+                                unsigned int sourceXInteger = static_cast<unsigned int>(sourceXInt);
+                                RGBCOLOR pixelx0 = ::GetPixel(TempMemDC, sourceXInt,     g_Bitmaps[TurtleToPaste].Height - 1);
+                                RGBCOLOR pixelx1 = ::GetPixel(TempMemDC, sourceXInt + 1, g_Bitmaps[TurtleToPaste].Height - 1);
 
                                 // get the screen's value for each of the transparent pixels
                                 const RGBCOLOR screenPixel = GetPixel(ScreenDC, x + xScreenOffset, y + yScreenOffset);
@@ -2825,11 +2849,11 @@ void turtlepaste(int TurtleToPaste)
                                     y + yScreenOffset,
                                     pixel);
                             }
-                            else if (sourcex < g_Bitmaps[TurtleToPaste].Width &&
-                                     sourcey < g_Bitmaps[TurtleToPaste].Height)
+                            else if (sourceX < g_Bitmaps[TurtleToPaste].Width &&
+                                     sourceY < g_Bitmaps[TurtleToPaste].Height)
                             {
                                 // we're at the corner, so we don't need any interpolation
-                                const RGBCOLOR pixel = ::GetPixel(TempMemDC, sourcex, sourcey);
+                                const RGBCOLOR pixel = ::GetPixel(TempMemDC, sourceX, sourceY);
                                 if (pixel != TRANSPARENT_COLOR)
                                 {
                                     SetPixelV(
