@@ -133,7 +133,7 @@ TO NETWORKTEST.SERVER.TWOCONNECTIONS
    NETSHUTDOWN
 
    ; verify that both connections succeeded
-   SIMPLEREPORTTEST [:server.data] [[Hello] [Hello]]
+   SIMPLEREPORTTEST [:server.data] [[hello] [hello]]
 
 END
 
@@ -161,7 +161,7 @@ TO NETWORKTEST.CLIENT.SMOKETEST
    TRACEINSTRUCTION  [ NETCONNECTOFF ]
    TRACEINSTRUCTION  [ NETSHUTDOWN   ]
 
-   SIMPLEREPORTTEST [:client.data] [[Hello]]
+   SIMPLEREPORTTEST [:client.data] [[hello]]
 END
 
 TO NETWORKTEST.CLIENT.ECHO

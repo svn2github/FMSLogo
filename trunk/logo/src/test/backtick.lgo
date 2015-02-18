@@ -25,7 +25,7 @@ TO BACKTICKTEST.SMOKETEST
    LOCAL [name1 name2]
    TRACEINSTRUCTION [MAKE "name1 "x]
    TRACEINSTRUCTION [MAKE "name2 "y]
-   SIMPLEREPORTTEST [ `[,:name1 ,:name2] ] [X Y]
+   SIMPLEREPORTTEST [ `[,:name1 ,:name2] ] [x y]
 
    ; lists don't get removed unexpectedly when the FIRST member is a comma
    SIMPLEREPORTTEST [ `[   , :name1   ] ]   [x]

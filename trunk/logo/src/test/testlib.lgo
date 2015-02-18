@@ -167,6 +167,20 @@ TO TRACEINSTRUCTIONNOCATCH :instruction
 END
 BURY [TRACEINSTRUCTIONNOCATCH]
 
+TO SIMPLEREPORTTEST.CHECKRESULT :instruction :result :expectedresult
+  LOCAL "caseignoredp
+
+  ; require strict case correctness
+  MAKE "caseignoredp "false
+
+  IF NOTEQUAL? :result :expectedresult [
+    REPORTTESTFAILED (LIST :instruction "output :result "|. We expected| :expectedresult ".)
+    STOP
+  ]
+
+  REPORTTESTPASSED (LIST :instruction "output :result "|, as expected.|)
+END
+
 TO SIMPLEREPORTTEST :instruction :expectedresult
   LOCAL "result
 
@@ -180,12 +194,8 @@ TO SIMPLEREPORTTEST :instruction :expectedresult
 
   IF FAILIFERROR :instruction [ STOP ]
 
-  IF NOTEQUAL? :result :expectedresult [
-    REPORTTESTFAILED (LIST :instruction "output :result "|. We expected| :expectedresult ".)
-    STOP
-  ]
+  SIMPLEREPORTTEST.CHECKRESULT :instruction :result :expectedresult
 
-  REPORTTESTPASSED (LIST :instruction "output :result "|, as expected.|)
 END
 BURY [SIMPLEREPORTTEST]
 
@@ -198,12 +208,7 @@ TO SIMPLEREPORTTESTNOCATCH :instruction :expectedresult
 
   MAKE "result RUN :instruction
 
-  IF NOTEQUAL? :result :expectedresult [
-    REPORTTESTFAILED (LIST :instruction "output :result "|. We expected| :expectedresult ".)
-    STOP
-  ]
-
-  REPORTTESTPASSED (LIST :instruction "output :result "|, as expected.|)
+  SIMPLEREPORTTEST.CHECKRESULT :instruction :result :expectedresult
 END
 BURY [SIMPLEREPORTTESTNOCATCH]
 
