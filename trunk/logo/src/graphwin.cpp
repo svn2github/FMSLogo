@@ -2632,9 +2632,12 @@ void turtlepaste(int TurtleToPaste)
                 sine   = sin(g_Turtles[TurtleToPaste].Heading * rads_per_degree);
             }
             
+            const FLONUM sourceWidth  = g_Bitmaps[TurtleToPaste].Width;
+            const FLONUM sourceHeight = g_Bitmaps[TurtleToPaste].Height;
+
             // The location of the centerpoint (or origin) of the turtle's bitmap about which to rotate
-            const FLONUM xOrigin = g_Bitmaps[TurtleToPaste].Width  / 2.0;
-            const FLONUM yOrigin = g_Bitmaps[TurtleToPaste].Height / 2.0;
+            const FLONUM xOrigin = sourceWidth  / 2.0;
+            const FLONUM yOrigin = sourceHeight / 2.0;
                 
             // Compute points of the image rotated about its center.
             FLONUM x0 = X_ROTATED(-xOrigin, -yOrigin, cosine, sine);
@@ -2673,8 +2676,8 @@ void turtlepaste(int TurtleToPaste)
                         int sourcex = (int)((X_ROTATED(x, y, cosine, sine) / the_zoom + xOrigin));
                         int sourcey = (int)((Y_ROTATED(x, y, cosine, sine) / the_zoom + yOrigin));
 
-                        if (0 <= sourcex && sourcex < g_Bitmaps[TurtleToPaste].Width &&
-                            0 <= sourcey && sourcey < g_Bitmaps[TurtleToPaste].Height)
+                        if (0 <= sourcex && sourcex < sourceWidth &&
+                            0 <= sourcey && sourcey < sourceHeight)
                         {
                             const RGBCOLOR pixel = ::GetPixel(TempMemDC, sourcex, sourcey);
                             if (pixel != TRANSPARENT_COLOR)
@@ -2710,8 +2713,8 @@ void turtlepaste(int TurtleToPaste)
 
                         if (0 <= sourceX && 0 <= sourceY)
                         {
-                            if (sourceX < g_Bitmaps[TurtleToPaste].Width  - 1 &&
-                                sourceY < g_Bitmaps[TurtleToPaste].Height - 1)
+                            if (sourceX < sourceWidth  - 1 &&
+                                sourceY < sourceHeight - 1)
                             {
                                 // full bilinear interpolation is necessary
                                 FLONUM sourceXInt;
@@ -2787,8 +2790,8 @@ void turtlepaste(int TurtleToPaste)
                                         pixel);
                                 }
                             }
-                            else if (sourceX < g_Bitmaps[TurtleToPaste].Width &&
-                                     sourceY < g_Bitmaps[TurtleToPaste].Height - 1)
+                            else if (sourceX < sourceWidth &&
+                                     sourceY < sourceHeight - 1)
                             {
                                 // We're at the right edge, so linear interpolation in Y is sufficient.
                                 FLONUM sourceYInt;
@@ -2818,8 +2821,8 @@ void turtlepaste(int TurtleToPaste)
                                     y + yScreenOffset,
                                     pixel);
                             }
-                            else if (sourceX < g_Bitmaps[TurtleToPaste].Width - 1 &&
-                                     sourceY < g_Bitmaps[TurtleToPaste].Height)
+                            else if (sourceX < sourceWidth - 1 &&
+                                     sourceY < sourceHeight)
                             {
                                 // We're at the bottom edge, so linear interpolation in X is sufficient.
                                 FLONUM sourceXInt;
@@ -2849,8 +2852,8 @@ void turtlepaste(int TurtleToPaste)
                                     y + yScreenOffset,
                                     pixel);
                             }
-                            else if (sourceX < g_Bitmaps[TurtleToPaste].Width &&
-                                     sourceY < g_Bitmaps[TurtleToPaste].Height)
+                            else if (sourceX < sourceWidth &&
+                                     sourceY < sourceHeight)
                             {
                                 // we're at the corner, so we don't need any interpolation
                                 const RGBCOLOR pixel = ::GetPixel(TempMemDC, sourceX, sourceY);
