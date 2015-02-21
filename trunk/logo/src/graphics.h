@@ -180,7 +180,6 @@ extern NODE *lgifload(NODE *arg);
 extern NODE *lgifsize(NODE *arg);
 extern NODE *lbitcut(NODE *arg);
 extern NODE *lbitcopy(NODE *arg);
-extern void turtlepaste(int turtle_which);
 extern NODE *lbitpaste(NODE *arg);
 extern NODE *lbitpastetoindex(NODE *arg);
 extern NODE *lbitmode(NODE *arg);

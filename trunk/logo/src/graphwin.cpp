@@ -2565,7 +2565,21 @@ static RGBCOLOR InterpolateColors(RGBCOLOR A, RGBCOLOR B, double Alpha)
     return MAKERGB(red, green, blue);
 }
 
-void turtlepaste(int TurtleToPaste)
+// Copies a bitmap that is associated with a given turtle onto a
+// device context.
+//
+// PaintDeviceContext - The device context on which to paste the bitmap.
+// TurtleToPaste      - The index of the turtle (and bitmap) that should
+//                      be copied to the screen.
+// zoom               - A multiplier that says how much the bitmap
+//                      should be expanded when being copied.
+//
+// The calling contract is very strange for performance reasons and
+// hopefully will not last long.
+// 1) This is only called for turtles that are bitmapped.
+// 2) Sprite turtles MUST ignore the zoom, as this is handled by the caller.
+// 3) This MUST ignore the scroll positions.
+static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
 {
     ASSERT_TURTLE_INVARIANT;
 #ifndef WX_PURE
@@ -2585,15 +2599,13 @@ void turtlepaste(int TurtleToPaste)
     // only if we have something to paste
     if (g_Bitmaps[TurtleToPaste].IsValid)
     {
-
         // if clipboard then never leave Cut Flag true
         if (TurtleToPaste == 0)
         {
             g_Bitmaps[TurtleToPaste].IsValid = false;
         }
 
-        HDC ScreenDC  = GetScreenDeviceContext();
-        HDC TempMemDC = CreateCompatibleDC(ScreenDC);
+        HDC TempMemDC = CreateCompatibleDC(PaintDeviceContext);
 
         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
             TempMemDC,
@@ -2653,14 +2665,14 @@ void turtlepaste(int TurtleToPaste)
             FLONUM y3 = Y_ROTATED(xOrigin, -yOrigin, cosine, sine);
 
             // Compute the bounding box.  We grow the box by one to account for rounding errors.
-            const int minx = (int) ((std::min(x0,std::min(x1, std::min(x2,x3))) - 1) * the_zoom);
-            const int miny = (int) ((std::min(y0,std::min(y1, std::min(y2,y3))) - 1) * the_zoom);
-            const int maxx = (int) ((std::max(x0,std::max(x1, std::max(x2,x3))) + 1) * the_zoom);
-            const int maxy = (int) ((std::max(y0,std::max(y1, std::max(y2,y3))) + 1) * the_zoom);
+            const int minx = (int) ((std::min(x0,std::min(x1, std::min(x2,x3))) - 1));
+            const int miny = (int) ((std::min(y0,std::min(y1, std::min(y2,y3))) - 1));
+            const int maxx = (int) ((std::max(x0,std::max(x1, std::max(x2,x3))) + 1));
+            const int maxy = (int) ((std::max(y0,std::max(y1, std::max(y2,y3))) + 1));
 
             // Figure out where on the screen window the turtle belongs.
-            const int xScreenOffset = (+dest.x + xoffset) * the_zoom - GetScreenHorizontalScrollPosition();
-            const int yScreenOffset = (-dest.y + yoffset) * the_zoom - GetScreenVerticalScrollPosition();
+            const int xScreenOffset = (+dest.x + xoffset);
+            const int yScreenOffset = (-dest.y + yoffset);
 
             // Now do the rotating, one pixel at a time.
             // Find the pixel that cooresponds to each point in the destination
@@ -2673,8 +2685,8 @@ void turtlepaste(int TurtleToPaste)
                 {
                     for (int x = minx; x < maxx; x++)
                     {
-                        int sourcex = (int)((X_ROTATED(x, y, cosine, sine) / the_zoom + xOrigin));
-                        int sourcey = (int)((Y_ROTATED(x, y, cosine, sine) / the_zoom + yOrigin));
+                        int sourcex = (int)((X_ROTATED(x, y, cosine, sine) + xOrigin));
+                        int sourcey = (int)((Y_ROTATED(x, y, cosine, sine) + yOrigin));
 
                         if (0 <= sourcex && sourcex < sourceWidth &&
                             0 <= sourcey && sourcey < sourceHeight)
@@ -2683,7 +2695,7 @@ void turtlepaste(int TurtleToPaste)
                             if (pixel != TRANSPARENT_COLOR)
                             {
                                 SetPixelV(
-                                    ScreenDC,
+                                    PaintDeviceContext,
                                     x + xScreenOffset,
                                     y + yScreenOffset,
                                     pixel);
@@ -2694,8 +2706,8 @@ void turtlepaste(int TurtleToPaste)
             }
             else
             {
-                const FLONUM deltaSourceX =   cosine / the_zoom;
-                const FLONUM deltaSourceY = - sine   / the_zoom;
+                const FLONUM deltaSourceX =  cosine;
+                const FLONUM deltaSourceY = -sine;
 
                 // Read the bitmap into a local buffer for faster access.
                 RGBCOLOR * sourceBitmap = new RGBCOLOR[g_Bitmaps[TurtleToPaste].Width * g_Bitmaps[TurtleToPaste].Height];
@@ -2711,14 +2723,14 @@ void turtlepaste(int TurtleToPaste)
                 // Use bilinear interpolation to make the picture look nice at rough angles.
                 for (int y = miny; y < maxy; y++)
                 {
-                    FLONUM sourceX = ((X_ROTATED(minx, y, cosine, sine) / the_zoom + xOrigin));
-                    FLONUM sourceY = ((Y_ROTATED(minx, y, cosine, sine) / the_zoom + yOrigin));
+                    FLONUM sourceX = ((X_ROTATED(minx, y, cosine, sine) + xOrigin));
+                    FLONUM sourceY = ((Y_ROTATED(minx, y, cosine, sine) + yOrigin));
 
                     for (int x = minx; x < maxx; x++)
                     {
                         // sourceX and sourceY look like this if computed in an absolute manner.
-                        // sourceX = ((X_ROTATED(x, y, cosine, sine) / the_zoom + xOrigin));
-                        // sourceY = ((Y_ROTATED(x, y, cosine, sine) / the_zoom + yOrigin));
+                        // sourceX = ((X_ROTATED(x, y, cosine, sine) + xOrigin));
+                        // sourceY = ((Y_ROTATED(x, y, cosine, sine) + yOrigin));
                         sourceX += deltaSourceX;
                         sourceY += deltaSourceY;
 
@@ -2754,7 +2766,7 @@ void turtlepaste(int TurtleToPaste)
                                     if (pixelx0y0 != TRANSPARENT_COLOR)
                                     {
                                         SetPixelV(
-                                            ScreenDC,
+                                            PaintDeviceContext,
                                             x + xScreenOffset,
                                             y + yScreenOffset,
                                             pixelx0y0);
@@ -2769,7 +2781,7 @@ void turtlepaste(int TurtleToPaste)
                                         pixelx1y1 == TRANSPARENT_COLOR)
                                     {
                                         const RGBCOLOR screenPixel = GetPixel(
-                                            ScreenDC,
+                                            PaintDeviceContext,
                                             x + xScreenOffset,
                                             y + yScreenOffset);
 
@@ -2797,7 +2809,7 @@ void turtlepaste(int TurtleToPaste)
                                     RGBCOLOR pixel   = InterpolateColors(pixely0, pixely1, yFraction);
 
                                     SetPixelV(
-                                        ScreenDC,
+                                        PaintDeviceContext,
                                         x + xScreenOffset,
                                         y + yScreenOffset,
                                         pixel);
@@ -2816,7 +2828,7 @@ void turtlepaste(int TurtleToPaste)
                                 RGBCOLOR pixely1 = y0Ptr[g_Bitmaps[TurtleToPaste].Width];
 
                                 // get the screen's value for each of the transparent pixels
-                                const RGBCOLOR screenPixel = GetPixel(ScreenDC, x + xScreenOffset, y + yScreenOffset);
+                                const RGBCOLOR screenPixel = GetPixel(PaintDeviceContext, x + xScreenOffset, y + yScreenOffset);
 
                                 if (pixely0 == TRANSPARENT_COLOR)
                                 {
@@ -2830,7 +2842,7 @@ void turtlepaste(int TurtleToPaste)
                                 // interpolate in the Y direction
                                 RGBCOLOR pixel = InterpolateColors(pixely0, pixely1, yFraction);
                                 SetPixelV(
-                                    ScreenDC,
+                                    PaintDeviceContext,
                                     x + xScreenOffset,
                                     y + yScreenOffset,
                                     pixel);
@@ -2848,7 +2860,7 @@ void turtlepaste(int TurtleToPaste)
                                 RGBCOLOR pixelx1 = x0Ptr[1];
 
                                 // get the screen's value for each of the transparent pixels
-                                const RGBCOLOR screenPixel = GetPixel(ScreenDC, x + xScreenOffset, y + yScreenOffset);
+                                const RGBCOLOR screenPixel = GetPixel(PaintDeviceContext, x + xScreenOffset, y + yScreenOffset);
 
                                 if (pixelx0 == TRANSPARENT_COLOR)
                                 {
@@ -2862,7 +2874,7 @@ void turtlepaste(int TurtleToPaste)
                                 // interpolate in the X direction
                                 RGBCOLOR pixel = InterpolateColors(pixelx0, pixelx1, xFraction);
                                 SetPixelV(
-                                    ScreenDC,
+                                    PaintDeviceContext,
                                     x + xScreenOffset,
                                     y + yScreenOffset,
                                     pixel);
@@ -2875,7 +2887,7 @@ void turtlepaste(int TurtleToPaste)
                                 if (pixel != TRANSPARENT_COLOR)
                                 {
                                     SetPixelV(
-                                        ScreenDC,
+                                        PaintDeviceContext,
                                         x + xScreenOffset,
                                         y + yScreenOffset,
                                         pixel);
@@ -2890,39 +2902,16 @@ void turtlepaste(int TurtleToPaste)
         }
         else
         {
-            //screen
-            if (zoom_flag)
-            {
-                SetMapMode(ScreenDC, MM_ANISOTROPIC);
-                SetWindowOrgEx(ScreenDC, 0, 0, 0);
-                SetWindowExtEx(ScreenDC, BitMapWidth, BitMapHeight, 0);
-                SetViewportOrgEx(ScreenDC, 0, 0, 0);
-                SetViewportExtEx(ScreenDC, (int) (BitMapWidth * the_zoom), (int) (BitMapHeight * the_zoom), 0);
-
-                BitBlt(
-                    ScreenDC,
-                    +dest.x - GetScreenHorizontalScrollPosition() / the_zoom + xoffset,
-                    -dest.y - GetScreenVerticalScrollPosition() / the_zoom + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
-                    g_Bitmaps[TurtleToPaste].Width,
-                    g_Bitmaps[TurtleToPaste].Height,
-                    TempMemDC,
-                    0,
-                    0,
-                    g_Turtles[TurtleToPaste].BitmapRasterMode);
-            }
-            else
-            {
-                BitBlt(
-                    ScreenDC,
-                    +dest.x - GetScreenHorizontalScrollPosition() + xoffset,
-                    -dest.y - GetScreenVerticalScrollPosition() + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
-                    g_Bitmaps[TurtleToPaste].Width,
-                    g_Bitmaps[TurtleToPaste].Height,
-                    TempMemDC,
-                    0,
-                    0,
-                    g_Turtles[TurtleToPaste].BitmapRasterMode);
-            }
+            BitBlt(
+                PaintDeviceContext,
+                +dest.x / zoom + xoffset,
+                -dest.y / zoom + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
+                g_Bitmaps[TurtleToPaste].Width,
+                g_Bitmaps[TurtleToPaste].Height,
+                TempMemDC,
+                0,
+                0,
+                g_Turtles[TurtleToPaste].BitmapRasterMode);
         }
 
         SelectObject(TempMemDC, oldBitmap2);
@@ -2940,6 +2929,41 @@ void turtlepaste(int TurtleToPaste)
         g_Turtles[TurtleToPaste].IsSprite         = false;
     }
 #endif
+}
+
+void paste_all_turtles(HDC DeviceContext, FLONUM zoom)
+{
+    for (int j = 0; j <= g_MaxTurtle; j++)
+    {
+        if (g_Turtles[j].IsShown)
+        {
+            if (g_Turtles[j].BitmapRasterMode)
+            {
+                SetROP2(DeviceContext, R2_COPYPEN);
+                turtlepaste(DeviceContext, j, zoom);
+            }
+            else
+            {
+                SetROP2(DeviceContext, R2_NOT);
+                for (int i = 0; i < 4; i++)
+                {
+                    if (g_Turtles[j].Points[i].bValid)
+                    {
+                        MoveToEx(
+                            DeviceContext,
+                            g_Turtles[j].Points[i].from.x * zoom,
+                            g_Turtles[j].Points[i].from.y * zoom,
+                            0);
+
+                        LineTo(
+                            DeviceContext,
+                            g_Turtles[j].Points[i].to.x * zoom,
+                            g_Turtles[j].Points[i].to.y * zoom);
+                    }
+                }
+            }
+        }
+    }
 }
 
 NODE *lscrollx(NODE *arg)

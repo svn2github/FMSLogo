@@ -623,8 +623,7 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
     HPALETTE oldPalette  = NULL;
     HPALETTE oldPalette2 = NULL;
 
-    /* if palette allocate it */
-
+    // If we have a palette, then use it.
     if (EnablePalette)
     {
         oldPalette = SelectPalette(PaintDC, ThePalette, FALSE);
@@ -634,11 +633,23 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
         RealizePalette(memoryDC);
     }
 
+    // draw the turtles on top of the image
+    bool useBackBuffer = false;
+    for (int j = 0; j <= g_MaxTurtle; j++)
+    {
+        if (g_Turtles[j].IsShown && g_Turtles[j].IsSprite)
+        {
+            useBackBuffer = true;
+            break;
+        }
+    }
+
     HBRUSH whiteBrush = (HBRUSH) GetStockObject(WHITE_BRUSH);
 
+    RECT sourceRect;
     if (!zoom_flag)
     {
-        // fill the part to the right of the screen.
+        // fill the part to the right of the screen
         if (BitMapWidth < PaintRect.right)
         {
             RECT toFill;
@@ -661,31 +672,10 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
             FillRect(PaintDC, &toFill, whiteBrush);
         }
 
-        // The zoom is 1:1.  Just do a 1:1 BLIT (no scaling).
-        BitBlt(
-            PaintDC,
-            PaintRect.left,
-            PaintRect.top,
-            PaintRect.right  - PaintRect.left,
-            PaintRect.bottom - PaintRect.top,
-            memoryDC,
-            PaintRect.left,
-            PaintRect.top,
-            SRCCOPY);
+        sourceRect = PaintRect;
     }
     else
     {
-        // We are zoomed in.  Compute scaling and then display
-        if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
-        {
-            SetStretchBltMode(PaintDC, HALFTONE);
-        }
-        else
-        {
-            // HALFTONE is not supported on Win 95/98/ME
-            SetStretchBltMode(PaintDC, COLORONCOLOR);
-        }
-
         FLONUM sourceRectLeft   = PaintRect.left;
         FLONUM sourceRectTop    = PaintRect.top;
         FLONUM sourceRectRight  = PaintRect.right;
@@ -729,17 +719,83 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
 
         // Make sure that none of rectangle's borders are off-screen
         // after we inflated it.
-        RECT sourceRect;
         sourceRect.left   = (int) (std::min(std::max(scaledSourceRectLeft,   0.0), (double)BitMapWidth));
         sourceRect.top    = (int) (std::min(std::max(scaledSourceRectTop,    0.0), (double)BitMapHeight));
         sourceRect.right  = (int) (std::min(std::max(scaledSourceRectRight,  0.0), (double)BitMapWidth));
         sourceRect.bottom = (int) (std::min(std::max(scaledSourceRectBottom, 0.0), (double)BitMapHeight));
+    }
 
+    HDC     sourceDeviceContext;
+    HBITMAP backBuffer;
+    if (useBackBuffer)
+    {
+        // Allocate the back buffer.
+        HDC backBufferDeviceContext = CreateCompatibleDC(PaintDC);
+        backBuffer = CreateCompatibleBitmap(PaintDC, BitMapWidth, BitMapHeight);
+        SelectObject(backBufferDeviceContext, backBuffer);
+
+        if (EnablePalette)
+        {
+            SelectPalette(backBufferDeviceContext, ThePalette, FALSE);
+            RealizePalette(backBufferDeviceContext);
+        }
+
+        // Copy the portion of the memory image to the back buffer
+        // that corresponds to the portion of the screen that is
+        // being be painted.
+        BitBlt(
+            backBufferDeviceContext,
+            sourceRect.left,
+            sourceRect.top,
+            sourceRect.right  - sourceRect.left,
+            sourceRect.bottom - sourceRect.top,
+            memoryDC,
+            sourceRect.left,
+            sourceRect.top,
+            SRCCOPY);
+
+        // draw the turtles on top of the image
+        paste_all_turtles(backBufferDeviceContext, 1.0);
+
+        sourceDeviceContext = backBufferDeviceContext;
+    }
+    else
+    {
+        sourceDeviceContext = memoryDC;
+    }
+
+    if (!zoom_flag)
+    {
+        // The zoom is 1:1.  Just do a 1:1 BLIT (no scaling).
+        BitBlt(
+            PaintDC,
+            PaintRect.left,
+            PaintRect.top,
+            PaintRect.right  - PaintRect.left,
+            PaintRect.bottom - PaintRect.top,
+            sourceDeviceContext,
+            PaintRect.left,
+            PaintRect.top,
+            SRCCOPY);
+    }
+    else
+    {
         RECT destRect;
         destRect.left   = sourceRect.left   * the_zoom;
         destRect.top    = sourceRect.top    * the_zoom;
         destRect.right  = sourceRect.right  * the_zoom;
         destRect.bottom = sourceRect.bottom * the_zoom;
+
+        // We are zoomed in.  Compute scaling and then display
+        if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
+        {
+            SetStretchBltMode(PaintDC, HALFTONE);
+        }
+        else
+        {
+            // HALFTONE is not supported on Win 95/98/ME
+            SetStretchBltMode(PaintDC, COLORONCOLOR);
+        }
 
         StretchBlt(
             PaintDC,
@@ -747,7 +803,7 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
             destRect.top,
             destRect.right  - destRect.left,
             destRect.bottom - destRect.top,
-            memoryDC,
+            sourceDeviceContext,
             sourceRect.left,
             sourceRect.top,
             sourceRect.right  - sourceRect.left,
@@ -755,46 +811,24 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
             SRCCOPY);
     }
 
+    SelectObject(memoryDC, oldBitmap);
+
+    // draw the turtles on top of the image
+    if (useBackBuffer)
+    {
+        DeleteObject(backBuffer);
+        DeleteDC(sourceDeviceContext);
+    }
+    else
+    {
+        paste_all_turtles(PaintDC, the_zoom);
+    }
+
     // restore resources
     if (EnablePalette)
     {
         SelectPalette(memoryDC, oldPalette2, FALSE);
         SelectPalette(PaintDC, oldPalette, FALSE);
-    }
-
-    SelectObject(memoryDC, oldBitmap);
-
-    // draw the turtles on top of the image
-    SetROP2(PaintDC, R2_NOT);
-
-    for (int j = 0; j <= g_MaxTurtle; j++)
-    {
-        if (g_Turtles[j].IsShown)
-        {
-            if (g_Turtles[j].BitmapRasterMode)
-            {
-                turtlepaste(j);
-            }
-            else
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    if (g_Turtles[j].Points[i].bValid)
-                    {
-                        MoveToEx(
-                            PaintDC,
-                            g_Turtles[j].Points[i].from.x * the_zoom,
-                            g_Turtles[j].Points[i].from.y * the_zoom,
-                            0);
-
-                        LineTo(
-                            PaintDC,
-                            g_Turtles[j].Points[i].to.x * the_zoom,
-                            g_Turtles[j].Points[i].to.y * the_zoom);
-                    }
-                }
-            }
-        }
     }
 }
 

@@ -20,6 +20,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 6.33.0
+  o Fix bug #347; Rotating bitmaps no longer flicker when the turtle moves.
   o Fix bug #414; FILES and DIRECTORIES now output in alphabetical order.
   o Fix bug #435; examples now run on Windows 7.
   o Fix bug #436; The wxWidgets version of FMSLogo now closes modal windows

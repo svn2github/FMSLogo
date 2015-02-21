@@ -113,7 +113,7 @@ extern void set_pen_height(int h);
 extern void GetWorkingAreaDimensions(int & workingAreaWidth, int & workingAreaHeight);
 extern RGBCOLOR LoadColor(int dpenr, int dpeng, int dpenb);
 extern struct PENSTATE & GetPenStateForSelectedTurtle();
-
+extern void paste_all_turtles(HDC DeviceContext, FLONUM zoom);
 extern void exit_program(void);
 extern void MyMessageScan(void);
 
