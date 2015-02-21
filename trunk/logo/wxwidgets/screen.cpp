@@ -155,7 +155,6 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
     wxPaintDC paintContext(this);
     PrepareDC(paintContext);
 
-
 #ifndef WX_PURE
     // This is a compromise between speed and memory (as is most code).
     // All drawing is written to the backing store 1 to 1 even when zoomed.
@@ -174,8 +173,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
     HPALETTE oldPalette  = NULL;
     HPALETTE oldPalette2 = NULL;
 
-    /* if palette allocate it */
-
+    // If we have a palette, then use it.
     if (EnablePalette)
     {
         oldPalette = SelectPalette(PaintDC, ThePalette, FALSE);
@@ -183,6 +181,54 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
 
         oldPalette2 = SelectPalette(memoryDC, ThePalette, FALSE);
         RealizePalette(memoryDC);
+    }
+
+    // draw the turtles on top of the image
+    bool useBackBuffer = false;
+    for (int j = 0; j <= g_MaxTurtle; j++)
+    {
+        if (g_Turtles[j].IsShown && g_Turtles[j].IsSprite)
+        {
+            useBackBuffer = true;
+            break;
+        }
+    }
+
+    wxDC     * sourceDeviceContext;
+    wxBitmap * backBuffer = NULL;
+    if (useBackBuffer)
+    {
+        // Allocate the back buffer.
+        backBuffer = new wxBitmap(BitMapWidth, BitMapHeight);
+        wxMemoryDC * backBufferDeviceContext = new wxMemoryDC(*backBuffer);
+
+        if (EnablePalette)
+        {
+            SelectPalette(static_cast<HDC>(backBufferDeviceContext->GetHDC()), ThePalette, FALSE);
+            RealizePalette(static_cast<HDC>(backBufferDeviceContext->GetHDC()));
+        }
+
+        // Copy the portion of the memory image to the back buffer
+        // that corresponds to the portion of the screen that is
+        // being be painted.
+        // TODO: (only copy the portion being repainted.
+        backBufferDeviceContext->Blit(
+            0,
+            0,
+            BitMapWidth,
+            BitMapHeight,
+            m_MemoryDeviceContext,
+            0,
+            0);
+
+        // draw the turtles on top of the image
+        paste_all_turtles(static_cast<HDC>(backBufferDeviceContext->GetHDC()), 1.0);
+
+        sourceDeviceContext = backBufferDeviceContext;
+    }
+    else
+    {
+        sourceDeviceContext = m_MemoryDeviceContext;
     }
 #endif
 
@@ -241,7 +287,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
                 y + vbY,
                 width,
                 height,
-                m_MemoryDeviceContext,
+                sourceDeviceContext,
                 x + vbX,
                 y + vbY);
         }
@@ -349,13 +395,27 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
                 destRect.top,
                 destRect.right  - destRect.left,
                 destRect.bottom - destRect.top,
-                memoryDC,
+                static_cast<HDC>(sourceDeviceContext->GetHDC()),
                 sourceRect.left,
                 sourceRect.top,
                 sourceRect.right  - sourceRect.left,
                 sourceRect.bottom - sourceRect.top,
                 SRCCOPY);
         }
+    }
+
+    //SelectObject(memoryDC, oldBitmap);
+
+    // draw the turtles on top of the image
+    if (useBackBuffer)
+    {
+        delete backBuffer;
+        delete sourceDeviceContext;
+    }
+    else
+    {
+        // draw the turtles on top of the image
+        paste_all_turtles(PaintDC, the_zoom);
     }
 
     /* restore resources */
@@ -365,36 +425,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
         SelectPalette(PaintDC, oldPalette, FALSE);
     }
 
-    //SelectObject(memoryDC, oldBitmap);
-
-    // draw the turtles on top of the image
-    SetROP2(PaintDC, R2_NOT);
 #endif // WX_PURE
-
-    for (int j = 0; j <= g_MaxTurtle; j++)
-    {
-        if (g_Turtles[j].IsShown)
-        {
-            if (g_Turtles[j].BitmapRasterMode)
-            {
-                turtlepaste(j);
-            }
-            else
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    if (g_Turtles[j].Points[i].bValid)
-                    {
-                        paintContext.DrawLine(
-                            g_Turtles[j].Points[i].from.x * the_zoom,
-                            g_Turtles[j].Points[i].from.y * the_zoom,
-                            g_Turtles[j].Points[i].to.x * the_zoom,
-                            g_Turtles[j].Points[i].to.y * the_zoom);
-                    }
-                }
-            }
-        }
-    }
 }
 
 
