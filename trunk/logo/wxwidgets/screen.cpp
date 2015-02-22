@@ -155,6 +155,11 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
     wxPaintDC paintContext(this);
     PrepareDC(paintContext);
 
+    // Determine the top left corner of where the window is scrolled
+    int vbX;
+    int vbY; 
+    GetViewStart(&vbX, &vbY);
+
 #ifndef WX_PURE
     // This is a compromise between speed and memory (as is most code).
     // All drawing is written to the backing store 1 to 1 even when zoomed.
@@ -211,15 +216,65 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
         // Copy the portion of the memory image to the back buffer
         // that corresponds to the portion of the screen that is
         // being be painted.
-        // TODO: (only copy the portion being repainted.
-        backBufferDeviceContext->Blit(
-            0,
-            0,
-            BitMapWidth,
-            BitMapHeight,
-            m_MemoryDeviceContext,
-            0,
-            0);
+        for (wxRegionIterator regionIterator(GetUpdateRegion());
+             regionIterator;
+             regionIterator++)
+        {
+            // regionIterator gives coordinates in terms of the client area.
+            // We need to determine what rectangle in memoryBitmap corresponds
+            // to this rectangle.
+            FLONUM sourceRectLeft   = regionIterator.GetX();
+            FLONUM sourceRectTop    = regionIterator.GetY();
+            FLONUM sourceRectRight  = sourceRectLeft + regionIterator.GetWidth();
+            FLONUM sourceRectBottom = sourceRectTop  + regionIterator.GetHeight();
+
+            // Shift the rectangle based on the scroll position.
+            sourceRectLeft   += vbX;
+            sourceRectRight  += vbX;
+            sourceRectTop    += vbY;
+            sourceRectBottom += vbY;
+
+            // If the screen is zoomed, then we must do some additional
+            // calculation to determine what part of the source image
+            // needs repainting.
+            if (zoom_flag)
+            {
+                // Expand the source rectangle a little bit based zoom factor,
+                // It doesn't hurt to copy a little more than necessary, but copying
+                // less can result in jaggies.
+                const FLONUM inflateIncrement = (the_zoom+0.5)*2.0;
+                sourceRectLeft   -= inflateIncrement;
+                sourceRectTop    -= inflateIncrement;
+                sourceRectRight  += inflateIncrement;
+                sourceRectBottom += inflateIncrement;
+
+                // Second, scale based on the zoom factor.
+                // We divide by the zoom factor to convert from screen coordinates
+                // to turtle coordinates.  If we're zoomed in, the_zoom greater
+                // than 1, so dividing by it will shrink the rectangle that
+                // we're going to copy from.
+                FLONUM scaledSourceRectLeft   = sourceRectLeft   / the_zoom;
+                FLONUM scaledSourceRectTop    = sourceRectTop    / the_zoom;
+                FLONUM scaledSourceRectRight  = sourceRectRight  / the_zoom;
+                FLONUM scaledSourceRectBottom = sourceRectBottom / the_zoom;
+
+                // Make sure that none of rectangle's borders are off-screen
+                // after we inflated it.
+                sourceRectLeft   = (int) (std::min(std::max(0.0, scaledSourceRectLeft),   (double)BitMapWidth));
+                sourceRectTop    = (int) (std::min(std::max(0.0, scaledSourceRectTop),    (double)BitMapHeight));
+                sourceRectRight  = (int) (std::min(std::max(0.0, scaledSourceRectRight),  (double)BitMapWidth));
+                sourceRectBottom = (int) (std::min(std::max(0.0, scaledSourceRectBottom), (double)BitMapHeight));
+            }
+
+            backBufferDeviceContext->Blit(
+                sourceRectLeft,
+                sourceRectTop,
+                sourceRectRight - sourceRectLeft + 1,
+                sourceRectBottom - sourceRectTop + 1,
+                m_MemoryDeviceContext,
+                sourceRectLeft,
+                sourceRectTop);
+        }
 
         // draw the turtles on top of the image
         paste_all_turtles(static_cast<HDC>(backBufferDeviceContext->GetHDC()), 1.0);
@@ -231,11 +286,6 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
         sourceDeviceContext = m_MemoryDeviceContext;
     }
 #endif
-
-    // Determine the top left corner of where the window is scrolled
-    int vbX;
-    int vbY; 
-    GetViewStart(&vbX, &vbY);
 
     if (!zoom_flag)
     {
