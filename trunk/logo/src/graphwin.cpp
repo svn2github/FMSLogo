@@ -2591,11 +2591,16 @@ static RGBCOLOR InterpolateColors(RGBCOLOR A, RGBCOLOR B, double Alpha)
 static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
 {
     ASSERT_TURTLE_INVARIANT;
+    assert(0 <= TurtleToPaste);
+    assert(TurtleToPaste <= g_MaxTurtle);
+
+    Turtle * const turtle = &g_Turtles[TurtleToPaste];
+    CUTMAP * const bitmap = &g_Bitmaps[TurtleToPaste];
 
 #ifndef WX_PURE
 
     POINT dest;
-    if (!WorldCoordinateToScreenCoordinate(g_Turtles[TurtleToPaste].Position, dest))
+    if (!WorldCoordinateToScreenCoordinate(turtle->Position, dest))
     {
         return;
     }
@@ -2607,21 +2612,21 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
     }
 
     // only if we have something to paste
-    if (g_Bitmaps[TurtleToPaste].IsValid)
+    if (bitmap->IsValid)
     {
         // if clipboard then never leave Cut Flag true
         if (TurtleToPaste == 0)
         {
-            g_Bitmaps[TurtleToPaste].IsValid = false;
+            bitmap->IsValid = false;
         }
 
         HDC TempMemDC = CreateCompatibleDC(PaintDeviceContext);
 
         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
             TempMemDC,
-            g_Bitmaps[TurtleToPaste].MemoryBitMap);
+            bitmap->MemoryBitMap);
 
-        if (g_Turtles[TurtleToPaste].IsSprite)
+        if (turtle->IsSprite)
         {
             // TODO: figure out how to merge this with the bounding box
             // computation logic in ibmturt()
@@ -2633,29 +2638,29 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
             FLONUM cosine;
             FLONUM sine;
 
-            if (g_Turtles[TurtleToPaste].Heading == 90)
+            if (turtle->Heading == 90)
             {
                 cosine = 0;
                 sine   = 1;
             }
-            else if (g_Turtles[TurtleToPaste].Heading == 180)
+            else if (turtle->Heading == 180)
             {
                 cosine = -1;
                 sine   = 0;
             }
-            else if (g_Turtles[TurtleToPaste].Heading == 270)
+            else if (turtle->Heading == 270)
             {
                 cosine = 0;
                 sine   = -1;
             }
             else
             {
-                cosine = cos(g_Turtles[TurtleToPaste].Heading * rads_per_degree);
-                sine   = sin(g_Turtles[TurtleToPaste].Heading * rads_per_degree);
+                cosine = cos(turtle->Heading * rads_per_degree);
+                sine   = sin(turtle->Heading * rads_per_degree);
             }
             
-            const FLONUM sourceWidth  = g_Bitmaps[TurtleToPaste].Width;
-            const FLONUM sourceHeight = g_Bitmaps[TurtleToPaste].Height;
+            const FLONUM sourceWidth  = bitmap->Width;
+            const FLONUM sourceHeight = bitmap->Height;
 
             // The location of the centerpoint (or origin) of the turtle's bitmap about which to rotate
             const FLONUM xOrigin = sourceWidth  / 2.0;
@@ -2675,10 +2680,10 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
             FLONUM y3 = Y_ROTATED(xOrigin, -yOrigin, cosine, sine);
 
             // Compute the bounding box.  We grow the box by one to account for rounding errors.
-            const int minx = (int) ((std::min(x0,std::min(x1, std::min(x2,x3))) - 1));
-            const int miny = (int) ((std::min(y0,std::min(y1, std::min(y2,y3))) - 1));
-            const int maxx = (int) ((std::max(x0,std::max(x1, std::max(x2,x3))) + 1));
-            const int maxy = (int) ((std::max(y0,std::max(y1, std::max(y2,y3))) + 1));
+            const int minx = (int) std::min(x0,std::min(x1, std::min(x2,x3))) - 1;
+            const int miny = (int) std::min(y0,std::min(y1, std::min(y2,y3))) - 1;
+            const int maxx = (int) std::max(x0,std::max(x1, std::max(x2,x3))) + 1;
+            const int maxy = (int) std::max(y0,std::max(y1, std::max(y2,y3))) + 1;
 
             // Figure out where on the screen window the turtle belongs.
             const int xScreenOffset = (+dest.x + xoffset);
@@ -2686,42 +2691,47 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
 
             // Read the bitmap into a local buffer for faster access.
             // Because this takes a long time, we also cache this in the CUTMAP.
-            if (g_Bitmaps[TurtleToPaste].Pixels == NULL) 
+            if (bitmap->Pixels == NULL) 
             {
-                g_Bitmaps[TurtleToPaste].Pixels = (RGBCOLOR *) malloc(
-                    g_Bitmaps[TurtleToPaste].Width *
-                    g_Bitmaps[TurtleToPaste].Height * 
-                    sizeof(RGBCOLOR));
+                bitmap->Pixels = (RGBCOLOR *) malloc(bitmap->Width * bitmap->Height * sizeof(RGBCOLOR));
 
-                RGBCOLOR * nextPixel = g_Bitmaps[TurtleToPaste].Pixels;
-                for (int y = 0; y < g_Bitmaps[TurtleToPaste].Height; y++)
+                RGBCOLOR * nextPixel = bitmap->Pixels;
+                for (int y = 0; y < bitmap->Height; y++)
                 {
-                    for (int x = 0; x < g_Bitmaps[TurtleToPaste].Width; x++)
+                    for (int x = 0; x < bitmap->Width; x++)
                     {
                         *nextPixel++ = ::GetPixel(TempMemDC, x, y);
                     }
                 }
             }
-            RGBCOLOR const * const sourceBitmap = g_Bitmaps[TurtleToPaste].Pixels;
+            RGBCOLOR const * const sourceBitmap = bitmap->Pixels;
 
             // Now do the rotating, one pixel at a time.
             // Find the pixel that cooresponds to each point in the destination
             // rectangle to guarantee that each pixel gets covered.
             const RGBCOLOR TRANSPARENT_COLOR = RGB(255, 255, 255);
+            const FLONUM deltaSourceX =  cosine;
+            const FLONUM deltaSourceY = -sine;
             if (EnablePalette)
             {
                 // The display has a palette, so bilinear interpolation would not work.
                 for (int y = miny; y < maxy; y++)
                 {
+                    FLONUM sourceX = X_ROTATED(minx, y, cosine, sine) + xOrigin;
+                    FLONUM sourceY = Y_ROTATED(minx, y, cosine, sine) + yOrigin;
+
                     for (int x = minx; x < maxx; x++)
                     {
-                        int sourcex = (int)((X_ROTATED(x, y, cosine, sine) + xOrigin));
-                        int sourcey = (int)((Y_ROTATED(x, y, cosine, sine) + yOrigin));
+                        // sourceX and sourceY look like this if computed in an absolute manner.
+                        // sourceX = ((X_ROTATED(x, y, cosine, sine) + xOrigin));
+                        // sourceY = ((Y_ROTATED(x, y, cosine, sine) + yOrigin));
+                        sourceX += deltaSourceX;
+                        sourceY += deltaSourceY;
 
-                        if (0 <= sourcex && sourcex < sourceWidth &&
-                            0 <= sourcey && sourcey < sourceHeight)
+                        if (0 <= sourceX && sourceX < sourceWidth &&
+                            0 <= sourceY && sourceY < sourceHeight)
                         {
-                            const RGBCOLOR pixel = ::GetPixel(TempMemDC, sourcex, sourcey);
+                            const RGBCOLOR pixel = sourceBitmap[static_cast<int>(sourceX) * bitmap->Width + static_cast<int>(sourceY)];
                             if (pixel != TRANSPARENT_COLOR)
                             {
                                 SetPixelV(
@@ -2736,14 +2746,11 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
             }
             else
             {
-                const FLONUM deltaSourceX =  cosine;
-                const FLONUM deltaSourceY = -sine;
-
                 // Use bilinear interpolation to make the picture look nice at rough angles.
                 for (int y = miny; y < maxy; y++)
                 {
-                    FLONUM sourceX = ((X_ROTATED(minx, y, cosine, sine) + xOrigin));
-                    FLONUM sourceY = ((Y_ROTATED(minx, y, cosine, sine) + yOrigin));
+                    FLONUM sourceX = X_ROTATED(minx, y, cosine, sine) + xOrigin;
+                    FLONUM sourceY = Y_ROTATED(minx, y, cosine, sine) + yOrigin;
 
                     for (int x = minx; x < maxx; x++)
                     {
@@ -2767,8 +2774,8 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
 
                                 unsigned int sourceXInteger = static_cast<unsigned int>(sourceXInt);
                                 unsigned int sourceYInteger = static_cast<unsigned int>(sourceYInt);
-                                const RGBCOLOR * x0y0Ptr = sourceBitmap + sourceYInteger * g_Bitmaps[TurtleToPaste].Width + sourceXInteger;
-                                const RGBCOLOR * x0y1Ptr = x0y0Ptr + g_Bitmaps[TurtleToPaste].Width;
+                                const RGBCOLOR * x0y0Ptr = sourceBitmap + sourceYInteger * bitmap->Width + sourceXInteger;
+                                const RGBCOLOR * x0y1Ptr = x0y0Ptr + bitmap->Width;
                                 RGBCOLOR pixelx0y0 = x0y0Ptr[0];
                                 RGBCOLOR pixelx1y0 = x0y0Ptr[1];
                                 RGBCOLOR pixelx0y1 = x0y1Ptr[0];
@@ -2842,9 +2849,9 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                 FLONUM yFraction = modf(sourceY, &sourceYInt);
 
                                 unsigned int sourceYInteger = static_cast<unsigned int>(sourceYInt);
-                                const RGBCOLOR * y0Ptr = sourceBitmap + sourceYInteger * g_Bitmaps[TurtleToPaste].Width + g_Bitmaps[TurtleToPaste].Width - 1;
+                                const RGBCOLOR * y0Ptr = sourceBitmap + sourceYInteger * bitmap->Width + bitmap->Width - 1;
                                 RGBCOLOR pixely0 = y0Ptr[0];
-                                RGBCOLOR pixely1 = y0Ptr[g_Bitmaps[TurtleToPaste].Width];
+                                RGBCOLOR pixely1 = y0Ptr[bitmap->Width];
 
                                 // get the screen's value for each of the transparent pixels
                                 const RGBCOLOR screenPixel = GetPixel(PaintDeviceContext, x + xScreenOffset, y + yScreenOffset);
@@ -2874,7 +2881,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                 FLONUM xFraction = modf(sourceX, &sourceXInt);
 
                                 unsigned int sourceXInteger = static_cast<unsigned int>(sourceXInt);
-                                const RGBCOLOR * x0Ptr = sourceBitmap + (g_Bitmaps[TurtleToPaste].Height - 1) * g_Bitmaps[TurtleToPaste].Width + sourceXInteger;
+                                const RGBCOLOR * x0Ptr = sourceBitmap + (bitmap->Height - 1) * bitmap->Width + sourceXInteger;
                                 RGBCOLOR pixelx0 = x0Ptr[0];
                                 RGBCOLOR pixelx1 = x0Ptr[1];
 
@@ -2902,7 +2909,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                      sourceY < sourceHeight)
                             {
                                 // we're at the corner, so we don't need any interpolation
-                                const RGBCOLOR pixel = sourceBitmap[g_Bitmaps[TurtleToPaste].Height * g_Bitmaps[TurtleToPaste].Width - 1];
+                                const RGBCOLOR pixel = sourceBitmap[bitmap->Height * bitmap->Width - 1];
                                 if (pixel != TRANSPARENT_COLOR)
                                 {
                                     SetPixelV(
@@ -2922,13 +2929,13 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
             BitBlt(
                 PaintDeviceContext,
                 +dest.x / zoom + xoffset,
-                -dest.y / zoom + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
-                g_Bitmaps[TurtleToPaste].Width,
-                g_Bitmaps[TurtleToPaste].Height,
+                -dest.y / zoom + yoffset + LL - bitmap->Height,
+                bitmap->Width,
+                bitmap->Height,
                 TempMemDC,
                 0,
                 0,
-                g_Turtles[TurtleToPaste].BitmapRasterMode);
+                turtle->BitmapRasterMode);
         }
 
         SelectObject(TempMemDC, oldBitmap2);
@@ -2942,8 +2949,8 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
         ShowErrorMessage(errorMessage);
 
         // un-bitmap this turtle to prevent future errors
-        g_Turtles[TurtleToPaste].BitmapRasterMode = 0;
-        g_Turtles[TurtleToPaste].IsSprite         = false;
+        turtle->BitmapRasterMode = 0;
+        turtle->IsSprite         = false;
     }
 #endif
 }
