@@ -83,10 +83,11 @@ struct RECT {
 
 struct CUTMAP
 {
-    HBITMAP MemoryBitMap;  // Used to store the bitmap
-    int     Height;        // current cut height
-    int     Width;         // current cut width
-    bool    IsValid;       // flag to signal something in cut buffer
+    HBITMAP    MemoryBitMap;  // Used to store the bitmap
+    RGBCOLOR * Pixels;        // The bitmap in a flat buffer (32bpp)
+    int        Height;        // current cut height
+    int        Width;         // current cut width
+    bool       IsValid;       // flag to signal something in cut buffer
 };
 
 
@@ -312,6 +313,7 @@ GrowBitmapsArray(int NewSize)
     for (int i = g_BitmapsLimit; i < NewSize; i++)
     {
         newBitmaps[i].MemoryBitMap = NULL;
+        newBitmaps[i].Pixels       = NULL;
         newBitmaps[i].Width        = 0;
         newBitmaps[i].Height       = 0;
         newBitmaps[i].IsValid      = false;
@@ -1942,7 +1944,6 @@ PasteFromClipboardToBitmapArray()
 #endif
 }
 
-
 static
 NODE *
 BitCopyOrCut(NODE *arg, bool IsCut)
@@ -1974,8 +1975,15 @@ BitCopyOrCut(NODE *arg, bool IsCut)
             {
                 // else get rid of it and make a new one later
                 DeleteObject(g_SelectedBitmap->MemoryBitMap);
+                g_SelectedBitmap->MemoryBitMap = NULL;
             }
             g_SelectedBitmap->IsValid = false;
+
+            // Always free any pixel buffer.  Because this is filled in lazily,
+            // we don't want to keep an old image around merely because it's
+            // the same size as the one we might allocate in the future.
+            free(g_SelectedBitmap->Pixels);
+            g_SelectedBitmap->Pixels = NULL;
         }
 
         g_SelectedBitmap->Width  = tempWidth;
@@ -2000,7 +2008,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
                     g_SelectedBitmap->Height);
             }
 
-            if (!g_SelectedBitmap->MemoryBitMap)
+            if (g_SelectedBitmap->MemoryBitMap == NULL)
             {
                 ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPCUTFAILED);
                 return Unbound;
@@ -2026,6 +2034,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
 
             SelectObject(tempMemDC, oldBitmap2);
             DeleteDC(tempMemDC);
+
 
             if (IsCut)
             {
@@ -2582,6 +2591,7 @@ static RGBCOLOR InterpolateColors(RGBCOLOR A, RGBCOLOR B, double Alpha)
 static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
 {
     ASSERT_TURTLE_INVARIANT;
+
 #ifndef WX_PURE
 
     POINT dest;
@@ -2611,7 +2621,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
             TempMemDC,
             g_Bitmaps[TurtleToPaste].MemoryBitMap);
 
-        if (g_SelectedTurtle->IsSprite)
+        if (g_Turtles[TurtleToPaste].IsSprite)
         {
             // TODO: figure out how to merge this with the bounding box
             // computation logic in ibmturt()
@@ -2674,6 +2684,26 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
             const int xScreenOffset = (+dest.x + xoffset);
             const int yScreenOffset = (-dest.y + yoffset);
 
+            // Read the bitmap into a local buffer for faster access.
+            // Because this takes a long time, we also cache this in the CUTMAP.
+            if (g_Bitmaps[TurtleToPaste].Pixels == NULL) 
+            {
+                g_Bitmaps[TurtleToPaste].Pixels = (RGBCOLOR *) malloc(
+                    g_Bitmaps[TurtleToPaste].Width *
+                    g_Bitmaps[TurtleToPaste].Height * 
+                    sizeof(RGBCOLOR));
+
+                RGBCOLOR * nextPixel = g_Bitmaps[TurtleToPaste].Pixels;
+                for (int y = 0; y < g_Bitmaps[TurtleToPaste].Height; y++)
+                {
+                    for (int x = 0; x < g_Bitmaps[TurtleToPaste].Width; x++)
+                    {
+                        *nextPixel++ = ::GetPixel(TempMemDC, x, y);
+                    }
+                }
+            }
+            RGBCOLOR const * const sourceBitmap = g_Bitmaps[TurtleToPaste].Pixels;
+
             // Now do the rotating, one pixel at a time.
             // Find the pixel that cooresponds to each point in the destination
             // rectangle to guarantee that each pixel gets covered.
@@ -2709,17 +2739,6 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                 const FLONUM deltaSourceX =  cosine;
                 const FLONUM deltaSourceY = -sine;
 
-                // Read the bitmap into a local buffer for faster access.
-                RGBCOLOR * sourceBitmap = new RGBCOLOR[g_Bitmaps[TurtleToPaste].Width * g_Bitmaps[TurtleToPaste].Height];
-                RGBCOLOR * nextPixel = sourceBitmap;
-                for (size_t y = 0; y < g_Bitmaps[TurtleToPaste].Height; y++)
-                {
-                    for (size_t x = 0; x < g_Bitmaps[TurtleToPaste].Width; x++)
-                    {
-                        *nextPixel++ = ::GetPixel(TempMemDC, x, y);
-                    }
-                }
-
                 // Use bilinear interpolation to make the picture look nice at rough angles.
                 for (int y = miny; y < maxy; y++)
                 {
@@ -2748,8 +2767,8 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
 
                                 unsigned int sourceXInteger = static_cast<unsigned int>(sourceXInt);
                                 unsigned int sourceYInteger = static_cast<unsigned int>(sourceYInt);
-                                RGBCOLOR * x0y0Ptr = sourceBitmap + sourceYInteger * g_Bitmaps[TurtleToPaste].Width + sourceXInteger;
-                                RGBCOLOR * x0y1Ptr = x0y0Ptr + g_Bitmaps[TurtleToPaste].Width;
+                                const RGBCOLOR * x0y0Ptr = sourceBitmap + sourceYInteger * g_Bitmaps[TurtleToPaste].Width + sourceXInteger;
+                                const RGBCOLOR * x0y1Ptr = x0y0Ptr + g_Bitmaps[TurtleToPaste].Width;
                                 RGBCOLOR pixelx0y0 = x0y0Ptr[0];
                                 RGBCOLOR pixelx1y0 = x0y0Ptr[1];
                                 RGBCOLOR pixelx0y1 = x0y1Ptr[0];
@@ -2823,7 +2842,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                 FLONUM yFraction = modf(sourceY, &sourceYInt);
 
                                 unsigned int sourceYInteger = static_cast<unsigned int>(sourceYInt);
-                                RGBCOLOR * y0Ptr = sourceBitmap + sourceYInteger * g_Bitmaps[TurtleToPaste].Width + g_Bitmaps[TurtleToPaste].Width - 1;
+                                const RGBCOLOR * y0Ptr = sourceBitmap + sourceYInteger * g_Bitmaps[TurtleToPaste].Width + g_Bitmaps[TurtleToPaste].Width - 1;
                                 RGBCOLOR pixely0 = y0Ptr[0];
                                 RGBCOLOR pixely1 = y0Ptr[g_Bitmaps[TurtleToPaste].Width];
 
@@ -2855,7 +2874,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                 FLONUM xFraction = modf(sourceX, &sourceXInt);
 
                                 unsigned int sourceXInteger = static_cast<unsigned int>(sourceXInt);
-                                RGBCOLOR * x0Ptr = sourceBitmap + (g_Bitmaps[TurtleToPaste].Height - 1) * g_Bitmaps[TurtleToPaste].Width + sourceXInteger;
+                                const RGBCOLOR * x0Ptr = sourceBitmap + (g_Bitmaps[TurtleToPaste].Height - 1) * g_Bitmaps[TurtleToPaste].Width + sourceXInteger;
                                 RGBCOLOR pixelx0 = x0Ptr[0];
                                 RGBCOLOR pixelx1 = x0Ptr[1];
 
@@ -2896,8 +2915,6 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                         }
                     }
                 }
-
-                delete [] sourceBitmap;
             }
         }
         else
@@ -3775,6 +3792,7 @@ void uninit_bitmaps()
     {
         if (bmp->IsValid)
         {
+            free(g_SelectedBitmap->Pixels);
 #ifndef WX_PURE
             DeleteObject(bmp->MemoryBitMap);
 #endif
