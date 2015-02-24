@@ -22,7 +22,11 @@
 #include "logocore.h"
 #include "graphics.h"
 
-#ifndef WX_PURE
+#ifdef WX_PURE
+
+typedef struct __HDC * HDC;
+
+#else
 
 // global variable declarations
 extern RECT FullRect;

@@ -2961,6 +2961,7 @@ void paste_all_turtles(HDC DeviceContext, FLONUM zoom)
     {
         if (g_Turtles[j].IsShown)
         {
+#ifndef WX_PURE
             if (g_Turtles[j].BitmapRasterMode)
             {
                 SetROP2(DeviceContext, R2_COPYPEN);
@@ -2986,6 +2987,7 @@ void paste_all_turtles(HDC DeviceContext, FLONUM zoom)
                     }
                 }
             }
+#endif
         }
     }
 }

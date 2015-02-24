@@ -211,15 +211,15 @@ NODE *directory_helper(bool OnlyListDirectories)
 {
     CAppendableList directory; 
 
-#ifndef WX_PURE
-    WIN32_FIND_DATA findFileData;
-
     // Flags for whether the special directories "." and ".." have been found.
     // Because these are special entries, we always want them to be first,
     // even if there's an entry that comes before them alphabetically,
     // like "!MyDirectory".
-    boolean foundDot    = false;
-    boolean foundDotDot = false;
+    bool foundDot    = false;
+    bool foundDotDot = false;
+
+#ifndef WX_PURE
+    WIN32_FIND_DATA findFileData;
 
     HANDLE searchHandle = FindFirstFile(
         "*.*",

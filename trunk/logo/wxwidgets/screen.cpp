@@ -187,6 +187,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
         oldPalette2 = SelectPalette(memoryDC, ThePalette, FALSE);
         RealizePalette(memoryDC);
     }
+#endif
 
     // draw the turtles on top of the image
     bool useBackBuffer = false;
@@ -207,11 +208,13 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
         backBuffer = new wxBitmap(BitMapWidth, BitMapHeight);
         wxMemoryDC * backBufferDeviceContext = new wxMemoryDC(*backBuffer);
 
+#ifndef WX_PURE
         if (EnablePalette)
         {
             SelectPalette(static_cast<HDC>(backBufferDeviceContext->GetHDC()), ThePalette, FALSE);
             RealizePalette(static_cast<HDC>(backBufferDeviceContext->GetHDC()));
         }
+#endif
 
         // Copy the portion of the memory image to the back buffer
         // that corresponds to the portion of the screen that is
@@ -276,8 +279,10 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
                 sourceRectTop);
         }
 
+#ifndef WX_PURE
         // draw the turtles on top of the image
         paste_all_turtles(static_cast<HDC>(backBufferDeviceContext->GetHDC()), 1.0);
+#endif
 
         sourceDeviceContext = backBufferDeviceContext;
     }
@@ -285,7 +290,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
     {
         sourceDeviceContext = m_MemoryDeviceContext;
     }
-#endif
+
 
     if (!zoom_flag)
     {
