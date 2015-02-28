@@ -237,6 +237,7 @@ public:
                 g_Turtles[i].IsSpecial == false);
 
 #ifndef WX_PURE
+
             assert(
                 g_Turtles[i].BitmapRasterMode == 0           ||
                 g_Turtles[i].BitmapRasterMode == SRCCOPY     ||
@@ -253,6 +254,13 @@ public:
             {
                 // make sure that the bitmap exists.
                 assert(i < g_BitmapsLimit);
+            }
+            if (g_Turtles[i].IsSprite)
+            {
+                // Even though the raster mode is not used,
+                // it is set to indicate that the turtle
+                // is drawn with a bitmap.
+                assert(g_Turtles[i].BitmapRasterMode != 0)
             }
 #endif
         }
@@ -839,6 +847,132 @@ static void InvalidateRectangleOnScreen(const RECT & ScreenRectangle)
 #endif
 }
 
+static
+void
+InvalidateRectangleOnScreen(
+    int Left,
+    int Top,
+    int Right,
+    int Bottom)
+{
+    RECT screenRectangle;
+    screenRectangle.left   = Left;
+    screenRectangle.top    = Top;
+    screenRectangle.right  = Right;
+    screenRectangle.bottom = Bottom;
+    InvalidateRectangleOnScreen(screenRectangle);
+}
+
+static
+void
+InvalidateTopBottomWrappingMemoryRectangle(
+    int Left,
+    int Top,
+    int Right,
+    int Bottom)
+{
+    // This should only be called after the left-right wrapping
+    // has been performed.
+    assert(0 <= Left);
+    assert(Left <= Right);
+    assert(Right < BitMapWidth);
+
+    if (Top < 0 && BitMapHeight <= Bottom)
+    {
+        // The box wraps around both the top and bottom
+        // edges of the memory bitmap, which is to say,
+        // it covers the entire height.
+        InvalidateRectangleOnScreen(Left, 0, Right, BitMapHeight - 1);
+    }
+    else if (Top < 0)
+    {
+        // The box wraps around the top edge of the memory bitmap (only)
+
+        // Invalidate the portion on the top edge.
+        InvalidateRectangleOnScreen(Left, 0, Right, Bottom);
+  
+        // Invalidate the portion that wrapped to the bottom.
+        InvalidateRectangleOnScreen(
+            Left,
+            BitMapHeight - 1 + Top,
+            Right,
+            BitMapHeight - 1);
+    }
+    else if (BitMapHeight <= Bottom)
+    {
+        // The box wraps around the bottom edge of the memory bitmap (only)
+
+        // Invalidate the portion that wrapped to the top edge.
+        InvalidateRectangleOnScreen(Left, 0, Right, Bottom - BitMapHeight + 1); 
+
+        // Invalidate the portion on the bottom edge.
+        InvalidateRectangleOnScreen(Left, Top, Right, BitMapHeight - 1);
+    }
+    else
+    {
+        // The rectangle does not wrap across the left or right edges.
+        InvalidateRectangleOnScreen(Left, Top, Right, Bottom);
+    }
+}
+
+static
+void
+InvalidateWrappingMemoryRectangle(
+    int Left,
+    int Top,
+    int Right,
+    int Bottom)
+{
+    if (Left < 0 && BitMapWidth <= Right)
+    {
+        // The box wraps around both the left and right
+        // edges of the memory bitmap, which is to say,
+        // it covers the entire width.
+        InvalidateTopBottomWrappingMemoryRectangle(
+            0,
+            Top,
+            BitMapWidth - 1,
+            Bottom);
+    }
+    else if (Left < 0)
+    {
+        // The box wraps around the left edge of the memory bitmap (only)
+
+        // Invalidate the portion on the left edge.
+        InvalidateTopBottomWrappingMemoryRectangle(0, Top, Right, Bottom);
+  
+        // Invalidate the portion that wrapped to the right.
+        InvalidateTopBottomWrappingMemoryRectangle(
+            BitMapWidth - 1 + Left,
+            Top,
+            BitMapWidth - 1,
+            Bottom);
+    }
+    else if (BitMapWidth <= Right)
+    {
+        // The box wraps around the right edge of the memory bitmap (only)
+
+        // Invalidate the portion that wrapped to the left edge.
+        InvalidateTopBottomWrappingMemoryRectangle(
+            0,
+            Top,
+            Right - BitMapWidth + 1,
+            Bottom);
+  
+        // Invalidate the portion on the right edge.
+        InvalidateTopBottomWrappingMemoryRectangle(
+            Left,
+            Top,
+            BitMapWidth - 1,
+            Bottom);
+    }
+    else
+    {
+        // The rectangle does not wrap across the left or right edges.
+        InvalidateTopBottomWrappingMemoryRectangle(Left, Top, Right, Bottom);
+    }
+}
+
 // ibmturt() calculates what needs to be done to either draw or erase
 // the turte, but it does not actually do either of these operations.
 // If draw==true, then the points of the turtle's vertices are computed.
@@ -848,7 +982,7 @@ void ibmturt(bool draw)
 {
     // special turtles must not be drawn
     assert(!g_SelectedTurtle->IsSpecial);
-    
+
     if (draw)
     {
         // We are supposed to draw the turtle in a new position, we
@@ -938,14 +1072,11 @@ void ibmturt(bool draw)
         }
     }
 
-    bool  needsInvalidation = false;
-    RECT  invalidationBoundingBox;
-
     if (g_SelectedTurtle->BitmapRasterMode != 0)
     {
         // The turtle is bitmapped, we need to invalidate the bounding box of the bitmap.
         POINT dest;
-        needsInvalidation = WorldCoordinateToScreenCoordinate(
+        bool needsInvalidation = WorldCoordinateToScreenCoordinate(
             g_SelectedTurtle->Position,
             dest);
 
@@ -965,54 +1096,62 @@ void ibmturt(bool draw)
                 FLONUM cosine = cos(g_SelectedTurtle->Heading * rads_per_degree);
                 FLONUM sine   = sin(g_SelectedTurtle->Heading * rads_per_degree);
 
-                // Compute points of the image rotated about its center.
-                FLONUM x0 = X_ROTATED(-turtleBitmap.Width/2, -turtleBitmap.Height/2, cosine, sine);
-                FLONUM y0 = Y_ROTATED(-turtleBitmap.Width/2, -turtleBitmap.Height/2, cosine, sine);
+                // Compute the location of the four corners of the sprite's image
+                // rotated about its center.  These values are initially relative
+                // to the turtle's location.
+                FLONUM x0 = X_ROTATED(-turtleBitmap.Width/2.0, -turtleBitmap.Height/2.0, cosine, sine);
+                FLONUM y0 = Y_ROTATED(-turtleBitmap.Width/2.0, -turtleBitmap.Height/2.0, cosine, sine);
 
-                FLONUM x1 = X_ROTATED(-turtleBitmap.Width/2, turtleBitmap.Height/2, cosine, sine);
-                FLONUM y1 = Y_ROTATED(-turtleBitmap.Width/2, turtleBitmap.Height/2, cosine, sine);
+                FLONUM x1 = X_ROTATED(-turtleBitmap.Width/2.0, turtleBitmap.Height/2.0, cosine, sine);
+                FLONUM y1 = Y_ROTATED(-turtleBitmap.Width/2.0, turtleBitmap.Height/2.0, cosine, sine);
 
-                FLONUM x2 = X_ROTATED(turtleBitmap.Width/2, turtleBitmap.Height/2, cosine, sine);
-                FLONUM y2 = Y_ROTATED(turtleBitmap.Width/2, turtleBitmap.Height/2, cosine, sine);
+                FLONUM x2 = X_ROTATED(turtleBitmap.Width/2.0, turtleBitmap.Height/2.0, cosine, sine);
+                FLONUM y2 = Y_ROTATED(turtleBitmap.Width/2.0, turtleBitmap.Height/2.0, cosine, sine);
 
-                FLONUM x3 = X_ROTATED(turtleBitmap.Width/2, -turtleBitmap.Height/2, cosine, sine);
-                FLONUM y3 = Y_ROTATED(turtleBitmap.Width/2, -turtleBitmap.Height/2, cosine, sine);
+                FLONUM x3 = X_ROTATED(turtleBitmap.Width/2.0, -turtleBitmap.Height/2.0, cosine, sine);
+                FLONUM y3 = Y_ROTATED(turtleBitmap.Width/2.0, -turtleBitmap.Height/2.0, cosine, sine);
 
-                // Compute the bounding box.  We grow the box by one to account for rounding errors.
+                // Compute the bounding box, again relative to the turtle's location.
+                // We grow the box by one to account for rounding errors.
                 leftOffset   = std::min(x0,std::min(x1, std::min(x2,x3))) - 1;
                 topOffset    = std::min(y0,std::min(y1, std::min(y2,y3))) - 1;
                 rightOffset  = std::max(x0,std::max(x1, std::max(x2,x3))) + 1;
                 bottomOffset = std::max(y0,std::max(y1, std::max(y2,y3))) + 1;
+
+                // Map from turtle coordinates to memory bitmap coordinates.
+                int memoryBoundingBoxLeft   = +dest.x + xoffset + leftOffset;
+                int memoryBoundingBoxTop    = -dest.y + yoffset + topOffset;
+                int memoryBoundingBoxRight  = +dest.x + xoffset + rightOffset;
+                int memoryBoundingBoxBottom = -dest.y + yoffset + bottomOffset;
+
+                if (current_mode == wrapmode)
+                {
+                    // In "wrapmode" sprite bitmaps wrap around the screen just
+                    // like the turtle movement.
+                    InvalidateWrappingMemoryRectangle(
+                        memoryBoundingBoxLeft,
+                        memoryBoundingBoxTop,
+                        memoryBoundingBoxRight,
+                        memoryBoundingBoxBottom);
+                }
+                else
+                {
+                    InvalidateRectangleOnScreen(
+                        memoryBoundingBoxLeft,
+                        memoryBoundingBoxTop,
+                        memoryBoundingBoxRight,
+                        memoryBoundingBoxBottom);
+                }
             }
             else
             {
-                leftOffset   = 0;
-                topOffset    = LL - turtleBitmap.Height;
-                rightOffset  = turtleBitmap.Width;
-                bottomOffset = LL;
-            }
-
-            invalidationBoundingBox.left   = +dest.x + xoffset + leftOffset;
-            invalidationBoundingBox.top    = -dest.y + yoffset + topOffset;
-            invalidationBoundingBox.right  = +dest.x + xoffset + rightOffset;
-            invalidationBoundingBox.bottom = -dest.y + yoffset + bottomOffset;
-
-            // Make sure that the left side of the rectangle is less than the right side
-            if (invalidationBoundingBox.right < invalidationBoundingBox.left)
-            {
-                const LONG oldLeftValue = invalidationBoundingBox.left;
-
-                invalidationBoundingBox.left  = invalidationBoundingBox.right;
-                invalidationBoundingBox.right = oldLeftValue;
-            }
-
-            // Make sure that the top of the rectangle is above (less than) the bottom side
-            if (invalidationBoundingBox.bottom < invalidationBoundingBox.top)
-            {
-                const LONG oldBottomValue = invalidationBoundingBox.bottom;
-
-                invalidationBoundingBox.bottom = invalidationBoundingBox.top;
-                invalidationBoundingBox.top    = oldBottomValue;
+                // Compute the bounding box of the non-rotating sprite in screen cordinate.
+                // The lower-left corner of this bitmap is the location of the turtle.
+                InvalidateRectangleOnScreen(
+                    +dest.x + xoffset + 0,                        // left
+                    -dest.y + yoffset + LL - turtleBitmap.Height, // top
+                    +dest.x + xoffset + turtleBitmap.Width,       // right
+                    -dest.y + yoffset + LL);                      // bottom
             }
         }
     }
@@ -1021,7 +1160,10 @@ void ibmturt(bool draw)
         // The turtle is drawn with lines, so we need to calculate the bounding box
         // of these lines.
 
-        // First calculate the bounding box independent of zoom and scroll position.
+        // Calculate the bounding box independent of zoom and scroll position.
+        bool  needsInvalidation = false;
+        RECT  invalidationBoundingBox;
+
         invalidationBoundingBox.left   =  100000;
         invalidationBoundingBox.top    =  100000;
         invalidationBoundingBox.right  = -100000;
@@ -1037,11 +1179,11 @@ void ibmturt(bool draw)
                 needsInvalidation = true;
             }
         }
-    }
 
-    if (needsInvalidation)
-    {
-        InvalidateRectangleOnScreen(invalidationBoundingBox);
+        if (needsInvalidation)
+        {
+            InvalidateRectangleOnScreen(invalidationBoundingBox);
+        }
     }
 }
 
@@ -2574,6 +2716,66 @@ static RGBCOLOR InterpolateColors(RGBCOLOR A, RGBCOLOR B, double Alpha)
     return MAKERGB(red, green, blue);
 }
 
+static void SetWrappedPixel(HDC DeviceContext, int X, int Y, RGBCOLOR Pixel)
+{
+    if (current_mode == wrapmode)
+    {
+        if (X < 0)
+        {
+            // Wrap from the left side to the right.
+            X += BitMapWidth;
+        }
+        else if (BitMapWidth <= X)
+        {
+            // Wrap from the right side to the left.
+            X -= BitMapWidth - 1;
+        }
+        
+        if (Y < 0)
+        {
+            // Wrap from the top to the bottom.
+            Y += BitMapHeight;
+        }
+        else if (BitMapHeight <= Y)
+        {
+            // Wrap from the right side to the left.
+            Y -= BitMapHeight + 1;
+        }
+    }
+    
+    SetPixelV(DeviceContext, X, Y, Pixel);
+}
+
+static RGBCOLOR GetWrappedPixel(HDC DeviceContext, int X, int Y)
+{
+    if (current_mode == wrapmode)
+    {
+        if (X < 0)
+        {
+            // Wrap from the left side to the right.
+            X += BitMapWidth;
+        }
+        else if (BitMapWidth <= X)
+        {
+            // Wrap from the right side to the left.
+            X -= BitMapWidth - 1;
+        }
+        
+        if (Y < 0)
+        {
+            // Wrap from the top to the bottom.
+            Y += BitMapHeight;
+        }
+        else if (BitMapHeight <= Y)
+        {
+            // Wrap from the right side to the left.
+            Y -= BitMapHeight + 1;
+        }
+    }
+    
+    return GetPixel(DeviceContext, X, Y);
+}
+
 // Copies a bitmap that is associated with a given turtle onto a
 // device context.
 //
@@ -2685,7 +2887,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
             const int maxx = (int) std::max(x0,std::max(x1, std::max(x2,x3))) + 1;
             const int maxy = (int) std::max(y0,std::max(y1, std::max(y2,y3))) + 1;
 
-            // Figure out where on the screen window the turtle belongs.
+            // Figure out where on the memory bitmap the turtle belongs.
             const int xScreenOffset = (+dest.x + xoffset);
             const int yScreenOffset = (-dest.y + yoffset);
 
@@ -2734,7 +2936,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                             const RGBCOLOR pixel = sourceBitmap[static_cast<int>(sourceX) * bitmap->Width + static_cast<int>(sourceY)];
                             if (pixel != TRANSPARENT_COLOR)
                             {
-                                SetPixelV(
+                                SetWrappedPixel(
                                     PaintDeviceContext,
                                     x + xScreenOffset,
                                     y + yScreenOffset,
@@ -2791,7 +2993,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                     // improvement.
                                     if (pixelx0y0 != TRANSPARENT_COLOR)
                                     {
-                                        SetPixelV(
+                                        SetWrappedPixel(
                                             PaintDeviceContext,
                                             x + xScreenOffset,
                                             y + yScreenOffset,
@@ -2806,7 +3008,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                         pixelx0y1 == TRANSPARENT_COLOR ||
                                         pixelx1y1 == TRANSPARENT_COLOR)
                                     {
-                                        const RGBCOLOR screenPixel = GetPixel(
+                                        const RGBCOLOR screenPixel = GetWrappedPixel(
                                             PaintDeviceContext,
                                             x + xScreenOffset,
                                             y + yScreenOffset);
@@ -2834,7 +3036,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                     RGBCOLOR pixely1 = InterpolateColors(pixelx0y1, pixelx1y1, xFraction);
                                     RGBCOLOR pixel   = InterpolateColors(pixely0, pixely1, yFraction);
 
-                                    SetPixelV(
+                                    SetWrappedPixel(
                                         PaintDeviceContext,
                                         x + xScreenOffset,
                                         y + yScreenOffset,
@@ -2854,7 +3056,10 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                 RGBCOLOR pixely1 = y0Ptr[bitmap->Width];
 
                                 // get the screen's value for each of the transparent pixels
-                                const RGBCOLOR screenPixel = GetPixel(PaintDeviceContext, x + xScreenOffset, y + yScreenOffset);
+                                const RGBCOLOR screenPixel = GetWrappedPixel(
+                                    PaintDeviceContext,
+                                    x + xScreenOffset,
+                                    y + yScreenOffset);
 
                                 if (pixely0 == TRANSPARENT_COLOR)
                                 {
@@ -2867,7 +3072,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
 
                                 // interpolate in the Y direction
                                 RGBCOLOR pixel = InterpolateColors(pixely0, pixely1, yFraction);
-                                SetPixelV(
+                                SetWrappedPixel(
                                     PaintDeviceContext,
                                     x + xScreenOffset,
                                     y + yScreenOffset,
@@ -2886,7 +3091,10 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                 RGBCOLOR pixelx1 = x0Ptr[1];
 
                                 // get the screen's value for each of the transparent pixels
-                                const RGBCOLOR screenPixel = GetPixel(PaintDeviceContext, x + xScreenOffset, y + yScreenOffset);
+                                const RGBCOLOR screenPixel = GetWrappedPixel(
+                                    PaintDeviceContext,
+                                    x + xScreenOffset,
+                                    y + yScreenOffset);
 
                                 if (pixelx0 == TRANSPARENT_COLOR)
                                 {
@@ -2899,7 +3107,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
 
                                 // interpolate in the X direction
                                 RGBCOLOR pixel = InterpolateColors(pixelx0, pixelx1, xFraction);
-                                SetPixelV(
+                                SetWrappedPixel(
                                     PaintDeviceContext,
                                     x + xScreenOffset,
                                     y + yScreenOffset,
@@ -2912,7 +3120,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                 const RGBCOLOR pixel = sourceBitmap[bitmap->Height * bitmap->Width - 1];
                                 if (pixel != TRANSPARENT_COLOR)
                                 {
-                                    SetPixelV(
+                                    SetWrappedPixel(
                                         PaintDeviceContext,
                                         x + xScreenOffset,
                                         y + yScreenOffset,
