@@ -1030,6 +1030,24 @@ to initMain
   ;make "glintSpeed 1
 
 ;BITMAPS
+
+  ; bitmap  1 - The ship's explosion
+  ; bitmap  2 - The large turtle in the intro screen
+  ; bitmap  3 - The word "Score:" for the scoreboard
+  ; bitmap  4 - The word "Bonus:" for the scoreboard
+  ; bitmap  6 - A small picture of the ship to indicate an extra life
+  ; bitmap 10 - The numeral 0 (used for scoreboard)
+  ; bitmap 11 - The numeral 1 (used for scoreboard)
+  ; bitmap 12 - The numeral 2 (used for scoreboard)
+  ; bitmap 13 - The numeral 3 (used for scoreboard)
+  ; bitmap 14 - The numeral 4 (used for scoreboard)
+  ; bitmap 15 - The numeral 5 (used for scoreboard)
+  ; bitmap 16 - The numeral 6 (used for scoreboard)
+  ; bitmap 17 - The numeral 7 (used for scoreboard)
+  ; bitmap 18 - The numeral 8 (used for scoreboard)
+  ; bitmap 19 - The numeral 9 (used for scoreboard)
+  ; bitmap 20 - The portion of the game screen obscured by the Paused screen.
+
   setturtle 0
   setbitindex 1
   make "pos1 ( list 0 -:displayHeight/2+10*:scale )
@@ -1514,6 +1532,8 @@ to open.stars
 end
 
 to open.turtleO
+  ; Animates the dropping of the large turtle that becomes
+  ; the "O" in "Aster[O]id Miner" in the intro screen.
   setturtle 2
   bitmapturtle
   penup  setxy (( first :Apos ) + 232*:open.scale) (:displayHeight / 2)
