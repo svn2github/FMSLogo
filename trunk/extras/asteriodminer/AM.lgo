@@ -161,6 +161,34 @@ to checkScreen
   ]
 end
 
+to checkLogoVersion
+   localmake "version splitversion item 2 logoversion
+   if (or (lessp item 1 :version 6) (and equalp item 1 :version 6 lessp item 2 :version 32)) [
+      messagebox [Version Problem] [This version of Asteroid Minor only runs on FMSLogo 6.33.0 or higher.]
+      bye
+   ]
+end
+
+to splitversion :version
+   output splitversion.inner :version "|| []
+end
+
+to splitversion.inner :version :workingversion :accumulatedversion
+
+  if empty? :version [
+     ; We reached the end of the version
+     output reverse fput :workingversion :accumulatedversion
+  ]
+  if equal? first :version ". [
+     ; We reached the version delimiter
+     output splitversion.inner (butfirst :version) "|| (fput :workingversion :accumulatedversion)
+  ]
+
+  output splitversion.inner (butfirst :version) (word :workingversion first :version) :accumulatedversion
+
+end
+
+
 to clearBox
   setturtle 0
   setxy (:displayWidth/2 - :displayWidth)+1 (:displayHeight/2 - :displayHeight)+1
@@ -506,14 +534,89 @@ to drawRock :pos1
   setpensize round :scale
 end
 
-to drawShip :x :y :d :action
+to drawShipExplosion :x :y
+
+  repeat :numFrags [
+    setxy :x :y  seth :d
+    rt 360/:numFrags * repcount
+    make "fal item repcount :fragments  ;fal stands for fragment attribute list
+    fd :shipRad * (item 1 :fal) + :expStep * (item 2 :fal)
+    rt (item 3 :fal) + :expStep * (item 4 :fal)
+    pendown
+    fd :expLen * (item 5 :fal) * :scale
+    rt 180
+    fd :expLen * (item 6 :fal) * :scale
+    if (item 7 :fal) = 1 [ rt (item 8 :fal)  fd :expLen * (item 9 :fal) * :scale ]
+    penup
+  ]
+end
+
+to hideShip 
+  repeat 4 [ setturtle repcount hideturtle ]
+  setturtle 0
+end
+
+to moveShip :x :y :dr
+  local "activeTurtle
+
+  if :shipIsExploding [
+    repeat 3 [ setturtle repcount hideturtle ]
+
+    ;explosion--random numbers for the fragment attribute lists are picked in playLoop
+    make "expLen :expLen - :shipRad / :numExpSteps
+
+    setturtle 0
+    setpencolor [138 60 255]
+    drawShipExplosion :x :y
+    stop
+  ]
+
+  ; Determine which tutrle should be shown
+  ifelse :isThrustOn [
+    ifelse (20 * :glintSpeed) < :blink [
+      ; thursting, with lights
+      make "activeTurtle 4
+    ][
+      ; thursting, no lights
+      make "activeTurtle 2
+    ]
+  ][
+    ifelse (20 * :glintSpeed) < :blink [
+      ; no thurst, with lights
+      make "activeTurtle 3
+    ][
+      ; no thurst, no lights
+      make "activeTurtle 1
+    ]
+  ]
+
+  ; Position the turtle correctly
+  setturtle :activeturtle
+  setxy :x :y
+  seth  :dr
+  showturtle
+
+  ; Hide the other sprites
+  repeat 4 [ if :activeTurtle <> repcount [ setturtle repcount hideturtle ] ]
+
+  ; Increment the blink counter
+  ifelse :blink = (40 * :glintSpeed) [ 
+     make "blink 0 
+  ][
+     make "blink :blink + 1
+  ]
+
+  setturtle 0
+end
+
+to drawShip :x :y :d :thickness :action
   ; :x      is xcor of ship
   ; :y      is ycor of ship
   ; :d      is heading of ship
   ; :action is "draw, "redraw, or "erase
 
   setturtle 0
-  setpensize round :scale*:shipRad/:normalShipRad
+  setpensize :thickness
 
   ifelse :shipGlow > :shipFadeStart [ 
      make "pencolor [255 255 255]
@@ -580,7 +683,7 @@ to drawShip :x :y :d :action
     bk :shipSide - 1.414*:scale
     lt 45
     if ( or :isThrustOn  :action = "erase ) [
-      setpensize round 2*:scale*:shipRad/:normalShipRad
+      setpensize :thickness*2
     ]
     if ( and (:leaveStep < :numLeaveSteps * .80) :isThrustOn (:action <> "erase) ) [
       setpc[ 255 230 130 ]
@@ -588,7 +691,7 @@ to drawShip :x :y :d :action
     bk :shipSide + 2*:scale
 
     setpc :pencolor
-    setpensize round :scale*:shipRad/:normalShipRad
+    setpensize :thickness
 
     penup
     fd :shipSide + 2*:scale
@@ -613,7 +716,7 @@ to drawShip :x :y :d :action
     fd 12.95 * :scale*:shipRad/:normalShipRad
     penup
 
-    ; draw the first light, now that we won't draw over it
+    ; draw the lights, now that we won't draw over them
     if (or :leaveStep < :numLeaveSteps * 0.5 not :isLeaving) [ 
        drawShip.light :light1Pos
        drawShip.light :light2Pos
@@ -885,6 +988,7 @@ to hitGemCheck
           make "isLeaving "true
           make "isThrustOn "true
           timerOff
+          hideShip
         ]
         make "score :score + :gemWorth
         make "textCount 1  printText
@@ -905,12 +1009,12 @@ to hitRockCheck
     make "dist2   (power (:shipX - :x) 2) + (power (:shipY - :y) 2)
     make "shipRock2 (power (:shipRad + :rockRad) 2)
     if (and :dist2 < :shipRock2  not :isLeaving   not :shipIsExploding) [
+      ; The ship hit a rock.  Life Over!.
       timerOff
-      drawShip :shipXInt :shipYInt :dr "erase
-      ;save the point where the ship hit the rock, for the explosion bitmap
-      ;turtle was set by drawShip
-      seth towards ( item repcount :rocks ) fd :shipRad - :shipRad3
-      make "expCtr (list ((first pos) - :shipRad ) ((last pos) - :shipRad ) )
+      hideShip
+
+      ; Save the point where the ship hit the rock (for the explosion bitmap)
+      make "explosionCenter (list (:shipX - :shipRad ) (:shipY - :shipRad ) )
       make "shipIsExploding "true
       make "expLen :shipRad
     ]
@@ -930,8 +1034,9 @@ to initGame
   make "gameOver "false
   wrap
 
-  ; hide all turtles 0-5
+  ; recreate turtles 0-5
   repeat 5 [ setturtle repcount - 1 hideturtle penup ]
+  repeat 4 [ setturtle repcount (bitmapturtle "true) ]
 
   setpensize round :scale
 end
@@ -1059,6 +1164,10 @@ to initMain
 
 ;BITMAPS
 
+  ; bitmap  1 - The ship (normal)
+  ; bitmap  2 - The ship (thrusting)
+  ; bitmap  3 - The ship (lights on)
+  ; bitmap  4 - The ship (lights on with thrust)
   ; bitmap  5 - The large turtle in the intro screen
   ; bitmap  6 - The ship's explosion
   ; bitmap  7 - The word "Score:" for the scoreboard
@@ -1075,6 +1184,39 @@ to initMain
   ; bitmap 18 - The numeral 8 (used for scoreboard)
   ; bitmap 19 - The numeral 9 (used for scoreboard)
   ; bitmap 20 - The portion of the game screen obscured by the Paused screen.
+
+  ; Set bitmap 1 to be a ship in the normal state.
+  ; We draw the ship on a white background so that the non-line
+  ; portions are transparent.
+  initLife
+  setscreencolor "white
+  drawShip :shipRad :shipRad 0 2 "draw
+  setbitindex 1
+  setfloodcolor "white
+  setpos [0 0]
+  sbitcut round( :shipRad * 2 )+1 round( :shipRad  * 2 )+1
+
+  ; Set bitmap 2 to be a ship in the thrusting state.
+  make "isThrustOn "true
+  drawShip :shipRad :shipRad 0 2 "draw
+  setbitindex 2
+  setpos [0 0]
+  sbitcut round( :shipRad * 2 )+1 round( :shipRad  * 2 )+1
+
+  ; Set bitmap 3 to be a ship with its lights on
+  make "blink 20 * :glintSpeed
+  make "isThrustOn "false
+  drawShip :shipRad :shipRad 0 2 "draw
+  setbitindex 3
+  setpos [0 0]
+  sbitcut round( :shipRad * 2 )+1 round( :shipRad  * 2 )+1
+
+  ; Set bitmap 4 to be a thrusting ship with its lights on
+  make "isThrustOn "true
+  drawShip :shipRad :shipRad 0 2 "draw
+  setbitindex 4
+  setpos [0 0]
+  sbitcut round( :shipRad * 2 )+1 round( :shipRad  * 2 )+1
 
   ; Load the bitmaps to the screen
   setxy 0 0
@@ -1097,6 +1239,7 @@ to initMain
   ; Load the word "Score:" into bitmap 7
   setbitindex 7
   setpos [0 0]
+  setscreencolor "black
   drawText [Score:] "draw
   make "scoreLength :textLength
   setpos [0 0]
@@ -1115,7 +1258,7 @@ to initMain
   setbitindex 9
   setShipSize 9 * :scale
   initLife
-  drawShip 0 0 0 "draw 
+  drawShip 0 0 0 1 "draw 
   penup seth 270 fd :shipRad lt 90 fd :shipRad
   sbitcut round( 18 * :scale )+1 round( 18 * :scale )+1 
   setShipSize :normalShipRad
@@ -1217,7 +1360,7 @@ end
 to inputText.keyHit
   make "key keyboardvalue
 
-  ifelse :key = 8 [
+  ifelse :key = 8 [ ; backspace
     if (count :string) > 0 [
 
       if (count :string) <> :max [ inputText.eraseChar "_ ]
@@ -1631,6 +1774,11 @@ to playLoop
   while [ (and (not :quit) (not :reset) (:expStep < :numExpSteps) (not :levelIsOver)) ] [
     make "start timemilli
 
+    if :shipIsExploding [
+      setpencolor "black
+      drawShipExplosion :oldShipX :oldShipY
+    ]
+
     if (or (:oldShipX <> :shipXInt)
            (:oldShipY <> :shipYInt)
            (:oldDr    <> :dr)
@@ -1638,33 +1786,38 @@ to playLoop
            :isLeaving 
            :erase 
            :blink = 0) [
-      if not :isBehindRock [ drawShip :oldShipX :oldShipY :oldDr "erase ]
+      ;if not :isBehindRock [ drawShip :oldShipX :oldShipY :oldDr "erase ]
     ]
     if :shipIsExploding [
       make "expStep :expStep + 1
       if :expStep = :numExpSteps [ make "lives :lives - 1 ]
     ]
     if :isLeaving [
-      make "leaveStep :leaveStep + 1  shrinkShip
+      ; gradually shrink the ship for the "leaving level" effect.
+      make "leaveStep :leaveStep + 1
+      shrinkShip
       if :leaveStep = :numLeaveSteps [ make "levelIsOver "true ]
+
+      drawShip :shipXInt :shipYInt :dr 2 "draw
     ]
-    if (and not :levelIsOver   not :isBehindRock  not (:expStep = :numExpSteps)) [ drawShip :shipXInt :shipYInt :dr "draw ]
-    make "oldIsBehindRock :isBehindRock
-    make "isBehindRock "false
-    setxy :shipX :shipY
-    if not :isLeaving [
-      hitGemCheck
+    if (and not :levelIsOver   not :isBehindRock  not :isLeaving  not (:expStep = :numExpSteps)) [ 
+        moveShip :shipXInt :shipYInt :dr
     ]
 
+    setxy :shipX :shipY
+    if not :isLeaving [ hitGemCheck ]
+
+    make "oldIsBehindRock :isBehindRock
+    make "isBehindRock "false
     hitRockCheck
 
     ;if the ship just emerged from behind a rock, draw it now...
-    if (and not :levelIsOver   not :isBehindRock  :oldIsBehindRock) [
-      drawShip :shipXInt :shipYInt :dr "redraw
+    if (and not :levelIsOver   not :isBehindRock  :oldIsBehindRock   not :isLeaving) [
+      moveShip :shipXInt :shipYInt :dr
     ]
     ;...and if it just went behind one, erase it now
     if (and :isBehindRock   not :oldIsBehindRock) [
-      drawShip :shipXInt :shipYInt :dr "erase
+      hideShip
     ]
 
     ;don't print if they're equal. keeps it from showing the removal of a ship just yet
@@ -1672,7 +1825,7 @@ to playLoop
 
     if and :shipIsExploding  (:expStep = 0) [
       ; Show the explosion bitmap
-      setpos :expCtr
+      setpos :explosionCenter
       setbitindex 6
       bitpaste
 
@@ -1692,7 +1845,7 @@ to playLoop
       ]
     ]
     if :expStep = 2 [
-      setpos :expCtr
+      setpos :explosionCenter
       sbitblock (round :shipRad * 2.5 * :scale) (round :shipRad * 2.5 * :scale)
     ]
 
@@ -1728,7 +1881,7 @@ to playLoop
 
     make "shipXInt round :shipX
     make "shipYInt round :shipY
-    while [ timemilli - :start < :animationDelay ] []
+    while [ timemilli - :start < :animationDelay ] [wait 1]
   ]
 
 end
@@ -1886,7 +2039,7 @@ to rungame
 
   cs
   setfocus[MSWLogo Screen]
-  setscreencolor[ 0 0 0 ]
+  checkLogoVersion
   checkScreen
   initMain
 
