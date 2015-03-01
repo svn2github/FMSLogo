@@ -43,6 +43,8 @@ CScreen::CScreen(
     m_ScreenDeviceContext(0),
     m_MemoryDeviceContext(0),
     m_MemoryBitmap(0),
+    m_BackBufferDeviceContext(0),
+    m_BackBuffer(0),
     m_XScrollRatio(0.5),
     m_YScrollRatio(0.5)
 {
@@ -86,9 +88,16 @@ CScreen::~CScreen()
 #endif
     }
 
+    if (m_BackBufferDeviceContext)
+    {
+        m_BackBufferDeviceContext->SelectObject(wxNullBitmap);
+    }
+
     delete m_ScreenDeviceContext;
     delete m_MemoryBitmap;
     delete m_MemoryDeviceContext;
+    delete m_BackBuffer;
+    delete m_BackBufferDeviceContext;
 }
 
 static
@@ -200,19 +209,17 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
         }
     }
 
-    wxDC     * sourceDeviceContext;
-    wxBitmap * backBuffer = NULL;
+    wxDC * sourceDeviceContext;
     if (useBackBuffer)
     {
-        // Allocate the back buffer.
-        backBuffer = new wxBitmap(BitMapWidth, BitMapHeight);
-        wxMemoryDC * backBufferDeviceContext = new wxMemoryDC(*backBuffer);
+        // Allocate the back buffer (if needed)
+        sourceDeviceContext = &GetBackBufferDeviceContext();
 
 #ifndef WX_PURE
         if (EnablePalette)
         {
-            SelectPalette(static_cast<HDC>(backBufferDeviceContext->GetHDC()), ThePalette, FALSE);
-            RealizePalette(static_cast<HDC>(backBufferDeviceContext->GetHDC()));
+            SelectPalette(static_cast<HDC>(sourceDeviceContext->GetHDC()), ThePalette, FALSE);
+            RealizePalette(static_cast<HDC>(sourceDeviceContext->GetHDC()));
         }
 #endif
 
@@ -269,7 +276,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
                 sourceRectBottom = (int) (std::min(std::max(0.0, scaledSourceRectBottom), (double)BitMapHeight));
             }
 
-            backBufferDeviceContext->Blit(
+            sourceDeviceContext->Blit(
                 sourceRectLeft,
                 sourceRectTop,
                 sourceRectRight - sourceRectLeft + 1,
@@ -281,10 +288,8 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
 
 #ifndef WX_PURE
         // draw the turtles on top of the image
-        paste_all_turtles(static_cast<HDC>(backBufferDeviceContext->GetHDC()), 1.0);
+        paste_all_turtles(static_cast<HDC>(sourceDeviceContext->GetHDC()), 1.0);
 #endif
-
-        sourceDeviceContext = backBufferDeviceContext;
     }
     else
     {
@@ -462,12 +467,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
     //SelectObject(memoryDC, oldBitmap);
 
     // draw the turtles on top of the image
-    if (useBackBuffer)
-    {
-        delete backBuffer;
-        delete sourceDeviceContext;
-    }
-    else
+    if (!useBackBuffer)
     {
         // draw the turtles on top of the image
         paste_all_turtles(PaintDC, the_zoom);
@@ -492,6 +492,20 @@ wxClientDC & CScreen::GetScreenDeviceContext()
 wxMemoryDC & CScreen::GetMemoryDeviceContext()
 {
     return *m_MemoryDeviceContext;
+}
+
+wxMemoryDC & CScreen::GetBackBufferDeviceContext()
+{
+    // The back buffer is only needed if there are sprite bitmaps.
+    // To avoid making all programmer pay the cost of creating a
+    // duplicate memory bitmap, we create it lazily.
+    if (m_BackBufferDeviceContext == NULL)
+    {
+        m_BackBuffer = new wxBitmap(BitMapWidth, BitMapHeight);
+        m_BackBufferDeviceContext = new wxMemoryDC(*m_BackBuffer);
+    }
+
+    return *m_BackBufferDeviceContext;
 }
 
 void CScreen::OnScroll(wxScrollWinEvent& Event)

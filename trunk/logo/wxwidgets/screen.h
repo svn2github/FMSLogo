@@ -16,6 +16,7 @@ public:
 
     wxClientDC & GetScreenDeviceContext();
     wxMemoryDC & GetMemoryDeviceContext();
+    wxMemoryDC & GetBackBufferDeviceContext();
 
     void AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor);
 
@@ -40,6 +41,8 @@ private:
     wxClientDC * m_ScreenDeviceContext;
     wxMemoryDC * m_MemoryDeviceContext;
     wxBitmap   * m_MemoryBitmap;
+    wxMemoryDC * m_BackBufferDeviceContext;
+    wxBitmap   * m_BackBuffer;
 
     double       m_XScrollRatio;
     double       m_YScrollRatio;
