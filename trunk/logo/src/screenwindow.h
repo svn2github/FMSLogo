@@ -48,6 +48,7 @@ void OpenEditorToLocationOfFirstError(const char *FileName);
 #ifndef WX_PURE
 HDC GetScreenDeviceContext();
 HDC GetMemoryDeviceContext();
+HDC GetBackBufferDeviceContext();
 #endif
 
 void OpenStatusWindow();

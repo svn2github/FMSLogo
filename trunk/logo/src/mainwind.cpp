@@ -602,6 +602,7 @@ LoadBitmapFile(
     return status;
 }
 
+
 void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
 {
     /*
@@ -725,26 +726,22 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
         sourceRect.bottom = (int) (std::min(std::max(scaledSourceRectBottom, 0.0), (double)BitMapHeight));
     }
 
-    HDC     sourceDeviceContext;
-    HBITMAP backBuffer;
+    HDC sourceDeviceContext;
     if (useBackBuffer)
     {
-        // Allocate the back buffer.
-        HDC backBufferDeviceContext = CreateCompatibleDC(PaintDC);
-        backBuffer = CreateCompatibleBitmap(PaintDC, BitMapWidth, BitMapHeight);
-        SelectObject(backBufferDeviceContext, backBuffer);
+        sourceDeviceContext = GetBackBufferDeviceContext();
 
         if (EnablePalette)
         {
-            SelectPalette(backBufferDeviceContext, ThePalette, FALSE);
-            RealizePalette(backBufferDeviceContext);
+            SelectPalette(sourceDeviceContext, ThePalette, FALSE);
+            RealizePalette(sourceDeviceContext);
         }
 
         // Copy the portion of the memory image to the back buffer
         // that corresponds to the portion of the screen that is
         // being be painted.
         BitBlt(
-            backBufferDeviceContext,
+            sourceDeviceContext,
             sourceRect.left,
             sourceRect.top,
             sourceRect.right  - sourceRect.left,
@@ -755,9 +752,7 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
             SRCCOPY);
 
         // draw the turtles on top of the image
-        paste_all_turtles(backBufferDeviceContext, 1.0);
-
-        sourceDeviceContext = backBufferDeviceContext;
+        paste_all_turtles(sourceDeviceContext, 1.0);
     }
     else
     {
@@ -814,12 +809,7 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
     SelectObject(memoryDC, oldBitmap);
 
     // draw the turtles on top of the image
-    if (useBackBuffer)
-    {
-        DeleteObject(backBuffer);
-        DeleteDC(sourceDeviceContext);
-    }
-    else
+    if (!useBackBuffer)
     {
         paste_all_turtles(PaintDC, the_zoom);
     }

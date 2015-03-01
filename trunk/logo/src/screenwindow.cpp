@@ -100,6 +100,11 @@ HDC GetMemoryDeviceContext()
     return MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 }
 
+HDC GetBackBufferDeviceContext()
+{
+    return MainWindowx->ScreenWindow->GetBackBufferDeviceContext();
+}
+
 void OpenStatusWindow()
 {
     MainWindowx->MyPopupStatus();

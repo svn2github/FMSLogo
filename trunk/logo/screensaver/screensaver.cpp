@@ -50,9 +50,11 @@ static HANDLE          g_Fmslogo             = NULL;
 static HMODULE         g_User32              = NULL;
 #endif
 
-static HWND g_ScreenWindow = NULL;
-static HDC  g_ScreenDeviceContext = NULL;
-static HDC  g_MemoryDeviceContext = NULL;
+static HWND    g_ScreenWindow = NULL;
+static HDC     g_ScreenDeviceContext = NULL;
+static HDC     g_MemoryDeviceContext = NULL;
+static HDC     g_BackBufferDeviceContext = NULL;
+static HBITMAP g_BackBuffer = NULL;
 
 static DWORD g_TickCountOfMostRecentLoad = 0;
 
@@ -435,7 +437,19 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
             DeleteDC(g_MemoryDeviceContext);
             g_MemoryDeviceContext = NULL;
         }
-   
+
+        if (g_BackBuffer != NULL)
+        {
+            DeleteObject(g_BackBuffer);
+            g_BackBuffer = NULL;
+        }
+
+        if (g_BackBufferDeviceContext != NULL)
+        {
+            DeleteDC(g_BackBufferDeviceContext);
+            g_BackBufferDeviceContext = NULL;
+        }
+
         if (g_ScreenDeviceContext != NULL)
         {
             ReleaseDC(g_ScreenWindow, g_ScreenDeviceContext);
@@ -722,6 +736,21 @@ HDC GetScreenDeviceContext()
 HDC GetMemoryDeviceContext()
 {
     return g_MemoryDeviceContext;
+}
+
+HDC GetBackBufferDeviceContext()
+{
+    // The back buffer is only needed if there are sprite bitmaps.
+    // To avoid making all programmer pay the cost of creating a
+    // duplicate memory bitmap, we create it lazily.
+    if (g_BackBufferDeviceContext == NULL)
+    {
+        g_BackBufferDeviceContext = CreateCompatibleDC(g_ScreenDeviceContext);
+        g_BackBuffer = CreateCompatibleBitmap(g_ScreenDeviceContext, BitMapWidth, BitMapHeight);
+        SelectObject(g_BackBufferDeviceContext, g_BackBuffer);
+    }
+
+    return g_BackBufferDeviceContext;
 }
 
 void OpenStatusWindow()

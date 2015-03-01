@@ -45,6 +45,8 @@ public:
         return m_MemoryDeviceContext;
     }
 
+    HDC GetBackBufferDeviceContext();
+
 protected:
     void SetupWindow();
 
@@ -66,8 +68,10 @@ protected:
 private:
     void GetScrollRatios(FLONUM & XRatio, FLONUM & YRatio);
 
-    HDC    m_ScreenDeviceContext;
-    HDC    m_MemoryDeviceContext;
+    HDC     m_ScreenDeviceContext;
+    HDC     m_MemoryDeviceContext;
+    HDC     m_BackBufferDeviceContext;
+    HBITMAP m_BackBuffer;
 };
 
 class CEditors : public qlist

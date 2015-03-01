@@ -109,7 +109,9 @@ TScreenWindow::TScreenWindow(
     LPCSTR   ATitle
     ) : TWindow(AParent, ATitle),
         m_ScreenDeviceContext(NULL),
-        m_MemoryDeviceContext(NULL)
+        m_MemoryDeviceContext(NULL),
+        m_BackBufferDeviceContext(NULL),
+        m_BackBuffer(NULL)
 {
     if (!bFixed)
     {
@@ -180,6 +182,18 @@ void TScreenWindow::EvDestroy()
     {
         DeleteDC(m_MemoryDeviceContext);
         m_MemoryDeviceContext = NULL;
+    }
+
+    if (m_BackBuffer != NULL)
+    {
+        DeleteObject(m_BackBuffer);
+        m_BackBuffer = NULL;
+    }
+
+    if (m_BackBufferDeviceContext != NULL)
+    {
+        DeleteDC(m_BackBufferDeviceContext);
+        m_BackBufferDeviceContext = NULL;
     }
    
     if (m_ScreenDeviceContext != NULL)
@@ -596,6 +610,20 @@ void TScreenWindow::EvSize(UINT arg1, TSize &arg2)
     AdjustScrollPositionToZoomFactor(the_zoom);
 }
 
+HDC TScreenWindow::GetBackBufferDeviceContext()
+{
+    // The back buffer is only needed if there are sprite bitmaps.
+    // To avoid making all programmer pay the cost of creating a
+    // duplicate memory bitmap, we create it lazily.
+    if (m_BackBufferDeviceContext == NULL)
+    {
+        m_BackBufferDeviceContext = CreateCompatibleDC(m_ScreenDeviceContext);
+        m_BackBuffer = CreateCompatibleBitmap(m_ScreenDeviceContext, BitMapWidth, BitMapHeight);
+        SelectObject(m_BackBufferDeviceContext, m_BackBuffer);
+    }
+
+    return m_BackBufferDeviceContext;
+}
 
 DEFINE_RESPONSE_TABLE1(TScreenWindow, TWindow)
     EV_WM_DESTROY,
