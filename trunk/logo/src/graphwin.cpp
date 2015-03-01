@@ -260,7 +260,7 @@ public:
                 // Even though the raster mode is not used,
                 // it is set to indicate that the turtle
                 // is drawn with a bitmap.
-                assert(g_Turtles[i].BitmapRasterMode != 0)
+                assert(g_Turtles[i].BitmapRasterMode != 0);
             }
 #endif
         }
@@ -2933,7 +2933,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                         if (0 <= sourceX && sourceX < sourceWidth &&
                             0 <= sourceY && sourceY < sourceHeight)
                         {
-                            const RGBCOLOR pixel = sourceBitmap[static_cast<int>(sourceX) * bitmap->Width + static_cast<int>(sourceY)];
+                            const RGBCOLOR pixel = sourceBitmap[static_cast<int>(sourceY) * bitmap->Width + static_cast<int>(sourceX)];
                             if (pixel != TRANSPARENT_COLOR)
                             {
                                 SetWrappedPixel(
