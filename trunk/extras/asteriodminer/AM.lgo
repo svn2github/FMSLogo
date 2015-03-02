@@ -535,7 +535,7 @@ to drawRock :pos1
   setpensize round :scale
 end
 
-to drawShipExplosion :x :y
+to drawShipExplosion :x :y :d
 
   repeat :numFrags [
     setxy :x :y  seth :d
@@ -559,18 +559,6 @@ end
 
 to moveShip :x :y :dr
   local "activeTurtle
-
-  if :shipIsExploding [
-    repeat 3 [ setturtle repcount hideturtle ]
-
-    ;explosion--random numbers for the fragment attribute lists are picked in playLoop
-    make "expLen :expLen - :shipRad / :numExpSteps
-
-    setturtle 0
-    setpencolor [138 60 255]
-    drawShipExplosion :x :y
-    stop
-  ]
 
   ; Determine which tutrle should be shown
   ifelse :isThrustOn [
@@ -648,7 +636,11 @@ to drawShip :x :y :d :thickness :action
     ;explosion--random numbers for the fragment attribute lists are picked in playLoop
     if :action = "draw [ make "expLen :expLen - :shipRad / :numExpSteps ]
     repeat :numFrags [
-      setxy :x :y  seth :d
+      ; move the turtle to the begining of this piece of sharpnel
+      setxy :x :y
+      seth :d
+
+      ; draw this piece of shrapnel
       rt 360/:numFrags * repcount
       make "fal item repcount :fragments  ;fal stands for fragment attribute list
       fd :shipRad * (item 1 :fal) + :expStep * (item 2 :fal)
@@ -1073,8 +1065,9 @@ to initLife
   make "shipX 0
   make "shipY 0
   make "dr 0
-  make "oldShipX :shipX
-  make "oldShipY :shipY
+  make "oldShipX  :shipX
+  make "oldShipY  :shipY
+  make "oldShipDr :dr
   make "shipDeltaX 0
   make "shipDeltaY 0
   make "turnRt "false
@@ -1802,30 +1795,37 @@ to playLoop
   while [ (and (not :quit) (not :reset) (:expStep < :numExpSteps) (not :levelIsOver)) ] [
     make "start timemilli
 
-    if :shipIsExploding [
-      ; draw the current animation frame.
+    ifelse :shipIsExploding [
+      ; erase the previous animation frame.
       setpencolor "black
-      drawShipExplosion :oldShipX :oldShipY
+      drawShipExplosion :oldShipX :oldShipY :oldShipDr
 
       ; Advance to the next animation frame for the explosion.
-      ; When we're at the end of the animation, remove the life.
       make "expStep :expStep + 1
+
+      ; draw the current animation frame.
+      setpencolor [138 60 255]
+      make "expLen :expLen - :shipRad / :numExpSteps
+      drawShipExplosion :shipX :shipY :dr
+
+      ; When we're at the end of the animation, remove the life.
       if :expStep = :numExpSteps [ make "lives :lives - 1 ]
-    ]
-    if :isLeaving [
-      ; gradually shrink the ship for the "leaving level" effect.
-      make "leaveStep :leaveStep + 1
-      shrinkShip
-      if :leaveStep = :numLeaveSteps [ make "levelIsOver "true ]
+    ][
+      ifelse :isLeaving [
+        ; gradually shrink the ship for the "leaving level" effect.
+        make "leaveStep :leaveStep + 1
+        shrinkShip
+        if :leaveStep = :numLeaveSteps [ make "levelIsOver "true ]
 
-      drawShip :shipX :shipY :dr 2 "draw
-    ]
-    if (and not :levelIsOver   not :isBehindRock  not :isLeaving  not (:expStep = :numExpSteps)) [ 
-        moveShip :shipX :shipY :dr
+        drawShip :shipX :shipY :dr 2 "draw
+      ][
+        if (and not :levelIsOver   not :isBehindRock) [ 
+          moveShip :shipX :shipY :dr
+        ]
+      ]
     ]
 
-    setxy :shipX :shipY
-    if not :isLeaving [ hitGemCheck ]
+    hitGemCheck
 
     make "oldIsBehindRock :isBehindRock
     make "isBehindRock "false
@@ -1891,8 +1891,9 @@ to playLoop
         if and ((round :y) = :y) (:y <> :offScreenY) [ make "glintStep 0 ]
       ]
     ]
-    make "oldShipX :shipX
-    make "oldShipY :shipY
+    make "oldShipX  :shipX
+    make "oldShipY  :shipY
+    make "oldShipDr :dr
 
     if :isLeaving [ make :isThrustOn "true ]
     processCommand
