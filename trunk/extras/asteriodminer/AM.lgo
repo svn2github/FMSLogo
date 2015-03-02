@@ -1072,8 +1072,6 @@ to initLife
   make "key 0
   make "shipX 0
   make "shipY 0
-  make "shipXInt 0
-  make "shipYInt 0
   make "dr 0
   make "oldShipX :shipX
   make "oldShipY :shipY
@@ -1822,10 +1820,10 @@ to playLoop
       shrinkShip
       if :leaveStep = :numLeaveSteps [ make "levelIsOver "true ]
 
-      drawShip :shipXInt :shipYInt :dr 2 "draw
+      drawShip :shipX :shipY :dr 2 "draw
     ]
     if (and not :levelIsOver   not :isBehindRock  not :isLeaving  not (:expStep = :numExpSteps)) [ 
-        moveShip :shipXInt :shipYInt :dr
+        moveShip :shipX :shipY :dr
     ]
 
     setxy :shipX :shipY
@@ -1837,7 +1835,7 @@ to playLoop
 
     ;if the ship just emerged from behind a rock, draw it now...
     if (and not :levelIsOver   not :isBehindRock  :oldIsBehindRock   not :isLeaving) [
-      moveShip :shipXInt :shipYInt :dr
+      moveShip :shipX :shipY :dr
     ]
     ;...and if it just went behind one, erase it now
     if (and :isBehindRock   not :oldIsBehindRock) [
@@ -1890,9 +1888,9 @@ to playLoop
         if and ((round :y) = :y) (:y <> :offScreenY) [ make "glintStep 0 ]
       ]
     ]
-    make "oldShipX :shipXInt
-    make "oldShipY :shipYInt
-    make "oldDr :dr
+    make "oldShipX :shipX
+    make "oldShipY :shipY
+    make "oldDr    :dr
 
     if :isLeaving [ make :isThrustOn "true ]
     processCommand
@@ -1901,10 +1899,22 @@ to playLoop
     make "shipX :shipX + :shipDeltaX
     make "shipY :shipY + :shipDeltaY
 
-    wrapCheck
+    ; if the center of the object is out of the box, wrap it around to the other side
+    ifelse :shipX > (:gameWidth / 2 ) [
+      make "shipX (:shipX - :gameWidth)
+    ][
+      if :shipX < (:gameWidth / 2 - :gameWidth )[
+        make "shipX (:shipX + :gameWidth)
+      ]
+    ]
+    ifelse :shipY < (:displayHeight / 2 - :displayHeight )[
+      make "shipY (:shipY + :displayHeight )
+    ][
+      if :shipY > (:displayHeight / 2 ) [
+        make "shipY (:shipY - :displayHeight )
+      ]
+    ]
 
-    make "shipXInt round :shipX
-    make "shipYInt round :shipY
     while [ timemilli - :start < :animationDelay ] [wait 1]
   ]
 
@@ -2218,19 +2228,6 @@ to waitStop :delay
 end
 
 to wrapCheck
-;if the center of the object is out of the box, wrap it around to the other side
-  if :shipX > (:gameWidth / 2 ) [
-    make "shipX (:shipX - :gameWidth)
-  ]
-  if :shipX < (:gameWidth / 2 - :gameWidth )[
-    make "shipX (:shipX + :gameWidth)
-  ]
-  if :shipY < (:displayHeight / 2 - :displayHeight )[
-    make "shipY (:shipY + :displayHeight )
-  ]
-  if :shipY > (:displayHeight / 2 ) [
-    make "shipY (:shipY - :displayHeight )
-  ]
 end
 
 make "startup [ rungame ]
