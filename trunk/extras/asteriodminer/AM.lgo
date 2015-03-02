@@ -1803,11 +1803,10 @@ to playLoop
     make "start timemilli
 
     if :shipIsExploding [
+      ; draw the current animation frame.
       setpencolor "black
       drawShipExplosion :oldShipX :oldShipY
-    ]
 
-    if :shipIsExploding [
       ; Advance to the next animation frame for the explosion.
       ; When we're at the end of the animation, remove the life.
       make "expStep :expStep + 1
