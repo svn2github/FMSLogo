@@ -1810,15 +1810,6 @@ to playLoop
       drawShipExplosion :oldShipX :oldShipY
     ]
 
-    if (or (:oldShipX <> :shipXInt)
-           (:oldShipY <> :shipYInt)
-           (:oldDr    <> :dr)
-           :shipIsExploding 
-           :isLeaving 
-           :erase 
-           :blink = 0) [
-      ;if not :isBehindRock [ drawShip :oldShipX :oldShipY :oldDr "erase ]
-    ]
     if :shipIsExploding [
       ; Advance to the next animation frame for the explosion.
       ; When we're at the end of the animation, remove the life.
