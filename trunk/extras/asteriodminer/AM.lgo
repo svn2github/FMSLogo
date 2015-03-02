@@ -1075,7 +1075,6 @@ to initLife
   make "dr 0
   make "oldShipX :shipX
   make "oldShipY :shipY
-  make "oldDr :dr
   make "shipDeltaX 0
   make "shipDeltaY 0
   make "turnRt "false
@@ -1895,7 +1894,6 @@ to playLoop
     ]
     make "oldShipX :shipX
     make "oldShipY :shipY
-    make "oldDr    :dr
 
     if :isLeaving [ make :isThrustOn "true ]
     processCommand
