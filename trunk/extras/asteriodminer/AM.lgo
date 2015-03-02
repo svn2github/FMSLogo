@@ -1845,30 +1845,35 @@ to playLoop
     ; As time passes, the bonus always changes.
     updateStatusBonus
 
-    if and :shipIsExploding  (:expStep = 0) [
-      ; Show the explosion bitmap
-      setpos :explosionCenter
-      setbitindex 6
-      bitpaste
+    if :shipIsExploding [
+      ifelse :expStep = 0 [
+        ; Show the explosion bitmap
+        setpos :explosionCenter
+        setbitindex 6
+        bitpaste
 
-      make "fragments ( array :numFrags 1 )
-      repeat :numFrags [
-        setitem repcount :fragments ( list 
-          ( (random 3) / 2 )
-          ( (random 3 + 2) / 2 )
-          ( random 360 )
-          ( (random 61) + 10 )
-          ( (random 4) * .25 + .5 )
-          ( (random 6) * .25 )
-          ( random 2 )
-          ( (random 341) + 10 )
-          ( (random 20) / 10 )
-        )
+        make "fragments array :numFrags
+        repeat :numFrags [
+          ; determine how this fragment should travel.
+          setitem repcount :fragments ( list 
+            ( (random 3) / 2 )
+            ( (random 3 + 2) / 2 )
+            ( random 360 )
+            ( (random 61) + 10 )
+            ( (random 4) * .25 + .5 )
+            ( (random 6) * .25 )
+            ( random 2 )
+            ( (random 341) + 10 )
+            ( (random 20) / 10 )
+          )
+        ]
+      ][
+        if :expStep = 2 [
+          ; erase the explosion bitmap.
+          setpos :explosionCenter
+          sbitblock (round :shipRad * 2.5 * :scale) (round :shipRad * 2.5 * :scale)
+        ]
       ]
-    ]
-    if :expStep = 2 [
-      setpos :explosionCenter
-      sbitblock (round :shipRad * 2.5 * :scale) (round :shipRad * 2.5 * :scale)
     ]
 
     ifelse :glintStep < (20 * :glintSpeed) [
