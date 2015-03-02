@@ -4,8 +4,8 @@ to addBonus :type
     if or :quit :reset [ stop ]
     make "timeLeft :timeLeft - 1
     make "score :score + 5
-    make "textCount 1  printText
-    make "textCount 2  printText
+    updateStatusBonus
+    updateStatusScore
     waitStop 1
     if :timeLeft > 0 [ addBonus :type ]
   ]
@@ -13,8 +13,8 @@ to addBonus :type
     if or :quit :reset [ stop ]
     make "lives :lives - 1
     make "score :score + 400
-    make "textCount 2  printText
-    make "textCount 3  printText
+    updateStatusScore
+    updateStatusLives
     waitStop 40
     if :lives > 1 [ addBonus :type ]
   ]
@@ -283,6 +283,7 @@ to displayInstructions
 end
 
 to displayText :text :pause
+  ; Clears the screen and shows :text rendered in the center for :pause ticks.
   clearBox
   drawText :text "getLength
   setxy -:textLength/2  0 
@@ -991,8 +992,8 @@ to hitGemCheck
           hideShip
         ]
         make "score :score + :gemWorth
-        make "textCount 1  printText
-        make "textCount 2  printText
+        updateStatusBonus
+        updateStatusScore
         make "gemWorth :gemWorth + 5
         make "shipGlow :shipFadeStart + 4
       ]
@@ -1051,6 +1052,7 @@ to initLevel
   make "isBehindRock "false
   make "gemWorth 40
   setShipSize :normalShipRad
+
 end
 
 to initLife
@@ -1076,7 +1078,6 @@ to initLife
   make "isLeaving "false
   make "expStep 0
   make "leaveStep 0
-  make "textCount 1
   make "erase "false
   make "lifeOver "false
   make "shipGlow 0
@@ -1415,23 +1416,32 @@ to levelLoop
     while [ :now - :start < 1000 ] [ make "now timemilli ]
 
     lifeLoop
+
     if :levelIsOver [
+
       displayText (list "Level :level "Complete!) 60
       ifelse ( :timeLeft > 0 ) [ displayText [Adding Bonus...] 0 ] [ displayText [No Bonus] 0 ]
-      
-      make "textCount 1  printText
-      make "textCount 2  printText
+
+      ; Redraw the "Bonus" and "Score" elements of the status bar.
+      statusDrawBonus
+      updateStatusBonus
+      statusDrawScore
+      updateStatusScore
+
       waitStop 30
       if( :timeLeft > 0 ) [ addBonus 1 ]
       waitStop 60
       make "level :level + 1
     ]
     if :level > :maxLevel [
+      ; The player has beaten the final level.  They win!
       make "gameOver "true
       displayText [Game Complete!] 120
       ifelse ( :lives > 1 ) [ displayText [Adding Extra Ship Bonus...] 0 ] [ displayText [No Extra Ship Bonus] 30 ]
-      make "textCount 2  printText
-      make "textCount 3  printText
+      statusDrawBonus
+      updateStatusBonus
+      statusDrawScore
+      updateStatusScore
       waitStop 30
       if( :lives > 1 ) [ addBonus 2 ]
       waitStop 30
@@ -1452,15 +1462,18 @@ to lifeLoop
     if :lives = 1 [
       displayText [Last Ship...Get Ready!] 60
     ]
+
     initLife
     timerOn
     playLoop
     timerOff
     if( and not :quit  not :reset ) [ waitStop 60 ]
     if :lives = 0 [
+      ; The player has died and has no extra lives.
       make "gameOver "true
       displayText [Game Over!] 0
-      make "textCount 2 printText
+      statusDrawScore
+      updateStatusScore
       waitStop 50
     ]
   ]
@@ -1528,7 +1541,7 @@ to open
   make "playing "false
   make "open.quit "false
 
-  if :score > 0 [ make "textCount 2 printText ]
+  if :score > 0 [ statusDrawScore updateStatusScore  ]
   setpensize round 3*:open.scale
   setturtle 0
   open.stars
@@ -1771,6 +1784,14 @@ end
 
 to playLoop
 
+  ; Before entering the loop, setup the status bar at the top of the screen.
+  statusDrawBonus
+  updateStatusBonus
+  statusDrawScore
+  updateStatusScore
+
+  updateStatusLives
+
   while [ (and (not :quit) (not :reset) (:expStep < :numExpSteps) (not :levelIsOver)) ] [
     make "start timemilli
 
@@ -1789,6 +1810,8 @@ to playLoop
       ;if not :isBehindRock [ drawShip :oldShipX :oldShipY :oldDr "erase ]
     ]
     if :shipIsExploding [
+      ; Advance to the next animation frame for the explosion.
+      ; When we're at the end of the animation, remove the life.
       make "expStep :expStep + 1
       if :expStep = :numExpSteps [ make "lives :lives - 1 ]
     ]
@@ -1820,8 +1843,8 @@ to playLoop
       hideShip
     ]
 
-    ;don't print if they're equal. keeps it from showing the removal of a ship just yet
-    if :expStep < :numExpSteps [ printText ]
+    ; As time passes, the bonus always changes.
+    updateStatusBonus
 
     if and :shipIsExploding  (:expStep = 0) [
       ; Show the explosion bitmap
@@ -1886,69 +1909,73 @@ to playLoop
 
 end
 
-to printText
-  ; Updates the Score/Bonus/Lives status indicators
-  ; at the top of the screen.
-
-  local "timeLeftCopy
-
+to statusDrawBonus
+  ; Paste the word "Bonus:" in the status bar.
   setturtle 0
-  ;To speed things up, only one of the three objects at the top of the screen is printed at a time.
-  ;They need to be continuously printed though, because the ship can fly through them.
-  if :textCount = 1 [
-    ;paste "Bonus"
-    (setxy (:displayWidth / 2 - :displayWidth + 4 * :scale) 
-           (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
-    setbitindex 8
+  (setxy (:displayWidth / 2 - :displayWidth + 4 * :scale) 
+         (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
+  setbitindex 8
+  bitpaste
+end
+
+to updateStatusBonus
+
+  ; Save a copy of :timeLeft in case it changes.
+  local "timeLeftCopy
+  make "timeLeftCopy :timeLeft
+
+  ; Move to just after the "Bonus:"
+  setturtle 0
+  (setxy (:displayWidth / 2 - :displayWidth + :bonusLength + 7 * :scale)
+         (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
+  seth 90
+
+  repeat count (:timeLeftCopy * 5) [
+    setbitindex (item repcount (:timeLeftCopy * 5) ) + 10
     bitpaste
-
-    ;paste time left
-    (setxy (:displayWidth / 2 - :displayWidth + :bonusLength + 7 * :scale)
-           (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
-    seth 90
-
-    make "timeLeftCopy :timeLeft ; copy :timeLeft in case it changes
-    repeat count (:timeLeftCopy * 5) [
-      setbitindex (item repcount (:timeLeftCopy * 5) ) + 10
-      bitpaste
-      fd round( 13 * :scale )
-    ]
-
-    sbitblock round( 10 * :scale )+1 round( 18 * :scale )+1
+    fd round( 13 * :scale )
   ]
 
-  if :textCount = 2 [
-    ;paste "Score"
-    (setxy ( -((count :score)*13 + :scoreLength * :scale) / 2 )
-           (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
-    seth 90
-    sbitblock round( :scoreLength + :scale)+1+5*:textScale round( 18 * :scale + :scale)+1
-    setbitindex 7
+  sbitblock round( 10 * :scale )+1 round( 18 * :scale )+1
+end
+
+to statusDrawScore
+  ; Paste the word "Score:" in the status bar.
+  setturtle 0
+  (setxy ( -:scoreLength * :scale)
+         (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
+  sbitblock round( :scoreLength + :scale)+1+5*:textScale round( 18 * :scale + :scale)+1
+  setbitindex 7
+  bitpaste
+end
+
+to updateStatusScore
+
+  ; Paste the score just after the "Score:" text.
+  setturtle 0
+  (setxy
+      (7 * :scale)
+      (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
+  seth 90
+  repeat count :score [
+    sbitblock round(13 * :scale + :scale)+1 round(18 * :scale + :scale)+1
+    setbitindex (item repcount :score ) + 10
     bitpaste
-    fd round( :scoreLength + 2 * :scale )
-
-    ;paste score
-    repeat count :score [
-      sbitblock round(13 * :scale + :scale)+1 round(18 * :scale + :scale)+1
-      setbitindex (item repcount :score ) + 10
-      bitpaste
-      fd round( 13 * :scale )
-    ]
+    fd round( 13 * :scale )
   ]
 
-  if :textCount = 3 [ 
-    ;print extra lives left
-    make "extraLives :lives - 1
-    if :extraLives < 0 [ make "extraLives 0 ]
-    setxy (:displayWidth / 2 - 4) (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-17 *:scale) / 2))
-    seth 270
-    setbitindex 9
-    repeat :extraLives [ fd 20*:scale  bitpaste ]
-    repeat 3 - :extraLives [ fd 20*:scale  sbitblock round( 18 * :scale ) round( 18 * :scale ) ]
-  ]
+end
 
-  make "textCount :textCount + 1
-  if :textCount = 4 [ make "textCount 1 ]
+to updateStatusLives
+  ;print extra lives left
+  setturtle 0
+  make "extraLives :lives - 1
+  if :extraLives < 0 [ make "extraLives 0 ]
+  setxy (:displayWidth / 2 - 4) (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-17 *:scale) / 2))
+  seth 270
+  setbitindex 9
+  repeat :extraLives [ fd 20*:scale  bitpaste ]
+  repeat 3 - :extraLives [ fd 20*:scale  sbitblock round( 18 * :scale ) round( 18 * :scale ) ]
 end
 
 to processCommand
@@ -2107,8 +2134,8 @@ to scoreCheck
   ifelse :score > item 10 :AM_Hiscores [
     displayText [New High Score!] 0
     ;put the score on top of the screen
-    make "textCount 2
-    printText
+    statusDrawScore
+    updateStatusScore 
 
     drawText [Enter your name: Dan_] "getLength  ;get the length with a typical(?) input
     make "name inputText (list ( 0 - :textLength/2 ) ( 0 - 18*:scale*3 ) ) [Enter your name: ] 11
@@ -2141,8 +2168,8 @@ to scoreCheck
     setwrite[]
     displayText [Final Score] 0
     ;put the score on top of the screen
-    make "textCount 2
-    printText 
+    statusDrawScore
+    updateStatusScore 
     waitStop 180
   ]
 end
@@ -2181,6 +2208,7 @@ to timerOn
 end
 
 to waitStop :delay
+  ; An interuptable alternative to "WAIT"
   repeat :delay [
     wait 1
     if or :reset :quit [ stop ]
