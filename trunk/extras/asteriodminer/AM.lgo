@@ -970,9 +970,9 @@ to hitGemCheck
   ; Checks all gems, whether they are on the screen or not.
   ; This keeps the speed more constant on slow computers.
   repeat :maxGems [
-    make "x first (item repcount :gems)
-    make "y last  (item repcount :gems)
-    make "dist2 (power (:shipX - :x ) 2) + (power (:shipY - :y ) 2)
+    make "dist2 (SUM
+        power (:shipX - first (item repcount :gems)) 2 
+        power (:shipY - last  (item repcount :gems)) 2)
     ifelse :shipIsExploding [
       if :dist2 < (:shipGem2 * 4) [
         drawGem (item repcount :gems) "draw
