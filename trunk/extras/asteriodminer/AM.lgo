@@ -763,6 +763,13 @@ to drawShip.light :lightPos
 end
 
 to drawText :txt :action
+  ; If :action = "draw, then :txt is draw screen at the turtle's position
+  ; using the configured :textScale.
+  ; The global variable :textLength is updated to be the number of pixels
+  ; of how wide the text is and the turtle is moved to the end of the text.
+  ;
+  ; If :action = "getLength, then only :textLength is updated and the turtle
+  ; is not moved.
   setturtle 0
   make "tPos pos
   make "textLength 0
@@ -773,6 +780,8 @@ to drawText :txt :action
       make "char item repcount :txt
       make "numChars count :char
       repeat :numChars [ drawChar ascii (item repcount :char) :action ]
+
+      ; Add 6 text pixels of space between each word.
       if repcount <> :numWords [ rt 90 tfd 6 lt 90 make "textLength :textLength + 6 ]
     ]
   ][
@@ -1942,9 +1951,9 @@ end
 to statusDrawScore
   ; Paste the word "Score:" in the status bar.
   setturtle 0
-  (setxy ( -:scoreLength * :scale)
-         (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
-  sbitblock round( :scoreLength + :scale)+1+5*:textScale round( 18 * :scale + :scale)+1
+  (setxy
+      -:scoreLength
+      (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
   setbitindex 7
   bitpaste
 end
@@ -1954,7 +1963,7 @@ to updateStatusScore
   ; Paste the score just after the "Score:" text.
   setturtle 0
   (setxy
-      (7 * :scale)
+      (7 * :textScale)
       (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
   seth 90
   repeat count :score [
