@@ -1769,6 +1769,7 @@ to pauseGame
   setxy -57*:scale -43*:scale
   setbitindex 20
   sbitcut round(110*:scale) round(90*:scale)
+  hideShip
 
   buttonOn 9 "true
   buttonOn 10 "true
