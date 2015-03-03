@@ -1006,25 +1006,37 @@ to hitRockCheck
   ; Checks all rocks, whether they are on the screen or not.
   ; This keeps the speed more constant on slow computers
   repeat :numRocks [
-    make "x first (item repcount :rocks)
-    make "y last  (item repcount :rocks)
-    make "dist2   (power (:shipX - :x) 2) + (power (:shipY - :y) 2)
+    ; Calculate the square of the euclidian distance between the ship and the rock.
+    make "dist2     (power (:shipX - first (item repcount :rocks)) 2) + (power (:shipY - last (item repcount :rocks)) 2)
     make "shipRock2 (power (:shipRad + :rockRad) 2)
-    if (and :dist2 < :shipRock2  not :isLeaving   not :shipIsExploding) [
-      ; The ship hit a rock.  Life Over!.
-      timerOff
-      hideShip
+    if :dist2 < (:shipRock2 * 2) [
+      ; The ship is close to the rock.
 
-      ; Save the point where the ship hit the rock (for the explosion bitmap)
-      make "explosionCenter (list (:shipX - :shipRad ) (:shipY - :shipRad ) )
-      make "shipIsExploding "true
-      make "expLen :shipRad
-    ]
-    if and :dist2 < (:shipRock2 * 2) (or :shipIsExploding :isLeaving) [
-       drawRock (item repcount :rocks)
-    ]
-    if and (:dist2 < :shipRock2) :isLeaving [
-       make "isBehindRock "true
+      if :dist2 < :shipRock2 [
+        ; The ship is touching a rock.
+
+        if and not :isLeaving  not :shipIsExploding [
+          ; The ship hit a rock.  Life Over!.
+          timerOff
+          hideShip
+
+          ; Save the point where the ship hit the rock (for the explosion bitmap)
+          make "explosionCenter (list (:shipX - :shipRad ) (:shipY - :shipRad ) )
+          make "shipIsExploding "true
+          make "expLen :shipRad
+        ]
+        if :isLeaving [
+          ; Set a flag to skip drawing the warp-smear effect.
+          make "isBehindRock "true
+        ]
+      ]
+
+      if or :shipIsExploding :isLeaving [
+        ; The ship is close enough that it may have overdrawn is recently.
+        ; Redraw the rock, just in case part of it was erased by the
+        ; exploding or leaving effect.
+        drawRock (item repcount :rocks)
+      ]
     ]
   ]
 end
