@@ -962,9 +962,10 @@ to hitGemCheck
   ; Checks all gems, whether they are on the screen or not.
   ; This keeps the speed more constant on slow computers.
   repeat :maxGems [
-    make "dist2 (SUM
-        power (:shipX - first (item repcount :gems)) 2 
-        power (:shipY - last  (item repcount :gems)) 2)
+    make "gemPosition item repcount :gems
+    make "dist2 (sum
+        power (:shipX - first :gemPosition) 2 
+        power (:shipY - last  :gemPosition) 2)
     ifelse :shipIsExploding [
       if :dist2 < (:shipGem2 * 4) [
         drawGem (item repcount :gems) "draw
@@ -981,7 +982,7 @@ to hitGemCheck
         ]
 
         ; Erase the gem.
-        drawGem (item repcount :gems) "erase
+        drawGem :gemPosition "erase
         setitem repcount :gems (list :offScreenX :offScreenY)
         make "numGems :numGems - 1
         if :numGems = 0 [
@@ -1007,7 +1008,8 @@ to hitRockCheck
   ; This keeps the speed more constant on slow computers
   repeat :numRocks [
     ; Calculate the square of the euclidian distance between the ship and the rock.
-    make "dist2     (power (:shipX - first (item repcount :rocks)) 2) + (power (:shipY - last (item repcount :rocks)) 2)
+    make "rockPosition item repcount :rocks
+    make "dist2     (power (:shipX - first :rockPosition) 2) + (power (:shipY - last :rockPosition) 2)
     make "shipRock2 (power (:shipRad + :rockRad) 2)
     if :dist2 < (:shipRock2 * 2) [
       ; The ship is close to the rock.
@@ -1035,7 +1037,7 @@ to hitRockCheck
         ; The ship is close enough that it may have overdrawn is recently.
         ; Redraw the rock, just in case part of it was erased by the
         ; exploding or leaving effect.
-        drawRock (item repcount :rocks)
+        drawRock :rockPosition
       ]
     ]
   ]
@@ -1844,12 +1846,15 @@ to playLoop
     hitRockCheck
 
     ;if the ship just emerged from behind a rock, draw it now...
-    if (and not :levelIsOver   not :isBehindRock  :oldIsBehindRock   not :isLeaving) [
-      moveShip :shipX :shipY :dr
-    ]
-    ;...and if it just went behind one, erase it now
-    if (and :isBehindRock   not :oldIsBehindRock) [
-      hideShip
+    ifelse :oldIsBehindRock [
+        if (and not :levelIsOver   not :isBehindRock  not :isLeaving) [
+            moveShip :shipX :shipY :dr
+        ]
+    ][
+        ;...and if it just went behind one, erase it now
+        if :isBehindRock [
+            hideShip
+        ]
     ]
 
     ; As time passes, the bonus always changes.
@@ -1918,11 +1923,11 @@ to playLoop
     ifelse :shipX > (:gameWidth / 2 ) [
       make "shipX (:shipX - :gameWidth)
     ][
-      if :shipX < (:gameWidth / 2 - :gameWidth )[
+      if :shipX < -(:gameWidth / 2) [
         make "shipX (:shipX + :gameWidth)
       ]
     ]
-    ifelse :shipY < (:displayHeight / 2 - :displayHeight )[
+    ifelse :shipY < -(:displayHeight / 2) [
       make "shipY (:shipY + :displayHeight )
     ][
       if :shipY > (:displayHeight / 2 ) [
@@ -2013,17 +2018,14 @@ to processCommand
 
     if :isThrustOn [
       ;sin and cos are backwards because Logo calls 0 degrees straight up 
-      make "xAccel ( sin :dr ) * :acceleration
-      make "yAccel ( cos :dr ) * :acceleration
-
-      make "shipDeltaX :shipDeltaX + :xAccel
-      make "shipDeltaY :shipDeltaY + :yAccel
+      make "shipDeltaX :shipDeltaX + ( sin :dr ) * :acceleration
+      make "shipDeltaY :shipDeltaY + ( cos :dr ) * :acceleration
  
       if not :isLeaving [
         ;If the ship is at maximum speed, get rid of the extra speed, but leave the 
         ;direction alone. 
-        make "speed2( (:shipDeltaX)*(:shipDeltaX) + (:shipDeltaY)*(:shipDeltaY) )
-        if( :maxSpeed2 - :speed2 < 0 )[
+        make "speed2 (power :shipDeltaX 2) + (power :shipDeltaY 2) 
+        if :maxSpeed2 < :speed2 [
           make "shipDeltaX (:maxSpeed2 * :shipDeltaX / :speed2)
           make "shipDeltaY (:maxSpeed2 * :shipDeltaY / :speed2)
         ]
@@ -2240,9 +2242,6 @@ to waitStop :delay
     if or :reset :quit [ stop ]
     if :pauseNow [ pauseGame ]
   ]
-end
-
-to wrapCheck
 end
 
 make "startup [ rungame ]
