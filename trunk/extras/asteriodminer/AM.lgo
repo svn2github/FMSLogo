@@ -2018,6 +2018,7 @@ to processCommand
 
     if :isThrustOn [
       ;sin and cos are backwards because Logo calls 0 degrees straight up 
+
       make "shipDeltaX :shipDeltaX + ( sin :dr ) * :acceleration
       make "shipDeltaY :shipDeltaY + ( cos :dr ) * :acceleration
  
@@ -2035,14 +2036,14 @@ to processCommand
   if :pauseNow [ pauseGame ]
 end
 
-to processKey :key :iskeydown
+to processKey :key :iskeydown [:keychar char :key]
 
   ;the first key of each pair is querty, the second is Dvorak
-  if :playing [
-    if (or :key=ascii "L :key=ascii "N) [ make "turnRt :iskeydown ]
-    if (or :key=ascii "J :key=ascii "H) [ make "turnLt :iskeydown ]
+  ifelse :playing [
+    if memberp :keychar "LN [ make "turnRt :iskeydown ]
+    if memberp :keychar "JH [ make "turnLt :iskeydown ]
 
-    if (or :key=ascii "K :key=ascii "T) [
+    if memberp :keychar "KT [
        ifelse :iskeydown [
           make "isThrustOn "true
        ][
@@ -2050,34 +2051,34 @@ to processKey :key :iskeydown
        ]
     ]
 
-    if( and :key=ascii "P    not :iskeydown    not :paused ) [ 
-       make "pauseNow "true 
+    if (and :keychar = "P    not :iskeydown    not :paused) [ 
+       make "pauseNow "true
     ]
 
     if :iskeydown [
-       if (or :key=ascii "X :key=ascii "Q) [ 
-          make "quit      "true 
+       if memberp :keychar "XQ [
+          make "quit      "true
           make "open.quit "true
        ]
 
       if :paused [
-         if :key = ascii "C [ make "paused "false ]
-         if :key = ascii "R [ make "paused "false  make "reset "true ]
+         if :keychar = "C [ make "paused "false ]
+         if :keychar = "R [ make "paused "false  make "reset "true ]
       ]
     ]
-  ]
-
-  if (and not :playing not :iskeydown) [
-    ifelse :doneButtonOn [
-      if :key = ascii "D [ commandDone ]
-    ][
-      if :key = ascii "P [ commandPlay ]
-      if :key = ascii "I [ commandInstructions ]
-      if :key = ascii "H [ commandHighScores ]
-      if :key = ascii "M [ menuOn not :menuOn ] ; (toggle menu)
-      if or :key=ascii "X :key=ascii "Q [
-         make "quit      "true 
-         make "open.quit "true
+  ][
+    if not :iskeydown [
+      ifelse :doneButtonOn [
+        if :keychar = "D [ commandDone ]
+      ][
+        if :keychar = "P [ commandPlay ]
+        if :keychar = "I [ commandInstructions ]
+        if :keychar = "H [ commandHighScores ]
+        if :keychar = "M [ menuOn not :menuOn ] ; (toggle menu)
+        if memberp :keychar "XQ [
+           make "quit      "true 
+           make "open.quit "true
+        ]
       ]
     ]
   ]
