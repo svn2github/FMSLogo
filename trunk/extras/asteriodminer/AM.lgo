@@ -1807,6 +1807,7 @@ to playLoop
   updateStatusLives
 
   while [ (and (not :quit) (not :reset) (:expStep < :numExpSteps) (not :levelIsOver)) ] [
+    noyield ; prevent keyboard/timer events from interrupting
     make "start timemilli
 
     ifelse :shipIsExploding [
@@ -1908,9 +1909,12 @@ to playLoop
         if and ((round :y) = :y) (:y <> :offScreenY) [ make "glintStep 0 ]
       ]
     ]
-    make "oldShipX  :shipX
-    make "oldShipY  :shipY
-    make "oldShipDr :dr
+
+    if :shipIsExploding [
+      make "oldShipX  :shipX
+      make "oldShipY  :shipY
+      make "oldShipDr :dr
+    ]
 
     if :isLeaving [ make :isThrustOn "true ]
     processCommand
@@ -1935,6 +1939,7 @@ to playLoop
       ]
     ]
 
+    yield ; re-enabled timer/keyboard events
     while [ timemilli - :start < :animationDelay ] [wait 1]
   ]
 
