@@ -131,10 +131,51 @@ TO SELECTBOXTEST.BADINPUT
    RUNBADINPUTTEST [ IGNORE SELECTBOX [Title] 12345    ]
 END
 
+TO SELECTBOXTEST.FROMSTARTUP
+   ; This is a regression test for bug #438,
+   ; which is that in the wxWidgets version of FMSLogo, creating
+   ; a custom window from the startup proceedure of a program that
+   ; is loaded from the commandline cause it to run repeatedly.
+
+   LOCALMAKE "statusfile "selectboxfromstartup.status
+   LOCALMAKE "program    "selectboxfromstartup.lgo
+
+   IF FILEEXISTS :statusfile [ ERASEFILE :statusfile ]
+
+   WRITEBINARYDATA :program (WORD
+        "|LOAD "testlib.lgo\n|
+        "|LOAD "uiautomationlib.lgo\n|
+        "|\n|
+        "|MAKE "startup [\n|
+        "|  UIAUTOMATION.INITIALIZE\n|
+        "|  UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [Choose] "OK\n|
+        "|\n|
+        "|  IGNORE SELECTBOX [Choose] [A B C]\n|
+        "|  UIAUTOMATION.UNINITIALIZE\n|
+        "|\n|
+        "|  ; Write a file to indicate success\n|
+        "|  WRITEBINARYDATA "| :statusfile "| "success\n|
+        "|  BYE\n|
+        "|]\n|
+   )
+
+   IGNORE (shell (list "fmslogo.exe :program) "true)
+
+   IFELSE FILEEXISTS :statusfile [
+     REPORTTESTPASSED [SELECTBOX from startup did not result in instability.]
+     ERASEFILE :statusfile
+   ][
+     REPORTTESTFAILED [SELECTBOX from startup did not run correctly.]
+   ]
+
+   ERASEFILE :program
+END
+
 TO SELECTBOXTEST
 
   SELECTBOXTEST.SMOKETEST
   SELECTBOXTEST.MANYCHOICES
   SELECTBOXTEST.LONGCHOICES
+  SELECTBOXTEST.FROMSTARTUP
   SELECTBOXTEST.BADINPUT
 END
