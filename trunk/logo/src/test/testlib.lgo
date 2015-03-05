@@ -180,6 +180,7 @@ TO SIMPLEREPORTTEST.CHECKRESULT :instruction :result :expectedresult
 
   REPORTTESTPASSED (LIST :instruction "output :result "|, as expected.|)
 END
+BURY [SIMPLEREPORTTEST.CHECKRESULT]
 
 TO SIMPLEREPORTTEST :instruction :expectedresult
   LOCAL "result
