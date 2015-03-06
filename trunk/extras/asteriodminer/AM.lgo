@@ -191,7 +191,7 @@ end
 
 to clearBox
   setturtle 0
-  setxy (-:halfDisplayWidth+1) (-:halfDisplayHeight+1)
+  setxy -:halfDisplayWidth -:halfDisplayHeight
   setfc[ 0 0 0 ]
   bitblock :displayWidth+1 :displayHeight+1
 end
@@ -968,7 +968,7 @@ to hitGemCheck
         power (:shipY - last  :gemPosition) 2)
     ifelse :shipIsExploding [
       if :dist2 < (:shipGem2 * 4) [
-        drawGem (item repcount :gems) "draw
+        drawGem :gemPosition "draw
       ]
     ][
       if :dist2 < :shipGem2 [
@@ -1139,7 +1139,7 @@ to initMain
   setShipSize :normalShipRad
 
   ;it's faster if the math is done here, once, and saved in a variable
-  make "shipGem2 (:shipRad + :gemRad)*(:shipRad + :gemRad) ;distance squared
+  make "shipGem2 power (:shipRad + :gemRad) 2 ;distance squared
 
   make "maxGems :maxLevel * 2 + 2
   make "maxRocks :maxLevel * 2
@@ -1930,21 +1930,21 @@ to playLoop
     ; calculate the direction which it is outside because the the common case
     ; is that the ship is within the game box is the common case and the ABS takes
     ; fewer instructions.
-    if :halfDisplayWidth  < abs (:shipX - :halfDisplayWidth) [
+    if :halfDisplayWidth < abs :shipX [
       ifelse :shipX > :halfDisplayWidth [
-        make "shipX :shipX - :displayWidth
+        make "shipX (:shipX - :displayWidth)
       ][
         if :shipX < -:halfDisplayWidth [
-          make "shipX :shipX + :displayWidth
+          make "shipX (:shipX + :displayWidth)
         ]
       ]
     ]
-    if :halfDisplayHeight < abs (:shipY - :halfDisplayHeight) [
-      ifelse :shipY < -:halfDisplayHeight [
-        make "shipY :shipY + :displayHeight
+    if :halfDisplayHeight < abs :shipY [
+      ifelse :shipY > :halfDisplayHeight [
+        make "shipY (:shipY - :displayHeight)
       ][
-        if :shipY > :halfDisplayHeight [
-          make "shipY :shipY - :displayHeight
+        if :shipY < -:halfDisplayHeight [
+          make "shipY (:shipY + :displayHeight)
         ]
       ]
     ]
