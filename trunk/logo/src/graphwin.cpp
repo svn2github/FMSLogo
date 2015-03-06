@@ -2742,7 +2742,7 @@ static void SetWrappedPixel(HDC DeviceContext, int X, int Y, RGBCOLOR Pixel)
             Y -= BitMapHeight + 1;
         }
     }
-    
+
     SetPixelV(DeviceContext, X, Y, Pixel);
 }
 
@@ -2891,6 +2891,8 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
             const int xScreenOffset = (+dest.x + xoffset);
             const int yScreenOffset = (-dest.y + yoffset);
 
+            const RGBCOLOR TRANSPARENT_COLOR = RGB(255, 255, 255);
+
             // Read the bitmap into a local buffer for faster access.
             // Because this takes a long time, we also cache this in the CUTMAP.
             if (bitmap->Pixels == NULL) 
@@ -2902,7 +2904,17 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                 {
                     for (int x = 0; x < bitmap->Width; x++)
                     {
-                        *nextPixel++ = ::GetPixel(TempMemDC, x, y);
+                        RGBCOLOR pixel = ::GetPixel(TempMemDC, x, y);
+
+                        // If we're using a palette, then set a flag so that
+                        // Windows knows to use the palette.  This is what
+                        // PALETTERGB would do.
+                        if (EnablePalette && pixel != TRANSPARENT_COLOR)
+                        {
+                            pixel |= 0x02000000;
+                        }
+
+                        *nextPixel++ = pixel;
                     }
                 }
             }
@@ -2911,7 +2923,6 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
             // Now do the rotating, one pixel at a time.
             // Find the pixel that cooresponds to each point in the destination
             // rectangle to guarantee that each pixel gets covered.
-            const RGBCOLOR TRANSPARENT_COLOR = RGB(255, 255, 255);
             const FLONUM deltaSourceX =  cosine;
             const FLONUM deltaSourceY = -sine;
             if (EnablePalette)
