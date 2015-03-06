@@ -20,6 +20,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 6.33.0
+  o Fix bug #438; The wxWidgets version of FMSLogo no longer opens hundreds of
+    windows when running SELECTBOX from a program loaded on FMSLogo startup.
   o Fix bug #347; Rotating bitmaps no longer flicker when the turtle moves.
   o Fix bug #364; Creating a rotating bitmap turtle before loading the bitmap
     no longer causes FMSLogo to enter an infinite loop.

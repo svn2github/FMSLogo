@@ -586,18 +586,22 @@ void CFmsLogo::OnIdle(wxIdleEvent & IdleEvent)
     static bool hasRunStartup = false;
     if (!hasRunStartup)
     {
+        hasRunStartup = true;
+
         char startupScript[MAX_PATH + 1];
         MakeHelpPathName(startupScript, "startup.logoscript");
         silent_load(NIL, startupScript);
-
-        hasRunStartup = true;
     }
 
-    // if command arg loaded then execute
-    if (g_FileToLoad[0] != '\0')
+    // If a file to load was given on the command line, then execute it.
+    static bool hasLoadedFileToLoad = false;
+    if (!hasLoadedFileToLoad && g_FileToLoad[0] != '\0')
     {
+        // Set that we have loaded the file before we actually do
+        // in case loading the file causes and idle event to be sent
+        // and re-executes this function.
+        hasLoadedFileToLoad = true;
         silent_load(NIL, g_FileToLoad);
-        g_FileToLoad[0] = '\0';
     }
 
     // Process logo events
