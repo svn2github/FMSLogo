@@ -1808,7 +1808,7 @@ to playLoop
 
   updateStatusLives
 
-  while [ (and (not :quit) (not :reset) (:expStep < :numExpSteps) (not :levelIsOver)) ] [
+  forever [
     noyield ; prevent keyboard/timer events from interrupting
     make "start timemilli
 
@@ -1950,9 +1950,9 @@ to playLoop
     ]
 
     yield ; re-enabled timer/keyboard events
+    if (or :quit :reset (:numExpSteps <= :expStep) :levelIsOver) [ stop ]
     while [ timemilli - :start < :animationDelay ] [wait 1]
   ]
-
 end
 
 to statusDrawBonus
