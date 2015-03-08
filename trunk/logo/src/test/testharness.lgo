@@ -35,6 +35,7 @@ LOAD "reduce.lgo
 LOAD "activearea.lgo
 LOAD "bitmap.lgo
 LOAD "bitfit.lgo
+LOAD "bitmapturtle.lgo
 LOAD "gif.lgo
 LOAD "form.lgo
 LOAD "plist.lgo
@@ -213,6 +214,7 @@ TO TESTALL
   BITBLOCKTEST         ; from bitblock.lgo
   TURTLETEST           ; from turtle.lgo
   TURTLEMODETEST       ; from turtlemode.lgo
+  BITMAPTURTLETEST     ; from bitmapturtle.lgo
   FORMTEST             ; from form.lgo
   PRINTTEST            ; from print.lgo
   STANDOUTTEST         ; from standout.lgo
