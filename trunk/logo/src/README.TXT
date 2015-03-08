@@ -35,6 +35,8 @@ II. New features/bugs fixed:
     the final line in file (same as all the other continuation characters).
   o Fix bug #445; Rotating bitmap turtles now draw the center of the bitmap as
     the center of the turtle.
+  o Fix bug #446; Rotating bitmap turtles now anti-alias the upper&left edges
+    of the bitmap in the same way as the lower&right edges.
   o Fix bug #447; The bitmap on rotating bitmap turtle now wraps around
     the edges of the world in WRAP mode.
   o Minor improvements to the manual.
