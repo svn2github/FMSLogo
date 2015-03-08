@@ -2930,21 +2930,21 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                 // The display has a palette, so bilinear interpolation would not work.
                 for (int y = miny; y < maxy; y++)
                 {
-                    FLONUM sourceX = X_ROTATED(minx, y, cosine, sine) + xOrigin;
-                    FLONUM sourceY = Y_ROTATED(minx, y, cosine, sine) + yOrigin;
+                    FLONUM sourceX = X_ROTATED(minx, y, cosine, sine) + xOrigin - 0.5;
+                    FLONUM sourceY = Y_ROTATED(minx, y, cosine, sine) + yOrigin - 0.5;
 
                     for (int x = minx; x < maxx; x++)
                     {
                         // sourceX and sourceY look like this if computed in an absolute manner.
-                        // sourceX = ((X_ROTATED(x, y, cosine, sine) + xOrigin));
-                        // sourceY = ((Y_ROTATED(x, y, cosine, sine) + yOrigin));
-                        sourceX += deltaSourceX;
-                        sourceY += deltaSourceY;
+                        // sourceX = X_ROTATED(x, y, cosine, sine) + xOrigin - 0.5;
+                        // sourceY = Y_ROTATED(x, y, cosine, sine) + yOrigin - 0.5;
 
                         if (0 <= sourceX && sourceX < sourceWidth &&
                             0 <= sourceY && sourceY < sourceHeight)
                         {
-                            const RGBCOLOR pixel = sourceBitmap[static_cast<int>(sourceY) * bitmap->Width + static_cast<int>(sourceX)];
+                            int sourceXInt = static_cast<int>(sourceX);
+                            int sourceYInt = static_cast<int>(sourceY);
+                            const RGBCOLOR pixel = sourceBitmap[sourceYInt * bitmap->Width + sourceXInt];
                             if (pixel != TRANSPARENT_COLOR)
                             {
                                 SetWrappedPixel(
@@ -2954,6 +2954,9 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                     pixel);
                             }
                         }
+
+                        sourceX += deltaSourceX;
+                        sourceY += deltaSourceY;
                     }
                 }
             }
@@ -2962,16 +2965,14 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                 // Use bilinear interpolation to make the picture look nice at rough angles.
                 for (int y = miny; y < maxy; y++)
                 {
-                    FLONUM sourceX = X_ROTATED(minx, y, cosine, sine) + xOrigin;
-                    FLONUM sourceY = Y_ROTATED(minx, y, cosine, sine) + yOrigin;
+                    FLONUM sourceX = X_ROTATED(minx, y, cosine, sine) + xOrigin - 0.5;
+                    FLONUM sourceY = Y_ROTATED(minx, y, cosine, sine) + yOrigin - 0.5;
 
                     for (int x = minx; x < maxx; x++)
                     {
                         // sourceX and sourceY look like this if computed in an absolute manner.
-                        // sourceX = ((X_ROTATED(x, y, cosine, sine) + xOrigin));
-                        // sourceY = ((Y_ROTATED(x, y, cosine, sine) + yOrigin));
-                        sourceX += deltaSourceX;
-                        sourceY += deltaSourceY;
+                        // sourceX = X_ROTATED(x, y, cosine, sine) + xOrigin - 0.5;
+                        // sourceY = Y_ROTATED(x, y, cosine, sine) + yOrigin - 0.5;
 
                         if (0 <= sourceX && 0 <= sourceY)
                         {
@@ -3139,6 +3140,9 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                 }
                             }
                         }
+
+                        sourceX += deltaSourceX;
+                        sourceY += deltaSourceY;
                     }
                 }
             }
