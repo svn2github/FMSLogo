@@ -2881,9 +2881,9 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
             FLONUM x3 = X_ROTATED(xOrigin, -yOrigin, cosine, sine);
             FLONUM y3 = Y_ROTATED(xOrigin, -yOrigin, cosine, sine);
 
-            // Compute the bounding box.  We grow the box by one to account for rounding errors.
-            const int minx = (int) std::min(x0,std::min(x1, std::min(x2,x3))) - 1;
-            const int miny = (int) std::min(y0,std::min(y1, std::min(y2,y3))) - 1;
+            // Compute the bounding box.  We grow the box by one to account for truncation.
+            const int minx = (int) std::min(x0,std::min(x1, std::min(x2,x3)));
+            const int miny = (int) std::min(y0,std::min(y1, std::min(y2,y3)));
             const int maxx = (int) std::max(x0,std::max(x1, std::max(x2,x3))) + 1;
             const int maxy = (int) std::max(y0,std::max(y1, std::max(y2,y3))) + 1;
 
@@ -3106,7 +3106,9 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                             }
                             else
                             {
-                                // get the screen's value for each of the transparent pixels
+                                // Get the screen's value for each of the transparent pixels.
+                                // If there aren't any, then we don't need to read the screen
+                                // pixel.
                                 if (pixelx0y0 == TRANSPARENT_COLOR ||
                                     pixelx1y0 == TRANSPARENT_COLOR ||
                                     pixelx0y1 == TRANSPARENT_COLOR ||
