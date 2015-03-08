@@ -2974,170 +2974,177 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                         // sourceX = X_ROTATED(x, y, cosine, sine) + xOrigin - 0.5;
                         // sourceY = Y_ROTATED(x, y, cosine, sine) + yOrigin - 0.5;
 
-                        if (0 <= sourceX && 0 <= sourceY)
+                        if (-1.0 < sourceX && sourceX < sourceWidth &&
+                            -1.0 < sourceY && sourceY < sourceHeight)
                         {
-                            if (sourceX < sourceWidth  - 1 &&
-                                sourceY < sourceHeight - 1)
+                            // Perform bilinear interpolation across the (potentially)
+                            // four pixels on the source bitmap on which this screen
+                            // pixel falls.
+                            FLONUM sourceXInt;
+                            FLONUM xFraction = modf(sourceX, &sourceXInt);
+                            if (sourceX < 0)
                             {
-                                // full bilinear interpolation is necessary
-                                FLONUM sourceXInt;
-                                FLONUM xFraction = modf(sourceX, &sourceXInt);
+                                sourceXInt = -1.0;
+                                xFraction  = 1.0 + xFraction;
+                            }
 
-                                FLONUM sourceYInt;
-                                FLONUM yFraction = modf(sourceY, &sourceYInt);
+                            FLONUM sourceYInt;
+                            FLONUM yFraction = modf(sourceY, &sourceYInt);
+                            if (sourceY < 0)
+                            {
+                                sourceYInt = -1.0;
+                                yFraction  = 1.0 + yFraction;
+                            }
 
-                                unsigned int sourceXInteger = static_cast<unsigned int>(sourceXInt);
-                                unsigned int sourceYInteger = static_cast<unsigned int>(sourceYInt);
-                                const RGBCOLOR * x0y0Ptr = sourceBitmap + sourceYInteger * bitmap->Width + sourceXInteger;
-                                const RGBCOLOR * x0y1Ptr = x0y0Ptr + bitmap->Width;
-                                RGBCOLOR pixelx0y0 = x0y0Ptr[0];
-                                RGBCOLOR pixelx1y0 = x0y0Ptr[1];
-                                RGBCOLOR pixelx0y1 = x0y1Ptr[0];
-                                RGBCOLOR pixelx1y1 = x0y1Ptr[1];
+                            int sourceXInteger = static_cast<int>(sourceXInt);
+                            int sourceYInteger = static_cast<int>(sourceYInt);
+                            const RGBCOLOR * x0y0Ptr = sourceBitmap + sourceYInteger * bitmap->Width + sourceXInteger;
+                            const RGBCOLOR * x0y1Ptr = x0y0Ptr + bitmap->Width;
 
-                                if (pixelx0y0 == pixelx0y1 &&
-                                    pixelx0y0 == pixelx1y0 &&
-                                    pixelx0y0 == pixelx1y1)
+                            // Read the four pixels from the bitmap. If any pixel falls
+                            // outside the bitmap, then use the screen's pixel, instead.
+                            RGBCOLOR pixelx0y0;
+                            RGBCOLOR pixelx1y0;
+                            RGBCOLOR pixelx0y1;
+                            RGBCOLOR pixelx1y1;
+                            if (0 <= sourceXInteger && sourceXInteger < bitmap->Width - 1)
+                            {
+                                // The "X0" and "X1" pixels both fall on the bitmap
+
+                                if (0 <= sourceYInteger && sourceYInteger < bitmap->Height - 1)
                                 {
-                                    // If all of the adjacent pixels are the same, then
-                                    // bilinear interpolation is unnecessary.  For a typical
-                                    // sprite image, this optimization yields a 10% speed
-                                    // improvement.
-                                    if (pixelx0y0 != TRANSPARENT_COLOR)
-                                    {
-                                        SetWrappedPixel(
-                                            PaintDeviceContext,
-                                            x + xScreenOffset,
-                                            y + yScreenOffset,
-                                            pixelx0y0);
-                                    }
+                                    // All four source pixels are on the bitmap.
+                                    pixelx0y0 = x0y0Ptr[0];
+                                    pixelx1y0 = x0y0Ptr[1];
+                                    pixelx0y1 = x0y1Ptr[0];
+                                    pixelx1y1 = x0y1Ptr[1];
+                                }
+                                else if (sourceYInteger < 0)
+                                {
+                                    // The "Y0" pixels falls below the bitmap.
+                                    pixelx0y0 = TRANSPARENT_COLOR;
+                                    pixelx1y0 = TRANSPARENT_COLOR;
+                                    pixelx0y1 = x0y1Ptr[0];
+                                    pixelx1y1 = x0y1Ptr[1];
                                 }
                                 else
                                 {
-                                    // get the screen's value for each of the transparent pixels
-                                    if (pixelx0y0 == TRANSPARENT_COLOR ||
-                                        pixelx1y0 == TRANSPARENT_COLOR ||
-                                        pixelx0y1 == TRANSPARENT_COLOR ||
-                                        pixelx1y1 == TRANSPARENT_COLOR)
+                                    // The "Y1" pixels fall above the bitmap.
+                                    pixelx0y0 = x0y0Ptr[0];
+                                    pixelx1y0 = x0y0Ptr[1];
+                                    pixelx0y1 = TRANSPARENT_COLOR;
+                                    pixelx1y1 = TRANSPARENT_COLOR;
+                                }
+                            }
+                            else if (sourceXInteger < 0)
+                            {
+                                // The "X0" pixels fall to the left of the bitmap.
+                                pixelx0y0 = TRANSPARENT_COLOR;
+                                pixelx0y1 = TRANSPARENT_COLOR;
+
+                                if (0 <= sourceYInteger && sourceYInteger < bitmap->Height - 1)
+                                {
+                                    // The Y0 and Y1 are on the bitmap.
+                                    pixelx1y0 = x0y0Ptr[1];
+                                    pixelx1y1 = x0y1Ptr[1];
+                                }
+                                else if (sourceYInteger < 0)
+                                {
+                                    // The "Y0" pixels fall below the bitmap.
+                                    pixelx1y0 = TRANSPARENT_COLOR;
+                                    pixelx1y1 = x0y1Ptr[1];
+                                }
+                                else
+                                {
+                                    // The "Y1" pixels fall above the bitmap.
+                                    pixelx1y0 = x0y0Ptr[1];
+                                    pixelx1y1 = TRANSPARENT_COLOR;
+                                }
+                            }
+                            else
+                            {
+                                // The "X1" pixels fall to the right of the bitmap.
+                                pixelx1y0 = TRANSPARENT_COLOR;
+                                pixelx1y1 = TRANSPARENT_COLOR;
+
+                                if (0 <= sourceYInteger && sourceYInteger < bitmap->Height - 1)
+                                {
+                                    // The Y0 and Y1 are on the bitmap.
+                                    pixelx0y0 = x0y0Ptr[1];
+                                    pixelx0y1 = x0y1Ptr[1];
+                                }
+                                else if (sourceYInteger < 0)
+                                {
+                                    // The "Y0" pixels fall below the bitmap.
+                                    pixelx0y0 = TRANSPARENT_COLOR;
+                                    pixelx0y1 = x0y1Ptr[1];
+                                }
+                                else
+                                {
+                                    // The "Y1" pixels fall above the bitmap.
+                                    pixelx0y0 = x0y0Ptr[1];
+                                    pixelx0y1 = TRANSPARENT_COLOR;
+                                }
+                            }
+
+                            if (pixelx0y0 == pixelx0y1 &&
+                                pixelx0y0 == pixelx1y0 &&
+                                pixelx0y0 == pixelx1y1)
+                            {
+                                // If all of the adjacent pixels are the same, then
+                                // bilinear interpolation is unnecessary.  For a typical
+                                // sprite image, this optimization yields a 10% speed
+                                // improvement.
+                                if (pixelx0y0 != TRANSPARENT_COLOR)
+                                {
+                                    SetWrappedPixel(
+                                        PaintDeviceContext,
+                                        x + xScreenOffset,
+                                        y + yScreenOffset,
+                                        pixelx0y0);
+                                }
+                            }
+                            else
+                            {
+                                // get the screen's value for each of the transparent pixels
+                                if (pixelx0y0 == TRANSPARENT_COLOR ||
+                                    pixelx1y0 == TRANSPARENT_COLOR ||
+                                    pixelx0y1 == TRANSPARENT_COLOR ||
+                                    pixelx1y1 == TRANSPARENT_COLOR)
+                                {
+                                    const RGBCOLOR screenPixel = GetWrappedPixel(
+                                        PaintDeviceContext,
+                                        x + xScreenOffset,
+                                        y + yScreenOffset);
+
+                                    if (pixelx0y0 == TRANSPARENT_COLOR)
                                     {
-                                        const RGBCOLOR screenPixel = GetWrappedPixel(
-                                            PaintDeviceContext,
-                                            x + xScreenOffset,
-                                            y + yScreenOffset);
-
-                                        if (pixelx0y0 == TRANSPARENT_COLOR)
-                                        {
-                                            pixelx0y0 = screenPixel;
-                                        }
-                                        if (pixelx1y0 == TRANSPARENT_COLOR)
-                                        {
-                                            pixelx1y0 = screenPixel;
-                                        }
-                                        if (pixelx0y1 == TRANSPARENT_COLOR)
-                                        {
-                                            pixelx0y1 = screenPixel;
-                                        }
-                                        if (pixelx1y1 == TRANSPARENT_COLOR)
-                                        {
-                                            pixelx1y1 = screenPixel;
-                                        }
+                                        pixelx0y0 = screenPixel;
                                     }
-
-                                    // interpolate in the X direction, then the Y direction
-                                    RGBCOLOR pixely0 = InterpolateColors(pixelx0y0, pixelx1y0, xFraction);
-                                    RGBCOLOR pixely1 = InterpolateColors(pixelx0y1, pixelx1y1, xFraction);
-                                    RGBCOLOR pixel   = InterpolateColors(pixely0, pixely1, yFraction);
-
-                                    SetWrappedPixel(
-                                        PaintDeviceContext,
-                                        x + xScreenOffset,
-                                        y + yScreenOffset,
-                                        pixel);
-                                }
-                            }
-                            else if (sourceX < sourceWidth &&
-                                     sourceY < sourceHeight - 1)
-                            {
-                                // We're at the right edge, so linear interpolation in Y is sufficient.
-                                FLONUM sourceYInt;
-                                FLONUM yFraction = modf(sourceY, &sourceYInt);
-
-                                unsigned int sourceYInteger = static_cast<unsigned int>(sourceYInt);
-                                const RGBCOLOR * y0Ptr = sourceBitmap + sourceYInteger * bitmap->Width + bitmap->Width - 1;
-                                RGBCOLOR pixely0 = y0Ptr[0];
-                                RGBCOLOR pixely1 = y0Ptr[bitmap->Width];
-
-                                // get the screen's value for each of the transparent pixels
-                                const RGBCOLOR screenPixel = GetWrappedPixel(
-                                    PaintDeviceContext,
-                                    x + xScreenOffset,
-                                    y + yScreenOffset);
-
-                                if (pixely0 == TRANSPARENT_COLOR)
-                                {
-                                    pixely0 = screenPixel;
-                                }
-                                if (pixely1 == TRANSPARENT_COLOR)
-                                {
-                                    pixely1 = screenPixel;
+                                    if (pixelx1y0 == TRANSPARENT_COLOR)
+                                    {
+                                        pixelx1y0 = screenPixel;
+                                    }
+                                    if (pixelx0y1 == TRANSPARENT_COLOR)
+                                    {
+                                        pixelx0y1 = screenPixel;
+                                    }
+                                    if (pixelx1y1 == TRANSPARENT_COLOR)
+                                    {
+                                        pixelx1y1 = screenPixel;
+                                    }
                                 }
 
-                                // interpolate in the Y direction
-                                RGBCOLOR pixel = InterpolateColors(pixely0, pixely1, yFraction);
+                                // interpolate in the X direction, then the Y direction
+                                RGBCOLOR pixely0 = InterpolateColors(pixelx0y0, pixelx1y0, xFraction);
+                                RGBCOLOR pixely1 = InterpolateColors(pixelx0y1, pixelx1y1, xFraction);
+                                RGBCOLOR pixel   = InterpolateColors(pixely0, pixely1, yFraction);
+
                                 SetWrappedPixel(
                                     PaintDeviceContext,
                                     x + xScreenOffset,
                                     y + yScreenOffset,
                                     pixel);
-                            }
-                            else if (sourceX < sourceWidth - 1 &&
-                                     sourceY < sourceHeight)
-                            {
-                                // We're at the bottom edge, so linear interpolation in X is sufficient.
-                                FLONUM sourceXInt;
-                                FLONUM xFraction = modf(sourceX, &sourceXInt);
-
-                                unsigned int sourceXInteger = static_cast<unsigned int>(sourceXInt);
-                                const RGBCOLOR * x0Ptr = sourceBitmap + (bitmap->Height - 1) * bitmap->Width + sourceXInteger;
-                                RGBCOLOR pixelx0 = x0Ptr[0];
-                                RGBCOLOR pixelx1 = x0Ptr[1];
-
-                                // get the screen's value for each of the transparent pixels
-                                const RGBCOLOR screenPixel = GetWrappedPixel(
-                                    PaintDeviceContext,
-                                    x + xScreenOffset,
-                                    y + yScreenOffset);
-
-                                if (pixelx0 == TRANSPARENT_COLOR)
-                                {
-                                    pixelx0 = screenPixel;
-                                }
-                                if (pixelx1 == TRANSPARENT_COLOR)
-                                {
-                                    pixelx1 = screenPixel;
-                                }
-
-                                // interpolate in the X direction
-                                RGBCOLOR pixel = InterpolateColors(pixelx0, pixelx1, xFraction);
-                                SetWrappedPixel(
-                                    PaintDeviceContext,
-                                    x + xScreenOffset,
-                                    y + yScreenOffset,
-                                    pixel);
-                            }
-                            else if (sourceX < sourceWidth &&
-                                     sourceY < sourceHeight)
-                            {
-                                // we're at the corner, so we don't need any interpolation
-                                const RGBCOLOR pixel = sourceBitmap[bitmap->Height * bitmap->Width - 1];
-                                if (pixel != TRANSPARENT_COLOR)
-                                {
-                                    SetWrappedPixel(
-                                        PaintDeviceContext,
-                                        x + xScreenOffset,
-                                        y + yScreenOffset,
-                                        pixel);
-                                }
                             }
                         }
 
