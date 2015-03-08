@@ -731,12 +731,6 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
     {
         sourceDeviceContext = GetBackBufferDeviceContext();
 
-        if (EnablePalette)
-        {
-            SelectPalette(sourceDeviceContext, ThePalette, FALSE);
-            RealizePalette(sourceDeviceContext);
-        }
-
         // Copy the portion of the memory image to the back buffer
         // that corresponds to the portion of the screen that is
         // being be painted.
@@ -753,6 +747,12 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
 
         // draw the turtles on top of the image
         paste_all_turtles(sourceDeviceContext, 1.0);
+
+        if (EnablePalette)
+        {
+            SelectPalette(sourceDeviceContext, ThePalette, FALSE);
+            RealizePalette(sourceDeviceContext);
+        }
     }
     else
     {
