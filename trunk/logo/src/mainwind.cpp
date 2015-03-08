@@ -622,16 +622,12 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
     HBITMAP oldBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
 
     HPALETTE oldPalette  = NULL;
-    HPALETTE oldPalette2 = NULL;
 
     // If we have a palette, then use it.
     if (EnablePalette)
     {
         oldPalette = SelectPalette(PaintDC, ThePalette, FALSE);
         RealizePalette(PaintDC);
-
-        oldPalette2 = SelectPalette(memoryDC, ThePalette, FALSE);
-        RealizePalette(memoryDC);
     }
 
     // draw the turtles on top of the image
@@ -817,7 +813,6 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
     // restore resources
     if (EnablePalette)
     {
-        SelectPalette(memoryDC, oldPalette2, FALSE);
         SelectPalette(PaintDC, oldPalette, FALSE);
     }
 }

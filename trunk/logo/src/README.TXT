@@ -33,6 +33,8 @@ II. New features/bugs fixed:
     line of a text file, even if it doesn't end in a newline.
   o Fix bug #440; The line continuation character (~) is now removed from the
     the final line in file (same as all the other continuation characters).
+  o Fix bug #445; Rotating bitmap turtles now draw the center of the bitmap as
+    the center of the turtle.
   o Fix bug #447; The bitmap on rotating bitmap turtle now wraps around
     the edges of the world in WRAP mode.
   o Minor improvements to the manual.
