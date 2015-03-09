@@ -457,6 +457,11 @@ err_logo(
         g_ErrorFormatString = LOCALIZED_ERROR_TIMERNOTFOUND;
         break;
 
+    case INVALID_STATE_FOR_INSTRUCTION:
+        g_ErrorFormatString = LOCALIZED_ERROR_INVALIDSTATEFORINSTRUCTION;
+        error_message = cons_list(ErrorMessageParameters);
+        break;
+
     default:
         assert(!"Unexpected error code in err_logo()");
         prepare_to_exit(FALSE);

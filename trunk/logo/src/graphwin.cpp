@@ -261,6 +261,10 @@ public:
                 // it is set to indicate that the turtle
                 // is drawn with a bitmap.
                 assert(g_Turtles[i].BitmapRasterMode != 0);
+
+                // For now, require that all sprites have a
+                // default mode.
+                assert(g_Turtles[i].BitmapRasterMode == SRCCOPY);
             }
 #endif
         }
@@ -1895,16 +1899,26 @@ NODE *lsetturtlemode(NODE *arg)
 #ifndef WX_PURE
     if (g_SelectedTurtle->BitmapRasterMode)
     {
-        draw_turtle(false);
+        if (g_SelectedTurtle->IsSprite)
+        {
+            // The code for drawing rotating sprites does not
+            // honor the turtle's mode.  However, it could
+            // someday, so prevent to its introduction from
+            // being a breaking change, we prevent anyone
+            // from setting it today.
+            err_logo(
+                INVALID_STATE_FOR_INSTRUCTION,
+                cons_list(make_strnode(LOCALIZED_ERROR_MODE_ON_SPRITE)));
+        }
 
         // convert from logo "code" to Windows constants
         FIXNUM rastermode = BitModeArgsToRasterMode(arg);
         if (NOT_THROWING)
         {
+            draw_turtle(false);
             g_SelectedTurtle->BitmapRasterMode = rastermode;
+            draw_turtle(true);
         }
-
-        draw_turtle(true);
     }
 #endif
     return Unbound;
@@ -2079,6 +2093,10 @@ PasteFromClipboardToBitmapArray()
 
         g_Bitmaps[0].Width = temp.bmWidth;
         g_Bitmaps[0].Height = temp.bmHeight;
+
+        // Clear any cached version of the bitmap
+        free(g_Bitmaps[0].Pixels);
+        g_Bitmaps[0].Pixels = NULL;
     }
 
     // we have everything we need
@@ -4026,6 +4044,8 @@ void init_bitmaps()
 
 void uninit_bitmaps()
 {
+    free(g_Bitmaps[0].Pixels);
+
     // Note Bitmap index 0 belongs to clipboard
     for (CUTMAP* bmp = g_Bitmaps + 1;
          bmp < g_Bitmaps + g_BitmapsLimit;
@@ -4033,11 +4053,12 @@ void uninit_bitmaps()
     {
         if (bmp->IsValid)
         {
-            free(g_SelectedBitmap->Pixels);
 #ifndef WX_PURE
             DeleteObject(bmp->MemoryBitMap);
 #endif
         }
+
+        free(g_SelectedBitmap->Pixels);
     }
 
     free(g_Bitmaps);

@@ -194,35 +194,37 @@ enum ERR_TYPES
     OUT_OF_MEM_UNREC     = 34,
 
     // FMSLogo-specific error codes start at 1000
-    WINDOW_GENERAL               = 1000,
-    WINDOW_ALREADY_EXISTS        = 1001,
-    WINDOW_DOES_NOT_EXIST        = 1002,
+    WINDOW_GENERAL                = 1000,
+    WINDOW_ALREADY_EXISTS         = 1001,
+    WINDOW_DOES_NOT_EXIST         = 1002,
 
-    DLL_GENERAL                  = 1100,
-    DLL_LOAD_FAILED              = 1101,
-    DLL_NOT_LOADED               = 1102,
-    DLL_TYPE_DATA_NOT_PAIRED     = 1103,
-    DLL_INVALID_DATA_TYPE        = 1104,
-    DLL_INVALID_OUTPUT_TYPE      = 1105,
-    DLL_FUNCTION_NOT_FOUND       = 1106,
+    DLL_GENERAL                   = 1100,
+    DLL_LOAD_FAILED               = 1101,
+    DLL_NOT_LOADED                = 1102,
+    DLL_TYPE_DATA_NOT_PAIRED      = 1103,
+    DLL_INVALID_DATA_TYPE         = 1104,
+    DLL_INVALID_OUTPUT_TYPE       = 1105,
+    DLL_FUNCTION_NOT_FOUND        = 1106,
 
-    IMAGE_GENERAL                = 1200,
-    IMAGE_GIF_LOAD_FAILED        = 1201,
-    IMAGE_GIF_SAVE_FAILED        = 1202,
-    IMAGE_BMP_OPEN_FAILED        = 1211,
-    IMAGE_BMP_CREATE_FAILED      = 1212,
-    IMAGE_BMP_WRITE_FAILED       = 1213,
-    IMAGE_BMP_INVALID            = 1214,
+    IMAGE_GENERAL                 = 1200,
+    IMAGE_GIF_LOAD_FAILED         = 1201,
+    IMAGE_GIF_SAVE_FAILED         = 1202,
+    IMAGE_BMP_OPEN_FAILED         = 1211,
+    IMAGE_BMP_CREATE_FAILED       = 1212,
+    IMAGE_BMP_WRITE_FAILED        = 1213,
+    IMAGE_BMP_INVALID             = 1214,
 
-    MIDI_GENERAL                 = 1300,
-    MIDI_DEVICE_ALREADY_OPEN     = 1301,
-    MIDI_INVALID_DEVICE          = 1302,
-    MIDI_NOT_OPEN                = 1303,
+    MIDI_GENERAL                  = 1300,
+    MIDI_DEVICE_ALREADY_OPEN      = 1301,
+    MIDI_INVALID_DEVICE           = 1302,
+    MIDI_NOT_OPEN                 = 1303,
 
-    TIMER_GENERAL                = 1400,
-    TIMER_NOT_FOUND              = 1401,
+    TIMER_GENERAL                 = 1400,
+    TIMER_NOT_FOUND               = 1401,
 
-    FATAL                        = 0xFFFF,
+    INVALID_STATE_FOR_INSTRUCTION = 1500,
+
+    FATAL                         = 0xFFFF,
 };
 
 #define FALSE   0
