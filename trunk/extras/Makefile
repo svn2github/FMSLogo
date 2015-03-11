@@ -1,4 +1,4 @@
-EXTRAS_VERSION=1.9
+EXTRAS_VERSION=1.10
 
 SOURCEZIP=fmslogo-extras-$(EXTRAS_VERSION).zip
 
@@ -7,7 +7,7 @@ all : $(SOURCEZIP) ;
 TOINCLUDE= \
   README.TXT    \
   CHANGELOG.TXT \
-  asteriodminer \
+  asteroidminer \
   boink         \
   domino        \
   lightcycle    \

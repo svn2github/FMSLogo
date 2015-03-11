@@ -8,7 +8,7 @@ to share it, please email it to me at david_costanzo@yahoo.com and, if I like
 the change, I will include it in a future release.
 
 
-Directory:   asteriodminer
+Directory:   asteroidminer
 Author:      Dan Gerhards
 Genre:       arcade game
 Description: Pilot a ship in space to collect gems and avoid asteriods.
