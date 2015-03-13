@@ -1678,6 +1678,31 @@ NODE *lbitmapturtle(NODE * arg)
     {
         rotatingBitmap = boolean_arg(arg);
     }
+    if (rotatingBitmap)
+    {
+        int turtleIndex = GetSelectedTurtleIndex();
+
+        if (turtleIndex < 0)
+        {
+            // It is non-sensisical to try to map a bitmap
+            // one of the "special" turtles that are never
+            // rendered, but used to control 3D modes.
+            err_logo(
+                INVALID_STATE_FOR_INSTRUCTION,
+                cons_list(make_strnode(LOCALIZED_ERROR_BITMAPSPECIALTUTRLE)));
+        }
+        else if (turtleIndex == 0)
+        {
+            // In order to implement rotating bitmaps efficiently,
+            // the pixels are read from the HBITMAP into a buffer
+            // and cached.  This is not possible to do with the
+            // clipboard bitmap, since it can change without
+            // notifying us.
+            err_logo(
+                INVALID_STATE_FOR_INSTRUCTION,
+                cons_list(make_strnode(LOCALIZED_ERROR_BITMAPCLIPBOARD)));
+        }
+    }
 
     if (stopping_flag == THROWING)
     {

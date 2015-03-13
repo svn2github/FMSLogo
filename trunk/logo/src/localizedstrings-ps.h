@@ -1025,6 +1025,7 @@
 // FMSLogo-specific error messages.
 #define LOCALIZED_ERROR_INVALIDSTATEFORINSTRUCTION "pseudo.Invalid state for instruction: %p"
 #define LOCALIZED_ERROR_MODE_ON_SPRITE             "pseudo.cannot set the mode of a turtle with a rotating bitmap"
+#define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "pseudo.cannot make a special turtle use a rotating bitmap"
 
 //
 // Error messages displayed in Message Boxes.
