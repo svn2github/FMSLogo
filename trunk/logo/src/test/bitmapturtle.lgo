@@ -3,7 +3,36 @@ LOAD "testlib.lgo
 TO BITMAPTURTLETEST.NOTURTLE
   ; This is a regression test for Bug #364, which is that setting
   ; a bitmap turtle when there was no sprite caused an infinite loop.
-  SIMPLEREPORTTEST [ (SHELL [fmslogo bitmapturtle-nosprite.lgo] LOCALETRUE) ] LOCALETRUE
+  FAILIFNOTTRUE [ (SHELL [fmslogo bitmapturtle-nosprite.lgo] LOCALETRUE) ]
+END
+
+TO BITMAPTURTLETEST.SPECIALTURTLE
+
+  ; The traditional (non-rotating) BITMAPTURTLE allowed you
+  ; to bitmap the "special" turtles that are used in PERSPECTIVE mode.
+  ; This behavior is retained for backward compatibility.
+  FOR [I -3 -1] [
+    TRACEINSTRUCTION (LIST "SETTURTLE :I)
+    TRACEINSTRUCTION [BITMAPTURTLE]
+  ]
+
+  ; The rotating bitmap turtle does not allow this, as it
+  ; has no meaning.
+  FOR [I -3 -1] [
+    TRACEINSTRUCTION (LIST "SETTURTLE :I)
+    (RUNEXPECTERRORTEST
+       [ (BITMAPTURTLE "true) ]
+       1500
+       "|Invalid state for instruction: cannot make a special turtle use a rotating bitmap|)
+  ]
+
+  ; The clipboard bitmap can not be used to make a rotating bitmap turtle
+  TRACEINSTRUCTION [SETTURTLE 0]
+  (RUNEXPECTERRORTEST
+     [ (BITMAPTURTLE "true) ]
+     1500
+     "|Invalid state for instruction: cannot use the clipboard as a rotating bitmap|)
+
 END
 
 TO BITMAPTURTLETEST.SMOKETEST
@@ -14,7 +43,6 @@ TO BITMAPTURTLETEST.SMOKETEST
    SETTURTLE 0
    HIDETURTLE
 
-   HIDETURTLE
    SETTURTLE 1
    SETBITINDEX 1
    BITCUT 75 101
@@ -69,6 +97,27 @@ TO BITMAPTURTLETEST.SMOKETEST
    ]
    PENDOWN
 
+END
+
+TO BITMAPTURTLETEST.TURTLEMODE
+
+   SETTURTLE 1
+   SETBITINDEX 1
+   BITCUT 5 5
+
+   SETTURTLE 1
+   BITMAPTURTLE
+   SETTURTLEMODE 2
+   SIMPLEREPORTTEST [TURTLEMODE] 2
+
+   ; Test that BITMAPTURTLE always overwrites the bitmode.
+   BITMAPTURTLE
+   SIMPLEREPORTTEST [TURTLEMODE] 1
+
+   ; Tests that BITMAPTURTLE for sprites overwrites the bitmode.
+   SETTURTLEMODE 3
+   (BITMAPTURTLE "true)
+   SIMPLEREPORTTEST [TURTLEMODE] 1
 END
 
 TO BITMAPTURTLETEST.ROTATETEST
@@ -182,11 +231,33 @@ TO BITMAPTURTLETEST.CHANGETURTLEIMAGE
 
 END
 
+TO BITMAPTURTLETEST.BADINPUT
+   LOCALMAKE "originalturtle TURTLE
+
+   ; BITMAPTURTLE only works if there is a bitmap
+   SETBITINDEX 1
+   BITCUT 1 1
+   SETTURTLE 1
+
+   RUNDOESNTLIKEINPUTTEST [ (BITMAPTURTLE  1)    ]
+   RUNDOESNTLIKEINPUTTEST [ (BITMAPTURTLE  1.5)  ]
+   RUNDOESNTLIKEINPUTTEST [ (BITMAPTURTLE [1])   ]
+   RUNDOESNTLIKEINPUTTEST [ (BITMAPTURTLE {1})   ]
+   RUNDOESNTLIKEINPUTTEST [ (BITMAPTURTLE "word) ]
+
+   RUNTOOMANYINPUTSTEST   [ (BITMAPTURTLE "false "toomany) ]
+
+   SETTURTLE :originalturtle 
+END
+
 TO BITMAPTURTLETEST
 
    BITMAPTURTLETEST.SMOKETEST
    BITMAPTURTLETEST.NOTURTLE
+   BITMAPTURTLETEST.SPECIALTURTLE
    BITMAPTURTLETEST.CHANGETURTLEIMAGE
+   BITMAPTURTLETEST.TURTLEMODE
+   BITMAPTURTLETEST.BADINPUT
 
    ; Manual tests
    ; BITMAPTURTLETEST.ONEPIXEL
