@@ -40,6 +40,7 @@ TO TURTLEMODETEST.SMOKETEST
       SIMPLEREPORTTEST [TURTLEMODE] REPCOUNT
       WAIT 30
    ]
+
    NOBITMAPTURTLE
    SETBITMODE :savedbitmode
 
@@ -70,6 +71,13 @@ TO TURTLEMODETEST.BADINPUT
 
    ; verify that none of the bad input tests changed the bitmode
    SIMPLEREPORTTEST [TURTLEMODE] 3
+
+   ; Cannot set the mode of a rotating bitmap turtle.
+   (BITMAPTURTLE "true)
+   (RUNEXPECTERRORTEST
+       [ SETTURTLEMODE 2 ]
+       1500
+       "|Invalid state for instruction: Cannot set the mode of a turtle with a rotating bitmap|)
 
    ; restore the previous bitmode
    NOBITMAPTURTLE
