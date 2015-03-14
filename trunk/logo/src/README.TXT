@@ -39,6 +39,8 @@ II. New features/bugs fixed:
     of the bitmap in the same way as the lower&right edges.
   o Fix bug #447; The bitmap on rotating bitmap turtle now wraps around
     the edges of the world in WRAP mode.
+  o Fix bug #450; The wxWidgets version of FMSLogo now strips trailing newlines
+    from text pasted into the commander input.
   o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
