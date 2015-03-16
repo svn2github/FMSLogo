@@ -33,12 +33,13 @@ making the number an input to the <userinput>?</userinput> procedure.
 This special treatment does not apply to words read as data, to words with a non-number following the question mark, or if the question mark is backslashed.</para>
 
     <para>A line (an instruction line or one read by <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link>) can be continued onto the following line if its last character is a tilde (<userinput>~</userinput>).
-<link linkend="command-readword">READWORD</link> preserves the tilde and the newline; <link linkend="command-readlist">READLIST</link> does not.</para>
+<link linkend="command-readword">READWORD</link> preserves the tilde and the newline; <link linkend="command-readlist">READLIST</link> does not.
+    A tilde which appears anywhere else in a line has no special meaning.</para>
 
 
     <para>A semicolon begins a comment in an instruction line.
 &GENERICNAME; ignores characters from the semicolon to the end of the line.
-A tilde (<userinput>~</userinput>) as the last character still indicates a continuation line, but not a continuation of the comment.</para>
+A tilde (<userinput>~</userinput>) as the last character in the line still indicates a continuation line, but not a continuation of the comment.</para>
 
     <para>Example:</para>
 
