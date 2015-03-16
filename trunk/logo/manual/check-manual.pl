@@ -171,6 +171,9 @@ $Exceptions{'command-beforep.xml'}{'allcaps'}{'ABC'}      = 1;
 
 $Exceptions{'command-bitsave.xml'}{'allcaps'}{'BMP'}      = 1;
 
+$Exceptions{'command-bitmapturtle.xml'}{'allcaps'}{'BLUE'}  = 1;
+$Exceptions{'command-bitmapturtle.xml'}{'allcaps'}{'WHITE'} = 1;
+
 $Exceptions{'command-bury.xml'}{'allcaps'}{'BAR'}         = 1;
 $Exceptions{'command-bury.xml'}{'allcaps'}{'FOO'}         = 1;
 
@@ -676,19 +679,19 @@ $Exceptions{'media-control-interface.xml'}{'allcaps'}{'TMFS'}            = 1;
 $Exceptions{'media-control-interface.xml'}{'bannedword'}{'parameter'}    = 1;
 $Exceptions{'media-control-interface.xml'}{'bannedword'}{'parameters'}   = 1;
 
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'COMPUTERNAME'} = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'DHCP'}         = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'DNS'}          = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'ECHO'}         = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'FTP'}          = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'HTTP'}         = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'IP'}           = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'NETACCEPT'}    = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'NETCONNECT'}   = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'PING'}         = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'POPMAIL'}      = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'TCP'}          = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'TELNET'}       = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'HTTP'}         = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'DHCP'}         = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'ECHO'}         = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'NETCONNECT'}   = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'NETACCEPT'}    = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'COMPUTERNAME'} = 1;
 
 $Exceptions{'main-menu.xml'}{'allcaps'}{'MS'}   = 1;
 $Exceptions{'main-menu.xml'}{'allcaps'}{'HTML'} = 1;

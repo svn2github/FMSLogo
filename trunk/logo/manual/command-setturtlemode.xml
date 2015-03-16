@@ -56,6 +56,11 @@ Use <link linkend="command-turtlemode">TURTLEMODE</link> to obtain the selected 
 Use <link linkend="command-bitmapturtle">BITMAPTURTLE</link> to map a turtle to a bitmap.
 </para>
 
+<para>
+SETTURTLEMODE has no effect if the selected turtle is not currently bitmapped.
+It is an error to run SETTURTLEMODE on a turtle that was bitmapped with a rotating bitmap.
+</para>
+
 </listitem>
 </varlistentry>
 
