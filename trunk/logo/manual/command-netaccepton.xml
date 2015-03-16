@@ -6,20 +6,20 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>NETACCEPTON</command> <parameter>socket</parameter> <parameter>sendready</parameter> <parameter>receiveready</parameter></synopsis>
+<synopsis><command>NETACCEPTON</command> <parameter>localport</parameter> <parameter>sendready</parameter> <parameter>receiveready</parameter></synopsis>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Enables you to accept a connection over the network on the <parameter>socket</parameter>.
-To obtain the data received call <link linkend="command-netacceptreceivevalue">NETACCEPTRECEIVEVALUE</link> in your <parameter>receiveready</parameter> code.
-To turn off accept call <link linkend="command-netacceptoff">NETACCEPTOFF</link>.
-When data are available, &PRODUCTNAME; will run the <parameter>receiveready</parameter> instruction list.
-When you actually send data with <link linkend="command-netacceptsendvalue">NETACCEPTSENDVALUE</link> it might output FALSE (meaning that it's not ready to send).
+Enables you to accept a connection over the network on the <parameter>localport</parameter>.
+When data are available, &PRODUCTNAME; runs the <parameter>receiveready</parameter> instruction list.
+To obtain the data received, run <link linkend="command-netacceptreceivevalue">NETACCEPTRECEIVEVALUE</link> in your <parameter>receiveready</parameter> instruction list.
+When you send data with <link linkend="command-netacceptsendvalue">NETACCEPTSENDVALUE</link> it might output FALSE (meaning that it's not ready to send).
 If this happens you must wait until &PRODUCTNAME; runs the <parameter>sendready</parameter> instruction list before trying to send the data again.
 Note you cannot just send data from the <parameter>sendready</parameter> callback, it won't be run unless the previous send was blocked.
+To stop accepting connections, run <link linkend="command-netacceptoff">NETACCEPTOFF</link>.
 </para>
 
 <para>
@@ -28,8 +28,9 @@ Otherwise, it outputs FALSE.
 </para>
 
 <para>
-The <parameter>socket</parameter> input is an integer that is used to identify which socket to listen on.
-This is used as the local port.
+The <parameter>localport</parameter> input is an integer between 1 and 65535 that is used to identify which local port to listen on.
+The port must not already be in use by some other service on the machine.
+It is recommended that you use ports numbers greater than 1024.
 </para>
 
 <para>
@@ -52,7 +53,7 @@ The <parameter>receiveready</parameter> input is an instruction list (a list of 
 <listitem>
 <programlisting><userinput>NETSTARTUP ; Start up the network
 
-; Wait for someone to connect to you on socket 5124
+; Wait for someone to connect to you on port 5124
 SHOW NETACCEPTON 5124 [PRINT [Ready to send]] [PRINT [Ready to receive]]</userinput>
 true
 

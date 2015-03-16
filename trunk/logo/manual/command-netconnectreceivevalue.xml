@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command outputs the value of the last network data received on the connect socket.
-It is best to call this procedure in your <parameter>receiveready</parameter> callback code of your <link linkend="command-netconnecton">NETCONNECTON</link> command.
+This command outputs the value of the last network data received on the connection that was created with <link linkend="command-netconnecton">NETCONNECTON</link>.
+It is best to call this procedure in your <parameter>receiveready</parameter> callback code of your NETCONNECTON command.
 If you don't, then the data will be discarded the next time <parameter>receiveready</parameter> is run.
 </para>
 </listitem>
@@ -23,20 +23,24 @@ If you don't, then the data will be discarded the next time <parameter>receivere
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>; the acceptor sends data to whomever connected
+<para>
+The following example sets up both a client and server.
+The server (accepter) sends data to the client (connector).
+To make this example run properly, you must replace "MyComputerName" with the name of your computer.
 
-NETSTARTUP ; Start up the network
+<programlisting><userinput>NETSTARTUP ; Start up the network
 
-; Wait for someone to connect to you on socket 5124
+; Wait for someone to connect to you on port 5124
 SHOW NETACCEPTON 5124 [PRINT [Ok to Send Again]] []</userinput>
 true
+Ok to Send Again
 
-<userinput>; Connect to MyMachineName on socket 5124 (myself)
-SHOW NETCONNECTON "MyMachineName 5124 [] [PRINT NETCONNECTRECEIVEVALUE]</userinput>
+<userinput>; Connect to local machine on port 5124
+; TODO: replace MyComputerName with the name of your computer.
+SHOW NETCONNECTON "MyComputerName 5124 [] [PRINT NETCONNECTRECEIVEVALUE]</userinput>
 true
 
-<userinput>WAIT 100 ; Wait little for connection to establish</userinput>
-Ok to Send Again
+<userinput>WAIT 100 ; Wait a little to establish the connection</userinput>
 Ok to Send Again
 Ok to Send Again
 
@@ -50,6 +54,7 @@ Who are you that called me
 NETACCEPTOFF
 NETSHUTDOWN</userinput>
 </programlisting>
+</para>
 </listitem>
 </varlistentry>
 

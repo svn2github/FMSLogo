@@ -369,10 +369,18 @@ $Exceptions{'command-namelist.xml'}{'allcaps'}{'FOO'} = 1;
 $Exceptions{'command-names.xml'}{'allcaps'}{'BAR'} = 1;
 $Exceptions{'command-names.xml'}{'allcaps'}{'FOO'} = 1;
 
+$Exceptions{'command-netacceptreceivevalue.xml'}{'allcaps'}{'TODO'} = 1;
+
+$Exceptions{'command-netacceptsendvalue.xml'}{'allcaps'}{'TODO'} = 1;
+
 $Exceptions{'command-netconnecton.xml'}{'allcaps'}{'DNS'}   = 1;
 $Exceptions{'command-netconnecton.xml'}{'allcaps'}{'HOSTS'} = 1;
 $Exceptions{'command-netconnecton.xml'}{'allcaps'}{'IP'}    = 1;
 $Exceptions{'command-netconnecton.xml'}{'allcaps'}{'TCP'}   = 1;
+
+$Exceptions{'command-netconnectreceivevalue.xml'}{'allcaps'}{'TODO'} = 1;
+
+$Exceptions{'command-netconnectsendvalue.xml'}{'allcaps'}{'TODO'} = 1;
 
 $Exceptions{'command-netstartup.xml'}{'allcaps'}{'DNS'}  = 1;
 
@@ -668,17 +676,19 @@ $Exceptions{'media-control-interface.xml'}{'allcaps'}{'TMFS'}            = 1;
 $Exceptions{'media-control-interface.xml'}{'bannedword'}{'parameter'}    = 1;
 $Exceptions{'media-control-interface.xml'}{'bannedword'}{'parameters'}   = 1;
 
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'DNS'}       = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'FTP'}       = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'HOSTS'}     = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'HOSTS.SAM'} = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'IP'}        = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'PING'}      = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'POPMAIL'}   = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'PPP'}       = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'SERVICES'}  = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'TCP'}       = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'TELNET'}    = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'DNS'}          = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'FTP'}          = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'IP'}           = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'PING'}         = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'POPMAIL'}      = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'TCP'}          = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'TELNET'}       = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'HTTP'}         = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'DHCP'}         = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'ECHO'}         = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'NETCONNECT'}   = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'NETACCEPT'}    = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'COMPUTERNAME'} = 1;
 
 $Exceptions{'main-menu.xml'}{'allcaps'}{'MS'}   = 1;
 $Exceptions{'main-menu.xml'}{'allcaps'}{'HTML'} = 1;

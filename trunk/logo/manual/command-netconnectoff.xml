@@ -14,6 +14,7 @@
 <listitem>
 <para>
 Shuts down a connection that was created with <link linkend="command-netconnecton">NETCONNECTON</link>.
+After running this, <link linkend="command-netconnectsendvalue">NETCONNECTSENDVALUE</link> and <link linkend="command-netconnectreceivevalue">NETCONNECTRECEIVEVALUE</link> will no longer work.
 </para>
 </listitem>
 </varlistentry>
@@ -21,13 +22,16 @@ Shuts down a connection that was created with <link linkend="command-netconnecto
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>; This example assumes remotemachinename is listening on socket 5124)
-NETSTARTUP ; Start up the network
+<para>
+The following example assumes that there is a machine named "remotemachinename" that is listening on port 5124.
+
+<programlisting><userinput>NETSTARTUP ; Start up the network
 SHOW NETCONNECTON "remotemachinename 5124 [PRINT [ready to send again]] [PRINT [I have something]]</userinput>
 true
 
 <userinput>NETCONNECTOFF
 NETSHUTDOWN</userinput></programlisting>
+</para>
 </listitem>
 </varlistentry>
 

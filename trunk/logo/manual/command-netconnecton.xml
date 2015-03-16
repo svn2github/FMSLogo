@@ -6,14 +6,14 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>NETCONNECTON</command> <parameter>machinename</parameter> <parameter>socket</parameter> <parameter>sendready</parameter> <parameter>receiveready</parameter></synopsis>
+<synopsis><command>NETCONNECTON</command> <parameter>remotemachinename</parameter> <parameter>remoteport</parameter> <parameter>sendready</parameter> <parameter>receiveready</parameter></synopsis>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Enable you to initiate a connection over the network to the <parameter>socket</parameter> at <parameter>machinename</parameter>.
+Initiates a connection over the network to the TCP port <parameter>remoteport</parameter> on <parameter>remotemachinename</parameter>.
 To turn off the connection call <link linkend="command-netconnectoff">NETCONNECTOFF</link>.
 To obtain the data received call <link linkend="command-netconnectreceivevalue">NETCONNECTRECEIVEVALUE</link> in your <parameter>receiveready</parameter> instruction list.
 When you actually send data with <link linkend="command-netconnectsendvalue">NETCONNECTSENDVALUE</link> it might output FALSE (meaning that it's not ready to send).
@@ -27,12 +27,12 @@ Otherwise, it outputs FALSE.
 </para>
 
 <para>
-The <parameter>machinename</parameter> input is a TCP/IP host name from DNS or a <filename>HOSTS</filename> file.
+The <parameter>remotemachinename</parameter> input is a DNS host name or an IP address.
 It can be a list or a word.
 </para>
 
 <para>
-The <parameter>socket</parameter> input is an integer that is used to identify which socket to connect to.
+The <parameter>remoteport</parameter> input is an integer that is used to identify which remote TCP port to connect to.
 </para>
 
 <para>
@@ -53,17 +53,17 @@ It is run whenever data is received and is ready to be read.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>; This example assumes remotemachinename is listening on socket 5124
-NETSTARTUP ; Start up the network
+<para>This example assumes that a machine named "remotemachinename" is listening on port 5124.
+<programlisting><userinput>NETSTARTUP ; Start up the network
 SHOW NETCONNECTON "remotemachinename 5124 [PRINT [ready to send again]] [PRINT [I have something]]</userinput>
 true
 
 <userinput>NETCONNECTOFF
 NETSHUTDOWN</userinput>
 </programlisting>
+</para>
 </listitem>
 </varlistentry>
-
 
 </variablelist>
 </section>

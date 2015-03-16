@@ -22,7 +22,7 @@ Stops accepting incoming connections.
 <listitem>
 <programlisting><userinput>NETSTARTUP ; Start up the network
 
-; Wait for someone to connect to you on socket 5124
+; Wait for someone to connect to you on local port 5124
 SHOW NETACCEPTON 5124 [PRINT [Ready to send]] [PRINT [Ready to receive]]</userinput>
 true
 

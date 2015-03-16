@@ -31,20 +31,24 @@ The <parameter>data</parameter> input is a list.  It contains the data you wish 
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>; the acceptor sends data to whomever connected
+<para>
+This example sets up a client and server on the same machine.
+The server (accepter) sends data to whomever connected.
+To make this example run properly, you must replace "MyComputerName" with the name of your computer.
 
-NETSTARTUP ; Start up the network
+<programlisting><userinput>NETSTARTUP ; Start up the network
 
-; Wait for someone to connect to you on socket 5124
+; Wait for someone to connect to you on local port 5124
 SHOW NETACCEPTON 5124 [PRINT [Ok to Send Again]] []</userinput>
 true
+Ok to Send Again
 
-<userinput>; Connect to MyMachineName on socket 5124 (myself)
-SHOW NETCONNECTON "MyMachineName 5124 [] [PRINT NETCONNECTRECEIVEVALUE]</userinput>
+<userinput>; Connect to the local machine on port 5124.
+; TODO: replace MyComputerName with the name of your computer.
+SHOW NETCONNECTON "MyComputerName 5124 [] [PRINT NETCONNECTRECEIVEVALUE]</userinput>
 true
 
 <userinput>WAIT 100 ; Wait little for connection to establish</userinput>
-Ok to Send Again
 Ok to Send Again
 Ok to Send Again
 
@@ -58,6 +62,7 @@ Who are you that called me
 NETACCEPTOFF
 NETSHUTDOWN</userinput>
 </programlisting>
+</para>
 </listitem>
 </varlistentry>
 

@@ -17,21 +17,33 @@ Outputs the value of the last network data received on the accept socket.
 It is best to call this procedure in your <parameter>receiveready</parameter> callback code of your <link linkend="command-netaccepton">NETACCEPTON</link> instruction.
 If you don't, then the data will be discarded the next time <parameter>receiveready</parameter> is run.
 </para>
+
+<para>
+&PRODUCTNAME; does not guarantee that the remote machine that sent the data is friendly.
+It is therefore a good practice to make sure that the data looks correct before using it.
+For example, if you want to accept turtle commands from a remote machine, its bad to simply <link linkend="command-run">RUN</link> all data that you receive, as the data could include a <link linkend="command-shell">SHELL</link> command that installs malware.
+Instead, your program should verify that the data it received is a well-formed turtle command before running it.
+</para>
+
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>; The Initiator (connector) Sends Data To Who Accepted the connection
+<para>
+This example sets up both a client and server.
+The client (connector) sends data to the server (accepter).
+To make this example run properly, you must replace "MyComputerName" with the name of your computer.
 
-NETSTARTUP ; Start up the network
+<programlisting><userinput>NETSTARTUP ; Start up the network
 
-; Wait for someone to connect to you on socket 5124
+; Wait for someone to connect to you on local port 5124
 SHOW NETACCEPTON 5124 [] [PRINT NETACCEPTRECEIVEVALUE]</userinput>
 true
 
-<userinput>; Connect to MyMachineName on socket 5124 (myself)
-SHOW NETCONNECTON "MyMachineName 5124 [PRINT [Ok to Send Again]] []</userinput>
+<userinput>; Connect to local machine on port 5124
+; TODO: replace MyComputerName with the name of your computer.
+SHOW NETCONNECTON "MyComputerName 5124 [PRINT [Ok to Send Again]] []</userinput>
 true
 
 <userinput>WAIT 100 ; Wait little for connection to establish</userinput>
@@ -48,6 +60,7 @@ Hello thanks for taking my call
 NETACCEPTOFF
 NETSHUTDOWN</userinput>
 </programlisting>
+</para>
 </listitem>
 </varlistentry>
 

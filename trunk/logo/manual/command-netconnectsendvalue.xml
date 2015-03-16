@@ -13,17 +13,18 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Sends <parameter>data</parameter> out the connect socket.
+Sends <parameter>data</parameter> out the connection that was created with <link linkend="command-netconnecton">NETCONNECTON</link>.
 </para>
 
 <para>
 NETCONNECTSENDVALUE outputs TRUE if the data were successfully queued to be sent.
 Otherwise, it outputs FALSE (meaning that it's not ready to send).
-If it outputs FALSE, you must wait until the <parameter>sendready</parameter> callback procedure of <link linkend="command-netconnecton">NETCONNECTON</link> is run and then try sending the data again.
+If it outputs FALSE, you must wait until the <parameter>sendready</parameter> callback procedure of NETCONNECTON is run and then try sending the data again.
 </para>
 
 <para>
-The <parameter>data</parameter> input is a list.  It contains the data you wish to send over the network.
+The <parameter>data</parameter> input is a list.
+It contains the data you wish to send over the network.
 </para>
 
 </listitem>
@@ -31,19 +32,23 @@ The <parameter>data</parameter> input is a list.  It contains the data you wish 
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>; The Initiator (connector) Sends Data To Who Accepted the connection
+<para>
+The following example sets up both a client and a server.
+The client (connector) sends data to the server (accepter).
+To make this example run properly, you must replace "MyComputerName" with the name of your computer.
 
-NETSTARTUP ; Start up the network
+<programlisting><userinput>NETSTARTUP ; Start up the network
 
-; Wait for someone to connect to you on socket 5124
+; Wait for someone to connect to you on port 5124
 SHOW NETACCEPTON 5124 [] [PRINT NETACCEPTRECEIVEVALUE]</userinput>
 true
 
-<userinput>; Connect to MyMachineName on socket 5124 (myself)
-SHOW NETCONNECTON "MyMachineName 5124 [PRINT [Ok to Send Again]] []</userinput>
+<userinput>; Connect to local machine on port 5124
+; TODO: replace MyComputerName with the name of your computer.
+SHOW NETCONNECTON "MyComputerName 5124 [PRINT [Ok to Send Again]] []</userinput>
 true
 
-<userinput>WAIT 100 ; Wait little for connection to establish</userinput>
+<userinput>WAIT 100 ; Wait a little to establish the connection</userinput>
 Ok to Send Again
 Ok to Send Again
 Ok to Send Again
@@ -58,6 +63,7 @@ Hello thanks for taking my call
 NETACCEPTOFF
 NETSHUTDOWN</userinput>
 </programlisting>
+</para>
 </listitem>
 </varlistentry>
 
