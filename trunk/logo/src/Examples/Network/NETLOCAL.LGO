@@ -15,8 +15,7 @@ NETLOCAL "Logo
 ;
 ; System requirements:
 ;
-; You must have a WinSock capable machine and know your machine name.
-; You must know your MyMachineName.
+; You must know your machine name.
 ;
 end
 
