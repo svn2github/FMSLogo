@@ -299,10 +299,8 @@ to drawChar :c :action
   setpensize :textPenSize
   seth 0
   make "cPos pos
-  make "x first :cPos
-  make "y last :cPos
-  make "x round :x
-  make "y round :y
+  make "x round first :cPos
+  make "y round last :cPos
   setxy :x :y
   setpc [ 255 255 0 ]
   pendown
@@ -386,10 +384,11 @@ to drawChar :c :action
     if :c=ascii "_ [penup tbk 2 rt 90 pendown tfd 11]
  ]
 
+  ; Determine how wide :c is.
   make "charWidth 0
-  if( and :c > (ascii "A)-1  :c < (ascii "Z)+1 ) [make "charWidth 12]
-  if( and :c > (ascii "a)-1  :c < (ascii "z)+1 ) [make "charWidth 10]
-  if( and :c > (ascii "0)-1  :c < (ascii "9)+1 ) [make "charWidth 12]
+  if and (ascii "A) <= :c  :c <= (ascii "Z) [make "charWidth 12]
+  if and (ascii "a) <= :c  :c <= (ascii "z) [make "charWidth 10]
+  if and (ascii "0) <= :c  :c <= (ascii "9) [make "charWidth 12]
   if :c=ascii "I  [make "charWidth 7]
   if :c=ascii "f  [make "charWidth 9]
   if :c=ascii "j  [make "charWidth 5]
@@ -424,10 +423,8 @@ to drawChar :c :action
     make "textLength :textLength + :charWidth + 3
   ]
 
-  make "x first pos
-  make "y last pos
-  make "x round :x
-  make "y round :y
+  make "x round first pos
+  make "y round last  pos
   setxy :x :y
 end
 
@@ -1349,8 +1346,7 @@ to inputText :iPos :txt :max
   setfocus [ MSWLogo Screen ]
   setpos :iPos
   drawText :txt "draw
-  drawChar 32 "draw
-  make "iPos pos
+  drawChar 32 "draw ; space between words
   penup
   drawText [_] "draw
 
