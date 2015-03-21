@@ -91,7 +91,7 @@ LangString DesktopShortcut ${LANG_PORTUGUESE} "Atalho no Desktop"
 LangString DesktopShortcut ${LANG_FRENCH}     "Raccourci Bureau" 
 LangString DesktopShortcut ${LANG_GREEK}      "Ухнфьмехуз ЕрйцЬнейбт ЕсгбуЯбт"
 LangString DesktopShortcut ${LANG_RUSSIAN}    "Ярлык рабочего стола" 
-LangString DesktopShortcut ${LANG_CROATIAN}   "Desktop Shortcut" ; NOT_YET_LOCALIZED
+LangString DesktopShortcut ${LANG_CROATIAN}   "Preиac na Radnu povrљinu"
 
 LangString StartMenuShortcuts ${LANG_ENGLISH}    "Start Menu Shortcuts"
 LangString StartMenuShortcuts ${LANG_GERMAN}     "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
@@ -101,7 +101,7 @@ LangString StartMenuShortcuts ${LANG_PORTUGUESE} "Atalho no Menu Iniciar"
 LangString StartMenuShortcuts ${LANG_FRENCH}     "Raccourcis Menu Dйmarrer" 
 LangString StartMenuShortcuts ${LANG_GREEK}      "Ухнфпмеэуейт Менпэ ёнбсоз" 
 LangString StartMenuShortcuts ${LANG_RUSSIAN}    "Ярлык меню Пуск" 
-LangString StartMenuShortcuts ${LANG_CROATIAN}   "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
+LangString StartMenuShortcuts ${LANG_CROATIAN}   "Preиaci za Start izbornik"
 
 LangString ScreenSaver ${LANG_ENGLISH}    "Screen Saver"
 LangString ScreenSaver ${LANG_GERMAN}     "Screen Saver" ; NOT_YET_LOCALIZED
@@ -441,7 +441,7 @@ SetupUser.Done:
      MessageBox MB_OK|MB_ICONEXCLAMATION "Или инсталлятор или FMSLogo в настоящее время запущены.$\nУстановка не может быть продолжена." 
      Abort
   StrCmp $LANGUAGE ${LANG_CROATIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Trenutno je pokrenut ili instalacijski program ili FMSLogo.$\nOva se instalacija ne moћe nastaviti."
      Abort
   ; default to English
   MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
@@ -484,7 +484,7 @@ checkifinstalled:
   StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +2
     MessageBox MB_YESNO "Существующая копия FMSLogo должна быть удалена, чтобы продолжить.$\nВы хотите удалить ее?$\n$\n(Выбор Нет прервет установку)" IDYES uninstall IDNO abort
   StrCmp $LANGUAGE ${LANG_CROATIAN} 0 +2
-    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
+    MessageBox MB_YESNO "Postojeжa se verzija programa FMSLogo mora deinstalirati ako ћeliљ nastaviti.$\nЋeliљ li je deinstalirati?$\n$\n(Ako odabereљ "Ne", instalacija жe se prekinuti)" IDYES uninstall IDNO abort
  ; default to English
  MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort
 
@@ -535,7 +535,7 @@ Function un.onInit
      MessageBox MB_OK|MB_ICONEXCLAMATION "Или инсталлятор или FMSLogo в настоящее время запущены.$\nнУдаление не может быть продолжено."
      Abort
   StrCmp $LANGUAGE ${LANG_CROATIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Trenutno je pokrenut ili instalacijski program ili FMSLogo.$\nOva se deinstalacija ne moћe nastaviti."
      Abort
   ; default to English
   MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue."
@@ -595,7 +595,7 @@ CheckIfInstallExists.ShowError:
      MessageBox MB_OK|MB_ICONEXCLAMATION "Или FMSLogo был уже удален, или Вы не имеете прав удалять ее.$\nВ любом случае, удаление не может быть продолжено." 
      Abort
   StrCmp $LANGUAGE ${LANG_CROATIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Ili je FMSLogo veж izbrisan ili nemaљ dopuљtenje da ga deinstaliraљ.$\nU svakom sluиaju, ova se deinstalacija ne moћe nastaviti."
   ; default to English
   MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue."
   Abort

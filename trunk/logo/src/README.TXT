@@ -41,6 +41,7 @@ II. New features/bugs fixed:
     the edges of the world in WRAP mode.
   o Fix bug #450; The wxWidgets version of FMSLogo now strips trailing newlines
     from text pasted into the commander input.
+  o Add a Croatian translation.
   o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
@@ -121,6 +122,7 @@ VIII. Acknowledgements
     Carl Bogardus
     Clem Rutter
     Daniel Ajoy
+    Domagoj Kuna
     Hensley Bass
     Igor Baglaev
     Jan Grabe

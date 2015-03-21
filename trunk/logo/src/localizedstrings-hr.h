@@ -713,10 +713,10 @@
 #define LOCALIZED_POPUP_COPY                     "Kopiraj"
 #define LOCALIZED_POPUP_CUT                      "Izreži"
 #define LOCALIZED_POPUP_PASTE                    "Zalijepi"
-#define LOCALIZED_POPUP_DELETE                   "Izbriši" // NOT_YET_LOCALIZED
+#define LOCALIZED_POPUP_DELETE                   "Izbriši"
 #define LOCALIZED_POPUP_UNDO                     "Poništi"
 #define LOCALIZED_POPUP_REDO                     "Ponovi"
-#define LOCALIZED_POPUP_SELECTALL                "Select All" // NOT_YET_LOCALIZED
+#define LOCALIZED_POPUP_SELECTALL                "Oznaèi sve"
 #define LOCALIZED_POPUP_HELP                     "Topic Search" // NOT_YET_LOCALIZED
 
 //
@@ -730,13 +730,13 @@
 #define LOCALIZED_EDITOR_FILE_PRINT              "Is&piši..."
 #define LOCALIZED_EDITOR_FILE_EXIT               "I&zlaz"
 
-#define LOCALIZED_EDITOR_EDIT                    "&Edit" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_UNDO               "&Undo\tCtrl+Z" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_REDO               "&Redo\tCtrl+Y" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_CUT                "&Cut\tCtrl+X" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_EDIT                    "&Uredi"
+#define LOCALIZED_EDITOR_EDIT_UNDO               "&Poništi\tCtrl+Z"
+#define LOCALIZED_EDITOR_EDIT_REDO               "&Ponovi\tCtrl+Y"
+#define LOCALIZED_EDITOR_EDIT_CUT                "&Izreži\tCtrl+X"
 #define LOCALIZED_EDITOR_EDIT_COPY               "C&opy\tCtrl+C" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_PASTE              "&Paste\tCtrl+V" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_DELETE             "&Delete\tDel" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_EDIT_PASTE              "&Zalijepi\tCtrl+V"
+#define LOCALIZED_EDITOR_EDIT_DELETE             "&Izbriši\tDel"
 #define LOCALIZED_EDITOR_EDIT_CLEARALL           "C&lear All\tCtrl+Del" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_EDIT_SELECTALL          "S&elect All\tCtrl+A" // NOT_YET_LOCALIZED
 
@@ -762,11 +762,11 @@
 // The strings in the "You have unsaved changes" dialog
 //
 #define LOCALIZED_UNSAVEDCHANGES                LOCALIZED_YOUHAVEUNSAVEDCHANGES // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "&Save and Exit" // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_DONTSAVE       "&Don't Save" // NOT_YET_LOCALIZED
+#define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "&Spremi i iziði" // NOT_YET_LOCALIZED
+#define LOCALIZED_UNSAVEDCHANGES_DONTSAVE       "&Nemoj spremati"
 #define LOCALIZED_UNSAVEDCHANGES_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_MESSAGE1       "There are unsaved changes in the workspace.  If you exit without saving, these changes will be lost.  " // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_MESSAGE2       "Would you like to save your changes before exiting?"  // NOT_YET_LOCALIZED
+#define LOCALIZED_UNSAVEDCHANGES_MESSAGE1       "Na radnom prostoru postoje promjene koje nisu spremljene.  Ako iziðete bez spremanja, promjene æe biti izgubljene.  "
+#define LOCALIZED_UNSAVEDCHANGES_MESSAGE2       "Želite li spremiti promjene prije nego iziðete?"
 
 
 //
@@ -983,9 +983,9 @@
 #define LOCALIZED_ERROR_STACKOVERFLOW          "stack overflow" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "turtle out of bounds" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BADGRAPHINIT           "couldn't initialize graphics" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADDATA                "%p doesn't like %s as input" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_BADDATA                "%p ne voli %s za ulaznu vrijednost"
 #define LOCALIZED_ERROR_DIDNTOUTPUT            "%p didn't output to %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOTENOUGHINPUTS        "not enough inputs to %p" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_NOTENOUGHINPUTS        "nema dovoljno ulaznih vrijednosti za %p"
 #define LOCALIZED_ERROR_TOOMUCH                "too much inside ()'s" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "Ne kažeš što da napravim s %s"
 #define LOCALIZED_ERROR_PARENMISMATCH          "too many ('s" // NOT_YET_LOCALIZED
@@ -995,7 +995,7 @@
 #define LOCALIZED_ERROR_UNEXPECTEDBRACE        "unexpected '}'" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_DONTKNOWHOWTO          "Ne znam što je %p"
 #define LOCALIZED_ERROR_NOCATCHTAG             "Can't find catch tag for %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ALREADYDEFINED         "%p is already defined" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_ALREADYDEFINED         "%p je veæ prije zadan" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_STOPPING               "Stopping..." // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_ALREADYDRIBBLING       "Already dribbling" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_FILESYSTEM                   "File system error: %p" // NOT_YET_LOCALIZED
@@ -1010,7 +1010,7 @@
 #define LOCALIZED_ERROR_SHADOWWARNING          "%p shadowed by local in procedure call" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_USER                   "Throw \"Error" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_ISPRIMITIVE            "%p is a primitive" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TONOTINSIDE            "Can't use TO inside a procedure" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_TONOTINSIDE            "Ne možeš koristiti TO unutar procedure"
 #define LOCALIZED_ERROR_ATTOPLEVEL             "Can only use %p inside a procedure" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_ATTOPLEVEL2            "You must be in a procedure to use OUTPUT or STOP" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_NOTEST                 "%p without TEST" // NOT_YET_LOCALIZED
@@ -1022,15 +1022,10 @@
 #define LOCALIZED_PAUSING                      "Pausing..." // NOT_YET_LOCALIZED
 
 
-// FMSLogo-specific error messages.
-#define LOCALIZED_ERROR_INVALIDSTATEFORINSTRUCTION "Invalid state for instruction: %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MODE_ON_SPRITE             "cannot set the mode of a turtle with a rotating bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "cannot make a special turtle use a rotating bitmap" // NOT_YET_LOCALIZED
-
 //
 // Error messages displayed in Message Boxes.
 //
-#define LOCALIZED_ERROR                      "Error" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR                      "Greška"
 #define LOCALIZED_ERROR_BADINPUT             "Bad input" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BADINPUTNOTPAIRED    "Input is not paired" // NOT_YET_LOCALIZED
 
@@ -1043,8 +1038,8 @@
 #define LOCALIZED_ERROR_PORTNOTOPEN          "Port is not open" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "First input must be an array" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s already exists" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s does not exist" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s veæ postoji"
+#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s ne postoji"
 
 #define LOCALIZED_ERROR_DLLNOTLOADED          "DLL is not loaded" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_DLLLOADFAILED         "DLL load failed" // NOT_YET_LOCALIZED
@@ -1181,7 +1176,7 @@
 //
 // The default title of a Logo picture when it is printed
 //
-#define LOCALIZED_BITMAPPRINTOUTTITLE       "Logo Picture" // NOT_YET_LOCALIZED
+#define LOCALIZED_BITMAPPRINTOUTTITLE       "Logo slika"
 
 //
 // Other strings
