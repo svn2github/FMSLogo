@@ -3176,16 +3176,40 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
         }
         else
         {
-            BitBlt(
-                PaintDeviceContext,
-                +dest.x / zoom + xoffset,
-                -dest.y / zoom + yoffset + LL - bitmap->Height,
-                bitmap->Width,
-                bitmap->Height,
-                TempMemDC,
-                0,
-                0,
-                turtle->BitmapRasterMode);
+            // Non-rotating bitmaps can simply be copied to the target context.
+            if (zoom != 1.0)
+            {
+                // Configure BitBlit to support the zoom.
+                SetMapMode(PaintDeviceContext, MM_ANISOTROPIC);
+                SetWindowOrgEx(PaintDeviceContext, 0, 0, 0);
+                SetWindowExtEx(PaintDeviceContext, BitMapWidth, BitMapHeight, 0);
+                SetViewportOrgEx(PaintDeviceContext, 0, 0, 0);
+                SetViewportExtEx(PaintDeviceContext, (int) (BitMapWidth * zoom), (int) (BitMapHeight * zoom), 0);
+
+                BitBlt(
+                    PaintDeviceContext,
+                    +dest.x - GetScreenHorizontalScrollPosition() / zoom + xoffset,
+                    -dest.y - GetScreenVerticalScrollPosition() / zoom + yoffset + LL - bitmap->Height,
+                    bitmap->Width,
+                    bitmap->Height,
+                    TempMemDC,
+                    0,
+                    0,
+                    turtle->BitmapRasterMode);
+            }
+            else
+            {
+                BitBlt(
+                    PaintDeviceContext,
+                    +dest.x + xoffset,
+                    -dest.y + yoffset + LL - bitmap->Height,
+                    bitmap->Width,
+                    bitmap->Height,
+                    TempMemDC,
+                    0,
+                    0,
+                    turtle->BitmapRasterMode);
+            }
         }
 
         SelectObject(TempMemDC, oldBitmap2);
@@ -4044,8 +4068,6 @@ void init_bitmaps()
 
 void uninit_bitmaps()
 {
-    free(g_Bitmaps[0].Pixels);
-
     // Note Bitmap index 0 belongs to clipboard
     for (CUTMAP* bmp = g_Bitmaps + 1;
          bmp < g_Bitmaps + g_BitmapsLimit;
@@ -4058,7 +4080,7 @@ void uninit_bitmaps()
 #endif
         }
 
-        free(g_SelectedBitmap->Pixels);
+        free(bmp->Pixels);
     }
 
     free(g_Bitmaps);
