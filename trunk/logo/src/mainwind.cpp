@@ -630,7 +630,8 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
         RealizePalette(PaintDC);
     }
 
-    // draw the turtles on top of the image
+    // Use a back buffer if we are drawing sprite turtles
+    // (turtles with rotating bitmaps).
     bool useBackBuffer = false;
     for (int j = 0; j <= g_MaxTurtle; j++)
     {
