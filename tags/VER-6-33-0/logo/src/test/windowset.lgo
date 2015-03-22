@@ -1,0 +1,38 @@
+LOAD "testlib.lgo
+
+TO WINDOWSETTEST.BUG1429960
+  ; For backward-compatibility with MSWLogo programs, ICON "Commander
+  ; should always minimize the commander, even when the commander is docked.
+
+  SPLITSCREEN
+  ICON "Commander
+
+  LOCALMAKE "isok YESNOBOX [Question] [Is the commander minimized?]
+  IF NOT :isok [
+    REPORTTESTFAILED (sentence "|ICON "Commander did not minimize the commander when it was docked|) 
+    STOP
+  ]
+
+  REPORTTESTPASSED (sentence "|ICON "Commander minimized the commander when it was docked|) 
+  UNICON "Commander
+  SPLITSCREEN
+END
+
+TO WINDOWSETTEST.BADINPUT
+
+  RUNNOTENOUGHINPUTSTEST [(WINDOWSET)]
+  RUNNOTENOUGHINPUTSTEST [(WINDOWSET "FMSLogo)]
+  RUNTOOMANYINPUTSTEST   [(WINDOWSET "FMSLogo 0 "toomany)]
+
+  RUNBADINPUTTEST [WINDOWSET "FMSLogo [1]  ]
+  RUNBADINPUTTEST [WINDOWSET "FMSLogo {1}  ]
+  RUNBADINPUTTEST [WINDOWSET "FMSLogo "one ]
+  RUNBADINPUTTEST [WINDOWSET "FMSLogo -1   ]
+END
+
+TO WINDOWSETTEST
+
+  WINDOWSETTEST.BUG1429960
+  WINDOWSETTEST.BADINPUT
+
+END

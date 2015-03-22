@@ -1,0 +1,30 @@
+TO TESTSMALLWINDOWHANG
+
+   ; This function undocks the commander, resizes the screen 
+   ; window so that it is very small, then redocks the commander.
+   ; This is a regression test for bug #1652924, which caused an
+   ; infinite regress in this condition.
+
+   ; undock the commander
+   TEXTSCREEN
+
+   ; Load the Windows User API client DLL
+   DLLLOAD "user32.dll
+
+   ; Get Handle to Main Window (Note args are in REVERSE order)
+   LOCALMAKE "hwnd DLLCALL [l FindWindowA s FMSLogo l 0]
+
+   ; Shrink the Main Window
+   LOCALMAKE "status DLLCALL (LIST "l "MoveWindow "w "1 "l "0 "l "0 "l "0 "l "0 "l :hwnd)
+
+   ; redock the commander.  This is where FMSLogo used to hang.
+   SPLITSCREEN
+
+   ; Resize Main Window
+   MAKE "status DLLCALL (LIST "l "MoveWindow "w "1 "l "400 "l "400 "l "0 "l "0 "l :hwnd)
+
+   ; cleanup
+   DLLFREE
+
+   REPORTTESTPASSED [Resizing FMSLogo to be very small didn't cause an infinite loop.]
+END
