@@ -73,14 +73,17 @@ TO TURTLEMODETEST.BADINPUT
    SIMPLEREPORTTEST [TURTLEMODE] 3
 
    ; Cannot set the mode of a rotating bitmap turtle.
+   SETBITINDEX 1
+   BITCUT 10 10
+   SETTURTLE   1
    (BITMAPTURTLE "true)
    (RUNEXPECTERRORTEST
        [ SETTURTLEMODE 2 ]
        1500
        "|Invalid state for instruction: Cannot set the mode of a turtle with a rotating bitmap|)
 
-   ; restore the previous bitmode
-   NOBITMAPTURTLE
+   ; restore the previous bitmode and unbitmap the turtle
+   CLEARSCREEN
 END
 
 TO TURTLEMODETEST
