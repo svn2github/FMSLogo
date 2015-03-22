@@ -484,9 +484,9 @@ checkifinstalled:
   StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +2
     MessageBox MB_YESNO "—уществующа€ копи€ FMSLogo должна быть удалена, чтобы продолжить.$\n¬ы хотите удалить ее?$\n$\n(¬ыбор Ќет прервет установку)" IDYES uninstall IDNO abort
   StrCmp $LANGUAGE ${LANG_CROATIAN} 0 +2
-    MessageBox MB_YESNO "Postojeжa se verzija programa FMSLogo mora deinstalirati ako ЮeliЪ nastaviti.$\nОeliЪ li je deinstalirati?$\n$\n(Ako odabereЪ "Ne", instalacija жe se prekinuti)" IDYES uninstall IDNO abort
- ; default to English
- MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort
+    MessageBox MB_YESNO "Postojeжa se verzija programa FMSLogo mora deinstalirati ako ЮeliЪ nastaviti.$\nОeliЪ li je deinstalirati?$\n$\n(Ako odabereЪ $\"Ne$\", instalacija жe se prekinuti)" IDYES uninstall IDNO abort
+  ; default to English
+  MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting $\"No$\" will abort the installation)" IDYES uninstall IDNO abort
 
 abort:
     Abort
