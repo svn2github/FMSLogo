@@ -3088,19 +3088,19 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                                 if (0 <= sourceYInteger && sourceYInteger < bitmap->Height - 1)
                                 {
                                     // The Y0 and Y1 are on the bitmap.
-                                    pixelx0y0 = x0y0Ptr[1];
-                                    pixelx0y1 = x0y1Ptr[1];
+                                    pixelx0y0 = x0y0Ptr[0];
+                                    pixelx0y1 = x0y1Ptr[0];
                                 }
                                 else if (sourceYInteger < 0)
                                 {
                                     // The "Y0" pixels fall below the bitmap.
                                     pixelx0y0 = TRANSPARENT_COLOR;
-                                    pixelx0y1 = x0y1Ptr[1];
+                                    pixelx0y1 = x0y1Ptr[0];
                                 }
                                 else
                                 {
                                     // The "Y1" pixels fall above the bitmap.
-                                    pixelx0y0 = x0y0Ptr[1];
+                                    pixelx0y0 = x0y0Ptr[0];
                                     pixelx0y1 = TRANSPARENT_COLOR;
                                 }
                             }
