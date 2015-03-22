@@ -84,6 +84,31 @@ TO BENCHMARK.PLIST :totalvalues
    ERN "benchmark.plist
 END
 
+TO SPRITEPERFTEST
+
+   BITLOAD "uparrow.bmp
+
+   SETTURTLE 0
+   HIDETURTLE
+
+   SETTURTLE 1
+   SETBITINDEX 1
+   BITCUT 75 101
+   (BITMAPTURTLE "TRUE)
+
+   HOME
+   SCROLLX 0
+   SCROLLY 0
+   IGNORE TIMECOMMAND [ 
+       ZOOM 1   REPEAT 360 [ RT 1 FD 1 ]
+       ZOOM 0.5 REPEAT 360 [ LT 1 BK 1 ]
+       ZOOM 2   REPEAT 360 [ RT 1 BK 1 ]
+   ]
+
+   CLEARSCREEN
+
+END
+
 TO BENCHMARK 
 
    REPORTTESTINFO LOGOVERSION ; put the version into the test log
@@ -112,6 +137,10 @@ TO BENCHMARK
    ; time drawing a large squiral
    CLEARSCREEN
    IGNORE TIMECOMMAND [REPEAT 20000 [ FORWARD REPCOUNT RIGHT 91 ] ]
+
+   ; Time moving a sprite (rotating bitmap turtle)
+   CLEARSCREEN
+   SPRITEPERFTEST
 
    SPLITSCREEN
 END
