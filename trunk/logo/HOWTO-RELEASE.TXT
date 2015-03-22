@@ -9,7 +9,7 @@ Build the Release Files
 1.c) Update the translation tables in the manual
    cd src
    perl make-translation-tables.pl
-   copy /Y translation-*.xml ..\manual
+   copy /Y translations-*.xml ..\manual
 
 1.d) Commit all changes, "cvs up -APd", and tag the tree VER-X-Y-Z
 1.e) Open up a fresh command prompt and cleanly build everything with:
