@@ -141,7 +141,7 @@ TO TURTLETEST.CHARACTERISTICS
    ; test that the individual turtles maintain their own state
    TRACEINSTRUCTION [ CLEARSCREEN ]
 
-   ; give some unique characteristics to turtle 1
+   ; give some unique characteristics to turtle #0
    TRACEINSTRUCTION [ SETXY 130 15 ]
    TRACEINSTRUCTION [ PENUP        ]
    ; TODO: give more characteristics
@@ -152,7 +152,7 @@ TO TURTLETEST.CHARACTERISTICS
 
    ; test the initial starting conditions of turtle #1
    SIMPLEREPORTTEST [ POS          ] [0 0]
-   SIMPLEREPORTTEST [ PENDOWNP     ] "true
+   SIMPLEREPORTTEST [ PENDOWNP     ] LOCALETRUE
 
    ; give turtle #1 some unique characteritics
    TRACEINSTRUCTION [ SETXY 70 120 ]
@@ -160,7 +160,7 @@ TO TURTLETEST.CHARACTERISTICS
    ; switch back to turtle #0 and test that the characteristics were restored
    TRACEINSTRUCTION [ SETTURTLE 0  ]
    SIMPLEREPORTTEST [ POS          ] [130 15]
-   SIMPLEREPORTTEST [ PENDOWNP     ] "false
+   SIMPLEREPORTTEST [ PENDOWNP     ] LOCALEFALSE
 
 END
 
