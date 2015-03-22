@@ -3183,33 +3183,30 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                 SetMapMode(PaintDeviceContext, MM_ANISOTROPIC);
                 SetWindowOrgEx(PaintDeviceContext, 0, 0, 0);
                 SetWindowExtEx(PaintDeviceContext, BitMapWidth, BitMapHeight, 0);
-                SetViewportOrgEx(PaintDeviceContext, 0, 0, 0);
-                SetViewportExtEx(PaintDeviceContext, (int) (BitMapWidth * zoom), (int) (BitMapHeight * zoom), 0);
 
-                BitBlt(
+                SetViewportOrgEx(
                     PaintDeviceContext,
-                    +dest.x - GetScreenHorizontalScrollPosition() / zoom + xoffset,
-                    -dest.y - GetScreenVerticalScrollPosition() / zoom + yoffset + LL - bitmap->Height,
-                    bitmap->Width,
-                    bitmap->Height,
-                    TempMemDC,
-                    0,
-                    0,
-                    turtle->BitmapRasterMode);
+                    (int) (GetScreenHorizontalScrollPosition() * zoom),
+                    (int) (GetScreenVerticalScrollPosition()   * zoom),
+                    0);
+
+                SetViewportExtEx(
+                    PaintDeviceContext, 
+                    (int) (BitMapWidth  * zoom),
+                    (int) (BitMapHeight * zoom),
+                    0);
             }
-            else
-            {
-                BitBlt(
-                    PaintDeviceContext,
-                    +dest.x + xoffset,
-                    -dest.y + yoffset + LL - bitmap->Height,
-                    bitmap->Width,
-                    bitmap->Height,
-                    TempMemDC,
-                    0,
-                    0,
-                    turtle->BitmapRasterMode);
-            }
+
+            BitBlt(
+                PaintDeviceContext,
+                +dest.x + xoffset,
+                -dest.y + yoffset + LL - bitmap->Height,
+                bitmap->Width,
+                bitmap->Height,
+                TempMemDC,
+                0,
+                0,
+                turtle->BitmapRasterMode);
         }
 
         SelectObject(TempMemDC, oldBitmap2);
