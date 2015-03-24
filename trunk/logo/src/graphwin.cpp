@@ -2761,7 +2761,9 @@ static void SetWrappedPixel(HDC DeviceContext, int X, int Y, RGBCOLOR Pixel)
         }
     }
 
+#ifndef WX_PURE
     SetPixelV(DeviceContext, X, Y, Pixel);
+#endif
 }
 
 static RGBCOLOR GetWrappedPixel(HDC DeviceContext, int X, int Y)
@@ -2791,7 +2793,11 @@ static RGBCOLOR GetWrappedPixel(HDC DeviceContext, int X, int Y)
         }
     }
     
+#ifdef WX_PURE
+    return 0;
+#else
     return GetPixel(DeviceContext, X, Y);
+#endif 
 }
 
 // Copies a bitmap that is associated with a given turtle onto a

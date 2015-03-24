@@ -35,7 +35,7 @@
 
 struct LOGPEN;
 typedef struct __PEN * HPEN;
-typedef struct __DC  * HDC;
+typedef struct __HDC * HDC;
 
 #include "fmslogo.h"
 #include "screen.h"
