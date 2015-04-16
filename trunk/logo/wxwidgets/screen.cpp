@@ -181,9 +181,6 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
     // grab the client area's backing store (a bitmap)
     HDC memoryDC = static_cast<HDC>(m_MemoryDeviceContext->GetHDC());
 
-    //HBITMAP oldBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
-    //m_MemoryDeviceContext->SelectObject(*m_MemoryBitmap);
-
     HPALETTE oldPalette  = NULL;
     HPALETTE oldPalette2 = NULL;
 
@@ -463,8 +460,6 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
                 SRCCOPY);
         }
     }
-
-    //SelectObject(memoryDC, oldBitmap);
 
     // draw the turtles on top of the image
     if (!useBackBuffer)
