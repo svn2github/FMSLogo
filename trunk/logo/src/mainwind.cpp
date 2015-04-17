@@ -478,7 +478,6 @@ OpenDIB(
             RealizePalette(DCHandle);
         }
 
-        HBITMAP oldBitmap  = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(DCHandle, NewBitmapHandle);
 
         /* if either dimension is more than half then put in corner */
@@ -538,7 +537,6 @@ OpenDIB(
             SelectPalette(DCHandle, oldPalette2, FALSE);
         }
 
-        SelectObject(memoryDC, oldBitmap);
         SelectObject(DCHandle, oldBitmap2);
         DeleteDC(DCHandle);
 
@@ -618,8 +616,6 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
 
     // grab the client area's backing store (a bitmap)
     HDC memoryDC = GetMemoryDeviceContext();
-
-    HBITMAP oldBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
 
     HPALETTE oldPalette  = NULL;
 
@@ -802,8 +798,6 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
             sourceRect.bottom - sourceRect.top,
             SRCCOPY);
     }
-
-    SelectObject(memoryDC, oldBitmap);
 
     // draw the turtles on top of the image
     if (!useBackBuffer)

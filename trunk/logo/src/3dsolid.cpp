@@ -1119,7 +1119,6 @@ void TThreeDSolid::View()
 
     // memory
     m_MemDC = GetMemoryDeviceContext();
-    HBITMAP oldBitmap = (HBITMAP) SelectObject(m_MemDC, MemoryBitMap);
 
     if (EnablePalette)
     {
@@ -1140,8 +1139,6 @@ void TThreeDSolid::View()
     {
         SelectPalette(m_MemDC, OldPalette, FALSE);
     }
-
-    SelectObject(m_MemDC, oldBitmap);
 
     ::InvalidateRect(GetScreenWindow(), NULL, FALSE);
 #endif

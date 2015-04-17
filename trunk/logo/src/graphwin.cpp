@@ -1210,8 +1210,6 @@ NODE *lsetpixel(NODE *args)
         // memory
         HDC MemDC = GetMemoryDeviceContext();
 
-        HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
-
         if (EnablePalette)
         {
             OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
@@ -1224,7 +1222,6 @@ NODE *lsetpixel(NODE *args)
             -dest.y + yoffset,
             color);
 
-        SelectObject(MemDC, oldBitmap);
         if (EnablePalette)
         {
             SelectPalette(MemDC, OldPalette, FALSE);
@@ -1307,7 +1304,6 @@ NODE *lpixel(NODE *)
 
     // memory
     HDC MemDC = GetMemoryDeviceContext();
-    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
     if (EnablePalette)
     {
@@ -1352,7 +1348,6 @@ void logofill(bool bOld)
 
     // memory
     HDC MemDC = GetMemoryDeviceContext();
-    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
     if (EnablePalette)
     {
@@ -1377,7 +1372,7 @@ void logofill(bool bOld)
     {
         RGBCOLOR tcolor =
             GetPixel(MemDC, dest.x + xoffset, -dest.y + yoffset) |
-            0x02000000;
+            0x02000000; // for paletted devices
 
         ExtFloodFill(
             MemDC,
@@ -1393,7 +1388,6 @@ void logofill(bool bOld)
     }
 
     SelectObject(MemDC, oldBrush);
-    SelectObject(MemDC, oldBitmap);
 
     DeleteObject(JunkBrush);
 }
@@ -1525,12 +1519,9 @@ void ChangeActiveScreenColor(int Red, int Green, int Blue)
     // writes the screen color
     UpdateErasePen(GetPenStateForSelectedTurtle().Width, scolor);
 
-    HBRUSH TempBrush = CreateBrushIndirect(&ScreenBrush);
 
     // memory
     HDC MemDC = GetMemoryDeviceContext();
-
-    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
     if (EnablePalette)
     {
@@ -1538,15 +1529,14 @@ void ChangeActiveScreenColor(int Red, int Green, int Blue)
         RealizePalette(MemDC);
     }
 
-    FillRect(MemDC, &FullRect, TempBrush);
+    HBRUSH tempBrush = CreateBrushIndirect(&ScreenBrush);
+    FillRect(MemDC, &FullRect, tempBrush);
+    DeleteObject(tempBrush);
 
     if (EnablePalette)
     {
         SelectPalette(MemDC, OldPalette, FALSE);
     }
-
-    SelectObject(MemDC, oldBitmap);
-    DeleteObject(TempBrush);
 
     ::InvalidateRect(GetScreenWindow(), NULL, TRUE);
 #endif
@@ -1696,10 +1686,7 @@ NODE *lbitblock(NODE *arg)
         if (cutWidth != 0 && cutHeight != 0)
         {
             HBRUSH fillBrush = CreateBrushIndirect(&FloodBrush);
-
-            // memory
-            HDC     memDC     = GetMemoryDeviceContext();
-            HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, MemoryBitMap);
+            HDC    memDC     = GetMemoryDeviceContext();
 
             if (EnablePalette)
             {
@@ -1715,7 +1702,6 @@ NODE *lbitblock(NODE *arg)
 
             FillRect(memDC, &memoryRect, fillBrush);
 
-            SelectObject(memDC, oldBitmap);
             if (EnablePalette)
             {
                 SelectPalette(memDC, OldPalette, FALSE);
@@ -2158,8 +2144,6 @@ BitCopyOrCut(NODE *arg, bool IsCut)
             HDC screenDC = GetScreenDeviceContext();
             HDC memDC    = GetMemoryDeviceContext();
 
-            HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, MemoryBitMap);
-
             if (!havebitmap)
             {
                 g_SelectedBitmap->MemoryBitMap = CreateCompatibleBitmap(
@@ -2248,8 +2232,6 @@ BitCopyOrCut(NODE *arg, bool IsCut)
                 draw_turtle(true);
             }
 
-            SelectObject(memDC, oldBitmap);
-
             if (ClipboardIsSelectedBitmap())
             {
                 CopyFromBitmapArrayToClipboard();
@@ -2296,6 +2278,7 @@ NODE *lbitfit(NODE *arg)
             HDC ScreenDC = GetScreenDeviceContext();
             HDC MemDC    = GetMemoryDeviceContext();
 
+            // TODO: Use bitmap device context.
             HBITMAP savedMemBitmap = (HBITMAP) SelectObject(MemDC, g_SelectedBitmap->MemoryBitMap);
 
             HPALETTE savedScreenPalette;
@@ -2418,16 +2401,13 @@ NODE *lbitpaste(NODE *)
                 g_SelectedBitmap->IsValid = false;
             }
 
+            // TODO: use device context in CUTMAP.
             HDC ScreenDC = GetScreenDeviceContext();
-
             HDC TempMemDC = CreateCompatibleDC(ScreenDC);
-            HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
-                TempMemDC,
-                g_SelectedBitmap->MemoryBitMap);
+            SelectObject(TempMemDC, g_SelectedBitmap->MemoryBitMap);
 
             //memory
             HDC MemDC = GetMemoryDeviceContext();
-            HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
             BitBlt(
                 MemDC,
@@ -2440,10 +2420,7 @@ NODE *lbitpaste(NODE *)
                 0,
                 g_BitMode);
 
-            SelectObject(MemDC, oldBitmap);
-
             //screen
-
             draw_turtle(false);
 
             if (zoom_flag)
@@ -2477,7 +2454,6 @@ NODE *lbitpaste(NODE *)
 
             draw_turtle(true);
 
-            SelectObject(TempMemDC, oldBitmap2);
             DeleteDC(TempMemDC);
 
             // Clipboard owns what we paste in not what we converted
@@ -2539,32 +2515,27 @@ NODE *lbitpastetoindex(NODE *arg)
 
         HDC ScreenDC = GetScreenDeviceContext();
 
-        HDC TempMemDC = CreateCompatibleDC(ScreenDC);
-        HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
-            TempMemDC,
-            g_SelectedBitmap->MemoryBitMap);
+        // TODO: Use device context in CUTMAP.
+        HDC sourceDeviceContext = CreateCompatibleDC(ScreenDC);
+        SelectObject(sourceDeviceContext, g_SelectedBitmap->MemoryBitMap);
 
-        //memory
-        HDC     MemDC     = GetMemoryDeviceContext();
-        HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, g_Bitmaps[i].MemoryBitMap);
+        // TODO: Use device context in CUTMAP.
+        HDC destinationDeviceContext = CreateCompatibleDC(ScreenDC);
+        SelectObject(destinationDeviceContext, g_Bitmaps[i].MemoryBitMap);
 
         BitBlt(
-            MemDC,
+            destinationDeviceContext,
             +x,
             g_Bitmaps[i].Height - y - g_SelectedBitmap->Height,
             g_SelectedBitmap->Width,
             g_SelectedBitmap->Height,
-            TempMemDC,
+            sourceDeviceContext,
             0,
             0,
             g_BitMode);
 
-        SelectObject(MemDC, oldBitmap);
-
-        SelectObject(TempMemDC, oldBitmap2);
-        DeleteDC(TempMemDC);
-
-        // Clipboard owns what we paste in not what we converted
+        DeleteDC(sourceDeviceContext);
+        DeleteDC(destinationDeviceContext);
     }
     else
     {
@@ -3439,19 +3410,17 @@ void ibm_clear_screen(void)
     if (tempBrush != NULL)
     {
         // memory
-        HDC     memoryDC  = GetMemoryDeviceContext();
-        HBITMAP oldBitmap = (HBITMAP) ::SelectObject(memoryDC, MemoryBitMap);
+        HDC memoryDC  = GetMemoryDeviceContext();
 
         ::FillRect(memoryDC, &FullRect, tempBrush);
 
         ::SetBkColor(memoryDC, scolor);
         ::SetBkMode(memoryDC, TRANSPARENT);
 
-        ::SelectObject(memoryDC, oldBitmap);
-
         ::DeleteObject(tempBrush);
     }
 
+    // screen
     InvalidateRect(GetScreenWindow(), NULL, FALSE);
 #endif
 }
@@ -3896,8 +3865,7 @@ void label(const char *s)
     }
 
     // memory
-    HDC     MemDC     = GetMemoryDeviceContext();
-    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
+    HDC MemDC = GetMemoryDeviceContext();
 
     if (EnablePalette)
     {
@@ -3934,7 +3902,6 @@ void label(const char *s)
     }
 
     SelectObject(MemDC, oldFont);
-    SelectObject(MemDC, oldBitmap);
 
 
     // screen

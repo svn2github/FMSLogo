@@ -46,8 +46,14 @@ bool IsEditorOpen();
 void OpenEditorToLocationOfFirstError(const char *FileName);
 
 #ifndef WX_PURE
+// Returns the device context for the main drawing surface (the screen).
 HDC GetScreenDeviceContext();
+
+// Returns the device context for MemoryBitMap
 HDC GetMemoryDeviceContext();
+
+// Returns a device context of a bitmap that is distinct from MemoryBitMap,
+// but has the same characteristics (bit depth, width, height, etc.)
 HDC GetBackBufferDeviceContext();
 #endif
 

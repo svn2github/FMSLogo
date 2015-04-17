@@ -824,8 +824,6 @@ void TMainFrame::CMBitmapNew()
     {
         HDC memoryDC = ScreenWindow->GetMemoryDeviceContext();
 
-        ::SelectObject(memoryDC, MemoryBitMap);
-
         ::FillRect(memoryDC, &FullRect, brush);
 
         ::SetBkColor(memoryDC, scolor);
