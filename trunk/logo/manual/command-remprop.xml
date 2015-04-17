@@ -33,10 +33,10 @@ Property names are compared in the same manner as <link linkend="command-equalp"
 <programlisting><userinput>PPROP "plist1 "p1 1
 PPROP "plist1 "p2 2
 SHOW PLIST "plist1</userinput>
-["p2 2 "p1 1]
+[p2 2 p1 1]
 <userinput>REMPROP "plist1 "p1
 SHOW PLIST "plist1</userinput>
-["p2 2]
+[p2 2]
 </programlisting>
 </listitem>
 </varlistentry>

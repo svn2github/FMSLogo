@@ -30,7 +30,7 @@ The output is a copy of the actual property list; changing properties later does
 <programlisting><userinput>PPROP "plist1 "p1 1
 PPROP "plist1 "p2 2
 SHOW PLIST "plist1</userinput>
-["p2 2 "p1 1]
+[p2 2 p1 1]
 </programlisting>
 </listitem>
 </varlistentry>

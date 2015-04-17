@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.33.0 for Microsoft Windows
+FMSLogo Version 6.34.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -13,35 +13,13 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.33.0.exe   - Installer for the mainline Logo environment
-  fmslogo-6.33.0.zip   - ZIP of the mainline Logo environment
-  wxfmslogo-6.33.0.exe - Installer for the Beta wxWidgets-based Logo environment
+  fmslogo-6.34.0.exe   - Installer for the mainline Logo environment
+  fmslogo-6.34.0.zip   - ZIP of the mainline Logo environment
+  wxfmslogo-6.34.0.exe - Installer for the Beta wxWidgets-based Logo environment
 
 II. New features/bugs fixed:
 
-  Changed in 6.33.0
-  o Fix bug #438; The wxWidgets version of FMSLogo no longer opens hundreds of
-    windows when running SELECTBOX from a program loaded on FMSLogo startup.
-  o Fix bug #347; Rotating bitmaps no longer flicker when the turtle moves.
-  o Fix bug #364; Creating a rotating bitmap turtle before loading the bitmap
-    no longer causes FMSLogo to enter an infinite loop.
-  o Fix bug #414; FILES and DIRECTORIES now output in alphabetical order.
-  o Fix bug #435; examples now run on Windows 7.
-  o Fix bug #436; The wxWidgets version of FMSLogo now closes modal windows
-    when WINDOWDELETE is run with an unknown window name as input.
-  o Fix bug #439; READWORD, READLIST, and READRAWLINE can now process the last
-    line of a text file, even if it doesn't end in a newline.
-  o Fix bug #440; The line continuation character (~) is now removed from the
-    the final line in file (same as all the other continuation characters).
-  o Fix bug #445; Rotating bitmap turtles now draw the center of the bitmap as
-    the center of the turtle.
-  o Fix bug #446; Rotating bitmap turtles now anti-alias the upper&left edges
-    of the bitmap in the same way as the lower&right edges.
-  o Fix bug #447; The bitmap on rotating bitmap turtle now wraps around
-    the edges of the world in WRAP mode.
-  o Fix bug #450; The wxWidgets version of FMSLogo now strips trailing newlines
-    from text pasted into the commander input.
-  o Add a Croatian translation.
+  Changed in 6.34.0
   o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
