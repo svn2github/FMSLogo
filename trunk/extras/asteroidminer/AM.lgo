@@ -977,9 +977,6 @@ to hitGemCheck
       if :dist2 < :shipGem2 [
         ; The player grabbed a gem.
 
-        ; Make a cool effect for picking up a gem.
-        playwave "getgem.wav 1
-
         ; Stop any glinting effect on the gem.
         if and :glintStep < (20 * :glintSpeed) :glintGem = repcount [
           make "glintStep :glintStep + 1
@@ -998,6 +995,12 @@ to hitGemCheck
           make "isThrustOn "true
           timerOff
           hideShip
+          
+          ; Play a sound effect for beating the level.
+          playwave "finishlevel.wav 3
+        ][
+          ; Play a sound effect for picking up a gem.
+          playwave "getgem.wav 3
         ]
         make "score :score + :gemWorth
         updateStatusBonus
@@ -1027,7 +1030,7 @@ to hitRockCheck
           ; The ship hit a rock.  Life Over!.
 
           ; Make a cool effect for exploding.
-          playwave "explode.wav 1
+          playwave "explode.wav 3
 
           timerOff
           hideShip
