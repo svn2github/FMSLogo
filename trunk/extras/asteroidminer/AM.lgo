@@ -977,7 +977,7 @@ to hitGemCheck
       if :dist2 < :shipGem2 [
         ; The player grabbed a gem.
 
-        ; Make a cool effect.
+        ; Make a cool effect for picking up a gem.
         playwave "getgem.wav 1
 
         ; Stop any glinting effect on the gem.
@@ -1025,6 +1025,10 @@ to hitRockCheck
 
         if and not :isLeaving  not :shipIsExploding [
           ; The ship hit a rock.  Life Over!.
+
+          ; Make a cool effect for exploding.
+          playwave "explode.wav 1
+
           timerOff
           hideShip
 
