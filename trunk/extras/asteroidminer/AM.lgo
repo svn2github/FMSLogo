@@ -977,6 +977,9 @@ to hitGemCheck
       if :dist2 < :shipGem2 [
         ; The player grabbed a gem.
 
+        ; Make a cool effect.
+        playwave "getgem.wav 1
+
         ; Stop any glinting effect on the gem.
         if and :glintStep < (20 * :glintSpeed) :glintGem = repcount [
           make "glintStep :glintStep + 1
