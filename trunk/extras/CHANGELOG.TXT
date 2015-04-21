@@ -1,6 +1,7 @@
 FMSLogo Extras 1.10
 o asteroidminer
   * Fix misspelling in directory name.
+  * Add sound effects.
   * Add comments to make it easier to understand how the code works.
   * Port to use rotating bitmaps for ship.
   * Various performance improvements.
