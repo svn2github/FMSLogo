@@ -988,7 +988,7 @@ to hitGemCheck
         drawGem :gemPosition "erase
         setitem repcount :gems (list :offScreenX :offScreenY)
         make "numGems :numGems - 1
-        if :numGems = 0 [
+        ifelse :numGems = 0 [
           ; This was the last gem to get.  Level complete!
           make "bonus :timeLeft * 5
           make "isLeaving "true
