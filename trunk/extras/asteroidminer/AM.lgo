@@ -158,6 +158,14 @@ to capturekeyboardinput
                [ processKey keyboardvalue "false ] )
 end
 
+to checkLogoVersion
+   localmake "version splitversion item 2 logoversion
+   if (or (lessp item 1 :version 6) (and equalp item 1 :version 6 lessp item 2 :version 32)) [
+      messagebox [Version Problem] [This version of Asteroid Minor only runs on FMSLogo 6.33.0 or higher.]
+      bye
+   ]
+end
+
 to checkScreen
   make "x item 3 machine
   make "y item 4 machine
@@ -170,34 +178,6 @@ to checkScreen
     bye
   ]
 end
-
-to checkLogoVersion
-   localmake "version splitversion item 2 logoversion
-   if (or (lessp item 1 :version 6) (and equalp item 1 :version 6 lessp item 2 :version 32)) [
-      messagebox [Version Problem] [This version of Asteroid Minor only runs on FMSLogo 6.33.0 or higher.]
-      bye
-   ]
-end
-
-to splitversion :version
-   output splitversion.inner :version "|| []
-end
-
-to splitversion.inner :version :workingversion :accumulatedversion
-
-  if empty? :version [
-     ; We reached the end of the version
-     output reverse fput :workingversion :accumulatedversion
-  ]
-  if equal? first :version ". [
-     ; We reached the version delimiter
-     output splitversion.inner (butfirst :version) "|| (fput :workingversion :accumulatedversion)
-  ]
-
-  output splitversion.inner (butfirst :version) (word :workingversion first :version) :accumulatedversion
-
-end
-
 
 to clearBox
   setxy -:halfDisplayWidth -:halfDisplayHeight
@@ -535,74 +515,6 @@ to drawRock :pos1
   setpensize round :scale
 end
 
-to drawShipExplosion :x :y :d
-
-  repeat :numFrags [
-    setxy :x :y  seth :d
-    rt 360/:numFrags * repcount
-    make "fal item repcount :fragments  ;fal stands for fragment attribute list
-    fd :shipRad * (item 1 :fal) + :expStep * (item 2 :fal)
-    rt (item 3 :fal) + :expStep * (item 4 :fal)
-    pendown
-    fd :expLen * (item 5 :fal) * :scale
-    rt 180
-    fd :expLen * (item 6 :fal) * :scale
-    if (item 7 :fal) = 1 [ rt (item 8 :fal)  fd :expLen * (item 9 :fal) * :scale ]
-    penup
-  ]
-end
-
-to hideShip 
-  repeat 4 [ (setturtle repcount "true) hideturtle ]
-  setturtle 0
-end
-
-to moveShip :x :y :dr
-  local "activeTurtle
-
-  ; Determine which tutrle should be shown
-  ifelse :isThrustOn [
-    ifelse (20 * :glintSpeed) < :blink [
-      ; thursting, with lights
-      make "activeTurtle 4
-    ][
-      ; thursting, no lights
-      make "activeTurtle 2
-    ]
-  ][
-    ifelse (20 * :glintSpeed) < :blink [
-      ; no thurst, with lights
-      make "activeTurtle 3
-    ][
-      ; no thurst, no lights
-      make "activeTurtle 1
-    ]
-  ]
-
-  ; Position the turtle correctly
-  (setturtle :activeturtle "true)
-  setxy :x :y
-  seth  :dr
-  showturtle
-
-  ; Hide the other sprites
-  repeat 4 [ 
-    if :activeTurtle <> repcount [
-      (setturtle repcount "true)
-      hideturtle
-    ]
-  ]
-
-  ; Increment the blink counter
-  ifelse :blink = (40 * :glintSpeed) [ 
-     make "blink 0 
-  ][
-     make "blink :blink + 1
-  ]
-
-  setturtle 0
-end
-
 to drawShip :x :y :d :thickness :action
   ; :x      is xcor of ship
   ; :y      is ycor of ship
@@ -756,6 +668,23 @@ to drawShip.light :lightPos
     ]
   ]
 
+end
+
+to drawShipExplosion :x :y :d
+
+  repeat :numFrags [
+    setxy :x :y  seth :d
+    rt 360/:numFrags * repcount
+    make "fal item repcount :fragments  ;fal stands for fragment attribute list
+    fd :shipRad * (item 1 :fal) + :expStep * (item 2 :fal)
+    rt (item 3 :fal) + :expStep * (item 4 :fal)
+    pendown
+    fd :expLen * (item 5 :fal) * :scale
+    rt 180
+    fd :expLen * (item 6 :fal) * :scale
+    if (item 7 :fal) = 1 [ rt (item 8 :fal)  fd :expLen * (item 9 :fal) * :scale ]
+    penup
+  ]
 end
 
 to drawText :txt :action
@@ -958,6 +887,11 @@ to glint :action
   ]
   penup
 
+end
+
+to hideShip 
+  repeat 4 [ (setturtle repcount "true) hideturtle ]
+  setturtle 0
 end
 
 to hitGemCheck
@@ -1557,6 +1491,52 @@ to menuOn :action
   if and not :action  not :playing [ buttonOn 1 "true ]
 end
 
+to moveShip :x :y :dr
+  local "activeTurtle
+
+  ; Determine which tutrle should be shown
+  ifelse :isThrustOn [
+    ifelse (20 * :glintSpeed) < :blink [
+      ; thursting, with lights
+      make "activeTurtle 4
+    ][
+      ; thursting, no lights
+      make "activeTurtle 2
+    ]
+  ][
+    ifelse (20 * :glintSpeed) < :blink [
+      ; no thurst, with lights
+      make "activeTurtle 3
+    ][
+      ; no thurst, no lights
+      make "activeTurtle 1
+    ]
+  ]
+
+  ; Position the turtle correctly
+  (setturtle :activeturtle "true)
+  setxy :x :y
+  seth  :dr
+  showturtle
+
+  ; Hide the other sprites
+  repeat 4 [ 
+    if :activeTurtle <> repcount [
+      (setturtle repcount "true)
+      hideturtle
+    ]
+  ]
+
+  ; Increment the blink counter
+  ifelse :blink = (40 * :glintSpeed) [ 
+     make "blink 0 
+  ][
+     make "blink :blink + 1
+  ]
+
+  setturtle 0
+end
+
 to obk :d
   bk :d*:open.scale
 end
@@ -1981,70 +1961,6 @@ to playLoop
   ]
 end
 
-to statusDrawBonus
-  ; Paste the word "Bonus:" in the status bar.
-  (setxy (:halfDisplayWidth  - :displayWidth + 4 * :scale) 
-         (:halfDisplayHeight - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
-  setbitindex 8
-  bitpaste
-end
-
-to updateStatusBonus
-
-  ; Save a copy of :timeLeft in case it changes.
-  local "timeLeftCopy
-  make "timeLeftCopy :timeLeft
-
-  ; Move to just after the "Bonus:"
-  (setxy (-:halfDisplayWidth + :bonusLength + 7 * :scale)
-         (:halfDisplayHeight - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
-  seth 90
-
-  repeat count (:timeLeftCopy * 5) [
-    setbitindex (item repcount (:timeLeftCopy * 5) ) + 10
-    bitpaste
-    fd round( 13 * :scale )
-  ]
-
-  sbitblock round( 10 * :scale )+1 round( 18 * :scale )+1
-end
-
-to statusDrawScore
-  ; Paste the word "Score:" in the status bar.
-  (setxy
-      -:scoreLength
-      (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
-  setbitindex 7
-  bitpaste
-end
-
-to updateStatusScore
-
-  ; Paste the score just after the "Score:" text.
-  (setxy
-      (7 * :textScale)
-      (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
-  seth 90
-  repeat count :score [
-    sbitblock round(13 * :scale + :scale)+1 round(18 * :scale + :scale)+1
-    setbitindex (item repcount :score ) + 10
-    bitpaste
-    fd round( 13 * :scale )
-  ]
-
-end
-
-to updateStatusLives
-  ;print extra lives left
-  make "extraLives :lives - 1
-  if :extraLives < 0 [ make "extraLives 0 ]
-  setxy (:halfDisplayWidth - 4) (:halfDisplayHeight - :textBarHeight + ((:textBarHeight-17 *:scale) / 2))
-  seth 270
-  setbitindex 9
-  repeat :extraLives [ fd 20*:scale  bitpaste ]
-  repeat 3 - :extraLives [ fd 20*:scale  sbitblock round( 18 * :scale ) round( 18 * :scale ) ]
-end
-
 to processCommand
   if not :shipIsExploding [
     if :turnLt   [ make "dr :dr - :turnSpeed ]
@@ -2247,6 +2163,42 @@ to shrinkShip
   setShipSize :shipRad
 end
 
+to splitversion :version
+   output splitversion.inner :version "|| []
+end
+
+to splitversion.inner :version :workingversion :accumulatedversion
+
+  if empty? :version [
+     ; We reached the end of the version
+     output reverse fput :workingversion :accumulatedversion
+  ]
+  if equal? first :version ". [
+     ; We reached the version delimiter
+     output splitversion.inner (butfirst :version) "|| (fput :workingversion :accumulatedversion)
+  ]
+
+  output splitversion.inner (butfirst :version) (word :workingversion first :version) :accumulatedversion
+
+end
+
+to statusDrawBonus
+  ; Paste the word "Bonus:" in the status bar.
+  (setxy (:halfDisplayWidth  - :displayWidth + 4 * :scale) 
+         (:halfDisplayHeight - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
+  setbitindex 8
+  bitpaste
+end
+
+to statusDrawScore
+  ; Paste the word "Score:" in the status bar.
+  (setxy
+      -:scoreLength
+      (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
+  setbitindex 7
+  bitpaste
+end
+
 to tbk :dist
   bk :dist*:textScale
 end
@@ -2266,6 +2218,53 @@ to timerOn
   make "timer "true
 end
 
+to updateStatusBonus
+
+  ; Save a copy of :timeLeft in case it changes.
+  local "timeLeftCopy
+  make "timeLeftCopy :timeLeft
+
+  ; Move to just after the "Bonus:"
+  (setxy (-:halfDisplayWidth + :bonusLength + 7 * :scale)
+         (:halfDisplayHeight - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
+  seth 90
+
+  repeat count (:timeLeftCopy * 5) [
+    setbitindex (item repcount (:timeLeftCopy * 5) ) + 10
+    bitpaste
+    fd round( 13 * :scale )
+  ]
+
+  sbitblock round( 10 * :scale )+1 round( 18 * :scale )+1
+end
+
+to updateStatusLives
+  ;print extra lives left
+  make "extraLives :lives - 1
+  if :extraLives < 0 [ make "extraLives 0 ]
+  setxy (:halfDisplayWidth - 4) (:halfDisplayHeight - :textBarHeight + ((:textBarHeight-17 *:scale) / 2))
+  seth 270
+  setbitindex 9
+  repeat :extraLives [ fd 20*:scale  bitpaste ]
+  repeat 3 - :extraLives [ fd 20*:scale  sbitblock round( 18 * :scale ) round( 18 * :scale ) ]
+end
+
+to updateStatusScore
+
+  ; Paste the score just after the "Score:" text.
+  (setxy
+      (7 * :textScale)
+      (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
+  seth 90
+  repeat count :score [
+    sbitblock round(13 * :scale + :scale)+1 round(18 * :scale + :scale)+1
+    setbitindex (item repcount :score ) + 10
+    bitpaste
+    fd round( 13 * :scale )
+  ]
+
+end
+
 to waitStop :delay
   ; An interuptable alternative to "WAIT"
   repeat :delay [
@@ -2275,4 +2274,4 @@ to waitStop :delay
   ]
 end
 
-make "startup [ rungame ]
+Make "startup [rungame]
