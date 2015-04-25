@@ -23,7 +23,7 @@ TOINCLUDE= \
 $(SOURCEZIP) :
 	$(RM) $(shell /usr/bin/find . -iname '*~')
 	$(RM) $(shell /usr/bin/find . -iname '*.bak')
-	$(RM) asteriodminer/AM_Hiscores
+	$(RM) asteroidminer/AM_Hiscores
 	$(RM) logoui/transcript.lgo
 	cd .. && zip -r -9 -X $(SOURCEZIP) $(addprefix extras/,$(TOINCLUDE)) -x */.cvsignore */CVS/ */CVS/* */*/.cvsignore */*/CVS/ */*/CVS/* */*/*/CVS/
 	mv ../$(SOURCEZIP) .
