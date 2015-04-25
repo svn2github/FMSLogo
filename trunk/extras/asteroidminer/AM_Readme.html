@@ -19,6 +19,8 @@ Asteroid Miner(Tiny)   (shortcut for the smallest size that works)<br>
 Asteroid Miner(Small)  (shortcut intended for 640x480 monitors)<br>
 Asteroid Miner(Med)    (shortcut intended for 800x600 monitors)<br>
 Asteroid Miner(Large)  (shortcut intended for 1024x768 monitors)<br>
+explode.wav<br>
+finishlevel.wav<br>
 getgem.wav<br>
 
 <h2>Installing</h2>
@@ -29,13 +31,12 @@ getgem.wav<br>
 <li>The first time you play, press "I" or use the mouse to expand the menu and read the instructions.</li>
 </ol>
 
-<h2>Linux and Wine</h2>
+<h2>GNU/Linux and Wine</h2>
 <p>
-I've tested FMSLogo-6.33.0 under Wine-0.9.36, and it works well enough to play the game!
-The editor is still kind of unstable, and the help menu doesn't work, but the most important parts are there, and reasonably fast.
+I've tested FMSLogo-6.33.0 under wine-1.7.40 on Fedora Core 20 and it works well enough to play the game!
 One thing will have to be changed: the program sets the font to Times New Roman, which probably didn't come with your Linux distro.
 This will cause the game to seem to lock up while it prints out a list of fonts you <i>do</i> have.
-Either install the Times New Roman font, or change the program to use a font you have (on line 1449).
+Either install the Times New Roman font, or change the program to use a font you have.
 You will also have to create your own shortcut.
 I made a shortcut that launches "wine /opt/fmslogo.exe -h 660 -w 924 -f -l AM.lgo".
 You can use whatever you want for width and height, -w and -h, as long as the width is 1.4 times the height.
