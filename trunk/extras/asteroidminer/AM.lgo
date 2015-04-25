@@ -160,7 +160,7 @@ end
 
 to checkLogoVersion
    localmake "version splitversion item 2 logoversion
-   if (or (lessp item 1 :version 6) (and equalp item 1 :version 6 lessp item 2 :version 32)) [
+   if (or (lessp item 1 :version 6) (and equalp item 1 :version 6 lessp item 2 :version 33)) [
       messagebox [Version Problem] [This version of Asteroid Minor only runs on FMSLogo 6.33.0 or higher.]
       bye
    ]
