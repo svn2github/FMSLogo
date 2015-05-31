@@ -16,7 +16,7 @@
 Outputs a list that describes the characteristics of the machine.
 The list has the following format:
 
-<programlisting>[IsWindows Wordsize BitmapWidth BitmapHeight IsPaletteEnable WindowsVersionLoWord WindowsVersionHiWord WorkingAreaWidth WorkingAreaHeight DesktopWidth DesktopHeight WindowWidth WindowHeight]</programlisting>
+<programlisting>[IsWindows Wordsize BitmapWidth BitmapHeight IsPaletteEnable WindowsVersionMajor WindowsVersionMinor WorkingAreaWidth WorkingAreaHeight DesktopWidth DesktopHeight WindowWidth WindowHeight]</programlisting>
 
 Where the meaning of each member is given by the table below.
 
@@ -26,19 +26,68 @@ Where the meaning of each member is given by the table below.
       <row><entry>Member</entry> <entry>Meaning</entry></row>
     </thead>
     <tbody>
-      <row><entry>IsWindows</entry>            <entry>1, if this is Microsoft Windows.  0, otherwise.</entry></row>
-      <row><entry>Wordsize</entry>             <entry>The number of bits in a machine word.</entry></row>
-      <row><entry>BitmapWidth</entry>          <entry>The width of the drawable area on the &PRODUCTNAME; Screen, in pixels.</entry></row>
-      <row><entry>BitmapHeight</entry>         <entry>The height of the drawable area on the &PRODUCTNAME; Screen, in pixels.</entry></row>
-      <row><entry>IsPaletteEnabled</entry>     <entry>1, if a palette is enabled, 0, otherwise.</entry></row>
-      <row><entry>WindowsVersionLoWord</entry> <entry>The minor version of Windows.</entry></row>
-      <row><entry>WindowsVersionHiWord</entry> <entry>The major version of Windows.</entry></row>
-      <row><entry>WorkingAreaWidth</entry>     <entry>The width of the part of the desktop that is not obscured by the taskbar, in pixels.</entry></row>
-      <row><entry>WorkingAreaHeight</entry>    <entry>The height of the part of the desktop that is not obscured by the taskbar, in pixels.</entry></row>
-      <row><entry>DesktopWidth</entry>         <entry>The width of the whole desktop, in pixels.</entry></row>
-      <row><entry>DesktopHeight</entry>        <entry>The height of the whole desktop, in pixels.</entry></row>
-      <row><entry>WindowWidth</entry>          <entry>The width of the &PRODUCTNAME; screen window, in pixels.</entry></row>
-      <row><entry>WindowHeight</entry>         <entry>The height of the &PRODUCTNAME; screen window, in pixels.</entry></row>
+      <row>
+        <entry>IsWindows</entry>
+        <entry>1, if this is Microsoft Windows.  0, otherwise.</entry>
+      </row>
+      <row>
+        <entry>Wordsize</entry>
+        <entry>
+            The number of bits in a machine word.
+            If the version of &PRODUCTNAME; was compiled for a 32-bit machine, this will be 32 even when running on a 64-bit Windows.
+        </entry>
+      </row>
+      <row>
+        <entry>BitmapWidth</entry>
+        <entry>The width of the drawable area on the &PRODUCTNAME; Screen, in pixels.</entry>
+      </row>
+      <row>
+        <entry>BitmapHeight</entry>
+        <entry>The height of the drawable area on the &PRODUCTNAME; Screen, in pixels.</entry>
+      </row>
+      <row>
+        <entry>IsPaletteEnabled</entry>
+        <entry>1, if a palette is enabled, 0, otherwise.</entry>
+      </row>
+      <row>
+        <entry>WindowsVersionMajor</entry>
+        <entry>The major version of Windows.</entry>
+      </row>
+      <row>
+        <entry>WindowsVersionMinor</entry>
+        <entry>The minor version of Windows.</entry>
+      </row>
+      <row>
+        <entry>WorkingAreaWidth</entry>
+        <entry>The width of the part of the desktop that is not obscured by the taskbar, in pixels.</entry>
+      </row>
+      <row>
+        <entry>WorkingAreaHeight</entry>
+        <entry>The height of the part of the desktop that is not obscured by the taskbar, in pixels.</entry>
+      </row>
+      <row>
+        <entry>DesktopWidth</entry>
+        <entry>The width of the whole desktop, in pixels.</entry>
+      </row>
+      <row>
+        <entry>DesktopHeight</entry>
+        <entry>The height of the whole desktop, in pixels.</entry>
+      </row>
+      <row>
+         <entry>WindowWidth</entry>
+         <entry>
+           The width of the &PRODUCTNAME; screen window, in pixels.
+           This includes the window frame, the vertical scollbar, etc.
+         </entry>
+      </row>
+      <row>
+         <entry>WindowHeight</entry>
+         <entry>
+           The height of the &PRODUCTNAME; screen window, in pixels.
+           This includes the window frame, the title bar, the menu bar, the horizontal scrollbar, etc.
+           If the commander window is docked, this also includes the thickness of the splitter and the commander.
+         </entry>
+      </row>
     </tbody>
   </tgroup>
 </informaltable>
