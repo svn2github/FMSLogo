@@ -19,10 +19,24 @@ TO DRAWFRAME
   SETSCREENCOLOR "black
 
   ; Draw a frame around the edge of the screen window.
-  LOCALMAKE "right    ((ITEM 3 MACHINE) / 2) - 1
-  LOCALMAKE "left    -((ITEM 3 MACHINE) / 2)
-  LOCALMAKE "top      ((ITEM 4 MACHINE) / 2)
-  LOCALMAKE "bottom  -((ITEM 4 MACHINE) / 2) + 1
+  LOCAL [left right top bottom]
+  LOCALMAKE "width  ITEM 3 MACHINE
+  LOCALMAKE "height ITEM 4 MACHINE
+  IFELSE EQUAL? 0 MODULO :width 2 [
+    MAKE "right   (:width / 2) - 1
+    MAKE "left   -(:width / 2)
+  ][
+    MAKE "right   (:width - 1) / 2
+    MAKE "left   -:right
+  ]
+
+  IFELSE EQUAL? 0 MODULO :height 2 [
+    MAKE "top      :height / 2
+    MAKE "bottom  -(:height / 2) + 1
+  ][
+    MAKE "top      (:height - 1) / 2
+    MAKE "bottom  -:top
+  ]
 
   PENUP
   SETXY :left :top
