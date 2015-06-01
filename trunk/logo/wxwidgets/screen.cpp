@@ -48,7 +48,13 @@ CScreen::CScreen(
     m_XScrollRatio(0.5),
     m_YScrollRatio(0.5)
 {
-    if (!bFixed)
+    if (bFixed)
+    {
+        // Set the screen client area to match what the user passed
+        // in on the command line.
+        SetClientSize(logicalScreenWidth, logicalScreenHeight);
+    }
+    else
     {
         // Prepare the scrollbars
         SetVirtualSize(logicalScreenWidth, logicalScreenHeight);

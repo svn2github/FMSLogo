@@ -510,15 +510,30 @@ CMainFrame::CMainFrame(
 
     m_Screen = new CScreen(m_Splitter, ScreenWidth, ScreenHeight);
 
-    if (bFixed) 
-    {
-        // Fix up the frame window's size so that the screen's client
-        // area matches what the client passed in on the command line.
-        SetClientSize(ScreenWidth, ScreenHeight);
-    }
-
     m_RealCommander = new CCommander(m_Splitter);
     DockCommanderWindow();
+
+    if (bFixed)
+    {
+        // HACK: fix up the frame window's size so that the screen's
+        // size matches what the client passed in on the command line.
+        // There MUST be a simpler/better way, but I do not know
+        // how to set the size of the screen client area directly.
+        wxSize screenRectangle = m_Screen->GetClientSize();
+        int deltaX = ScreenWidth  - screenRectangle.GetWidth();
+        int deltaY = ScreenHeight - screenRectangle.GetHeight();
+
+        wxSize frameRectangle = GetClientSize();
+        SetClientSize(
+            frameRectangle.GetWidth() + deltaX,
+            frameRectangle.GetHeight() + deltaY);
+
+        // REVISIT: I don't know why, but the sash position needs
+        // to be two more than it should.  This might be due to
+        // a border or some other factor.
+        const int UNKNOWN_OFFSET = 2;
+        m_Splitter->SetSashPosition(ScreenHeight + UNKNOWN_OFFSET);
+    }
 
     m_Screen->Show();
     m_Commander->Show();
@@ -558,7 +573,7 @@ void CMainFrame::UndockCommanderWindow()
             // hold just the screen.
             int mainFrameWidth;
             int mainFrameHeight;
-            GetSize(&mainFrameWidth, &mainFrameHeight);
+            GetClientSize(&mainFrameWidth, &mainFrameHeight);
 
             int commanderWidth;
             int commanderHeight;
@@ -569,11 +584,11 @@ void CMainFrame::UndockCommanderWindow()
                 m_Splitter->GetSashSize();
 
             // Use the computed height
-            SetSize(mainFrameWidth, newHeight);
+            SetClientSize(mainFrameWidth, newHeight);
         }
         else
         {
-            // Save the current height
+            // Save the current height.
             // Restore the commander window's height.
             SetConfigurationInt(
                 "CommanderHeight",
@@ -629,8 +644,7 @@ void CMainFrame::DockCommanderWindow()
             // so we must grow the main window to hold the commander window.
             int mainFrameWidth;
             int mainFrameHeight;
-            GetSize(&mainFrameWidth, &mainFrameHeight);
-
+            GetClientSize(&mainFrameWidth, &mainFrameHeight);
 
             // grow the main window to hold the splitter and the commander
             const int newHeight =
@@ -638,7 +652,7 @@ void CMainFrame::DockCommanderWindow()
                 m_Splitter->GetSashSize() +
                 commanderWindowHeight;
 
-            SetSize(mainFrameWidth, newHeight);
+            SetClientSize(mainFrameWidth, newHeight);
         }
         else
         {
@@ -657,16 +671,9 @@ void CMainFrame::DockCommanderWindow()
             }
         }
 
-        int clientWidth;
-        int clientHeight;
-        GetClientSize(&clientWidth, &clientHeight);
-
         m_RealCommander->Reparent(m_Splitter);
-        m_Splitter->SplitHorizontally(m_Screen, m_RealCommander);
 
-        int splitterWidth = m_Splitter->GetSashSize();
-        int splitterPosition = clientHeight - commanderWindowHeight - splitterWidth;
-        m_Splitter->SetSashPosition(splitterPosition);
+        m_Splitter->SplitHorizontally(m_Screen, m_RealCommander, -commanderWindowHeight);
 
         m_RealCommander->GetHistory()->ScrollToBottom();
 
