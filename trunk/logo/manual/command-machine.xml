@@ -16,21 +16,29 @@
 Outputs a list that describes the characteristics of the machine.
 The list has the following format:
 
-<programlisting>[IsWindows Wordsize BitmapWidth BitmapHeight IsPaletteEnable WindowsVersionMajor WindowsVersionMinor WorkingAreaWidth WorkingAreaHeight DesktopWidth DesktopHeight WindowWidth WindowHeight]</programlisting>
+<programlisting>[IsWindows Wordsize BitmapWidth BitmapHeight IsPaletteEnable
+WindowsVersionMajor WindowsVersionMinor WorkingAreaWidth WorkingAreaHeight
+DesktopWidth DesktopHeight WindowWidth WindowHeight]</programlisting>
 
 Where the meaning of each member is given by the table below.
 
 <informaltable frame='all'>
-  <tgroup cols='2'>
+  <tgroup cols='3'>
     <thead>
-      <row><entry>Member</entry> <entry>Meaning</entry></row>
+      <row>
+        <entry>Item</entry>
+        <entry>Name</entry>
+        <entry>Meaning</entry>
+      </row>
     </thead>
     <tbody>
       <row>
+        <entry>1</entry>
         <entry>IsWindows</entry>
         <entry>1, if this is Microsoft Windows.  0, otherwise.</entry>
       </row>
       <row>
+        <entry>2</entry>
         <entry>Wordsize</entry>
         <entry>
             The number of bits in a machine word.
@@ -38,42 +46,52 @@ Where the meaning of each member is given by the table below.
         </entry>
       </row>
       <row>
+        <entry>3</entry>
         <entry>BitmapWidth</entry>
         <entry>The width of the drawable area on the &PRODUCTNAME; Screen, in pixels.</entry>
       </row>
       <row>
+        <entry>4</entry>
         <entry>BitmapHeight</entry>
         <entry>The height of the drawable area on the &PRODUCTNAME; Screen, in pixels.</entry>
       </row>
       <row>
+        <entry>5</entry>
         <entry>IsPaletteEnabled</entry>
         <entry>1, if a palette is enabled, 0, otherwise.</entry>
       </row>
       <row>
+        <entry>6</entry>
         <entry>WindowsVersionMajor</entry>
         <entry>The major version of Windows.</entry>
       </row>
       <row>
+        <entry>7</entry>
         <entry>WindowsVersionMinor</entry>
         <entry>The minor version of Windows.</entry>
       </row>
       <row>
+        <entry>8</entry>
         <entry>WorkingAreaWidth</entry>
         <entry>The width of the part of the desktop that is not obscured by the taskbar, in pixels.</entry>
       </row>
       <row>
+        <entry>9</entry>
         <entry>WorkingAreaHeight</entry>
         <entry>The height of the part of the desktop that is not obscured by the taskbar, in pixels.</entry>
       </row>
       <row>
+        <entry>10</entry>
         <entry>DesktopWidth</entry>
         <entry>The width of the whole desktop, in pixels.</entry>
       </row>
       <row>
+        <entry>11</entry>
         <entry>DesktopHeight</entry>
         <entry>The height of the whole desktop, in pixels.</entry>
       </row>
       <row>
+        <entry>12</entry>
          <entry>WindowWidth</entry>
          <entry>
            The width of the &PRODUCTNAME; screen window, in pixels.
@@ -81,6 +99,7 @@ Where the meaning of each member is given by the table below.
          </entry>
       </row>
       <row>
+        <entry>13</entry>
          <entry>WindowHeight</entry>
          <entry>
            The height of the &PRODUCTNAME; screen window, in pixels.
