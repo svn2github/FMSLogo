@@ -60,6 +60,7 @@ LOAD "pensize.lgo
 LOAD "pixel.lgo
 LOAD "screen.lgo
 LOAD "misc.lgo
+LOAD "machine.lgo
 LOAD "network.lgo
 LOAD "controlflow.lgo
 LOAD "fence.lgo
@@ -241,6 +242,7 @@ TO TESTALL
   TIMETEST             ; from time.lgo
   SHELLTEST            ; from shell.lgo
   DIRECTORYTEST        ; from directory.lgo
+  MACHINETEST          ; from machine.lgo
   MISCTEST             ; from misc.lgo
   FENCETEST            ; from fence.lgo
   WRAPTEST             ; from wrap.lgo
