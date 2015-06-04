@@ -17,8 +17,8 @@ TO COMMANDLINETEST.RUNTEST :commandline [:expectedwidth 1000] [:expectedheight 1
    ; This is a helper that spawns an instance of FMSLogo with
    ; the given string.
    ; It is expected that this program will create a file called
-   ; "commandline-createfile.txt" whose contents are the width and
-   ; height of the screen (the -W and -H values).
+   ; "commandline-createfile.txt" whose contents are two numbers,
+   ; each on their own line.
 
    ; erase the file, if it exists
    TRACEINSTRUCTION [ERASEFILE "commandline-createfile.txt]
@@ -109,9 +109,131 @@ TO COMMANDLINETEST.WIDTHHEIGHT
 
 END
 
+TO COMMANDLINETEST.PARAMETER.F.RUNTEST :script :width :height
+   LOCALMAKE "scriptfile "commandlinetest-script.lgo
+
+   IF FILEEXISTS :scriptfile [ ERASEFILE :scriptfile ]
+
+   WRITEBINARYDATA :scriptfile :script
+
+   (COMMANDLINETEST.RUNTEST
+      (list "fmslogo "-H :height "-W :width "-F "-L :scriptfile)
+      :width
+      :height)
+
+   ERASEFILE :scriptfile
+END
+
+TO COMMANDLINETEST.PARAMETER.F
+
+   ; Test the screen size (even width/height)
+   COMMANDLINETEST.PARAMETER.F.RUNTEST (WORD
+       "|LOAD "testlib.lgo\n|
+       "|\n|
+       "|TO RUNTEST\n|
+       "|  ; Write out the screen window size\n|
+       "|  WRITEBINARYDATA "commandline-createfile.txt (WORD\n|
+       "|     ITEM 14 MACHINE CHAR 10 ; screen width  - newline\n|
+       "|     ITEM 15 MACHINE CHAR 10 ; screen height - newline\n|
+       "|  )\n|
+       "|END\n|
+       "|MAKE "startup [RUNTEST BYE]\n|
+   ) 200 300
+
+   ; Test the screen size (odd width/height)
+   COMMANDLINETEST.PARAMETER.F.RUNTEST (WORD
+       "|LOAD "testlib.lgo\n|
+       "|\n|
+       "|TO RUNTEST\n|
+       "|  ; Write out the screen window size\n|
+       "|  WRITEBINARYDATA "commandline-createfile.txt (WORD\n|
+       "|     ITEM 14 MACHINE CHAR 10 ; screen width  - newline\n|
+       "|     ITEM 15 MACHINE CHAR 10 ; screen height - newline\n|
+       "|  )\n|
+       "|END\n|
+       "|MAKE "startup [RUNTEST BYE]\n|
+   ) 201 301
+
+   ; Test when going from docked to undocked commander (even width/height)
+   COMMANDLINETEST.PARAMETER.F.RUNTEST (WORD
+       "|LOAD "testlib.lgo\n|
+       "|\n|
+       "|TO RUNTEST\n|
+       "|  FULLSCREEN\n|
+       "|  ; Write out the screen window size\n|
+       "|  WRITEBINARYDATA "commandline-createfile.txt (WORD\n|
+       "|     ITEM 14 MACHINE CHAR 10 ; screen width  - newline\n|
+       "|     ITEM 15 MACHINE CHAR 10 ; screen height - newline\n|
+       "|  )\n|
+       "|END\n|
+       "|MAKE "startup [RUNTEST BYE]\n|
+   ) 200 300
+
+   ; Test when going from docked to undocked commander (odd width/height)
+   COMMANDLINETEST.PARAMETER.F.RUNTEST (WORD
+       "|LOAD "testlib.lgo\n|
+       "|\n|
+       "|TO RUNTEST\n|
+       "|  FULLSCREEN\n|
+       "|  ; Write out the screen window size\n|
+       "|  WRITEBINARYDATA "commandline-createfile.txt (WORD\n|
+       "|     ITEM 14 MACHINE CHAR 10 ; screen width  - newline\n|
+       "|     ITEM 15 MACHINE CHAR 10 ; screen height - newline\n|
+       "|  )\n|
+       "|END\n|
+       "|MAKE "startup [RUNTEST BYE]\n|
+   ) 201 301
+
+   ; Test when going from undocked to docked commander (even width/height)
+   COMMANDLINETEST.PARAMETER.F.RUNTEST (WORD
+       "|LOAD "testlib.lgo\n|
+       "|\n|
+       "|TO RUNTEST\n|
+       "|  REPEAT 5 [ FULLSCREEN SPLITSCREEN ]\n|
+       "|  ; Write out the screen window size\n|
+       "|  WRITEBINARYDATA "commandline-createfile.txt (WORD\n|
+       "|     ITEM 14 MACHINE CHAR 10 ; screen width  - newline\n|
+       "|     ITEM 15 MACHINE CHAR 10 ; screen height - newline\n|
+       "|  )\n|
+       "|END\n|
+       "|MAKE "startup [RUNTEST BYE]\n|
+   ) 200 300
+
+   ; Test when going from undocked to docked (odd width/height)
+   COMMANDLINETEST.PARAMETER.F.RUNTEST (WORD
+       "|LOAD "testlib.lgo\n|
+       "|\n|
+       "|TO RUNTEST\n|
+       "|  REPEAT 5 [ FULLSCREEN SPLITSCREEN ]\n|
+       "|  ; Write out the screen window size\n|
+       "|  WRITEBINARYDATA "commandline-createfile.txt (WORD\n|
+       "|     ITEM 14 MACHINE CHAR 10 ; screen width  - newline\n|
+       "|     ITEM 15 MACHINE CHAR 10 ; screen height - newline\n|
+       "|  )\n|
+       "|END\n|
+       "|MAKE "startup [RUNTEST BYE]\n|
+   ) 201 301
+
+   ; Test when the width/height is the desktop size
+   COMMANDLINETEST.PARAMETER.F.RUNTEST (WORD
+       "|LOAD "testlib.lgo\n|
+       "|\n|
+       "|TO RUNTEST\n|
+       "|  ; Write out the screen window size\n|
+       "|  WRITEBINARYDATA "commandline-createfile.txt (WORD\n|
+       "|     ITEM 14 MACHINE CHAR 10 ; screen width  - newline\n|
+       "|     ITEM 15 MACHINE CHAR 10 ; screen height - newline\n|
+       "|  )\n|
+       "|END\n|
+       "|MAKE "startup [RUNTEST BYE]\n|
+   ) (ITEM 10 MACHINE) (ITEM 11 MACHINE)
+
+END
+
 TO COMMANDLINETEST
    COMMANDLINETEST.ALREADYRUNNING
    COMMANDLINETEST.PARAMETER.L
+   COMMANDLINETEST.PARAMETER.F
    COMMANDLINETEST.PARAMETER.FILENAME
    COMMANDLINETEST.WIDTHHEIGHT
 END
