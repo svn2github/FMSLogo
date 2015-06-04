@@ -443,7 +443,7 @@ bool CFmsLogo::OnInit()
     {
         if (g_CustomHeight)
         {
-            // if height specified santize it against screen height
+            // if height specified sanitize it against screen height
             h = std::min(h, maxHeight);
         }
         else
@@ -454,7 +454,7 @@ bool CFmsLogo::OnInit()
 
         if (g_CustomWidth)
         {
-            // if width specified santize it against screen width
+            // if width specified sanitize it against screen width
             w = std::min(w, maxWidth);
         }
         else
@@ -469,7 +469,7 @@ bool CFmsLogo::OnInit()
     }
     else
     {
-        // sanatize window size we would like against screen size
+        // sanitize window size we would like against screen size
         w = std::min(w, maxWidth);
         h = std::min(h, (int) (maxHeight * ScreenSz));
 
@@ -479,7 +479,7 @@ bool CFmsLogo::OnInit()
         h = std::max(h, 200);
         w = std::max(w, 200);
 
-        // sanatize against screen size
+        // sanitize against screen size
         checkwindow(&x, &y, &w, &h);
     }
 
