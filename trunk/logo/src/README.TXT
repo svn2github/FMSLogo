@@ -22,6 +22,7 @@ II. New features/bugs fixed:
   Changed in 6.34.0
   o Fix bug #448; The wxWidgets version of FMSLogo now opens to the correct
     size when -W -H and -F are given on the command line.
+  o Extend MACHINE to output the dimensions of the screen window's client area.
   o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see

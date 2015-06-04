@@ -16,9 +16,10 @@
 Outputs a list that describes the characteristics of the machine.
 The list has the following format:
 
-<programlisting>[IsWindows Wordsize BitmapWidth BitmapHeight IsPaletteEnable
-WindowsVersionMajor WindowsVersionMinor WorkingAreaWidth WorkingAreaHeight
-DesktopWidth DesktopHeight WindowWidth WindowHeight]</programlisting>
+<programlisting>[IsWindows Wordsize BitmapWidth BitmapHeight
+IsPaletteEnable WindowsVersionMajor WindowsVersionMinor
+WorkingAreaWidth WorkingAreaHeight DesktopWidth DesktopHeight
+OuterWindowWidth OuterWindowHeight InnerWindowWidth InnerWindowHeight]</programlisting>
 
 Where the meaning of each member is given by the table below.
 
@@ -92,7 +93,7 @@ Where the meaning of each member is given by the table below.
       </row>
       <row>
         <entry>12</entry>
-         <entry>WindowWidth</entry>
+         <entry>OuterWindowWidth</entry>
          <entry>
            The width of the &PRODUCTNAME; screen window, in pixels.
            This includes the window frame, the vertical scollbar, etc.
@@ -100,11 +101,27 @@ Where the meaning of each member is given by the table below.
       </row>
       <row>
         <entry>13</entry>
-         <entry>WindowHeight</entry>
+         <entry>OuterWindowHeight</entry>
          <entry>
            The height of the &PRODUCTNAME; screen window, in pixels.
            This includes the window frame, the title bar, the menu bar, the horizontal scrollbar, etc.
            If the commander window is docked, this also includes the thickness of the splitter and the commander.
+         </entry>
+      </row>
+      <row>
+        <entry>14</entry>
+         <entry>InnerWindowWidth</entry>
+         <entry>
+           The width of the client area of the &PRODUCTNAME; screen window, in pixels.
+           This only includes the drawable surface, not the window frame, scrollbar, etc.
+         </entry>
+      </row>
+      <row>
+        <entry>15</entry>
+         <entry>InnerWindowHeight</entry>
+         <entry>
+           The height of the client area of the &PRODUCTNAME; screen window, in pixels.
+           This only includes the drawable surface, not the window frame, scrollbar, etc.
          </entry>
       </row>
     </tbody>
@@ -118,7 +135,7 @@ Where the meaning of each member is given by the table below.
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>SHOW MACHINE</userinput>
-[1 32 1000 1000 1 5 0 1024 740 1024 768 1008 516]
+[1 32 1000 1000 0 5 1 1280 772 1280 800 1035 594 1027 251]
 </programlisting>
 </listitem>
 </varlistentry>

@@ -3805,8 +3805,12 @@ NODE *lmachine(NODE *)
 
 
     // Get FMSLogo's window dimensions
-    RECT wrect;
-    GetWindowRect(GetMainWindow(), &wrect);
+    RECT mainWindowRect;
+    GetWindowRect(GetMainWindow(), &mainWindowRect);
+
+    // Get Screen window's dimensions
+    RECT screenWindowRect;
+    GetWindowRect(GetScreenWindow(), &screenWindowRect);
 
     // return a list with system specific information
     return
@@ -3821,9 +3825,11 @@ NODE *lmachine(NODE *)
         cons(make_intnode((FIXNUM) workingAreaHeight),
         cons(make_intnode((FIXNUM) ScreenWidth),
         cons(make_intnode((FIXNUM) ScreenHeight),
-        cons(make_intnode((FIXNUM) (wrect.right - wrect.left)),
-        cons(make_intnode((FIXNUM) (wrect.bottom - wrect.top)),
-        NIL)))))))))))));
+        cons(make_intnode((FIXNUM) (mainWindowRect.right  - mainWindowRect.left)),
+        cons(make_intnode((FIXNUM) (mainWindowRect.bottom - mainWindowRect.top)),
+        cons(make_intnode((FIXNUM) (screenWindowRect.right  - screenWindowRect.left)),
+        cons(make_intnode((FIXNUM) (screenWindowRect.bottom - screenWindowRect.top)),
+        NIL)))))))))))))));
 #endif
 }
 
