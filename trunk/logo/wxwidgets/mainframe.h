@@ -205,6 +205,7 @@ private:
         const char * FileName
         );
 
+    void ResizeToFitScreen();
     void InitializePrinter();
 
     // Member variables
@@ -214,6 +215,9 @@ private:
     CStatusDialog    * m_StatusDialog;
     CSetPenSize      * m_SetPenSizeDialog;
     wxSplitterWindow * m_Splitter;
+
+    const int m_OriginalWidth;
+    const int m_OriginalHeight;
 
     bool  m_CommanderIsDocked;
     bool  m_IsNewFile;

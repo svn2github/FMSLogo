@@ -400,6 +400,8 @@ CMainFrame::CMainFrame(
       m_StatusDialog(NULL),
       m_SetPenSizeDialog(NULL),
       m_Splitter(NULL),
+      m_OriginalWidth(ScreenWidth),
+      m_OriginalHeight(ScreenHeight),
       m_CommanderIsDocked(false),
       m_IsNewFile(true),
       m_IsNewBitmap(true),
@@ -513,27 +515,6 @@ CMainFrame::CMainFrame(
     m_RealCommander = new CCommander(m_Splitter);
     DockCommanderWindow();
 
-    if (bFixed)
-    {
-        // HACK: fix up the frame window's size so that the screen's
-        // size matches what the client passed in on the command line.
-        // There MUST be a simpler/better way, but I do not know
-        // how to set the size of the screen client area directly.
-        wxSize screenRectangle = m_Screen->GetClientSize();
-        int deltaX = ScreenWidth  - screenRectangle.GetWidth();
-        int deltaY = ScreenHeight - screenRectangle.GetHeight();
-
-        wxSize frameRectangle = GetClientSize();
-        SetClientSize(
-            frameRectangle.GetWidth() + deltaX,
-            frameRectangle.GetHeight() + deltaY);
-
-        // REVISIT: I don't know why, but the sash position needs
-        // to be two more than it should.  This might be due to
-        // a border or some other factor.
-        const int UNKNOWN_OFFSET = 2;
-        m_Splitter->SetSashPosition(ScreenHeight + UNKNOWN_OFFSET);
-    }
 
     m_Screen->Show();
     m_Commander->Show();
@@ -557,6 +538,29 @@ CMainFrame::~CMainFrame()
 {
 }
 
+// Resizes the frame window so that the screen window matches the
+// width/height that was originally requested.
+void CMainFrame::ResizeToFitScreen()
+{
+    // HACK: fix up the frame window's size so that the screen's
+    // size matches what the client passed in on the command line.
+    // There MUST be a simpler/better way, but I do not know
+    // how to set the size of the screen client area directly.
+    wxSize screenRectangle = m_Screen->GetClientSize();
+    int deltaX = m_OriginalWidth  - screenRectangle.GetWidth();
+    int deltaY = m_OriginalHeight - screenRectangle.GetHeight();
+
+    if (deltaX != 0 || deltaY != 0)
+    {
+        // The screen is the wrong size, so we adjust the
+        // frame window to account for this.
+        wxSize frameRectangle = GetClientSize();
+        SetClientSize(
+            frameRectangle.GetWidth() + deltaX,
+            frameRectangle.GetHeight() + deltaY);
+    }
+}
+
 
 void CMainFrame::UndockCommanderWindow()
 {
@@ -566,30 +570,9 @@ void CMainFrame::UndockCommanderWindow()
             this,
             m_RealCommander);
 
-        if (bFixed)
+        if (!bFixed)
         {
-            // The user requested that the screen window should not
-            // change sizes, so we must resize the main window to
-            // hold just the screen.
-            int mainFrameWidth;
-            int mainFrameHeight;
-            GetClientSize(&mainFrameWidth, &mainFrameHeight);
-
-            int commanderWidth;
-            int commanderHeight;
-            m_Commander->GetSize(&commanderWidth, &commanderHeight);
-
-            int newHeight = mainFrameHeight -
-                commanderHeight -
-                m_Splitter->GetSashSize();
-
-            // Use the computed height
-            SetClientSize(mainFrameWidth, newHeight);
-        }
-        else
-        {
-            // Save the current height.
-            // Restore the commander window's height.
+            // Save the current commander's height.
             SetConfigurationInt(
                 "CommanderHeight",
                 m_Commander->GetSize().GetHeight());
@@ -616,6 +599,13 @@ void CMainFrame::UndockCommanderWindow()
 
         m_RealCommander->GiveControlToInputBox();
         m_CommanderIsDocked = false;
+
+        if (bFixed)
+        {
+            // Fix up the frame window's size so that the screen's
+            // size matches what the client passed in on the command line.
+            ResizeToFitScreen();
+        }
     }
 }
 
@@ -674,6 +664,22 @@ void CMainFrame::DockCommanderWindow()
         m_RealCommander->Reparent(m_Splitter);
 
         m_Splitter->SplitHorizontally(m_Screen, m_RealCommander, -commanderWindowHeight);
+
+        if (bFixed)
+        {
+            // Fix up the frame window's size so that the screen's
+            // size matches what the client passed in on the command line.
+            // It would be better to somehow unify this logic with the
+            // logic in the above "bFixed" block, but I haven't figure out
+            // how to do that.
+            ResizeToFitScreen();
+
+            // REVISIT: I don't know why, but the sash position needs
+            // to be two more than it should.  This might be due to
+            // a border or some other factor.
+            const int UNKNOWN_OFFSET = 2;
+            m_Splitter->SetSashPosition(m_OriginalHeight + UNKNOWN_OFFSET);
+        }
 
         m_RealCommander->GetHistory()->ScrollToBottom();
 
