@@ -214,11 +214,13 @@ TO COMMANDLINETEST.PARAMETER.F
        "|MAKE "startup [RUNTEST BYE]\n|
    ) 201 301
 
-   ; Test when the width/height is the desktop size
+   ; Test when the width/height is the working area size, then
+   ; additional room is made by undocking the commander.
    COMMANDLINETEST.PARAMETER.F.RUNTEST (WORD
        "|LOAD "testlib.lgo\n|
        "|\n|
        "|TO RUNTEST\n|
+       "|  FULLSCREEN\n|
        "|  ; Write out the screen window size\n|
        "|  WRITEBINARYDATA "commandline-createfile.txt (WORD\n|
        "|     ITEM 14 MACHINE CHAR 10 ; screen width  - newline\n|
@@ -226,7 +228,7 @@ TO COMMANDLINETEST.PARAMETER.F
        "|  )\n|
        "|END\n|
        "|MAKE "startup [RUNTEST BYE]\n|
-   ) (ITEM 10 MACHINE) (ITEM 11 MACHINE)
+   ) (ITEM 8 MACHINE) (ITEM 9 MACHINE) - 20
 
 END
 
