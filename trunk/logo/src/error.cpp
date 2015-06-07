@@ -34,7 +34,7 @@
 #include "unix.h"
 #include "mem.h"
 #include "wrksp.h"
-#include "graphwin.h" // for MyMessageScane
+#include "graphwin.h" // for MyMessageScan
 #include "init.h"
 #include "parse.h"
 #include "logomath.h"
