@@ -765,6 +765,11 @@ void DockCommanderWindow()
     CFmsLogo::GetMainFrame()->DockCommanderWindow();
 }
 
+bool TranslateKeyboardShortcut(MSG & Message)
+{
+    return CFmsLogo::GetMainFrame()->TranslateKeyboardShortcut(Message);
+}
+
 int ShowEditorForFile(const char *FileName, NODE * EditArguments)
 {
     return CMainFrame::PopupEditorForFile(WXSTRING(FileName), EditArguments);

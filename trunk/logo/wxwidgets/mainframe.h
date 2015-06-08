@@ -39,6 +39,7 @@ public:
 
     void UndockCommanderWindow();
     void DockCommanderWindow();
+    bool TranslateKeyboardShortcut(MSG & Message);
 
     void ShowStatus();
     void HideStatus();
@@ -236,6 +237,7 @@ private:
     CSetColor * m_SetFloodColorDialog;
     CSetColor * m_SetScreenColorDialog;
 
+    // REVISIT: should this be std::set?
     std::map<CWorkspaceEditor*,CWorkspaceEditor*> m_Editors;
 
     DECLARE_EVENT_TABLE();

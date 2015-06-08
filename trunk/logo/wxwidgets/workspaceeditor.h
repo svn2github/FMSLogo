@@ -20,6 +20,8 @@ public:
         bool             OpenToError
         );
 
+    bool TranslateKeyboardShortcut(WXMSG * Message);
+
 private:
 
     // Helpers for reading/writing the contents of the editor

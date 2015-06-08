@@ -57,6 +57,7 @@
 #include "editproceduredialog.h"
 #include "eraseproceduredialog.h"
 #include "commanderhistory.h"
+#include "commanderinput.h"
 #include "minieditor.h"
 #include "workspaceeditor.h"
 #include "logodata.h"
@@ -696,6 +697,90 @@ void CMainFrame::DockCommanderWindow()
 
         m_CommanderIsDocked = true;
     }
+}
+
+static bool IsDescendentOf(HWND PossibleDescendant, const wxWindow * Ancestor)
+{
+    for (HWND currentWindow = PossibleDescendant;
+         currentWindow != NULL;
+         currentWindow = GetParent(currentWindow))
+    {
+        if (currentWindow == static_cast<HWND>(Ancestor->GetHandle()))
+        {
+            return true;
+        }
+    }
+         
+    return false;
+}
+
+bool CMainFrame::TranslateKeyboardShortcut(MSG & Message)
+{
+    WXMSG * const message = static_cast<WXMSG*>(&Message);
+
+    // Check if the message was generated on the commander's input.
+    if (IsDescendentOf(Message.hwnd, m_RealCommander->GetInput()))
+    {
+        bool isHandled = m_RealCommander->GetInput()->GetAcceleratorTable()->Translate(
+            m_RealCommander->GetInput(),
+            message);
+        if (isHandled)
+        {
+            return true;
+        }
+    }
+
+    // Check if the message was generated on the commander's history.
+    if (IsDescendentOf(Message.hwnd, m_RealCommander->GetHistory()))
+    {
+        bool isHandled = m_RealCommander->GetHistory()->GetAcceleratorTable()->Translate(
+            m_RealCommander->GetHistory(),
+            message);
+        if (isHandled)
+        {
+            return true;
+        }
+    }
+
+    // Check if the message was generated on the commander.
+    if (IsDescendentOf(Message.hwnd, m_RealCommander))
+    {
+        bool isHandled = m_RealCommander->GetAcceleratorTable()->Translate(
+            m_RealCommander,
+            message);
+        if (isHandled)
+        {
+            return true;
+        }
+    }
+
+    // Search across all editors to see if this belongs to it.
+    for (std::map<CWorkspaceEditor*,CWorkspaceEditor*>::const_iterator cursor = m_Editors.begin();
+         cursor != m_Editors.end();
+         ++cursor) {
+        CWorkspaceEditor * const editor = cursor->first;
+        if (IsDescendentOf(Message.hwnd, editor))
+        {
+            bool isHandled = editor->TranslateKeyboardShortcut(message);
+            if (isHandled)
+            {
+                return true;
+            }
+        }
+    }
+        
+    // Check if this message originated from the main frame.
+    if (IsDescendentOf(Message.hwnd, this))
+    {
+        bool isHandled = MSWDoTranslateMessage(this, message);
+        if (isHandled)
+        {
+            return true;
+        }
+    }
+
+    // This was not translated as an accelerator.
+    return false;
 }
 
 bool CMainFrame::IsEditorOpen() const

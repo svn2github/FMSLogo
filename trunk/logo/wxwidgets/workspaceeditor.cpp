@@ -272,6 +272,11 @@ CWorkspaceEditor::CWorkspaceEditor(
     }
 }
 
+bool CWorkspaceEditor::TranslateKeyboardShortcut(WXMSG * Message)
+{
+    return MSWDoTranslateMessage(this, Message);
+}
+
 void CWorkspaceEditor::OnSetFont(wxCommandEvent& WXUNUSED(Event))
 {
     wxFont font;
