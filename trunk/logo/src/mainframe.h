@@ -120,6 +120,7 @@ public:
     void FixWindowTitle();
     void UndockCommanderWindow();
     void DockCommanderWindow();
+    bool TranslateKeyboardShortcut(MSG & Message);
 
 protected:
     void SetupWindow();
@@ -165,6 +166,7 @@ protected:
 
 public:  //HACK
     void CMHelp();
+
 protected:
     void CMHelpDemo();
     void CMHelpExamples();

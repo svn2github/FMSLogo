@@ -35,6 +35,7 @@ public:
     bool Read(const char *fileName = NULL);
     bool Write(const char *FileName = NULL);
     void SetFileName(const char *fileName);
+    bool TranslateKeyboardShortcut(MSG & Message);
 
     bool CanClose();
     bool EndEdit();

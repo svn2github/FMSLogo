@@ -20,6 +20,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 6.34.0
+  o Fix bug #444; Keyboard shortcuts now work while the Logo engine is running.
   o Fix bug #448; The wxWidgets version of FMSLogo now opens to the correct
     size when -W -H and -F are given on the command line.
   o Extend MACHINE to output the dimensions of the screen window's client area.

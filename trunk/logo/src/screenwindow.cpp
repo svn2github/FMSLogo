@@ -130,6 +130,11 @@ void DockCommanderWindow()
     MainWindowx->DockCommanderWindow();
 }
 
+bool TranslateKeyboardShortcut(MSG & Message)
+{
+    return MainWindowx->TranslateKeyboardShortcut(Message);
+}
+
 int ShowEditorForFile(const char *FileName, NODE *args)
 {
     return TMainFrame::PopupEditorForFile(FileName, args);

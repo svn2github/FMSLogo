@@ -49,6 +49,12 @@ public:
     void remove(void * a);
     qlink * find(void * a);
 
+    void *
+    find_element(
+        bool (*match_proc) (void * context, void * element),
+        void * context
+    );
+
     qlist()
     {
         last = NULL;

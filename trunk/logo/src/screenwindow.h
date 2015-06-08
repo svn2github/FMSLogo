@@ -55,6 +55,20 @@ HDC GetMemoryDeviceContext();
 // Returns a device context of a bitmap that is distinct from MemoryBitMap,
 // but has the same characteristics (bit depth, width, height, etc.)
 HDC GetBackBufferDeviceContext();
+
+// Locates the window for which the message was generated and attempts to
+// translate it as a keyboard accelerator (keyboard shortcut) using that
+// window's accelerator table.
+//
+// Returns true if the message was translated (in which case it does
+// not need to be handled further).  Returns false, otherwise (in which
+// case it should be translated and dispatched).
+//
+// Note that this routine exists because the Logo engine is executed from
+// the context of the message pump and we still want to be able to process
+// user input while it's running.
+bool TranslateKeyboardShortcut(MSG & Message);
+
 #endif
 
 void OpenStatusWindow();

@@ -87,6 +87,7 @@ public:
 
     void PostKeyDownToEditBox(WPARAM KeyEventWParam, LPARAM KeyEventLParam);
     bool EditBoxWantsKeyEvent(WPARAM KeyEventWParam);
+    bool TranslateKeyboardShortcut(TWindow * Window, MSG & Message);
 
     void ChooseNewFont();
 

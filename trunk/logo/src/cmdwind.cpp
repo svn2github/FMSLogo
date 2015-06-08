@@ -301,7 +301,6 @@ TMyCommandWindow::EditBoxWantsKeyEvent(
     return false;
 }
 
-
 void
 TMyCommandWindow::PostKeyDownToEditBox(
     WPARAM KeyEventWParam,
@@ -626,6 +625,11 @@ void TMyCommandWindow::ChooseNewFont()
         RecalculateLayout();
         Invalidate(true);
     }
+}
+
+bool TMyCommandWindow::TranslateKeyboardShortcut(TWindow * Window, MSG & Message)
+{
+    return TranslateAccelerator(Window->HWindow, hAccel, &Message) ? true : false;
 }
 
 /* Editbox members */

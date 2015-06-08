@@ -2562,6 +2562,93 @@ LRESULT TMainFrame::WMCheckQueue(WPARAM, LPARAM)
     return (LRESULT) msg.Result;
 }
 
+static bool IsDescendentOf(HWND PossibleDescendant, TWindow * Ancestor)
+{
+    for (HWND currentWindow = PossibleDescendant;
+         currentWindow != NULL;
+         currentWindow = GetParent(currentWindow))
+    {
+        if (currentWindow == Ancestor->HWindow)
+        {
+            return true;
+        }
+    }
+         
+    return false;
+}
+
+static
+bool
+MessageCameFromEditor(void * context, void * element)
+{
+    MSG           * const message = static_cast<MSG*>(context);
+    TMyFileWindow * const editor  = static_cast<TMyFileWindow*>(element);
+
+    return IsDescendentOf(message->hwnd, editor);
+}
+
+
+bool TMainFrame::TranslateKeyboardShortcut(MSG & Message)
+{
+    // Check if this message was generated on the commander input.
+    if (IsDescendentOf(Message.hwnd, &CommandWindow->Editbox))
+    {
+        bool isHandled = CommandWindow->TranslateKeyboardShortcut(
+            &CommandWindow->Editbox,
+            Message);
+        if (isHandled)
+        {
+            // Retranslate the message on the commander, in case it's Ctrl+D.
+            CommandWindow->TranslateKeyboardShortcut(CommandWindow, Message);
+            return true;
+        }
+    }
+
+    // Check if this message was generated on the commander history.
+    if (IsDescendentOf(Message.hwnd, &CommandWindow->Listbox))
+    {
+        bool isHandled = CommandWindow->TranslateKeyboardShortcut(
+            &CommandWindow->Listbox,
+            Message);
+        if (isHandled)
+        {
+            // Retranslate the message on the commander, in case it's Ctrl+D.
+            CommandWindow->TranslateKeyboardShortcut(CommandWindow, Message);
+            return true;
+        }
+    }
+
+    // Check if this message was generated on the commander, itself.
+    if (IsDescendentOf(Message.hwnd, CommandWindow))
+    {
+        bool isHandled = CommandWindow->TranslateKeyboardShortcut(
+            CommandWindow,
+            Message);
+        if (isHandled)
+        {
+            return true;
+        }
+    }
+
+    // Search across all editors to see if this belongs to it.
+    void * element = m_Editors.find_element(MessageCameFromEditor, &Message);
+    if (element != NULL)
+    {
+        // The message was generated on this editor.
+        const TMyFileWindow * editor = static_cast<TMyFileWindow*>(element);
+        return editor->TranslateKeyboardShortcut(Message);
+    }
+
+    // Check if this message originated from the main frame.
+    if (IsDescendentOf(Message.hwnd, this))
+    {
+        return ::TranslateAccelerator(HWindow, hAccel, &Message) ? true : false;
+    }
+
+    // This was not translated as an accelerator.
+    return false;
+}
+
 
 LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
 {

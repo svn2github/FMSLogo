@@ -78,6 +78,10 @@ TMyFileWindow::~TMyFileWindow()
     delete FileName;
 }
 
+bool TMyFileWindow::TranslateKeyboardShortcut(MSG & Message)
+{
+    return ::TranslateAccelerator(HWindow, hAccel, &Message) ? true : false;
+}
 
 LRESULT TMyFileWindow::SendEditor(UINT Msg, WPARAM wParam, LPARAM lParam)
 {

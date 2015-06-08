@@ -95,6 +95,31 @@ void qlist::zap(void)
     delete p;
 }
 
+// searches a list for an element using a given comparison routine
+void *
+qlist::find_element(
+    bool (*match_proc) (void * context, void * element),
+    void * context
+    )
+{
+    if (last != NULL)
+    {
+        const qlink * cursor = last;
+        do
+        {
+            if (match_proc(context, cursor->e))
+            {
+                // found it!
+                return cursor->e;
+            }
+
+            cursor = cursor->next;
+        } while (cursor != last);
+    }
+
+    return NULL;
+}
+
 // deletes the list structure, but does not modify any of the list elements.
 void qlist::clear()
 {
@@ -157,7 +182,7 @@ qlink * qlist::find(void * a)
         return NULL;
     }
 
-    // search the list for "a" and remove it.
+    // search the list for the node whose value is "a"
     qlink * ptr = last;
     do 
     {

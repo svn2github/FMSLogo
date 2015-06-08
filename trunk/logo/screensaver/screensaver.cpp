@@ -777,6 +777,12 @@ void DockCommanderWindow()
     // so there is nothing to dock.
 }
 
+bool TranslateKeyboardShortcut(MSG & Message)
+{
+    // The screen saver doesn't have windows with keyboard accelerators.
+    return false;
+}
+
 int ShowEditorForFile(const char *FileName, NODE *args)
 {
     return 0;

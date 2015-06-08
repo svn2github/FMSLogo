@@ -3969,6 +3969,20 @@ void MyMessageScan()
         MSG msg;
         while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
+            // If this is a keydown event, then it might be a keyboard shortcut.
+            // Checking this before calling TranslateKeyboardShortcut is an
+            // optimization.
+            if (msg.message == WM_KEYDOWN || msg.message == WM_SYSKEYDOWN)
+            {
+                if (TranslateKeyboardShortcut(msg))
+                {
+                    // This message represents a keyboard shortcut and it
+                    // has been and dispatched appropriately.
+                    // Move on to the next message.
+                    continue;
+                }
+            }
+
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
