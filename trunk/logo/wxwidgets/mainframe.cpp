@@ -415,10 +415,6 @@ CMainFrame::CMainFrame(
     m_BitmapName[0] = '\0';
 #endif
 
-#if wxUSE_STATUSBAR
-    CreateStatusBar(2);
-#endif // wxUSE_STATUSBAR
-
     //
     // Construct the main menu
     //
@@ -2301,12 +2297,6 @@ void CMainFrame::OnSetLabelFont(wxCommandEvent& WXUNUSED(Event))
 void CMainFrame::OnSetCommanderFont(wxCommandEvent& WXUNUSED(Event))
 {
     m_RealCommander->ChooseNewFont();
-
-#if wxUSE_STATUSBAR
-    // TODO: Delete this.  It's just a reminder on how to write
-    // to the status bar.
-    SetStatusText(WXSTRING("New font chosen"), 1);
-#endif // wxUSE_STATUSBAR
 }
 
 void CMainFrame::OnZoomIn(wxCommandEvent& WXUNUSED(Event))

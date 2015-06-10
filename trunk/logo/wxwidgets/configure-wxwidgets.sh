@@ -5,8 +5,14 @@
 # Use the script like:
 #   bash
 #   cd <wxwidgets_top_dir>
-#   <path_to_this_script>/configure-wxwidgets.sh
 #   Patch wxwidgets with <path_to_this_script>/wxwidgets-2.8.12.patch
+#
+#   <path_to_this_script>/configure-wxwidgets.sh
+#   gmake clean all
+#   gmake -C contrib/src/stc clean all
+#
+#   export DEBUG=1
+#   <path_to_this_script>/configure-wxwidgets.sh
 #   gmake clean all
 #   gmake -C contrib/src/stc clean all
 #
@@ -62,7 +68,6 @@ fi
     --with-libtiff=no             \
     --enable-monolithic           \
     --disable-shared              \
-    --disable-statusbar           \
     --disable-catch_segvs         \
     --disable-toolbar             \
     --disable-aui                 \
