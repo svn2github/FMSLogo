@@ -48,6 +48,12 @@ then
   export ADDITIONAL_OPTIONS="--enable-debug --enable-debug_gdb --enable-debug_info --disable-optimise"
 else
   export ADDITIONAL_OPTIONS="--disable-debug --enable-optimise"
+
+  # Enable link-time optimization so that the resulting fmslogo.exe is smaller.
+  # Without this, all of the uncalled member functions remain in the final executable.
+  export CFLAGS=-flto
+  export CXXFLAGS=-flto
+  export LDFLAGS=-flto
 fi
 
 if [ "$PROFILE" == "1" ];
