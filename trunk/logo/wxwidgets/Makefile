@@ -261,7 +261,7 @@ obj/$(1)-%_rc.o : %.rc ../src/version.h
 	$(RC) -i$$< -o$$@ -DLOCALE=$1 --define __WX$(TOOLKIT)__ $(addprefix --include-dir ,$(INCLUDES))
 
 
-fmslogo_rc.o: fmslogo.rc
+fmslogo_rc.o: fmslogo.rc fmslogo.ico
 
 endef
 

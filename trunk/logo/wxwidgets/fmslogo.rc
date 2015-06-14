@@ -1,4 +1,4 @@
-fmslogo ICON "../src/logo.ico"
+fmslogo ICON "fmslogo.ico"
 
 #define wxUSE_NO_MANIFEST 0
 
