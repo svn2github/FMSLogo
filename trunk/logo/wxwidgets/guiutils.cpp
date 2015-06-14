@@ -13,27 +13,50 @@ SetFmsLogoIcon(
 {
 #ifdef __WXMSW__
     // On Windows use the .ico in the resource.
-    // This ensures that an icon is created, even at
-    // high DPI.  See bug #421.
-    wxIcon icon(wxICON(fmslogo));
+    // Since we have already paid the size cost of compiling
+    // the icons into a source, there's no reason to compile
+    // them into the executable a second time as an .XPM.
 
-    TopLevelWindow.SetIcon(icon);
+    // Note that, for any given DPI mode, only two of these
+    // icon sizes are required: SM_CXICON x SM_CYICON and
+    // SM_CXSMICON x SM_CYSMICON.  We could reduce the memory
+    // overhead by calling GetSystemMetrics and only adding
+    // these two to the bundle.
+    wxIcon icon16x16(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 16, 16));
+    wxIcon icon20x20(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 20, 20));
+    wxIcon icon24x24(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 24, 24));
+    wxIcon icon32x32(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 32, 32));
+    wxIcon icon40x40(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 40, 40));
+    wxIcon icon48x48(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 48, 48));
+    wxIcon icon64x64(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 64, 64));
+
 #else
     #include "fmslogo-16x16.xpm"
+    #include "fmslogo-20x20.xpm"
     #include "fmslogo-32x32.xpm"
+    #include "fmslogo-40x40.xpm"
+    #include "fmslogo-48x48.xpm"
     #include "fmslogo-64x64.xpm"
 
     wxIcon icon16x16(fmslogo_16x16_xpm);
+    wxIcon icon20x20(fmslogo_20x20_xpm);
+    wxIcon icon24x24(fmslogo_20x20_xpm);
     wxIcon icon32x32(fmslogo_32x32_xpm);
+    wxIcon icon40x40(fmslogo_40x40_xpm);
+    wxIcon icon48x48(fmslogo_48x48_xpm);
     wxIcon icon64x64(fmslogo_64x64_xpm);
+#endif
 
     wxIconBundle icons;
     icons.AddIcon(icon16x16);
+    icons.AddIcon(icon20x20);
+    icons.AddIcon(icon24x24);
     icons.AddIcon(icon32x32);
+    icons.AddIcon(icon40x40);
+    icons.AddIcon(icon48x48);
     icons.AddIcon(icon64x64);
 
     TopLevelWindow.SetIcons(icons);
-#endif
 }
 
 
