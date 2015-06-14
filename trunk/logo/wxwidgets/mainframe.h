@@ -39,7 +39,9 @@ public:
 
     void UndockCommanderWindow();
     void DockCommanderWindow();
+#ifndef WX_PURE
     bool TranslateKeyboardShortcut(MSG & Message);
+#endif
 
     void ShowStatus();
     void HideStatus();

@@ -20,7 +20,9 @@ public:
         bool             OpenToError
         );
 
+#ifndef WX_PURE
     bool TranslateKeyboardShortcut(WXMSG * Message);
+#endif
 
 private:
 

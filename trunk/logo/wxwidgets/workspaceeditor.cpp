@@ -272,10 +272,12 @@ CWorkspaceEditor::CWorkspaceEditor(
     }
 }
 
+#ifndef WX_PURE
 bool CWorkspaceEditor::TranslateKeyboardShortcut(WXMSG * Message)
 {
     return MSWDoTranslateMessage(this, Message);
 }
+#endif
 
 void CWorkspaceEditor::OnSetFont(wxCommandEvent& WXUNUSED(Event))
 {

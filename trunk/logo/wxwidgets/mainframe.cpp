@@ -695,6 +695,8 @@ void CMainFrame::DockCommanderWindow()
     }
 }
 
+#ifndef WX_PURE
+
 static bool IsDescendentOf(HWND PossibleDescendant, const wxWindow * Ancestor)
 {
     for (HWND currentWindow = PossibleDescendant;
@@ -778,6 +780,8 @@ bool CMainFrame::TranslateKeyboardShortcut(MSG & Message)
     // This was not translated as an accelerator.
     return false;
 }
+
+#endif // WX_PURE
 
 bool CMainFrame::IsEditorOpen() const
 {
