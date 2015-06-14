@@ -22,6 +22,8 @@ II. New features/bugs fixed:
   Changed in 6.34.0
   o Fix bug #423; Menu items in the editor of the wxWidgets version of FMSLogo
     are now disabled when they would have no effect.
+  o Fix bug #433; The icon shown in the Task Manager's "Applications" tab now
+    looks correct in the wxWidgets version of FMSLogo.
   o Fix bug #444; Keyboard shortcuts now work while the Logo engine is running.
   o Fix bug #448; The wxWidgets version of FMSLogo now opens to the correct
     size when -W -H and -F are given on the command line.
