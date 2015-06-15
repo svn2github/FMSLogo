@@ -1,21 +1,25 @@
-<!--#include virtual="header.html" -->
-			<script type="text/javascript">
-				$(document).ready(function() {
-					$('#nav-links').addClass('active');
-				});
-			</script>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Links - FMSLogo</title>
+		<meta name="description" content="Useful Links about Logo">
+		<?php include 'header.php' ?>
+	</head>
+	<body>
+		<?php include 'menunav.php' ?>
+		<div id="main">
 			<article>
-				<h2>Useful Links</h2>
+				<h1>Useful Links</h1>
 				<ul>
 				  <li><a href="http://sourceforge.net/projects/fmslogo">FMSLogo on SourceForge</a> -
 					The FMSLogo project portal on SourceForge.net.
 					This is where you download FMSLogo, file bugs, make feature requests, submit support requests, etc.</li>
 
-				  <li><a href="workshop">The Logo Workshop</a> - 
+				  <li><a href="http://fmslogo.sourceforge.net/workshop">The Logo Workshop</a> - 
 					A short lesson plan for introducing FMSLogo to children K-5.
 					I used this Web site to run computer workshops at my local Boys and Girls Club.</li>
 
-				  <li><a href="manual">The FMSLogo Manual</a> - 
+				  <li><a href="http://fmslogo.sourceforge.net/manual">The FMSLogo Manual</a> - 
 					An online manual for FMSLogo.</li>
 
 				  <li><a href="http://spacemandan.net/software/Asteroid_Miner/Asteroid_Miner.html">Asteroid Miner</a> - 
@@ -30,10 +34,15 @@
 					The original MSWLogo homepage.
 					Lots of useful links.</li>
 
-				  <li><a href="http://nmss.org">The National Multiple Sclerosis Society</a> -
+				  <li><a href="http://nmss.org/">The National Multiple Sclerosis Society</a> -
 					The "FMS" in FMSLogo stands for "Fight Multiple Sclerosis".
 					Please take some time to learn about this disease and what you can do to fight it.</li>
 				</ul>
 			</article>
-
-<!--#include virtual="footer.html" -->
+			<?php include 'aside.php' ?>
+		</div>
+		<footer>
+			<a href="http://sourceforge.net/projects/fmslogo"><img id="sourceforge" src="media/sflogo.png" width="120" height="30" alt="Get FMSLogo at SourceForge.net. Fast, secure and Free Open Source software downloads"></a>
+		</footer>
+	</body>
+</html>

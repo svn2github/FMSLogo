@@ -1,11 +1,15 @@
-<!--#include virtual="header.html" -->
-			<script type="text/javascript">
-				$(document).ready(function() {
-					$('#nav-releasecycle').addClass('active');
-				});
-			</script>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Release Cycle - FMSLogo</title>
+		<meta name="description" content="Release Cycle of FMSLogo, a  programming environment for Microsoft Windows">
+		<?php include 'header.php' ?>
+	</head>
+	<body>
+		<?php include 'menunav.php' ?>
+		<div id="main">
 			<article>
-				<h2>Release Cycle</h2>
+				<h1>Release Cycle</h1>
 				<p>
 					The most fundamental aspect to understanding the release cycle is  understanding how FMSLogo version numbers work.
 					FMSLogo uses three numbers for its version number, separated by dots, as in:
@@ -44,5 +48,10 @@
 					In other words, if I release a bugfix version, it's because I did something very bad in the previous release.
 				</p>
 			</article>
-
-<!--#include virtual="footer.html" -->
+			<?php include 'aside.php' ?>
+		</div>
+		<footer>
+			<a href="http://sourceforge.net/projects/fmslogo"><img id="sourceforge" src="media/sflogo.png" width="120" height="30" alt="Get FMSLogo at SourceForge.net. Fast, secure and Free Open Source software downloads"></a>
+		</footer>
+	</body>
+</html>

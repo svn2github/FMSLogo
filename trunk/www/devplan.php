@@ -1,12 +1,15 @@
-<!--#include virtual="header.html" -->
-			<script type="text/javascript">
-				$(document).ready(function() {
-					$('#nav-devplan').addClass('active');
-				});
-			</script>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Development Plan - FMSLogo</title>
+		<meta name="description" content="Development Plan of FMSLogo, a  programming environment for Microsoft Windows">
+		<?php include 'header.php' ?>
+	</head>
+	<body>
+		<?php include 'menunav.php' ?>
+		<div id="main">
 			<article>
-				<h2>Development Plan</h2>
-				
+				<h1>Development Plan</h1>
 				<p>
 				There is a lot of work to do on FMSLogo.
 				The code base lay in atrophy for five years before I picked it up.
@@ -15,8 +18,7 @@
 				Of course, I will always be looking to fix bugs and make small updates that enhance the usability along the way.
 				Likewise, I'm willing to accept contributions from other developers that don't follow this development plan.
 				</p>
-
-				<ol style="list-style-type:decimal">
+				<ol>
 					<li><b>Port FMSLogo to a supported UI tooolkit.</b><br>
 					<p>
 					FMSLogo was written in Borland OWL, which was great at the time, but is no longer even sold, much less supported.
@@ -37,31 +39,31 @@
 					Once FMSLogo uses wxWidgets, it will be possible to port the internals to Unicode, which will make FMSLogo more compatible with modern operating systems and with non-English languages.
 					</p>
 
-					<li><b>Support 64-bit.</b><br>
+					</li><li><b>Support 64-bit.</b><br>
 					<p>
 					FMSLogo is a 32-bit program and making it run natively on modern hardware without an emulation layer is important for future-proofing it.
 					</p>
 
 
-					<li><b>Provide a Better Editor/Debugging Experience</b><br>
+					</li><li><b>Provide a Better Editor/Debugging Experience</b><br>
 					<p>
 					Once FMSLogo uses wxWidgets, there will be new UI controls available that will make it possible to have a modern editing/debugging experience, including breakpoints and more precise syntax error reporting.
 					</p>
 
-					<li><b>Port to GNU/Linux</b><br>
+					</li><li><b>Port to GNU/Linux</b><br>
 					<p>
 					FMSLogo's heritage comes for MSWLogo, which is short for "Microsoft Windows Logo", so it naturally only runs on Windows and its API extensions are roughly 1:1 with Windows API.
 					Porting FMSLogo to wxWidgets should make it easier to build a native version for GNU/Linux, with, perhaps, some reduced functionality.
 					</p>
 
 
-					<li><b>New API sets</b><br>
+					</li><li><b>New API sets</b><br>
 					<p>
 					The overall things that FMSLogo has direct support for manpulating has been fixed for 20 years.
 					FMSLogo would benefit from new commands or language constructs that give access to regular expressions, text-to-speech, vector graphics, or animation.
 					This is a long way off and I don't have anything specific in mind.
 					</p>
-				</ol>
+				</li></ol>
 
 				<p>
 				One thing that won't change is FMSLogo's commitment to backward compatibility.
@@ -69,5 +71,10 @@
 				While certain compatibility breaks are unavoidable, I plan to avoid them when possible.
 				</p>
 			</article>
-
-<!--#include virtual="footer.html" -->
+			<?php include 'aside.php' ?>
+		</div>
+		<footer>
+			<a href="http://sourceforge.net/projects/fmslogo"><img id="sourceforge" src="media/sflogo.png" width="120" height="30" alt="Get FMSLogo at SourceForge.net. Fast, secure and Free Open Source software downloads"></a>
+		</footer>
+	</body>
+</html>

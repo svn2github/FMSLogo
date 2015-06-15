@@ -1,19 +1,22 @@
-<!--#include virtual="header.html" -->
-			<script type="text/javascript">
-				$(document).ready(function() {
-					$('#nav-index').addClass('active');
-				});
-			</script>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Home - FMSLogo</title>
+		<meta name="description" content="Website of FMSLogo, a Logo programming environment for Microsoft Windows">
+		<?php include 'header.php' ?>
+	</head>
+	<body>
+		<?php include 'menunav.php' ?>
+		<div id="main">
 			<article>
-				<h2>Welcome to the world of FMSLogo!</h2>
-				<img src="media/logoexample.png" />
+				<h1>Welcome to the world of FMSLogo!</h1>
 				<p>FMSLogo is a free implementation of a computing environment called Logo, which is an interactive programming language that is simple, powerful, and best of all fun.
 				You can download FMSLogo from the project portal on SourceForge.
 				</p>
+				<img src="media/logoexample.png" alt="Logo Example">
 				<p>
 				FMSLogo includes support for:
 				</p>
-
 				<ul>
 					<li>"Standard" Logo parsing</li>
 					<li>Turtle Graphics</li>
@@ -33,8 +36,7 @@
 					<li>3D Perspective drawing (wire-frame and solids)</li>
 					<li>Creating animated GIFs</li>
 				</ul>
-				
-				<h2>Why FMSLogo?</h2>
+				<h1>Why FMSLogo?</h1>
 				<ul>
 					<li>FMSLogo has a simple GUI that encourages learning.</li>
 					<li>FMSLogo provides support for exploring diverse disciplines, including mathematics, engineering, art, music, and robotics.</li>
@@ -46,6 +48,10 @@
 				Because of this, FMSLogo is ideal for elementary school computer labs.
 				</p>
 			</article>
-
-
-<!--#include virtual="footer.html" -->
+			<?php include 'aside.php' ?>
+		</div>
+		<footer>
+			<a href="http://sourceforge.net/projects/fmslogo"><img id="sourceforge" src="media/sflogo.png" width="120" height="30" alt="Get FMSLogo at SourceForge.net. Fast, secure and Free Open Source software downloads"></a>
+		</footer>
+	</body>
+</html>

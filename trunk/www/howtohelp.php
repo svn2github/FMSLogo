@@ -1,11 +1,15 @@
-<!--#include virtual="header.html" -->	
-			<script type="text/javascript">
-				$(document).ready(function() {
-					$('#nav-howtohelp').addClass('active');
-				});
-			</script>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>How to help - FMSLogo</title>
+		<meta name="description" content="How you can help to improve FMSLogo, a  programming environment for Microsoft Windows">
+		<?php include 'header.php' ?>
+	</head>
+	<body>
+		<?php include 'menunav.php' ?>
+		<div id="main">
 			<article>
-				<h2>How You Can Help</h2>
+				<h1>How You Can Help</h1>
 
 				<p>
 				There are many ways to help improve FMSLogo and they don't all require hacking on C++ code.
@@ -19,14 +23,14 @@
 				  <li>I would like to bundle FMSLogo with lots of high-quality mini-applications written in FMSLogo that show off what it's capable of.
 					  I would like them to be written in a way that people can study, learn from, and improve them.
 					  Games are ideal, since my target will always be children and young adults.
-					  If you have a Logo program to donate, post a link in <a href="http://sourceforge.net/forum/forum.php?forum_id=500407" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">the discussion forum</a>.
+					  If you have a Logo program to donate, post a link in <a href="https://sourceforge.net/p/fmslogo/discussion/500407" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">the discussion forum</a>.
 				  </li>
 
 				  <li>Translate FMSLogo to a new language.
 					  Each new translation of FMSLogo expands its potential audience.
 					  Translators are expected to translate the text in the GUI and the names of each command.
 					  Translating the manual is not necessary (but would be appreciated).
-					  If you would like to translate FMSLogo to a new language, please post a comment to the <a href="http://sourceforge.net/forum/forum.php?forum_id=500407" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">Public Forum</a> and I will send you further instructions.</li>
+					  If you would like to translate FMSLogo to a new language, please post a comment to the <a href="https://sourceforge.net/p/fmslogo/discussion/500407" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">Public Forum</a> and I will send you further instructions.</li>
 
 				  <li>If you're good with at Web development, this Web site obviously needs some help.
 					  If you have some ideas on what should go here and would like to take over maintenance, let me know.</li>
@@ -38,14 +42,14 @@
 				  </li>
 
 				  <li>I need real-world feedback on where FMSLogo should be improved. 
-					  If you know where FMSLogo is lacking, please <a href="http://sourceforge.net/tracker/?group_id=149686&amp;atid=775556" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">post a feature request</a> or 
+					  If you know where FMSLogo is lacking, please <a href="https://sourceforge.net/p/fmslogo/feature-requests/" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">post a feature request</a> or 
 					  post a message in <a href="http://sourceforge.net/forum/forum.php?forum_id=500407" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">the discussion forum</a>.
 					  Try to keep your suggestions based on practical experience (instead of abstract theories).
 					  Also, please explain how your suggestion would improve FMSLogo as a learning tool for children.</li>
 
 				  <li>File bugs. 
 					  FMSLogo is full of them and they should all be tracked.
-					  If you know of a bug, please file it in the <a href="http://sourceforge.net/tracker/?atid=775553&amp;group_id=149686&amp;func=browse" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">bug tracker</a>.</li>
+					  If you know of a bug, please file it in the <a href="https://sourceforge.net/p/fmslogo/bugs/" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">bug tracker</a>.</li>
 
 				  <li>If you're a GNU/Linux user, you can become a <a href="http://appdb.winehq.org/" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">WINE application maintainer</a> for FMSLogo.
 					  I intend to port FMSLogo to GNU/Linux some day, but that could be years form now.
@@ -60,6 +64,10 @@
 				  <li>Whatever else you can think of!</li>
 				</ul>
 			</article>
-
-
-<!--#include virtual="footer.html" -->
+			<?php include 'aside.php' ?>
+		</div>
+		<footer>
+			<a href="http://sourceforge.net/projects/fmslogo"><img id="sourceforge" src="media/sflogo.png" width="120" height="30" alt="Get FMSLogo at SourceForge.net. Fast, secure and Free Open Source software downloads"></a>
+		</footer>
+	</body>
+</html>

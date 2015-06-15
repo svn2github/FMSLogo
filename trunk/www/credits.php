@@ -1,11 +1,15 @@
-<!--#include virtual="header.html" -->
-			<script type="text/javascript">
-				$(document).ready(function() {
-					$('#nav-credits').addClass('active');
-				});
-			</script>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Credits - FMSLogo</title>
+		<meta name="description" content="Credits of FMSLogo, a  programming environment for Microsoft Windows">
+		<?php include 'header.php' ?>
+	</head>
+	<body>
+		<?php include 'menunav.php' ?>
+		<div id="main">
 			<article>
-				<h2>Credits</h2>
+				<h1>Credits</h1>
 				<p>
 				FMSLogo was originally called MSWLogo.
 				It was written by <b>George Mills</b> and based on UCBLogo, which is written by <b>Brian Harvey</b> and is still under active development.
@@ -37,7 +41,7 @@
 					 <li>Domagoj Kuna</li>
 					 <li>Hensley Bass</li>
 					 <li>Igor Baglaev</li>
-					 <li>Jan Grabe</li>
+					 <li>Jan-Niklas Grabe</li>
 					 <li>Jason Gervich</li>
 					 <li>Jim Foster</li>
 					 <li>Juan J. Paredes G.</li>
@@ -71,5 +75,10 @@
 				It is my hope that FMSLogo's new home on SourceForge will serve as a focal point for future community involvement.
 				</p>
 			</article>
-
-<!--#include virtual="footer.html" -->
+			<?php include 'aside.php' ?>
+		</div>
+		<footer>
+			<a href="http://sourceforge.net/projects/fmslogo"><img id="sourceforge" src="media/sflogo.png" width="120" height="30" alt="Get FMSLogo at SourceForge.net. Fast, secure and Free Open Source software downloads"></a>
+		</footer>
+	</body>
+</html>
