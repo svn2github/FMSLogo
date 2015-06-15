@@ -1,5 +1,15 @@
+# Historical URLs (.shtml and .html redirects)
+RedirectMatch ^(.*)/index\.s?html$         $1/index
+RedirectMatch ^(.*)/history\.s?html$       $1/history
+RedirectMatch ^(.*)/links\.s?html$         $1/links
+RedirectMatch ^(.*)/devplan\.s?html$       $1/devplan
+RedirectMatch ^(.*)/credits\.s?html$       $1/credits
+RedirectMatch ^(.*)/releasecycle\.s?html$  $1/releasecycle
+
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+
+# Append ".php" to the requested filename, if it exists.
+RewriteCond %{REQUEST_FILENAME}      !-f
+RewriteCond %{REQUEST_FILENAME}      !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^(.*)$ /$1.php
+RewriteRule ^(.*)$ /$1.php [L]
