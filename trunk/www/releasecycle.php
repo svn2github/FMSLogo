@@ -50,8 +50,6 @@
 			</article>
 			<?php include 'aside.php' ?>
 		</div>
-		<footer>
-			<a href="http://sourceforge.net/projects/fmslogo"><img id="sourceforge" src="media/sflogo.png" width="120" height="30" alt="Get FMSLogo at SourceForge.net. Fast, secure and Free Open Source software downloads"></a>
-		</footer>
+		<?php include 'footer.php' ?>
 	</body>
 </html>
