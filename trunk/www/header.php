@@ -19,8 +19,14 @@
 </script>
 <script>
 	$(function(){
-		var url = window.location.href;
-		var page = url.substr(url.lastIndexOf('/')+1);
+		// Get everything after the initial '/'
+		var page = window.location.pathname.substr(1);
+		if (page === '' || page === 'index') {
+			// The 'index" link goes to the site root.
+			page = '/';
+		}
+
+		// Make the navlink that cooresponds to the page look active.
 		$('a[href*="'+page+'"]').addClass('active');
 	});
 </script>
