@@ -5,5 +5,5 @@
         width="120"
         height="30"
         alt="Get FMSLogo at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
-<footer>
+</footer>
 
