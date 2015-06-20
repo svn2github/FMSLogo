@@ -3,7 +3,6 @@
 #endif
 
 #include <wx/clipbrd.h>
-
 #include "commanderinput.h"
 
 #include "commander.h"
@@ -121,83 +120,21 @@ CCommanderInput::WantsKeyEvent(
 
 void CCommanderInput::SimulateKeyPress(wxKeyEvent & KeyEvent)
 {
-    if (KeyEvent.ShiftDown())
-    {
-        // An early adopter of the wxWidgets FMSLogo reported that
-        // the key events with Shift are not emulated properly by
-        // EmulateKeyEvent() on his Vista Business machine.
-        // 
-        // To account for this, we must explicitly handle all such
-        // key events.
-        int keyCode = KeyEvent.GetKeyCode();
-        switch (keyCode)
-        {
-        case WXK_HOME:
-        case WXK_NUMPAD_HOME:
-            if (KeyEvent.ControlDown())
-            {
-                // Ctrl+Shift+Home selects to the top of the input.
-                DocumentStartExtend();
-            }
-            else
-            {
-                // Shift+Home selects to the beginning of the input.
-                HomeExtend();
-            }
-            break;
-
-        case WXK_END:
-        case WXK_NUMPAD_END:
-            if (KeyEvent.ControlDown())
-            {
-                // Ctrl+Shift+End selects to the bottom of the input.
-                DocumentEndExtend();
-            }
-            else
-            {
-                // Shift+End selects to the end of the line.
-                LineEndExtend();
-            }
-            break;
-
-        case WXK_LEFT:
-        case WXK_NUMPAD_LEFT:
-            if (KeyEvent.ControlDown())
-            {
-                // Ctrl+Shift+Left extends the selection a word to the left.
-                WordLeftExtend();
-            }
-            else
-            {
-                // Shift+Left extends the selection a character to the left.
-                CharLeftExtend();
-            }
-            break;
-
-        case WXK_RIGHT:
-        case WXK_NUMPAD_RIGHT:
-            if (KeyEvent.ControlDown())
-            {
-                // Ctrl+Shift+Right extends the selection a word to the right.
-                WordRightExtend();
-            }
-            else
-            {
-                // Shift+Right extends the selection a character to the right.
-                CharRightExtend();
-            }
-            break;
-        }
-    }
-    else
-    {
 #ifdef __WXMSW__
-        // Copied from wxTextCtrl::EmulateKeyEvent(KeyEvent)
-        BYTE code = static_cast<BYTE>(KeyEvent.GetRawKeyCode());
-        ::keybd_event(code, 0, 0 /* key press */, 0);
-        ::keybd_event(code, 0, KEYEVENTF_KEYUP, 0);
+    // Emulating a keyboard event is not possible with the current
+    // wxStyledCtrl class and it's even difficult with platform-specific
+    // calls like SendMessage, as wxStyledCtrl keeps a handle to the
+    // real Scintilla window without exposing how to use it.
+    //
+    // Instead we use an ancient API that still works.
+    // This assumes that the caller has set focus to this window.
+    BYTE code = static_cast<BYTE>(KeyEvent.GetRawKeyCode());
+    ::keybd_event(code, 0, 0 /* key press */, 0);
+    ::keybd_event(code, 0, KEYEVENTF_KEYUP, 0);
+#else
+    boolean consumed = false;
+    OnKeyEvent(KeyEvent, &consumed);
 #endif
-    }
 }
 
 void CCommanderInput::SetText(const wxString & NewText)
