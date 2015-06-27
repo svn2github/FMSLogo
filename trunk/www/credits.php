@@ -72,7 +72,7 @@
 					 <li>Yehuda Katz</li>
 				</ul>
 				<p>
-				It is my hope that FMSLogo's new home on SourceForge will serve as a focal point for future community involvement.
+				It is my hope that FMSLogo's home on SourceForge will serve as a focal point for future community involvement.
 				</p>
 			</article>
 			<?php include 'aside.php' ?>
