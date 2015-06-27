@@ -12,10 +12,10 @@
 // CAboutFmsLogo
 // ----------------------------------------------------------------------------
 
-#define LOCALIZED_ABOUTFMS_UNSTABLE_VERSION     \
+#define LOCALIZED_ABOUTFMS_WXWIDGETS_VERSION    \
     LOCALIZED_GENERAL_PRODUCTNAME               \
-    " Version "                                 \
-    FMSLOGO_VERSION " - UNSTABLE\n"             \
+    " " LOCALIZED_ABOUTFMS_VERSION " "          \
+    FMSLOGO_VERSION " - wxWidgets\n"            \
     "http://sourceforge.net/projects/fmslogo"   \
 
 CAboutFmsLogo::CAboutFmsLogo(wxWindow * Parent)
@@ -26,15 +26,15 @@ CAboutFmsLogo::CAboutFmsLogo(wxWindow * Parent)
     
     // The text in all of the static controls
     static const char * staticText[] = {
-        "  " LOCALIZED_ABOUTFMS_UNSTABLE_VERSION "  ",
-        "  " LOCALIZED_ABOUTFMS_GUI              "  ",
-        "  " LOCALIZED_ABOUTFMS_CORE             "  ",
-        "  " LOCALIZED_ABOUTFMS_INSTALLER        "  ",
-        "  " LOCALIZED_ABOUTFMS_ADVENTURE        "  ",
-        "  " LOCALIZED_ABOUTFMS_SPECIALTHANKS    "  ",
-        "  " LOCALIZED_ABOUTFMS_GPL              "  ",
-        "  " LOCALIZED_ABOUTFMS_NEWSGROUP        "  ",
-        "  " LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC  "  ",
+        "  " LOCALIZED_ABOUTFMS_WXWIDGETS_VERSION  "  ",
+        "  " LOCALIZED_ABOUTFMS_GUI                "  ",
+        "  " LOCALIZED_ABOUTFMS_CORE               "  ",
+        "  " LOCALIZED_ABOUTFMS_INSTALLER          "  ",
+        "  " LOCALIZED_ABOUTFMS_ADVENTURE          "  ",
+        "  " LOCALIZED_ABOUTFMS_SPECIALTHANKS      "  ",
+        "  " LOCALIZED_ABOUTFMS_GPL                "  ",
+        "  " LOCALIZED_ABOUTFMS_NEWSGROUP          "  ",
+        "  " LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC    "  ",
     };
 
     for (size_t i = 0; i < ARRAYSIZE(staticText); i++)
