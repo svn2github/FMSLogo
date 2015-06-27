@@ -860,7 +860,7 @@
 // Strings on the "About FMSLogo" Dialog box
 //
 #define LOCALIZED_ABOUTFMS                     "Πληροφορίες για την "LOCALIZED_GENERAL_PRODUCTNAME 
-#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME", έκδοση "FMSLOGO_VERSION"\nhttp:\x2F/sourceforge.net/projects/fmslogo"
+#define LOCALIZED_ABOUTFMS_VERSION             "έκδοση"
 #define LOCALIZED_ABOUTFMS_GUI                 "GUI από τον George Mills\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
 #define LOCALIZED_ABOUTFMS_CORE                "Πυρήνας από τον Brian Harvey\nUniversity of California Berkeley"
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Εγκαταστάτης βασισμένος στο Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net"

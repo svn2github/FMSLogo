@@ -2279,6 +2279,11 @@ void TMainFrame::CMHelpReleaseNotes()
     OpenFileWithDefaultApplication(HWindow, szFileName);
 }
 
+#define LOCALIZED_ABOUTFMS_OWL_VERSION          \
+    LOCALIZED_GENERAL_PRODUCTNAME               \
+    " " LOCALIZED_ABOUTFMS_VERSION " "          \
+    FMSLOGO_VERSION " - OWL\n"                  \
+    "http://sourceforge.net/projects/fmslogo"   \
 
 class CAboutFmsLogoDialog : public TDialog
 {
@@ -2299,7 +2304,7 @@ void CAboutFmsLogoDialog::SetupWindow()
 
     // set the text in all of the static controls
     static const MENUITEM staticText[] = {
-        {LOCALIZED_ABOUTFMS_VERSION,         ID_ABOUTFMS_VERSION},
+        {LOCALIZED_ABOUTFMS_OWL_VERSION,     ID_ABOUTFMS_VERSION},
         {LOCALIZED_ABOUTFMS_GUI,             ID_ABOUTFMS_GUI},
         {LOCALIZED_ABOUTFMS_CORE,            ID_ABOUTFMS_CORE},
         {LOCALIZED_ABOUTFMS_INSTALLER,       ID_ABOUTFMS_INSTALLER},

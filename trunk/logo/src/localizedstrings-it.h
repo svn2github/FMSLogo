@@ -860,7 +860,7 @@
 // Strings on the "About FMSLogo" Dialog box
 //
 #define LOCALIZED_ABOUTFMS                     "Informazioni su "LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Versione "FMSLOGO_VERSION"\nhttp:\x2F/sourceforge.net/projects/fmslogo"
+#define LOCALIZED_ABOUTFMS_VERSION             "Versione"
 #define LOCALIZED_ABOUTFMS_GUI                 "GUI di George Mills\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
 #define LOCALIZED_ABOUTFMS_CORE                "Core di Brian Harvey\nUniversity of California Berkeley"
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Installatore basato su Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net/"
