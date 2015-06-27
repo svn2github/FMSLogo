@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<title>Credits - FMSLogo</title>
-		<meta name="description" content="Credits of FMSLogo, a  programming environment for Microsoft Windows">
+		<meta name="description" content="Credits of FMSLogo, a programming environment for Microsoft Windows">
 		<?php include 'header.php' ?>
 	</head>
 	<body>
@@ -12,7 +12,7 @@
 				<h1>Credits</h1>
 				<p>
 				FMSLogo was originally called MSWLogo.
-				It was written by <b>George Mills</b> and based on UCBLogo, which is written by <b>Brian Harvey</b> and is still under active development.
+				It was written by <b>George Mills</b> and based on UCBLogo, which was written by <b>Brian Harvey</b>.
 				A large, international community adopted MSWLogo, translated it into several languages, and created countless lessons plans around it.
 				</p>
 				
