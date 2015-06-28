@@ -16,14 +16,23 @@
 				</p>
 
 				<ul>
-				  <li>Of course, you can help with the programming side of things. 
-					  Unfortunately, FMSLogo was written using old versions of Borland C++ and TASM, which are not available in stores anymore.
-					  If you want to help on the programming side of things, you must first obtain a copy of these products.</li>
+					<li>Of course, you can help with the programming side of things. 
+					There are three version of FMSLogo: the wxWidgets version, the screensaver, and the OWL version.
+					The wxWidgets can be compiled with i686-w64-mingw32-gcc package from cygwin.
+					The screensaver can be compiled with MinGW.
+					The OWL version can be compiled old versions of Borland C++ and TASM, which are not available in stores anymore.
+					If you want to help on the programming side of things, you must first obtain one of these products.
+					To my knowledge, I am the only one who has ever compiled FMSLogo, so don't expect this to be easy.
+					I wrote a thumbnail sketch of how to build it in BUILD.TXT.
+					Even if you are unable to build FMSLogo, if report where you get stuck, you may help other developers.</li>
+
+				  <li>The build system consists of hand-written Makefiles that have hard-coded paths that only work on machine.
+					If you know how to generalize the build to work like other GPL projects (with configure), that would be a great contribution.</li>
 
 				  <li>I would like to bundle FMSLogo with lots of high-quality mini-applications written in FMSLogo that show off what it's capable of.
-					  I would like them to be written in a way that people can study, learn from, and improve them.
-					  Games are ideal, since my target will always be children and young adults.
-					  If you have a Logo program to donate, post a link in <a href="https://sourceforge.net/p/fmslogo/discussion/500407" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">the discussion forum</a>.
+					I would like them to be written in a way that people can study, learn from, and improve them.
+					Games are ideal, since my target will always be children and young adults.
+					If you have a Logo program to donate, post a link in <a href="https://sourceforge.net/p/fmslogo/discussion/500407" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">the discussion forum</a>.
 				  </li>
 
 				  <li>Translate FMSLogo to a new language.
@@ -31,9 +40,6 @@
 					  Translators are expected to translate the text in the GUI and the names of each command.
 					  Translating the manual is not necessary (but would be appreciated).
 					  If you would like to translate FMSLogo to a new language, please post a comment to the <a href="https://sourceforge.net/p/fmslogo/discussion/500407" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">Public Forum</a> and I will send you further instructions.</li>
-
-				  <li>If you're good with at Web development, this Web site obviously needs some help.
-					  If you have some ideas on what should go here and would like to take over maintenance, let me know.</li>
 
 				  <li>Create a new icon for FMSLogo.
 					  The current icon is not recognizable and looks like a mismash of red, white, and blue.
@@ -51,17 +57,19 @@
 					  FMSLogo is full of them and they should all be tracked.
 					  If you know of a bug, please file it in the <a href="https://sourceforge.net/p/fmslogo/bugs/" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">bug tracker</a>.</li>
 
-				  <li>If you're a GNU/Linux user, you can become a <a href="http://appdb.winehq.org/" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">WINE application maintainer</a> for FMSLogo.
-					  I intend to port FMSLogo to GNU/Linux some day, but that could be years form now.
+				<li>If you're a GNU/Linux user, you can become a <a href="http://appdb.winehq.org/" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">WINE application maintainer</a> for FMSLogo.
+					  I intend to port FMSLogo to GNU/Linux some day, but that could be years from now.
 					  In the meantime, it'd be nice if it ran under WINE.
-				  </li>
+				</li>
 
-				  <li>Evangelize FMSLogo.
-					  MSWLogo is still far more popular than FMSLogo.
-					  If it's because FMSLogo is deficient in some way, then let's file a bug and get it fixed.
-					  If it's because people don't know about FMSLogo, then let's let them know.</li>
+				<li>
+					Evangelize FMSLogo.
+					Respond to questions posted on the Logo forum.
+					If people get stuck or run into problems with FMSLogo, help them out.
+					If you don't know how to help, try to connect them to someone who does.
+				</li>
 
-				  <li>Whatever else you can think of!</li>
+				<li>Whatever else you can think of!</li>
 				</ul>
 			</article>
 			<?php include 'aside.php' ?>
