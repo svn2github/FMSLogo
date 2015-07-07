@@ -19,6 +19,7 @@
 #define __UNIX_H_
 
 #include <setjmp.h>
+#include "print.h" // for MESSAGETYPE
 
 struct NODE;
 
@@ -26,7 +27,7 @@ struct NODE;
 extern int printfx(const char *fmt);
 extern int printfx(const char *fmt, const char *str);
 extern void unblock_input(void);
-extern void putcombochar(char c);
+extern void putcombochar(MESSAGETYPE type, char c);
 extern NODE *lchdir(NODE *arg);
 extern NODE *lpopdir(NODE *arg);
 extern NODE *lmkdir(NODE *arg);

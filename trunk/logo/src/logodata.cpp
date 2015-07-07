@@ -1131,7 +1131,8 @@ NODE *lpprop(NODE *args)
             NODE * propertyvalue = vref(maybe_quote(newval));
 
             ndprintf(
-                g_Writer.GetStream(), 
+                g_Writer.GetStream(),
+                MESSAGETYPE_Trace,
                 LOCALIZED_TRACING_PPROP, 
                 propertylist,
                 propertyname,
@@ -1146,11 +1147,12 @@ NODE *lpprop(NODE *args)
             {
                 ndprintf(
                     g_Writer.GetStream(), 
+                    MESSAGETYPE_Trace,
                     LOCALIZED_TRACING_LOCATION,
                     ufun, 
                     this_line);
             }
-            new_line(g_Writer.GetStream());
+            new_line(g_Writer.GetStream(), MESSAGETYPE_Trace);
         }
 
         // Insert the property into the tree.

@@ -51,24 +51,20 @@ static STRING_PRINT_INFORMATION g_StringPrintInformation;
 
 bool print_backslashes = false;
 
-
-void update_coords(char /*ch*/)
-{
-}
-
-void print_char(FILE *strm, char ch)
+void print_char(FILE *strm, MESSAGETYPE type, char ch)
 {
     if (strm != NULL)
     {
         // printing to a file stream
         if (strm == stdout)
         {
-            putcombochar(ch);
+            // FMSLogo isn't a command-line application, so printing
+            // to "stdout" really goes to the commander history.
+            putcombochar(type, ch);
             if (dribblestream != NULL)
             {
                 putc(ch, dribblestream);
             }
-            update_coords(ch);
         }
         else
         {
@@ -86,18 +82,17 @@ void print_char(FILE *strm, char ch)
     }
 }
 
-void print_space(FILE *strm)
+void print_space(FILE *strm, MESSAGETYPE type)
 {
-    print_char(strm, ' ');
+    print_char(strm, type, ' ');
 }
 
-/*VARARGS2*/
-void ndprintf(FILE *strm, const char *fmt, ...)
+void ndprintf(FILE *strm, MESSAGETYPE type, const char *fmt, ...)
 {
     va_list ap;
-    char ch;
-
     va_start(ap, fmt);
+
+    char ch;
     while ((ch = *fmt++) != '\0')
     {
         if (ch == '%')
@@ -105,7 +100,7 @@ void ndprintf(FILE *strm, const char *fmt, ...)
             ch = *fmt++;
             if (ch == 's') // show
             {
-                print_node(strm, va_arg(ap, NODE *));
+                print_node(strm, type, va_arg(ap, NODE *));
             }
             else if (ch == 'p')  // print
             {
@@ -113,11 +108,11 @@ void ndprintf(FILE *strm, const char *fmt, ...)
                 NODE * nd = va_arg(ap, NODE *);
                 if (is_list(nd))
                 {
-                    print_helper(strm, nd);
+                    print_helper(strm, type, nd);
                 }
                 else
                 {
-                    print_node(strm, nd);
+                    print_node(strm, type, nd);
                 }
             }
             else if (ch == 't') // text
@@ -125,25 +120,36 @@ void ndprintf(FILE *strm, const char *fmt, ...)
                 char *cp = va_arg(ap, char *);
                 while (ch = *cp++)
                 {
-                    print_char(strm, ch);
+                    print_char(strm, type, ch);
                 }
             }
             else
             {
-                print_char(strm, '%');
-                print_char(strm, ch);
+                print_char(strm, type, '%');
+                print_char(strm, type, ch);
             }
         }
-        else 
+        else
         {
-            print_char(strm, ch);
+            print_char(strm, type, ch);
         }
     }
+
     va_end(ap);
 }
 
 static
-void real_print_helper(FILE *strm, const NODE *ndlist, int depth, int width)
+void
+real_print_node(
+    FILE       * strm,
+    MESSAGETYPE  type,
+    const NODE * nd,
+    int          depth,
+    int          width
+    );
+
+static
+void real_print_helper(FILE *strm, MESSAGETYPE type, const NODE *ndlist, int depth, int width)
 {
     int wid = width;
 
@@ -159,13 +165,13 @@ void real_print_helper(FILE *strm, const NODE *ndlist, int depth, int width)
         {
             break;
         }
-        real_print_node(strm, arg, depth, width);
+        real_print_node(strm, type, arg, depth, width);
         if (ndlist != NIL)
         {
-            print_space(strm);
+            print_space(strm, type);
             if (--wid == 0)
             {
-                ndprintf(strm, "...");
+                ndprintf(strm, type, "...");
                 break;
             }
         }
@@ -173,39 +179,48 @@ void real_print_helper(FILE *strm, const NODE *ndlist, int depth, int width)
 }
 
 
-// prints a node to a file stream in a way that is consistent
+// Prints a node to a file stream in a way that is consistent
 // with how FMSLogo parses nodes.
 //
 //   strm - the file stream.
-//   nd - the node to print.
+//   type - the type of message that is being printed
+//   nd - the node to print
 //   depth - how "deep" to go (how many elements of a list)
 //   width - how many bytes to print at most ???
-void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
+static
+void
+real_print_node(
+    FILE       * strm,
+    MESSAGETYPE  type,
+    const NODE * nd,
+    int          depth,
+    int          width
+    )
 {
     NODETYPES ndty;
 
     if (depth == 0)
     {
-        ndprintf(strm, "...");
+        ndprintf(strm, type, "...");
     }
     else if (nd == NIL)
     {
-        print_char(strm, '[');
-        print_char(strm, ']');
+        print_char(strm, type, '[');
+        print_char(strm, type, ']');
     }
     else if (nd == Unbound)
     {
-        ndprintf(strm, LOCALIZED_UNBOUND);
+        ndprintf(strm, type, LOCALIZED_UNBOUND);
     }
     else if ((ndty = nodetype(nd)) & NT_PRIM)
     {
-        ndprintf(strm, "PRIM");
+        ndprintf(strm, type, "PRIM");
     }
     else if (ndty & NT_LIST)
     {
-        print_char(strm, '[');
-        real_print_helper(strm, nd, depth - 1, width);
-        print_char(strm, ']');
+        print_char(strm, type, '[');
+        real_print_helper(strm, type, nd, depth - 1, width);
+        print_char(strm, type, ']');
     }
     else if (ndty == ARRAY)
     {
@@ -222,42 +237,42 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
             wid = (dim > width ? width : dim);
         }
 
-        print_char(strm, '{');
+        print_char(strm, type, '{');
 
         // print each item in the array
         NODE **pp = getarrptr(nd);
         int i = 0;
         while (i < wid)
         {
-            real_print_node(strm, *pp++, depth - 1, width);
+            real_print_node(strm, type, *pp++, depth - 1, width);
             if (++i < dim) 
             {
-                print_space(strm);
+                print_space(strm, type);
             }
         }
         if (wid < dim) 
         {
-            ndprintf(strm, "...");
+            ndprintf(strm, type, "...");
         }
-        print_char(strm, '}');
+        print_char(strm, type, '}');
 
         // print the origin
         if (print_backslashes && (getarrorg(nd) != 1))
         {
             char origin[32];
             sprintf(origin, "@%d", getarrorg(nd));
-            ndprintf(strm, origin);
+            ndprintf(strm, type, origin);
         }
     }
     else if (ndty == QUOTE)
     {
-        print_char(strm, '\"');
-        real_print_node(strm, car(nd), width - 1, depth);
+        print_char(strm, type, '\"');
+        real_print_node(strm, type, car(nd), width - 1, depth);
     }
     else if (ndty == COLON)
     {
-        print_char(strm, ':');
-        real_print_node(strm, car(nd), width - 1, depth);
+        print_char(strm, type, ':');
+        real_print_node(strm, type, car(nd), width - 1, depth);
     }
     else if (ndty == FLOATINGPOINT)
     {
@@ -267,7 +282,7 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
         // REVISIT: is it okay to ignore the width parameter?
         for (const char *cp = buffer; *cp != '\0'; cp++)
         {
-            print_char(strm, *cp);
+            print_char(strm, type, *cp);
         }
     }
     else if (ndty == INTEGER)
@@ -278,12 +293,12 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
         // REVISIT: is it okay to ignore the width parameter?
         for (const char *cp = buffer; *cp != '\0'; cp++)
         {
-            print_char(strm, *cp);
+            print_char(strm, type, *cp);
         }
     }
     else if (ndty == CASEOBJ)
     {
-        real_print_node(strm, strnode__caseobj(nd), depth, width);
+        real_print_node(strm, type, strnode__caseobj(nd), depth, width);
     }
     else
     {
@@ -314,14 +329,14 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
         {
             for (int i = 0; i < totalCharsToPrint; i++)
             {
-                print_char(strm, *cp++);
+                print_char(strm, type, *cp++);
             }
         }
         else if (!print_backslashes)
         {
             for (int i = 0; i < totalCharsToPrint; i++)
             {
-                print_char(strm, ecma_clear(*cp++));
+                print_char(strm, type, ecma_clear(*cp++));
             }
         }
         else
@@ -341,10 +356,10 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
                 // word was in vbars
                 if (strchr("\":", *cp))
                 {
-                    print_char(strm, *cp++);
+                    print_char(strm, type, *cp++);
                     totalCharsToPrint--;
                 }
-                print_char(strm, '|');
+                print_char(strm, type, '|');
                 for (i = 0; i < totalCharsToPrint; i++)
                 {
                     char ch = ecma_clear(*cp++);
@@ -353,11 +368,11 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
                     // that must be escaped.
                     if (ch == '|' || ch == '\\')
                     {
-                        print_char(strm, '\\');
+                        print_char(strm, type, '\\');
                     }
-                    print_char(strm, ch);
+                    print_char(strm, type, ch);
                 }
-                print_char(strm, '|');
+                print_char(strm, type, '|');
             }
             else 
             {
@@ -367,16 +382,16 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
                     if (is_special_character(*cp))
                     {
                         // *cp must be escaped with a backslash
-                        print_char(strm, '\\');
+                        print_char(strm, type, '\\');
                     }
-                    print_char(strm, *cp++);
+                    print_char(strm, type, *cp++);
                 }
             }
         }
 
         if (dots)
         {
-            ndprintf(strm, "...");
+            ndprintf(strm, type, "...");
         }
     }
 }
@@ -394,45 +409,47 @@ int find_limit(const CLocalizedNode & Node)
     return val;
 }
 
-void print_helper(FILE *strm, NODE *nd)
+void print_helper(FILE *strm, MESSAGETYPE type, NODE *nd)
 {
     real_print_helper(
         strm,
+        type,
         nd,
         find_limit(Printdepthlimit),
         find_limit(Printwidthlimit));
 }
 
-void print_node(FILE *strm, NODE *nd)
+void print_node(FILE *strm, MESSAGETYPE type, NODE *nd)
 {
     real_print_node(
         strm,
+        type,
         nd,
         find_limit(Printdepthlimit),
         find_limit(Printwidthlimit));
 }
 
-void print_nobrak(FILE *strm, NODE *nd)
+void print_nobrak(FILE *strm, MESSAGETYPE type, NODE *nd)
 {
     if (is_list(nd))
     {
-        print_helper(strm, nd);
+        print_helper(strm, type, nd);
     }
     else 
     {
-        print_node(strm, nd);
+        print_node(strm, type, nd);
     }
 }
 
-void new_line(FILE *strm)
+void new_line(FILE *strm, MESSAGETYPE type)
 {
-    print_char(strm, '\n');
+    print_char(strm, type, '\n');
 }
 
 NODE *lshow(NODE *args)
 {
-    print_helper(g_Writer.GetStream(), args);
-    new_line(g_Writer.GetStream());
+    print_helper(g_Writer.GetStream(), MESSAGETYPE_Normal, args);
+    new_line(g_Writer.GetStream(), MESSAGETYPE_Normal);
     return Unbound;
 }
 
@@ -443,12 +460,12 @@ void type_helper(NODE *args, bool print_space_between_arguments)
     {
         NODE * arg = car(args);
 
-        print_nobrak(g_Writer.GetStream(), arg);
+        print_nobrak(g_Writer.GetStream(), MESSAGETYPE_Normal, arg);
 
         args = cdr(args);
         if (print_space_between_arguments && (args != NIL))
         {
-            print_space(g_Writer.GetStream());
+            print_space(g_Writer.GetStream(), MESSAGETYPE_Normal);
         }
     }
 }
@@ -462,7 +479,7 @@ NODE *ltype(NODE *args)
 NODE *lprint(NODE *args)
 {
     type_helper(args, true);
-    new_line(g_Writer.GetStream());
+    new_line(g_Writer.GetStream(), MESSAGETYPE_Normal);
     return Unbound;
 }
 
@@ -527,6 +544,7 @@ PrintNodeToString(
     {
         real_print_helper(
             NULL,
+            MESSAGETYPE_Normal,
             Node,
             PrintDepthLimit,
             PrintWidthLimit);
@@ -535,6 +553,7 @@ PrintNodeToString(
     {
         real_print_node(
             NULL,
+            MESSAGETYPE_Normal,
             Node,
             PrintDepthLimit,
             PrintWidthLimit);

@@ -278,10 +278,10 @@ void trace_input(NODE * UnquotedArgument)
 {
     // trace a NODE* as if it were an input to a function
     NODE * quoted_arg = vref(maybe_quote(UnquotedArgument));
-    print_node(g_Writer.GetStream(), quoted_arg);
+    print_node(g_Writer.GetStream(), MESSAGETYPE_Trace, quoted_arg);
     deref(quoted_arg);
 
-    print_space(g_Writer.GetStream());
+    print_space(g_Writer.GetStream(), MESSAGETYPE_Trace);
 }
 
 class CEvaluatorStack
@@ -1196,10 +1196,10 @@ NODE *evaluator(NODE *list, enum labels where)
     {
         for (int i = 0; i < trace_level; i++) 
         {
-            print_space(g_Writer.GetStream());
+            print_space(g_Writer.GetStream(), MESSAGETYPE_Trace);
         }
         trace_level++;
-        ndprintf(g_Writer.GetStream(), "( %s ", fun);
+        ndprintf(g_Writer.GetStream(), MESSAGETYPE_Trace, "( %s ", fun);
     }
 
  lambda_apply:
@@ -1404,9 +1404,9 @@ NODE *evaluator(NODE *list, enum labels where)
     {
         if (NOT_THROWING) 
         {
-            print_char(g_Writer.GetStream(), ')');
+            print_char(g_Writer.GetStream(), MESSAGETYPE_Trace, ')');
         }
-        new_line(g_Writer.GetStream());
+        new_line(g_Writer.GetStream(), MESSAGETYPE_Trace);
 
         Stack.PushFrame(
             compound_apply_continue,
@@ -1523,7 +1523,7 @@ NODE *evaluator(NODE *list, enum labels where)
                 int i = 1;
                 while (i++ < trace_level) 
                 {
-                    print_space(stdout);
+                    print_space(stdout, MESSAGETYPE_Trace);
                 }
             }
             // print_node(stdout, this_line);
@@ -1812,19 +1812,26 @@ NODE *evaluator(NODE *list, enum labels where)
     {
         for (int i = 0; i < trace_level; i++) 
         {
-            print_space(g_Writer.GetStream());
+            print_space(g_Writer.GetStream(), MESSAGETYPE_Trace);
         }
-        print_node(g_Writer.GetStream(), fun);
+        print_node(g_Writer.GetStream(), MESSAGETYPE_Trace, fun);
         if (val == Unbound)
         {
             // trace that the procedure stopped (without outputting anything)
-            ndprintf(g_Writer.GetStream(), LOCALIZED_TRACING_STOPS);
+            ndprintf(
+                g_Writer.GetStream(),
+                MESSAGETYPE_Trace,
+                LOCALIZED_TRACING_STOPS);
         }
         else
         {
             // trace the output
             NODE * quoted_val = vref(maybe_quote(val));
-            ndprintf(g_Writer.GetStream(), LOCALIZED_TRACING_OUTPUTS, quoted_val);
+            ndprintf(
+                g_Writer.GetStream(),
+                MESSAGETYPE_Trace,
+                LOCALIZED_TRACING_OUTPUTS,
+                quoted_val);
             deref(quoted_val);
         }
     }
@@ -2452,6 +2459,7 @@ bool process_special_conditions()
         // stopping_flag of THROWING.
         ndprintf(
             stdout, 
+            MESSAGETYPE_Normal,
             "%t.\n"
             LOCALIZED_ERROR_ATTOPLEVEL2);
         stopping_flag = RUN;

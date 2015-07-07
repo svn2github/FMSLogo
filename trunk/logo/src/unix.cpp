@@ -65,7 +65,7 @@ mputcombobox(
         {
             // if <lf> pump it out
             rawBuffer[i] = '\0';
-            putcombobox(next_line);
+            putcombobox(next_line, MESSAGETYPE_Normal);
             rawBuffer[i] = '\n';
             next_line = &rawBuffer[i + 1];
         }
@@ -74,19 +74,19 @@ mputcombobox(
     // flush the last line (which doesn't end in \n)
     if (next_line[0] != '\0')
     {
-        putcombobox(next_line);
+        putcombobox(next_line, MESSAGETYPE_Normal);
     }
 
     // clear the contents of the buffer, since we wrote the entire thing
     g_ComboBuffer.Empty();
 }
 
-void putcombochar(char ch)
+void putcombochar(MESSAGETYPE type, char ch)
 {
     if (ch == '\n')
     {
         // if <lf> pump it out
-        putcombobox(g_ComboBuffer.GetBuffer());
+        putcombobox(g_ComboBuffer.GetBuffer(), type);
         g_ComboBuffer.Empty();
     }
     else

@@ -609,7 +609,7 @@ void single_step_box(NODE *the_line)
 // This function is called when Logo wants to write a line of text to the commander's
 // recall box.  Since we don't have a recall box, we instead write directly to the
 // screen.
-void putcombobox(const char *str)
+void putcombobox(const char *Text, MESSAGETYPE type)
 {
     HDC     memoryDeviceContext = GetMemoryDeviceContext();
     HBITMAP oldBitmap           = (HBITMAP) SelectObject(memoryDeviceContext, MemoryBitMap);
@@ -622,7 +622,16 @@ void putcombobox(const char *str)
 
     SetBkColor(memoryDeviceContext, scolor);
     SetBkMode(memoryDeviceContext, TRANSPARENT);
-    SetTextColor(memoryDeviceContext, pcolor);
+    if (type == MESSAGETYPE_Error)
+    {
+        // Errors are written as red text.
+        SetTextColor(memoryDeviceContext, RGB(255, 0, 0));
+    }
+    else
+    {
+        // All other messages use the pen color.
+        SetTextColor(memoryDeviceContext, pcolor);
+    }
 
     FontRec.lfEscapement = 0;
     HFONT tempFont = CreateFontIndirect(&FontRec);
@@ -630,7 +639,7 @@ void putcombobox(const char *str)
 
     // figure out how much space this text will take up
     SIZE size;
-    GetTextExtentPoint(memoryDeviceContext, str, strlen(str), &size);
+    GetTextExtentPoint(memoryDeviceContext, Text, strlen(Text), &size);
 
     if (BitMapHeight < g_NextTextLine + size.cy)
     {
@@ -643,8 +652,8 @@ void putcombobox(const char *str)
         memoryDeviceContext,
         0,
         g_NextTextLine,
-        str,
-        strlen(str));
+        Text,
+        strlen(Text));
 
     if (EnablePalette)
     {

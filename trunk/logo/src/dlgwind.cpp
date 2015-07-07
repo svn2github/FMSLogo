@@ -703,7 +703,7 @@ void dialoglist::list(const char *k, int level)
         {
             char temp[MAX_WINDOWNAME_LENGTH + 1 + MAX_BUFFER_SIZE + 1];
             sprintf(temp, "%s %s", Windowname[(int)p->type], p->key);
-            putcombobox(temp);
+            putcombobox(temp, MESSAGETYPE_Normal);
         }
 
         dialogthing *ff = last;
@@ -713,7 +713,7 @@ void dialoglist::list(const char *k, int level)
             {
                 char temp[2 + 1 + MAX_WINDOWNAME_LENGTH + 1 + MAX_BUFFER_SIZE + 1];
                 sprintf(temp, "  %*s%s %s", level, "", Windowname[(int)ff->type], ff->key);
-                putcombobox(temp);
+                putcombobox(temp, MESSAGETYPE_Normal);
                 list(ff->key, level + 1);
             }
             ff = ff->next;

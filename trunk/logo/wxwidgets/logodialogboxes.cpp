@@ -1019,7 +1019,7 @@ void CLogoWidgetList::list(const char *k, int level)
                 "%s %s",
                 WindowName[(int)p->m_Type],
                 p->m_Key);
-            putcombobox(temp);
+            putcombobox(temp, MESSAGETYPE_Normal);
         }
 
         CLogoWidget *ff = last;
@@ -1035,7 +1035,7 @@ void CLogoWidgetList::list(const char *k, int level)
                     WindowName[(int)ff->m_Type],
                     ff->m_Key);
 
-                putcombobox(temp);
+                putcombobox(temp, MESSAGETYPE_Normal);
                 list(ff->m_Key, level + 1);
             }
             ff = ff->m_Next;

@@ -31,6 +31,7 @@
 #include "status.h"
 #include "fontutils.h"
 #include "mmwind.h"
+#include "print.h" // for MESSAGETYPE
 #include "stringadapter.h"
 
 bool g_IsOkayToUseCommanderWindow = true;
@@ -349,9 +350,9 @@ void clearcombobox()
     commanderHistory->Clear();
 }
 
-// Appends "str" to the end of the what is in the Commander's Recall box.
-// If "str" doesn't fit, then some text will be removed from the top to make it fit.
-void putcombobox(const char *str)
+// Appends Text to the end of the what is in the Commander's Recall box.
+// If Text doesn't fit, then some text is removed from the top to make it fit.
+void putcombobox(const char *Text, MESSAGETYPE MessageType)
 {
     // Check that the commander's history field is ready for input.
     if (g_IsOkayToUseCommanderWindow)
@@ -370,9 +371,19 @@ void putcombobox(const char *str)
             // Don't append the empty string because that results in appending
             // a newline.  When combined with the newline that gets added
             // below, this would have the side-effect of inserting two lines.
-            if (str != NULL && str[0] != '\0')
+            if (Text != NULL && Text[0] != '\0')
             {
-                commanderHistory->AppendText(WXSTRING(str));
+                if (MessageType == MESSAGETYPE_Error)
+                {
+                    commanderHistory->SetInsertionPointEnd();
+                    commanderHistory->BeginTextColour(wxColor(0xFF, 0, 0));
+                    commanderHistory->WriteText(WXSTRING(Text));
+                    commanderHistory->EndTextColour();
+                }
+                else
+                {
+                    commanderHistory->AppendText(WXSTRING(Text));
+                }
             }
 
             // Append the newline
@@ -400,7 +411,7 @@ void putcombobox(const char *str)
 
         // If all else fails try erasing everything.
         // We should never get here.
-        commanderHistory->SetValue(WXSTRING(str));
+        commanderHistory->SetValue(WXSTRING(Text));
     }
 }
 
@@ -418,7 +429,7 @@ RunLogoInstructionFromGui(
         // The instruction is real.  Do something with it.
 
         // copy to list box for command recall
-        putcombobox(LogoInstruction);
+        putcombobox(LogoInstruction, MESSAGETYPE_Normal);
 
         // if dribble then dribble 
         if (dribblestream != NULL)
@@ -691,7 +702,7 @@ CCommander::AppendToCommanderHistory(
         {
             // if <lf> pump it out
             rawBuffer[i] = '\0';
-            putcombobox(next_line);
+            putcombobox(next_line, MESSAGETYPE_Normal);
             rawBuffer[i] = '\n';
             next_line = &rawBuffer[i + 1];
         }
@@ -700,7 +711,7 @@ CCommander::AppendToCommanderHistory(
     // flush the last line (which doesn't end in \n)
     if (next_line[0] != '\0')
     {
-        putcombobox(next_line);
+        putcombobox(next_line, MESSAGETYPE_Normal);
     }
 
     // clear the contents of the buffer, since we wrote the entire thing
@@ -715,7 +726,7 @@ CCommander::AppendToCommanderHistory(
     if (Char == '\n')
     {
         // if <lf> pump it out
-        putcombobox(g_HistoryBuffer.GetBuffer());
+        putcombobox(g_HistoryBuffer.GetBuffer(), MESSAGETYPE_Normal);
         g_HistoryBuffer.Empty();
     }
     else

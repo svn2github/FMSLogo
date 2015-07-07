@@ -742,7 +742,11 @@ void silent_load(NODE *arg, const char *prefix)
         {
             // we're loading argv (not from Logolib or current directory)
             // so we should display an error
-            ndprintf(stdout, LOCALIZED_ERROR_FILESYSTEM_CANTOPEN2"\n", prefix);
+            ndprintf(
+                stdout,
+                MESSAGETYPE_Error,
+                LOCALIZED_ERROR_FILESYSTEM_CANTOPEN2"\n",
+                prefix);
         }
     }
 }

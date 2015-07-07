@@ -20,6 +20,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 6.34.0
+  o Implement feature #106; Error messages are now rendered in red text in the
+    commander history box.
   o Fix bug #423; Menu items in the editor of the wxWidgets version of FMSLogo
     are now disabled when they would have no effect.
   o Fix bug #424; Captial letters and other printable characters are now

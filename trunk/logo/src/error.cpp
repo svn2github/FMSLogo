@@ -106,10 +106,14 @@ err_print_helper(
     FILE * fp;
     if (Buffer == NULL)
     {
+        // No buffer was supplied, so the printing should
+        // go to "stdout" (which is the commander history).
         fp = stdout;
     }
     else
     {
+        // A buffer was supplied, so the error message
+        // should be written there.
         fp = NULL;
         InitializeStringPrintInformation(Buffer, BufferLength);
     }
@@ -121,29 +125,46 @@ err_print_helper(
     if (g_ErrorArguments == NIL)
     {
         // this is a zero-argument error message
-        ndprintf(fp, g_ErrorFormatString);
+        ndprintf(
+            fp,
+            MESSAGETYPE_Error,
+            g_ErrorFormatString);
     }
     else if (cdr(g_ErrorArguments) == NIL)
     {
         // this is a one-argument error message
-        ndprintf(fp, g_ErrorFormatString, car(g_ErrorArguments));
+        ndprintf(
+            fp,
+            MESSAGETYPE_Error,
+            g_ErrorFormatString,
+            car(g_ErrorArguments));
     }
     else
     {
         // this is a two-argument error message
-        ndprintf(fp, g_ErrorFormatString, car(g_ErrorArguments), cadr(g_ErrorArguments));
+        ndprintf(
+            fp,
+            MESSAGETYPE_Error,
+            g_ErrorFormatString,
+            car(g_ErrorArguments),
+            cadr(g_ErrorArguments));
     }
 
     // Print the location where the error happened, if applicable.
     if (g_ErrorFunction != NIL && Buffer == NULL)
     {
-        ndprintf(fp, LOCALIZED_TRACING_LOCATION, g_ErrorFunction, g_ErrorLine);
+        ndprintf(
+            fp,
+            MESSAGETYPE_Error,
+            LOCALIZED_TRACING_LOCATION,
+            g_ErrorFunction,
+            g_ErrorLine);
     }
 
     // flush the file stream
     if (Buffer == NULL)
     {
-        new_line(stdout);
+        new_line(stdout, MESSAGETYPE_Error);
     }
     else
     {
@@ -531,7 +552,11 @@ err_logo(
             {
                 // This error wasn't recoverable, so ERRACT shouldn't
                 // have output a new value to use.
-                ndprintf(stdout, LOCALIZED_ERROR_DONTSAYWHATTODOWITH"\n", val);
+                ndprintf(
+                    stdout,
+                    MESSAGETYPE_Error,
+                    LOCALIZED_ERROR_DONTSAYWHATTODOWITH"\n",
+                    val);
                 deref(val);
                 new_throw_node = Toplevel.GetNode();
             }
@@ -605,7 +630,7 @@ NODE *lpause(NODE*)
     // This does not print a newline, because the pausing
     // line may also include the name of the procedure
     // which ran PAUSE.
-    ndprintf(stdout, LOCALIZED_PAUSING);
+    ndprintf(stdout, MESSAGETYPE_Normal, LOCALIZED_PAUSING);
 
     jmp_buf sav_iblk;
     memcpy(sav_iblk, iblk_buf, sizeof(sav_iblk));
@@ -623,7 +648,7 @@ NODE *lpause(NODE*)
         // If PAUSE was run at the toplevel, then uname is NIL.
         if (uname != NIL) 
         {
-            print_node(stdout, uname);
+            print_node(stdout, MESSAGETYPE_Normal, uname);
         }
 
         // Flush the line, which might look something like
@@ -633,7 +658,7 @@ NODE *lpause(NODE*)
         // was "<procedure name>? ", but now that the input
         // is taken from separate dialog box, this just looks weird,
         // especially when uname is NIL.
-        new_line(stdout);
+        new_line(stdout, MESSAGETYPE_Normal);
 
         // get the interactive input for the "pause"
         input_mode = INPUTMODE_Pause;

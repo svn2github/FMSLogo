@@ -20,17 +20,24 @@
 
 #include <stdio.h>
 
+struct NODE;
+
+enum MESSAGETYPE
+{
+    MESSAGETYPE_Normal, // normal text
+    MESSAGETYPE_Trace,  // a TRACE message
+    MESSAGETYPE_Error,  // an error message
+};
+
 // function declarations
-extern void real_print_node(FILE *strm, const NODE *nd, int depth, int width);
-extern void update_coords(char ch);
-extern void print_char(FILE *strm, char ch);
-extern void print_space(FILE *strm);
-extern void ndprintf(FILE *strm, const char *fmt, ...);
+extern void print_char(FILE *strm, MESSAGETYPE type, char ch);
+extern void print_space(FILE *strm, MESSAGETYPE type);
+extern void ndprintf(FILE *strm, MESSAGETYPE type, const char *fmt, ...);
 extern int find_limit(const class CLocalizedNode & Node);
-extern void print_helper(FILE *strm, NODE *nd);
-extern void print_node(FILE *strm, NODE *nd);
-extern void print_nobrak(FILE *strm, NODE *nd);
-extern void new_line(FILE *strm);
+extern void print_helper(FILE *strm, MESSAGETYPE type, NODE *nd);
+extern void print_node(FILE *strm, MESSAGETYPE type, NODE *nd);
+extern void print_nobrak(FILE *strm, MESSAGETYPE type, NODE *nd);
+extern void new_line(FILE *strm, MESSAGETYPE type);
 extern NODE *lshow(NODE *args);
 extern NODE *ltype(NODE *args);
 extern NODE *lprint(NODE *args);

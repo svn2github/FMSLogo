@@ -101,10 +101,9 @@ void clearcombobox()
     MainWindowx->CommandWindow->Listbox.SetCursorAtBottom();
 }
 
-
 // Appends "str" to the end of the what is in the Commander's Recall box.
-// If "str" doesn't fit, then some text will be removed from the top to make it fit.
-void putcombobox(const char *str)
+// If "Text" doesn't fit, then some text will be removed from the top to make it fit.
+void putcombobox(const char * Text, MESSAGETYPE MessageType)
 {
     // only if OK to write to recall box do we do it
     if (IsOkayToUseCommanderWindow)
@@ -113,18 +112,47 @@ void putcombobox(const char *str)
 
         for (int i=0;i<16;i++)
         {
-            // remember where we started
+            // Remember where we started.
             UINT uBefore = commanderRecallBox.GetTextLen();
 
-            // output to list box 
+            // Output to the end of the recall box.
             commanderRecallBox.SetSelection(uBefore, uBefore);
-            commanderRecallBox.Insert(str);
-            UINT uCheck = commanderRecallBox.GetTextLen();
+            commanderRecallBox.Insert(Text);
+            UINT uAfterText = commanderRecallBox.GetTextLen();
+
+            if (MessageType == MESSAGETYPE_Error)
+            {
+                // We are writing an error message, so make
+                // whatever text we just wrote red.
+
+                // First, select the text we wrote.
+                // We hide the selection indicator as we do this
+                // so that the error text doesn't appear to flash.
+                UINT uAfter = commanderRecallBox.GetTextLen();
+                commanderRecallBox.HideSelection(true, false);
+                commanderRecallBox.SetSelection(uBefore, uAfterText);
+
+                // Set the selected text to bold red.
+                TCharFormat currentFormat;
+                commanderRecallBox.GetCharFormat(currentFormat);
+                TCharFormat errorFormat(currentFormat);
+                errorFormat.SetTextColor(TColor(255, 0, 0)); // red
+                errorFormat.EnableBold(); // bold
+                commanderRecallBox.SetCharFormat(errorFormat);
+
+                // Reset the character format that's just after
+                // what we wrote to be the normal format
+                // so that subsequent text is written as normal.
+                commanderRecallBox.SetSelection(uAfterText, uAfterText);
+                commanderRecallBox.HideSelection(false, false);
+                commanderRecallBox.SetCharFormat(currentFormat);
+            }
+
             commanderRecallBox.Insert("\r\n");
             UINT uAfter = commanderRecallBox.GetTextLen();
 
             // if last 2 bytes inserted ok get out
-            if (uCheck+2 == uAfter) 
+            if (uAfterText+2 == uAfter) 
             {
                 return;
             }
@@ -144,9 +172,14 @@ void putcombobox(const char *str)
 
         // if all else fails try this, should never get here
         clearcombobox();
-        commanderRecallBox.Insert(str);
+        commanderRecallBox.Insert(Text);
         commanderRecallBox.Insert("\r\n");
     }
+}
+
+void putcombobox(const char * Text)
+{
+    putcombobox(Text, MESSAGETYPE_Normal);
 }
 
 

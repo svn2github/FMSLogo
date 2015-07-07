@@ -592,7 +592,11 @@ NODE *to_helper(NODE *args, bool is_macro)
             }
             if (loadstream == stdin)
             {
-                ndprintf(stdout, LOCALIZED_PROCEDUREDEFINED, proc_name);
+                ndprintf(
+                    stdout,
+                    MESSAGETYPE_Normal,
+                    LOCALIZED_PROCEDUREDEFINED,
+                    proc_name);
             }
 
             // Set the "dirty" flag so that closing FMSLogo will
@@ -648,6 +652,7 @@ NODE *lmake(NODE *args)
 
             ndprintf(
                 g_Writer.GetStream(),
+                MESSAGETYPE_Normal,
                 LOCALIZED_TRACING_MAKE,
                 quoted_variable_name,
                 new_value);
@@ -660,11 +665,12 @@ NODE *lmake(NODE *args)
             {
                 ndprintf(
                     g_Writer.GetStream(),
+                    MESSAGETYPE_Normal,
                     LOCALIZED_TRACING_LOCATION,
                     ufun,
                     this_line);
             }
-            new_line(g_Writer.GetStream());
+            new_line(g_Writer.GetStream(), MESSAGETYPE_Normal);
         }
     }
     return Unbound;
@@ -985,6 +991,7 @@ po_helper_print_plist(
     // PPROP "list "name "value
     ndprintf(
         g_Writer.GetStream(), 
+        MESSAGETYPE_Normal,
         "%t %s %s %s\n",
         LOCALIZED_ALTERNATE_PPROP,
         quoted_plist_name,
@@ -1030,6 +1037,7 @@ void po_helper(NODE *arg, int just_titles)  /* >0 for POT, 0 for PO, <0 for EDIT
                 //   \n
                 ndprintf(
                     g_Writer.GetStream(), 
+                    MESSAGETYPE_Normal,
                     "%t %p\n%t\n\n", 
                     To.GetName(),
                     car(proclst),
@@ -1055,12 +1063,19 @@ void po_helper(NODE *arg, int just_titles)  /* >0 for POT, 0 for PO, <0 for EDIT
                 NODE * titleline = car(bodywords);
                 if (is_list(titleline))
                 {
-                    print_helper(g_Writer.GetStream(), titleline);
+                    print_helper(
+                        g_Writer.GetStream(),
+                        MESSAGETYPE_Normal,
+                        titleline);
                 }
                 else
                 {
                     char *str = expand_slash(titleline);
-                    ndprintf(g_Writer.GetStream(), "%t", str);
+                    ndprintf(
+                        g_Writer.GetStream(),
+                        MESSAGETYPE_Normal,
+                        "%t",
+                        str);
                     free(str);
                 }
             }
@@ -1072,7 +1087,10 @@ void po_helper(NODE *arg, int just_titles)  /* >0 for POT, 0 for PO, <0 for EDIT
                     NODE * currentline = car(bodywords);
                     if (is_list(currentline))
                     {
-                        print_helper(g_Writer.GetStream(), currentline);
+                        print_helper(
+                            g_Writer.GetStream(),
+                            MESSAGETYPE_Normal,
+                            currentline);
                     }
                     else
                     {
@@ -1116,13 +1134,13 @@ void po_helper(NODE *arg, int just_titles)  /* >0 for POT, 0 for PO, <0 for EDIT
 
                     if (g_Writer.GetStream() != stdout) 
                     {
-                        new_line(g_Writer.GetStream());
+                        new_line(g_Writer.GetStream(), MESSAGETYPE_Normal);
                     }
 
                     bodywords = cdr(bodywords);
                 }
             }
-            new_line(g_Writer.GetStream());
+            new_line(g_Writer.GetStream(), MESSAGETYPE_Normal);
         }
         proclst = cdr(proclst);
         if (check_throwing) break;
@@ -1161,6 +1179,7 @@ void po_helper(NODE *arg, int just_titles)  /* >0 for POT, 0 for PO, <0 for EDIT
             // MAKE "name "value
             ndprintf(
                 g_Writer.GetStream(),
+                MESSAGETYPE_Normal,
                 "%t %s %s\n",
                 LOCALIZED_ALTERNATE_MAKE,
                 quoted_variable_name,
@@ -1190,7 +1209,8 @@ void po_helper(NODE *arg, int just_titles)  /* >0 for POT, 0 for PO, <0 for EDIT
 
             // PLIST "name = [name1 value1 name2 value2]
             ndprintf(
-                g_Writer.GetStream(), 
+                g_Writer.GetStream(),
+                MESSAGETYPE_Normal,
                 "%t %s = %s\n",
                 LOCALIZED_ALTERNATE_PLIST,
                 quoted_plist_name, 

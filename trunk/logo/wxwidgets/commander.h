@@ -3,6 +3,9 @@
 #include <wx/panel.h>
 #include <wx/dialog.h>
 
+// TODO: refactor so that this isn't needed
+#include "print.h" // for MESSAGETYPE
+
 class CCommanderButton;
 class CCommanderToggleButton;
 class CCommanderHistory;
@@ -41,7 +44,7 @@ public:
     const wxSize GetRecommendedMinimumSize() const;
 
     // HACK: friend functions
-    friend void putcombobox(const char *str);
+    friend void putcombobox(const char *Text, MESSAGETYPE);
     friend void clearcombobox();
 
 private:

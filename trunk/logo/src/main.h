@@ -21,10 +21,9 @@
 #include "3dsolid.h"
 #include "error.h"
 #include "logocore.h"
+#include "print.h"
 
 struct NODE;
-
-
 
 // Functions
 extern void single_step_box(NODE *the_line);
@@ -34,8 +33,8 @@ extern void ShowErrorMessageAndStop(const char * Message);
 extern void ShowErrorMessage(const char * Message);
 extern void ShowErrorMessage(ERR_TYPES ErrorCode);
 extern void RunLogoInstructionFromGui(char * LogoInstruction);
-extern void putcombobox(const char *str);
-extern void clearcombobox(void);
+extern void putcombobox(const char * Text, MESSAGETYPE MessageType);
+extern void clearcombobox();
 extern char * promptuser(const char *prompt);
 extern void ChangeActivePenColor(int Red, int Green, int Blue);
 extern void ChangeActiveFloodColor(int Red, int Green, int Blue);

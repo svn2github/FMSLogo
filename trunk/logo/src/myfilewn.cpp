@@ -631,7 +631,7 @@ void TMyFileWindow::CMTest()
             *(ptr2 - 1) = '\0';
         }
 
-        putcombobox(ptr);
+        putcombobox(ptr, MESSAGETYPE_Normal);
         do_execution(ptr);
 
         if (ptr2 != NULL)
