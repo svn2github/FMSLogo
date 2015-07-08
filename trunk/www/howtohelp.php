@@ -32,14 +32,14 @@
 				  <li>I would like to bundle FMSLogo with lots of high-quality mini-applications written in FMSLogo that show off what it's capable of.
 					I would like them to be written in a way that people can study, learn from, and improve them.
 					Games are ideal, since my target will always be children and young adults.
-					If you have a Logo program to donate, post a link in <a href="https://sourceforge.net/p/fmslogo/discussion/500407" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">the discussion forum</a>.
+					If you have a Logo program to donate, post a link in <a href="https://sourceforge.net/p/fmslogo/discussion/500407">the discussion forum</a>.
 				  </li>
 
 				  <li>Translate FMSLogo to a new language.
 					  Each new translation of FMSLogo expands its potential audience.
 					  Translators are expected to translate the text in the GUI and the names of each command.
 					  Translating the manual is not necessary (but would be appreciated).
-					  If you would like to translate FMSLogo to a new language, please post a comment to the <a href="https://sourceforge.net/p/fmslogo/discussion/500407" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">Public Forum</a> and I will send you further instructions.</li>
+					  If you would like to translate FMSLogo to a new language, please post a comment to the <a href="https://sourceforge.net/p/fmslogo/discussion/500407">Public Forum</a> and I will send you further instructions.</li>
 
 				  <li>Create a new icon for FMSLogo.
 					  The current icon is not recognizable and looks like a mismash of red, white, and blue.
@@ -48,16 +48,16 @@
 				  </li>
 
 				  <li>I need real-world feedback on where FMSLogo should be improved. 
-					  If you know where FMSLogo is lacking, please <a href="https://sourceforge.net/p/fmslogo/feature-requests/" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">post a feature request</a> or 
-					  post a message in <a href="http://sourceforge.net/forum/forum.php?forum_id=500407" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">the discussion forum</a>.
+					  If you know where FMSLogo is lacking, please <a href="https://sourceforge.net/p/fmslogo/feature-requests/">post a feature request</a> or 
+					  post a message in <a href="http://sourceforge.net/forum/forum.php?forum_id=500407">the discussion forum</a>.
 					  Try to keep your suggestions based on practical experience (instead of abstract theories).
 					  Also, please explain how your suggestion would improve FMSLogo as a learning tool for children.</li>
 
 				  <li>File bugs. 
 					  FMSLogo is full of them and they should all be tracked.
-					  If you know of a bug, please file it in the <a href="https://sourceforge.net/p/fmslogo/bugs/" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">bug tracker</a>.</li>
+					  If you know of a bug, please file it in the <a href="https://sourceforge.net/p/fmslogo/bugs/">bug tracker</a>.</li>
 
-				<li>If you're a GNU/Linux user, you can become a <a href="http://appdb.winehq.org/" class="blurred" onmouseover="inFocus(this)" onmouseout="outFocus(this)">WINE application maintainer</a> for FMSLogo.
+				<li>If you're a GNU/Linux user, you can become a <a href="http://appdb.winehq.org/">WINE application maintainer</a> for FMSLogo.
 					  I intend to port FMSLogo to GNU/Linux some day, but that could be years from now.
 					  In the meantime, it'd be nice if it ran under WINE.
 				</li>
