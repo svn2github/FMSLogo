@@ -207,6 +207,9 @@ void CCommander::ChooseNewFont()
 {
     wxFontDialog fontChooser;
 
+    // Disable color selection, since we don't honor it.
+    fontChooser.GetFontData().EnableEffects(false);
+
     // Seed the font picker with the current configuration
     wxFont currentCommanderFont;
     currentCommanderFont.SetFamily(wxFONTFAMILY_TELETYPE);

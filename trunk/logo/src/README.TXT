@@ -32,6 +32,8 @@ II. New features/bugs fixed:
   o Fix bug #444; Keyboard shortcuts now work while the Logo engine is running.
   o Fix bug #448; The wxWidgets version of FMSLogo now opens to the correct
     size when -W -H and -F are given on the command line.
+  o Fix bug #458; Remove the unhonored strikeout, underline, and color options
+    on all font picker dialog boxes in the wxWidgets version of FMSLogo.
   o Extend MACHINE to output the dimensions of the screen window's client area.
   o Remove the "UNSTABLE" mark from the wxWidgets version.
   o Minor improvements to the manual.

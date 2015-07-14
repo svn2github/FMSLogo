@@ -2251,6 +2251,9 @@ void CMainFrame::OnSetLabelFont(wxCommandEvent& WXUNUSED(Event))
     const wxFont labelFont = GetLabelFont();
     fontChooser.GetFontData().SetInitialFont(labelFont);
 
+    // Disable color selection, since we use the pencolor instead.
+    fontChooser.GetFontData().EnableEffects(false);
+
     int rval = fontChooser.ShowModal();
     if (rval == wxID_OK)
     {

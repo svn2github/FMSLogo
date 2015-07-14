@@ -289,6 +289,9 @@ void CWorkspaceEditor::OnSetFont(wxCommandEvent& WXUNUSED(Event))
     wxFontDialog fontChooser;
     fontChooser.GetFontData().SetInitialFont(font);
 
+    // Disable color selection, since we colorize based on syntax.
+    fontChooser.GetFontData().EnableEffects(false);
+
     int rval = fontChooser.ShowModal();
     if (rval == wxID_OK)
     {
