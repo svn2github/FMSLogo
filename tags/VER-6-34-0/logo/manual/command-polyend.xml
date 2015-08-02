@@ -1,0 +1,45 @@
+<section id="command-polyend">
+    <title>POLYEND</title>
+<indexterm><primary>POLYEND</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>POLYEND</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+POLYEND completes the definition of a polygon that you started when you issued the command <link linkend="command-polystart">POLYSTART</link>.
+Note that the current coordinate is not added as a vertex when you issue the POLYEND command.
+But the move that you issued to get to the current coordinate is included.
+Make sure you understand the <link linkend="polygon-restrictions">Polygon Restrictions</link>.
+</para>
+
+<para>
+POLYEND is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode and does not run in 2D modes.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>TO SQUARE
+  POLYSTART
+  REPEAT 4 [FORWARD 100 RIGHT 90]
+  POLYEND
+END
+
+PERSPECTIVE
+REPEAT 72 [SQUARE RIGHTROLL 5]
+POLYVIEW</userinput></programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>
