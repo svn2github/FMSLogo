@@ -1,5 +1,25 @@
 This file contains the changes that were made in each version of FMSLogo.
 
+Changed in 6.34.0
+o Implement feature #106; Error messages are now rendered in red text in the
+  commander history box.
+o Fix bug #423; Menu items in the editor of the wxWidgets version of FMSLogo
+  are now disabled when they would have no effect.
+o Fix bug #424; Captial letters and other printable characters are now
+  redirected from the screen to the commander in the wxWidgets version of
+  FMSLogo.
+o Fix bug #433; The icon shown in the Task Manager's "Applications" tab now
+  looks correct in the wxWidgets version of FMSLogo.
+o Fix bug #444; Keyboard shortcuts now work while the Logo engine is running.
+o Fix bug #448; The wxWidgets version of FMSLogo now opens to the correct
+  size when -W -H and -F are given on the command line.
+o Fix bug #458; Remove the unhonored strikeout, underline, and color options
+  on all font picker dialog boxes in the wxWidgets version of FMSLogo.
+o Extend MACHINE to output the dimensions of the screen window's client area.
+o Remove the "UNSTABLE" mark from the wxWidgets version.
+o Minor improvements to the manual.
+
+
 Changed in 6.33.0
 o Fix bug #438; The wxWidgets version of FMSLogo no longer opens hundreds of
   windows when running SELECTBOX from a program loaded on FMSLogo startup.
