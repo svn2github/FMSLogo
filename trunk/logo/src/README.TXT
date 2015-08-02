@@ -13,9 +13,9 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.34.0.exe   - Installer for the mainline Logo environment
-  fmslogo-6.34.0.zip   - ZIP of the mainline Logo environment
-  wxfmslogo-6.34.0.exe - Installer for the Beta wxWidgets-based Logo environment
+  wxfmslogo-6.34.0.exe - Installer for the wxWidgets-based Logo environment
+  fmslogo-6.34.0.exe   - Installer for the deprecated OWL Logo environment
+  fmslogo-6.34.0.zip   - ZIP of the deprecated OWL Logo environment
 
 II. New features/bugs fixed:
 
@@ -43,7 +43,6 @@ II. New features/bugs fixed:
 
 III. Standard features
 
-  * Supports Windows 95/98/ME/NT/2000/XP/WS03/Vista/Windows 7/Windows 8.
   * Supports TCP/IP WinSock Networking.
   * Supports Text in all available fonts and sizes.
   * Supports 1024 independent Turtles.
