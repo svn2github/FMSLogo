@@ -20,7 +20,7 @@ Build the Release Files
 1.f) Copy resulting fmslogo-X-Y-Z.exe, fmslogo-X-Y-Z.zip, and wxfmslogo-X-Y-Z.exe
      to \\dcostanz\dcostanz\logo
 
-     copy /Y *fmslogo-6.33.0* \\dcostanz\dcostanz\logo
+     copy /Y *fmslogo-6.34.0* \\dcostanz\dcostanz\logo
 
 
 Test the Candidate Release
@@ -42,8 +42,8 @@ Release the files
        fmslogo-x-y-z.exe
        fmslogo-x-y-z.zip
        wxfmslogo-x-y-z.exe
-1.c) Set fmslogo-x-y-z.exe as the default file for Windows.
-1.d) Set fmslogo-x-y-z.zip as the default file for Linux.
+1.c) Set wxfmslogo-x-y-z.exe as the default file for Windows.
+1.d) Set wxfmslogo-x-y-z.exe as the default file for Linux.
 
 2) Update the manual on the Web site
 2.a) Build an updated manual ("gmake website" within "manual")
