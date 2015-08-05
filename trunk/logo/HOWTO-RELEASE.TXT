@@ -48,5 +48,5 @@ Release the files
 2) Update the manual on the Web site
 2.a) Build an updated manual ("gmake website" within "manual")
 2.b) Open an SSH2/SFTP connection to web.sourceforge.net
-2.c) Browse to /home/groups/f/fm/fmslogo/htdocs/manual on the remote machine.
+2.c) Browse to /home/project-web/fmslogo/htdocs/manual on the remote machine.
 2.d) Upload all of the HTML files in the www directory.
