@@ -86,6 +86,7 @@ LOAD "bury.lgo
 LOAD "erase.lgo
 LOAD "logoversion.lgo
 LOAD "apply.lgo
+LOAD "arity.lgo
 LOAD "quoted.lgo
 LOAD "mouse.lgo
 LOAD "windows.lgo
@@ -204,6 +205,7 @@ TO TESTALL
   MACROTEST            ; from macro.lgo
   REDUCETEST           ; from reduce.lgo
   COPYDEFTEST          ; from copydef.lgo
+  ARITYTEST            ; from arity.lgo
   PLISTTEST            ; from plist.lgo
   CONTROLFLOWTEST      ; from controlflow.lgo
   CASCADETEST          ; from cascade.lgo
@@ -315,4 +317,3 @@ END
 
 ; execute all tests on startup
 make "startup [TESTALL]
-

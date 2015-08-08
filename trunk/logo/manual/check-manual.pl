@@ -161,6 +161,9 @@ $Exceptions{'command-.setfirst.xml'}{'allcaps'}{'WARNING'}  = 1;
 
 $Exceptions{'command-.setitem.xml'}{'allcaps'}{'WARNING'}   = 1;
 
+$Exceptions{'command-arity.xml'}{'allcaps'}{'MYPROC.WITHDEFAULT'} = 1;
+$Exceptions{'command-arity.xml'}{'allcaps'}{'MYPROC.WITHREST'}    = 1;
+
 $Exceptions{'command-array.xml'}{'bannedword'}{'element'}        = 1;
 $Exceptions{'command-arraytolist.xml'}{'bannedword'}{'element'}  = 1;
 $Exceptions{'command-arraytolist.xml'}{'bannedword'}{'elements'} = 1;

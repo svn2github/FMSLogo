@@ -328,6 +328,7 @@
   <!ENTITY command-text           SYSTEM "command-text.xml">
   <!ENTITY command-fulltext       SYSTEM "command-fulltext.xml">
   <!ENTITY command-copydef        SYSTEM "command-copydef.xml">
+  <!ENTITY command-arity          SYSTEM "command-arity.xml">
 
   <!ENTITY command-make           SYSTEM "command-make.xml">
   <!ENTITY command-name           SYSTEM "command-name.xml">
@@ -396,7 +397,7 @@
   <!ENTITY command-load           SYSTEM "command-load.xml">
   <!ENTITY command-status         SYSTEM "command-status.xml">
   <!ENTITY command-nostatus       SYSTEM "command-nostatus.xml">
-  <!ENTITY command-nodes           SYSTEM "command-nodes.xml">
+  <!ENTITY command-nodes          SYSTEM "command-nodes.xml">
 
   <!ENTITY command-run              SYSTEM "command-run.xml">
   <!ENTITY command-runresult        SYSTEM "command-runresult.xml">
