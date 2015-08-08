@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.34.0 for Microsoft Windows
+FMSLogo Version 6.35.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -13,30 +13,14 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  wxfmslogo-6.34.0.exe - Installer for the wxWidgets-based Logo environment
-  fmslogo-6.34.0.exe   - Installer for the deprecated OWL Logo environment
-  fmslogo-6.34.0.zip   - ZIP of the deprecated OWL Logo environment
+  wxfmslogo-6.35.0.exe - Installer for the wxWidgets-based Logo environment
+  fmslogo-6.35.0.exe   - Installer for the deprecated OWL Logo environment
+  fmslogo-6.35.0.zip   - ZIP of the deprecated OWL Logo environment
 
 II. New features/bugs fixed:
 
-  Changed in 6.34.0
-  o Implement feature #106; Error messages are now rendered in red text in the
-    commander history box.
-  o Fix bug #423; Menu items in the editor of the wxWidgets version of FMSLogo
-    are now disabled when they would have no effect.
-  o Fix bug #424; Captial letters and other printable characters are now
-    redirected from the screen to the commander in the wxWidgets version of
-    FMSLogo.
-  o Fix bug #433; The icon shown in the Task Manager's "Applications" tab now
-    looks correct in the wxWidgets version of FMSLogo.
-  o Fix bug #444; Keyboard shortcuts now work while the Logo engine is running.
-  o Fix bug #448; The wxWidgets version of FMSLogo now opens to the correct
-    size when -W -H and -F are given on the command line.
-  o Fix bug #458; Remove the unhonored strikeout, underline, and color options
-    on all font picker dialog boxes in the wxWidgets version of FMSLogo.
-  o Extend MACHINE to output the dimensions of the screen window's client area.
-  o Remove the "UNSTABLE" mark from the wxWidgets version.
-  o Minor improvements to the manual.
+  Changed in 6.35.0
+  o Implement feature #107; Implement ARITY procedure
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/viewvc/fmslogo/logo/src/CHANGELOG.TXT
@@ -81,7 +65,7 @@ V. Reporting bugs
   Report bugs at http://sourceforge.net/projects/fmslogo/
 
 VI. Sources
- 
+
   Source code is available.  It's your legal right!  (See LICENSE.TXT).
 
   The FMSLogo sources were written/compiled with:

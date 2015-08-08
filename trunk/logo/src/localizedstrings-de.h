@@ -162,6 +162,7 @@
 #define LOCALIZED_ALTERNATE_ARCCOS                 "arccos"
 #define LOCALIZED_ALTERNATE_ARCSIN                 "arcsin"
 #define LOCALIZED_ALTERNATE_ARCTAN                 "arctan"
+#define LOCALIZED_ALTERNATE_ARITY                  "arity" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ARRAY                  "Array"
 #define LOCALIZED_ALTERNATE_ARRAYP                 "arrayp"
 #define LOCALIZED_ALTERNATE_ARRAY_                 "Array?"

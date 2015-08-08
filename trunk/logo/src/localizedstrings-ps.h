@@ -162,6 +162,7 @@
 #define LOCALIZED_ALTERNATE_ARCCOS                 "pseudo.arccos"
 #define LOCALIZED_ALTERNATE_ARCSIN                 "pseudo.arcsin"
 #define LOCALIZED_ALTERNATE_ARCTAN                 "pseudo.arctan"
+#define LOCALIZED_ALTERNATE_ARITY                  "pseudo.arity"
 #define LOCALIZED_ALTERNATE_ARRAY                  "pseudo.array"
 #define LOCALIZED_ALTERNATE_ARRAYP                 "pseudo.arrayp"
 #define LOCALIZED_ALTERNATE_ARRAY_                 "pseudo.array?"

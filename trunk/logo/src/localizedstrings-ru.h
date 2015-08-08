@@ -162,6 +162,7 @@
 #define LOCALIZED_ALTERNATE_ARCCOS                 "arccos" 
 #define LOCALIZED_ALTERNATE_ARCSIN                 "arcsin" 
 #define LOCALIZED_ALTERNATE_ARCTAN                 "arctg" 
+#define LOCALIZED_ALTERNATE_ARITY                  "arity" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ARRAY                  "массив"
 #define LOCALIZED_ALTERNATE_ARRAYP                 "массивпи" 
 #define LOCALIZED_ALTERNATE_ARRAY_                 "массив?" 

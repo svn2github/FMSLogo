@@ -1732,6 +1732,46 @@ NODE *cpdf_newname(NODE * Name, NODE * TitleLine)
     return make_strnode(newTitleLine);
 }
 
+NODE *larity(NODE *args)
+{
+    if (NOT_THROWING)
+    {
+        NODE *arg = proc_name_arg(args);
+        arg = intern(arg);
+        load_procedure_if_necessary(arg);
+        arg = procnode__caseobj(arg);
+        if (is_prim(arg))
+        {
+            FIXNUM min = getprimmin(arg);
+            if (min == OK_NO_ARG)
+            {
+                min = 0;
+            }
+
+            return cons_list(
+                make_intnode(min),
+                make_intnode(getprimdflt(arg)),
+                make_intnode(getprimmax(arg)));
+
+        }
+        else if (arg == UNDEFINED)
+        {
+            err_logo(DK_HOW_UNREC, car(args));
+            return Unbound;
+        }
+        else
+        {
+            return cons_list(
+                minargs__procnode(arg),
+                dfltargs__procnode(arg),
+                maxargs__procnode(arg));
+        }
+    }
+
+    return Unbound;
+}
+
+
 NODE *lcopydef(NODE *args)
 {
     NODE * arg1 = proc_name_arg(args);

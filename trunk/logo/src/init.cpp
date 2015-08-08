@@ -128,6 +128,7 @@ const PRIMTYPE prims[] =
     { "arccos", 1, 1, 1, PREFIX_PRIORITY, lacos, LOCALIZED_ALTERNATE_ARCCOS },
     { "arcsin", 1, 1, 1, PREFIX_PRIORITY, lasin, LOCALIZED_ALTERNATE_ARCSIN },
     { "arctan", 1, 1, 2, PREFIX_PRIORITY, latan, LOCALIZED_ALTERNATE_ARCTAN },
+    { "arity", 1, 1, 1, PREFIX_PRIORITY, larity, LOCALIZED_ALTERNATE_ARITY },
     { "array", 1, 1, 2, PREFIX_PRIORITY, larray, LOCALIZED_ALTERNATE_ARRAY },
     { "arrayp", 1, 1, 1, PREFIX_PRIORITY, larrayp, LOCALIZED_ALTERNATE_ARRAYP },
     { "array?", 1, 1, 1, PREFIX_PRIORITY, larrayp, LOCALIZED_ALTERNATE_ARRAY_ },
