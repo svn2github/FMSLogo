@@ -39,7 +39,7 @@ II. New features/bugs fixed:
   o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
-  http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
+  http://fmslogo.cvs.sourceforge.net/viewvc/fmslogo/logo/src/CHANGELOG.TXT
 
 III. Standard features
 
