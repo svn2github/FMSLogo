@@ -1734,14 +1734,15 @@ NODE *cpdf_newname(NODE * Name, NODE * TitleLine)
 
 NODE *larity(NODE *args)
 {
+    NODE *arg = proc_name_arg(args);
     if (NOT_THROWING)
     {
-        NODE *arg = proc_name_arg(args);
         arg = intern(arg);
         load_procedure_if_necessary(arg);
         arg = procnode__caseobj(arg);
         if (is_prim(arg))
         {
+            // This is a primitive
             FIXNUM min = getprimmin(arg);
             if (min == OK_NO_ARG)
             {
@@ -1756,11 +1757,14 @@ NODE *larity(NODE *args)
         }
         else if (arg == UNDEFINED)
         {
+            // Even after trying to load the procedure,
+            // it's still not defined.
             err_logo(DK_HOW_UNREC, car(args));
             return Unbound;
         }
         else
         {
+            // This is a user-defined procedure.
             return cons_list(
                 minargs__procnode(arg),
                 dfltargs__procnode(arg),
