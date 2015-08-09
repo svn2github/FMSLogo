@@ -100,11 +100,11 @@ NODE *Null_Word = NIL;
 // reaches the point of the error.
 NODE *g_ParseErrorNotEnoughInputs;
 
-const PRIMTYPE prims[] =
+static const PRIMTYPE prims[] =
 {
-    { "*", 1, 1, 1, PREFIX_PRIORITY + 3, lmul },
-    { "+", 1, 1, 1, PREFIX_PRIORITY + 2, ladd },
-    { "-", 1, 1, 1, PREFIX_PRIORITY + 2, lsub },
+    { "*", 2, 2, 2, PREFIX_PRIORITY + 3, lmul },
+    { "+", 2, 2, 2, PREFIX_PRIORITY + 2, ladd },
+    { "-", 2, 2, 2, PREFIX_PRIORITY + 2, lsub },
     { "--", 1, 1, 1, PREFIX_PRIORITY + 4, lsub },
     { ".defmacro", 2, 2, 2, PREFIX_PRIORITY, ldefmacro, LOCALIZED_ALTERNATE__DEFMACRO },
     { ".eq", 2, 2, 2, PREFIX_PRIORITY, l_eq, LOCALIZED_ALTERNATE__EQ },
@@ -113,7 +113,7 @@ const PRIMTYPE prims[] =
     { ".setbf", 2, 2, 2, PREFIX_PRIORITY, l_setbf, LOCALIZED_ALTERNATE__SETBF },
     { ".setfirst", 2, 2, 2, PREFIX_PRIORITY, l_setfirst, LOCALIZED_ALTERNATE__SETFIRST },
     { ".setitem", 3, 3, 3, PREFIX_PRIORITY, l_setitem, LOCALIZED_ALTERNATE__SETITEM },
-    { "/", 1, 1, 1, PREFIX_PRIORITY + 3, ldivide },
+    { "/", 2, 2, 2, PREFIX_PRIORITY + 3, ldivide },
     { "<", 2, 2, 2, PREFIX_PRIORITY + 1, llessp },
     { "=", 2, 2, 2, PREFIX_PRIORITY + 1, lequalp },
     { ">", 2, 2, 2, PREFIX_PRIORITY + 1, lgreaterp },
