@@ -548,7 +548,7 @@ setprimpri(NODE * Node, short Priority)
 
 // Special value for pmin, means that it's
 // OK if primitive name on line by itself even though defltargs=1 (ED, CO)
-#define OK_NO_ARG       01000
+const int OK_NO_ARG = 0x200;
 
 inline
 int 
