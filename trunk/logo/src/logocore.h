@@ -473,6 +473,12 @@ setprimfun(NODE * Node, logofunc Func)
     Node->nunion.nprim.fun = Func;
 }
 
+// Returns the minimum number of inputs for procnode that
+// represents a primitive.
+//
+// -1, if this is a "special form" (TO or .MACRO)
+// OK_NO_ARG, if the command can appear on a line without any
+//   inputs even if the default is not zero (HELP or CONTINUE).
 inline
 short 
 getprimmin(const NODE * Node)

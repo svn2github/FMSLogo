@@ -431,7 +431,8 @@ NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
         min = (inparen ? getprimmin(proc) : getprimdflt(proc));
         if (min < 0)
         {
-            // special form (either TO or .MACRO)
+            // Special form (either TO or .MACRO)
+            // Invoking the primitive gathers its arguments.
             return ((logofunc) *getprimfun(proc)) (*args);
         }
 
