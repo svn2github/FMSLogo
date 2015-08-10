@@ -1744,6 +1744,14 @@ NODE *larity(NODE *args)
         {
             // This is a primitive
             FIXNUM min = getprimmin(arg);
+            if (min < 0)
+            {
+                // This is a special form (TO or .MACRO) which
+                // reads its inputs as its run.  As such, the
+                // the notion of arity is meaningless.
+                err_logo(SPECIAL_FORM_PROC_UNREC, car(args));
+                return Unbound;
+            }
             if (min == OK_NO_ARG)
             {
                 min = 0;
