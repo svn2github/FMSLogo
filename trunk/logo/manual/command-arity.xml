@@ -31,9 +31,16 @@ For example, if you wanted to write a &GENERICNAME; syntax checker in &PRODUCTNA
 In some cases, the ARITY may output seemingly incorrect results.
 For example the <link linkend="command-for">FOR</link> command is documented to accept exactly two inputs, but ARITY outputs that it can accept 7.
 This is because FOR is library command that, for implementation convenience, accepts additional, undocumented inputs that have default values, and invokes itself recursively.
-This does not mean that you should provide more than two inputs, just that &PRODUCTNAME; will not complain if you do.
+This does not mean that you should provide more than two inputs, just that &PRODUCTNAME; will not complain if you do.  
 Wherever ARITY and the documentation appear to be in conflict, follow the documentation.
 </para>
+
+<para>
+It is an error for the <parameter>procedurename</parameter> input to be the name of a procedure with a special form like <link linkend="command-to">TO</link>.
+These procedures cannot be called in the normal way and their inputs are processed in a special manner.
+As such, the notion of minimum, default, or maximum inputs is irrelevant.
+</para>
+
 
 </listitem>
 </varlistentry>
