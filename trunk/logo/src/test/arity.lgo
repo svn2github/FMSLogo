@@ -16,11 +16,24 @@ TO ARITYTEST.SMOKETEST
    SIMPLEREPORTTEST [ARITY "`]            [1 1 1]
 
    ; infix operators supported
-   SIMPLEREPORTTEST [ARITY "=]         [2 2 2]
-   SIMPLEREPORTTEST [ARITY "+]         [2 2 2]
+   SIMPLEREPORTTEST [ARITY "*  ] [2 2 2]
+   SIMPLEREPORTTEST [ARITY "+  ] [2 2 2]
+   SIMPLEREPORTTEST [ARITY "-  ] [2 2 2]
+   SIMPLEREPORTTEST [ARITY "/  ] [2 2 2]
+   SIMPLEREPORTTEST [ARITY "<  ] [2 2 2]
+   SIMPLEREPORTTEST [ARITY "=  ] [2 2 2]
+   SIMPLEREPORTTEST [ARITY ">  ] [2 2 2]
+   SIMPLEREPORTTEST [ARITY "<= ] [2 2 2]
+   SIMPLEREPORTTEST [ARITY "<> ] [2 2 2]
+   SIMPLEREPORTTEST [ARITY ">= ] [2 2 2]
+   SIMPLEREPORTTEST [ARITY "-- ] [1 1 1] ; negative
 
-   ; special forms
-   SIMPLEREPORTTEST [ARITY "TO]        [1 1 -1]
+   ; primitives that can take no arguments without parens,
+   ; even though they take one by default.
+   SIMPLEREPORTTEST [ARITY "CO       ]  [0 1 1]
+   SIMPLEREPORTTEST [ARITY "CONTINUE ]  [0 1 1]
+   SIMPLEREPORTTEST [ARITY "HELP     ]  [0 1 1]
+   
 
    ; Tests some library procedures that are not loaded
    ; This confirms that ARITY can work on unloaded procedures.
@@ -79,7 +92,11 @@ TO ARITYTEST.BADINPUT
    RUNDOESNTLIKEINPUTTEST [ ARITY [1 2 3]       ]
 
    ; command must exist
-   RUNIDONTKNOWHOWTOTEST  [ARITY "this.command.does.not.exist.in.fmslogo]
+   RUNNONRECOVERABLEIDONTKNOWHOWTOTEST  [ARITY "this.command.does.not.exist.in.fmslogo]
+
+   ; special forms
+   (RUNEXPECTERRORTEST [ARITY "TO]     2001 "|ARITY doesn't like TO as input because it has a special form|)
+   (RUNEXPECTERRORTEST [ARITY ".MACRO] 2001 "|ARITY doesn't like .MACRO as input because it has a special form|)
 
    RUNNOTENOUGHINPUTSTEST [(ARITY)]
    RUNTOOMANYINPUTSTEST   [(ARITY "FORWARD "toomany)]
