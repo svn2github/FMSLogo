@@ -699,7 +699,7 @@
 
 // The dialog box for selecting a Startup procedure
 #define LOCALIZED_SELECTSTARTUP_CAPTION               "pseudo.Select a " LOCALIZED_ALTERNATE_STARTUP " instruction"
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "pseudo.The workspace does not have a " LOCALIZED_ALTERNATE_STARTUP " instruction list defined, so nothing\nwill happen when the screensaver is loaded.\nPlease select a procedure to run when the program is loaded."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "pseudo.Your workspace does not have a " LOCALIZED_ALTERNATE_STARTUP " instruction list defined, so nothing\nwill happen when the screensaver is loaded.\nPlease select a procedure to run when the program is loaded."
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "pseudo.The " LOCALIZED_ALTERNATE_STARTUP " variable is not a list, so nothing will happen when the screensaver\nis loaded.\nPlease select a procedure to run when the program is loaded."
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "pseudo.Your workspace has an empty " LOCALIZED_ALTERNATE_STARTUP " instruction list defined, so nothing will\nhappen when the screensaver is loaded.\nPlease select a procedure to run when the program is loaded."
 #define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "pseudo.No procedures are defined"
@@ -1027,7 +1027,7 @@
 #define LOCALIZED_ERROR_MODE_ON_SPRITE             "pseudo.cannot set the mode of a turtle with a rotating bitmap"
 #define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "pseudo.cannot make a special turtle use a rotating bitmap"
 #define LOCALIZED_ERROR_BITMAPCLIPBOARD            "pseudo.cannot use the clipboard as a rotating bitmap"
-#define LOCALIZED_ERROR_SPECIALFORM                "pseudo.Cannot run %p on a procedure with a special form"
+#define LOCALIZED_ERROR_SPECIALFORM                "pseudo.%p doesn't like %p as input because it has a special form"
 
 //
 // Error messages displayed in Message Boxes.
@@ -1196,7 +1196,7 @@
 
 // The text which is shown when the Unbound node is formatted.
 // This happens when a macro outputs nothing (instead of a list)
-#define LOCALIZED_UNBOUND       "pseudo.Unbound"
+#define LOCALIZED_UNBOUND       "pseudo.nothing"
 
 //
 // Strings that explain the purpose of each menu option.
