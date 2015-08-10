@@ -18,7 +18,11 @@ sub UpdateLocalizationFiles($$$) {
     while (<$existingStringTable>) {
       chomp;
       if (m/^\#define\s+([\w\d_]+)\s*(.*)$/) {
-        $translations{$1} = $2;
+        my $symbolicName = $1;
+        my $translation  = $2;
+        if ($translation !~ m!// NOT_YET_LOCALIZED!) {
+            $translations{$symbolicName} = $translation;
+        }
       }
     }
     $existingStringTable->close();
