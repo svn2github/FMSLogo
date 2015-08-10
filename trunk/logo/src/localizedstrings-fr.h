@@ -747,16 +747,16 @@
 #define LOCALIZED_EDITOR_SEARCH_NEXT             "&Suivant\tF3"
 
 #define LOCALIZED_EDITOR_SET                     "&Options"
-#define LOCALIZED_EDITOR_SET_FONT                "&Police..."  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_SET_FONT                "&Police..."
 
 #define LOCALIZED_EDITOR_TEST_BUTTON             "Test!" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_TEST                    "&Test" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_TEST                    "Test" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "&Run Selection\tCtrl+R" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_EDITOR_HELP                    "&Aide"  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_HELP                    "&Aide"
 #define LOCALIZED_EDITOR_HELP_INDEX              "&Index" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_HELP_EDITOR             "&Editeur" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "&Recherche thématique\tF1" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_HELP_EDITOR             "&Editeur"
+#define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "&Recherche thématique\tF1"
 
 
 //
@@ -864,9 +864,9 @@
 #define LOCALIZED_ABOUTFMS_VERSION             "Version" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_CORE                "Core by Brian Harvey\nUniversity of California Berkeley" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_INSTALLER           "Installer based on Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net" // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTFMS_INSTALLER           "Installer based on Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net/" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http:\x2F/www.softronix.com/" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Thanks to Yehuda Katz and Erich Neuwirth" // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Special thanks to Yehuda Katz and Erich Neuwirth" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" is free software\nSee GNU Public License" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp:\x2F/groups.yahoo.com/group/LogoForum/" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Adaptation française partielle de Bertrand Carette" // 
@@ -1019,7 +1019,6 @@
 #define LOCALIZED_ERROR_DEEPEND                "FIN (END) dans une instruction multi-ligne"
 #define LOCALIZED_ERROR_DEEPENDIN              "FIN (END) dans une instruction multi-ligne dans %p"
 #define LOCALIZED_ERROR_UNKNOWN                "Unknown error condition - internal error." // NOT_YET_LOCALIZED
-
 #define LOCALIZED_PAUSING                      "Pause..."
 
 
@@ -1028,6 +1027,7 @@
 #define LOCALIZED_ERROR_MODE_ON_SPRITE             "cannot set the mode of a turtle with a rotating bitmap" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "cannot make a special turtle use a rotating bitmap" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BITMAPCLIPBOARD            "cannot use the clipboard as a rotating bitmap" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_SPECIALFORM                "%p doesn't like %p as input because it has a special form" // NOT_YET_LOCALIZED
 
 //
 // Error messages displayed in Message Boxes.
@@ -1196,18 +1196,18 @@
 
 // The text which is shown when the Unbound node is formatted.
 // This happens when a macro outputs nothing (instead of a list)
-#define LOCALIZED_UNBOUND       "Unbound" // NOT_YET_LOCALIZED
+#define LOCALIZED_UNBOUND       "nothing" // NOT_YET_LOCALIZED
 
 //
 // Strings that explain the purpose of each menu option.
 // I don't think that any of these strings can be seen by the user, 
 // so you probably don't have to translate these.
 //
-#define LOCALIZED_STRINGTABLE_FILESAVEAS "Saves the contents of the EDALL window to a new file" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_FILESAVEAS "Saves the contents of the workspace to a new file" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_FILEOPEN "Erases the current workspace and loads a Logo program as the new workspace" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_FILELOAD "Locates and loads a Logo program into the current workspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILENEW "Erases the contents of the EDALL session" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILESAVE "Saves the contents of the EDALL window" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_FILENEW "Erases the contents of the workspace" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_FILESAVE "Saves the contents of the workspace" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_FILEEDIT "Selects a procedure to edit" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_FILEERASE "Selects a procedure to erase" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_SETASSCREENSAVER "Saves the contents of the workspace as the screen saver" // NOT_YET_LOCALIZED
@@ -1247,14 +1247,14 @@
 #define LOCALIZED_STRINGTABLE_EDITFIND "Searches for text" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_EDITREPLACE "Searches for text and replaces it with other text" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_EDITFINDNEXT "Repeats the previous Find or Replace command" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDITSETFONT "Sets the font for the EDALL window" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_EDITSETFONT "Sets the font for the editor window" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_TEST "Runs the selected Logo instructions" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_HELPEDIT "Displays help on using the editor" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_HELPEDIT_TOPIC "Displays help for Logo" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILESAVEANDEXIT "Saves and exits the current EDALL session" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILESAVETOWORKSPACE "Saves the current EDALL session" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILEPRINT "Prints the current EDALL session" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDALLEXIT "Closes the EDALL session" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_FILESAVEANDEXIT "Saves and exits the current workspace" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_FILESAVETOWORKSPACE "Saves the current workspace" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_FILEPRINT "Prints the current workspace" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_EDALLEXIT "Closes the workspace" // NOT_YET_LOCALIZED
 
 // The title of the Editor's Find/Replace dialog box
 #define LOCALIZED_EDITOR_TITLE_FIND     "Rechercher"

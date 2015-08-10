@@ -763,7 +763,7 @@
 // The strings in the "You have unsaved changes" dialog
 //
 #define LOCALIZED_UNSAVEDCHANGES                LOCALIZED_YOUHAVEUNSAVEDCHANGES // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "&Spremi i iziði" // NOT_YET_LOCALIZED
+#define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "&Spremi i iziði"
 #define LOCALIZED_UNSAVEDCHANGES_DONTSAVE       "&Nemoj spremati"
 #define LOCALIZED_UNSAVEDCHANGES_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
 #define LOCALIZED_UNSAVEDCHANGES_MESSAGE1       "Na radnom prostoru postoje promjene koje nisu spremljene.  Ako iziðete bez spremanja, promjene æe biti izgubljene.  "
@@ -996,7 +996,7 @@
 #define LOCALIZED_ERROR_UNEXPECTEDBRACE        "unexpected '}'" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_DONTKNOWHOWTO          "Ne znam što je %p"
 #define LOCALIZED_ERROR_NOCATCHTAG             "Can't find catch tag for %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ALREADYDEFINED         "%p je veæ prije zadan" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_ALREADYDEFINED         "%p je veæ prije zadan"
 #define LOCALIZED_ERROR_STOPPING               "Stopping..." // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_ALREADYDRIBBLING       "Already dribbling" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_FILESYSTEM                   "File system error: %p" // NOT_YET_LOCALIZED
@@ -1019,7 +1019,6 @@
 #define LOCALIZED_ERROR_DEEPEND                "END inside multi-line instruction" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_DEEPENDIN              "END inside multi-line instruction in %p" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_UNKNOWN                "Unknown error condition - internal error." // NOT_YET_LOCALIZED
-
 #define LOCALIZED_PAUSING                      "Pausing..." // NOT_YET_LOCALIZED
 
 
@@ -1028,6 +1027,7 @@
 #define LOCALIZED_ERROR_MODE_ON_SPRITE             "cannot set the mode of a turtle with a rotating bitmap" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "cannot make a special turtle use a rotating bitmap" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BITMAPCLIPBOARD            "cannot use the clipboard as a rotating bitmap" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_SPECIALFORM                "%p doesn't like %p as input because it has a special form" // NOT_YET_LOCALIZED
 
 //
 // Error messages displayed in Message Boxes.

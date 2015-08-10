@@ -1019,7 +1019,6 @@
 #define LOCALIZED_ERROR_DEEPEND                "FINE all'interno di un'istruzione multi-riga"
 #define LOCALIZED_ERROR_DEEPENDIN              "FINE FINE all'interno di un'istruzione multi-riga in %p"
 #define LOCALIZED_ERROR_UNKNOWN                "Errore sconosciuto - errore interno."
-
 #define LOCALIZED_PAUSING                      "In pausa..."
 
 
@@ -1028,6 +1027,7 @@
 #define LOCALIZED_ERROR_MODE_ON_SPRITE             "cannot set the mode of a turtle with a rotating bitmap" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "cannot make a special turtle use a rotating bitmap" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BITMAPCLIPBOARD            "cannot use the clipboard as a rotating bitmap" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_SPECIALFORM                "%p doesn't like %p as input because it has a special form" // NOT_YET_LOCALIZED
 
 //
 // Error messages displayed in Message Boxes.
@@ -1196,7 +1196,7 @@
 
 // The text which is shown when the Unbound node is formatted.
 // This happens when a macro outputs nothing (instead of a list)
-#define LOCALIZED_UNBOUND       "Non inzializzato" // NOT_YET_LOCALIZED
+#define LOCALIZED_UNBOUND       "Non inzializzato"
 
 //
 // Strings that explain the purpose of each menu option.

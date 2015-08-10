@@ -224,6 +224,8 @@ enum ERR_TYPES
 
     INVALID_STATE_FOR_INSTRUCTION = 1500,
 
+    SPECIAL_FORM_PROC_UNREC       = 2001,
+
     FATAL                         = 0xFFFF,
 };
 

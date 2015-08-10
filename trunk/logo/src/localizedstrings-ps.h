@@ -1019,7 +1019,6 @@
 #define LOCALIZED_ERROR_DEEPEND                "pseudo.END inside multi-line instruction"
 #define LOCALIZED_ERROR_DEEPENDIN              "pseudo.END inside multi-line instruction in %p"
 #define LOCALIZED_ERROR_UNKNOWN                "pseudo.Unknown error condition - internal error."
-
 #define LOCALIZED_PAUSING                      "pseudo.Pausing..."
 
 
@@ -1028,6 +1027,7 @@
 #define LOCALIZED_ERROR_MODE_ON_SPRITE             "pseudo.cannot set the mode of a turtle with a rotating bitmap"
 #define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "pseudo.cannot make a special turtle use a rotating bitmap"
 #define LOCALIZED_ERROR_BITMAPCLIPBOARD            "pseudo.cannot use the clipboard as a rotating bitmap"
+#define LOCALIZED_ERROR_SPECIALFORM                "pseudo.Cannot run %p on a procedure with a special form"
 
 //
 // Error messages displayed in Message Boxes.

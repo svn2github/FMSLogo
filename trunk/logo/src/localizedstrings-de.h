@@ -115,7 +115,7 @@
 #define LOCALIZED_ALTERNATE_TRUE     "wahr"
 #define LOCALIZED_ALTERNATE_FALSE    "falsch"
 #define LOCALIZED_ALTERNATE_END      "ende"
-#define LOCALIZED_ALTERNATE_TOPLEVEL "Ausstieg" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TOPLEVEL "Ausstieg"
 #define LOCALIZED_ALTERNATE_SYSTEM   "system" // NOT_YET_LOCALIZED
 
 //
@@ -1019,7 +1019,6 @@
 #define LOCALIZED_ERROR_DEEPEND                "ENDE(END) innerhalb vielzeiliger Instruktion"
 #define LOCALIZED_ERROR_DEEPENDIN              "ENDE (END) innerhalb vielzeiliger Instruktion in %p"
 #define LOCALIZED_ERROR_UNKNOWN                "Unbekannte Fehlerbedingung - interner Fehler."
-
 #define LOCALIZED_PAUSING                      "Pausiere..."
 
 
@@ -1028,6 +1027,7 @@
 #define LOCALIZED_ERROR_MODE_ON_SPRITE             "cannot set the mode of a turtle with a rotating bitmap" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "cannot make a special turtle use a rotating bitmap" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BITMAPCLIPBOARD            "cannot use the clipboard as a rotating bitmap" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_SPECIALFORM                "%p doesn't like %p as input because it has a special form" // NOT_YET_LOCALIZED
 
 //
 // Error messages displayed in Message Boxes.

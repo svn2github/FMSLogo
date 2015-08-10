@@ -483,6 +483,11 @@ err_logo(
         error_message = cons_list(ErrorMessageParameters);
         break;
 
+    case SPECIAL_FORM_PROC_UNREC:
+        g_ErrorFormatString = LOCALIZED_ERROR_SPECIALFORM;
+        error_message = cons_list(IsUpLevel ? ufun : fun, ErrorMessageParameters);
+        break;
+
     default:
         assert(!"Unexpected error code in err_logo()");
         prepare_to_exit(FALSE);

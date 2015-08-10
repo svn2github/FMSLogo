@@ -1019,7 +1019,6 @@
 #define LOCALIZED_ERROR_DEEPEND                "FIN (END) dentro de una instrucción multi-línea"
 #define LOCALIZED_ERROR_DEEPENDIN              "FIN (END) dentro de una instrucción multi-línea en %p"
 #define LOCALIZED_ERROR_UNKNOWN                "Estado de error desconocido  - error interno."
-
 #define LOCALIZED_PAUSING                      "Pausando..."
 
 
@@ -1028,6 +1027,7 @@
 #define LOCALIZED_ERROR_MODE_ON_SPRITE             "cannot set the mode of a turtle with a rotating bitmap" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "cannot make a special turtle use a rotating bitmap" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BITMAPCLIPBOARD            "cannot use the clipboard as a rotating bitmap" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_SPECIALFORM                "a %p no le gustó recibir %p porque toma sus entradas de manera especial"
 
 //
 // Error messages displayed in Message Boxes.

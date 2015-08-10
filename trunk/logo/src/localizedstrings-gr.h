@@ -121,12 +121,12 @@
 //
 // Localized "alternate" names of Logo special variables
 //
-#define LOCALIZED_ALTERNATE_CASEIGNOREDP    "caseignoredp" // 
-#define LOCALIZED_ALTERNATE_ERRACT          "ΟΔΗΓΙΕΣ_ΣΦΑΛΜΑΤΟΣ" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_STARTUP         "ΕΚΚΙΝΗΣΗ" // 
-#define LOCALIZED_ALTERNATE_REDEFP          "ΕΠΑΝΑΠΡΟΣΔΙΟΡΙΣΜΟΣ" // 
-#define LOCALIZED_ALTERNATE_PRINTWIDTHLIMIT "ΠΛΑΤΟΣ_ΕΚΤΥΠΩΣΗΣ" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PRINTDEPTHLIMIT "ΒΑΘΟΣ_ΕΚΤΥΠΩΣΗΣ" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_CASEIGNOREDP    "caseignoredp"
+#define LOCALIZED_ALTERNATE_ERRACT          "ΟΔΗΓΙΕΣ_ΣΦΑΛΜΑΤΟΣ"
+#define LOCALIZED_ALTERNATE_STARTUP         "ΕΚΚΙΝΗΣΗ"
+#define LOCALIZED_ALTERNATE_REDEFP          "ΕΠΑΝΑΠΡΟΣΔΙΟΡΙΣΜΟΣ" 
+#define LOCALIZED_ALTERNATE_PRINTWIDTHLIMIT "ΠΛΑΤΟΣ_ΕΚΤΥΠΩΣΗΣ"
+#define LOCALIZED_ALTERNATE_PRINTDEPTHLIMIT "ΒΑΘΟΣ_ΕΚΤΥΠΩΣΗΣ"
 
 
 //
@@ -577,7 +577,7 @@
 #define LOCALIZED_ALTERNATE_TEXTSCREEN             "textscreen" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_THING                  "ΤΙΜΗ" // 
 #define LOCALIZED_ALTERNATE_THROW                  "throw" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TIME                   "ΩΡΑ" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TIME                   "ΩΡΑ"
 #define LOCALIZED_ALTERNATE_TIMEMILLI              "ΧΡΟΝΟΣ" // 
 #define LOCALIZED_ALTERNATE_TO                     "to" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_TONE                   "tone" // NOT_YET_LOCALIZED
@@ -699,7 +699,7 @@
 
 // The dialog box for selecting a Startup procedure
 #define LOCALIZED_SELECTSTARTUP_CAPTION               "Select a " LOCALIZED_ALTERNATE_STARTUP " instruction" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "The workspace does not have a " LOCALIZED_ALTERNATE_STARTUP " instruction list defined, so nothing\nwill happen when the screensaver is loaded.\nPlease select a procedure to run when the program is loaded." // NOT_YET_LOCALIZED
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "Your workspace does not have a " LOCALIZED_ALTERNATE_STARTUP " instruction list defined, so nothing\nwill happen when the screensaver is loaded.\nPlease select a procedure to run when the program is loaded." // NOT_YET_LOCALIZED
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "The " LOCALIZED_ALTERNATE_STARTUP " variable is not a list, so nothing will happen when the screensaver\nis loaded.\nPlease select a procedure to run when the program is loaded." // NOT_YET_LOCALIZED
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Your workspace has an empty " LOCALIZED_ALTERNATE_STARTUP " instruction list defined, so nothing will\nhappen when the screensaver is loaded.\nPlease select a procedure to run when the program is loaded." // NOT_YET_LOCALIZED
 #define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "No procedures are defined" // NOT_YET_LOCALIZED
@@ -960,7 +960,7 @@
 //
 // strings seen when single-stepping execution
 //
-#define LOCALIZED_STEPPING                  "Βήμα-βήμα" // NOT_YET_LOCALIZED
+#define LOCALIZED_STEPPING                  "Βήμα-βήμα"
 
 //
 // Notification when defining a procedure with TO in the commander
@@ -1019,7 +1019,6 @@
 #define LOCALIZED_ERROR_DEEPEND                "Το END βρίσκεται μέσα σε οδηγία πολλαπλών γραμμών" // 
 #define LOCALIZED_ERROR_DEEPENDIN              "Το END βρίσκεται μέσα σε οδηγία πολλαπλών γραμμών στο %p" // 
 #define LOCALIZED_ERROR_UNKNOWN                "’γνωστη κατάσταση σφάλματος - εσωτερικό σφάλμα." // 
-
 #define LOCALIZED_PAUSING                      "Παύση..." // 
 
 
@@ -1028,6 +1027,7 @@
 #define LOCALIZED_ERROR_MODE_ON_SPRITE             "cannot set the mode of a turtle with a rotating bitmap" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "cannot make a special turtle use a rotating bitmap" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BITMAPCLIPBOARD            "cannot use the clipboard as a rotating bitmap" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_SPECIALFORM                "%p doesn't like %p as input because it has a special form" // NOT_YET_LOCALIZED
 
 //
 // Error messages displayed in Message Boxes.
@@ -1301,7 +1301,7 @@
 #define LOCALIZED_COLOR_DARKKHAKI             "DarkKhaki" // NOT_YET_LOCALIZED
 #define LOCALIZED_COLOR_DARKMAGENTA           "DarkMagenta" // NOT_YET_LOCALIZED
 #define LOCALIZED_COLOR_DARKOLIVEGREEN        "DarkOliveGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKORANGE            "Darkorange" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKORANGE            "DarkOrange" // NOT_YET_LOCALIZED
 #define LOCALIZED_COLOR_DARKORCHID            "DarkOrchid" // NOT_YET_LOCALIZED
 #define LOCALIZED_COLOR_DARKRED               "DarkRed" // NOT_YET_LOCALIZED
 #define LOCALIZED_COLOR_DARKSALMON            "DarkSalmon" // NOT_YET_LOCALIZED
