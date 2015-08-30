@@ -832,8 +832,21 @@ TO REPEATWORD :word :repcount
 END
 BURY [REPEATWORD]
 
+TO PTEST [:procedures PROCEDURES]
+  ; Prints out all top-level tests (ones that take no arguments).
+  ; This is an interactive helper that uses the history like a menu
+  ; so that a test runner can select which of test they want to run.
+  IF EMPTY? :procedures [ STOP ]
+
+  IF (AND SUBSTRING? "TEST FIRST :procedures                 ; contains the word "TEST" in the name
+          EQUALP 0 FIRST BUTFIRST ARITY FIRST :procedures) [ ; no inputs by default
+      PRINT WORD "| | FIRST :procedures
+  ]
+  (PTEST BUTFIRST :procedures)
+END
+BURY [PTEST]
+
 ; protect against loading the file twice
 if not name? "testlog [
   MAKE "testlog []
 ]
-
