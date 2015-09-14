@@ -719,6 +719,7 @@
 #define LOCALIZED_POPUP_REDO                     "Вернуть" 
 #define LOCALIZED_POPUP_SELECTALL                "Выделить всё" 
 #define LOCALIZED_POPUP_HELP                     "Поиск по разделу" 
+#define LOCALIZED_POPUP_REMOVELINES              "Remove Selected Lines" // NOT_YET_LOCALIZED
 
 //
 // The menu options on the editor

@@ -719,6 +719,7 @@
 #define LOCALIZED_POPUP_REDO                     "Ακύρωση αναίρεσης" // 
 #define LOCALIZED_POPUP_SELECTALL                "Ε&πιλογή όλων" // 
 #define LOCALIZED_POPUP_HELP                     "Ανα&ζήτηση στη βοήθεια" // 
+#define LOCALIZED_POPUP_REMOVELINES              "Remove Selected Lines" // NOT_YET_LOCALIZED
 
 //
 // The menu options on the editor

@@ -719,6 +719,7 @@
 #define LOCALIZED_POPUP_REDO                     "pseudo.Redo"
 #define LOCALIZED_POPUP_SELECTALL                "pseudo.Select All"
 #define LOCALIZED_POPUP_HELP                     "pseudo.Topic Search"
+#define LOCALIZED_POPUP_REMOVELINES              "pseudo.Remove Selected Lines"
 
 //
 // The menu options on the editor

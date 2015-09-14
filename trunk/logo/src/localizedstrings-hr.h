@@ -719,6 +719,7 @@
 #define LOCALIZED_POPUP_REDO                     "Ponovi"
 #define LOCALIZED_POPUP_SELECTALL                "Oznaèi sve"
 #define LOCALIZED_POPUP_HELP                     "Topic Search" // NOT_YET_LOCALIZED
+#define LOCALIZED_POPUP_REMOVELINES              "Remove Selected Lines" // NOT_YET_LOCALIZED
 
 //
 // The menu options on the editor

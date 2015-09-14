@@ -21,6 +21,8 @@ II. New features/bugs fixed:
 
   Changed in 6.35.0
   o Implement feature #107; Implement ARITY procedure
+  o Implement feature #108; Add a way to remove selected lines from the
+    commander history in the wxWidgets version of FMSLogo.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/viewvc/fmslogo/logo/src/CHANGELOG.TXT

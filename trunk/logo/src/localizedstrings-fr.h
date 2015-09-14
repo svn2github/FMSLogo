@@ -719,6 +719,7 @@
 #define LOCALIZED_POPUP_REDO                     "Rétablir"
 #define LOCALIZED_POPUP_SELECTALL                "Sélectionner tout"
 #define LOCALIZED_POPUP_HELP                     "Recherche thématique"
+#define LOCALIZED_POPUP_REMOVELINES              "Remove Selected Lines" // NOT_YET_LOCALIZED
 
 //
 // The menu options on the editor
