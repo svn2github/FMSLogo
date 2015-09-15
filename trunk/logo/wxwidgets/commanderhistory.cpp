@@ -12,6 +12,12 @@
 
 #include "localizedstrings.h"
 
+// Menu IDs
+enum
+{
+   ID_REMOVELINES = wxID_HIGHEST,
+};
+
 CCommanderHistory::CCommanderHistory(
     CCommander *    Parent, 
     wxWindowID      Id
@@ -217,14 +223,100 @@ void CCommanderHistory::OnLeftMouseButtonDoubleClick(wxMouseEvent& Event)
     // safely do any further processing on this control.
 }
 
+// Removes the selected lines, which are assumed to be whole lines.
+void CCommanderHistory::OnRemoveSelectedLines(wxCommandEvent& Event)
+{
+    wxTextPos start;
+    wxTextPos end;
+    GetSelection(&start, &end);
+
+    if (start != 0 &&                            // not the start of the buffer
+        GetRange(start - 1, start)[0] != '\n' && // not on the start of a line
+        GetRange(start, start + 1)[0] == '\n')   // on the end of a line
+    {
+        // The selection is not at the start of a line, but
+        // it includes the newline from the previous line.
+        // This is a natural way to select a line if the user
+        // moves the mouse up one line, instead of to the left
+        // end of the top line.
+        // In this case, we want to do what the user expects,
+        // which is not to delete the newline character, thereby
+        // joining the lines before and after the selection onto
+        // the same line, but instead, remove the lines which are
+        // selected.
+        start++;
+    }
+
+    if (GetRange(end - 1, end)[0] != '\n' && // not immediately after a newline
+        GetRange(end, end + 1)[0] == '\n')   // at a newline
+    {
+        // The selection does not continue through the
+        // end of the line, but it ends at a line.
+        // This a natural way for the user to select
+        // a line, but deleting the selection will
+        // not do what they want.
+        end++;
+    }
+    
+    // Fix the selection to be whole lines.
+    SetSelection(start, end);
+ 
+    // Remove the selected lines.
+    DeleteSelectedContent();
+}
+
+void CCommanderHistory::OnUpdateRemoveSelectedLines(wxUpdateUIEvent& Event)
+{
+    if (!HasSelection())
+    {
+        Event.Enable(false);
+    }
+    else
+    {
+        // Allow the user to remove selected lines only if they have
+        // selected whole lines
+        wxTextPos start;
+        wxTextPos end;
+        GetSelection(&start, &end);
+
+        // Check if the selection's start is at the start of the line
+        bool selectionStartIsAtStartOfLine;
+        if (start == 0                            || // the start of the buffer
+            GetRange(start - 1, start)[0] == '\n' || // the start of a line
+            GetRange(start, start + 1)[0] == '\n')   // at the end of a line
+        {
+            selectionStartIsAtStartOfLine = true;
+        }
+        else
+        {
+            selectionStartIsAtStartOfLine = false;
+        }
+
+        // Check if the selection's end is at the end of the line
+        bool selectionEndIsAtEndOfLine;
+        if (GetRange(end - 1, end)[0] == '\n' || // just after a newline
+            GetRange(end, end + 1)[0] == '\n')   // at a newline
+        {
+            selectionEndIsAtEndOfLine = true;
+        }
+        else
+        {
+            selectionEndIsAtEndOfLine = false;
+        }
+
+        Event.Enable(selectionStartIsAtStartOfLine && selectionEndIsAtEndOfLine);
+    }
+}
+
 void CCommanderHistory::OnContextMenu(wxContextMenuEvent& Event)
 {
-    // Show a popup menu that is appropriate for a read-only test control.
+    // The history only supports a limited set of editing
     static const MENUITEM contextMenuItems[] = {
-        {LOCALIZED_POPUP_COPY,      wxID_COPY},
-        {LOCALIZED_POPUP_SELECTALL, wxID_SELECTALL},
+        {LOCALIZED_POPUP_COPY,        wxID_COPY},
+        {LOCALIZED_POPUP_REMOVELINES, ID_REMOVELINES},
+        {LOCALIZED_POPUP_SELECTALL,   wxID_SELECTALL},
         {0},
-        {LOCALIZED_POPUP_HELP,      wxID_HELP_INDEX},
+        {LOCALIZED_POPUP_HELP,        wxID_HELP_INDEX},
     };
 
     wxMenu menu;
@@ -248,4 +340,6 @@ BEGIN_EVENT_TABLE(CCommanderHistory, wxRichTextCtrl)
     EVT_LEFT_DCLICK(CCommanderHistory::OnLeftMouseButtonDoubleClick)
     EVT_CONTEXT_MENU(CCommanderHistory::OnContextMenu)
     EVT_SET_FOCUS(CCommanderHistory::OnSetFocus)
+    EVT_MENU(ID_REMOVELINES,      CCommanderHistory::OnRemoveSelectedLines)
+    EVT_UPDATE_UI(ID_REMOVELINES, CCommanderHistory::OnUpdateRemoveSelectedLines)
 END_EVENT_TABLE()

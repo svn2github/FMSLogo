@@ -18,6 +18,8 @@ private:
     void OnLeftMouseButtonDoubleClick(wxMouseEvent& Event);
     void OnContextMenu(wxContextMenuEvent& Event);
     void OnSetFocus(wxFocusEvent & Event);
+    void OnRemoveSelectedLines(wxCommandEvent& Event);
+    void OnUpdateRemoveSelectedLines(wxUpdateUIEvent& Event);
 
     // Private helper functions
     CCommander * GetCommander() const;
