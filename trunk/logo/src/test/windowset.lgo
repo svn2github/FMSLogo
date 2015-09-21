@@ -1,21 +1,36 @@
 LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
 
 TO WINDOWSETTEST.BUG1429960
   ; For backward-compatibility with MSWLogo programs, ICON "Commander
   ; should always minimize the commander, even when the commander is docked.
 
+  UIAUTOMATION.INITIALIZE
+
   SPLITSCREEN
   ICON "Commander
 
-  LOCALMAKE "isok YESNOBOX [Question] [Is the commander minimized?]
-  IF NOT :isok [
-    REPORTTESTFAILED (sentence "|ICON "Commander did not minimize the commander when it was docked|) 
-    STOP
+  LOCALMAKE "hwnd UIAUTOMATION.FINDWINDOW "Commander IFELSE ISWX ["#32770] ["LogoCommander]
+  IFELSE EQUALP :hwnd 0 [
+    ; FINDWINDOW couldn't find the Commander.
+    ; It could be that ICON failed or that "Commander" is localized.
+    LOCALMAKE "isok YESNOBOX [Question] [Is the commander minimized?]
+  ][
+    ; FINDWINDOW found the commander
+    LOCALMAKE "isMinimized ITEM 1 (DLLCALL (list "L "IsIconic "L :hwnd))
+    LOCALMAKE "isok EQUAL? :isMinimized 1
   ]
 
-  REPORTTESTPASSED (sentence "|ICON "Commander minimized the commander when it was docked|) 
+  IFELSE :isok [
+    REPORTTESTPASSED (sentence "|ICON "Commander minimized the commander when it was docked|) 
+  ][
+    REPORTTESTFAILED (sentence "|ICON "Commander did not minimize the commander when it was docked|) 
+  ]
+
   UNICON "Commander
   SPLITSCREEN
+
+  UIAUTOMATION.UNINITIALIZE
 END
 
 TO WINDOWSETTEST.BADINPUT
@@ -24,15 +39,23 @@ TO WINDOWSETTEST.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(WINDOWSET "FMSLogo)]
   RUNTOOMANYINPUTSTEST   [(WINDOWSET "FMSLogo 0 "toomany)]
 
-  RUNBADINPUTTEST [WINDOWSET "FMSLogo [1]  ]
-  RUNBADINPUTTEST [WINDOWSET "FMSLogo {1}  ]
-  RUNBADINPUTTEST [WINDOWSET "FMSLogo "one ]
-  RUNBADINPUTTEST [WINDOWSET "FMSLogo -1   ]
+  RUNDOESNTLIKEINPUTTEST [WINDOWSET "FMSLogo [1]  ]
+  RUNDOESNTLIKEINPUTTEST [WINDOWSET "FMSLogo {1}  ]
+  RUNDOESNTLIKEINPUTTEST [WINDOWSET "FMSLogo "one ]
+  RUNDOESNTLIKEINPUTTEST [WINDOWSET "FMSLogo -1   ]
+END
+
+TO ICONTEST.BADINPUT
+  RUNNOTENOUGHINPUTSTEST [(ICON)]
+  RUNTOOMANYINPUTSTEST   [(ICON "FMSLogo "toomany)]
 END
 
 TO WINDOWSETTEST
 
+  ; WINDOWSET
   WINDOWSETTEST.BUG1429960
   WINDOWSETTEST.BADINPUT
 
+  ; ICON
+  ICONTEST.BADINPUT
 END
