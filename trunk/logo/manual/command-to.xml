@@ -21,7 +21,7 @@ Names of procedures and inputs are case-insensitive.
 </para>
 
 <para>
-Unlike every other &GENERICNAME; procedure, TO takes as its inputs the actual words typed in the instruction line, as if they were all quoted, rather than the results of evaluating expressions to provide the inputs.  (That's what "special form" means.)
+Unlike nearly every other &GENERICNAME; procedure, TO takes as its inputs the actual words typed in the instruction line, as if they were all quoted, rather than the results of evaluating expressions to provide the inputs.  (That's what "special form" means.)
 </para>
 
 <para>
