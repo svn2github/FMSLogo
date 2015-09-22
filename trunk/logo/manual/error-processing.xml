@@ -130,6 +130,10 @@ The numeric error codes and their corresponding human-readable messages are give
       <row><entry>1303</entry><entry>MIDI Error: Not open</entry></row>
 
       <row><entry>1401</entry><entry>Timer not found</entry></row>
+
+      <row><entry>1500</entry><entry>Invalid state for instruction</entry></row>
+
+      <row><entry>2001</entry><entry>PROC cannot be run on PROC because it has a special form</entry></row>
     </tbody>
   </tgroup>
 </informaltable>
