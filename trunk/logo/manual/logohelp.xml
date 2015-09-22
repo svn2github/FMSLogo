@@ -287,6 +287,9 @@
   <!ENTITY command-scrolly        SYSTEM "command-scrolly.xml">
   <!ENTITY command-setfocus       SYSTEM "command-setfocus.xml">
   <!ENTITY command-getfocus       SYSTEM "command-getfocus.xml">
+  <!ENTITY command-minimize       SYSTEM "command-minimize.xml">
+  <!ENTITY command-restore        SYSTEM "command-restore.xml">
+  <!ENTITY command-maximize       SYSTEM "command-maximize.xml">
   <!ENTITY command-icon           SYSTEM "command-icon.xml">
   <!ENTITY command-unicon         SYSTEM "command-unicon.xml">
   <!ENTITY command-windowset      SYSTEM "command-windowset.xml">

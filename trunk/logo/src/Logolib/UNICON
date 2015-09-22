@@ -1,5 +1,5 @@
-to unicon :window
-windowset :window 9
+to unicon :caption
+windowset :caption 9
 end
 
 bury "unicon

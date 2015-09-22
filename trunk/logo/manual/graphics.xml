@@ -156,8 +156,8 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
 
    </section>
 
-   <section id="turtle-window-control">
-       <title>Turtle and Window Control</title>
+   <section id="turtle-control">
+       <title>Turtle Control</title>
         &command-showturtle;
         &command-hideturtle;
         &command-clean;
@@ -174,6 +174,10 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
         &command-setlabelfont;
         &command-labelfont;
         &command-labelsize;
+   </section>
+
+   <section id="window-control">
+       <title>Window Control</title>
         &command-textscreen;
         &command-fullscreen;
         &command-splitscreen;
@@ -187,6 +191,9 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
         &command-getfocus;
         &command-icon;
         &command-unicon;
+        &command-minimize;
+        &command-restore;
+        &command-maximize;
         &command-windowset;
    </section>
 

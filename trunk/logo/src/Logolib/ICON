@@ -1,5 +1,5 @@
-to icon :window
-windowset :window 6
+to icon :caption
+windowset :caption 6
 end
 
 bury "icon

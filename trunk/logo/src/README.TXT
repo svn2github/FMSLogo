@@ -23,6 +23,8 @@ II. New features/bugs fixed:
   o Implement feature #107; Implement ARITY procedure
   o Implement feature #108; Add a way to remove selected lines from the
     commander history in the wxWidgets version of FMSLogo.
+  o Implement feature #109; Add MINIMIZE, MAXIMIZE, and RESTORE as modern
+    replacements for ICON and UNICON.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/viewvc/fmslogo/logo/src/CHANGELOG.TXT

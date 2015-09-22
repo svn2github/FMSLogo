@@ -355,6 +355,9 @@ $Exceptions{'command-map.xml'}{'allcaps'}{'?REST'}     = 1;
 
 $Exceptions{'command-map.se.xml'}{'allcaps'}{'?REST'}  = 1;
 
+$Exceptions{'command-maximize.xml'}{'allcaps'}{'MAXLOGO'} = 1;
+$Exceptions{'command-maximize.xml'}{'logo'}               = 1;
+
 $Exceptions{'command-mci.xml'}{'allcaps'}{'CD'}        = 1;
 $Exceptions{'command-mci.xml'}{'allcaps'}{'SOUNDIT'}   = 1;
 
@@ -368,6 +371,8 @@ $Exceptions{'command-midiopen.xml'}{'allcaps'}{'MIDI'}   = 1;
 $Exceptions{'command-midiopen.xml'}{'allcaps'}{'MAPPER'} = 1;
 $Exceptions{'command-midiopen.xml'}{'allcaps'}{'.MID'}   = 1;
 $Exceptions{'command-midiopen.xml'}{'allcaps'}{'.MDI'}   = 1;
+
+$Exceptions{'command-minimize.xml'}{'allcaps'}{'HIDEANDSHOW'} = 1;
 
 $Exceptions{'command-namelist.xml'}{'allcaps'}{'BAR'} = 1;
 $Exceptions{'command-namelist.xml'}{'allcaps'}{'FOO'} = 1;
@@ -459,6 +464,8 @@ $Exceptions{'command-radiobuttonset.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 $Exceptions{'command-readlist.xml'}{'logo'} = 1;
 
 $Exceptions{'command-reduce.xml'}{'allcaps'}{'MAX'} = 1;
+
+$Exceptions{'command-restore.xml'}{'allcaps'}{'HIDEANDSHOW'} = 1;
 
 $Exceptions{'command-save.xml'}{'allcaps'}{'MYPROGRAM1'} = 1;
 $Exceptions{'command-save.xml'}{'allcaps'}{'MYPROGRAM2'} = 1;
