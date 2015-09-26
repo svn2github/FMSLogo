@@ -6,18 +6,24 @@ TO SETPENSIZEDIALOGTEST.BUG3418522
    UIAUTOMATION.INITIALIZE
 
    CATCH "ERROR [
-     ; Taken from logorc.h
+     ; Taken from logorc.h (OWL)
      LOCALMAKE "CMD_BASE      32771
      LOCALMAKE "CM_SETPENSIZE :CMD_BASE + 55
 
+     ; For wx version
+     LOCALMAKE "wxID_HIGHEST  5999               ; from defs.h
+     LOCALMAKE "ID_SETPENSIZE :wxID_HIGHEST + 15 ; mainframe.cpp
+
      REPEAT 2 [
        ; Use the "Set Pen Size" menu command to open the Pen Size dialog box
-       UIAUTOMATION.SENDMENUCOMMANDTOWINDOW "FMSLogo :CM_SETPENSIZE
+       localmake "message IFELSE ISWX [ :ID_SETPENSIZE ][ :CM_SETPENSIZE ]
+       UIAUTOMATION.SENDMENUCOMMANDTOWINDOW "FMSLogo :message
 
        localmake "WM_VSCROLL  277
        localmake "SB_LINEDOWN 3
        localmake "hwnd        UIAUTOMATION.FINDWINDOW [Pen Size] 0
-       UIAUTOMATION.SENDMESSAGETOWINDOW [Pen Size] [SizeControl] :WM_VSCROLL :SB_LINEDOWN :hwnd
+       localmake "sliderclass IFELSE ISWX ["msctls_trackbar32] ["SizeControl]
+       UIAUTOMATION.SENDMESSAGETOWINDOW [Pen Size] :sliderclass :WM_VSCROLL :SB_LINEDOWN :hwnd
 
        ; dismiss the dialog box
        UIAUTOMATION.SENDBUTTONPUSHTOWINDOW [Pen Size] "Cancel
