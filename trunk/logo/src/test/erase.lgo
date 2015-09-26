@@ -1,4 +1,5 @@
 LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
 
 TO ERASETEST.ERASEPROCEDURE
 
@@ -145,15 +146,24 @@ END
 
 TO ERASETEST.ERASEALL
 
-   ; test ERALL
    ; We can't run our tests if we erase all procedures, 
-   ; so we just test for not erasing anything and bad input.
-   MESSAGEBOX "|Manual Test| "|You will be now asked to erase all procedures.  Say No.|
-   ERALL
+   ; so we just test for not erasing anything.
 
-   ; make sure that nothing to erased
-   FAILIFNOTTRUE [PROCEDURE? "ERASETEST.ERASEALL]
+   UIAUTOMATION.INITIALIZE
 
+   CATCH "ERROR [
+
+     ; Run ERALL and Say No (don't erase everything)
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [Warning] "&No
+     TRACEINSTRUCTION [ ERALL ]
+
+     ; make sure that nothing was erased
+     FAILIFNOTTRUE [PROCEDURE? "ERASETEST.ERASEALL]
+   ]
+
+   IGNORE FAILIFERROR "ERASETEST.ERASEALL
+
+   UIAUTOMATION.UNINITIALIZE
 END
 
 TO ERASETEST
