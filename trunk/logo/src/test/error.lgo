@@ -1,4 +1,5 @@
 LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
 
 TO PROCEDURE.WITH.TO.INSIDE.IT
    ; Attempt to define a procedure within a procedure.
@@ -93,16 +94,23 @@ TO ERRORTEST
    ; error 14: is an uncaught exception, which can't be caught
    ; error 15: can only be tested at the top level
 
-   STEP "MY.PROC.TO.STEP
-   (RUNEXPECTERRORTEST [MY.PROC.TO.STEP]                      16 "|Stopping...|)
+   ; Force a stopping error by pressing cancel on a STEP
+   UIAUTOMATION.INITIALIZE
+   CATCH "ERROR [
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [Single Step] "Cancel
+     STEP "MY.PROC.TO.STEP
+     (RUNEXPECTERRORTEST [MY.PROC.TO.STEP]                 16 "|Stopping...|)
+   ]
    UNSTEP "MY.PROC.TO.STEP
+   IGNORE FAILIFERROR "ERROTEST.STOPPING
+   UIAUTOMATION.UNINITIALIZE
 
    DRIBBLE "DELETEME.TXT
-   (RUNEXPECTERRORTEST [DRIBBLE "DELETEME.TXT]                17 "|Already dribbling|)
+   (RUNEXPECTERRORTEST [DRIBBLE "DELETEME.TXT]             17 "|Already dribbling|)
    NODRIBBLE
    ERASEFILE "DELETEME.TXT
 
-   (RUNEXPECTERRORTEST [OPENREAD "DELETEME.TXT]               18 "|File system error: Could not open file|)
+   (RUNEXPECTERRORTEST [OPENREAD "DELETEME.TXT]            18 "|File system error: Could not open file|)
 
    ; error #19 is just a warning
    if "TRUE [IGNORE "TRUE] [IGNORE "FALSE]
