@@ -19,7 +19,7 @@ Both <parameter>dividend</parameter> and <parameter>divisor</parameter> must be 
 
 <para>
 Mathematically, a remainder is a number such that
-<informalequation>dividend = quotient * divisor + remainder</informalequation>
+<informalequation><mathphrase>dividend = quotient * divisor + remainder</mathphrase></informalequation>
 Where quotient is an integer and -divisor &lt; remainder &lt; divisor.
 By this definition, two remainders may be possible for a given divisor and dividend, one positive and one negative.
 To make MODULO well-defined, it always outputs the remainder whose sign matches that of <parameter>divisor</parameter>.

@@ -8,6 +8,7 @@ FO_STYLESHEET   = fo.xsl
 ROOTFILE        = logohelp.xml
 SOURCEFILES     = $(filter-out $(TEMPORARY_FILES), $(wildcard *.xml)) logoversion.xml
 
+XMLLINT  = xmllint
 XSLTPROC = xsltproc
 HHC      = 'C:\Program Files\HTML Help Workshop\hhc.exe'
 FOP      = 'E:\fop-1.1\fop.bat'
@@ -24,12 +25,14 @@ logohelp.chm : logohelp-1033.chm
 index.html : $(SOURCEFILES) $(HTML_STYLESHEET)
 	cp translations-1033.xml translations.xml
 	echo -n $* > locale.xml
-	$(XSLTPROC) --nonet $(HTML_STYLESHEET) $(ROOTFILE)
+	$(XMLLINT) --valid --noout --nonet $(ROOTFILE)
+	$(XSLTPROC) --novalid --nonet $(HTML_STYLESHEET) $(ROOTFILE)
 
 logohelp.fo : $(SOURCEFILES) $(FO_STYLESHEET)
 	cp translations-1033.xml translations.xml
 	echo -n $* > locale.xml
-	$(XSLTPROC) --nonet --output $@ $(FO_STYLESHEET) $(ROOTFILE)
+	$(XMLLINT) --valid --noout --nonet $(ROOTFILE)
+	$(XSLTPROC) --novalid --nonet --output $@ $(FO_STYLESHEET) $(ROOTFILE)
 
 logohelp-%.chm : htmlhelp-%.hhp logohelp.css
 	perl -W clean-html.pl
@@ -59,7 +62,8 @@ logohelp-1050.chm : htmlhelp-1050.hhp logohelp.css
 htmlhelp-%.hhp : translations-%.xml $(SOURCEFILES) $(HHP_STYLESHEET)
 	cp translations-$*.xml translations.xml
 	echo -n $* > locale.xml
-	$(XSLTPROC) --nonet --param htmlhelp.chm \"'logohelp-$*.chm'\" $(HHP_STYLESHEET) $(ROOTFILE)
+	$(XMLLINT) --valid --noout --nonet $(ROOTFILE)
+	$(XSLTPROC) --novalid --nonet --param htmlhelp.chm \"'logohelp-$*.chm'\" $(HHP_STYLESHEET) $(ROOTFILE)
 	mv htmlhelp.hhp htmlhelp-$*.hhp
 
 # The "all" target builds all translations of the .chm
