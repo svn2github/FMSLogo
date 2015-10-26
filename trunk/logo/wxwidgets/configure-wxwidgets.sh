@@ -4,19 +4,21 @@
 #
 # Use the script like:
 #   bash
-#   cd <wxwidgets_top_dir>
-#   Patch wxwidgets with <path_to_this_script>/wxwidgets-2.8.12.patch
+#   cd [wxwidgets_src_dir]
+#   patch -p1 < [path_to_this_script]/wxwidgets-2.8.12.patch
 #
-#   <path_to_this_script>/configure-wxwidgets.sh
+#   cd [wxwidgets_bin_dir]
+#   [path_to_this_script]/configure-wxwidgets.sh [wxwidgets_src_dir]
 #   gmake clean all
 #   gmake -C contrib/src/stc clean all
 #
 #   export DEBUG=1
-#   <path_to_this_script>/configure-wxwidgets.sh
+#   [path_to_this_script]/configure-wxwidgets.sh [wxwidgets_src_dir]
 #   gmake clean all
 #   gmake -C contrib/src/stc clean all
 #
 ###########################################################################
+CONFIGURE=$1/configure
 
 export PATH=/usr/bin:$PATH
 export MAKE=gmake
@@ -38,6 +40,12 @@ export MAKE=gmake
 export CFLAGS=-march=i586
 export CXXFLAGS=-march=i586
 
+if [ ! -f $CONFIGURE ];
+then
+  echo The file $CONFIGURE does not exist
+  exit 1
+fi
+
 if [ -f configarg.cache ];
 then
   rm configarg.cache
@@ -49,11 +57,14 @@ then
 else
   export ADDITIONAL_OPTIONS="--disable-debug --enable-optimise"
 
-  # Enable link-time optimization so that the resulting fmslogo.exe is smaller.
+  # Enable link-time optimization so that the resulting galaxql.exe isn't 12MB.
   # Without this, all of the uncalled member functions remain in the final executable.
-  export CFLAGS=-flto
-  export CXXFLAGS=-flto
-  export LDFLAGS=-flto
+  ## Unfortunately, there's a bug in the -flto in i686-w64-mingw32-g++ (GCC) 4.9.2
+  ## So until this is fixed, wxWidgets cannot be compiled with this flag, which means
+  ## that dead code cannot be removed.
+  ##export CFLAGS=-flto
+  ##export CXXFLAGS=-flto
+  ##export LDFLAGS=-flto
 fi
 
 if [ "$PROFILE" == "1" ];
@@ -61,7 +72,7 @@ then
 export ADDITIONAL_OPTIONS="$ADDITIONAL_OPTIONS --enable-profile"
 fi
 
-./configure                       \
+$CONFIGURE                        \
     $ADDITIONAL_OPTIONS           \
     --with-msw                    \
     --disable-rtti                \

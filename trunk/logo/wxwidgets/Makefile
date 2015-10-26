@@ -37,6 +37,7 @@ EXEEXT = .exe
 # Compile with MinGW
 RC = windres --preprocessor=$(CXX) --preprocessor-arg=-E --preprocessor-arg=-xc-header
 
+wx_top_srcdir   = /cygdrive/e/wxMSW-2.8.12-src
 wx_top_builddir = /cygdrive/e/wxMSW-2.8.12
 
 ifeq "$(DEBUG)" "1"
@@ -79,7 +80,7 @@ CXXFLAGS += -pg
 LDFLAGS  += -pg
 endif
 
-INCLUDES = . $(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) $(wx_top_builddir)/include $(wx_top_builddir)/contrib/include ../src
+INCLUDES = . $(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) $(wx_top_srcdir)/include $(wx_top_srcdir)/contrib/include ../src
 CPPFLAGS += -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES $(addprefix -I, $(INCLUDES))
 CXXFLAGS += -Wall -fno-strict-aliasing
 CXXFLAGS += -DFMSLOGO_WXWIDGETS
