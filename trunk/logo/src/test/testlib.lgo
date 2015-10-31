@@ -832,6 +832,24 @@ TO REPEATWORD :word :repcount
 END
 BURY [REPEATWORD]
 
+TO MAKEDEEPARRAY :depth
+   ; Creates a deeply nested array while avoiding the
+   ; performance penalty of SETITEM as it checks for
+   ; circularity.
+   LOCAL [deeparray innerarray]
+
+   MAKE "deeparray  ARRAY 1
+   MAKE "innerarray :deeparray
+
+   REPEAT :depth  [
+      SETITEM 1 :innerarray ARRAY 1
+      MAKE "innerarray ITEM 1 :innerarray
+   ]
+
+   OUTPUT :deeparray
+END
+BURY [MAKEDEEPARRAY]
+
 TO ISWX
   ; Outputs TRUE if this is wxWidgets. Outputs FALSE if it's OWL.
   OUTPUT SUBSTRINGP "1e-005 POWER 10 -5

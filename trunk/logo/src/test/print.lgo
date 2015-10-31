@@ -173,19 +173,8 @@ TO PRINTTEST.PRINTDEPTHANDWIDTHLIMIT
 END
 
 TO PRINTTEST.DEEPLYNESTEDARRAY
-
-   LOCALMAKE "deeparray  ARRAY 1
-   LOCALMAKE "innerarray :deeparray
-
-   REPEAT 10000 [
-      SETITEM 1 :innerarray ARRAY 1
-      MAKE "innerarray ITEM 1 :innerarray
-   ]
-
-   PRINT :deeparray
-
-   REPORTTESTPASSED [|Bug #1566778 is fixed; printing a deeply nested array didn't crash.|]
-
+   PRINT MAKEDEEPARRAY 100000
+   REPORTTESTPASSED [|Bug #208 is fixed; printing a deeply nested array didn't crash.|]
 END
 
 TO PRINTTEST.PSEUDOLOC

@@ -170,6 +170,11 @@ TO SETITEMTEST
    RUNBADINPUTTEST  [SETITEM 1 :myarray :myarray]
 END
 
+TO ARRAYGCCRASHTEST
+   IGNORE MAKEDEEPARRAY 100000 ; create a deeply nested array
+   REPORTTESTPASSED [|Bug #468 is fixed; garbage collecting a deeply nested array didn't crash.|]
+END
+
 TO ARRAYTEST
 
    ARRAYSMOKETEST
@@ -178,5 +183,6 @@ TO ARRAYTEST
    BUG1349374TEST
    SETITEMTEST
 
+   ; ARRAYGCCRASHTEST
 END
 
