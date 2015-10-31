@@ -22,13 +22,14 @@ SetFmsLogoIcon(
     // SM_CXSMICON x SM_CYSMICON.  We could reduce the memory
     // overhead by calling GetSystemMetrics and only adding
     // these two to the bundle.
-    wxIcon icon16x16(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 16, 16));
-    wxIcon icon20x20(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 20, 20));
-    wxIcon icon24x24(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 24, 24));
-    wxIcon icon32x32(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 32, 32));
-    wxIcon icon40x40(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 40, 40));
-    wxIcon icon48x48(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 48, 48));
-    wxIcon icon64x64(wxIcon("fmslogo", wxBITMAP_TYPE_ICO_RESOURCE, 64, 64));
+    wxString name(WXSTRING("fmslogo"));
+    wxIcon icon16x16(wxIcon(name, wxBITMAP_TYPE_ICO_RESOURCE, 16, 16));
+    wxIcon icon20x20(wxIcon(name, wxBITMAP_TYPE_ICO_RESOURCE, 20, 20));
+    wxIcon icon24x24(wxIcon(name, wxBITMAP_TYPE_ICO_RESOURCE, 24, 24));
+    wxIcon icon32x32(wxIcon(name, wxBITMAP_TYPE_ICO_RESOURCE, 32, 32));
+    wxIcon icon40x40(wxIcon(name, wxBITMAP_TYPE_ICO_RESOURCE, 40, 40));
+    wxIcon icon48x48(wxIcon(name, wxBITMAP_TYPE_ICO_RESOURCE, 48, 48));
+    wxIcon icon64x64(wxIcon(name, wxBITMAP_TYPE_ICO_RESOURCE, 64, 64));
 
 #else
     #include "fmslogo-16x16.xpm"
