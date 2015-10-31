@@ -98,12 +98,10 @@ NODE *merge(NODE *a, NODE *b, bool ignorecase)
 static
 void mergepairs(NODE *nd, bool ignorecase)
 {
-    NODE *temp;
-
     while (nd != NIL && cdr(nd) != NIL)
     {
         nd->nunion.ncons.ncar = merge(car(nd), cadr(nd), ignorecase);
-        temp = cdr(nd);
+        NODE * temp = cdr(nd);
         nd->nunion.ncons.ncdr = cddr(nd);
         temp->nunion.ncons.ncar = temp->nunion.ncons.ncdr = NIL;
         gc(temp);
