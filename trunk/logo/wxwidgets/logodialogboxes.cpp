@@ -53,6 +53,7 @@
 #include "screenwindow.h"
 #include "questionbox.h"
 #include "selectbox.h"
+#include "stringadapter.h"
 #include "debugheap.h"
 
 enum WINDOWTYPE 
@@ -126,7 +127,7 @@ static void SetMswLogoCompatibleFont(wxWindow * Window)
 {
     // Sets the font to look like it did in MSWLogo.
     wxFont font = Window->GetFont();
-    font.SetFaceName("System");
+    font.SetFaceName(WXSTRING("System"));
     Window->SetFont(font);
 }
 
@@ -224,7 +225,7 @@ public:
     {
         HWND hwnd = CreateWindow(
             WC_COMBOBOX, // window class
-            "",          // caption
+            "",           // caption
             CBS_SIMPLE |
                 CBS_AUTOHSCROLL |
                 CBS_DISABLENOSCROLL |
@@ -387,7 +388,7 @@ public:
     {
         HWND hwnd = CreateWindow(
             WC_STATIC, // window class
-            Text,      // caption
+            Text,       // caption
             WS_CHILD |
                 WS_OVERLAPPED |
                 WS_CLIPCHILDREN |
@@ -434,7 +435,7 @@ public:
     {
         HWND hwnd = CreateWindow(
             WC_BUTTON, // window class
-            Caption,   // caption
+            Caption,    // caption
             BS_PUSHBUTTON |
                 BS_TEXT |
                 WS_CHILD |
@@ -678,7 +679,7 @@ public:
         wxRadioButton(
             Parent,
             wxID_ANY,
-            Title,
+            WXSTRING(Title),
             wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
             wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
             Group->IsEmpty() ? wxRB_GROUP : 0)
@@ -1019,7 +1020,7 @@ void CLogoWidgetList::list(const char *k, int level)
                 "%s %s",
                 WindowName[(int)p->m_Type],
                 p->m_Key);
-            putcombobox(temp, MESSAGETYPE_Normal);
+            putcombobox(WXSTRING_TO_STRING(temp), MESSAGETYPE_Normal);
         }
 
         CLogoWidget *ff = last;
@@ -1035,7 +1036,7 @@ void CLogoWidgetList::list(const char *k, int level)
                     WindowName[(int)ff->m_Type],
                     ff->m_Key);
 
-                putcombobox(temp, MESSAGETYPE_Normal);
+                putcombobox(WXSTRING_TO_STRING(temp), MESSAGETYPE_Normal);
                 list(ff->m_Key, level + 1);
             }
             ff = ff->m_Next;
@@ -1199,7 +1200,7 @@ NODE *lwindowcreate(NODE *args)
 
     child->Dialog = new CLogoDialog(
         wxParent,
-        titlename.GetString(),
+        WXSTRING(titlename.GetString()),
         clientrect);
 
     g_LogoWidgets.insert(child);
@@ -1383,7 +1384,7 @@ NODE *ldialogcreate(NODE *args)
 
     child->Dialog = new CLogoDialog(
         wxParent,
-        titlename.GetString(),
+        WXSTRING(titlename.GetString()),
         clientrect);
     child->m_Parent = (char *)wxParent;
 
@@ -1508,7 +1509,7 @@ NODE *llistboxgetselect(NODE *args)
     const wxString & selection = listbox->ListBox->GetStringSelection();
 
     // Parsing the string turns it into a list for us
-    return parser(make_strnode(selection.c_str()), false);
+    return parser(make_strnode(WXSTRING_TO_STRING(selection)), false);
 }
 
 NODE *llistboxaddstring(NODE *args)
@@ -1534,7 +1535,7 @@ NODE *llistboxaddstring(NODE *args)
     }
 
     // add entry and reset Index for consistency
-    listbox->ListBox->Append(stringname);
+    listbox->ListBox->Append(WXSTRING(stringname));
     listbox->ListBox->SetSelection(0);
     return Unbound;
 }
@@ -1674,7 +1675,7 @@ NODE *lcomboboxgettext(NODE *args)
     const wxString & selection = combobox->ComboBox->GetValue();
 
     // parsing it turns it into a list
-    return parser(make_strnode(selection.c_str()), false);
+    return parser(make_strnode(WXSTRING_TO_STRING(selection)), false);
 }
 
 NODE *lcomboboxsettext(NODE *args)
@@ -1695,7 +1696,7 @@ NODE *lcomboboxsettext(NODE *args)
     }
 
     // set the editcontrol portion to the user specified text
-    combobox->ComboBox->SetValue(stringname);
+    combobox->ComboBox->SetValue(WXSTRING(stringname));
     return Unbound;
 }
 
@@ -1718,7 +1719,7 @@ NODE *lcomboboxaddstring(NODE *args)
     }
 
     // add string and reset selection
-    combobox->ComboBox->Append(stringname);
+    combobox->ComboBox->Append(WXSTRING(stringname));
     combobox->ComboBox->SetSelection(0);
     return Unbound;
 }
@@ -1969,7 +1970,7 @@ NODE *lstaticupdate(NODE *args)
         return Unbound;
     }
 
-    temp->StaticText->SetLabel(titlename.GetString());
+    temp->StaticText->SetLabel(WXSTRING(titlename.GetString()));
     return Unbound;
 }
 
@@ -2080,7 +2081,7 @@ NODE *lbuttonupdate(NODE *args)
         return Unbound;
     }
 
-    button->Button->SetLabel(titlename.GetString());
+    button->Button->SetLabel(WXSTRING(titlename.GetString()));
     return Unbound;
 }
 
@@ -2358,7 +2359,7 @@ NODE *lcheckboxcreate(NODE *args)
 
         child->CheckBox = new CLogoCheckBox(
             parent->Dialog, 
-            titlename.GetString(), 
+            WXSTRING(titlename.GetString()), 
             clientrect,
             group->GroupBox);
     }
@@ -2370,7 +2371,7 @@ NODE *lcheckboxcreate(NODE *args)
 
         child->CheckBox = new CLogoCheckBox(
             CFmsLogo::GetMainFrame()->GetScreen(),
-            titlename.GetString(),
+            WXSTRING(titlename.GetString()),
             clientrect,
             group->GroupBox);
     }
@@ -2504,8 +2505,8 @@ NODE *lquestionbox(NODE *args)
 
     CQuestionBox questionBox(
         CFmsLogo::GetMainFrame(),
-        banner.GetString(),
-        body.GetString());
+        WXSTRING(banner.GetString()),
+        WXSTRING(body.GetString()));
 
     int exitCode = questionBox.ShowModal();
     if (exitCode == wxID_CANCEL)
@@ -2515,7 +2516,7 @@ NODE *lquestionbox(NODE *args)
         return Unbound;
     }
 
-    NODE * targ = make_strnode(questionBox.GetAnswer().c_str());
+    NODE * targ = make_strnode(WXSTRING_TO_STRING(questionBox.GetAnswer()));
     NODE * val = parser(targ, false);
     return val;
 }
@@ -2538,12 +2539,12 @@ NODE *lselectbox(NODE *args)
          currentChoice = cdr(currentChoice))
     {
         CStringPrintedNode choice(car(currentChoice));
-        choices.Add(choice.GetString());
+        choices.Add(WXSTRING(choice.GetString()));
     }
 
     CSelectBox selectBox(
         CFmsLogo::GetMainFrame(),
-        banner.GetString(),
+        WXSTRING(banner.GetString()),
         choices);
 
     int status = selectBox.DoDialog();
