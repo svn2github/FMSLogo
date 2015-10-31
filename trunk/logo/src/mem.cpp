@@ -189,8 +189,13 @@ NODE *newnode(NODETYPES type)
 
 class CGarbageCollectionStack
 {
-
 public:
+    CGarbageCollectionStack() :
+        m_TopNode(NULL),
+        m_TopNodeIndex(ARRAYSIZE(m_TopNode->Nodes))
+    {
+    }
+
     void Initialize()
     {
         m_TopNode      = NULL;
@@ -411,8 +416,20 @@ void gc(NODE *nd)
         case MACRO:
         case TAILFORM:
         case INFIX:
-            tcar = tcdr = tobj = NIL;
-            break;
+            // All of these nodes are scalars with no
+            // cdr, car, or obj.  To save some processing
+            // time, we omit the code with attempts to
+            // garbage collect them.
+            mem_nodes--;
+
+            // At this point, we no longer need "nd", so we can
+            // use its memory as bookkeeping space for the nodes
+            // that we wish to free.
+            gc_deferred_list.AddMemory(nd);
+
+            // get ready to garbage collect the next node
+            nd = gc_deferred_list.PopDeferredNode();
+            continue;
 
         default:
             assert(!"freeing unrecognized node type");
