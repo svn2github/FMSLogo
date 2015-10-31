@@ -119,8 +119,8 @@ CMainFrame::CLogoPicturePrintout::OnPrintPage(
     {
         // notify the user that the printer does not support scaling
         wxMessageBox(
-            LOCALIZED_ERROR_PRINTERCANTSCALE, 
-            LOCALIZED_ERROR,
+            WXSTRING(LOCALIZED_ERROR_PRINTERCANTSCALE), 
+            WXSTRING(LOCALIZED_ERROR),
             wxICON_ERROR);
         return false;
     }
@@ -242,7 +242,7 @@ CMainFrame::CLogoPicturePrintout::OnPrintPage(
                 LOCALIZED_ERROR_SUBCODE,
                 lastError);
 
-            wxMessageBox(message, LOCALIZED_ERROR, wxICON_ERROR);
+            wxMessageBox(message, WXSTRING(LOCALIZED_ERROR), wxICON_ERROR);
             isOk = false;
         }
     }
@@ -250,8 +250,8 @@ CMainFrame::CLogoPicturePrintout::OnPrintPage(
     {
         // can't do it
         wxMessageBox(
-            LOCALIZED_ERROR_CANTEXTRACTIMAGE,
-            LOCALIZED_ERROR,
+            WXSTRING(LOCALIZED_ERROR_CANTEXTRACTIMAGE),
+            WXSTRING(LOCALIZED_ERROR),
             wxICON_ERROR);
         isOk = false;
     }
@@ -2279,7 +2279,11 @@ void CMainFrame::OnSetLabelFont(wxCommandEvent& WXUNUSED(Event))
             char logoInstruction[512];
             sprintf(
                 logoInstruction,
+#if wxUSE_UNICODE
+                "%s [[%ws] %ld %ld %ld %ld %d %d %d %d %d %d %d %d]",
+#else
                 "%s [[%s] %ld %ld %ld %ld %d %d %d %d %d %d %d %d]",
+#endif
                 setlabelfont,
                 nativeFontInfo->lf.lfFaceName,
                 nativeFontInfo->lf.lfHeight,
