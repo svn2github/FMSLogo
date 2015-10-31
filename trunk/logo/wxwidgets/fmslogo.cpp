@@ -124,7 +124,7 @@ ReadIntArgument(
             // now warn user of their mistake.
             wxMessageBox(
                 *NextArgument,
-                LOCALIZED_ERROR_BADCOMMANDLINE, 
+                WXSTRING(LOCALIZED_ERROR_BADCOMMANDLINE), 
                 wxOK | wxICON_INFORMATION);
 
             numericValue = 0;
@@ -198,7 +198,7 @@ void CFmsLogo::ProcessCommandLine()
                     // invalid command line: unrecognized switch
                     wxMessageBox(
                         argument - 2,
-                        LOCALIZED_ERROR_BADCOMMANDLINE, 
+                        WXSTRING(LOCALIZED_ERROR_BADCOMMANDLINE), 
                         wxOK | wxICON_INFORMATION);
                     break;
                 }
