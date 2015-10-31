@@ -12,7 +12,7 @@
 // Note: because there is data loss in the conversion, every instance
 // of this macro should be considered a bug.
 #if wxUSE_UNICODE
-#define WXSTRING_TO_STRING(STRING) ((STRING).mb_str(wxConvLibc)).data()
+#define WXSTRING_TO_STRING(STRING) ((STRING).mb_str(wxConvUTF8)).data()
 #else
 #define WXSTRING_TO_STRING(STRING) ((STRING).c_str())
 #endif
