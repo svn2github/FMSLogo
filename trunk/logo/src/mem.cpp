@@ -340,7 +340,7 @@ void gc(NODE *nd)
 
     gc_deferred_list.Initialize();
 
-    while (nd != NIL)
+    do
     {
         NODE *tcar;
         NODE *tcdr;
@@ -449,7 +449,7 @@ void gc(NODE *nd)
 
         // get ready to garbage collect the next node
         nd = gc_deferred_list.PopDeferredNode();
-    }
+    } while (nd != NIL);
 
     // Free all of the nodes which were marked as having
     // no further references as a result of freeing nd.
