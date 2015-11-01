@@ -9,6 +9,28 @@
 #include "logocore.h"  // for ARRAYSIZE
 #include "helputils.h" // for ContextHelp
 
+#ifndef __WXMSW__
+
+  // !HACK!HACK!HACK!
+  // In CCommanderInput::SimulateKeyPress(wxKeyEvent & KeyEvent) we need a way
+  // to forward wxKeyEvent to Scintilla, but wxSytledTextCtrl provides no public
+  // member function for doing this.  However, there is a private interface that
+  // does exactly this.  The wxStyledTextCtrl wraps a bridge object (ScintillaWX)
+  // into Scintilla and this bridge object has a method for doing this.
+  // This bridge object is protected, so we have access to it, although we don't
+  // have access to the ScintillaWX class's definition to be able to invoke it.
+  //
+  // Below is a subset of the private, internal interface that we need access to.
+  // It was copied from ScintillaWX.h.
+  // 
+  class ScintillaWX {
+  public:
+      int DoKeyDown(const wxKeyEvent& event, bool* consumed);
+  };
+
+#endif
+
+
 enum
 {
     KEY_CODE_CLOSE_BRACKET = 0xDD,
@@ -132,8 +154,8 @@ void CCommanderInput::SimulateKeyPress(wxKeyEvent & KeyEvent)
     ::keybd_event(code, 0, 0 /* key press */, 0);
     ::keybd_event(code, 0, KEYEVENTF_KEYUP, 0);
 #else
-    boolean consumed = false;
-    OnKeyEvent(KeyEvent, &consumed);
+    bool consumed = false;
+    m_swx->DoKeyDown(KeyEvent, &consumed);
 #endif
 }
 
