@@ -2567,12 +2567,7 @@ void do_execution(char * logocommand)
         deref(current_line);
         current_line = saved_current_line;
 
-        // this is a hack to force garbage collector to properly clean up
-        if (exec_list != NIL)
-        {
-            settype(exec_list, CONS);
-            deref(exec_list);
-        }
+        deref(exec_list);
 
         stop_execution();
     }
