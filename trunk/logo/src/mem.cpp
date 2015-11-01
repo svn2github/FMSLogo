@@ -107,6 +107,8 @@ NODE * pop_from_free_list()
     free_list = free_list->nunion.ncons.ncdr;
 #ifdef MEM_DEBUG
     assert(newnd->type == NT_FREE);
+    memset(newnd, 0xDA, sizeof *newnd);
+    newnd->type = NT_FREE;
 #endif
     return newnd;
 }
@@ -143,6 +145,8 @@ void addseg()
 #endif
 }
 
+// Returns a new NODE with the given type and a reference count of 0.
+// None of the type-specific members are initialized.
 NODE *newnode(NODETYPES type)
 {
     // Make sure that there's a node on the free list
@@ -172,9 +176,6 @@ NODE *newnode(NODETYPES type)
     // Initialize the new node
     settype(newnd, type);
     newnd->ref_count = 0;
-    newnd->nunion.ncons.ncar = NIL;
-    newnd->nunion.ncons.ncdr = NIL;
-    newnd->nunion.ncons.nobj = NIL;
 
     // Note the creation of this node for the next call to NODES
     mem_nodes++;
