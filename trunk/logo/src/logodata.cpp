@@ -826,7 +826,7 @@ NODE *make_static_strnode(const char *strptr)
     setstrptr(strnode, strptr);
     setstrhead(strnode, NULL);
     setstrlen(strnode, (int) strlen(strptr));
-    return (strnode);
+    return strnode;
 }
 
 // Returns a NODE with refcount=0.
@@ -835,8 +835,9 @@ NODE *cons(NODE *x, NODE *y)
 {
     NODE *val = newnode(CONS);
 
-    setcar(val, x);
-    setcdr(val, y);
+    val->nunion.ncons.ncar = vref(x);
+    val->nunion.ncons.ncdr = vref(y);
+    val->nunion.ncons.nobj = NIL;
     return val;
 }
 
@@ -909,7 +910,6 @@ NODE *make_array(int len)
             return Unbound;
         }
 #endif
-
 
     NODE ** data;
     if (len != 0)

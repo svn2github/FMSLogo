@@ -163,8 +163,9 @@ void spush(NODE *obj, NODE **stack)
 
     NODE *newTop = newnode(CONS);
 
-    setcar(newTop, obj);
+    newTop->nunion.ncons.ncar = vref(obj);
     newTop->nunion.ncons.ncdr = *stack;
+    newTop->nunion.ncons.nobj = NIL;
     ref(newTop);
     *stack = newTop;
 }

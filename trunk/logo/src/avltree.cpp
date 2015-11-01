@@ -47,13 +47,13 @@ AvlCreateNode(
     NODE * secondNode = newnode(CONS);
     NODE * height     = make_intnode(1);
 
-    setcar(firstNode, NIL);
-    setcdr(firstNode, secondNode);
-    setobject(firstNode, Key);
+    firstNode->nunion.ncons.ncar = NIL;
+    firstNode->nunion.ncons.ncdr = vref(secondNode);
+    firstNode->nunion.ncons.nobj = vref(Key);
 
-    setcar(secondNode, height);
-    setcdr(secondNode, NIL);
-    setobject(secondNode, Value);
+    secondNode->nunion.ncons.ncar = vref(height);
+    secondNode->nunion.ncons.ncdr = NIL;
+    secondNode->nunion.ncons.nobj = vref(Value);
 
     return firstNode;
 }
