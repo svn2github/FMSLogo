@@ -1139,9 +1139,8 @@ NODE *runparse(NODE *ndlist)
     if (ndlist != NIL)
     {
         NODE * curnd = car(ndlist);
-        if (is_word(curnd)             && 
+        if (is_string(curnd)           && 
             getstrlen(curnd) >= 2      &&
-            getstrptr(curnd) != NULL   && 
             getstrptr(curnd)[0] == '#' && 
             getstrptr(curnd)[1] == '!')
         {
