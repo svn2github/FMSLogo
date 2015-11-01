@@ -187,25 +187,58 @@ NODE *newnode(NODETYPES type)
     return newnd;
 }
 
+struct FREED_ARRAY_LIST
+{
+    // Pointer to the next item in the list.
+    FREED_ARRAY_LIST * Next;
+
+    // The maximum number of elements that ToFree can hold
+    int ToFreeMax;
+
+    // A pointer to a stack of nodes to free
+    NODE ** ToFree;
+};
+
+// A garbage collection stack is a set of NODE objects that are
+// scheduled to be garbage collected.  This is used by gc() to
+// avoid the need to allocate memory in order to free children
+// NODEs by using the space within each NODE that it has freed
+// to hold the scheduled NODEs.
+//
+// As an optimization, it uses the global free_list to hold any
+// freed nodes that are not needed for book-keeping, instead
+// of its own list.  This saves the effort of transfering its
+// list to the free_list when gc() exits.
+//
+// The stack of nodes to free is actually a linked list of very
+// small arrays.  Each node in the linked list is a freed NODE
+// and so only has enough space to hold a "next" pointer and three
+// NODE pointers to free.
+//
+// Since gc'ing a NODE can only cause three additional nodes to be
+// gc'd (cdr, car, and obj), and since each NODE has enough space
+// for three NODEs and a "next" pointer, even in the worst case,
+// gc() does not need to allocate new memory.
+//
+// The ARRAY nodes need special handling, since gc'ing an ARRAY can
+// result in the need to free an arbitrary number of nodes (however
+// many the ARRAY held).
+//
 class CGarbageCollectionStack
 {
 public:
     CGarbageCollectionStack() :
         m_TopNode(NULL),
-        m_TopNodeIndex(ARRAYSIZE(m_TopNode->Nodes))
+        m_TopNodeIndex(ARRAYSIZE(m_TopNode->Nodes)),
+        m_DeferredArrayNodeList(NULL)
     {
     }
 
     void Initialize()
     {
-        m_TopNode      = NULL;
-        m_TopNodeIndex = ARRAYSIZE(m_TopNode->Nodes);
-
-#ifdef MEM_DEBUG
-        // BUG: cannot enable this until gc of arrays uses
-        // the garbage collection stack, instead of deref()
-        //assert(free_list_is_empty());
-#endif
+        m_TopNode               = NULL;
+        m_TopNodeIndex          = ARRAYSIZE(m_TopNode->Nodes);
+        m_DeferredArrayNodeList = NULL;
     }
 
     void AddMemory(NODE * UnusedLogoNode)
@@ -215,6 +248,28 @@ public:
 
         // Add this node to the head of the free list.
         push_to_free_list(UnusedLogoNode);
+    }
+
+    void PushDeferredArray(NODE * DeferredArray)
+    {
+        assert(nodetype(DeferredArray) == ARRAY);
+
+        // Assert that we can use an unused NODE as a LIST_NODE.
+        assert(sizeof(FREED_ARRAY_LIST) <= sizeof *DeferredArray);
+
+        // Get the information we need from DeferredArray
+        // before we "free" it.
+        NODE ** deferredNodes = getarrptr(DeferredArray);
+        int dimension         = getarrdim(DeferredArray);
+   
+        // From this point forward, DeferredArray is now freed.
+        FREED_ARRAY_LIST * freedArray = reinterpret_cast<FREED_ARRAY_LIST*>(DeferredArray);
+        freedArray->ToFreeMax = dimension;
+        freedArray->ToFree    = deferredNodes;
+
+        // Add this to the head of the deferred list.
+        freedArray->Next = m_DeferredArrayNodeList;
+        m_DeferredArrayNodeList = freedArray;
     }
 
     void PushDeferredNode(NODE * DeferredNode)
@@ -271,8 +326,31 @@ public:
     {
         if (m_TopNode == NULL)
         {
-            // There are no deferred nodes remaining.
+            // There are no normal deferred nodes remaining.
             assert(m_TopNodeIndex == ARRAYSIZE(m_TopNode->Nodes));
+
+            // Try to pull a node from the deferred array list.
+            while (m_DeferredArrayNodeList != NULL)
+            {
+                for (int i = 0; i < m_DeferredArrayNodeList->ToFreeMax; i++)
+                {
+                    if (m_DeferredArrayNodeList->ToFree[i] != NIL)
+                    {
+                        // Remove this node from the deferred list and return it.
+                        NODE * nextDeferredNode = m_DeferredArrayNodeList->ToFree[i];
+                        m_DeferredArrayNodeList->ToFree[i] = NIL;
+                        return nextDeferredNode;
+                    }
+                }
+
+                // There are no more deferred nodes in this array NODE.
+                // Free it.
+                FREED_ARRAY_LIST * nodeToFree = m_DeferredArrayNodeList;
+                free(nodeToFree->ToFree); // free the array
+                m_DeferredArrayNodeList = m_DeferredArrayNodeList->Next; // next node
+                AddMemory(reinterpret_cast<NODE*>(nodeToFree)); // free the node
+            }
+
             return NIL;
         }
 
@@ -307,9 +385,10 @@ public:
     void Uninitialize()
     {
         // If the GC stack is going to be uninitialized, there shouldn't
-        // be any nodes which are pending evaluation.
+        // be any nodes which are pending garbage collection.
         assert(m_TopNode == NULL);
         assert(m_TopNodeIndex == ARRAYSIZE(m_TopNode->Nodes));
+        assert(m_DeferredArrayNodeList == NULL);
 
 #ifdef MEM_DEBUG
         // To make debugging memory leaks easier in debug builds,
@@ -327,8 +406,12 @@ public:
 private:
     // This is the first node in the GC deferred list that has
     // NODE* in it that still need to be garbage collected.
-    LIST_NODE * m_TopNode;
-    int         m_TopNodeIndex;
+    LIST_NODE       * m_TopNode;
+    int               m_TopNodeIndex;
+
+    // A linked list of FREED_ARRAY_LIST pointers, whose arrays
+    // need to be garbage collected.
+    FREED_ARRAY_LIST * m_DeferredArrayNodeList;
 };
 
 
@@ -338,21 +421,20 @@ void gc(NODE *nd)
 
     CGarbageCollectionStack gc_deferred_list;
 
-    gc_deferred_list.Initialize();
-
     do
     {
         NODE *tcar;
         NODE *tcdr;
         NODE *tobj;
 
-        int i;
-        NODE **pp;
-
         switch (nodetype(nd))
         {
         case PUNBOUND:
-            nd->ref_count = 10000;  // save some time
+            // Since this is a single-instanced node that is never
+            // garbage collected, we can increase the reference count
+            // to make it less likely that this node will come back
+            // to be gc'd.
+            nd->ref_count = 100000;
 
             // get ready to garbage collect the next node
             nd = gc_deferred_list.PopDeferredNode();
@@ -378,20 +460,39 @@ void gc(NODE *nd)
             break;
 
         case ARRAY:
-            pp = getarrptr(nd);
-            i = getarrdim(nd);
-            while (--i >= 0)
+            // deref each of the nodes within the array
             {
-                tobj = *pp++;
-
-                // BUG: deref(tobj) can potentially call gc(),  which
-                // means that it could cause a stack overflow.
-                // The deref() should be reworked to use the gcstack.
-                deref(tobj);
+                NODE ** pp = getarrptr(nd);
+                for (int i = getarrdim(nd); 0 != i; --i, pp++)
+                {
+                    // Logically, we are calling deref(*pp).
+                    // However, actually doing this could call gc() recursively,
+                    // so it could cause a stack overflow.
+                    // Instead, we NIL-out any NODE that does NOT need garbage
+                    // collection, so we are left with an array of deferred
+                    // nodes.
+                    if (*pp != NIL)
+                    {
+                        if (decrefcnt(*pp) != 0)
+                        {
+                            // This node must NOT need to be gc'd.
+                            *pp = NIL;
+                        }
+                    }
+                }
             }
-            free(getarrptr(nd));
-            tcar = tcdr = tobj = NIL;
-            break;
+
+            mem_nodes--;
+
+            // At this point, we no longer need "nd", so we can surrender it
+            // to the garbage collection stack, which will reuse the node's
+            // memory and schedule all of the array's nodes with no more
+            // references for garbage collection.
+            gc_deferred_list.PushDeferredArray(nd);
+
+            // get ready to garbage collect the next node
+            nd = gc_deferred_list.PopDeferredNode();
+            continue;
 
         case STRING:
         case BACKSLASH_STRING:

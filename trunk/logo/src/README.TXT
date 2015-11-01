@@ -25,6 +25,7 @@ II. New features/bugs fixed:
     commander history in the wxWidgets version of FMSLogo.
   o Implement feature #109; Add MINIMIZE, MAXIMIZE, and RESTORE as modern
     replacements for ICON and UNICON.
+  o Fix bug #468; Garbage collecting a deeply nested array no longer crashes.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/viewvc/fmslogo/logo/src/CHANGELOG.TXT
