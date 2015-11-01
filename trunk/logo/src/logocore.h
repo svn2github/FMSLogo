@@ -736,17 +736,15 @@ inline
 void
 deref(NODE * object)
 {
-    if (object == NIL)
+    if (object != NIL)
     {
-        return;
-    }
+        assert(!is_freed(object));
+        assert(getrefcnt(object) != 0); // memleak
 
-    assert(!is_freed(object));
-    assert(getrefcnt(object) != 0); // memleak
-
-    if (decrefcnt(object) == 0)
-    {
-        gc(object);
+        if (decrefcnt(object) == 0)
+        {
+            gc(object);
+        }
     }
 }
 
