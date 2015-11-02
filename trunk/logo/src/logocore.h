@@ -864,8 +864,8 @@ assign(
     To = From;
 }
 
-#define push(obj, stack)    spush(obj, &stack)
-#define pop(stack)          spop(&stack)
+#define push(obj, stack)    (stack) = spush(obj, stack)
+#define pop(stack)          (stack) = spop(stack)
 
 /* evaluator labels, needed by macros in other files */
 

@@ -26,8 +26,8 @@
 // functions
 extern NODE *load_procedure_if_necessary(NODE * ProcNode);
 extern NODE *err_eval_driver(NODE *seq);
-extern void spop(NODE **stack);
-extern void spush(NODE *obj, NODE **stack);
+extern NODE *spop(NODE *stack);
+extern NODE *spush(NODE *obj, NODE *stack);
 extern void eval_driver(NODE *line);
 extern NODE *lapply(NODE *args);
 extern NODE *lqm(NODE *args);

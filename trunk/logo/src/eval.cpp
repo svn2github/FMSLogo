@@ -127,47 +127,40 @@ load_procedure_if_necessary(
     return procnode__caseobj(ProcNode);
 }
 
-// Remove the first element on *stack, then updates
-// *stack to point to the new top of the stack.
-void spop(NODE **stack)
+// Remove the first element on stack and returns the new top of the stack.
+NODE * spop(NODE *stack)
 {
-    assert(stack != NULL && "bad input");
-    assert(*stack != NIL && "popping from an empty stack");
+    assert(stack != NIL && "popping from an empty stack");
 
-    NODE *newTop = (*stack)->nunion.ncons.ncdr;
+    NODE * newTop = stack->nunion.ncons.ncdr;
 
-    if (decrefcnt(*stack) == 0)
+    if (decrefcnt(stack) == 0)
     {
         // Free this node in the stack, without freeing
         // the rest of the stack.
-        (*stack)->nunion.ncons.ncdr = NIL;
-        gc(*stack);
+        stack->nunion.ncons.ncdr = NIL;
+        gc(stack);
     }
     else
     {
         // Reference the new top of the stack for the
         // caller's reference.
-        if (newTop != NIL) 
-        {
-            increfcnt(newTop);
-        }
+        ref(newTop);
     }
-    *stack = newTop;
+
+    return newTop;
 }
 
-// Pushes "obj" onto the front of *stack, then updates
-// *stack to point to the new head.
-void spush(NODE *obj, NODE **stack)
+// Pushes "obj" onto the front of stack and returns the new stack head.
+NODE * spush(NODE *obj, NODE *stack)
 {
-    assert(stack != NULL && "bad input");
-
     NODE *newTop = newnode(CONS);
 
     newTop->nunion.ncons.ncar = vref(obj);
-    newTop->nunion.ncons.ncdr = *stack;
+    newTop->nunion.ncons.ncdr = stack;
     newTop->nunion.ncons.nobj = NIL;
     ref(newTop);
-    *stack = newTop;
+    return newTop;
 }
 
 // Check if a local variable is already in this frame 
