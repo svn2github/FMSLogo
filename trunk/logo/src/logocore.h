@@ -88,6 +88,75 @@ const int SPECIAL_TURTLE_EYE_LOCATION   = 0;
 const int SPECIAL_TURTLE_EYE_FIXATION   = 1;
 const int SPECIAL_TURTLE_LIGHT_LOCATION = 2;
 
+// All NODETYPEs share the same basic NODE* data structure.
+// The primitive types INTEGER, STRING, FLOATINGPOINT, ARRAY, and CONS are
+// straight-foward, as each uses the values on the union that you'd expect.
+// The other types add additional semantics to the primitives and are worth
+// describing, as their structure and purpose are not self-evident.
+//
+// LINE - a list of parsed words.  This is a line of Logo code that has been
+//        tokenized.
+//
+// "bodyline" is a parsed text.  The text is tokenized and has all comments
+//        stripped out.
+//
+// TREE - a parenthesized bodyline.
+//        Trees know which functions take which arguments.
+//        If a function definition changes after a TREE is created, then tree
+//        must be re-treeified, as the number of default arguments that it
+//        takes may have changed.
+//
+//        A line and tree have the following structure
+//
+//        CAR
+//        CDR
+//        OBJ - tree pair
+//              CAR - generation (time when treeified)
+//              CDR - tree of next line
+//              OBJ - unparsed line of this tree
+//
+// RUN_PARSE - A body line that knows about case objects, ?, :, "
+//
+// "procnode" is not a node type, but a building block.
+// A procnode may be a PRIM, in which case the union holds
+// all the information needed.  If a procnode is a list, then
+// it's a user-defined procedure with the following structure
+//   [ text bodywords minarg defaultarg maxargs ]
+//      |     |
+//      V     +- [ unparsed text ]
+//   [ formals line1 line2 ... lineN ]
+// 
+// "object" is also not a type, but another building block.
+// However, this is an important concept within Logo.
+// An "object" is a word that is associated with a procedure, variable, and/or
+// property list.  It has the following structure:
+//   [ canonical procnode value plist obflags . caselist ]
+//
+//    canonical is the canonical name for the object.
+//
+//    procnode is the procedure value of the object.
+//
+//    value is the variable value of the object.
+//
+//    plist is the property list value of the object.
+//
+//    The "caselist" is the list of different case objects which currently
+//    represent the object.  For example if there are different variables
+//    named "MyVar", "myvar", and "myVAR", each of these would be in the
+//    caselist.
+//
+// CASEOBJ - A case object is a word (with varying case as the programmers
+//    preference) that is bound to an object.  The object, itself, has a
+//    case list that points back to the CASEOBJ.
+//
+//    CAR - token (string name)
+//    CDR - object
+//    OBJ
+//
+// CONT - A node that represents the location in evaluator() where control
+//        should continue to.  The CAR is not really a NODE, but an integer
+//        that represents a label in evaluator().
+//
 typedef unsigned short NODETYPES;
 
 /* Note that some of these values are used twice; they must be
