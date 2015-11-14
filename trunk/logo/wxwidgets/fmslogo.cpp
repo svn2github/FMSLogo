@@ -7,6 +7,7 @@
 #include <wx/string.h>
 #include <wx/dcclient.h>
 #include <wx/dcmemory.h>
+#include <wx/clipbrd.h>
 
 #ifdef __WXMSW__
    #include "wx/msw/private.h"
@@ -557,6 +558,15 @@ int CFmsLogo::OnExit()
 
 
     HtmlHelpUninitialize();
+
+#if wxUSE_CLIPBOARD
+    // wxWidgets clears the clipboard when it exits, presumably to save memory.
+    // To me, this behavior is unintuitative and confusing, as it's something
+    // that Windows applications typically don't do.  To avoid this, we "flush"
+    // the clipboard, which means only that if the clipboard's data came from
+    // FMSLogo, it will continue to be available after FMSLogo exits.
+    wxClipboard::Get()->Flush();
+#endif
 
     return wxApp::OnExit();
 }
