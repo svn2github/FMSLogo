@@ -28,6 +28,7 @@
 #include "init.h"
 #include "logomath.h"
 #include "wrksp.h"
+#include "mem.h"
 #include "debugheap.h"
 
 
@@ -87,10 +88,9 @@ FIXNUM hash(const char *s, int len)
 }
 
 
-// Makes a "case object" and adds it to the "case list" for the interned object.
-// adds this "case object" to this hash table entry's case list
+// Makes a "case object" for object and adds it to object's "case list".
 static
-NODE *make_case(NODE *casestrnd, NODE *object)
+NODE *make_case_object(NODE *casestrnd, NODE *object)
 {
     // get a pointer to the "case-list" of the five-tuple list
     NODE * clistptr = caselistptr__object(object);
@@ -115,15 +115,19 @@ make_object(
     NODE *casestrnd
     )
 {
-    NODE * temp = cons_list(
-        canonical, 
-        proc, 
-        val, 
-        plist, 
-        make_intnode(0));
+    // Allocate a new node for the flags.  We don't use make_intnode()
+    // because those nodes are immutable and we intend to change this
+    // node's value directory when we toggle the object's flags.
+    NODE * flags = newnode(INTEGER);
+    flags->nunion.nint = 0;
 
-    make_case(casestrnd, temp);
-    return temp;
+    // Create the object.
+    NODE * object = cons_list(canonical, proc, val, plist, flags);
+
+    // Assign a particular case to the object.
+    make_case_object(casestrnd, object);
+
+    return object;
 }
 
 // Adds a node to hash_table based on case_node/lowercase_node.
@@ -137,7 +141,7 @@ NODE *make_instance(NODE *case_node, NODE *lowercase_node)
     FIXNUM hashind = hash(getstrptr(lowercase_node), getstrlen(lowercase_node));
 
     // append the object to the bucket
-    push(obj, (hash_table[hashind]));
+    push(obj, hash_table[hashind]);
 
     // return the first element of the case list
     return car(caselist__object(obj));
@@ -258,7 +262,7 @@ NODE *intern(NODE *nd)
         if ((casedes = find_case(nd, obj)) == NIL)
         {
             // none exists, so add one
-            casedes = make_case(nd, obj);
+            casedes = make_case_object(nd, obj);
         }
     }
     else
