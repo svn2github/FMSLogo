@@ -66,18 +66,28 @@ else
 CPPFLAGS += -DNDEBUG
 CXXFLAGS += -O2
 
-ifneq "$(PROFILE)" "1"
+ifneq "$(PROFILE)"  "1"
+ifneq "$(COVERAGE)" "1"
 # On retail builds, strip symbols unless we need them for profiling.
 # CONSIDER: using a separate variable for offical releases to strip. 
 LDFLAGS  += -s
 endif
 endif
 
+endif
+
 # Setup the build for profiling, if requested.
 ifeq "$(PROFILE)" "1"
-CFLAGS   += -pg
-CXXFLAGS += -pg
-LDFLAGS  += -pg
+CFLAGS   += -pg -g
+CXXFLAGS += -pg -g
+LDFLAGS  += -pg -g
+endif
+
+# Setup the build for code coverage, if requested.
+ifeq "$(COVERAGE)" "1"
+CFLAGS   += --coverage
+CXXFLAGS += --coverage
+LDFLAGS  += --coverage
 endif
 
 INCLUDES = . $(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) $(wx_top_srcdir)/include $(wx_top_srcdir)/contrib/include ../src
