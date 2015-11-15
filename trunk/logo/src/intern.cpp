@@ -40,8 +40,8 @@
 //
 // An "object" is represented as a list.   The format for an object is:
 //
-// [canonical proc  val  plist  case_node1 case_node2 ... ]
-//   canonical        - The canonical representation of the node.
+// [canonical proc  val  plist flags case_node1 case_node2 ... ]
+//   canonical        - The canonical representation of the object's name.
 //                      This is an all lower-case form of it.
 //                      This is what is printed if you SHOW the node.
 //   proc             - For objects that are procedures, this is the
@@ -50,8 +50,8 @@
 //                      the value of the variable.
 //   plist            - A list of properties.
 //                      This is used for property lists.
+//   flags            - A mutable integer of the object's properties
 //   case list        - A list of "case objects" for this node.
-//                      This list always begins with int:0.
 //
 // A "case object" is a cons cell
 //   car - a case-sensitive string representation of the object.

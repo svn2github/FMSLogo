@@ -130,7 +130,7 @@ const int SPECIAL_TURTLE_LIGHT_LOCATION = 2;
 // However, this is an important concept within Logo.
 // An "object" is a word that is associated with a procedure, variable, and/or
 // property list.  It has the following structure:
-//   [ canonical procnode value plist obflags . caselist ]
+//   [ canonical procnode value plist obflags caseobj1 caseobj2 ... ]
 //
 //    canonical is the canonical name for the object.
 //
@@ -140,14 +140,19 @@ const int SPECIAL_TURTLE_LIGHT_LOCATION = 2;
 //
 //    plist is the property list value of the object.
 //
-//    The "caselist" is the list of different case objects which currently
-//    represent the object.  For example if there are different variables
-//    named "MyVar", "myvar", and "myVAR", each of these would be in the
-//    caselist.
+//    objflags is an integer that holds some flags for the object.
+//    For example, one flag holds if the object's value is buried.
 //
-// CASEOBJ - A case object is a word (with varying case as the programmers
-//    preference) that is bound to an object.  The object, itself, has a
-//    case list that points back to the CASEOBJ.
+//    The "caselist" constitutes the rest of the object's list, which is of
+//    variable size.  Each entry in the caselist is a different case object
+//    which represents the object (see CASEOBJ below).
+//
+// CASEOBJ - A case object is a word (with whatever casing the programmer used)
+//    that is bound to an object.  The object, itself, has a case list that
+//    points back to the CASEOBJ.  A case object is used to associate text that
+//    a programmer typed with the interal object, so that the original text can
+//    be used in error messages, if necessary.  For example, we might have
+//    different case objects for "forward" and "FORWARD".
 //
 //    CAR - token (string name)
 //    CDR - object
