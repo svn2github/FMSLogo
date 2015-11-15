@@ -25,6 +25,8 @@ II. New features/bugs fixed:
     commander history in the wxWidgets version of FMSLogo.
   o Implement feature #109; Add MINIMIZE, MAXIMIZE, and RESTORE as modern
     replacements for ICON and UNICON.
+  o Fix bug #398; The OWL version of FMSLogo no longer reports that it
+    cannot open file "F" when given some command lines.
   o Fix bug #466; The wxWidgets version of FMSLogo no longer clears the
     clipboard on exit.
   o Fix bug #468; Garbage collecting a deeply nested array no longer crashes.

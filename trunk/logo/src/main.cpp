@@ -502,6 +502,14 @@ WinMain(
                     MB_OK);
                 break;
             }
+
+            if (*ptr == '\0')
+            {
+                // We processed the entire command line.
+                // If we continued the loop, we would increment beyond the
+                // command line string and into unallocated memory.
+                break;
+            }
         }
         else if (!IsSpace(*ptr))
         {
