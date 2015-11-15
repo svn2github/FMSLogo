@@ -6,7 +6,6 @@
 #include <wx/settings.h>
 
 #include "minieditortextctrl.h"
-#include "logocore.h"  // for ARRAYSIZE
 #include "fontutils.h"
 #include "stringadapter.h"
 #include "localizedstrings.h"
@@ -92,7 +91,7 @@ CMiniEditor::CMiniEditor(
         wxALIGN_LEFT);
     endButton->SetDefault();
 
-    // Add a strech spacer between End and Cancel so
+    // Add a stretch spacer between End and Cancel so
     // that they can be on the left and right of the
     // dialog box, instead of next to each other.
     buttonRow->AddStretchSpacer();
