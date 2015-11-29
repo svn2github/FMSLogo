@@ -31,8 +31,9 @@ public:
     CMainFrame(
         int             ScreenWidth,
         int             ScreenHeight,
-        const wxPoint & Position = wxDefaultPosition,
-        const wxSize  & Size     = wxDefaultSize
+        const wxPoint & Position       = wxDefaultPosition,
+        const wxSize  & Size           = wxDefaultSize,
+        bool            StartMaximized = false
         );
 
     virtual ~CMainFrame();

@@ -382,19 +382,28 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_CLOSE(CMainFrame::OnClose)
 END_EVENT_TABLE()
 
-// My frame constructor
+// ScreenWidth    - the size of the screen window.
+// ScreenHeight   - the size of the screen window.
+// Position       - where the frame window should be placed.
+// Size           - The size of the frame window.
+//                  In bFixed mode, this is ignored, as the width and height
+//                  are derived from ScreenWidth and ScreenHeight.
+// StartMaximized - true, if the window should start maximized (without a frame).
+//                  false, if it should start in a restored mode.
 CMainFrame::CMainFrame(
     int             ScreenWidth,
     int             ScreenHeight,
     const wxPoint & Position,
-    const wxSize  & Size
+    const wxSize  & Size,
+    bool            StartMaximized
     ) : wxFrame(
         NULL, 
         wxID_ANY, 
         WXSTRING(LOCALIZED_GENERAL_PRODUCTNAME),
         Position,
         Size,
-        wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
+        wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE |
+            (StartMaximized ? wxMAXIMIZE : 0)),
       m_Screen(NULL),
       m_Commander(NULL),
       m_RealCommander(NULL),

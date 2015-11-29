@@ -8,6 +8,8 @@
 #include <wx/dcclient.h>
 #include <wx/dcmemory.h>
 #include <wx/clipbrd.h>
+#include <wx/gdicmn.h> 
+#include <wx/settings.h>
 
 #ifdef __WXMSW__
    #include "wx/msw/private.h"
@@ -423,36 +425,68 @@ bool CFmsLogo::OnInit()
     // The main window should not exceed the size of the working area
     int maxWidth;
     int maxHeight;
-    GetWorkingAreaDimensions(maxWidth, maxHeight);
+    wxClientDisplayRect(NULL, NULL, &maxWidth, &maxHeight);
 
     // if fixed mode
+    bool startMaximized;
     if (bFixed)
     {
+        // FMSLogo was started with -F on the command-line.  In this case,
+        // CMainFrame ignores the window size parameter (width and height)
+        // and instead resizes itself to ensure that there is enough space
+        // for the bitmap's width/height.  Therefore, this code block only
+        // computes correct values for BitMapWidth and BitMapHeight, not
+        // w and h.
+
+        // If "-F" is given without "-W" or "-H", then FMSLogo should
+        // start maximized.  This ensures the FMSLogo uses the most
+        // amount of space available to it.
+        startMaximized = !g_CustomHeight && !g_CustomWidth;
+
+        // Reduce the maximum width available to the virtual service
+        // that is taken up by the 3D border between the frame and the
+        // screen.
+        int borderWidth = wxSystemSettings::GetMetric(wxSYS_EDGE_X);
+        if (borderWidth != -1)
+        {
+            maxWidth -= 2 * borderWidth;
+        }
+
+        // When an application is not maximized, it has a frame that reduces
+        // the amount of space available to the window.
+        // CMainFrame uses wxDEFAULT_FRAME_STYLE, which includes
+        // wxRESIZE_BORDER.  In wx/toplevel.h, this is #define'd to be the
+        // same as wxTHICK_FRAME, which is what wxSYS_FRAMESIZE_X returns.
+        if (!startMaximized)
+        {
+            int frameWidth  = wxSystemSettings::GetMetric(wxSYS_FRAMESIZE_X);
+            if (frameWidth != -1)
+            {
+                maxWidth -= 2 * frameWidth;
+            }
+        }
+
         if (g_CustomHeight)
         {
             // if height specified sanitize it against screen height
-            h = std::min(h, maxHeight);
+            BitMapHeight = std::min(h, maxHeight);
         }
         else
         {
-            // else choose something reasonable
-            h = (int) (maxHeight * ScreenSz);
+            // Go "full screen", leaving space for the commander.
+            BitMapHeight = (int) (maxHeight * ScreenSz);
         }
 
         if (g_CustomWidth)
         {
             // if width specified sanitize it against screen width
-            w = std::min(w, maxWidth);
+            BitMapWidth = std::min(w, maxWidth);
         }
         else
         {
-            // else choose something reasonable
-            w = maxWidth;
+            // Use the full width available to a window with a frame.
+            BitMapWidth = maxWidth;
         }
-
-        // fit the bitmap to the size of the window
-        BitMapWidth  = w;
-        BitMapHeight = h;
     }
     else
     {
@@ -468,6 +502,9 @@ bool CFmsLogo::OnInit()
 
         // sanitize against screen size
         checkwindow(&x, &y, &w, &h);
+
+        // Don't normally start maximized.
+        startMaximized = false;
     }
 
     // initialize the values for some of the graphics-related
@@ -479,7 +516,8 @@ bool CFmsLogo::OnInit()
         BitMapWidth,
         BitMapHeight,
         wxPoint(x, y),
-        wxSize(w, h));
+        wxSize(w, h),
+        startMaximized);
 
     frame->Show();
 
