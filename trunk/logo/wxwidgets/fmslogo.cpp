@@ -232,20 +232,6 @@ void CFmsLogo::ProcessCommandLine()
             fileToLoadIndex += strlen(argument);
         }
     }
-
-    // if fixed mode then make unspecified dimensions
-    // really large (shrink to fit)
-    if (bFixed)
-    {
-        if (!g_CustomWidth)
-        {
-            BitMapWidth  = 2048;
-        }
-        if (!g_CustomHeight)
-        {
-            BitMapHeight = 2048;
-        }
-    }
 }
 
 #endif // WX_PURE

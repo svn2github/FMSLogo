@@ -628,20 +628,6 @@ WinMain(
         *charPtr = '\0';
     }
 
-    // if fixed mode then make unspecified dimensions
-    // really large (shrink to fit)
-    if (bFixed)
-    {
-        if (!bWidth)
-        {
-            BitMapWidth  = 2048;
-        }
-        if (!bHeight)
-        {
-            BitMapHeight = 2048;
-        }
-    }
-
     // Get video mode parameters
     init_videomode();
 
