@@ -52,6 +52,10 @@ Be aware that the larger you set this the more memory is required.
 The default is 1000.
 </para>
 
+<para>
+If the <option>-F</option> command-line option is given in addition to <option>-W</option>, then the width of the virtual drawing workspace is reduced to fit within the dimensions of the display.
+</para>
+
 <para>Example:</para>
 <synopsis>&LOGOEXE; -W 2000 -H 2000</synopsis>
 </section>
@@ -63,9 +67,13 @@ The default is 1000.
 <synopsis>-H <replaceable>height</replaceable></synopsis>
 
 <para>
-This sets the width of your virtual drawing workspace to <option>height</option>.
+This sets the height of your virtual drawing workspace to <option>height</option>.
 Be aware that the larger you set this the more memory is required.
 The default is 1000.
+</para>
+
+<para>
+If the <option>-F</option> command-line option is given in addition to <option>-H</option>, then the height of the virtual drawing workspace is reduced to fit within the dimensions of the display.
 </para>
 
 <para>Example:</para>
