@@ -20,7 +20,10 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 6.35.0
-  o Implement feature #107; Implement ARITY procedure
+  o Implement feature #89; Make -F (with no -W or -H) start FMSLogo maximized
+    with size of the drawable surface equal to the screen window's size.
+    This was only implemented in the wxWidgets version of FMSLogo.
+  o Implement feature #107; Implement ARITY procedure.
   o Implement feature #108; Add a way to remove selected lines from the
     commander history in the wxWidgets version of FMSLogo.
   o Implement feature #109; Add MINIMIZE, MAXIMIZE, and RESTORE as modern
