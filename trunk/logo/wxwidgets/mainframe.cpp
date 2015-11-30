@@ -379,6 +379,7 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(wxID_ZOOM_IN,                 CMainFrame::OnZoomIn)
     EVT_MENU(wxID_ZOOM_OUT,                CMainFrame::OnZoomOut)
     EVT_MENU(wxID_ZOOM_100,                CMainFrame::OnZoomNormal)
+    EVT_SIZE(CMainFrame::OnResize)
     EVT_CLOSE(CMainFrame::OnClose)
 END_EVENT_TABLE()
 
@@ -514,7 +515,6 @@ CMainFrame::CMainFrame(
         wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN | wxSP_NO_XP_THEME);
 
     m_Splitter->SetMinimumPaneSize(MIN_COMMANDER_HEIGHT);
-    m_Splitter->SetSashGravity(1.0);
 
     m_Screen = new CScreen(m_Splitter, ScreenWidth, ScreenHeight);
 
@@ -680,11 +680,7 @@ void CMainFrame::DockCommanderWindow()
             // how to do that.
             ResizeToFitScreen();
 
-            // REVISIT: I don't know why, but the sash position needs
-            // to be two more than it should.  This might be due to
-            // a border or some other factor.
-            const int UNKNOWN_OFFSET = 2;
-            m_Splitter->SetSashPosition(m_OriginalHeight + UNKNOWN_OFFSET);
+            SetSashPosition(m_OriginalHeight);
         }
 
         m_RealCommander->GetHistory()->ScrollToBottom();
@@ -702,6 +698,22 @@ void CMainFrame::DockCommanderWindow()
 
         m_CommanderIsDocked = true;
     }
+}
+
+void CMainFrame::SetSashPosition(int position)
+{
+    // The splitter is created with the SP_3D style, which means that it
+    // has a 3D edge.  However, wxSplitterWindow::SetSashPosition() doesn't
+    // consider this part of the sash and so will place the sash such that
+    // the edge is above position.  Since we need pixel-exact placement
+    // of the splitter, we subtract the top of the edge from position.
+    int edgeHeight = wxSystemSettings::GetMetric(wxSYS_EDGE_Y);
+    if (edgeHeight != -1)
+    {
+        position += edgeHeight;
+    }
+
+    m_Splitter->SetSashPosition(position);
 }
 
 #ifndef WX_PURE
@@ -1131,6 +1143,25 @@ CMainFrame::KeyboardNavigateTopLevelWindow(
         // MSWLogo doesn't support backward navigation.
     }
 }
+
+void CMainFrame::OnResize(wxSizeEvent& Event)
+{
+    if (m_CommanderIsDocked && bFixed && IsMaximized())
+    {
+        // If FMSLogo was started with the -F, then it is supposed
+        // show the full screen without needing scrollbars.
+        // However, if the splitter is manually moved or the frame
+        // window is resized, then the full screen may no longer be visible.
+        // Therefore, when FMSLogo is maximized and there are no expectations
+        // about where the splitter should be placed, we can position it
+        // back to showing the screen.  This allows a straight-forward was to
+        // correct the splitter position.
+        SetSashPosition(m_OriginalHeight);
+    }
+
+    Event.Skip();
+}
+
 
 void CMainFrame::OnClose(wxCloseEvent& Event)
 {

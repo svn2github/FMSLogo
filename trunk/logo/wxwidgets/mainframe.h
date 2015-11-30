@@ -159,6 +159,8 @@ private:
     void OnAboutFmsLogo(wxCommandEvent& Event);
     void OnAboutMultipleSclerosis(wxCommandEvent& Event);
 
+    void OnResize(wxSizeEvent& Event);
+
     void OnClose(wxCloseEvent& Event);
 
 #ifndef WX_PURE
@@ -179,6 +181,8 @@ private:
         bool             CheckForErrors,
         bool             OpenToError
         );
+
+    void SetSashPosition(int position);
 
 #ifndef WX_PURE
     void
