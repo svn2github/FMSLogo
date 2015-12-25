@@ -216,6 +216,8 @@ TO COMMANDLINETEST.PARAMETER.F
 
    ; Test when the width/height is the working area size, then
    ; additional room is made by undocking the commander.
+   ; The width  is computed as -12 (2 * 4=frame + 2=3D edge)
+   ; The height is computed as -20 (2 * 4=frame + 2=3D edge + 8=???)
    COMMANDLINETEST.PARAMETER.F.RUNTEST (WORD
        "|LOAD "testlib.lgo\n|
        "|\n|
@@ -228,7 +230,7 @@ TO COMMANDLINETEST.PARAMETER.F
        "|  )\n|
        "|END\n|
        "|MAKE "startup [RUNTEST BYE]\n|
-   ) (ITEM 8 MACHINE) (ITEM 9 MACHINE) - 20
+   ) (ITEM 8 MACHINE) - 12 (ITEM 9 MACHINE) - 20
 
 END
 
