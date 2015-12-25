@@ -19,6 +19,17 @@ The output is a two item list [width height].
 </para>
 
 <para>
+The width and height are always output relative to the text, not the turtle's orientation.
+The width is the length of the text along the direction that words are read.
+The height is line height of <link linkend="command-labelfont">LABELFONT</link> and is independent of the <parameter>text</parameter> input.
+</para>
+
+<para>
+LABELSIZE's output may vary slightly depending on the turtle's orientation.
+For the best results, run LABELSIZE when the turtle's heading matches the heading when you run LABEL.
+</para>
+
+<para>
 You can use LABELSIZE to build other forms of LABEL, such as CENTERLABEL or VERTICALLABEL.
 You can also use this information to "prepare" a site for text (for example, frame it or set a background).
 </para>
