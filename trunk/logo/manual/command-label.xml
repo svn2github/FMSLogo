@@ -23,19 +23,21 @@ The text is truncated according to the current values of <link linkend="command-
 </para>
 
 <para>
+The text is printed in the font described by <link linkend="command-labelfont">LABELFONT</link>, which is set with <link linkend="command-setlabelfont">SETLABELFONT</link> or the <link linkend="menu-set-labelfont">Set->Label Font</link> menu item.
+</para>
+
+<para>
 The position of the text is determined by the location of the turtle.
+More precisely, the top-left corner of the text is placed at the turtle's position.
 </para>
 
 <para>
 The angle of the text is determined by the heading (direction) of the turtle.
+Not all fonts are capable of printing text at different angles, so be sure to use a TrueType or OpenType font if printing at different angles is desired.
 </para>
 
 <para>
 The color of the text is determined by the value of <link linkend="command-pencolor">PENCOLOR</link>, which is set with <link linkend="command-setpencolor">SETPENCOLOR</link>.
-</para>
-
-<para>
-The text is printed in the font described by <link linkend="command-labelfont">LABELFONT</link>, which is set with <link linkend="command-setlabelfont">SETLABELFONT</link> or the <link linkend="menu-set-labelfont">Set->Label Font</link> menu item.
 </para>
 
 <para>
@@ -48,10 +50,9 @@ The text will be placed wherever the turtle is on the screen and oriented accord
 </para>
 
 <para>
-Note that the top-left corner of the text is placed at the turtle's position, not the bottom-left corner.
-Another thing to be aware of is that the capabilities of the text changes depending on the device (screen or printer), the turtle heading (direction), and the font.
+The capabilities of the text changes depending on the device (screen or printer), the turtle heading (direction), and the font.
 In other words, sometimes the text can be drawn at the turtle heading and sometimes it cannot.
-Sometimes what is on the screen is not be exactly what you print.
+Sometimes what is on the screen is not exactly what you print.
 </para>
 
 <para>
