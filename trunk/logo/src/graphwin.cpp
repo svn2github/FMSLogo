@@ -3843,6 +3843,12 @@ SIZE labelsize(const char *s)
 
     HDC screen = GetScreenDeviceContext();
 
+    // Update the escapement exactly as LABEL does.
+    // While GetTextExtentPoint claims that it ignores this value,
+    // it returns slightly different sizes depending on the angle,
+    // which looks like its due to variation in intercharacter spacing.
+    FontRec.lfEscapement = (360.0 - (g_SelectedTurtle->Heading - 90.0)) * 10;
+
     // get a handle to the label's font
     HFONT tempFont = CreateFontIndirect(&FontRec);
     if (tempFont != NULL)
@@ -3891,7 +3897,14 @@ void label(const char *s)
         SetTextColor(MemDC, pcolor);
     }
 
+
+    // Update the "escapement", which is the angle at which the text
+    // is rendered (baseline angle), in 10ths of a degree from positive X.
+    // Because the device contexts are in GM_COMPATIBLE mode, the
+    // lfEscapement will take priority over the lfOrientation, so that
+    // all characters follow the escapement.
     FontRec.lfEscapement = (360.0 - (g_SelectedTurtle->Heading - 90.0)) * 10;
+
     HFONT tempFont = CreateFontIndirect(&FontRec);
     HFONT oldFont = (HFONT) SelectObject(MemDC, tempFont);
 

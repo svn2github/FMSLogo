@@ -33,6 +33,8 @@ II. New features/bugs fixed:
   o Fix bug #466; The wxWidgets version of FMSLogo no longer clears the
     clipboard on exit.
   o Fix bug #468; Garbage collecting a deeply nested array no longer crashes.
+  o Fix bug #469; LABELSIZE no longer changes its output depending on when
+    LABEL was last called.
   o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
