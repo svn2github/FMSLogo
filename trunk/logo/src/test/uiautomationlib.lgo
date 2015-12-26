@@ -107,7 +107,7 @@ BURY "UIAUTOMATION.POSTEVENT
 TO UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
   LOCALMAKE "parenthwnd UIAUTOMATION.FINDWINDOW :parentwindowtitle 0
   if :parenthwnd = 0 [
-     REPORTTESTBUG (se [Couldn't find parent] :parentwindowtitle)
+     REPORTTESTBUG (word "|Couldn't find parent | :parentwindowtitle)
      OUTPUT 0
   ]
 
@@ -115,7 +115,7 @@ TO UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
 
   LOCALMAKE "hwnd UIAUTOMATION.FINDCHILDWINDOW :parenthwnd 0 :childwindowclass
   if :hwnd = 0 [
-     REPORTTESTBUG (se [Couldn't find child] :childwindowclass)
+     REPORTTESTBUG (word "|Couldn't find child | :childwindowclass)
      OUTPUT 0
   ]
 
@@ -190,6 +190,42 @@ END
 BURY "UIAUTOMATION.POSTSTRINGTOWINDOW
 
 
+; Simulates pushing a button on the Commander.
+; The commander must be undocked.
+TO UIAUTOMATION.PUSHCOMMANDERBUTTON :buttontext [:UseSendApi "True]
+
+  localmake "WM_LBUTTONDOWN 512+1  ; 0x0201
+  localmake "WM_LBUTTONUP   512+2  ; 0x0202
+
+  LOCALMAKE "commanderHwnd UIAUTOMATION.FINDWINDOW "Commander 0
+  if :commanderHwnd = 0 [
+     REPORTTESTBUG "|Couldn't find Commander window|
+     STOP
+  ]
+
+  ; In the wxWidgets version, the buttons are not direct children of the
+  ; commander window, but, instead are on a child panel (called "panel")
+  IF ISWX [
+      MAKE "commanderHwnd UIAUTOMATION.FINDCHILDWINDOW :commanderHwnd "panel 0
+      if :commanderHwnd = 0 [
+         REPORTTESTBUG "|Couldn't find panel within Commander window|
+         STOP
+      ]
+  ]
+
+  LOCALMAKE "button UIAUTOMATION.FINDCHILDWINDOW :commanderHwnd :buttontext 0
+  if :button = 0 [
+     REPORTTESTBUG (WORD "|Couldn't find button named "| :buttontext "|" on Commander window|)
+     STOP
+  ]
+
+  IGNORE (UIAUTOMATION.SENDMESSAGE :button :WM_LBUTTONDOWN 0 0 :UseSendApi)
+  IGNORE (UIAUTOMATION.SENDMESSAGE :button :WM_LBUTTONUP   0 0 :UseSendApi)
+END
+BURY "UIAUTOMATION.PUSHCOMMANDERBUTTON
+
+
+
 TO UIAUTOMATION.SENDBUTTONPUSHTOWINDOW :parentwindowtitle :buttontext [:UseSendApi "True]
 
   localmake "WM_LBUTTONDOWN 512+1  ; 0x0201
@@ -197,13 +233,13 @@ TO UIAUTOMATION.SENDBUTTONPUSHTOWINDOW :parentwindowtitle :buttontext [:UseSendA
 
   LOCALMAKE "parenthwnd UIAUTOMATION.FINDWINDOW :parentwindowtitle 0
   if :parenthwnd = 0 [
-     REPORTTESTBUG (se [Couldn't find window named "] :parentwindowtitle ["])
+     REPORTTESTBUG (word "|Couldn't find window named "| :parentwindowtitle "|"|)
      STOP
   ]
 
   LOCALMAKE "button UIAUTOMATION.FINDCHILDWINDOW :parenthwnd :buttontext 0
   if :button = 0 [
-     REPORTTESTBUG (se [Couldn't find button named "] :buttontext [" on "] :parentwindowtitle ["])
+     REPORTTESTBUG (word "|Couldn't find button named "| :buttontext "|" on "| :parentwindowtitle "|"|)
      STOP
   ]
 

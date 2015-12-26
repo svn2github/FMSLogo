@@ -18,7 +18,7 @@ TO BUG1377856TEST
    ; This should halt CIRCLE command, not the test pass.
    SETTIMER 1 2000 [
      CLEARTIMER 1
-     (UIAUTOMATION.SENDBUTTONPUSHTOWINDOW "Commander "Halt "False)
+     (UIAUTOMATION.PUSHCOMMANDERBUTTON "Halt "False)
    ]
 
    RUNSTOPPINGTEST [ CIRCLE 1e50 ]
