@@ -1571,6 +1571,10 @@
        <entry>ton</entry>
      </row>
      <row>
+       <entry><link linkend='command-toplevel'>toplevel</link></entry>
+       <entry>Ausstieg</entry>
+     </row>
+     <row>
        <entry><link linkend='command-towards'>towards</link></entry>
        <entry>ri</entry>
      </row>
@@ -1806,6 +1810,10 @@
      <row>
        <entry>ausgang</entry>
        <entry><link linkend='command-portoutb'>portoutb</link></entry>
+     </row>
+     <row>
+       <entry>Ausstieg</entry>
+       <entry><link linkend='command-toplevel'>toplevel</link></entry>
      </row>
      <row>
        <entry>auswahlbox</entry>

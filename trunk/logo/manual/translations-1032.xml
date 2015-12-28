@@ -299,6 +299,10 @@
        <entry>ÓÂÇÓÉÌÏ_ÁÑ×ÅÉÏÕ</entry>
      </row>
      <row>
+       <entry><link linkend='command-erract'>erract</link></entry>
+       <entry>ÏÄÇÃÉÅÓ_ÓÖÁËÌÁÔÏÓ</entry>
+     </row>
+     <row>
        <entry><link linkend='command-error'>error</link></entry>
        <entry>ÓÖÁËÌÁ</entry>
      </row>
@@ -795,6 +799,14 @@
        <entry>ÅÊÔÕÐÙÓÇ</entry>
      </row>
      <row>
+       <entry><link linkend='command-printdepthlimit'>printdepthlimit</link></entry>
+       <entry>ÂÁÈÏÓ_ÅÊÔÕÐÙÓÇÓ</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-printwidthlimit'>printwidthlimit</link></entry>
+       <entry>ÐËÁÔÏÓ_ÅÊÔÕÐÙÓÇÓ</entry>
+     </row>
+     <row>
        <entry><link linkend='command-product'>product</link></entry>
        <entry>ÃÉÍÏÌÅÍÏ</entry>
      </row>
@@ -949,6 +961,10 @@
      <row>
        <entry><link linkend='command-thing'>thing</link></entry>
        <entry>ÔÉÌÇ</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-time'>time</link></entry>
+       <entry>ÙÑÁ</entry>
      </row>
      <row>
        <entry><link linkend='command-timemilli'>timemilli</link></entry>
@@ -1114,6 +1130,10 @@
      <row>
        <entry>ÅÃÃÑÁÖÇ_ÈÅÓÇ</entry>
        <entry><link linkend='command-writepos'>writepos</link></entry>
+     </row>
+     <row>
+       <entry>ÂÁÈÏÓ_ÅÊÔÕÐÙÓÇÓ</entry>
+       <entry><link linkend='command-printdepthlimit'>printdepthlimit</link></entry>
      </row>
      <row>
        <entry>ÃÅÌÉÓÌÁ</entry>
@@ -1604,6 +1624,10 @@
        <entry><link linkend='command-groupboxdelete'>groupboxdelete</link></entry>
      </row>
      <row>
+       <entry>ÐËÁÔÏÓ_ÅÊÔÕÐÙÓÇÓ</entry>
+       <entry><link linkend='command-printwidthlimit'>printwidthlimit</link></entry>
+     </row>
+     <row>
        <entry>ÐËÇÊÔÑÏ?</entry>
        <entry><link linkend='command-keyp'>key?</link></entry>
      </row>
@@ -1908,6 +1932,10 @@
        <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
      </row>
      <row>
+       <entry>ÏÄÇÃÉÅÓ_ÓÖÁËÌÁÔÏÓ</entry>
+       <entry><link linkend='command-erract'>erract</link></entry>
+     </row>
+     <row>
        <entry>ÌÅÉÏÍ</entry>
        <entry><link linkend='command-minus'>minus</link></entry>
      </row>
@@ -2070,6 +2098,10 @@
      <row>
        <entry>ÖÙÓ</entry>
        <entry><link linkend='command-light'>light</link></entry>
+     </row>
+     <row>
+       <entry>ÙÑÁ</entry>
+       <entry><link linkend='command-time'>time</link></entry>
      </row>
   </tbody>
   </tgroup>

@@ -67,6 +67,10 @@
        <entry>pseudo.arctan</entry>
      </row>
      <row>
+       <entry><link linkend='command-arity'>arity</link></entry>
+       <entry>pseudo.arity</entry>
+     </row>
+     <row>
        <entry><link linkend='command-array'>array</link></entry>
        <entry>pseudo.array</entry>
      </row>
@@ -1966,6 +1970,10 @@
      <row>
        <entry>pseudo.arctan</entry>
        <entry><link linkend='command-arctan'>arctan</link></entry>
+     </row>
+     <row>
+       <entry>pseudo.arity</entry>
+       <entry><link linkend='command-arity'>arity</link></entry>
      </row>
      <row>
        <entry>pseudo.array</entry>
