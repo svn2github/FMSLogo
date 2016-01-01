@@ -675,10 +675,6 @@
         <entry>nt</entry>
       </row>
       <row>
-        <entry><link linkend='command-icon'>icon</link></entry>
-        <entry>icona</entry>
-      </row>
-      <row>
         <entry><link linkend='command-if'>if</link></entry>
         <entry>se</entry>
       </row>
@@ -925,6 +921,10 @@
       <row>
         <entry><link linkend='command-midiopen'>midiopen</link></entry>
         <entry>aprimidi</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-minimize'>minimize</link></entry>
+        <entry>icona</entry>
       </row>
       <row>
         <entry><link linkend='command-mouseoff'>mouseoff</link></entry>
@@ -1447,6 +1447,10 @@
         <entry>riacaso</entry>
       </row>
       <row>
+        <entry><link linkend='command-restore'>restore</link></entry>
+        <entry>noicona</entry>
+      </row>
+      <row>
         <entry><link linkend='command-reverse'>reverse</link></entry>
         <entry>inverti</entry>
       </row>
@@ -1885,10 +1889,6 @@
       <row>
         <entry><link linkend='command-unburyname'>unburyname</link></entry>
         <entry>scoprinome</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-unicon'>unicon</link></entry>
-        <entry>noicona</entry>
       </row>
       <row>
         <entry><link linkend='command-unstep'>unstep</link></entry>
@@ -2825,7 +2825,7 @@
       </row>
       <row>
         <entry>icona</entry>
-        <entry><link linkend='command-icon'>icon</link></entry>
+        <entry><link linkend='command-minimize'>minimize</link></entry>
       </row>
       <row>
         <entry>incolladis</entry>
@@ -3205,7 +3205,7 @@
       </row>
       <row>
         <entry>noicona</entry>
-        <entry><link linkend='command-unicon'>unicon</link></entry>
+        <entry><link linkend='command-restore'>restore</link></entry>
       </row>
       <row>
         <entry>nome?</entry>

@@ -771,10 +771,6 @@
         <entry>ñò</entry>
       </row>
       <row>
-        <entry><link linkend='command-icon'>icon</link></entry>
-        <entry>èêîíêà</entry>
-      </row>
-      <row>
         <entry><link linkend='command-if'>if</link></entry>
         <entry>åñëè</entry>
       </row>
@@ -1045,6 +1041,10 @@
       <row>
         <entry><link linkend='command-midiopen'>midiopen</link></entry>
         <entry>ìèäèîòêðîé</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-minimize'>minimize</link></entry>
+        <entry>èêîíêà</entry>
       </row>
       <row>
         <entry><link linkend='command-minus'>minus</link></entry>
@@ -1619,6 +1619,10 @@
         <entry>ïîâòîðèñë</entry>
       </row>
       <row>
+        <entry><link linkend='command-restore'>restore</link></entry>
+        <entry>íåèêîí</entry>
+      </row>
+      <row>
         <entry><link linkend='command-reverse'>reverse</link></entry>
         <entry>îáðàòíûé</entry>
       </row>
@@ -2101,10 +2105,6 @@
       <row>
         <entry><link linkend='command-unburyname'>unburyname</link></entry>
         <entry>íåñêðïåð</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-unicon'>unicon</link></entry>
-        <entry>íåèêîí</entry>
       </row>
       <row>
         <entry><link linkend='command-unstep'>unstep</link></entry>
@@ -2973,7 +2973,7 @@
       </row>
       <row>
         <entry>èêîíêà</entry>
-        <entry><link linkend='command-icon'>icon</link></entry>
+        <entry><link linkend='command-minimize'>minimize</link></entry>
       </row>
       <row>
         <entry>êîä</entry>
@@ -3269,7 +3269,7 @@
       </row>
       <row>
         <entry>íåèêîí</entry>
-        <entry><link linkend='command-unicon'>unicon</link></entry>
+        <entry><link linkend='command-restore'>restore</link></entry>
       </row>
       <row>
         <entry>ïâêîíåö</entry>

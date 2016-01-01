@@ -727,10 +727,6 @@
         <entry>ot</entry>
       </row>
       <row>
-        <entry><link linkend='command-icon'>icon</link></entry>
-        <entry>minimize</entry>
-      </row>
-      <row>
         <entry><link linkend='command-if'>if</link></entry>
         <entry>se</entry>
       </row>
@@ -1567,6 +1563,10 @@
         <entry>repitasorteie</entry>
       </row>
       <row>
+        <entry><link linkend='command-restore'>restore</link></entry>
+        <entry>restaure</entry>
+      </row>
+      <row>
         <entry><link linkend='command-reverse'>reverse</link></entry>
         <entry>inverte</entry>
       </row>
@@ -2041,10 +2041,6 @@
       <row>
         <entry><link linkend='command-unburyname'>unburyname</link></entry>
         <entry>desnome</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-unicon'>unicon</link></entry>
-        <entry>restaure</entry>
       </row>
       <row>
         <entry><link linkend='command-unstep'>unstep</link></entry>
@@ -3364,10 +3360,6 @@
         <entry><link linkend='command-machine'>machine</link></entry>
       </row>
       <row>
-        <entry>minimize</entry>
-        <entry><link linkend='command-icon'>icon</link></entry>
-      </row>
-      <row>
         <entry>minúsculas</entry>
         <entry><link linkend='command-lowercase'>lowercase</link></entry>
       </row>
@@ -3885,7 +3877,7 @@
       </row>
       <row>
         <entry>restaure</entry>
-        <entry><link linkend='command-unicon'>unicon</link></entry>
+        <entry><link linkend='command-restore'>restore</link></entry>
       </row>
       <row>
         <entry>restaurelápis</entry>

@@ -731,10 +731,6 @@
         <entry>ocultaTortuga</entry>
       </row>
       <row>
-        <entry><link linkend='command-icon'>icon</link></entry>
-        <entry>minimiza</entry>
-      </row>
-      <row>
         <entry><link linkend='command-if'>if</link></entry>
         <entry>si</entry>
       </row>
@@ -963,6 +959,10 @@
         <entry>teje.fr</entry>
       </row>
       <row>
+        <entry><link linkend='command-maximize'>maximize</link></entry>
+        <entry>maximiza</entry>
+      </row>
+      <row>
         <entry><link linkend='command-mdarray'>mdarray</link></entry>
         <entry>vectormd</entry>
       </row>
@@ -1001,6 +1001,10 @@
       <row>
         <entry><link linkend='command-midiopen'>midiopen</link></entry>
         <entry>abreMidi</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-minimize'>minimize</link></entry>
+        <entry>minimiza</entry>
       </row>
       <row>
         <entry><link linkend='command-minus'>minus</link></entry>
@@ -2013,10 +2017,6 @@
       <row>
         <entry><link linkend='command-unburyname'>unburyname</link></entry>
         <entry>destapanombre</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-unicon'>unicon</link></entry>
-        <entry>maximiza</entry>
       </row>
       <row>
         <entry><link linkend='command-unstep'>unstep</link></entry>
@@ -3309,7 +3309,7 @@
       </row>
       <row>
         <entry>maximiza</entry>
-        <entry><link linkend='command-unicon'>unicon</link></entry>
+        <entry><link linkend='command-maximize'>maximize</link></entry>
       </row>
       <row>
         <entry>mayor?</entry>
@@ -3365,7 +3365,7 @@
       </row>
       <row>
         <entry>minimiza</entry>
-        <entry><link linkend='command-icon'>icon</link></entry>
+        <entry><link linkend='command-minimize'>minimize</link></entry>
       </row>
       <row>
         <entry>minusculas</entry>

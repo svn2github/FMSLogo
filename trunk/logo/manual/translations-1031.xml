@@ -623,10 +623,6 @@
         <entry>vi</entry>
       </row>
       <row>
-        <entry><link linkend='command-icon'>icon</link></entry>
-        <entry>minimieren</entry>
-      </row>
-      <row>
         <entry><link linkend='command-if'>if</link></entry>
         <entry>wenn</entry>
       </row>
@@ -837,6 +833,10 @@
       <row>
         <entry><link linkend='command-midiopen'>midiopen</link></entry>
         <entry>Midiöffnen</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-minimize'>minimize</link></entry>
+        <entry>minimieren</entry>
       </row>
       <row>
         <entry><link linkend='command-mouseoff'>mouseoff</link></entry>
@@ -1247,6 +1247,10 @@
         <entry>sZ</entry>
       </row>
       <row>
+        <entry><link linkend='command-restore'>restore</link></entry>
+        <entry>restauriere</entry>
+      </row>
+      <row>
         <entry><link linkend='command-reverse'>reverse</link></entry>
         <entry>invers</entry>
       </row>
@@ -1589,10 +1593,6 @@
       <row>
         <entry><link linkend='command-unburyname'>unburyname</link></entry>
         <entry>nameausgraben</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-unicon'>unicon</link></entry>
-        <entry>restauriere</entry>
       </row>
       <row>
         <entry><link linkend='command-unstep'>unstep</link></entry>
@@ -2525,7 +2525,7 @@
       </row>
       <row>
         <entry>minimieren</entry>
-        <entry><link linkend='command-icon'>icon</link></entry>
+        <entry><link linkend='command-minimize'>minimize</link></entry>
       </row>
       <row>
         <entry>MitEg</entry>
@@ -2777,7 +2777,7 @@
       </row>
       <row>
         <entry>restauriere</entry>
-        <entry><link linkend='command-unicon'>unicon</link></entry>
+        <entry><link linkend='command-restore'>restore</link></entry>
       </row>
       <row>
         <entry>rg</entry>

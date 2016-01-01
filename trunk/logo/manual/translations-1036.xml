@@ -899,10 +899,6 @@
         <entry>ct</entry>
       </row>
       <row>
-        <entry><link linkend='command-icon'>icon</link></entry>
-        <entry>minimise</entry>
-      </row>
-      <row>
         <entry><link linkend='command-if'>if</link></entry>
         <entry>si</entry>
       </row>
@@ -1225,6 +1221,10 @@
       <row>
         <entry><link linkend='command-midiopen'>midiopen</link></entry>
         <entry>ouvremidi</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-minimize'>minimize</link></entry>
+        <entry>minimise</entry>
       </row>
       <row>
         <entry><link linkend='command-minus'>minus</link></entry>
@@ -1867,6 +1867,10 @@
         <entry>rehasard</entry>
       </row>
       <row>
+        <entry><link linkend='command-restore'>restore</link></entry>
+        <entry>restaure</entry>
+      </row>
+      <row>
         <entry><link linkend='command-reverse'>reverse</link></entry>
         <entry>inverse</entry>
       </row>
@@ -2473,10 +2477,6 @@
       <row>
         <entry><link linkend='command-unburyname'>unburyname</link></entry>
         <entry>deterrenom</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-unicon'>unicon</link></entry>
-        <entry>restaure</entry>
       </row>
       <row>
         <entry><link linkend='command-unstep'>unstep</link></entry>
@@ -4417,7 +4417,7 @@
       </row>
       <row>
         <entry>minimise</entry>
-        <entry><link linkend='command-icon'>icon</link></entry>
+        <entry><link linkend='command-minimize'>minimize</link></entry>
       </row>
       <row>
         <entry>minuscule</entry>
@@ -4873,7 +4873,7 @@
       </row>
       <row>
         <entry>restaure</entry>
-        <entry><link linkend='command-unicon'>unicon</link></entry>
+        <entry><link linkend='command-restore'>restore</link></entry>
       </row>
       <row>
         <entry>reste</entry>
