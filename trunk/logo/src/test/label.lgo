@@ -207,7 +207,7 @@ TO LABELSIZETEST.BUG469
    SETLABELFONT [[Arial] 16]
 
    ; Get the initial size (before using LABEL)
-   MAKE "size LABELSIZE [This is my Sentence]
+   LOCALMAKE "size LABELSIZE [This is my Sentence]
 
    ; Now use the new font.
    LABEL [This is my Sentence]
