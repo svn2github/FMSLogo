@@ -11,66 +11,69 @@ use utf8;
 use IO::File;
 use strict;
 
-# commands that are undocumented and shouldn't be put into
-# the translation tables.
-$main::UndocumentedCommands{buttonp}     = 1;
-$main::UndocumentedCommands{demo}        = 1;
-$main::UndocumentedCommands{ellispa2}    = 1;
-$main::UndocumentedCommands{filep}       = 1;
-$main::UndocumentedCommands{goto}        = 1;
-$main::UndocumentedCommands{maketurtle}  = 1;
-$main::UndocumentedCommands{mousecopy}   = 1;
-$main::UndocumentedCommands{nodes}       = 1;
-$main::UndocumentedCommands{setclip}     = 1;
-$main::UndocumentedCommands{settextfont} = 1;
-$main::UndocumentedCommands{tag}         = 1;
-$main::UndocumentedCommands{textfont}    = 1;
-$main::UndocumentedCommands{tutor}       = 1;
+# commands that are undocumented and cannot be put into
+# the translation tables because they don't link to anything.
+$main::UndocumentedCommands{'buttonp'}     = 1;
+$main::UndocumentedCommands{'button?'}     = 1;
+$main::UndocumentedCommands{'demo'}        = 1;
+$main::UndocumentedCommands{'ellipsa2'}    = 1;
+$main::UndocumentedCommands{'filep'}       = 1;
+$main::UndocumentedCommands{'goto'}        = 1;
+$main::UndocumentedCommands{'maketurtle'}  = 1;
+$main::UndocumentedCommands{'mousecopy'}   = 1;
+$main::UndocumentedCommands{'rest'}        = 1;
+$main::UndocumentedCommands{'setclip'}     = 1;
+$main::UndocumentedCommands{'settextfont'} = 1;
+$main::UndocumentedCommands{'system'}      = 1;
+$main::UndocumentedCommands{'tag'}         = 1;
+$main::UndocumentedCommands{'textfont'}    = 1;
+$main::UndocumentedCommands{'toplevel'}    = 1;
+$main::UndocumentedCommands{'tutor'}       = 1;
 
 
 # Commands whose documentation are location in the documentation
 # for some other function.
-$main::EnglishAbbreviation{bk}    = 'back';
-$main::EnglishAbbreviation{bf}    = 'butfirst';
-$main::EnglishAbbreviation{bfs}   = 'butfirsts';
-$main::EnglishAbbreviation{bl}    = 'butlast';
-$main::EnglishAbbreviation{cs}    = 'clearscreen';
-$main::EnglishAbbreviation{ct}    = 'cleartext';
-$main::EnglishAbbreviation{co}    = 'continue';
-$main::EnglishAbbreviation{down}  = 'downpitch';
-$main::EnglishAbbreviation{ed}    = 'edit';
-$main::EnglishAbbreviation{er}    = 'erase';
-$main::EnglishAbbreviation{erf}   = 'erasefile';
-$main::EnglishAbbreviation{fd}    = 'forward';
-$main::EnglishAbbreviation{fs}    = 'fullscreen';
-$main::EnglishAbbreviation{ht}    = 'hideturtle';
-$main::EnglishAbbreviation{iff}   = 'iffalse';
-$main::EnglishAbbreviation{ift}   = 'iftrue';
-$main::EnglishAbbreviation{lr}    = 'leftroll';
-$main::EnglishAbbreviation{lt}    = 'left';
-$main::EnglishAbbreviation{op}    = 'output';
-$main::EnglishAbbreviation{pc}    = 'pencolor';
-$main::EnglishAbbreviation{pd}    = 'pendown';
-$main::EnglishAbbreviation{pe}    = 'penerase';
-$main::EnglishAbbreviation{ppt}   = 'penpaint';
-$main::EnglishAbbreviation{px}    = 'penreverse';
-$main::EnglishAbbreviation{pu}    = 'penup';
-$main::EnglishAbbreviation{pr}    = 'print';
-$main::EnglishAbbreviation{rc}    = 'readchar';
-$main::EnglishAbbreviation{rcs}   = 'readchars';
-$main::EnglishAbbreviation{rl}    = 'readlist';
-$main::EnglishAbbreviation{rr}    = 'rightroll';
-$main::EnglishAbbreviation{rt}    = 'right';
-$main::EnglishAbbreviation{rw}    = 'readword';
-$main::EnglishAbbreviation{se}    = 'sentence';
-$main::EnglishAbbreviation{setfc} = 'setfloodcolor';
-$main::EnglishAbbreviation{seth}  = 'setheading';
-$main::EnglishAbbreviation{setpc} = 'setpencolor';
-$main::EnglishAbbreviation{setsc} = 'setscreencolor';
-$main::EnglishAbbreviation{st}    = 'showturtle';
-$main::EnglishAbbreviation{ss}    = 'splitscreen';
-$main::EnglishAbbreviation{ts}    = 'textscreen';
-$main::EnglishAbbreviation{up}    = 'uppitch';
+$main::EnglishAbbreviation{'bk'}    = 'back';
+$main::EnglishAbbreviation{'bf'}    = 'butfirst';
+$main::EnglishAbbreviation{'bfs'}   = 'butfirsts';
+$main::EnglishAbbreviation{'bl'}    = 'butlast';
+$main::EnglishAbbreviation{'cs'}    = 'clearscreen';
+$main::EnglishAbbreviation{'ct'}    = 'cleartext';
+$main::EnglishAbbreviation{'co'}    = 'continue';
+$main::EnglishAbbreviation{'down'}  = 'downpitch';
+$main::EnglishAbbreviation{'ed'}    = 'edit';
+$main::EnglishAbbreviation{'er'}    = 'erase';
+$main::EnglishAbbreviation{'erf'}   = 'erasefile';
+$main::EnglishAbbreviation{'fd'}    = 'forward';
+$main::EnglishAbbreviation{'fs'}    = 'fullscreen';
+$main::EnglishAbbreviation{'ht'}    = 'hideturtle';
+$main::EnglishAbbreviation{'iff'}   = 'iffalse';
+$main::EnglishAbbreviation{'ift'}   = 'iftrue';
+$main::EnglishAbbreviation{'lr'}    = 'leftroll';
+$main::EnglishAbbreviation{'lt'}    = 'left';
+$main::EnglishAbbreviation{'op'}    = 'output';
+$main::EnglishAbbreviation{'pc'}    = 'pencolor';
+$main::EnglishAbbreviation{'pd'}    = 'pendown';
+$main::EnglishAbbreviation{'pe'}    = 'penerase';
+$main::EnglishAbbreviation{'ppt'}   = 'penpaint';
+$main::EnglishAbbreviation{'px'}    = 'penreverse';
+$main::EnglishAbbreviation{'pu'}    = 'penup';
+$main::EnglishAbbreviation{'pr'}    = 'print';
+$main::EnglishAbbreviation{'rc'}    = 'readchar';
+$main::EnglishAbbreviation{'rcs'}   = 'readchars';
+$main::EnglishAbbreviation{'rl'}    = 'readlist';
+$main::EnglishAbbreviation{'rr'}    = 'rightroll';
+$main::EnglishAbbreviation{'rt'}    = 'right';
+$main::EnglishAbbreviation{'rw'}    = 'readword';
+$main::EnglishAbbreviation{'se'}    = 'sentence';
+$main::EnglishAbbreviation{'setfc'} = 'setfloodcolor';
+$main::EnglishAbbreviation{'seth'}  = 'setheading';
+$main::EnglishAbbreviation{'setpc'} = 'setpencolor';
+$main::EnglishAbbreviation{'setsc'} = 'setscreencolor';
+$main::EnglishAbbreviation{'st'}    = 'showturtle';
+$main::EnglishAbbreviation{'ss'}    = 'splitscreen';
+$main::EnglishAbbreviation{'ts'}    = 'textscreen';
+$main::EnglishAbbreviation{'up'}    = 'uppitch';
 
 sub PrintShadowedProcedures($$$) {
   my $LocaleName         = shift or die "not enough arguments";
@@ -159,17 +162,17 @@ sub PrintTranslationsAsDocBook($$$$) {
 
   $docbook .= "<appendix id='translations'>\n";
   $docbook .= "<title>Commands: English to $LocaleName</title>\n";
+  $docbook .= "<indexterm><primary>From English</primary></indexterm>\n";
 
   $docbook .= "<informaltable>\n";
-  $docbook .= "  <indexterm><primary>From English</primary></indexterm>\n";
   $docbook .= "  <tgroup cols='2'>\n";
-  $docbook .= "   <thead>\n";
-  $docbook .= "     <row>\n";
-  $docbook .= "       <entry>English Command</entry>\n";
-  $docbook .= "       <entry>$LocaleName Command</entry>\n";
-  $docbook .= "     </row>\n";
-  $docbook .= "   </thead>\n";
-  $docbook .= "  <tbody>\n";
+  $docbook .= "    <thead>\n";
+  $docbook .= "      <row>\n";
+  $docbook .= "        <entry>English Command</entry>\n";
+  $docbook .= "        <entry>$LocaleName Command</entry>\n";
+  $docbook .= "      </row>\n";
+  $docbook .= "    </thead>\n";
+  $docbook .= "    <tbody>\n";
 
   # add a row for each english to localized translation
   foreach my $english (sort keys %{$EnglishToLocalized}) {
@@ -178,14 +181,14 @@ sub PrintTranslationsAsDocBook($$$$) {
 
     foreach my $translation (@{$$EnglishToLocalized{$english}}) {
       utf8::encode($translation);
-      $docbook .= "     <row>\n";
-      $docbook .= "       <entry><link linkend='$englishLinkend'>$english</link></entry>\n";
-      $docbook .= "       <entry>$translation</entry>\n";
-      $docbook .= "     </row>\n";
+      $docbook .= "      <row>\n";
+      $docbook .= "        <entry><link linkend='$englishLinkend'>$english</link></entry>\n";
+      $docbook .= "        <entry>$translation</entry>\n";
+      $docbook .= "      </row>\n";
     }
   }
 
-  $docbook .= "  </tbody>\n";
+  $docbook .= "    </tbody>\n";
   $docbook .= "  </tgroup>\n";
   $docbook .= "</informaltable>\n";
   $docbook .= "</appendix>\n";
@@ -197,13 +200,13 @@ sub PrintTranslationsAsDocBook($$$$) {
   $docbook .= "<indexterm><primary>To English</primary></indexterm>\n";
   $docbook .= "<informaltable>\n";
   $docbook .= "  <tgroup cols='2'>\n";
-  $docbook .= "   <thead>\n";
-  $docbook .= "     <row>\n";
-  $docbook .= "       <entry>$LocaleName Command</entry>\n";
-  $docbook .= "       <entry>English Command</entry>\n";
-  $docbook .= "     </row>\n";
-  $docbook .= "   </thead>\n";
-  $docbook .= "  <tbody>\n";
+  $docbook .= "    <thead>\n";
+  $docbook .= "      <row>\n";
+  $docbook .= "        <entry>$LocaleName Command</entry>\n";
+  $docbook .= "        <entry>English Command</entry>\n";
+  $docbook .= "      </row>\n";
+  $docbook .= "    </thead>\n";
+  $docbook .= "    <tbody>\n";
 
   # add a row for each localized to English translation
   foreach my $translation (sort keys %{$LocalizedToEnglish}) {
@@ -213,13 +216,13 @@ sub PrintTranslationsAsDocBook($$$$) {
 
     utf8::encode($translation);
 
-    $docbook .= "     <row>\n";
-    $docbook .= "       <entry>$translation</entry>\n";
-    $docbook .= "       <entry><link linkend='$englishLinkend'>$english</link></entry>\n";
-    $docbook .= "     </row>\n";
+    $docbook .= "      <row>\n";
+    $docbook .= "        <entry>$translation</entry>\n";
+    $docbook .= "        <entry><link linkend='$englishLinkend'>$english</link></entry>\n";
+    $docbook .= "      </row>\n";
   }
 
-  $docbook .= "  </tbody>\n";
+  $docbook .= "    </tbody>\n";
   $docbook .= "  </tgroup>\n";
   $docbook .= "</informaltable>\n";
   $docbook .= "</appendix>\n";
@@ -240,12 +243,12 @@ sub MakeTranslationTables($$$) {
   my %localizedtoenglish = ();
 
   #
-  # Build a table of everything that has already been translated
+  # Build a table of everything that can be translated
   #
   my $englishfile = new IO::File "localizedstrings-en.h" or die $!;
   while (<$englishfile>) {
     chomp;
-    if (m/^\#define\s+LOCALIZED_ALTERNATE_([\w\d_]+)\s*"([^"]+)"/) {
+    if (m/^\#define\s+LOCALIZED_ALTERNATE_(\w+)\s*"([^"]+)"/) {
       $english{$1} = $2;
     }
   }
@@ -256,7 +259,7 @@ sub MakeTranslationTables($$$) {
   #
   my $localizedfile = new IO::File "localizedstrings-$CountryCode.h" or die $!;
   while (<$localizedfile>) {
-    if (m/^\#define\s+LOCALIZED_ALTERNATE_([\w\d_]+)\s*"([^"]+)"/) {
+    if (m/^\#define\s+LOCALIZED_ALTERNATE_(\w+)\s*"([^"]+)"/) {
       my $symbolicname  = $1;
       my $localizedname = $2;
       my $englishword   = $english{$symbolicname};
@@ -297,12 +300,13 @@ sub MakeTranslationTables($$$) {
 
       if (lc $original ne lc $newname) {
 
-        # TODO: error-out if $original isn't an English command
+        # only add documented procedures to the translation tables.
+        if (not $main::UndocumentedCommands{lc $original}) {
+          $englishtolocalized{$original} = () if not $englishtolocalized{$original};
+          push @{$englishtolocalized{$original}}, $newname;
 
-        $englishtolocalized{$original} = () if not $englishtolocalized{$original};
-        push @{$englishtolocalized{$original}}, $newname;
-
-        $localizedtoenglish{$newname} = $original;
+          $localizedtoenglish{$newname} = $original;
+        }
       }
     }
   }
