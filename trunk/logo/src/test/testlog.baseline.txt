@@ -1542,6 +1542,7 @@ INFO: error text is SETITEM doesn't like 5 as input .
 INFO: Running invalid instruction: [SETITEM 1 :myarray :myarray]
 INFO: error code is 7 .
 INFO: error text is SETITEM doesn't like {1 2 3} as input .
+PASS: Bug #468 is fixed; garbage collecting a deeply nested array didn't crash.
 CALL: MAKE "testqueue []
 CALL: QUEUE "testqueue 1
 PASS: [:testqueue] output [1] , as expected.
@@ -4693,6 +4694,55 @@ INFO: error text is I don't know how to NEWCOPY .
 INFO: Running invalid instruction: [(COPYDEF "SUMCOPY "SUM)]
 PASS: error code is 22 , as expected.
 INFO: error text is SUMCOPY is a primitive .
+PASS: [ARITY "ARITY] output [1 1 1] , as expected.
+PASS: [ARITY "BITMODE] output [0 0 0] , as expected.
+PASS: [ARITY "BITMAPTURTLE] output [0 0 1] , as expected.
+PASS: [ARITY "LIST] output [0 2 -1] , as expected.
+PASS: [ARITY "list] output [0 2 -1] , as expected.
+PASS: [ARITY "localmake] output [2 2 2] , as expected.
+PASS: [ARITY "`] output [1 1 1] , as expected.
+PASS: [ARITY "*] output [2 2 2] , as expected.
+PASS: [ARITY "+] output [2 2 2] , as expected.
+PASS: [ARITY "-] output [2 2 2] , as expected.
+PASS: [ARITY "/] output [2 2 2] , as expected.
+PASS: [ARITY "<] output [2 2 2] , as expected.
+PASS: [ARITY "=] output [2 2 2] , as expected.
+PASS: [ARITY ">] output [2 2 2] , as expected.
+PASS: [ARITY "<=] output [2 2 2] , as expected.
+PASS: [ARITY "<>] output [2 2 2] , as expected.
+PASS: [ARITY ">=] output [2 2 2] , as expected.
+PASS: [ARITY "--] output [1 1 1] , as expected.
+PASS: [ARITY "CO] output [0 1 1] , as expected.
+PASS: [ARITY "CONTINUE] output [0 1 1] , as expected.
+PASS: [ARITY "HELP] output [0 1 1] , as expected.
+CALL: ERASE "TUTOR
+PASS: [ARITY "TUTOR] output [0 0 0] , as expected.
+PASS: [ARITY "aritytest.proc1] output [0 0 0] , as expected.
+PASS: [ARITY "aritytest.proc2] output [1 1 1] , as expected.
+PASS: [ARITY "aritytest.proc3] output [0 0 -1] , as expected.
+PASS: [ARITY "aritytest.proc4] output [2 2 3] , as expected.
+PASS: [ARITY "aritytest.proc5] output [1 1 3] , as expected.
+INFO: Running invalid instruction: [ARITY {1 2 3}]
+PASS: error code is 7 , as expected.
+INFO: error text is ARITY doesn't like {1 2 3} as input .
+INFO: Running invalid instruction: [ARITY [1 2 3]]
+PASS: error code is 7 , as expected.
+INFO: error text is ARITY doesn't like [1 2 3] as input .
+INFO: Running invalid instruction: [ARITY "this.command.does.not.exist.in.fmslogo]
+PASS: error code is 24 , as expected.
+INFO: error text is I don't know how to this.command.does.not.exist.in.fmslogo .
+INFO: Running invalid instruction: [ARITY "TO]
+PASS: error code is 2001 , as expected.
+PASS: error text is ARITY doesn't like TO as input because it has a special form , as expected.
+INFO: Running invalid instruction: [ARITY ".MACRO]
+PASS: error code is 2001 , as expected.
+PASS: error text is ARITY doesn't like .MACRO as input because it has a special form , as expected.
+INFO: Running invalid instruction: [(ARITY)]
+PASS: error code is 6 , as expected.
+INFO: error text is not enough inputs to ARITY .
+INFO: Running invalid instruction: [(ARITY "FORWARD "toomany)]
+PASS: error code is 8 , as expected.
+INFO: error text is too much inside ()'s .
 PASS: [GPROP "nonexistent "prop1] output [] , as expected.
 PASS: [GPROP "testplist1 "nonexistent] output [] , as expected.
 PASS: [GPROP "testplist1 [no existent]] output [] , as expected.
