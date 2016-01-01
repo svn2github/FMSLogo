@@ -76,7 +76,7 @@ catch "error [ copydef "wiederholefür           "for            ]
 catch "error [ copydef "fürjedes                "foreach        ]
 catch "error [ copydef "GoldenerSchnitt         "goldenratio    ]
 
-catch "error [ copydef "minimieren              "icon           ]
+catch "error [ copydef "minimieren              "minimize       ]
 catch "error [ copydef "ignoriere               "ignore         ]
 catch "error [ copydef "anrufen                 "invoke         ]
 catch "error [ copydef "ListezumArray           "listtoarray    ]
@@ -137,7 +137,7 @@ catch "error [ copydef "allesausgraben          "unburyall      ]
 
 catch "error [ copydef "Nameausgraben    "unburyname     ]
 
-catch "error [ copydef "restauriere      "unicon         ]
+catch "error [ copydef "restauriere      "restore        ]
 catch "error [ copydef "bis              "until          ]
 catch "error [ copydef "solange          "while          ]
 

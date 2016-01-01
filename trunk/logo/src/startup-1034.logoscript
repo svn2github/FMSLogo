@@ -1013,7 +1013,7 @@ FIN
 TAPA "LISTAPROPIEDADES
 
 
-;copydef "maximiza "unicon
+;copydef "maximiza "maximize
 
 PARA MAXIMIZA :window
 ACTIVAVENTANA :window 9
@@ -1032,7 +1032,7 @@ FIN
 TAPA "MIENTRAS
 
 
-;copydef "minimiza "icon
+;copydef "minimiza "minimize
 
 PARA MINIMIZA :window
 ACTIVAVENTANA :window 6
