@@ -11,8 +11,9 @@ use utf8;
 use IO::File;
 use strict;
 
-# commands that are undocumented and cannot be put into
+# Commands that are undocumented and cannot be put into
 # the translation tables because they don't link to anything.
+# Any translation of these will be omitted from the final documentation.
 $main::UndocumentedCommands{'buttonp'}     = 1;
 $main::UndocumentedCommands{'button?'}     = 1;
 $main::UndocumentedCommands{'demo'}        = 1;
@@ -29,7 +30,6 @@ $main::UndocumentedCommands{'tag'}         = 1;
 $main::UndocumentedCommands{'textfont'}    = 1;
 $main::UndocumentedCommands{'toplevel'}    = 1;
 $main::UndocumentedCommands{'tutor'}       = 1;
-
 
 # Commands whose documentation are location in the documentation
 # for some other function.
