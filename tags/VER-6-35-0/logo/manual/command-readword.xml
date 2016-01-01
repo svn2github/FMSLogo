@@ -1,0 +1,43 @@
+<section id="command-readword">
+<title>READWORD</title>
+<indexterm><primary>READWORD</primary></indexterm>
+<indexterm><primary>RW</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>READWORD</command>
+<command>RW</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Reads a line from the read stream and outputs that line as a word (without the end-of-line sequence).
+The output is a single word even if the line contains spaces, brackets, etc.
+A blank line is output as the empty word.
+If the read stream is a file and the last character in the file is not an end-of-line sequence, then READWORD treats the end-of-file as an end-of-line.
+After the file as been completely read, READWORD outputs the empty list (not the empty word).
+</para>
+<para>
+READWORD processes backslash, vertical bar, and tilde characters in the read stream.
+In the case of a tilde used for line continuation, the output word <emphasis>does</emphasis> include the tilde and the newline characters, so that the user program can tell exactly what the user entered.
+Vertical bars in the line are also preserved in the output.
+Backslash characters are not preserved in the output, but the character following the backslash is marked as being backslashed.
+Programs can use <link linkend="command-backslashedp">BACKSLASHEDP</link> to check for this condition.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>SHOW READWORD
+Hello how are you?</userinput>
+Hello how are you?</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>

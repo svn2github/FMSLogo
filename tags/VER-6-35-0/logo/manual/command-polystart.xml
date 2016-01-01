@@ -1,0 +1,46 @@
+<section id="command-polystart">
+    <title>POLYSTART</title>
+<indexterm><primary>POLYSTART</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>POLYSTART</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+POLYSTART tells &PRODUCTNAME; that you are about to define a polygon.
+Each subsequent move results in the destination coordinate being added as a vertex to the polygon.
+The definition is completed by issuing the command <link linkend="command-polyend">POLYEND</link>.
+To view all defined polygons as shaded polygons you must issue the command <link linkend="command-polyview">POLYVIEW</link>.
+Make sure you understand the <link linkend="polygon-restrictions">Polygon Restrictions</link>.
+</para>
+
+<para>
+POLYSTART is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode and does not run in 2D modes.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>TO SQUARE
+  POLYSTART
+  REPEAT 4 [FORWARD 100 RIGHT 90]
+  POLYEND
+END
+
+PERSPECTIVE
+REPEAT 72 [SQUARE RIGHTROLL 5]
+POLYVIEW</userinput></programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>
