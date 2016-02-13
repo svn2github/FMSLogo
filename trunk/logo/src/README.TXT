@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.35.0 for Microsoft Windows
+FMSLogo Version 7.0.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -13,29 +13,14 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  wxfmslogo-6.35.0.exe - Installer for the wxWidgets-based Logo environment
-  fmslogo-6.35.0.exe   - Installer for the deprecated OWL Logo environment
-  fmslogo-6.35.0.zip   - ZIP of the deprecated OWL Logo environment
+  fmslogo-7.0.0.exe   - Installer for the Logo environment
+  fmslogo-7.0.0.zip   - ZIP of the Logo environment
 
 II. New features/bugs fixed:
 
-  Changed in 6.35.0
-  o Implement feature #89; Make -F (with no -W or -H) start FMSLogo maximized
-    with size of the drawable surface equal to the screen window's size.
-    This was only implemented in the wxWidgets version of FMSLogo.
-  o Implement feature #107; Implement ARITY procedure.
-  o Implement feature #108; Add a way to remove selected lines from the
-    commander history in the wxWidgets version of FMSLogo.
-  o Implement feature #109; Add MINIMIZE, MAXIMIZE, and RESTORE as modern
-    replacements for ICON and UNICON.
-  o Fix bug #398; The OWL version of FMSLogo no longer reports that it
-    cannot open file "F" when given some command lines.
-  o Fix bug #466; The wxWidgets version of FMSLogo no longer clears the
-    clipboard on exit.
-  o Fix bug #468; Garbage collecting a deeply nested array no longer crashes.
-  o Fix bug #469; LABELSIZE no longer changes its output depending on when
-    LABEL was last called.
-  o Minor improvements to the manual.
+  Changed in 7.0.0
+  o Dropped support for the Win 9X versions of Windows.
+  o Dropped support for the original Pentium processor.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/viewvc/fmslogo/logo/src/CHANGELOG.TXT
@@ -85,16 +70,15 @@ VI. Sources
 
   The FMSLogo sources were written/compiled with:
 
-    Borland C++ 5.02 for windows (for .EXE)
-    Borland Turbo 32bit Assembler (for .EXE)
     MinGW (for the screen saver)
-    MinGW package of cygwin (for wxWidgets .EXE)
+    MinGW package of cygwin (for .EXE)
+    wxWidgets (GUI toolkit used for .EXE)
     DocBook, xsltproc, and Microsoft Help Workshop (for online help)
     Nullsoft Scriptable Install System (NSIS) (for the installer)
 
 VII. Minimum System Requirements
 
-   Pentium class processor with minimum of 16 MB RAM running Windows 95.
+   Windows XP with 512 MB of RAM.
 
 VIII. Acknowledgements
 
