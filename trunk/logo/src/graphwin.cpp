@@ -23,6 +23,10 @@
 #include <string.h>
 #include <algorithm>
 
+#ifdef max // MS compilers #define max in windows.h
+#undef max
+#endif
+
 #ifdef WX_PURE
 typedef struct __BITMAP      * HBITMAP;
 typedef struct __LOGPALLETTE * PLOGPALETTE;
