@@ -1,55 +1,25 @@
 // -*- c++ -*-
+
 #ifndef _MINIEDITOR_H_
 #define _MINIEDITOR_H_
 
-#include <owl/button.h>
-#include <owl/edit.h>
+#include <wx/dialog.h>
 
-#include "editwnd.h"
+class wxRichTextCtrl;
 
-class TMiniEditorRichEdit : public TRichEditWithPopup
+class CMiniEditor : public wxDialog
 {
 public:
-    TMiniEditorRichEdit(TWindow * Parent);
+    CMiniEditor(wxWindow *Parent, const char * ToLine);
+    ~CMiniEditor();
 
-protected:
-    bool CanClose()
-    {
-        return true;
-    }
-};
-
-class TMiniEditor : public TDialog
-{
-public:
-    TMiniEditor(
-        TWindow    * Parent,
-        const char * ToLine
-        );
-    ~TMiniEditor();
-
-    const char * GetText();
-
-protected:
-    void EvSetFocus(HWND);
-    void SetupWindow();
-    void CmOk();
-    void EvSize(UINT arg1, TSize & arg2);
+    const wxString GetProcedureBody() const;
 
 private:
-    void RecalculateLayout();
 
-    TMiniEditorRichEdit m_TextField;
-    TEdit               m_ToLine;
-    TButton             m_EndButton;
+    wxRichTextCtrl * m_TextField;
 
-    char *   m_ToLineString;
-
-    char *   m_EditorContents;
-    size_t   m_EditorContentsLength;
-
-private:
-    DECLARE_RESPONSE_TABLE(TMiniEditor);
+    DECLARE_NO_COPY_CLASS(CMiniEditor);
 };
 
 #endif // _MINIEDITOR_H_

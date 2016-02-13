@@ -1,227 +1,92 @@
-// Copyright (C) 2012 by the David Costanzo
-//
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 2 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-//
-
 #include "questionbox.h"
 
 #include <algorithm>
 
-#include "logorc.h"
-#include "mainframe.h"
+#include <wx/sizer.h>
+#include <wx/stattext.h>
+#include <wx/button.h>
+#include <wx/textctrl.h>
+
+#include "stringadapter.h"
 #include "localizedstrings.h"
-#include "debugheap.h"
 
+// ----------------------------------------------------------------------------
+// CQuestionBox
+// ----------------------------------------------------------------------------
 
-TQuestionBox::TQuestionBox(
-    TWindow *    Parent,
-    const char * Title,
-    const char * Question
-    ) : TDialog(Parent, IDD_QUESTIONBOX),
-        m_Question(this, ID_QUESTIONBOX_QUESTION),
-        m_Answer(this, ID_QUESTIONBOX_ANSWER),
-        m_OkButton(this, IDOK),
-        m_CancelButton(this, IDCANCEL),
-        m_QuestionBuffer(Question),
-        m_AnswerBuffer(NULL)
+CQuestionBox::CQuestionBox(
+    wxWindow       * Parent,
+    const wxString & Title,
+    const wxString & Question
+    ) : 
+    wxDialog(Parent, wxID_ANY, Title),
+    m_Answer(NULL)
 {
-    SetCaption(Title);
-}
+    // Get the title's width
+    int titleWidth;
+    int titleHeight;
+    wxFont titleFont = GetFont();
+    titleFont.SetFaceName(WXSTRING("System"));
+    GetTextExtent(Title, &titleWidth, &titleHeight, NULL, NULL, &titleFont);
 
-TQuestionBox::~TQuestionBox()
-{
-    delete [] m_AnswerBuffer;
-}
+    // Determine a good minimum size for the dialog box,
+    // which is some base minimum or the size of the title.
+    const int MINIMUM_QUESTION_WIDTH = 200;
+    const int minWidth = std::max(titleWidth, MINIMUM_QUESTION_WIDTH);
 
-void TQuestionBox::SetupWindow()
-{
-    TDialog::SetupWindow();
+    wxBoxSizer *topLevelSizer = new wxBoxSizer(wxVERTICAL);
 
-    // Note that the buttons must be first and go from right-to-left
-    static const MENUITEM staticText[] = {
-        {LOCALIZED_QUESTIONBOX_OK,     IDOK},
-        {LOCALIZED_QUESTIONBOX_CANCEL, IDCANCEL},
-    };
-
-    // Set the text in all of the static controls
-    SetTextOnChildWindows(this, staticText, ARRAYSIZE(staticText));
-
-    m_OkButton.Create();
-    m_CancelButton.Create();
-    m_Question.Create();
-    m_Question.SetText(m_QuestionBuffer);
-    m_Answer.Create();
-
-    //
-    // Resize and reposition all of the controls based on how
-    // much space the title and question take up.
-    //
-
-    TWindowDC questionDeviceContext(m_Question);
-
-    // Initially, the device context's font is set to System, which
-    // is what the title is drawn in.
-    TSize titleSize = questionDeviceContext.GetTextExtent(
-        Title,
-        strlen(Title));
-
-    HFONT questionFont = m_Question.GetWindowFont();
-    if (questionFont != NULL)
+    // Normalize the question so that wxWidget's processing
+    // matches the OWL's processing.
+    wxString normalizedQuestion(Question);
+    for (size_t i = 0; i < normalizedQuestion.Len(); i++)
     {
-        questionDeviceContext.SelectObject(questionFont);
-    }
-
-    // Determine the extent of the question,
-    // using some minimum value so that the dialog box
-    // doesn't get too small.
-    const int MINIMUM_TEXT_WIDTH = 200;
-    int questionX = MINIMUM_TEXT_WIDTH;
-    int questionY = 0;
-
-    const char * lineStart = m_QuestionBuffer;
-    while (*lineStart != '\0')
-    {
-        // Find where this line ends
-        const char * lineEnd = lineStart;
-        while (*lineEnd != '\0' && *lineEnd != '\r' && *lineEnd != '\n')
+        // Replace '\r' with '\n' unless it's part of a \r\n sequence.
+        if (normalizedQuestion[i] == '\r' &&
+            (i + 1 == normalizedQuestion.Len() || normalizedQuestion[i + 1] != '\n'))
         {
-            lineEnd++;
-        }
-
-        // Get the size of this line
-        TSize lineSize = questionDeviceContext.GetTextExtent(
-            lineStart,
-            lineEnd - lineStart);
-
-        // Grow the amount of space we're holding for the question
-        // to include this line.
-        questionX  = std::max(lineSize.X(), questionX);
-        questionY += lineSize.Y();
-
-        // Increment to the next line
-        if (lineEnd[0] == '\r' && lineEnd[1] == '\n')
-        {
-            // Treat CRLF as a single newline, like the dialog box will.
-            lineStart = lineEnd + 2;
-        }
-        else if (lineEnd[0] != '\0')
-        {
-            // Advance past the newline or carriage return.
-            lineStart = lineEnd + 1;
-        }
-        else
-        {
-            // Set lineStart at the NUL to break out of the loop.
-            lineStart = lineEnd;
+            normalizedQuestion[i] = '\n';
         }
     }
 
-    const int answerHeight = 22;
-    const int padding      = 5;
-    const int buttonWidth  = 70;
-    const int buttonHeight = 26;
+    wxStaticText *question = new wxStaticText(
+        this,
+        wxID_ANY,
+        normalizedQuestion);
+    topLevelSizer->Add(question, 1, wxALIGN_CENTER_VERTICAL | wxALL | wxEXPAND, 4);
 
-    // The window should be wide enough to hold
-    // both the complete title and the complete question.
-    const int overallWidth = std::max(questionX, titleSize.X());
+    m_Answer = new wxTextCtrl(this, wxID_ANY);
+    m_Answer->SetInitialSize(wxSize(minWidth, -1));
+    topLevelSizer->Add(m_Answer, 0, wxALIGN_CENTER_VERTICAL | wxALL | wxEXPAND, 4);
 
-    m_Question.SetWindowPos(
-        NULL,
-        padding,
-        padding,
-        questionX,
-        questionY,
-        SWP_NOZORDER);
+    // add the buttons
+    wxBoxSizer * buttonSizer = new wxBoxSizer(wxHORIZONTAL);
 
-    // The answer field is positioned just below the question.
-    const int answerLineTop = padding + questionY + padding;
-    m_Answer.SetWindowPos(
-        NULL,
-        padding,          // left
-        answerLineTop,    // top
-        overallWidth,     // width
-        answerHeight,     // height
-        SWP_NOZORDER);
+    wxButton *okButton = new wxButton(
+        this, 
+        wxID_OK,
+        WXSTRING(LOCALIZED_QUESTIONBOX_OK));
+    buttonSizer->Add(okButton);
 
-    // The OK and cancel buttons are just below the answer
-    const int buttonLineTop = answerLineTop + answerHeight + padding;
+    wxButton *cancelButton = new wxButton(
+        this, 
+        wxID_CANCEL,
+        WXSTRING(LOCALIZED_QUESTIONBOX_CANCEL));
+    buttonSizer->Add(cancelButton, 0, wxLEFT, 4);
 
-    m_OkButton.SetWindowPos(
-        NULL,
-        overallWidth - 2 * buttonWidth,    // left
-        buttonLineTop,                     // top
-        buttonWidth,                       // width
-        buttonHeight,                      // height
-        SWP_NOZORDER);
+    topLevelSizer->Add(buttonSizer, 0, wxALIGN_RIGHT | wxALL, 4);
 
-    // The OK and cancel buttons are just below the answer
-    m_CancelButton.SetWindowPos(
-        NULL,
-        padding + overallWidth - buttonWidth, // left
-        buttonLineTop,                        // top
-        buttonWidth,                          // width
-        buttonHeight,                         // height
-        SWP_NOZORDER);
+    SetSizerAndFit(topLevelSizer);
 
-    //
-    // Resize the window to fit the controls
-    //
+    // Make the "OK" button the default.
+    okButton->SetDefault();
 
-    // Calculate how much space the window frame takes up.
-    const TRect overallRect = GetWindowRect();
-    const TRect clientRect  = GetClientRect();
-
-    int extraWidth  = overallRect.Width()  - clientRect.Width();
-    int extraHeight = overallRect.Height() - clientRect.Height();
-
-    SetWindowPos(
-        NULL,
-        0,
-        0,
-        extraWidth + overallWidth + 2 * padding,
-        extraHeight + buttonLineTop + buttonHeight + padding,
-        SWP_NOMOVE);
-
-    if (questionFont != NULL)
-    {
-        questionDeviceContext.RestoreFont();
-    }
+    // Give focus to the text field for the control
+    m_Answer->SetFocus();
 }
 
-void TQuestionBox::CmOk()
+const wxString CQuestionBox::GetAnswer() const
 {
-    // reset any value that may be in the editor
-    delete [] m_AnswerBuffer;
-
-    // copy the data from the rich edit into a flat buffer
-    int answerLength = m_Answer.GetWindowTextLength();
-
-    m_AnswerBuffer = new char [answerLength + 1];
-    if (m_AnswerBuffer != NULL)
-    {
-        m_Answer.GetWindowText(m_AnswerBuffer, answerLength + 1);
-    }
-
-    TDialog::CmOk();
+    return m_Answer->GetValue();
 }
 
-const char * TQuestionBox::GetAnswer() const
-{
-    return m_AnswerBuffer;
-}
-
-DEFINE_RESPONSE_TABLE1(TQuestionBox, TDialog)
-    EV_COMMAND(IDOK, CmOk),
-END_RESPONSE_TABLE;

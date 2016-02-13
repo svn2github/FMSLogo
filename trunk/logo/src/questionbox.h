@@ -1,39 +1,23 @@
 // -*- c++ -*-
-#ifndef _QUESTIONBOX_H_
-#define _QUESTIONBOX_H_
 
-#include <owl/edit.h>
-#include <owl/button.h>
-#include <owl/dialog.h>
+#include <wx/dialog.h>
 
-class TQuestionBox : public TDialog
+class wxTextCtrl;
+
+class CQuestionBox : public wxDialog
 {
 public:
-    TQuestionBox(
-        TWindow    * Parent,
-        const char * Title,
-        const char * Question
+    CQuestionBox(
+        wxWindow       * Parent,
+        const wxString & Title,
+        const wxString & Question
         );
 
-    ~TQuestionBox();
-
-    const char * GetAnswer() const;
-
-protected:
-    void SetupWindow();
-    void CmOk();
+    const wxString GetAnswer() const;
 
 private:
-    TStatic   m_Question;
-    TEdit     m_Answer;
-    TButton   m_OkButton;
-    TButton   m_CancelButton;
+    // private member variables
+    wxTextCtrl * m_Answer;
 
-    const char * m_QuestionBuffer;
-    char *       m_AnswerBuffer;
-
-private:
-    DECLARE_RESPONSE_TABLE(TQuestionBox);
+    DECLARE_NO_COPY_CLASS(CQuestionBox);
 };
-
-#endif // _QUESTIONBOX_H_

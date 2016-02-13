@@ -1,273 +1,252 @@
 // -*- c++ -*-
-// Copyright (C) 1995 by George Mills
-//
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 2 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#include <map>
 
-#ifndef __MAINFRAME_H_
-#define __MAINFRAME_H_
+#ifndef WX_PURE
+#include <windows.h> // for COLORREF
+#endif // WX_PURE
 
-#include <owl\decframe.h>
-#include <owl\panespli.h>
+#include <wx/frame.h>
+#include <wx/print.h>
 
-#include "3dsolid.h"          // for RGBCOLOR
-#include "logocore.h"         // for FLONUM
-#include "logoeventqueue.h"   // for qlist
 #include "localizedstrings.h" // for MANUAL_HAS_TRANSLATION_TABLES
 
-class TScreenWindow : public TWindow
+
+class wxSplitterWindow;
+class wxCommandEvent;
+class wxScrolledWindow;
+class wxIcon;
+
+class CCommander;
+class CStatusDialog;
+class CWorkspaceEditor;
+class CSetPenSize;
+class CScreen;
+class CSetColor;
+
+struct NODE;
+
+class CMainFrame : public wxFrame
 {
 public:
-    TScreenWindow(TWindow * AParent, LPCSTR ATitle);
-    ~TScreenWindow();
+    CMainFrame(
+        int             ScreenWidth,
+        int             ScreenHeight,
+        const wxPoint & Position       = wxDefaultPosition,
+        const wxSize  & Size           = wxDefaultSize,
+        bool            StartMaximized = false
+        );
 
-    void AdjustScrollPositionToZoomFactor(FLONUM ZoomFactor);
-    void Printit(TDC & DC);
+    virtual ~CMainFrame();
 
-    HDC GetScreenDeviceContext() const
-    {
-        return m_ScreenDeviceContext;
-    }
-
-    HDC GetMemoryDeviceContext() const
-    {
-        return m_MemoryDeviceContext;
-    }
-
-    HDC GetBackBufferDeviceContext();
-
-protected:
-    void SetupWindow();
-
-    void Paint(TDC &, bool, TRect &);
-
-    void EvKeyDown(UINT, UINT, UINT);
-    void EvKeyUp(UINT, UINT, UINT);
-    void EvChar(UINT, UINT, UINT);
-    void EvLButtonDown(UINT, TPoint &);
-    void EvLButtonUp(UINT, TPoint &);
-    void EvRButtonDown(UINT, TPoint &);
-    void EvRButtonUp(UINT, TPoint &); 
-    void EvMouseMove(UINT, TPoint &);
-    void EvSize(UINT, TSize &);
-    void EvDestroy();
-
-    DECLARE_RESPONSE_TABLE(TScreenWindow);
-
-private:
-    void GetScrollRatios(FLONUM & XRatio, FLONUM & YRatio);
-
-    HDC     m_ScreenDeviceContext;
-    HDC     m_MemoryDeviceContext;
-    HDC     m_BackBufferDeviceContext;
-    HBITMAP m_BackBuffer;
-};
-
-class CEditors : public qlist
-{
-public:
-    void insert(class TMyFileWindow * Editor)
-    {
-        qlist::insert(Editor);
-    }
-
-    qlink * find(class TMyFileWindow * Editor)
-    {
-        return qlist::find(Editor);
-    }
-
-    void remove(class TMyFileWindow * Editor)
-    {
-        qlist::remove(Editor);
-    }
-
-    class TMyFileWindow * get()
-    {
-        return (class TMyFileWindow *) qlist::get();
-    }
-};
-
-class TMainFrame : public TDecoratedFrame
-{
-public:
-
-    TMainFrame(TWindow * AParent, LPCSTR ATitle, TPaneSplitter * PaneSplitter);
-    ~TMainFrame();
-
-    static int PopupEditorForFile(const char *FileName, NODE *args);
-    class TMyFileWindow * CreateEditWindow(const char *FileName, NODE *args, bool check_for_errors);
-    void DestroyEditWindow(class TMyFileWindow * EditWindow);
-    void MyPopupEdit(const char *FileName, NODE * args, bool check_for_errors);
-    void MyPopupEditToError(const char *FileName);
-    bool IsEditorOpen();
-    TMyFileWindow * GetEditor();
-
-    void MyPopupStatus();
-    void MyPopupStatusKill();
-    char * MyPopupInput(const char *prompt);
-
-    void FixWindowTitle();
     void UndockCommanderWindow();
     void DockCommanderWindow();
+#ifndef WX_PURE
     bool TranslateKeyboardShortcut(MSG & Message);
-
-protected:
-    void SetupWindow();
-    bool CanClose();
-    void GetWindowClass(WNDCLASS & WndClass);
-    char * GetClassName();
-
-    bool FileSave();
-    bool SaveFile();
-    bool SaveFileAs();
-    void SaveBitmap();
-    void SaveBitmapAs();
-
-    void EvDestroy();
-    void EvTimer(UINT);
-    void EvSize(UINT, TSize &);
-
-    void CMFileNew();
-    void CMFileLoad();
-    void CMFileOpen();
-
-public:
-    // The File-Save options are public so that the
-    // commander's list box can delegate the message.
-    void CMFileSave();
-    void CMFileSaveAs();
-
-protected:
-    void CMFileEdit();
-    void CMFileErase();
-    void CMFileSetAsScreenSaverEnable(TCommandEnabler& commandHandler);
-    void CMFileSetAsScreenSaver();
-    void CMExit();
-    void CmSelectAll();
-
-    void CMBitmapNew();
-    void CMBitmapOpen();
-    void CMBitmapSave();
-    void CMBitmapSaveAs();
-    void CMBitmapPrint();
-    void CMBitmapPrinterSetup();
-    void CMBitmapPrinterArea();
-
-public:  //HACK
-    void CMHelp();
-
-protected:
-    void CMHelpDemo();
-    void CMHelpExamples();
-    void CMHelpReleaseNotes();
-    void CMHelpTutorial();
-    void CMHelpAbout();
-    void CMHelpAboutMS();
-
-#if MANUAL_HAS_TRANSLATION_TABLES
-    void CMHelpLangToEnglish();
-    void CMHelpEnglishToLang();
 #endif
 
-    void CMControlExecute();
+    void ShowStatus();
+    void HideStatus();
+    bool StatusDialogIsShowing();
 
-    void CMSetFont();
-    void CMSetCommanderFont();
-    void CMSetPenSize();
-    void CMSetPenColor();
-    void CMSetFloodColor();
-    void CMSetScreenColor();
+    CCommander * GetCommander();
+    wxWindow   * GetTopLevelWindowForCommander();
+    CScreen    * GetScreen();
 
-    void CMZoomIn();
-    void CMZoomOut();
-    void CMZoomNormal();
+    bool IsEditorOpen() const;
 
-    LRESULT MMMCINotify(WPARAM, LPARAM);
-    LRESULT WMCheckQueue(WPARAM, LPARAM);
-    LRESULT OnNetworkConnectSendAck(WPARAM, LPARAM);
-    LRESULT OnNetworkConnectSendFinish(WPARAM, LPARAM);
-    LRESULT OnNetworkListenReceiveAck(WPARAM, LPARAM);
-    LRESULT OnNetworkListenReceiveFinish(WPARAM, LPARAM);
+    CWorkspaceEditor * GetWorkspaceEditor();
+
+    void
+    KeyboardNavigateTopLevelWindow(
+        wxWindow * CurrentWindowFocus,
+        int        DirectionFlags
+        );
+
+    char *
+    PromptUserForInput(
+        const char * Prompt
+        );
+
+    void
+    PopupEditor(
+        const wxString & FileName,
+        NODE           * EditArguments,
+        bool             CheckForErrors,
+        bool             OpenToError
+        );
+
+    void
+    PopupEditorToError(
+        const char *FileName
+        );
+
+    static
+    int
+    PopupEditorForFile(
+        const wxString & FileName,
+        NODE           * EditArguments
+        );
+
+    void CloseWorkspaceEditor(CWorkspaceEditor * Editor);
+
+    CStatusDialog * GetStatusDialog();
+    void            ClearStatusDialog();
 
 private:
 
-    bool WarnIfSavingEmptyWorkspace();
-    void EraseContentsOfWorkspace();
+    // A private helper class for printing
+    class CLogoPicturePrintout : public wxPrintout
+    {
+    public:
+        CLogoPicturePrintout(
+            const wxString        & Title,
+            wxWindow              & Screen,
+            wxPageSetupDialogData & PageSetup
+            );
+
+        bool OnPrintPage(int Page);
+        bool HasPage(int Page);
+
+        void
+        GetPageInfo(
+            int *MinPage,
+            int *MaxPage,
+            int *SelPageFrom,
+            int *SelPageTo
+            );
+
+    private:
+        wxWindow              & m_Screen;
+        wxPageSetupDialogData & m_PageSetup;
+    };
+
+    // Menu commands handlers
+    void OnFileNew(wxCommandEvent& Event);
+    void OnFileLoad(wxCommandEvent& Event);
+    void OnFileOpen(wxCommandEvent& Event);
+    void OnFileSave(wxCommandEvent& Event);
+    void OnFileSaveAs(wxCommandEvent& Event);
+    void OnFileSetAsScreenSaver(wxCommandEvent& Event);
+    void OnUpdateFileSetAsScreenSaver(wxUpdateUIEvent& Event);
+    void OnEditProcedure(wxCommandEvent& Event);
+    void OnEraseProcedure(wxCommandEvent& Event);
+    void OnExit(wxCommandEvent& Event);
+    void OnBitmapNew(wxCommandEvent& Event);
+    void OnBitmapOpen(wxCommandEvent& Event);
+    void OnBitmapSave(wxCommandEvent& Event);
+    void OnBitmapSaveAs(wxCommandEvent& Event);
+    void OnBitmapPrint(wxCommandEvent& Event);
+    void OnBitmapPrinterSetup(wxCommandEvent& Event);
+    void OnSetLabelFont(wxCommandEvent& Event);
+    void OnSetCommanderFont(wxCommandEvent& Event);
+    void OnSetActiveArea(wxCommandEvent& Event);
+    void OnSetPenSize(wxCommandEvent& Event);
+    void OnSetPenColor(wxCommandEvent& Event);
+    void OnSetFloodColor(wxCommandEvent& Event);
+    void OnSetScreenColor(wxCommandEvent& Event);
+    void OnZoomIn(wxCommandEvent& Event);
+    void OnZoomOut(wxCommandEvent& Event);
+    void OnZoomNormal(wxCommandEvent& Event);
+    void OnHelp(wxCommandEvent& Event);
+#if MANUAL_HAS_TRANSLATION_TABLES
+    void OnHelpLanguageToEnglish(wxCommandEvent& Event);
+    void OnHelpEnglishToLanguage(wxCommandEvent& Event);
+#endif
+    void OnHelpTutorial(wxCommandEvent& Event);
+    void OnHelpDemo(wxCommandEvent& Event);
+    void OnHelpExamples(wxCommandEvent& Event);
+    void OnHelpReleaseNotes(wxCommandEvent& Event);
+    void OnAboutFmsLogo(wxCommandEvent& Event);
+    void OnAboutMultipleSclerosis(wxCommandEvent& Event);
+
+    void OnResize(wxSizeEvent& Event);
+
+    void OnClose(wxCloseEvent& Event);
+
+#ifndef WX_PURE
+    virtual WXLRESULT MSWWindowProc(
+        WXUINT   Message,
+        WXWPARAM WParam,
+        WXLPARAM LParam
+        );
+#endif // WX_PURE
+
+    // Private helper functions
+    void PostCheckQueueMessage();
+
+    CWorkspaceEditor *
+    CreateWorkspaceEditor(
+        const wxString & FileName,
+        NODE           * EditArguments,
+        bool             CheckForErrors,
+        bool             OpenToError
+        );
+
+    void SetSashPosition(int position);
+
+#ifndef WX_PURE
+    void
+    SetColorHelper(
+        CSetColor * &   SetColorDialog,
+        const char *    DialogTitle,
+        COLORREF        InitialColor,
+        const char *    LogoCommand
+        );
 
     void
     InitializeOpenFileNameForLogoFiles(
         OPENFILENAME & OpenFileData
         );
+#endif // WX_PURE
+
+    bool WarnIfSavingEmptyWorkspace();
+    bool FileSave();
+    bool SaveFile();
+    bool SaveFileAs();
+    bool CanClose();
+
+    void SaveBitmap();
+    void SaveBitmapAs();
 
     void
-    ShowColorPicker(
-        class TColorDialog * & ColorPickerDialog,
-        RGBCOLOR               InitialColor,
-        const char *           EnglishDescription,
-        const char *           LogoCommand
+    OpenFileWithDefaultApplication(
+        const char * FileName
         );
 
-public:
-    class TMyCommandWindow     * CommandWindow;
-    class CStatusWindow        * StatusWindow;
-    class TPaneSplitter        * PaneSplitterWindow;
-    class TScreenWindow        * ScreenWindow;
+    void ResizeToFitScreen();
+    void InitializePrinter();
 
-private:
+    // Member variables
+    CScreen          * m_Screen;
+    wxWindow         * m_Commander;
+    CCommander       * m_RealCommander;
+    CStatusDialog    * m_StatusDialog;
+    CSetPenSize      * m_SetPenSizeDialog;
+    wxSplitterWindow * m_Splitter;
 
-    class TPrinter      * m_Printer;
-    class TColorDialog  * m_ScreenColorPicker;
-    class TColorDialog  * m_PenColorPicker;
-    class TColorDialog  * m_FloodColorPicker;
+    const int m_OriginalWidth;
+    const int m_OriginalHeight;
 
-    class TSizeDialog   * m_PenSizePicker;
+    bool  m_CommanderIsDocked;
+    bool  m_IsNewFile;
+    bool  m_IsNewBitmap;
 
-    CEditors              m_Editors;
+    // m_PageSetupData stores printer preferences across printouts.
+    wxPageSetupDialogData m_PageSetupData;
 
-    char FileName[MAX_PATH];
-    char BitmapName[MAX_PATH];
-    bool IsNewFile;
-    bool IsNewBitmap;
-    bool IsCommanderDocked;
+#ifndef WX_PURE
+    // TODO: Make these wxString objects
+    char m_FileName[MAX_PATH];
+    char m_BitmapName[MAX_PATH];
+#endif // WX_PURE
 
+    CSetColor * m_SetPenColorDialog;
+    CSetColor * m_SetFloodColorDialog;
+    CSetColor * m_SetScreenColorDialog;
 
-    DECLARE_RESPONSE_TABLE(TMainFrame);
+    // REVISIT: should this be std::set?
+    std::map<CWorkspaceEditor*,CWorkspaceEditor*> m_Editors;
+
+    DECLARE_EVENT_TABLE();
+    DECLARE_NO_COPY_CLASS(CMainFrame);
 };
-
-struct MENUITEM 
-{
-    const char *  MenuText;
-    UINT          MenuId;
-};
-
-extern void FillMenu(
-    class TMenu           & Menu, 
-    const struct MENUITEM * MenuItems,
-    size_t                  MenuItemsLength
-    );
-
-extern void AppendPopupMenu(
-    class TMenu           & Menu,
-    const char            * PopupMenuText,
-    const struct MENUITEM * PopupMenuItems,
-    size_t                  PopupMenuItemsLength
-    );
-
-extern void SetTextOnChildWindows(
-    class TWindow *  Parent,
-    const MENUITEM * ChildText,
-    size_t           ChildTextLength
-    );
-
-#endif // __MAINFRAME_H_

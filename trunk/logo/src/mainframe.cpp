@@ -1,230 +1,128 @@
-/*
- *  Copyright (C) 1995 by the Regents of the University of California
- *  Copyright (C) 1995 by George Mills
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- */
+// ----------------------------------------------------------------------------
+// headers
+// ----------------------------------------------------------------------------
 
-#include <owl/compat.h>
-#include <owl/scroller.h>
-#include <owl/printer.h>
-#include <shlobj.h>
+// For compilers that support precompilation, includes "wx/wx.h".
+#include <wx/wxprec.h>
 
-#ifndef INVALID_FILE_ATTRIBUTES
-const DWORD INVALID_FILE_ATTRIBUTES = 0xFFFFFFFF;
+#ifndef WX_PRECOMP
+    #include <wx/log.h>
+
+    #include <wx/app.h>
+    #include <wx/frame.h>
+
+    #include <wx/scrolwin.h>
+    #include <wx/menu.h>
+    #include <wx/msgdlg.h>
+
+    #include <wx/splitter.h>
+    #include <wx/statusbr.h>
+    #include <wx/dcmirror.h>
+    #include <wx/fontdlg.h>
+    #include <wx/printdlg.h>
+
+    #include <wx/dcmemory.h>
+
+    #include <wx/fontutil.h> // for wxNativeFontInfo
+    #include <wx/msgdlg.h>   // for wxMessageBox
 #endif
 
-#include "mainframe.h"
+#include <algorithm>
 
-#include "main.h"
-#include "utils.h"
-#include "ibmterm.h"
-#include "logorc.h"
-#include "eval.h"
-#include "const.h"
-#include "wrksp.h"
-#include "fileswnd.h"
-#include "error.h"
-#include "init.h"
-#include "logodata.h"
+#ifndef WX_PURE
+#include <shlobj.h>
+#endif
+
+#ifdef WX_PURE
+#define MAX_PATH (260)
+#endif
+
+#include "logorc.h" // for WM_*
+#include "guiutils.h"
+#include "commander.h"
 #include "activearea.h"
-#include "screenwindow.h"
-#include "questionbox.h"
-
-#include "devwind.h"
-#include "dlgwind.h"
-#include "netwind.h"
-#include "areawind.h"
-#include "cmdwind.h"
-#include "myfilewn.h"
-#include "myfileed.h"
-#include "graphwin.h"
-#include "statwind.h"
-#include "colordlg.h"
-#include "sizedlg.h"
+#include "setactivearea.h"
+#include "aboutfmslogo.h"
+#include "aboutmultiplesclerosis.h"
 #include "savebeforeexitdialog.h"
+#include "logocore.h"
+#include "localizedstrings.h"
+#include "fmslogo.h"
+#include "mainframe.h"
+#include "setpensize.h"
+#include "utils.h"
+#include "statusdialog.h"
+#include "screen.h"
 #include "selectstartupinstruction.h"
-#include "startup.h"
-#include "mmwind.h"
+#include "editproceduredialog.h"
+#include "eraseproceduredialog.h"
+#include "commanderhistory.h"
+#include "commanderinput.h"
+#include "minieditor.h"
+#include "workspaceeditor.h"
+#include "logodata.h"
+#include "setcolor.h"
+#include "graphwin.h"
+#include "init.h"
+#include "main.h"
+#include "screenwindow.h"   // for TraceOutput
 #include "mainwind.h"
+#include "logoeventqueue.h"
+#include "wrksp.h"
+#include "eval.h"
+#include "fileswnd.h"
+#include "graphwin.h"
+#include "mmwind.h" // for uninitialize_timers()
+#include "startup.h"
+#include "fontutils.h"
+#include "netwind.h"
+#include "questionbox.h"
+#include "stringadapter.h"
 #include "debugheap.h"
 
-#include "localizedstrings.h"
+// ----------------------------------------------------------------------------
+// CMainFrame::CLogoPicturePrintout
+// ----------------------------------------------------------------------------
 
-const int DEFAULT_COMMANDER_HEIGHT = 150;
-const int MIN_COMMANDER_HEIGHT     = 100;
-const int DEFAULT_SPLITTER_WIDTH   = 5;
-
-class TRulerOut : public TPrintout
+CMainFrame::CLogoPicturePrintout::CLogoPicturePrintout(
+    const wxString        & Title,
+    wxWindow              & Screen,
+    wxPageSetupDialogData & PageSetup
+    ) :
+    wxPrintout(Title),
+    m_Screen(Screen),
+    m_PageSetup(PageSetup)
 {
-public:
-
-    TRulerOut(const char * ATitle) : TPrintout(ATitle)
-    {
-    }
-
-    void PrintPage(int Page, TRect & Rect, UINT Flags);
-
-    void GetDialogInfo(int &minPage, int &maxPage, int &selFromPage, int &selToPage)
-    {
-        minPage = 1;
-        maxPage = 1;
-        selFromPage = 1;
-        selToPage = 1;
-    }
-
-    void SetBanding(BOOL b)
-    {
-        Banding = b;
-    }
-
-    bool HasPage(int pageNumber)
-    {
-        return pageNumber == 1;
-    }
-};
-
-// Print page (or pages)
-void TRulerOut::PrintPage(int /* page */, TRect & /* rect */, UINT /* flags */)
-{
-    MainWindowx->ScreenWindow->Printit(*DC);
 }
 
-
-TScreenWindow::TScreenWindow(
-    TWindow *AParent,
-    LPCSTR   ATitle
-    ) : TWindow(AParent, ATitle),
-        m_ScreenDeviceContext(NULL),
-        m_MemoryDeviceContext(NULL),
-        m_BackBufferDeviceContext(NULL),
-        m_BackBuffer(NULL)
+bool
+CMainFrame::CLogoPicturePrintout::OnPrintPage(
+    int Page
+    )
 {
-    if (!bFixed)
-    {
-        Attr.Style |= WS_VSCROLL | WS_HSCROLL;
-    }
-    Attr.Style |= WS_BORDER;
-
-    Scroller = new TScroller(this, 1, 1, BitMapWidth, BitMapHeight);
-}
-
-TScreenWindow::~TScreenWindow()
-{
-    delete Scroller;
-}
-
-void TScreenWindow::SetupWindow()
-{
-    TWindow::SetupWindow();
-
-    /* adjust scrollers */
-    const TRect clientRect = GetClientRect();
-
-    Scroller->SetRange(
-        BitMapWidth - clientRect.Width(),
-        BitMapHeight - clientRect.Height());
-
-    Scroller->ScrollTo(
-        (BitMapWidth  - clientRect.Width()) / 2,
-        (BitMapHeight - clientRect.Height()) / 2);
-
-    m_ScreenDeviceContext = GetDC(HWindow);
-    m_MemoryDeviceContext = CreateCompatibleDC(m_ScreenDeviceContext);
-
-    // create the in-memory image of the bitmap
-    MemoryBitMap = CreateCompatibleBitmap(
-        m_ScreenDeviceContext,
-        BitMapWidth,
-        BitMapHeight);
-    if (MemoryBitMap == NULL)
-    {
-        // If we don't have a memory bitmap to save the drawing, then
-        // most of FMSLogo won't work.  Notify the user and exit.
-        MessageBox(
-            LOCALIZED_CANNOTALLOCATESCREEN,
-            NULL,
-            MB_OK | MB_ICONERROR);
-
-        TXWindow::Raise(this);
-    }
-
-    // set the bitmap object of the screen
-    SelectObject(m_MemoryDeviceContext, MemoryBitMap);
-
-    // clear the screen to white
-    PatBlt(m_MemoryDeviceContext, 0, 0, BitMapWidth, BitMapHeight, WHITENESS);
-}
-
-
-void TScreenWindow::EvDestroy()
-{
-    if (MemoryBitMap != NULL)
-    {
-        DeleteObject(MemoryBitMap);
-        MemoryBitMap = NULL;
-    }
-
-    if (m_MemoryDeviceContext != NULL)
-    {
-        DeleteDC(m_MemoryDeviceContext);
-        m_MemoryDeviceContext = NULL;
-    }
-
-    if (m_BackBuffer != NULL)
-    {
-        DeleteObject(m_BackBuffer);
-        m_BackBuffer = NULL;
-    }
-
-    if (m_BackBufferDeviceContext != NULL)
-    {
-        DeleteDC(m_BackBufferDeviceContext);
-        m_BackBufferDeviceContext = NULL;
-    }
-   
-    if (m_ScreenDeviceContext != NULL)
-    {
-        ReleaseDC(HWindow, m_ScreenDeviceContext);
-        m_ScreenDeviceContext = NULL;
-    }
-
-    TWindow::EvDestroy();
-}
-
-
-void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
-{
-    PaintToScreenWindow(PaintDC, PaintRect);
-}
-
-void TScreenWindow::Printit(TDC &PrintDC)
-{
+#ifdef WX_PURE
+    return false;
+#else
     // Must of rewrote this at least 26 times and it still does not
     // Work in some situations. This is just the "Paint" of printing.
     // See the print module for all the other stuff.
+    wxDC * dc = GetDC();
+    if (dc == NULL)
+    {
+        return false;
+    }
+
+    HDC PrintDC = static_cast<HDC>(dc->GetHDC());
 
     // do we even have a chance?
     if ((GetDeviceCaps(PrintDC, RASTERCAPS) & RC_STRETCHDIB) == 0)
     {
         // notify the user that the printer does not support scaling
-        MessageBox(
-            LOCALIZED_ERROR_PRINTERCANTSCALE, 
-            LOCALIZED_ERROR);
-        return;
+        wxMessageBox(
+            WXSTRING(LOCALIZED_ERROR_PRINTERCANTSCALE), 
+            WXSTRING(LOCALIZED_ERROR),
+            wxICON_ERROR);
+        return false;
     }
 
     int printBitCount = GetDeviceCaps(PrintDC, BITSPIXEL);
@@ -238,7 +136,8 @@ void TScreenWindow::Printit(TDC &PrintDC)
     }
 
     // Get screen bitCount
-    HDC screenDc = GetDC(0);
+    wxClientDC * screenDeviceContext = new wxClientDC(&m_Screen);
+    HDC screenDc = static_cast<HDC>(screenDeviceContext->GetHDC());
 
     int screenBitCount = GetDeviceCaps(screenDc, BITSPIXEL);
     screenBitCount *= GetDeviceCaps(screenDc, PLANES);
@@ -304,6 +203,8 @@ void TScreenWindow::Printit(TDC &PrintDC)
     SetTextColor(PrintDC, 0x00000000L);
     SetBkColor(PrintDC, 0x00ffffffL);
 
+    bool isOk = true;
+
     int scanLines = GetDIBits(
         screenDc,
         MemoryBitMap,
@@ -334,22 +235,25 @@ void TScreenWindow::Printit(TDC &PrintDC)
         if (status <= 0)
         {
             // TODO: message the last error into the current locale
-            MessageBox(
-                LOCALIZED_ERROR_CANTDRAWIMAGE, 
-                LOCALIZED_ERROR);
+            DWORD lastError = GetLastError();
+            const wxString & message = wxString::Format(
+                "%s\n%s: %lu",
+                LOCALIZED_ERROR_CANTDRAWIMAGE,
+                LOCALIZED_ERROR_SUBCODE,
+                lastError);
 
-            char buffer[64];
-            MessageBox(
-                itoa(GetLastError(), buffer, 10), 
-                LOCALIZED_ERROR_SUBCODE);
+            wxMessageBox(message, WXSTRING(LOCALIZED_ERROR), wxICON_ERROR);
+            isOk = false;
         }
     }
     else
     {
         // can't do it
-        MessageBox(
-            LOCALIZED_ERROR_CANTEXTRACTIMAGE,
-            LOCALIZED_ERROR);
+        wxMessageBox(
+            WXSTRING(LOCALIZED_ERROR_CANTEXTRACTIMAGE),
+            WXSTRING(LOCALIZED_ERROR),
+            wxICON_ERROR);
+        isOk = false;
     }
 
     // restore resources 
@@ -360,615 +264,1115 @@ void TScreenWindow::Printit(TDC &PrintDC)
 
     delete [] bitsPtr;
 
-    ReleaseDC(0, screenDc);
-
     delete bitmapInfo;
+    delete screenDeviceContext;
+
+    return isOk;
+#endif
+}
+
+void
+CMainFrame::CLogoPicturePrintout::GetPageInfo(
+    int *MinPage,
+    int *MaxPage,
+    int *SelPageFrom,
+    int *SelPageTo
+    )
+{
+    *MinPage     = 1;
+    *MaxPage     = 1;
+    *SelPageFrom = 1;
+    *SelPageTo   = 1;
+}
+
+bool
+CMainFrame::CLogoPicturePrintout::HasPage(int Page)
+{
+    return Page == 1;
 }
 
 
-void TScreenWindow::EvKeyDown(UINT, UINT, UINT)
+// ----------------------------------------------------------------------------
+// CMainFrame
+// ----------------------------------------------------------------------------
+
+enum MainFrameMenuIds
 {
-    TMessage Msg = __GetTMessage();
+    ID_FILENEW = wxID_HIGHEST,
+    ID_FILELOAD,
+    ID_FILEOPEN,
+    ID_FILESAVE,
+    ID_FILESAVEAS,
+    ID_FILESETASSCREENSAVER,
+    ID_FILEEDIT,
+    ID_FILEERASE,
 
-    // if keyboard was on and up and down is enabled then continue
-    if (KeyboardCapture == KEYBOARDCAPTURE_KeyDownKeyUp)
+    ID_BITMAPNEW,
+    ID_BITMAPOPEN,
+    ID_BITMAPSAVE,
+    ID_BITMAPSAVEAS,
+
+    ID_BITMAPPRINT,
+    ID_BITMAPPRINTERSETUP,
+
+    ID_BITMAPPRINTERAREA,
+
+    ID_SETPENSIZE,
+
+    ID_SETLABELFONT,
+    ID_SETCOMMANDERFONT,
+
+    ID_SETPENCOLOR,
+    ID_SETFLOODCOLOR,
+    ID_SETSCREENCOLOR,
+
+#if MANUAL_HAS_TRANSLATION_TABLES
+    // options for translating to/from English
+    ID_HELPLANGTOENGLISH,
+    ID_HELPENGLISHTOLANG,
+#endif
+
+    ID_HELPTUTORIAL,
+    ID_HELPDEMO,
+    ID_HELPEXAMPLES,
+    ID_HELPRELEASENOTES,
+
+    ID_HELPABOUTMS,
+};
+
+BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
+    EVT_MENU(ID_FILENEW,                   CMainFrame::OnFileNew)
+    EVT_MENU(ID_FILELOAD,                  CMainFrame::OnFileLoad)
+    EVT_MENU(ID_FILEOPEN,                  CMainFrame::OnFileOpen)
+    EVT_MENU(ID_FILESAVE,                  CMainFrame::OnFileSave)
+    EVT_MENU(ID_FILESAVEAS,                CMainFrame::OnFileSaveAs)
+    EVT_MENU(ID_FILESETASSCREENSAVER,      CMainFrame::OnFileSetAsScreenSaver)
+    EVT_UPDATE_UI(ID_FILESETASSCREENSAVER, CMainFrame::OnUpdateFileSetAsScreenSaver)
+    EVT_MENU(ID_FILEEDIT,                  CMainFrame::OnEditProcedure)
+    EVT_MENU(ID_FILEERASE,                 CMainFrame::OnEraseProcedure)
+    EVT_MENU(wxID_EXIT,                    CMainFrame::OnExit)
+    EVT_MENU(ID_BITMAPNEW,                 CMainFrame::OnBitmapNew)
+    EVT_MENU(ID_BITMAPOPEN,                CMainFrame::OnBitmapOpen)
+    EVT_MENU(ID_BITMAPSAVE,                CMainFrame::OnBitmapSave)
+    EVT_MENU(ID_BITMAPSAVEAS,              CMainFrame::OnBitmapSaveAs)
+    EVT_MENU(ID_BITMAPPRINT,               CMainFrame::OnBitmapPrint)
+    EVT_MENU(ID_BITMAPPRINTERSETUP,        CMainFrame::OnBitmapPrinterSetup)
+    EVT_MENU(ID_BITMAPPRINTERAREA,         CMainFrame::OnSetActiveArea)
+    EVT_MENU(ID_SETPENSIZE,                CMainFrame::OnSetPenSize)
+    EVT_MENU(ID_SETLABELFONT,              CMainFrame::OnSetLabelFont)
+    EVT_MENU(ID_SETCOMMANDERFONT,          CMainFrame::OnSetCommanderFont)
+    EVT_MENU(ID_SETPENCOLOR,               CMainFrame::OnSetPenColor)
+    EVT_MENU(ID_SETSCREENCOLOR,            CMainFrame::OnSetScreenColor)
+    EVT_MENU(ID_SETFLOODCOLOR,             CMainFrame::OnSetFloodColor)
+    EVT_MENU(wxID_HELP_INDEX,              CMainFrame::OnHelp)
+#if MANUAL_HAS_TRANSLATION_TABLES
+    // options for translating to/from English
+    EVT_MENU(ID_HELPLANGTOENGLISH,         CMainFrame::OnHelpLanguageToEnglish)
+    EVT_MENU(ID_HELPENGLISHTOLANG,         CMainFrame::OnHelpEnglishToLanguage)
+#endif
+    EVT_MENU(ID_HELPTUTORIAL,              CMainFrame::OnHelpTutorial)
+    EVT_MENU(ID_HELPDEMO,                  CMainFrame::OnHelpDemo)
+    EVT_MENU(ID_HELPEXAMPLES,              CMainFrame::OnHelpExamples)
+    EVT_MENU(ID_HELPRELEASENOTES,          CMainFrame::OnHelpReleaseNotes)
+    EVT_MENU(wxID_ABOUT,                   CMainFrame::OnAboutFmsLogo)
+    EVT_MENU(ID_HELPABOUTMS,               CMainFrame::OnAboutMultipleSclerosis)
+    EVT_MENU(wxID_ZOOM_IN,                 CMainFrame::OnZoomIn)
+    EVT_MENU(wxID_ZOOM_OUT,                CMainFrame::OnZoomOut)
+    EVT_MENU(wxID_ZOOM_100,                CMainFrame::OnZoomNormal)
+    EVT_SIZE(CMainFrame::OnResize)
+    EVT_CLOSE(CMainFrame::OnClose)
+END_EVENT_TABLE()
+
+// ScreenWidth    - the size of the screen window.
+// ScreenHeight   - the size of the screen window.
+// Position       - where the frame window should be placed.
+// Size           - The size of the frame window.
+//                  In bFixed mode, this is ignored, as the width and height
+//                  are derived from ScreenWidth and ScreenHeight.
+// StartMaximized - true, if the window should start maximized (without a frame).
+//                  false, if it should start in a restored mode.
+CMainFrame::CMainFrame(
+    int             ScreenWidth,
+    int             ScreenHeight,
+    const wxPoint & Position,
+    const wxSize  & Size,
+    bool            StartMaximized
+    ) : wxFrame(
+        NULL, 
+        wxID_ANY, 
+        WXSTRING(LOCALIZED_GENERAL_PRODUCTNAME),
+        Position,
+        Size,
+        wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE |
+            (StartMaximized ? wxMAXIMIZE : 0)),
+      m_Screen(NULL),
+      m_Commander(NULL),
+      m_RealCommander(NULL),
+      m_StatusDialog(NULL),
+      m_SetPenSizeDialog(NULL),
+      m_Splitter(NULL),
+      m_OriginalWidth(ScreenWidth),
+      m_OriginalHeight(ScreenHeight),
+      m_CommanderIsDocked(false),
+      m_IsNewFile(true),
+      m_IsNewBitmap(true),
+      m_SetPenColorDialog(NULL),
+      m_SetFloodColorDialog(NULL),
+      m_SetScreenColorDialog(NULL)
+{
+#ifndef WX_PURE
+    m_FileName[0]   = '\0';
+    m_BitmapName[0] = '\0';
+#endif
+
+    //
+    // Construct the main menu
+    //
+    static const MENUITEM fileMenuItems[] = {
+        {LOCALIZED_FILE_NEW,              ID_FILENEW},
+        {LOCALIZED_FILE_LOAD,             ID_FILELOAD},
+        {LOCALIZED_FILE_OPEN,             ID_FILEOPEN},
+        {LOCALIZED_FILE_SAVE,             ID_FILESAVE},
+        {LOCALIZED_FILE_SAVEAS,           ID_FILESAVEAS},
+        {LOCALIZED_FILE_SETASSCREENSAVER, ID_FILESETASSCREENSAVER},
+        {0},
+        {LOCALIZED_FILE_EDIT,             ID_FILEEDIT},
+        {LOCALIZED_FILE_ERASE,            ID_FILEERASE},
+        {0},
+        {LOCALIZED_FILE_EXIT,             wxID_EXIT},
+    };
+
+    static const MENUITEM bitmapMenuItems[] = {
+        {LOCALIZED_BITMAP_NEW,           ID_BITMAPNEW},
+        {LOCALIZED_BITMAP_LOAD,          ID_BITMAPOPEN},
+        {LOCALIZED_BITMAP_SAVE,          ID_BITMAPSAVE},
+        {LOCALIZED_BITMAP_SAVEAS,        ID_BITMAPSAVEAS},
+        {0},
+        {LOCALIZED_BITMAP_PRINT,         ID_BITMAPPRINT},
+        {LOCALIZED_BITMAP_PRINTERSETUP,  ID_BITMAPPRINTERSETUP},
+        {0},
+        {LOCALIZED_BITMAP_ACTIVEAREA,    ID_BITMAPPRINTERAREA},
+    };
+
+    static const MENUITEM setMenuItems[] = {
+        {LOCALIZED_SET_PENSIZE,       ID_SETPENSIZE},
+        {0},
+        {LOCALIZED_SET_LABELFONT,     ID_SETLABELFONT},
+        {LOCALIZED_SET_COMMANDERFONT, ID_SETCOMMANDERFONT},
+        {0},
+        {LOCALIZED_SET_PENCOLOR,      ID_SETPENCOLOR},
+        {LOCALIZED_SET_FLOODCOLOR,    ID_SETFLOODCOLOR},
+        {LOCALIZED_SET_SCREENCOLOR,   ID_SETSCREENCOLOR},
+    };
+
+    static const MENUITEM zoomMenuItems[] = {
+        {LOCALIZED_ZOOM_IN,     wxID_ZOOM_IN},
+        {LOCALIZED_ZOOM_OUT,    wxID_ZOOM_OUT},
+        {LOCALIZED_ZOOM_NORMAL, wxID_ZOOM_100},
+    };
+ 
+    static const MENUITEM helpMenuItems[] = {
+        {LOCALIZED_HELP_INDEX,         wxID_HELP_INDEX},
+#if MANUAL_HAS_TRANSLATION_TABLES
+        // options for translating to/from English
+        {LOCALIZED_HELP_LANGTOENGLISH, ID_HELPLANGTOENGLISH},
+        {LOCALIZED_HELP_ENGLISHTOLANG, ID_HELPENGLISHTOLANG},
+#endif
+        {0},
+        {LOCALIZED_HELP_TUTORIAL,      ID_HELPTUTORIAL},
+        {LOCALIZED_HELP_DEMO,          ID_HELPDEMO},
+        {LOCALIZED_HELP_EXAMPLE,       ID_HELPEXAMPLES},
+        {LOCALIZED_HELP_RELEASENOTES,  ID_HELPRELEASENOTES},
+        {0},
+        {LOCALIZED_HELP_ABOUTFMSLOGO,  wxID_ABOUT},
+        {LOCALIZED_HELP_MS,            ID_HELPABOUTMS},
+    };
+
+    // Make a menubar
+    wxMenuBar * mainMenu = new wxMenuBar;
+
+    AppendChildMenu(mainMenu, LOCALIZED_FILE,   fileMenuItems,   ARRAYSIZE(fileMenuItems));
+    AppendChildMenu(mainMenu, LOCALIZED_BITMAP, bitmapMenuItems, ARRAYSIZE(bitmapMenuItems));
+    AppendChildMenu(mainMenu, LOCALIZED_SET,    setMenuItems,    ARRAYSIZE(setMenuItems));
+    AppendChildMenu(mainMenu, LOCALIZED_ZOOM,   zoomMenuItems,   ARRAYSIZE(zoomMenuItems));
+    AppendChildMenu(mainMenu, LOCALIZED_HELP,   helpMenuItems,   ARRAYSIZE(helpMenuItems));
+
+    SetMenuBar(mainMenu);
+
+    SetFmsLogoIcon(*this);
+
+    //
+    // Add the splitter to separate the screen from the commander
+    //
+
+    // Without wxSP_NO_XP_THEME, the splitter is invisible in
+    // Windows XP, Windows Aero, and Windows 7 Basic themes.
+    m_Splitter = new wxSplitterWindow(
+        this,
+        wxID_ANY,
+        wxDefaultPosition,
+        wxDefaultSize,
+        wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN | wxSP_NO_XP_THEME);
+
+    m_Splitter->SetMinimumPaneSize(MIN_COMMANDER_HEIGHT);
+
+    m_Screen = new CScreen(m_Splitter, ScreenWidth, ScreenHeight);
+
+    m_RealCommander = new CCommander(m_Splitter);
+    DockCommanderWindow();
+
+
+    m_Screen->Show();
+    m_Commander->Show();
+
+    // Set a flag that the printer data needs to be initialized.
+    // We delay the initialization because it can be block
+    // if the default printer is an offline network printer.
+    m_PageSetupData.SetDefaultInfo(true);
+
+#ifndef WX_PURE
+    // init the pens based on the color
+    UpdateNormalPen(GetPenStateForSelectedTurtle().Width, pcolor);
+    UpdateErasePen(GetPenStateForSelectedTurtle().Width,  scolor);
+#endif
+
+    // it's show time for our little friend
+    draw_turtle(true);
+}
+
+CMainFrame::~CMainFrame()
+{
+}
+
+// Resizes the frame window so that the screen window matches the
+// width/height that was originally requested.
+void CMainFrame::ResizeToFitScreen()
+{
+    // HACK: fix up the frame window's size so that the screen's
+    // size matches what the client passed in on the command line.
+    // There MUST be a simpler/better way, but I do not know
+    // how to set the size of the screen client area directly.
+    wxSize screenRectangle = m_Screen->GetClientSize();
+    int deltaX = m_OriginalWidth  - screenRectangle.GetWidth();
+    int deltaY = m_OriginalHeight - screenRectangle.GetHeight();
+
+    if (deltaX != 0 || deltaY != 0)
     {
-        callthing *callevent = callthing::CreateKeyboardEvent(keyboard_keydown, Msg.WParam);
+        // The screen is the wrong size, so we adjust the
+        // frame window to account for this.
+        wxSize frameRectangle = GetClientSize();
+        SetClientSize(
+            frameRectangle.GetWidth() + deltaX,
+            frameRectangle.GetHeight() + deltaY);
+    }
+}
 
-        calllists.insert(callevent);
-        checkqueue();
 
-        // Don't do scrolling
+void CMainFrame::UndockCommanderWindow()
+{
+    if (m_CommanderIsDocked)
+    {
+        CCommanderDialog * newCommander = new CCommanderDialog(
+            this,
+            m_RealCommander);
+
+        if (!bFixed)
+        {
+            // Save the current commander's height.
+            SetConfigurationInt(
+                "CommanderHeight",
+                m_Commander->GetSize().GetHeight());
+
+            // Restore the previous size and position of the
+            // undocked commander window.
+            const wxRect & currentRect = newCommander->GetRect();
+            int x      = currentRect.GetX();
+            int y      = currentRect.GetY();
+            int width  = currentRect.GetWidth();
+            int height = currentRect.GetHeight();
+            GetConfigurationQuadruple("CommanderWindow", &x, &y, &width, &height);
+            checkwindow(&x, &y, &width, &height);
+            newCommander->SetSize(x, y, width, height);
+        }
+
+        // commit to the new commander
+        m_Splitter->Unsplit(m_RealCommander);
+        m_RealCommander->Reparent(newCommander);
+        m_RealCommander->Show();
+
+        m_Commander = newCommander;
+        m_Commander->Show();
+
+        m_RealCommander->GiveControlToInputBox();
+        m_CommanderIsDocked = false;
+
+        if (bFixed)
+        {
+            // Fix up the frame window's size so that the screen's
+            // size matches what the client passed in on the command line.
+            ResizeToFitScreen();
+        }
+    }
+}
+
+void CMainFrame::DockCommanderWindow()
+{
+    if (!m_CommanderIsDocked) 
+    {
+#ifdef __WXMSW__ // utils.cpp only builds on Windows
+
+        // Restore the commander window's height.
+        int commanderWindowHeight = GetConfigurationInt(
+            "CommanderHeight",
+            DEFAULT_COMMANDER_HEIGHT);
+
+        // sanity-check the input
+        commanderWindowHeight = std::max(
+            commanderWindowHeight,
+            MIN_COMMANDER_HEIGHT);
+#else
+        int commanderWindowHeight = MIN_COMMANDER_HEIGHT;
+#endif
+
+        if (bFixed)
+        {
+            // The user requested that we never change the size of the drawing surface,
+            // so we must grow the main window to hold the commander window.
+            int mainFrameWidth;
+            int mainFrameHeight;
+            GetClientSize(&mainFrameWidth, &mainFrameHeight);
+
+            // grow the main window to hold the splitter and the commander
+            const int newHeight =
+                mainFrameHeight +
+                m_Splitter->GetSashSize() +
+                commanderWindowHeight;
+
+            SetClientSize(mainFrameWidth, newHeight);
+        }
+        else
+        {
+            if (m_Commander != NULL &&
+                !static_cast<CCommanderDialog*>(m_Commander)->IsIconized())
+            {
+                // Save the Commander's dialog's position
+                const wxRect windowRectangle = m_Commander->GetRect();
+
+                SetConfigurationQuadruple(
+                    "CommanderWindow",
+                    windowRectangle.GetLeft(),
+                    windowRectangle.GetTop(),
+                    windowRectangle.GetWidth(),
+                    windowRectangle.GetHeight());
+            }
+        }
+
+        m_RealCommander->Reparent(m_Splitter);
+
+        m_Splitter->SplitHorizontally(m_Screen, m_RealCommander, -commanderWindowHeight);
+
+        if (bFixed)
+        {
+            // Fix up the frame window's size so that the screen's
+            // size matches what the client passed in on the command line.
+            // It would be better to somehow unify this logic with the
+            // logic in the above "bFixed" block, but I haven't figure out
+            // how to do that.
+            ResizeToFitScreen();
+
+            SetSashPosition(m_OriginalHeight);
+        }
+
+        m_RealCommander->GetHistory()->ScrollToBottom();
+
+        // commit to the docked commander
+        if (m_Commander != NULL)
+        {
+            // m_Commander is NULL when this is called from the constructor
+            m_Commander->Destroy();
+        }
+        m_Commander = m_RealCommander;
+        m_Commander->Show();
+
+        m_RealCommander->GiveControlToInputBox();
+
+        m_CommanderIsDocked = true;
+    }
+}
+
+void CMainFrame::SetSashPosition(int position)
+{
+    // The splitter is created with the SP_3D style, which means that it
+    // has a 3D edge.  However, wxSplitterWindow::SetSashPosition() doesn't
+    // consider this part of the sash and so will place the sash such that
+    // the edge is above position.  Since we need pixel-exact placement
+    // of the splitter, we subtract the top of the edge from position.
+    int edgeHeight = wxSystemSettings::GetMetric(wxSYS_EDGE_Y);
+    if (edgeHeight != -1)
+    {
+        position += edgeHeight;
+    }
+
+    m_Splitter->SetSashPosition(position);
+}
+
+#ifndef WX_PURE
+
+static bool IsDescendentOf(HWND PossibleDescendant, const wxWindow * Ancestor)
+{
+    for (HWND currentWindow = PossibleDescendant;
+         currentWindow != NULL;
+         currentWindow = GetParent(currentWindow))
+    {
+        if (currentWindow == static_cast<HWND>(Ancestor->GetHandle()))
+        {
+            return true;
+        }
+    }
+         
+    return false;
+}
+
+bool CMainFrame::TranslateKeyboardShortcut(MSG & Message)
+{
+    WXMSG * const message = static_cast<WXMSG*>(&Message);
+
+    // Check if the message was generated on the commander's input.
+    if (IsDescendentOf(Message.hwnd, m_RealCommander->GetInput()))
+    {
+        bool isHandled = m_RealCommander->GetInput()->GetAcceleratorTable()->Translate(
+            m_RealCommander->GetInput(),
+            message);
+        if (isHandled)
+        {
+            return true;
+        }
+    }
+
+    // Check if the message was generated on the commander's history.
+    if (IsDescendentOf(Message.hwnd, m_RealCommander->GetHistory()))
+    {
+        bool isHandled = m_RealCommander->GetHistory()->GetAcceleratorTable()->Translate(
+            m_RealCommander->GetHistory(),
+            message);
+        if (isHandled)
+        {
+            return true;
+        }
+    }
+
+    // Check if the message was generated on the commander.
+    if (IsDescendentOf(Message.hwnd, m_RealCommander))
+    {
+        bool isHandled = m_RealCommander->GetAcceleratorTable()->Translate(
+            m_RealCommander,
+            message);
+        if (isHandled)
+        {
+            return true;
+        }
+    }
+
+    // Search across all editors to see if this belongs to it.
+    for (std::map<CWorkspaceEditor*,CWorkspaceEditor*>::const_iterator cursor = m_Editors.begin();
+         cursor != m_Editors.end();
+         ++cursor) {
+        CWorkspaceEditor * const editor = cursor->first;
+        if (IsDescendentOf(Message.hwnd, editor))
+        {
+            bool isHandled = editor->TranslateKeyboardShortcut(message);
+            if (isHandled)
+            {
+                return true;
+            }
+        }
+    }
+        
+    // Check if this message originated from the main frame.
+    if (IsDescendentOf(Message.hwnd, this))
+    {
+        bool isHandled = MSWDoTranslateMessage(this, message);
+        if (isHandled)
+        {
+            return true;
+        }
+    }
+
+    // This was not translated as an accelerator.
+    return false;
+}
+
+#endif // WX_PURE
+
+bool CMainFrame::IsEditorOpen() const
+{
+    return !m_Editors.empty();
+}
+
+CWorkspaceEditor * CMainFrame::GetWorkspaceEditor()
+{
+    if (m_Editors.empty())
+    {
+        return NULL;
+    }
+
+    // return any of the editors (doesn't matter which one)
+    return (*m_Editors.begin()).first;
+}
+
+CWorkspaceEditor *
+CMainFrame::CreateWorkspaceEditor(
+    const wxString & FileName,
+    NODE           * EditArguments,
+    bool             CheckForErrors,
+    bool             OpenToError
+    )
+{
+    // Construct the default coordinates of the editor's window
+    // to be about 1/2 of the working area and placed in the center.
+    int maxWidth;
+    int maxHeight;
+    GetWorkingAreaDimensions(maxWidth, maxHeight);
+
+    int x = (int) (maxWidth * 0.25);
+    int y = (int) (maxHeight * 0.25);
+    int w = (int) (maxWidth * 0.75);
+    int h = (int) (maxHeight * ScreenSz * 0.75);
+
+    // If the user has some coordinates saved, use them, instead.
+    GetConfigurationQuadruple("Editor", &x, &y, &w, &h); 
+    checkwindow(&x, &y, &w, &h);
+
+    // Determine the title
+    wxString editorWindowTitle;
+    if (EditArguments != NIL || CheckForErrors)
+    {
+        editorWindowTitle = WXSTRING(LOCALIZED_EDITOR_TITLE);
+    }
+    else
+    {
+        editorWindowTitle = FileName;
+    }
+
+    CWorkspaceEditor * editor = new CWorkspaceEditor(
+        this,
+        editorWindowTitle,
+        wxPoint(x, y),
+        wxSize(w, h),
+        FileName,
+        EditArguments,
+        CheckForErrors,
+        OpenToError);
+
+    // Add this editor the the list of known editors.
+    m_Editors.insert(std::pair<CWorkspaceEditor*,CWorkspaceEditor*>(editor,editor));
+
+    return editor;
+}
+
+char * CMainFrame::PromptUserForInput(const char *Prompt)
+{
+    // prompt the user for input
+    CQuestionBox questionBox(this, WXSTRING(Prompt), WXSTRING(LOCALIZED_INPUT));
+    int exitCode = questionBox.ShowModal();
+    if (exitCode != wxID_OK)
+    {
+        return NULL;
+    }
+
+    // Copy the user input to the Output string
+    return strdup(WXSTRING_TO_STRING(questionBox.GetAnswer()));
+}
+
+void
+CMainFrame::PopupEditor(
+    const wxString & FileName,
+    NODE           * EditArguments,
+    bool             CheckForErrors,
+    bool             OpenToError
+    )
+{
+    CreateWorkspaceEditor(
+        FileName,
+        EditArguments,
+        CheckForErrors,
+        OpenToError);
+
+    GiveFocusToEditbox = false;
+}
+
+void CMainFrame::PopupEditorToError(const char *FileName)
+{
+    bool fileNameIsTempPathName;
+    if (strcmp(FileName, TempPathName) == 0)
+    {
+        fileNameIsTempPathName = true;
+    }
+    else
+    {
+        fileNameIsTempPathName = false;
+    }
+
+    // Copy the input file to the editor's temporary file.
+    if (!fileNameIsTempPathName)
+    {
+        FILE * srcfile = fopen(FileName, "r");
+        if (srcfile != NULL)
+        {
+            FILE * dstfile = fopen(TempPathName, "w");
+            if (dstfile != NULL)
+            {
+                int ch;
+                while ((ch = fgetc(srcfile)) != EOF)
+                {
+                    fputc(ch, dstfile);
+                }
+                fclose(dstfile);
+            }
+            fclose(srcfile);
+        }
+    }
+
+    // Force the contents of the file to be processed for errors.
+    // This updates g_CharactersSuccessfullyParsedInEditor so that the
+    // editor can be opened to the point of the first error.
+    endedit();
+
+    // Calling endedit() throws an error.
+    // We must clear the error from the evaluating engine and put
+    // it into the commander.
+    process_special_conditions();
+
+    // Prompt the user to decide if they want to
+    // open FileName in the editor.
+    int rval = wxMessageBox(
+        wxString::Format(WXSTRING(LOCALIZED_ERRORINFILEMESSAGE), FileName),
+        WXSTRING(LOCALIZED_ERRORINFILETITLE),
+        wxYES_NO | wxICON_ERROR);
+    if (rval != wxYES)
+    {
+        // The user doesn't want to open the editor.
+
+        // Cleanup the file that we created.
+        if (!fileNameIsTempPathName)
+        {
+            unlink(TempPathName);
+        }
         return;
     }
 
-    // scroll main window with arrow keys
-    if (Msg.WParam == VK_PRIOR ||
-        Msg.WParam == VK_UP)
-    {
-        Scroller->ScrollBy(0, -Scroller->YLine);
-    }
-    else if (Msg.WParam == VK_NEXT ||
-             Msg.WParam == VK_DOWN)
-    {
-        Scroller->ScrollBy(0, Scroller->YLine);
-    }
-    else if (Msg.WParam == VK_LEFT)
-    {
-        Scroller->ScrollBy(-Scroller->XLine, 0);
-    }
-    else if (Msg.WParam == VK_RIGHT)
-    {
-        Scroller->ScrollBy(Scroller->XLine, 0);
-    }
-    else if (KeyboardCapture == KEYBOARDCAPTURE_Off &&
-             MainWindowx->CommandWindow->EditBoxWantsKeyEvent(Msg.WParam))
-    {
-        // we don't handle this key.
-        // give focus to the edit box and send the press to it.
-        MainWindowx->CommandWindow->PostKeyDownToEditBox(
-            Msg.WParam,
-            Msg.LParam);
-    }
-    else
-    {
-        // else do your normal stuff
-        DefaultProcessing();
-    }
+    CreateWorkspaceEditor(
+        WXSTRING(TempPathName), // use the temp file, in case the user saves changes
+        NIL,
+        true,  // check for errors
+        true); // open to the error
 }
 
-void TScreenWindow::EvKeyUp(UINT, UINT, UINT)
+static
+void
+CreateTemplateLogoFileForEditor(
+    const wxString & FileName,
+    NODE           * EditArguments
+    )
 {
-    TMessage Msg = __GetTMessage();
-
-    if (KeyboardCapture == KEYBOARDCAPTURE_KeyDownKeyUp)
+    // TODO: Use wxWidgets class for File I/O
+    FILE* logoFile = fopen(WXSTRING_TO_STRING(FileName), "w");
+    if (logoFile != NULL)
     {
-        // if keyboard was on and up and down is enabled then continue
-        callthing * callevent = callthing::CreateKeyboardEvent(keyboard_keyup, Msg.WParam);
-
-        calllists.insert(callevent);
-        checkqueue();
-    }
-    else
-    {
-        // else do your normal stuff
-        DefaultProcessing();
-    }
-}
-
-void TScreenWindow::EvChar(UINT, UINT, UINT)
-{
-    TMessage Msg = __GetTMessage();
-
-    if (KeyboardCapture == KEYBOARDCAPTURE_KeyDown)
-    {
-        // if keyboard was on and NOT up and down is enabled then continue
-        callthing * callevent = callthing::CreateKeyboardEvent(keyboard_keyup, Msg.WParam);
-
-        calllists.insert(callevent);
-        checkqueue();
-    }
-    else
-    {
-        // else do your normal stuff
-        DefaultProcessing();
-    }
-}
-
-void TScreenWindow::EvLButtonDown(UINT, TPoint &point)
-{
-    SetFocus();
-    SetCapture();
-
-    if (MouseCaptureIsEnabled)
-    {
-        // if user turned on mouse the queue up event
-        callthing * callevent = callthing::CreateMouseEvent(mouse_lbuttondown, point.x, point.y);
-
-        calllists.insert(callevent);
-        checkqueue();
-    }
-    else
-    {
-        // else do your normal processing
-        DefaultProcessing();
-    }
-}
-
-void TScreenWindow::EvLButtonUp(UINT, TPoint &point)
-{
-    ReleaseCapture();
-
-    if (MouseCaptureIsEnabled)
-    {
-        // if user turned on mouse the queue up event
-        callthing * callevent = callthing::CreateMouseEvent(mouse_lbuttonup, point.x, point.y);
-
-        calllists.insert(callevent);
-        checkqueue();
-    }
-}
-
-void TScreenWindow::EvRButtonDown(UINT, TPoint &point)
-{
-    SetFocus();
-    SetCapture();
-
-    if (MouseCaptureIsEnabled)
-    {
-        // if user turned on mouse the queue up event
-        callthing * callevent = callthing::CreateMouseEvent(mouse_rbuttondown, point.x, point.y);
-
-        calllists.insert(callevent);
-        checkqueue();
-    }
-}
-
-void TScreenWindow::EvRButtonUp(UINT, TPoint &point)
-{
-    ReleaseCapture();
-
-    if (MouseCaptureIsEnabled)
-    {
-        // if user turned on mouse the queue up event
-        callthing * callevent = callthing::CreateMouseEvent(mouse_rbuttonup, point.x, point.y);
-
-        calllists.insert(callevent);
-        checkqueue();
-    }
-}
-
-void TScreenWindow::EvMouseMove(UINT, TPoint &point)
-{
-    if (MouseCaptureIsEnabled)
-    {
-        // if user turned on mouse the queue up event
-        callthing * callevent = callthing::CreateMouseEvent(mouse_mousemove, point.x, point.y);
-
-        calllists.insert(callevent);
-        checkqueue();
-    }
-}
-
-void TScreenWindow::GetScrollRatios(FLONUM & XRatio, FLONUM & YRatio)
-{
-    // find out where we are (percentage of pos/range for x and y)
-
-    if (Scroller->XRange <= 1)
-    {
-        XRatio = 0.5; // center
-    }
-    else
-    {
-        // Subtract 1 because the range includes the endpoint.
-        // 0-100 implies range = 101
-        XRatio = (FLONUM) Scroller->XPos / (FLONUM) (Scroller->XRange - 1);
-    }
-
-    if (Scroller->YRange <= 1)
-    {
-        YRatio = 0.5; // center
-    }
-    else
-    {
-        // Subtract 1 because the range includes the endpoint.
-        // 0-100 implies range = 101
-        YRatio = (FLONUM) Scroller->YPos / (FLONUM) (Scroller->YRange - 1);
-    }
-}
-
-void TScreenWindow::AdjustScrollPositionToZoomFactor(FLONUM ZoomFactor)
-{
-
-    //
-    // Get the scrollbar position as a ratio of position/range
-    //
-    FLONUM xRatio;
-    FLONUM yRatio;
-    GetScrollRatios(xRatio, yRatio);
-
-    //
-    // Calculate the new scrollbar ranges
-    //
-    TRect screenRect;
-    GetClientRect(screenRect);
-
-    FLONUM xRange = (BitMapWidth * ZoomFactor) - screenRect.right;
-    FIXNUM xRangeRounded = g_round(xRange);
-    if (xRangeRounded < 0)
-    {
-        xRangeRounded = 0;
-    }
-
-    FLONUM yRange = (BitMapHeight * ZoomFactor) - screenRect.bottom;
-    FIXNUM yRangeRounded = g_round(yRange);
-    if (yRangeRounded < 0)
-    {
-        yRangeRounded = 0;
-    }
-
-
-    //
-    // update the scoller
-    //
-
-    // Add 1 because the range includes the endpoint.
-    // 0-100 implies range = 101
-    Scroller->SetRange(xRangeRounded + 1, yRangeRounded + 1);
-
-    // Position the scrollbar to the same ratio as before
-    Scroller->ScrollTo(g_round(xRatio * xRange), g_round(yRatio * yRange));
-}
-
-
-void TScreenWindow::EvSize(UINT arg1, TSize &arg2)
-{
-    TWindow::EvSize(arg1, arg2);
-
-    // readjust scroller range so that thumb at each extreme 
-    // corresponds to edge of extreme image.
-    AdjustScrollPositionToZoomFactor(the_zoom);
-}
-
-HDC TScreenWindow::GetBackBufferDeviceContext()
-{
-    // The back buffer is only needed if there are sprite bitmaps.
-    // To avoid making all programmer pay the cost of creating a
-    // duplicate memory bitmap, we create it lazily.
-    if (m_BackBufferDeviceContext == NULL)
-    {
-        m_BackBufferDeviceContext = CreateCompatibleDC(m_ScreenDeviceContext);
-        m_BackBuffer = CreateCompatibleBitmap(m_ScreenDeviceContext, BitMapWidth, BitMapHeight);
-        SelectObject(m_BackBufferDeviceContext, m_BackBuffer);
-    }
-
-    return m_BackBufferDeviceContext;
-}
-
-DEFINE_RESPONSE_TABLE1(TScreenWindow, TWindow)
-    EV_WM_DESTROY,
-    EV_WM_KEYUP,
-    EV_WM_KEYDOWN,
-    EV_WM_CHAR,
-    EV_WM_LBUTTONDOWN,
-    EV_WM_LBUTTONUP,
-    EV_WM_RBUTTONDOWN,
-    EV_WM_RBUTTONUP,
-    EV_WM_MOUSEMOVE,
-    EV_WM_SIZE,
-END_RESPONSE_TABLE;
-
-
-TMainFrame::TMainFrame(
-    TWindow *       Parent,
-    LPCSTR          Title,
-    TPaneSplitter * PaneSplitter
-    ) : TDecoratedFrame(Parent, Title, PaneSplitter),
-        CommandWindow(new TMyCommandWindow(0, IDD_DOCKEDCOMMANDER)),
-        StatusWindow(NULL),
-        PaneSplitterWindow(PaneSplitter),
-        ScreenWindow(new TScreenWindow(0, "FMSLogo Screen")),
-        IsNewFile(true),
-        IsNewBitmap(true),
-        IsCommanderDocked(false),
-        m_Printer(NULL),
-        m_ScreenColorPicker(NULL),
-        m_PenColorPicker(NULL),
-        m_FloodColorPicker(NULL),
-        m_PenSizePicker(NULL)
-{
-    // main window initialization
-    FileName[0]   = '\0';
-    BitmapName[0] = '\0';
-}
-
-TMainFrame::~TMainFrame()
-{
-    /* clean things up */
-    delete m_Printer;
-    delete CommandWindow;
-    delete ScreenWindow;
-
-    /* if palette clean it too */
-    if (EnablePalette)
-    {
-        DeleteObject(ThePalette);
-        delete MyLogPalette;
-    }
-}
-
-
-void TMainFrame::GetWindowClass(WNDCLASS &WndClass)
-{
-    TDecoratedFrame::GetWindowClass(WndClass);
-    WndClass.lpszMenuName = "Logo";
-    WndClass.hIcon = GetApplication()->LoadIcon("LOGOICON");
-}
-
-
-char * TMainFrame::GetClassName()
-{
-    return "Logo";
-}
-
-bool TMainFrame::IsEditorOpen()
-{
-    return GetEditor() != NULL ? true : false;
-}
-
-TMyFileWindow * TMainFrame::GetEditor()
-{
-    return m_Editors.get();
-}
-
-bool TMainFrame::CanClose()
-{
-    // if editor is running we could lose unsaved changes
-    TMyFileWindow * editor = GetEditor();
-    if (editor != NULL)
-    {
-        editor->ShowWindow(SW_SHOWNORMAL);
-        editor->SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-        GiveFocusToEditbox = false;
-
-        if (MessageBox(
-                LOCALIZED_CHANGESINEDITORMAYBELOST,
-                LOCALIZED_EDITSESSIONISRUNNING,
-                MB_OKCANCEL | MB_ICONQUESTION) != IDOK)
+        if (EditArguments != NIL)
         {
-            return false;
+            // Arguments were given to EDIT and the workspace was empty.
+            // So show a "TO" and "END" to help guide the user to their
+            // next action.
+            fprintf(logoFile, "%s\n", To.GetName());
+            fprintf(logoFile, "%s\n", End.GetName());
+        }
+        else
+        {
+            // No arguments were passed to EDIT, so we opened
+            // an empty workspace.
+            fprintf(logoFile, "\n");
         }
     }
 
+    fclose(logoFile);
+}
 
-    if (is_executing())
+
+int
+CMainFrame::PopupEditorForFile(
+    const wxString & FileName,
+    NODE           * EditArguments
+    )
+{
+    // If no file (or empty) create template
+    // TODO: Use a wxWidgets class for the file I/O.
+    FILE * logoFile = fopen(WXSTRING_TO_STRING(FileName), "r");
+    if (logoFile != NULL)
     {
-        // The language engine is not halted.
-        // Warn user and give chance to abort shutdown.
-        if (IsTimeToHalt)
+        // file exists.  check if it's empty.
+        bool fileIsEmpty = getc(logoFile) == EOF;
+        fclose(logoFile);
+
+        if (fileIsEmpty)
         {
-            // we already tried warn user of doom
-            if (MessageBox(
-                    LOCALIZED_NOTHALTEDREALLYEXIT,
-                    LOCALIZED_LOGOISNOTHALTED,
-                    MB_OKCANCEL | MB_ICONQUESTION) != IDOK)
+            CreateTemplateLogoFileForEditor(FileName, EditArguments);
+        }
+    }
+    else
+    {
+        // file doesn't exist.  Create it.
+        CreateTemplateLogoFileForEditor(FileName, EditArguments);
+    }
+
+    CFmsLogo::GetMainFrame()->PopupEditor(
+        FileName,
+        EditArguments,
+        false,  // don't check for errors
+        false); // no errors
+    return 0;
+}
+
+
+void CMainFrame::CloseWorkspaceEditor(CWorkspaceEditor * Editor)
+{
+    m_Editors.erase(Editor);
+}
+
+CStatusDialog *
+CMainFrame::GetStatusDialog()
+{
+    return m_StatusDialog;
+}
+
+void
+CMainFrame::ClearStatusDialog()
+{
+    m_StatusDialog = NULL;
+}
+
+CScreen * CMainFrame::GetScreen()
+{
+    return m_Screen;
+}
+
+CCommander * CMainFrame::GetCommander()
+{
+    return m_RealCommander;
+}
+
+// Returns the window to which is it appropriate to send state change
+// messages, such as minimizing, that are intended for the commander.
+//
+// If the commander is docked, this is the commander panel.
+// If the commander is not docked, this is the top-level window that
+// contains the commander panel.
+//
+wxWindow * CMainFrame::GetTopLevelWindowForCommander()
+{
+    return m_Commander;
+}
+
+// Gives focus to the next top-level window in the top-level window order.
+// This should be called in response to processing a Ctrl+Tab keyboard
+// sequence.
+//
+// From MSWLogo, the window order is:
+//
+//   Screen -> Commander -> Editor
+//
+// CurrentWindowFocus - The window that is currently selected.
+// DirectionFlags     - wxNavigationKeyEvent::IsForward to move forward.
+//
+void
+CMainFrame::KeyboardNavigateTopLevelWindow(
+    wxWindow * CurrentWindowFocus,
+    int        DirectionFlags
+    )
+{
+    // In MSWLogo, the top-level window order is:
+    //   Screen -> Commander -> Editor
+    if (DirectionFlags & wxNavigationKeyEvent::IsForward)
+    {
+        if (CurrentWindowFocus == m_Screen)
+        {
+            if (m_CommanderIsDocked)
             {
-                return false;
+                // Do nothing when the commander is docked.
+                // This is the current FMSLogo behavior and there's
+                // a separate bug to fix this.
+            }
+            else
+            {
+                m_Commander->SetFocus();
+            }
+        }
+        else if (CurrentWindowFocus == m_Commander)
+        {
+            if (m_CommanderIsDocked)
+            {
+                // Do nothing when the commander is docked.
+                // This is the current FMSLogo behavior and there's
+                // a separate bug to fix this.
+            }
+            else
+            {
+                CWorkspaceEditor * editor = GetWorkspaceEditor();
+                if (editor != NULL)
+                {
+                    // An editor exists, so give it focus
+                    editor->SetFocus();
+                }
+                else
+                {
+                    // No editor exists, so skip it and move
+                    // to the next window (the screen).
+                    m_Screen->SetFocus();
+                }
             }
         }
         else
         {
-            // let the user optionally halt first
-            if (MessageBox(
-                    LOCALIZED_NOTHALTEDREALLYHALT,
-                    LOCALIZED_LOGOISNOTHALTED,
-                    MB_OKCANCEL | MB_ICONQUESTION) == IDOK)
-            {
-                CommandWindow->DoButtonHalt(0);
-            }
-            return false;
+            // If this didn't come from the commander or the screen,
+            // then it must have come from the editor.
+            m_Screen->SetFocus();
         }
     }
-
-    // if dirty warn user and give chance to abort shutdown
-    if (IsDirty)
+    else
     {
-        CSaveBeforeExitDialog saveChangesDialog(this);
+        // MSWLogo doesn't support backward navigation.
+    }
+}
 
-        saveChangesDialog.Execute();
-        int exitCode = saveChangesDialog.GetExitCode();
-        if (exitCode == IDCANCEL)
+void CMainFrame::OnResize(wxSizeEvent& Event)
+{
+    if (m_CommanderIsDocked && bFixed && IsMaximized())
+    {
+        // If FMSLogo was started with the -F, then it is supposed
+        // show the full screen without needing scrollbars.
+        // However, if the splitter is manually moved or the frame
+        // window is resized, then the full screen may no longer be visible.
+        // Therefore, when FMSLogo is maximized and there are no expectations
+        // about where the splitter should be placed, we can position it
+        // back to showing the screen.  This allows a straight-forward was to
+        // correct the splitter position.
+        SetSashPosition(m_OriginalHeight);
+    }
+
+    Event.Skip();
+}
+
+
+void CMainFrame::OnClose(wxCloseEvent& Event)
+{
+    if (Event.CanVeto())
+    {
+        // If an editor is running we could lose unsaved changes.
+        CWorkspaceEditor * editor = GetWorkspaceEditor();
+        if (editor != NULL)
         {
-            // don't exit FMSLogo
-            IsTimeToHalt  = false;
-            IsTimeToExit  = false;
-            stopping_flag = RUN;
-            return false;
-        }
-        else if (exitCode == IDYES)
-        {
-            // save and then exit
+            // make sure that the editor is visible
+            editor->Iconize(false);
+            editor->Show();
+            editor->Raise();
+            GiveFocusToEditbox = false;
 
-            // HACK: Set TimeToExit and TimeToHalt to false
-            // so that writing the file to disk doesn't abort.
-            // This is hack because the code should not modify
-            // global variables--there should be a way to tell 
-            // CMFileSave to ignore errors.
-            bool savedIsTimeToExit = IsTimeToExit;
-            bool savedIsTimeToHalt = IsTimeToHalt;
+            // Notify the user that they will lose the changes
+            // in this editor if they continue.
 
-            IsTimeToExit = false;
-            IsTimeToHalt = false;
-            bool isOk = FileSave();
-            if (!isOk)
+            // REVISIT: It might be better to invoke the wxID_EXIT
+            // for each of the editors, so that we don't prompt the
+            // user unless there really are changes to save, and so
+            // that we prompt for all editors.
+            if (wxMessageBox(
+                    WXSTRING(LOCALIZED_CHANGESINEDITORMAYBELOST),
+                    WXSTRING(LOCALIZED_EDITSESSIONISRUNNING),
+                    wxOK | wxCANCEL | wxICON_QUESTION) != wxOK)
             {
-                // Something went wrong (most likely, the user 
-                // pressed "Cancel" when asked to choose a filename).
-                // Give the user a chance to fix the problem.
+                // The user doesn't want to shutdown.
+                Event.Veto();
+                return;
+            }
+
+            // The user wants to exit, anyway.
+            // Close all of the editors to give them a chance
+            // to clean up.
+            while (editor != NULL)
+            {
+                // Close without a chance to veto
+                editor->Close(true);
+
+                // Get the next workspace
+                editor = GetWorkspaceEditor();
+            }
+        }
+
+
+        if (is_executing())
+        {
+            // The language engine is not halted.
+            // Warn user and give chance to abort shutdown.
+            if (IsTimeToHalt)
+            {
+                // we already tried warn user of doom
+                if (wxMessageBox(
+                        WXSTRING(LOCALIZED_NOTHALTEDREALLYEXIT),
+                        WXSTRING(LOCALIZED_LOGOISNOTHALTED),
+                        wxOK | wxCANCEL | wxICON_QUESTION) != wxOK)
+                {
+                    // The user doesn't want to shutdown.
+                    Event.Veto();
+                    return;
+                }
+            }
+            else
+            {
+                // let the user optionally halt first
+                if (wxMessageBox(
+                        WXSTRING(LOCALIZED_NOTHALTEDREALLYHALT),
+                        WXSTRING(LOCALIZED_LOGOISNOTHALTED),
+                        wxOK | wxCANCEL | wxICON_QUESTION) == wxOK)
+                {
+                    m_RealCommander->Halt();
+                }
+                Event.Veto();
+                return;
+            }
+        }
+
+        // If the workspace has unsaved changes, then give the
+        // user a chance to abort shutdown.
+        if (IsDirty)
+        {
+            CSaveBeforeExitDialog saveChangesDialog(this);
+
+            int exitCode = saveChangesDialog.ShowModal();
+            switch (exitCode)
+            {
+            case CSaveBeforeExitDialog::SAVEBEFOREEXIT_Cancel:
+                // Don't exit FMSLogo
                 IsTimeToHalt  = false;
                 IsTimeToExit  = false;
                 stopping_flag = RUN;
-                return false;
-            }
+                Event.Veto();
+                return;
 
-            IsTimeToExit = savedIsTimeToExit;
-            IsTimeToHalt = savedIsTimeToHalt;
+            case CSaveBeforeExitDialog::SAVEBEFOREEXIT_SaveAndExit:
+                // save and then exit
+
+                // HACK: Set TimeToExit and TimeToHalt to false
+                // so that writing the file to disk doesn't abort.
+                // This is hack because the code should not modify
+                // global variables--there should be a way to tell 
+                // CMFileSave to ignore errors.
+                bool savedIsTimeToExit = IsTimeToExit;
+                bool savedIsTimeToHalt = IsTimeToHalt;
+
+                IsTimeToExit = false;
+                IsTimeToHalt = false;
+                bool isOk = FileSave();
+                if (!isOk)
+                {
+                    // Something went wrong (most likely, the user 
+                    // pressed "Cancel" when asked to choose a filename).
+                    // Give the user a chance to fix the problem.
+                    IsTimeToHalt  = false;
+                    IsTimeToExit  = false;
+                    stopping_flag = RUN;
+                    Event.Veto();
+                    return;
+                }
+
+                IsTimeToExit = savedIsTimeToExit;
+                IsTimeToHalt = savedIsTimeToHalt;
+                break;
+            }
         }
     }
 
-    // if we made it here we are OK to exit
-    return true;
-}
+    // If we made it here we are OK to exit.
 
-void TMainFrame::CMExit()
-{
-    // here on FILE-EXIT main window (screen)
-    if (is_executing())
+    // Don't save the window size if it's minimized, the commander is undocked,
+    // or if FMSLogo was started with the -F option.
+    if (!IsIconized() && !bFixed)
     {
-        IsTimeToHalt = true;
-    }
-    IsTimeToExit = true;
-}
-
-void TMainFrame::EvSize(UINT arg1, TSize &arg2)
-{
-    TDecoratedFrame::EvSize(arg1, arg2);   
-    DefaultProcessing();
-}
-
-void TMainFrame::CMBitmapNew()
-{
-    // reset the on-screen bitmap
-    HBRUSH brush = ::CreateBrushIndirect(&ScreenBrush);
-    if (brush != NULL)
-    {
-        HDC memoryDC = ScreenWindow->GetMemoryDeviceContext();
-
-        ::FillRect(memoryDC, &FullRect, brush);
-
-        ::SetBkColor(memoryDC, scolor);
-        ::SetBkMode(memoryDC, TRANSPARENT);
-
-        ::DeleteObject(brush);
-    }
-
-    // mark the screen window as invalid
-    ScreenWindow->Invalidate(true);
-    IsNewBitmap = true;
-}
-
-void TMainFrame::CMBitmapOpen()
-{
-    OPENFILENAME openFileName;
-    ZeroMemory(&openFileName, sizeof openFileName);
-    openFileName.lStructSize       = sizeof openFileName;
-    openFileName.hwndOwner         = HWindow;
-    openFileName.hInstance         = NULL;
-    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_IMAGE;
-    openFileName.lpstrCustomFilter = NULL;
-    openFileName.nMaxCustFilter    = 0;
-    openFileName.nFilterIndex      = 0;
-    openFileName.lpstrFile         = BitmapName;
-    openFileName.nMaxFile          = ARRAYSIZE(BitmapName);
-    openFileName.lpstrFileTitle    = NULL;
-    openFileName.nMaxFileTitle     = 0;
-    openFileName.lpstrInitialDir   = NULL;
-    openFileName.lpstrTitle        = NULL;
-    openFileName.Flags             = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
-    openFileName.nFileOffset       = 0;
-    openFileName.nFileExtension    = 0;
-    openFileName.lpstrDefExt       = "bmp";
-    openFileName.lCustData         = NULL;
-    openFileName.lpfnHook          = NULL;
-    openFileName.lpTemplateName    = NULL;
-
-    // if user found a file then try to load it
-    if (GetOpenFileName(&openFileName))
-    {
-        unsigned int pixelWidth  = 1;
-        unsigned int pixelHeight = 1;
-
-        IsNewBitmap = FALSE;
-
-        ERR_TYPES status;
-        char ext[_MAX_EXT];
-        _splitpath(BitmapName, NULL, NULL, NULL, ext);
-        if (stricmp(ext, ".gif") == 0)
+        if (m_CommanderIsDocked)
         {
-            status = gifload_helper(BitmapName, pixelWidth, pixelHeight);
+            // Get location and size of our window on the screen so we can
+            // come back up in the same spot next time we are invoked.
+            const wxRect mainWindowRect = GetRect();
+
+            // Save the current location of the screen.
+            SetConfigurationQuadruple(
+                "Screen",
+                mainWindowRect.GetLeft(),
+                mainWindowRect.GetTop(),
+                mainWindowRect.GetWidth(),
+                mainWindowRect.GetHeight());
+
+            // Save the location of the splitter.
+            SetConfigurationInt(
+                "CommanderHeight",
+                m_Commander->GetSize().GetHeight());
         }
         else
         {
-            status = LoadBitmapFile(BitmapName, pixelWidth, pixelHeight);
+            if (!static_cast<CCommanderDialog*>(m_Commander)->IsIconized())
+            {
+                // Save the commander's position
+                const wxRect windowRectangle = m_Commander->GetRect();
+
+                SetConfigurationQuadruple(
+                    "CommanderWindow",
+                    windowRectangle.GetLeft(),
+                    windowRectangle.GetTop(),
+                    windowRectangle.GetWidth(),
+                    windowRectangle.GetHeight());
+            }
         }
-
-        if (status != SUCCESS)
-        {
-            ShowErrorMessage(status);
-        }
     }
+
+    // Cleanup the pens
+#ifndef WX_PURE
+    // REVISIT: This is where the pens were destroyed in the OWL
+    // implementation, but it doesn't seem like the right place
+    // for it.
+    if (g_NormalPen != NULL)
+    {
+        DeleteObject(g_NormalPen);
+        g_NormalPen = NULL;
+    }
+
+    if (g_ErasePen != NULL)
+    {
+        DeleteObject(g_ErasePen);
+        g_ErasePen = NULL;
+    }
+#endif
+
+    // Because the timer events are scheduled on
+    // the main window's HWND, we must uninitialize them
+    // before the main window is destroyed.
+    uninitialize_timers();
+
+    // Invoke the default handler, which is to destroy
+    // the window and shut down.
+    Event.Skip();
 }
 
-void TMainFrame::CMBitmapSave()
+
+// menu command handlers
+void CMainFrame::OnExit(wxCommandEvent& WXUNUSED(Event))
 {
-    // if new file then switch to save file as, else save
-    if (IsNewBitmap)
-    {
-        SaveBitmapAs();
-    }
-    else
-    {
-        SaveBitmap();
-    }
+    // Attempt to close the application while
+    // giving the user an opportunity to abort
+    // the operation.
+    Close(false);
 }
 
-void TMainFrame::SaveBitmapAs()
-{
-    // if new then nulify File name
-    if (IsNewBitmap)
-    {
-        BitmapName[0] = '\0';
-    }
-
-    // Get file name from user
-    OPENFILENAME openFileName;
-    ZeroMemory(&openFileName, sizeof openFileName);
-    openFileName.lStructSize       = sizeof openFileName;
-    openFileName.hwndOwner         = HWindow;
-    openFileName.hInstance         = NULL;
-    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_IMAGE;
-    openFileName.lpstrCustomFilter = NULL;
-    openFileName.nMaxCustFilter    = 0;
-    openFileName.nFilterIndex      = 0;
-    openFileName.lpstrFile         = BitmapName;
-    openFileName.nMaxFile          = ARRAYSIZE(BitmapName);
-    openFileName.lpstrFileTitle    = NULL;
-    openFileName.nMaxFileTitle     = 0;
-    openFileName.lpstrInitialDir   = NULL;
-    openFileName.lpstrTitle        = NULL;
-    openFileName.Flags             = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
-    openFileName.nFileOffset       = 0;
-    openFileName.nFileExtension    = 0;
-    openFileName.lpstrDefExt       = "bmp";
-    openFileName.lCustData         = NULL;
-    openFileName.lpfnHook          = NULL;
-    openFileName.lpTemplateName    = NULL;
-
-    if (GetSaveFileName(&openFileName))
-    {
-        // save the bitmap
-        IsNewBitmap = false;
-        SaveBitmap();
-    }
-}
-
-void TMainFrame::CMBitmapSaveAs()
-{
-    SaveBitmapAs();
-}
-
-void TMainFrame::SaveBitmap()
-{
-    ERR_TYPES status;
-
-    char ext[_MAX_EXT];
-    _splitpath(BitmapName, NULL, NULL, NULL, ext);
-    if (stricmp(ext, ".gif") == 0)
-    {
-        status = gifsave_helper(BitmapName, -1, 0, -1, -1, 8);
-    }
-    else
-    {
-        status = DumpBitmapFile(BitmapName, 32);
-    }
-
-    if (status != SUCCESS)
-    {
-        ShowErrorMessage(status);
-    }
-}
-
-void TMainFrame::EraseContentsOfWorkspace()
+// CONSIDER: move this to wrksp.c, since it has no coheasion
+// with the UI.
+static void EraseContentsOfWorkspace()
 {
     NODE * workspace_contents;
 
@@ -981,47 +1385,48 @@ void TMainFrame::EraseContentsOfWorkspace()
     workspace_contents = cons_list(lburied(NIL));
     lerase(workspace_contents);
     gcref(workspace_contents);
+
+    IsDirty = false;
 }
 
-void TMainFrame::CMFileNew()
+void CMainFrame::OnFileNew(wxCommandEvent& WXUNUSED(Event))
 {
-    // if doing new and dirty give user a chance to abort the new
     if (IsDirty)
     {
         // Warn the user that File-New will erase the contents 
         // of the workspace and give them a chance to cancel the
         // operation.
-        if (MainWindowx->CommandWindow->MessageBox(
-                LOCALIZED_FILENEWWILLERASEWORKSPACE,
-                LOCALIZED_YOUHAVEUNSAVEDCHANGES,
-                MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL)
+        if (wxMessageBox(
+                WXSTRING(LOCALIZED_FILENEWWILLERASEWORKSPACE),
+                WXSTRING(LOCALIZED_YOUHAVEUNSAVEDCHANGES),
+                wxOK | wxCANCEL | wxICON_QUESTION,
+                GetTopLevelWindowForCommander()) == wxCANCEL)
         {
             return;
         }
     }
 
     // else start with a clean plate
-    IsNewFile = true;
-    IsDirty = false;
-
+    m_IsNewFile = true;
     EraseContentsOfWorkspace();
 }
 
+#ifndef WX_PURE
 void
-TMainFrame::InitializeOpenFileNameForLogoFiles(
+CMainFrame::InitializeOpenFileNameForLogoFiles(
     OPENFILENAME & OpenFileData
     )
 {
     ZeroMemory(&OpenFileData, sizeof OpenFileData);
     OpenFileData.lStructSize       = sizeof OpenFileData;
-    OpenFileData.hwndOwner         = HWindow;
+    OpenFileData.hwndOwner         = static_cast<HWND>(GetHandle());
     OpenFileData.hInstance         = NULL;
     OpenFileData.lpstrFilter       = LOCALIZED_FILEFILTER_LOGO;
     OpenFileData.lpstrCustomFilter = NULL;
     OpenFileData.nMaxCustFilter    = 0;
     OpenFileData.nFilterIndex      = 0;
-    OpenFileData.lpstrFile         = FileName;
-    OpenFileData.nMaxFile          = ARRAYSIZE(FileName);
+    OpenFileData.lpstrFile         = m_FileName;
+    OpenFileData.nMaxFile          = ARRAYSIZE(m_FileName);
     OpenFileData.lpstrFileTitle    = NULL;
     OpenFileData.nMaxFileTitle     = 0;
     OpenFileData.lpstrInitialDir   = NULL;
@@ -1030,29 +1435,33 @@ TMainFrame::InitializeOpenFileNameForLogoFiles(
     OpenFileData.nFileOffset       = 0;
     OpenFileData.nFileExtension    = 0;
     OpenFileData.lpstrDefExt       = LOCALIZED_LOGO_FILE_EXTENSION;
-    OpenFileData.lCustData         = NULL;
+    OpenFileData.lCustData         = 0;
     OpenFileData.lpfnHook          = NULL;
     OpenFileData.lpTemplateName    = NULL;
 }
 
+#endif // WX_PURE
 
-void TMainFrame::CMFileLoad()
+void CMainFrame::OnFileLoad(wxCommandEvent& WXUNUSED(Event))
 {
     if (IsDirty)
     {
         // Warn the user that File-Load may erase the contents 
         // of the workspace and give them a chance to cancel the
         // operation.
-        if (MainWindowx->CommandWindow->MessageBox(
-                LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE,
-                LOCALIZED_YOUHAVEUNSAVEDCHANGES,
-                MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL)
+        if (wxMessageBox(
+                WXSTRING(LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE),
+                WXSTRING(LOCALIZED_YOUHAVEUNSAVEDCHANGES),
+                wxOK | wxCANCEL | wxICON_QUESTION,
+                GetTopLevelWindowForCommander()) == wxCANCEL)
         {
             return;
         }
     }
 
     // show the user a file-picker dialog
+#ifndef WX_PURE
+    // TODO: switch to use wxFileSelector
     OPENFILENAME openFileName;
     InitializeOpenFileNameForLogoFiles(openFileName);
     openFileName.Flags |= OFN_FILEMUSTEXIST;
@@ -1060,11 +1469,11 @@ void TMainFrame::CMFileLoad()
     // if user found a file then try to load it
     if (GetOpenFileName(&openFileName))
     {
-        IsNewFile = false;
+        m_IsNewFile = false;
 
         start_execution();
 
-        bool isOk = fileload(FileName);
+        bool isOk = fileload(m_FileName);
         if (!isOk) 
         {
             err_logo(
@@ -1077,24 +1486,27 @@ void TMainFrame::CMFileLoad()
 
         stop_execution();
     }
+#endif // WX_PURE
 }
 
-void TMainFrame::CMFileOpen()
+void CMainFrame::OnFileOpen(wxCommandEvent& WXUNUSED(Event))
 {
     if (IsDirty)
     {
         // Warn the user that File-Open will erase the contents 
         // of the workspace and give them a chance to cancel the
         // operation.
-        if (MainWindowx->CommandWindow->MessageBox(
-                LOCALIZED_FILEOPENWILLERASEWORKSPACE,
-                LOCALIZED_YOUHAVEUNSAVEDCHANGES,
-                MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL)
+        if (wxMessageBox(
+                WXSTRING(LOCALIZED_FILEOPENWILLERASEWORKSPACE),
+                WXSTRING(LOCALIZED_YOUHAVEUNSAVEDCHANGES),
+                wxOK | wxCANCEL | wxICON_QUESTION,
+                GetTopLevelWindowForCommander()) == wxCANCEL)
         {
             return;
         }
     }
 
+#ifndef WX_PURE
     // show the user a file-picker dialog
     OPENFILENAME openFileName;
     InitializeOpenFileNameForLogoFiles(openFileName);
@@ -1104,15 +1516,14 @@ void TMainFrame::CMFileOpen()
     if (GetOpenFileName(&openFileName))
     {
         // start with a clean plate
-        IsNewFile = false;
-        IsDirty   = false;
+        m_IsNewFile = false;
 
         // erase the contents of the workspace
         EraseContentsOfWorkspace();
 
         start_execution();
 
-        bool isOk = fileload(FileName);
+        bool isOk = fileload(m_FileName);
         if (!isOk) 
         {
             err_logo(
@@ -1125,6 +1536,7 @@ void TMainFrame::CMFileOpen()
 
         stop_execution();
     }
+#endif
 }
 
 // Displays a warning if the workspace is empty
@@ -1133,19 +1545,23 @@ void TMainFrame::CMFileOpen()
 //
 // returns true, if we should continue to save the workspace.
 // returns false, if we should not save the workspace.
-bool TMainFrame::WarnIfSavingEmptyWorkspace()
+bool CMainFrame::WarnIfSavingEmptyWorkspace()
 {
     // Check if there's something in the workspace that
     // isn't buried (which would be saved).
     if (!something_is_unburied())
     {
+#ifndef WX_PURE
+        // TODO: use wxMessageBox if it supports default buttons
         if (MessageBox(
+                static_cast<HWND>(GetHandle()),
                 LOCALIZED_EMPTYWORKSPACE_MESSAGE,
                 LOCALIZED_EMPTYWORKSPACE_TITLE,
                 MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON2) == IDNO)
         {
             return false;
         }
+#endif
     }
 
     return true;
@@ -1157,12 +1573,15 @@ bool TMainFrame::WarnIfSavingEmptyWorkspace()
 // Returns "true" if the user saves the file.
 // Returns "false" if the user cancels the save or if the 
 // file couldn't be saved for other reasons.
-bool TMainFrame::SaveFileAs()
+bool CMainFrame::SaveFileAs()
 {
+#ifdef WX_PURE
+    return false;
+#else
     // if new the nulify File name
-    if (IsNewFile)
+    if (m_IsNewFile)
     {
-        FileName[0] = '\0';
+        m_FileName[0] = '\0';
     }
 
     // Get file name from user and then save the file
@@ -1173,7 +1592,7 @@ bool TMainFrame::SaveFileAs()
     bool isOk;
     if (GetSaveFileName(&openFileName))
     {
-        IsNewFile = false;
+        m_IsNewFile = false;
         isOk = SaveFile();
     }
     else
@@ -1182,11 +1601,14 @@ bool TMainFrame::SaveFileAs()
     }
 
     return isOk;
+#endif
 }
 
-bool TMainFrame::SaveFile()
+bool CMainFrame::SaveFile()
 {
-    filesave(FileName);
+#ifndef WX_PURE
+    filesave(m_FileName);
+#endif
 
     // handle any error that may have occured
     process_special_conditions();
@@ -1196,15 +1618,15 @@ bool TMainFrame::SaveFile()
 }
 
 
-bool TMainFrame::FileSave()
+bool CMainFrame::FileSave()
 {
     bool isOk;
 
-    if (IsNewFile)
+    if (m_IsNewFile)
     {
         // The file has never been saved, so we don't know
         // what file we should save it to.
-        // As the user with a "Save As" dialog.
+        // Ask the user with a "Save As" dialog.
         isOk = SaveFileAs();
     }
     else
@@ -1216,7 +1638,7 @@ bool TMainFrame::FileSave()
     return isOk;
 }
 
-void TMainFrame::CMFileSave()
+void CMainFrame::OnFileSave(wxCommandEvent& WXUNUSED(Event))
 {
     if (!WarnIfSavingEmptyWorkspace())
     {
@@ -1226,7 +1648,7 @@ void TMainFrame::CMFileSave()
     FileSave();
 }
 
-void TMainFrame::CMFileSaveAs()
+void CMainFrame::OnFileSaveAs(wxCommandEvent& WXUNUSED(Event))
 {
     if (!WarnIfSavingEmptyWorkspace())
     {
@@ -1236,50 +1658,7 @@ void TMainFrame::CMFileSaveAs()
     SaveFileAs();
 }
 
-void TMainFrame::CMBitmapPrinterArea()
-{
-    bool bAok;
-
-    do
-    {
-        bAok = true;
-
-        CPrinterAreaWindow printerArea(this);
-
-        if (printerArea.Execute() == IDOK)
-        {
-            // the user did not cancel, so commit to the new settings
-
-            if (printerArea.m_XLow >= printerArea.m_XHigh ||
-                printerArea.m_YLow >= printerArea.m_YHigh)
-            {
-                // the settings are no good, try again
-                MainWindowx->CommandWindow->MessageBox(
-                    LOCALIZED_ERROR_BADINPUT,
-                    LOCALIZED_ACTIVEAREA);
-                bAok = false;
-            }
-            else
-            {
-                g_PrinterAreaXLow   = printerArea.m_XLow;
-                g_PrinterAreaXHigh  = printerArea.m_XHigh;
-                g_PrinterAreaYLow   = printerArea.m_YLow;
-                g_PrinterAreaYHigh  = printerArea.m_YHigh;
-                g_PrinterAreaPixels = printerArea.m_PixelsPerInch;
-                if (g_PrinterAreaPixels < 1)
-                {
-                    g_PrinterAreaPixels = 1;
-                }
-
-                SetConfigurationInt("Printer.XLow",   g_PrinterAreaXLow);
-                SetConfigurationInt("Printer.XHigh",  g_PrinterAreaXHigh);
-                SetConfigurationInt("Printer.YLow",   g_PrinterAreaYLow);
-                SetConfigurationInt("Printer.YHigh",  g_PrinterAreaYHigh);
-                SetConfigurationInt("Printer.Pixels", g_PrinterAreaPixels);
-            }
-        }
-    } while (!bAok);
-}
+#ifndef WX_PURE
 
 // Gets the full path to where the FMSLogo screensaver
 // should be located (if it's installed).
@@ -1315,9 +1694,15 @@ GetScreenSaverFilePath(
     return true;
 }
 
+#endif
+
+
 static
 bool ScreenSaverIsInstalled()
 {
+#ifdef WX_PURE
+    return false;
+#else
     char screenSaverPath[MAX_PATH];
 
     if (!GetScreenSaverFilePath(screenSaverPath, ARRAYSIZE(screenSaverPath)))
@@ -1336,15 +1721,16 @@ bool ScreenSaverIsInstalled()
 
     // The screen saver exists.
     return true;
+#endif // WX_PURE
 }
 
-void TMainFrame::CMFileSetAsScreenSaverEnable(TCommandEnabler& commandHandler)
+void CMainFrame::OnUpdateFileSetAsScreenSaver(wxUpdateUIEvent& Event)
 {
     // Enable this option if a screen saver is installed.
-    commandHandler.Enable(ScreenSaverIsInstalled());
+    Event.Enable(ScreenSaverIsInstalled());
 }
 
-void TMainFrame::CMFileSetAsScreenSaver()
+void CMainFrame::OnFileSetAsScreenSaver(wxCommandEvent& WXUNUSED(Event))
 {
     // Before we save the workspace, we should ensure that a
     // startup procedure exists.  If not, their screen saver won't
@@ -1372,8 +1758,8 @@ void TMainFrame::CMFileSetAsScreenSaver()
     if (explainText != CSelectStartupInstructionDialog::EXPLAINTEXT_None)
     {
         CSelectStartupInstructionDialog dialog(this, explainText);
-        UINT exitCode = dialog.Execute();
-        if (exitCode == IDCANCEL)
+        int exitCode = dialog.ShowModal();
+        if (exitCode == wxID_CANCEL)
         {
             // The user hasn't selected a startup instruction list,
             // so there's no sense in setting this program to
@@ -1383,19 +1769,28 @@ void TMainFrame::CMFileSetAsScreenSaver()
 
         char makeInstruction[512] = {0};
 
-        sprintf(
+        // Make "Startup [<instructionlist>]
+        int formattedStringLength = snprintf(
             makeInstruction,
+            ARRAYSIZE(makeInstruction),
             "%s \"%s [%s]",
             LOCALIZED_ALTERNATE_MAKE,
             LOCALIZED_ALTERNATE_STARTUP,
-            dialog.GetSelectedInstruction());
+            WXSTRING_TO_STRING(dialog.GetSelectedInstruction()));
+        if ((int)ARRAYSIZE(makeInstruction) <= formattedStringLength)
+        {
+            // More than the fixed buffer size was needed
+            // to hold the instruction list.
 
-        RunLogoInstructionFromGui(makeInstruction);
+            // TODO: Handle this.
+        }
+        else
+        {
+            RunLogoInstructionFromGui(makeInstruction);
+        }
     }
 
-
-    char screenSaverProgramName[MAX_PATH] = "";
-
+#ifdef __WXMSW__
     LPITEMIDLIST itemIdList;
 
     // Get a handle to a folder where we can store personal documents.
@@ -1407,6 +1802,8 @@ void TMainFrame::CMFileSetAsScreenSaver()
         &itemIdList);
     if (SUCCEEDED(hr))
     {
+        char screenSaverProgramName[MAX_PATH] = "";
+
         // Get a handle to a folder where we can store personal documents.
         BOOL isOk = SHGetPathFromIDList(
             itemIdList,
@@ -1450,7 +1847,7 @@ void TMainFrame::CMFileSetAsScreenSaver()
                         "SCRNSAVE.EXE",
                         0,
                         REG_SZ,
-                        screenSaverPath,
+                        reinterpret_cast<BYTE*>(screenSaverPath),
                         strlen(screenSaverPath) + 1);
 
                     RegCloseKey(desktopKey);
@@ -1459,1318 +1856,680 @@ void TMainFrame::CMFileSetAsScreenSaver()
         }
         CoTaskMemFree(itemIdList);
     }
+#endif
+
 }
 
-void TMainFrame::CMFileEdit()
+void CMainFrame::OnEditProcedure(wxCommandEvent& WXUNUSED(Event))
 {
-    // create and show a dialog for which procedure to edit
-    CEditProcedureWindow(this).ShowDialog();
+    CEditProcedureDialog dlg(this);
+    dlg.DoDialog();
 }
 
-void TMainFrame::CMFileErase()
+void CMainFrame::OnEraseProcedure(wxCommandEvent& WXUNUSED(Event))
 {
-    // create and show a dialog for which procedure to erase
-    CEraseProcedureWindow(this).ShowDialog();
+    CEraseProcedureDialog dlg(this);
+    dlg.DoDialog();
 }
 
-
-TMyFileWindow * 
-TMainFrame::CreateEditWindow(
-    const char * FileName, 
-    NODE       * args, 
-    bool         check_for_errors
-    )
+void CMainFrame::OnBitmapNew(wxCommandEvent& WXUNUSED(Event))
 {
-    TMyFileWindow * editor = new TMyFileWindow(
-        this, 
-        LOCALIZED_EDITOR_TITLE,
-        FileName, 
-        args, 
-        check_for_errors);
-
-    // Construct the default coordinates of the editor's window
-    // to be about 1/2 of the working area and placed in the center.
-    int maxWidth;
-    int maxHeight;
-    GetWorkingAreaDimensions(maxWidth, maxHeight);
-
-    int x = (int) (maxWidth * 0.25);
-    int y = (int) (maxHeight * 0.25);
-    int w = (int) (maxWidth * 0.75);
-    int h = (int) (maxHeight * ScreenSz * 0.75);
-
-    GetConfigurationQuadruple("Editor", &x, &y, &w, &h); 
-    checkwindow(&x, &y, &w, &h);
-
-    // let user edit
-    editor->Create();
-
-    // force a resize to fix RichEdit ScrollBar not appearing automatically
-    editor->SetWindowPos(0, x, y, w + 1, h, SWP_NOZORDER);
-    editor->SetWindowPos(0, x, y, w, h, SWP_NOZORDER);
-
-    if (args != NULL || check_for_errors)
+#ifndef WX_PURE
+    // Reset the on-screen bitmap.
+    HBRUSH brush = ::CreateBrushIndirect(&ScreenBrush);
+    if (brush != NULL)
     {
-        // retitle without filename
-        editor->SetWindowText(LOCALIZED_EDITOR_TITLE);
+        HDC memoryDC = static_cast<HDC>(m_Screen->GetMemoryDeviceContext().GetHDC());
+
+        ::SelectObject(memoryDC, MemoryBitMap);
+
+        ::FillRect(memoryDC, &FullRect, brush);
+
+        ::SetBkColor(memoryDC, scolor);
+        ::SetBkMode(memoryDC, TRANSPARENT);
+
+        ::DeleteObject(brush);
     }
+#endif
 
-    // add this editor the the list of known editors
-    m_Editors.insert(editor);
+    // Refresh the screen window so that it will repainted
+    // to match the memory device context.
+    m_Screen->Refresh(true);
 
-    return editor;
+    // Mark the bitmap as not ever having been saved.
+    m_IsNewBitmap = true;
 }
 
-void
-TMainFrame::DestroyEditWindow(
-    TMyFileWindow * EditWindow
-    )
+void CMainFrame::OnBitmapOpen(wxCommandEvent& WXUNUSED(Event))
 {
-    m_Editors.remove(EditWindow);
-}
+#ifndef WX_PURE
+    OPENFILENAME openFileName;
+    ZeroMemory(&openFileName, sizeof openFileName);
+    openFileName.lStructSize       = sizeof openFileName;
+    openFileName.hwndOwner         = static_cast<HWND>(GetHandle());
+    openFileName.hInstance         = NULL;
+    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_IMAGE;
+    openFileName.lpstrCustomFilter = NULL;
+    openFileName.nMaxCustFilter    = 0;
+    openFileName.nFilterIndex      = 0;
+    openFileName.lpstrFile         = m_BitmapName;
+    openFileName.nMaxFile          = ARRAYSIZE(m_BitmapName);
+    openFileName.lpstrFileTitle    = NULL;
+    openFileName.nMaxFileTitle     = 0;
+    openFileName.lpstrInitialDir   = NULL;
+    openFileName.lpstrTitle        = NULL;
+    openFileName.Flags             = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
+    openFileName.nFileOffset       = 0;
+    openFileName.nFileExtension    = 0;
+    openFileName.lpstrDefExt       = "bmp";
+    openFileName.lCustData         = 0;
+    openFileName.lpfnHook          = NULL;
+    openFileName.lpTemplateName    = NULL;
 
-void TMainFrame::MyPopupEdit(const char *FileName, NODE *args, bool check_for_errors)
-{
-    class TMyFileWindow * editor = CreateEditWindow(FileName, args, check_for_errors);
-
-    if (args != NULL || check_for_errors)
+    // if user found a file then try to load it
+    if (GetOpenFileName(&openFileName))
     {
-        // if an error occured "force" a change so that we still in "dirty" state
-        if (error_happen)
+        unsigned int dwPixelWidth  = 1;
+        unsigned int dwPixelHeight = 1;
+
+        m_IsNewBitmap = false;
+
+        ERR_TYPES status;
+        char ext[_MAX_EXT];
+        _splitpath(m_BitmapName, NULL, NULL, NULL, ext);
+        if (stricmp(ext, ".gif") == 0)
         {
-            editor->ReopenAfterError();
-        }
-    }
-
-    GiveFocusToEditbox = false;
-}
-
-void TMainFrame::MyPopupEditToError(const char *FileName)
-{
-    // copy the input file to the editor's temporary file
-    FILE * srcfile = fopen(FileName, "r");
-    if (srcfile != NULL)
-    {
-        FILE * dstfile = fopen(TempPathName, "w");
-        if (dstfile != NULL)
-        {
-            int ch;
-            while ((ch = fgetc(srcfile)) != EOF)
-            {
-                fputc(ch, dstfile);
-            }
-            fclose(dstfile);
-        }
-        fclose(srcfile);
-    }
-
-    class TMyFileWindow * editor = CreateEditWindow(FileName, NIL, true);
-
-    // exit the editor to force it to notice the error.
-    error_happen = false;
-    editor->CMExit();
-}
-
-
-static
-void
-CreateTemplateLogoFileForEditor(
-    const char * FileName,
-    NODE       * Args
-    )
-{
-    FILE* logoFile = fopen(FileName, "w");
-    if (logoFile != NULL)
-    {
-        if (Args != NULL)
-        {
-            fprintf(logoFile, "%s\n", To.GetName());
-            fprintf(logoFile, "%s\n", End.GetName());
+            status = gifload_helper(m_BitmapName, dwPixelWidth, dwPixelHeight);
         }
         else
         {
-            fprintf(logoFile, "\n");
+            status = LoadBitmapFile(m_BitmapName, dwPixelWidth, dwPixelHeight);
+        }
+
+        if (status != SUCCESS)
+        {
+            ShowErrorMessage(status);
         }
     }
-    fclose(logoFile);
+#endif // WX_PURE
 }
 
-
-int TMainFrame::PopupEditorForFile(const char *FileName, NODE *args)
+void CMainFrame::SaveBitmap()
 {
-    // If no file (or empty) create template
-    FILE * logoFile = fopen(FileName, "r");
-    if (logoFile != NULL)
-    {
-        // file exists.  check if it's empty.
-        bool fileIsEmpty = getc(logoFile) == EOF;
-        fclose(logoFile);
+#ifndef WX_PURE
+    ERR_TYPES status;
 
-        if (fileIsEmpty)
-        {
-            CreateTemplateLogoFileForEditor(FileName, args);
-        }
+    char ext[_MAX_EXT];
+    _splitpath(m_BitmapName, NULL, NULL, NULL, ext);
+    if (stricmp(ext, ".gif") == 0)
+    {
+        status = gifsave_helper(m_BitmapName, -1, 0, -1, -1, 8);
     }
     else
     {
-        // file doesn't exist.  Create it.
-        CreateTemplateLogoFileForEditor(FileName, args);
+        status = DumpBitmapFile(m_BitmapName, 32);
     }
 
-    MainWindowx->MyPopupEdit(FileName, args, false);
-    return 0;
+    if (status != SUCCESS)
+    {
+        ShowErrorMessage(status);
+    }
+#endif // WX_PURE
 }
 
-
-char * TMainFrame::MyPopupInput(const char *Prompt)
+void CMainFrame::SaveBitmapAs()
 {
-    // get user input
-    TQuestionBox dlg(
-        MainWindowx->ScreenWindow,
-        Prompt,
-        LOCALIZED_INPUT);
-    if (dlg.Execute() != IDOK)
+#ifndef WX_PURE
+    // if new then nulify File name
+    if (m_IsNewBitmap)
     {
-        return NULL;
+        m_BitmapName[0] = '\0';
     }
 
-    return strdup(dlg.GetAnswer());
+    // Get file name from user
+    OPENFILENAME openFileName;
+    ZeroMemory(&openFileName, sizeof openFileName);
+    openFileName.lStructSize       = sizeof openFileName;
+    openFileName.hwndOwner         = static_cast<HWND>(GetHandle());
+    openFileName.hInstance         = NULL;
+    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_IMAGE;
+    openFileName.lpstrCustomFilter = NULL;
+    openFileName.nMaxCustFilter    = 0;
+    openFileName.nFilterIndex      = 0;
+    openFileName.lpstrFile         = m_BitmapName;
+    openFileName.nMaxFile          = ARRAYSIZE(m_BitmapName);
+    openFileName.lpstrFileTitle    = NULL;
+    openFileName.nMaxFileTitle     = 0;
+    openFileName.lpstrInitialDir   = NULL;
+    openFileName.lpstrTitle        = NULL;
+    openFileName.Flags             = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
+    openFileName.nFileOffset       = 0;
+    openFileName.nFileExtension    = 0;
+    openFileName.lpstrDefExt       = "bmp";
+    openFileName.lCustData         = 0;
+    openFileName.lpfnHook          = NULL;
+    openFileName.lpTemplateName    = NULL;
+
+    if (GetSaveFileName(&openFileName))
+    {
+        // Save the bitmap using the new file name
+        m_IsNewBitmap = false;
+        SaveBitmap();
+    }
+#endif // WX_PURE
 }
 
-void
-FillMenu(
-    TMenu &           Menu,
-    const MENUITEM *  MenuItems,
-    size_t            MenuItemsLength
-    )
+void CMainFrame::OnBitmapSave(wxCommandEvent& WXUNUSED(Event))
 {
-    for (size_t i = 0; i < MenuItemsLength; i++)
+    // if new file then switch to save file as, else save
+    if (m_IsNewBitmap)
     {
-        if (MenuItems[i].MenuText != NULL)
+        SaveBitmapAs();
+    }
+    else
+    {
+        SaveBitmap();
+    }
+}
+
+void CMainFrame::OnBitmapSaveAs(wxCommandEvent& WXUNUSED(Event))
+{
+    SaveBitmapAs();
+}
+
+void CMainFrame::InitializePrinter()
+{
+    // Read the default page settings.
+    // On Windows, even though we call ShowModal, no
+    // dialog box is displayed because we set the
+    // default info to true.
+    if (m_PageSetupData.GetDefaultInfo())
+    {
+#ifdef __WXMSW__
+        m_PageSetupData.SetDefaultMinMargins(true);
+        wxPageSetupDialog pageSetup(this, &m_PageSetupData);
+        if (pageSetup.ShowModal() == wxID_OK)
         {
-            Menu.AppendMenu(
-                MF_STRING, 
-                MenuItems[i].MenuId,
-                MenuItems[i].MenuText);
+            // Save the updated preferences.
+            m_PageSetupData = pageSetup.GetPageSetupData();
         }
-        else
-        {
-            Menu.AppendMenu(
-                MF_SEPARATOR, 
-                0, 
-                NULL);
-        }
-    }
-}
-
-void
-AppendPopupMenu(
-    TMenu &           MainMenu,
-    const char *      PopupMenuText,
-    const MENUITEM *  PopupMenuItems,
-    size_t            PopupMenuItemsLength
-    )
-{
-    // create the popup menu
-    TMenu popupMenu(NoAutoDelete);
-
-    // fill the popup menu with its items
-    FillMenu(popupMenu, PopupMenuItems, PopupMenuItemsLength);
-
-    // append the popup menu to the main menu
-    MainMenu.AppendMenu(MF_POPUP, popupMenu, PopupMenuText);
-}
-
-void
-SetTextOnChildWindows(
-    TWindow *         Parent,
-    const MENUITEM *  ChildText,
-    size_t            ChildTextLength
-    )
-{
-    for (size_t i = 0; i < ChildTextLength; i++)
-    {
-        Parent->SetDlgItemText(ChildText[i].MenuId, ChildText[i].MenuText);
-    }
-}
-
-
-void TMainFrame::SetupWindow()
-{
-    TDecoratedFrame::SetupWindow();
-
-    //
-    // Construct the main menu
-    //
-    static const MENUITEM fileMenuItems[] = {
-        {LOCALIZED_FILE_NEW,              CM_FILENEW},
-        {LOCALIZED_FILE_LOAD,             CM_FILELOAD},
-        {LOCALIZED_FILE_OPEN,             CM_FILEOPEN},
-        {LOCALIZED_FILE_SAVE,             CM_FILESAVE},
-        {LOCALIZED_FILE_SAVEAS,           CM_FILESAVEAS},
-        {LOCALIZED_FILE_SETASSCREENSAVER, CM_FILESETASSCREENSAVER},
-        {0},
-        {LOCALIZED_FILE_EDIT,   CM_FILEEDIT},
-        {LOCALIZED_FILE_ERASE,  CM_FILEERASE},
-        {0},
-        {LOCALIZED_FILE_EXIT,   CM_EXIT},
-    };
-
-    static const MENUITEM bitmapMenuItems[] = {
-        {LOCALIZED_BITMAP_NEW,           CM_BITMAPNEW},
-        {LOCALIZED_BITMAP_LOAD,          CM_BITMAPOPEN},
-        {LOCALIZED_BITMAP_SAVE,          CM_BITMAPSAVE},
-        {LOCALIZED_BITMAP_SAVEAS,        CM_BITMAPSAVEAS},
-        {0},
-        {LOCALIZED_BITMAP_PRINT,         CM_BITMAPPRINT},
-        {LOCALIZED_BITMAP_PRINTERSETUP,  CM_BITMAPPRINTERSETUP},
-        {0},
-        {LOCALIZED_BITMAP_ACTIVEAREA,    CM_BITMAPPRINTERAREA},
-    };
-
-    static const MENUITEM setMenuItems[] = {
-        {LOCALIZED_SET_PENSIZE,       CM_SETPENSIZE},
-        {0},
-        {LOCALIZED_SET_LABELFONT,     CM_SETFONT},
-        {LOCALIZED_SET_COMMANDERFONT, CM_SETCOMMANDERFONT},
-        {0},
-        {LOCALIZED_SET_PENCOLOR,      CM_SETPENCOLOR},
-        {LOCALIZED_SET_FLOODCOLOR,    CM_SETFLOODCOLOR},
-        {LOCALIZED_SET_SCREENCOLOR,   CM_SETSCREENCOLOR},
-    };
-
-    static const MENUITEM zoomMenuItems[] = {
-        {LOCALIZED_ZOOM_IN,     CM_ZOOMIN},
-        {LOCALIZED_ZOOM_OUT,    CM_ZOOMOUT},
-        {LOCALIZED_ZOOM_NORMAL, CM_ZOOMNORMAL},
-    };
- 
-    static const MENUITEM helpMenuItems[] = {
-        {LOCALIZED_HELP_INDEX,         CM_HELP},
-#if MANUAL_HAS_TRANSLATION_TABLES
-        // options for translating to/from English
-        {LOCALIZED_HELP_LANGTOENGLISH, CM_HELPLANGTOENGLISH},
-        {LOCALIZED_HELP_ENGLISHTOLANG, CM_HELPENGLISHTOLANG},
 #endif
-        {0},
-        {LOCALIZED_HELP_TUTORIAL,      CM_HELPTUTORIAL},
-        {LOCALIZED_HELP_DEMO,          CM_HELPDEMO},
-        {LOCALIZED_HELP_EXAMPLE,       CM_HELPEXAMPLES},
-        {LOCALIZED_HELP_RELEASENOTES,  CM_HELPRELEASENOTES},
-        {0},
-        {LOCALIZED_HELP_ABOUTFMSLOGO,  CM_HELPABOUT},
-        {LOCALIZED_HELP_MS,            CM_HELPABOUTMS},
-    };
 
-    TMenu mainMenu(CreateMenu());
-    AppendPopupMenu(mainMenu, LOCALIZED_FILE,   fileMenuItems,   ARRAYSIZE(fileMenuItems));
-    AppendPopupMenu(mainMenu, LOCALIZED_BITMAP, bitmapMenuItems, ARRAYSIZE(bitmapMenuItems));
-    AppendPopupMenu(mainMenu, LOCALIZED_SET,    setMenuItems,    ARRAYSIZE(setMenuItems));
-    AppendPopupMenu(mainMenu, LOCALIZED_ZOOM,   zoomMenuItems,   ARRAYSIZE(zoomMenuItems));
-    AppendPopupMenu(mainMenu, LOCALIZED_HELP,   helpMenuItems,   ARRAYSIZE(helpMenuItems));
-    SetMenu(mainMenu);
-
-    PaneSplitterWindow->SetSplitterCushion(MIN_COMMANDER_HEIGHT);
-    PaneSplitterWindow->SetSplitterWidth(DEFAULT_SPLITTER_WIDTH);
-
-    PaneSplitterWindow->SplitPane(
-        ScreenWindow,
-        0,
-        psHorizontal);
-   
-    if (bFixed) 
-    {
-        // HACK: fix up the frame window's size so that the screen's
-        // size matches what the client passed in on the command line.
-        // There MUST be a simpler/better way, but I do not know
-        // how to set the size of the screen client area directly.
-        TRect screenWindowRect = ScreenWindow->GetWindowRect();
-        int deltax = Attr.W - screenWindowRect.Width();
-        int deltay = Attr.H - screenWindowRect.Height();
-      
-        TRect mainWindowRect;
-        mainWindowRect.SetWH(
-            0,
-            0,
-            Attr.W + deltax,
-            Attr.H + deltay);
-
-        SetWindowPos(
-            NULL,
-            mainWindowRect,
-            SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
-    }
-
-    IsCommanderDocked = false;
-    DockCommanderWindow();
-
-    IsOkayToUseCommanderWindow = true;
-
-    // init the pens based on the color
-    UpdateNormalPen(GetPenStateForSelectedTurtle().Width, pcolor);
-    UpdateErasePen(GetPenStateForSelectedTurtle().Width,  scolor);
-
-    // it's show time for our little friend
-    draw_turtle(true);
-}
-
-void TMainFrame::FixWindowTitle()
-{
-    // This function restores the titlebar to contain just FMSLogo.
-    // It is a hack to work-around a problem that I don't understand.
-    // When I have a window that contains a text edit control that
-    // is not backed by a file, it appens a "-" to the title bar
-    // (presumably the filename would follow, if it existed).
-    //
-    // This happens when the commander window gets docked/undocked.
-    // It also happens when the mini-editor for a "TO" instruction
-    // is run.
-    //
-    // A better solution is to prevent the window title from changing
-    // in the first place.
-    SetWindowText(GetApplication()->GetName());
-}
-
-void TMainFrame::UndockCommanderWindow()
-{
-    if (IsCommanderDocked) 
-    {
-        TMyCommandWindow * newCommandWindow = new TMyCommandWindow(
-            ScreenWindow, 
-            IDD_UNDOCKEDCOMMANDER);
-        newCommandWindow->Create();
-        newCommandWindow->Duplicate(*CommandWindow);
-        newCommandWindow->ShowWindow(SW_SHOW);
-
-        if (bFixed)
-        {
-            // The user requested that we never change the size of the drawing surface,
-            // so we must shrink the main window to hold just the screen.
-            TRect screenWindowRect;
-            screenWindowRect.SetWH(
-                0,
-                0,
-                Attr.W,
-                Attr.H - CommandWindow->GetWindowRect().Height() - PaneSplitterWindow->GetSplitterWidth());
-
-            SetWindowPos(
-                NULL,
-                screenWindowRect,
-                SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
-        }
-
-        PaneSplitterWindow->RemovePane(
-            CommandWindow,
-            TShouldDelete::NoDelete);
-
-        // HACK: Reset the window title because the commander's
-        // history box appends a "-" (it thinks it's tied
-        // to a file and I can't figure out how to tell it
-        // that it's not.
-        FixWindowTitle();
-
-        delete CommandWindow;
-        CommandWindow = newCommandWindow;
-        CommandWindow->Editbox.SetFocus();
-        IsCommanderDocked = false;
+        // Mark the printer data as having been initialized.
+        m_PageSetupData.SetDefaultInfo(false);
     }
 }
 
-void TMainFrame::DockCommanderWindow()
+void CMainFrame::OnBitmapPrint(wxCommandEvent& WXUNUSED(Event))
 {
-    if (!IsCommanderDocked) 
+    InitializePrinter();
+
+    wxPrintDialogData printDialogData(m_PageSetupData.GetPrintData());
+
+    // Show the printer selection dialog box.
+    wxPrinter printer(&printDialogData);
+
+    // FMSLogo always scales the active area of the screen to fit on a
+    // single page, so we disable page number selection to prevent confusion.
+    printDialogData.EnablePageNumbers(false);
+
+    CLogoPicturePrintout printout(
+        WXSTRING(LOCALIZED_GENERAL_PRODUCTNAME),
+        *m_Screen,
+        m_PageSetupData);
+
+    if (!printer.Print(this, &printout, true))
     {
-        TMyCommandWindow * newCommandWindow = new TMyCommandWindow(
-            0, 
-            IDD_DOCKEDCOMMANDER);
-
-        // restore the commander window's height
-        int commanderWindowX      = 0;
-        int commanderWindowY      = 0;
-        int commanderWindowWidth  = 0;
-        int commanderWindowHeight = DEFAULT_COMMANDER_HEIGHT;
-        GetConfigurationQuadruple(
-            "Commander",
-            &commanderWindowX,
-            &commanderWindowY,
-            &commanderWindowWidth,
-            &commanderWindowHeight);
-
-        // sanity-check the input
-        commanderWindowHeight = max(commanderWindowHeight, MIN_COMMANDER_HEIGHT);
-
-
-        if (bFixed)
-        {
-            // The user requested that we never change the size of the drawing surface,
-            // so we must grow the main window to hold the commander window.
-
-            TRect originalWindowRect;
-            originalWindowRect.SetWH(
-                Attr.X,
-                Attr.Y,
-                Attr.W,
-                Attr.H);
-
-            // grow the main window to hold the splitter and the commander
-            const int totalHeight =
-                originalWindowRect.Height() +
-                PaneSplitterWindow->GetSplitterWidth() +
-                commanderWindowHeight;
-         
-            const TRect newWindowRect(
-                originalWindowRect.Left(),
-                originalWindowRect.Top(),
-                originalWindowRect.Right(),
-                originalWindowRect.Top() + totalHeight);
-
-            SetWindowPos(
-                NULL,
-                newWindowRect,
-                SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
-        }
-
-        // HACK: Hide the current commander window before adding
-        // the new one to the splitter.  This somehow forces a 
-        // refresh of the entire screen window.  Without it, the
-        // scrollbars sometimes don't show up (I don't know why).
-        // This is a hack because I'm sure there's a more direct
-        // way to force the scrollbars to show up.
+        // This can happen in two cases:
+        // 1) If there was an error while printing, in which
+        //    case the operating system will have communicated
+        //    the problem to the user, so we don't need to.
+        // 2) If the print job was cancelled by the user,
+        //    in which case we don't need to tell the user
+        //    that they cancelled the job.
         //
-        // See bug #1372200 for details.
-        CommandWindow->Show(SW_HIDE);
-      
-        double splitRatio = 0.5;
+        // Therefore, all we need to do is exit.
+        return;
+    }
 
-        TRect clientRect;
-        GetClientRect(clientRect);
-        if (clientRect.Height() != 0)
-        {
-            double reverseSplitRatio = 
-                (double) (commanderWindowHeight + PaneSplitterWindow->GetSplitterWidth()) /
-                (double) clientRect.Height();
+    // Preserve the printr settings for the next time.
+    m_PageSetupData.SetPrintData(printer.GetPrintDialogData().GetPrintData());
+}
 
-            splitRatio = 1.0 - reverseSplitRatio;
+void CMainFrame::OnBitmapPrinterSetup(wxCommandEvent& WXUNUSED(Event))
+{
+    InitializePrinter();
 
-            if (splitRatio < 0.0)
-            {
-                splitRatio = 0.1;
-            }
-            else if (splitRatio > 1.0)
-            {
-                splitRatio = 0.9;
-            }
-        }
-
-        PaneSplitterWindow->SplitPane(
-            ScreenWindow,
-            newCommandWindow,
-            psHorizontal,
-            splitRatio);
-
-        newCommandWindow->Duplicate(*CommandWindow);
-
-        // redraw the entire screen window
-        ScreenWindow->Invalidate(true);
-        newCommandWindow->Invalidate(true);
-
-        // HACK: Reset the window title because the commander's
-        // history box appends a "-" (it thinks it's tied
-        // to a file and I can't figure out how to tell it
-        // that it's not.
-        FixWindowTitle();
-
-        delete CommandWindow;
-        CommandWindow = newCommandWindow;
-        CommandWindow->Editbox.SetFocus();
-        IsCommanderDocked = true;
+    // Show a dialog box for updating the page setup
+    wxPageSetupDialog pageSetup(this, &m_PageSetupData);
+    if (pageSetup.ShowModal() == wxID_OK)
+    {
+        // The user pressed OK on the dialog box.
+        // Save the updated preferences.
+        m_PageSetupData = pageSetup.GetPageSetupData();
     }
 }
 
-
-void TMainFrame::MyPopupStatusKill()
+void CMainFrame::OnSetPenSize(wxCommandEvent& WXUNUSED(Event))
 {
-    if (StatusWindow != NULL)
+    if (m_SetPenSizeDialog == NULL)
     {
-        // The status window exists, close it
-        StatusWindow->CloseWindow();
+        const int initialSize = get_pen_width();
+
+        m_SetPenSizeDialog = new CSetPenSize(
+            this,
+            initialSize,
+            m_SetPenSizeDialog);
+
+        m_SetPenSizeDialog->Show();
+    }
+    else
+    {
+        m_SetPenSizeDialog->SetFocus();
     }
 }
 
-// popup status window
-void TMainFrame::MyPopupStatus()
+#ifndef WX_PURE
+
+void
+CMainFrame::SetColorHelper(
+    CSetColor * &   SetColorDialog,
+    const char  *   DialogTitle,
+    COLORREF        InitialColor,
+    const char  *   LogoCommand
+    )
 {
-    if (StatusWindow == NULL)
+    if (SetColorDialog == NULL)
     {
-        // The status window doesn't exist--create it
-        StatusWindow = new CStatusWindow(this);
-        StatusWindow->Create();
-        StatusWindow->ShowWindow(SW_SHOW);
+        const wxColor initialColor(
+            GetRValue(InitialColor),
+            GetGValue(InitialColor),
+            GetBValue(InitialColor));
+
+        SetColorDialog = new CSetColor(
+            this,
+            DialogTitle,
+            initialColor,
+            LogoCommand,
+            SetColorDialog);
+
+        SetColorDialog->Show();
+    }
+    else
+    {
+        SetColorDialog->SetFocus();
     }
 }
 
+#endif
 
-void TMainFrame::CMControlExecute()
+void CMainFrame::OnSetPenColor(wxCommandEvent& WXUNUSED(Event))
 {
-    TMyFileWindow * editor = GetEditor();
-    HWND TempH = GetActiveWindow();
+#ifndef WX_PURE
+    SetColorHelper(
+        m_SetPenColorDialog,
+        LOCALIZED_SETCOLOR_PENCOLOR,
+        pcolor,
+        LOCALIZED_ALTERNATE_SETPENCOLOR);
+#endif
+}
 
-    // if Main is active find alternate
-    if (TempH == MainWindowx->HWindow)
+void CMainFrame::OnSetFloodColor(wxCommandEvent& WXUNUSED(Event))
+{
+#ifndef WX_PURE
+    SetColorHelper(
+        m_SetFloodColorDialog,
+        LOCALIZED_SETCOLOR_FLOODCOLOR,
+        fcolor,
+        LOCALIZED_ALTERNATE_SETFLOODCOLOR);
+#endif
+}
+
+void CMainFrame::OnSetScreenColor(wxCommandEvent& WXUNUSED(Event))
+{
+#ifndef WX_PURE
+    SetColorHelper(
+        m_SetScreenColorDialog,
+        LOCALIZED_SETCOLOR_SCREENCOLOR,
+        scolor,
+        LOCALIZED_ALTERNATE_SETSCREENCOLOR);
+#endif
+}
+
+void CMainFrame::ShowStatus()
+{
+    // create a new status dialog, if necessary
+    if (!StatusDialogIsShowing())
     {
-
-        // if commander up then focus to input box
-        if (!CommandWindow->IsIconic())
-        {
-            CommandWindow->Editbox.SetFocus();
-        }
-
-        // else if an editor is available go there
-        else if (editor != NULL)
-        {
-            if (!editor->IsIconic())
-            {
-                editor->SetFocus();
-            }
-        }
+        m_StatusDialog = new CStatusDialog(this);
+        m_StatusDialog->PopulateAllFields();
+        m_StatusDialog->Show();
     }
+}
 
-    // else if active is commander find alternate
-    else if (TempH == CommandWindow->HWindow)
+void CMainFrame::HideStatus()
+{
+    // destroy the status dialog
+    if (StatusDialogIsShowing())
     {
+        m_StatusDialog->Close();
+        m_StatusDialog = NULL;
+    }
+}
 
-        // if a available editor maybe go there
-        if (editor != NULL)
+bool CMainFrame::StatusDialogIsShowing()
+{
+    return m_StatusDialog != NULL;
+}
+
+void CMainFrame::OnSetActiveArea(wxCommandEvent& WXUNUSED(Event))
+{
+    bool isOk;
+
+    do
+    {
+        isOk = true;
+
+        CSetActiveArea printerArea(
+            this,
+            g_PrinterAreaXLow,
+            g_PrinterAreaXHigh,
+            g_PrinterAreaYLow,
+            g_PrinterAreaYHigh,
+            g_PrinterAreaPixels);
+        if (printerArea.ShowModal() == wxID_OK)
         {
+            // the user did not cancel, so commit to the new settings
+            int xLow;
+            int xHigh;
+            int yLow;
+            int yHigh;
+            printerArea.GetActiveArea(xLow, xHigh, yLow, yHigh);
 
-            // if really available then go there
-            if (!editor->IsIconic())
+            // Validate the area
+            if (xLow >= xHigh || yLow >= yHigh)
             {
-                editor->SetFocus();
+                // The settings are no good.  Notify the user and try again.
+                wxMessageBox(
+                    WXSTRING(LOCALIZED_ERROR_BADINPUT),
+                    WXSTRING(LOCALIZED_ACTIVEAREA));
+                isOk = false;
             }
             else
             {
-                // else go to main
-                SetFocus();
+                // The settings are ok.
+                // Use them.
+                int pixelsPerInch;
+                printerArea.GetPixelsPerInch(pixelsPerInch);
+
+                g_PrinterAreaXLow   = xLow;
+                g_PrinterAreaXHigh  = xHigh;
+                g_PrinterAreaYLow   = yLow;
+                g_PrinterAreaYHigh  = yHigh;
+                g_PrinterAreaPixels = pixelsPerInch;
+                if (g_PrinterAreaPixels < 1)
+                {
+                    g_PrinterAreaPixels = 1;
+                }
+
+                // Persist the new settings
+                SetConfigurationInt("Printer.XLow",   g_PrinterAreaXLow);
+                SetConfigurationInt("Printer.XHigh",  g_PrinterAreaXHigh);
+                SetConfigurationInt("Printer.YLow",   g_PrinterAreaYLow);
+                SetConfigurationInt("Printer.YHigh",  g_PrinterAreaYHigh);
+                SetConfigurationInt("Printer.Pixels", g_PrinterAreaPixels);
             }
         }
-        else
-        {
-            // else go to main
-            SetFocus();
-        }
-    }
-    else
+    } while (!isOk);
+}
+
+void CMainFrame::OnSetLabelFont(wxCommandEvent& WXUNUSED(Event))
+{
+    wxFontDialog fontChooser;
+
+    // Seed the font picker with the current label font
+    const wxFont labelFont = GetLabelFont();
+    fontChooser.GetFontData().SetInitialFont(labelFont);
+
+    // Disable color selection, since we use the pencolor instead.
+    fontChooser.GetFontData().EnableEffects(false);
+
+    int rval = fontChooser.ShowModal();
+    if (rval == wxID_OK)
     {
-        // else go to main
-        SetFocus();
+        // The user selected a new font.
+
+#ifdef __WXMSW__ 
+
+        // Get the LOGFONT struct from the wxFont
+        const wxFont newFont = fontChooser.GetFontData().GetChosenFont();
+        const struct wxNativeFontInfo * fontInfo = newFont.GetNativeFontInfo();
+        if (fontInfo != NULL)
+        {
+            const class wxNativeFontInfo * nativeFontInfo = (class wxNativeFontInfo*)fontInfo;
+
+            // commit to the new font
+            char setlabelfont[MAX_BUFFER_SIZE];
+
+            NormalizeCaseForDisplay(
+                setlabelfont,
+                LOCALIZED_ALTERNATE_SETLABELFONT,
+                STRINGLENGTH(LOCALIZED_ALTERNATE_SETLABELFONT));
+
+            char logoInstruction[512];
+            sprintf(
+                logoInstruction,
+#if wxUSE_UNICODE
+                "%s [[%ws] %ld %ld %ld %ld %d %d %d %d %d %d %d %d]",
+#else
+                "%s [[%s] %ld %ld %ld %ld %d %d %d %d %d %d %d %d]",
+#endif
+                setlabelfont,
+                nativeFontInfo->lf.lfFaceName,
+                nativeFontInfo->lf.lfHeight,
+                nativeFontInfo->lf.lfWidth,
+                nativeFontInfo->lf.lfOrientation,
+                nativeFontInfo->lf.lfWeight,
+                nativeFontInfo->lf.lfItalic,
+                nativeFontInfo->lf.lfUnderline,
+                nativeFontInfo->lf.lfStrikeOut,
+                nativeFontInfo->lf.lfCharSet,
+                nativeFontInfo->lf.lfOutPrecision,
+                nativeFontInfo->lf.lfClipPrecision,
+                nativeFontInfo->lf.lfQuality,
+                nativeFontInfo->lf.lfPitchAndFamily);
+
+            RunLogoInstructionFromGui(logoInstruction);
+        }
+#endif
     }
 }
 
-void TMainFrame::CMZoomIn()
+void CMainFrame::OnSetCommanderFont(wxCommandEvent& WXUNUSED(Event))
+{
+    m_RealCommander->ChooseNewFont();
+}
+
+void CMainFrame::OnZoomIn(wxCommandEvent& WXUNUSED(Event))
 {
     zoom_helper(the_zoom * 2.0);
 }
 
-void TMainFrame::CMZoomOut()
+void CMainFrame::OnZoomOut(wxCommandEvent& WXUNUSED(Event))
 {
     zoom_helper(the_zoom * 0.5);
 }
 
-void TMainFrame::CMZoomNormal()
+void CMainFrame::OnZoomNormal(wxCommandEvent& WXUNUSED(Event))
 {
     zoom_helper(1.0);
+
+#if wxUSE_STATUSBAR
+    // TODO: Delete this.  It's just a reminder on how to write
+    // to the status bar.
+    wxLogStatus(this, WXSTRING("Zoom is now %f"), the_zoom);
+#endif
 }
 
-void TMainFrame::CMSetFont()
-{
-    LOGFONT logFont;
-    logFont = FontRec;
-
-    // clear the struct
-    CHOOSEFONT chooseFont;
-    memset(&chooseFont, 0x00, sizeof chooseFont);
-
-    // fill it with the right stuff
-    chooseFont.lStructSize = sizeof(chooseFont);
-    chooseFont.hwndOwner = MainWindowx->HWindow;
-    chooseFont.Flags = CF_SCREENFONTS | CF_INITTOLOGFONTSTRUCT;
-    chooseFont.nFontType = SCREEN_FONTTYPE;
-    chooseFont.lpLogFont = &logFont;
-    chooseFont.hInstance = 0;
-
-    if (ChooseFont(&chooseFont))
-    {
-        // commit to the new font
-        char setlabelfont[MAX_BUFFER_SIZE];
-
-        cap_strnzcpy(
-            setlabelfont,
-            LOCALIZED_ALTERNATE_SETLABELFONT,
-            STRINGLENGTH(LOCALIZED_ALTERNATE_SETLABELFONT));
-
-        char logoInstruction[512];
-        sprintf(
-            logoInstruction,
-            "%s [[%s] %d %d %d %d %d %d %d %d %d %d %d %d]",
-            setlabelfont,
-            logFont.lfFaceName,
-            logFont.lfHeight,
-            logFont.lfWidth,
-            logFont.lfOrientation,
-            logFont.lfWeight,
-            logFont.lfItalic,
-            logFont.lfUnderline,
-            logFont.lfStrikeOut,
-            logFont.lfCharSet,
-            logFont.lfOutPrecision,
-            logFont.lfClipPrecision,
-            logFont.lfQuality,
-            logFont.lfPitchAndFamily);
-
-        RunLogoInstructionFromGui(logoInstruction);
-    }
-}
-
-void TMainFrame::CMSetCommanderFont()
-{
-    CommandWindow->ChooseNewFont();
-}
-
-void TMainFrame::CMSetPenSize()
-{
-    if (m_PenSizePicker == NULL)
-    {
-        const TSize initialSize(get_pen_width(), get_pen_height());
-
-        m_PenSizePicker = new TSizeDialog(
-            this, 
-            initialSize, 
-            m_PenSizePicker);
-
-        m_PenSizePicker->Create();
-        m_PenSizePicker->ShowWindow(SW_SHOW);
-    }
-    else
-    {
-        m_PenSizePicker->SetFocus();
-    }
-}
-
-void
-TMainFrame::ShowColorPicker(
-    class TColorDialog * & ColorPickerDialog,
-    RGBCOLOR               InitialColor,
-    const char *           EnglishDescription,
-    const char *           LogoCommand
-    )
-{
-    if (ColorPickerDialog == NULL)
-    {
-        // The dialog object doesn't exist yet.
-        // Create it.
-        ColorPickerDialog = new TColorDialog(
-            this, 
-            (COLORREF)InitialColor, 
-            EnglishDescription,
-            LogoCommand,
-            ColorPickerDialog);
-
-        ColorPickerDialog->Create();
-        ColorPickerDialog->ShowWindow(SW_SHOW);
-    }
-    else
-    {
-        ColorPickerDialog->SetFocus();
-    }
-}
-
-void TMainFrame::CMSetPenColor()
-{
-    ShowColorPicker(
-        m_PenColorPicker,
-        pcolor, 
-        LOCALIZED_SETCOLOR_PENCOLOR, 
-        LOCALIZED_ALTERNATE_SETPENCOLOR);
-}
-
-void TMainFrame::CMSetFloodColor()
-{
-    ShowColorPicker(
-        m_FloodColorPicker,
-        fcolor, 
-        LOCALIZED_SETCOLOR_FLOODCOLOR, 
-        LOCALIZED_ALTERNATE_SETFLOODCOLOR);
-}
-
-void TMainFrame::CMSetScreenColor()
-{
-    ShowColorPicker(
-        m_ScreenColorPicker,
-        scolor, 
-        LOCALIZED_SETCOLOR_SCREENCOLOR,
-        LOCALIZED_ALTERNATE_SETSCREENCOLOR);
-}
-
-void TMainFrame::CMHelp()
+void CMainFrame::OnHelp(wxCommandEvent& WXUNUSED(Event))
 {
     do_help(NULL);
 }
 
-void TMainFrame::CMHelpDemo()
-{
-    do_execution("demo");
-}
-
-void TMainFrame::CMHelpTutorial()
-{
-    do_help("Where to Start");
-}
-
 #if MANUAL_HAS_TRANSLATION_TABLES
 
-void TMainFrame::CMHelpLangToEnglish()
+void CMainFrame::OnHelpLanguageToEnglish(wxCommandEvent& WXUNUSED(Event))
 {
     do_help("To English");
 }
 
-void TMainFrame::CMHelpEnglishToLang()
+void CMainFrame::OnHelpEnglishToLanguage(wxCommandEvent& WXUNUSED(Event))
 {
     do_help("From English");
 }
 
-#endif
+#endif // MANUAL_HAS_TRANSLATION_TABLES
 
+void CMainFrame::OnHelpTutorial(wxCommandEvent& WXUNUSED(Event))
+{
+    do_help("Where to Start");
+}
 
-static
+void CMainFrame::OnHelpDemo(wxCommandEvent& WXUNUSED(Event))
+{
+    char command[] = "demo";
+    do_execution(command);
+}
+
 void
-OpenFileWithDefaultApplication(
-    HWND          HWindow,
+CMainFrame::OpenFileWithDefaultApplication(
     const char *  FileName
     )
 {
+#ifndef WX_PURE
     HINSTANCE childApplication = ShellExecute(
-        HWindow,        // handle to parent window
-        "open",         // operation to perform
-        FileName,       // pointer to filename string
-        NULL,           // pointer to string that specifies executable-file parameters
-        NULL,           // pointer to string that specifies default directory
-        SW_SHOWNORMAL); // whether file is shown when opened
+        static_cast<HWND>(GetHandle()), // handle to parent window
+        "open",                         // operation to perform
+        FileName,                       // pointer to filename string
+        NULL,                           // pointer to string that specifies executable-file parameters
+        NULL,                           // pointer to string that specifies default directory
+        SW_SHOWNORMAL);                 // whether file is shown when opened
     if (childApplication != NULL)
     {
         CloseHandle(childApplication);
     }
+#endif
 }
 
-
-void TMainFrame::CMHelpExamples()
+void CMainFrame::OnHelpExamples(wxCommandEvent& WXUNUSED(Event))
 {
     char szFileName[MAX_PATH + 1];
     MakeHelpPathName(szFileName, "EXAMPLES\\INDEX.HTML");
 
-    OpenFileWithDefaultApplication(HWindow, szFileName);
+    OpenFileWithDefaultApplication(szFileName);
 }
 
-void TMainFrame::CMHelpReleaseNotes()
+void CMainFrame::OnHelpReleaseNotes(wxCommandEvent& WXUNUSED(Event))
 {
     char szFileName[MAX_PATH + 1];
     MakeHelpPathName(szFileName, "README.TXT");
 
-    OpenFileWithDefaultApplication(HWindow, szFileName);
+    OpenFileWithDefaultApplication(szFileName);
 }
 
-#define LOCALIZED_ABOUTFMS_OWL_VERSION          \
-    LOCALIZED_GENERAL_PRODUCTNAME               \
-    " " LOCALIZED_ABOUTFMS_VERSION " "          \
-    FMSLOGO_VERSION " - OWL\n"                  \
-    "http://sourceforge.net/projects/fmslogo"   \
-
-class CAboutFmsLogoDialog : public TDialog
+void CMainFrame::OnAboutFmsLogo(wxCommandEvent& WXUNUSED(Event))
 {
-public:
-    CAboutFmsLogoDialog(TWindow * Parent) : 
-        TDialog(Parent, IDD_ABOUTFMS)
-    {
-        SetCaption(LOCALIZED_ABOUTFMS);
-    }
-
-protected:
-    void SetupWindow();
-};
-
-void CAboutFmsLogoDialog::SetupWindow()
-{
-    TDialog::SetupWindow();
-
-    // set the text in all of the static controls
-    static const MENUITEM staticText[] = {
-        {LOCALIZED_ABOUTFMS_OWL_VERSION,     ID_ABOUTFMS_VERSION},
-        {LOCALIZED_ABOUTFMS_GUI,             ID_ABOUTFMS_GUI},
-        {LOCALIZED_ABOUTFMS_CORE,            ID_ABOUTFMS_CORE},
-        {LOCALIZED_ABOUTFMS_INSTALLER,       ID_ABOUTFMS_INSTALLER},
-        {LOCALIZED_ABOUTFMS_ADVENTURE,       ID_ABOUTFMS_ADVENTURE},
-        {LOCALIZED_ABOUTFMS_SPECIALTHANKS,   ID_ABOUTFMS_SPECIALTHANKS},
-        {LOCALIZED_ABOUTFMS_GPL,             ID_ABOUTFMS_GPL},
-        {LOCALIZED_ABOUTFMS_NEWSGROUP,       ID_ABOUTFMS_NEWSGROUP},
-        {LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC, ID_ABOUTFMS_MULTIMEDIALOGIC},
-        {LOCALIZED_ABOUTFMS_OK,              IDOK},
-    };
-
-    SetTextOnChildWindows(this, staticText, ARRAYSIZE(staticText));
-
-    // spacing between GUI elements
-    const int padding_y = 4;
-    const int padding_x = 4;
-
-    // -1 because we don't include IDOK
-    int panelHeights[ARRAYSIZE(staticText) - 1] = {0};
-
-    // calculate the width of the widest "thanks" panel
-    int longestWidth = 0;
-    int totalHeight  = 0;
-
-    for (int i = 0; i < ARRAYSIZE(panelHeights); i++)
-    {
-        HWND hwnd = GetItemHandle(staticText[i].MenuId);
-        if (hwnd != NULL)
-        {
-            HDC  dc = GetDC(hwnd);
-            if (dc != NULL)
-            {
-                // Iterate through all lines of text in this panel
-                // and figure out the width of the longest one.
-                const char * lineBegin = staticText[i].MenuText;
-                for (;;)
-                {
-                    const char * lineEnd = lineBegin;
-                    while (*lineEnd != '\0' && *lineEnd != '\n')
-                    {
-                        lineEnd++;
-                    }
-
-                    SIZE lineSize;
-                    BOOL isOk = GetTextExtentPoint(
-                        dc,
-                        lineBegin,
-                        lineEnd - lineBegin,
-                        &lineSize);
-                    if (isOk)
-                    {
-                        if (longestWidth < lineSize.cx)
-                        {
-                            // we found a new longest line
-                            longestWidth = lineSize.cx;
-                        }
-
-                        panelHeights[i] += lineSize.cy;
-                    }
-
-                    if (*lineEnd == '\0')
-                    {
-                        // we reached the end of staticText[i].MenuText
-                        break;
-                    }
-
-                    // advance beyond the newline
-                    lineBegin = lineEnd + 1;
-                }
-
-                totalHeight += panelHeights[i];
-
-                ReleaseDC(hwnd, dc);
-            }
-        }
-    }
-
-
-    // add in the padding between the child windows.
-    totalHeight += padding_y * ARRAYSIZE(staticText);
-
-    HWND okButtonHwnd = GetItemHandle(IDOK);
-    if (okButtonHwnd != NULL)
-    {
-        // figure out the dimensions of the OK button
-        RECT rect;
-        BOOL isOk = ::GetWindowRect(okButtonHwnd, &rect);
-        if (isOk)
-        {
-            totalHeight += padding_y + rect.bottom - rect.top;
-        }
-
-        // move the OK button to the proper place
-        ::SetWindowPos(
-            okButtonHwnd,
-            NULL,
-            (longestWidth - (rect.right - rect.left)) / 2,
-            totalHeight - (rect.bottom - rect.top) - padding_y,
-            0,
-            0,
-            SWP_NOSIZE);
-    }
-
-
-    // calculate how large the dialog box must be to hold the text
-    TRect windowRect;
-    GetWindowRect(windowRect);
-
-    TRect clientRect;
-    GetClientRect(clientRect);
-   
-    int newWindowWidth  = windowRect.Width() - clientRect.Width()   + longestWidth + 2 * padding_x;
-    int newWindowHeight = windowRect.Height() - clientRect.Height() + totalHeight;
-   
-    // set this dialog box wide enough to hold information
-    SetWindowPos(NULL, 0, 0, newWindowWidth, newWindowHeight, SWP_NOMOVE | SWP_NOZORDER);
-
-
-    // Now set the size/position of each panel of text
-    int current_y = padding_y;
-    for (int i = 0; i < ARRAYSIZE(panelHeights); i++)
-    {
-        // resize the text
-        HWND hwnd = GetItemHandle(staticText[i].MenuId);
-        if (hwnd != NULL)
-        {
-            ::SetWindowPos(
-                hwnd, 
-                NULL, 
-                padding_x,
-                current_y,
-                longestWidth,
-                panelHeights[i],
-                SWP_NOZORDER);
-
-            current_y += panelHeights[i] + padding_y;
-        }
-    }
+    // show the "About FMSLogo" dialog box
+    CAboutFmsLogo dlg(this);
+    dlg.ShowModal();
 }
 
-void TMainFrame::CMHelpAbout()
+void CMainFrame::OnAboutMultipleSclerosis(wxCommandEvent& WXUNUSED(Event))
 {
-    CAboutFmsLogoDialog(this).Execute();
+    // show the "About FMS" dialog box
+    CAboutMultipleSclerosis dlg(this);
+    dlg.ShowModal();
 }
 
-
-// Set the text of each dialog element programmatically, rather 
-// than in the resource files so that that Windows XP uses Unicode,
-// instead of the system code page.  This allows Greek to show up
-// in Greek.
-class CAboutMultipleSclerosisDialog : public TDialog
+void
+CMainFrame::PostCheckQueueMessage()
 {
-public:
-    CAboutMultipleSclerosisDialog(TWindow * Parent) : 
-        TDialog(Parent, IDD_ABOUTMS)
-    {
-        SetCaption(LOCALIZED_ABOUTMS);
-    }
-
-protected:
-    void SetupWindow()
-    {
-        TDialog::SetupWindow();
-
-        static const MENUITEM staticText[] = {
-            {LOCALIZED_ABOUTMS_CONSIDERDONATING, ID_ABOUTMS_CONSIDERDONATING},
-            {LOCALIZED_ABOUTMS_FMS,              ID_ABOUTMS_FMS},
-            {LOCALIZED_ABOUTMS_OK,               IDOK},
-        };
-
-        // set the text in all of the static controls
-        SetTextOnChildWindows(this, staticText, ARRAYSIZE(staticText));
-    }
-};
-
-void TMainFrame::CMHelpAboutMS()
-{
-    CAboutMultipleSclerosisDialog(this).Execute();
-}
-
-// Execute File:Print command
-void TMainFrame::CMBitmapPrint()
-{
-    TRulerOut Printout(LOCALIZED_BITMAPPRINTOUTTITLE);
-    Printout.SetBanding(false);
-
-    // Delay the initialization of m_Printer until it is used.
-    // This is because calling TPrinter() can potentially hang
-    // for 20 seconds if the default printer is unresponsive
-    // (for example, if it's a network printer that's been powered
-    // off).
-    if (m_Printer == NULL)
-    {
-        m_Printer = new TPrinter();
-    }
-    m_Printer->Print(this, Printout, true);
-}
-
-
-// Execute File:Printer-setup command
-void TMainFrame::CMBitmapPrinterSetup()
-{
-    // Delay the initialization of m_Printer until it is used.
-    // This is because calling TPrinter() can potentially hang
-    // for 20 seconds if the default printer is unresponsive
-    // (for example, if it's a network printer that's been powered
-    // off).
-    if (m_Printer == NULL)
-    {
-        m_Printer = new TPrinter();
-    }
-    m_Printer->Setup(this);
-}
-
-void TMainFrame::EvDestroy()
-{
-    // don't save the window size if it's minimized, the commander is undocked,
-    // or if FMSLogo was started with the -F option.
-    if (!IsIconic() && IsCommanderDocked && !bFixed)
-    {
-        // Get location and size of our window on the screen so we can
-        // come back up in the same spot next time we are invoked.
-        const TRect mainWindowRect = GetWindowRect();
-
-        // save the current location
-        SetConfigurationQuadruple(
-            "Screen",
-            mainWindowRect.Left(),
-            mainWindowRect.Top(),
-            mainWindowRect.Width(),
-            mainWindowRect.Height());
-    }
-
-    // cleanup the pens
-    if (g_NormalPen != NULL)
-    {
-        DeleteObject(g_NormalPen);
-        g_NormalPen = NULL;
-    }
-
-    if (g_ErasePen != NULL)
-    {
-        DeleteObject(g_ErasePen);
-        g_ErasePen = NULL;
-    }
-
-    // Because the timer events are scheduled on
-    // the main window's HWND, we must uninitialize them
-    // before the main window is destroyed.
-    uninitialize_timers();
-
-    TWindow::EvDestroy();
-}
-
-LRESULT TMainFrame::WMCheckQueue(WPARAM, LPARAM)
-{
-    TMessage msg = __GetTMessage();
-
-    checkqueue();
-    return (LRESULT) msg.Result;
-}
-
-static bool IsDescendentOf(HWND PossibleDescendant, TWindow * Ancestor)
-{
-    for (HWND currentWindow = PossibleDescendant;
-         currentWindow != NULL;
-         currentWindow = GetParent(currentWindow))
-    {
-        if (currentWindow == Ancestor->HWindow)
-        {
-            return true;
-        }
-    }
-         
-    return false;
-}
-
-static
-bool
-MessageCameFromEditor(void * context, void * element)
-{
-    MSG           * const message = static_cast<MSG*>(context);
-    TMyFileWindow * const editor  = static_cast<TMyFileWindow*>(element);
-
-    return IsDescendentOf(message->hwnd, editor);
-}
-
-
-bool TMainFrame::TranslateKeyboardShortcut(MSG & Message)
-{
-    // Check if this message was generated on the commander input.
-    if (IsDescendentOf(Message.hwnd, &CommandWindow->Editbox))
-    {
-        bool isHandled = CommandWindow->TranslateKeyboardShortcut(
-            &CommandWindow->Editbox,
-            Message);
-        if (isHandled)
-        {
-            // Retranslate the message on the commander, in case it's Ctrl+D.
-            CommandWindow->TranslateKeyboardShortcut(CommandWindow, Message);
-            return true;
-        }
-    }
-
-    // Check if this message was generated on the commander history.
-    if (IsDescendentOf(Message.hwnd, &CommandWindow->Listbox))
-    {
-        bool isHandled = CommandWindow->TranslateKeyboardShortcut(
-            &CommandWindow->Listbox,
-            Message);
-        if (isHandled)
-        {
-            // Retranslate the message on the commander, in case it's Ctrl+D.
-            CommandWindow->TranslateKeyboardShortcut(CommandWindow, Message);
-            return true;
-        }
-    }
-
-    // Check if this message was generated on the commander, itself.
-    if (IsDescendentOf(Message.hwnd, CommandWindow))
-    {
-        bool isHandled = CommandWindow->TranslateKeyboardShortcut(
-            CommandWindow,
-            Message);
-        if (isHandled)
-        {
-            return true;
-        }
-    }
-
-    // Search across all editors to see if this belongs to it.
-    void * element = m_Editors.find_element(MessageCameFromEditor, &Message);
-    if (element != NULL)
-    {
-        // The message was generated on this editor.
-        const TMyFileWindow * editor = static_cast<TMyFileWindow*>(element);
-        return editor->TranslateKeyboardShortcut(Message);
-    }
-
-    // Check if this message originated from the main frame.
-    if (IsDescendentOf(Message.hwnd, this))
-    {
-        return ::TranslateAccelerator(HWindow, hAccel, &Message) ? true : false;
-    }
-
-    // This was not translated as an accelerator.
-    return false;
-}
-
-
-LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
-{
-    return g_ClientConnection.OnConnectSendAck(HWindow, lParam);
-}
-
-LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lParam)
-{
-    return g_ClientConnection.OnConnectSendFinish(HWindow, lParam);
-}
-
-LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam)
-{
-    return g_ServerConnection.OnListenReceiveAck(HWindow, lParam);
-}
-
-LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lParam)
-{
-    return g_ServerConnection.OnListenReceiveFinish(HWindow, lParam);
-}
-
-LRESULT TMainFrame::MMMCINotify(WPARAM, LPARAM)
-{
-    TMessage msg = __GetTMessage();
-
-    // if user fired up a callback mci event the queue it up here
-    callthing * callevent = callthing::CreateNoYieldFunctionEvent(mci_callback);
-
-    calllists.insert(callevent);
-
-    PostMessage(WM_CHECKQUEUE, 0, 0);
-
-    return (LRESULT) msg.Result;
-}
-
-void TMainFrame::EvTimer(UINT)
-{
-    TMessage msg = __GetTMessage();
-
-    // One of the user's timer event notifications has fired.
-    // Queue it up here.
-
-    callthing *callevent;
-    // The ID can only be 1-31.
-    // select appropriate function event type
-    if (msg.WParam > 16)
-    {
-        // yieldable
-        callevent = callthing::CreateFunctionEvent(timer_callback[msg.WParam]);
-    }
-    else
-    {
-        // not safe to yield
-        callevent = callthing::CreateNoYieldFunctionEvent(timer_callback[msg.WParam]);
-    }
-
-    calllists.insert(callevent);
-    PostMessage(WM_CHECKQUEUE, 0, 0);
-}
-
-void TMainFrame::CmSelectAll()
-{
-    // delegate the window event to whichever window has focus
-    HWND activeWindow = GetFocus();
-    if (activeWindow != HWindow)
-    {
-        ::SendMessage(activeWindow, WM_COMMAND, CM_EDITSELECTALL, 0);
-    }
-}
-
-DEFINE_RESPONSE_TABLE1(TMainFrame, TDecoratedFrame)
-    EV_WM_DESTROY,
-    EV_WM_TIMER,
-    EV_WM_SIZE,
-    EV_COMMAND(CM_FILENEW, CMFileNew),
-    EV_COMMAND(CM_FILELOAD, CMFileLoad),
-    EV_COMMAND(CM_FILEOPEN, CMFileOpen),
-    EV_COMMAND(CM_FILESAVE, CMFileSave),
-    EV_COMMAND(CM_FILESAVEAS, CMFileSaveAs),
-    EV_COMMAND(CM_FILEEDIT, CMFileEdit),
-    EV_COMMAND(CM_FILEERASE, CMFileErase),
-    EV_COMMAND(CM_FILESETASSCREENSAVER,        CMFileSetAsScreenSaver),
-    EV_COMMAND_ENABLE(CM_FILESETASSCREENSAVER, CMFileSetAsScreenSaverEnable),
-    EV_COMMAND(CM_EDITSELECTALL, CmSelectAll),
-    EV_COMMAND(CM_EXIT, CMExit),
-    EV_COMMAND(CM_BITMAPNEW, CMBitmapNew),
-    EV_COMMAND(CM_BITMAPOPEN, CMBitmapOpen),
-    EV_COMMAND(CM_BITMAPSAVE, CMBitmapSave),
-    EV_COMMAND(CM_BITMAPSAVEAS, CMBitmapSaveAs),
-    EV_COMMAND(CM_BITMAPPRINT, CMBitmapPrint),
-    EV_COMMAND(CM_BITMAPPRINTERSETUP, CMBitmapPrinterSetup),
-    EV_COMMAND(CM_BITMAPPRINTERAREA, CMBitmapPrinterArea),
-    EV_COMMAND(CM_HELP, CMHelp),
-    EV_COMMAND(CM_HELPTUTORIAL, CMHelpTutorial),
-    EV_COMMAND(CM_HELPDEMO, CMHelpDemo),
-    EV_COMMAND(CM_HELPEXAMPLES, CMHelpExamples),
-    EV_COMMAND(CM_HELPRELEASENOTES, CMHelpReleaseNotes),
-    EV_COMMAND(CM_HELPABOUT, CMHelpAbout),
-    EV_COMMAND(CM_HELPABOUTMS, CMHelpAboutMS),
-#if MANUAL_HAS_TRANSLATION_TABLES
-    EV_COMMAND(CM_HELPLANGTOENGLISH, CMHelpLangToEnglish),
-    EV_COMMAND(CM_HELPENGLISHTOLANG, CMHelpEnglishToLang),
+#ifndef WX_PURE
+    PostMessage(
+        static_cast<HWND>(GetHandle()),
+        WM_CHECKQUEUE,
+        0,
+        0);
 #endif
-    EV_COMMAND(CM_CONTROLEXECUTE, CMControlExecute),
-    EV_COMMAND(CM_SETFONT, CMSetFont),
-    EV_COMMAND(CM_SETCOMMANDERFONT, CMSetCommanderFont),
-    EV_COMMAND(CM_SETPENCOLOR, CMSetPenColor),
-    EV_COMMAND(CM_SETPENSIZE, CMSetPenSize),
-    EV_COMMAND(CM_SETFLOODCOLOR, CMSetFloodColor),
-    EV_COMMAND(CM_SETSCREENCOLOR, CMSetScreenColor),
-    EV_COMMAND(CM_ZOOMIN, CMZoomIn),
-    EV_COMMAND(CM_ZOOMOUT, CMZoomOut),
-    EV_COMMAND(CM_ZOOMNORMAL, CMZoomNormal),
-    EV_MESSAGE(WM_CHECKQUEUE, WMCheckQueue),
-    EV_MESSAGE(MM_MCINOTIFY, MMMCINotify),
-    EV_MESSAGE(WM_NETWORK_CONNECTSENDACK, OnNetworkConnectSendAck),
-    EV_MESSAGE(WM_NETWORK_CONNECTSENDFINISH, OnNetworkConnectSendFinish),
-    EV_MESSAGE(WM_NETWORK_LISTENRECEIVEACK, OnNetworkListenReceiveAck),
-    EV_MESSAGE(WM_NETWORK_LISTENRECEIVEFINISH, OnNetworkListenReceiveFinish),
-END_RESPONSE_TABLE;
+}
+
+#ifndef WX_PURE
+
+WXLRESULT
+CMainFrame::MSWWindowProc(
+    WXUINT   Message,
+    WXWPARAM WParam,
+    WXLPARAM LParam
+    )
+{
+    switch (Message)
+    {
+    case WM_TIMER:
+        if (WParam < 16)
+        {
+            // not safe to yield
+            callthing * callevent = callthing::CreateNoYieldFunctionEvent(timer_callback[WParam]);
+            calllists.insert(callevent);
+            PostCheckQueueMessage();
+        }
+        else if (WParam < 32)
+        {
+            // yieldable
+            callthing * callevent = callthing::CreateFunctionEvent(timer_callback[WParam]);
+            calllists.insert(callevent);
+            PostCheckQueueMessage();
+        }
+        break;
+
+    case WM_CHECKQUEUE:
+        checkqueue();
+        break;
+
+    case MM_MCINOTIFY:
+        // if user fired up a callback mci event then queue it up here
+        {
+            callthing * callevent = callthing::CreateNoYieldFunctionEvent(mci_callback);
+            calllists.insert(callevent);
+            PostCheckQueueMessage();
+        }
+        break;
+
+    case WM_NETWORK_CONNECTSENDACK:
+        g_ClientConnection.OnConnectSendAck(
+            static_cast<HWND>(GetHandle()),
+            LParam);
+        break;
+
+    case WM_NETWORK_CONNECTSENDFINISH:
+        g_ClientConnection.OnConnectSendFinish(
+            static_cast<HWND>(GetHandle()),
+            LParam);
+        break;
+
+    case WM_NETWORK_LISTENRECEIVEACK:
+        g_ServerConnection.OnListenReceiveAck(
+            static_cast<HWND>(GetHandle()),
+            LParam);
+        break;
+
+    case WM_NETWORK_LISTENRECEIVEFINISH:
+        g_ServerConnection.OnListenReceiveFinish(
+            static_cast<HWND>(GetHandle()),
+            LParam);
+        break;
+    }
+
+    return wxFrame::MSWWindowProc(Message, WParam, LParam);
+}
+
+#endif // WX_PURE

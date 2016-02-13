@@ -1,45 +1,22 @@
 // -*- c++ -*-
-//
-//  Copyright (C) 2006 by David Costanzo
-//
-//  This program is free software; you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation; either version 2 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with this program; if not, write to the Free Software
-//  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#ifndef _SAVEBEFOREEXITDIALOG_H_
-#define _SAVEBEFOREEXITDIALOG_H_
+#include <wx/dialog.h>
 
-#include <owl/window.h>
-#include <owl/dialog.h>
-
-class CSaveBeforeExitDialog : public TDialog
+class CSaveBeforeExitDialog : public wxDialog
 {
 public:
+    CSaveBeforeExitDialog(wxWindow *Parent);
 
-    CSaveBeforeExitDialog(TWindow * Parent);
-    int GetExitCode();
-
-protected:
-    void SetupWindow();
+    static const int SAVEBEFOREEXIT_Cancel            = 0;
+    static const int SAVEBEFOREEXIT_ExitWithoutSaving = 1;
+    static const int SAVEBEFOREEXIT_SaveAndExit       = 2;
 
 private:
+    // event handlers
+    void OnExitWithoutSaving(wxCommandEvent& Event);
+    void OnSaveBeforeExit(wxCommandEvent& Event);
+    void OnCancel(wxCommandEvent& Event);
 
-    void EvSaveBeforeExit();
-    void EvExitWithoutSaving();
-
-    int m_ExitStatus;
-
-    DECLARE_RESPONSE_TABLE(CSaveBeforeExitDialog);
+    DECLARE_NO_COPY_CLASS(CSaveBeforeExitDialog);
+    DECLARE_EVENT_TABLE();
 };
-
-#endif // _SAVEBEFOREEXITDIALOG_H_

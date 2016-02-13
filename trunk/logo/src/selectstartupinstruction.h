@@ -18,11 +18,12 @@
 #ifndef __SELECTSTARTUPINSTRUCTION_H_
 #define __SELECTSTARTUPINSTRUCTION_H_
 
-#include <owl\dialog.h>
-#include <owl\listbox.h>
-#include "logocore.h"
+#include <wx/dialog.h>
 
-class CSelectStartupInstructionDialog : public TDialog
+class wxListBox;
+class wxTextCtrl;
+
+class CSelectStartupInstructionDialog : public wxDialog
 {
 public:
     enum EXPLAINTEXT
@@ -34,28 +35,25 @@ public:
     };
 
     CSelectStartupInstructionDialog(
-        TWindow *    Parent,
+        wxWindow   * Parent,
         EXPLAINTEXT  ExplainText
         );
 
-    void ShowDialog();
-
-    const char * GetSelectedInstruction() const;
-
-protected:
-    bool CanClose();
-    void SetupWindow();
-
-    void DoListBox(UINT);
-    void DoEditControl(UINT);
-    void CmOk(TCommandEnabler& commandHandler);
-
-    char m_SelectedInstruction[MAX_BUFFER_SIZE]; // buffer to hold selected instruction list
+    const wxString GetSelectedInstruction() const;
 
 private:
-    const char * m_ExplainText;
+    // event handlers
+    void OnProcedureSelect(wxCommandEvent& Event);
+    void OnInstructionTextChange(wxCommandEvent& Event);
+    void OnUpdateOk(wxUpdateUIEvent& Event);
 
-    DECLARE_RESPONSE_TABLE(CSelectStartupInstructionDialog);
+    // private members
+    wxString     m_SelectedInstruction;
+    wxTextCtrl * m_InstructionText;
+    wxListBox  * m_ProcedureList;
+
+    DECLARE_EVENT_TABLE();
+    DECLARE_NO_COPY_CLASS(CSelectStartupInstructionDialog);
 };
 
 #endif //__SELECTSTARTUPINSTRUCTION_H_

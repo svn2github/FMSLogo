@@ -1,14 +1,5 @@
 This file lists the steps for setting up a build environment for FMSLogo.
 
-
-Install Borland C++ Compiler 5.02 to C:\BC5 and add C:\BC5\BIN to your PATH.
-Borland does not sell this compiler anymore, so you'll have to find it at
-a used software store (try eBay).
-
-Install Borland's Turbo Assembler 4.1.  Add TASM32.EXE to the PATH.
-If you skip this step, you will still be able to build the debug
-version of FMSLogo.
-
 Install cygwin 1.7 (from http://cygnus.org/) to c:\cygwin.  Install all of the
 following packages (and their dependencies):
 - zip
@@ -20,9 +11,6 @@ following packages (and their dependencies):
 - mingw-gcc-g++
 
 Add c:\cygwin\bin to the PATH.
-
-Rename c:\cygwin\bin\make.exe to c:\cygwin\gmake.exe to avoid conflicts with
-Borland's MAKE utility.
 
 Delete c:\cygbin\bin\link.exe to avoid conflicts with the link.exe from
 Microsoft's SDK.
@@ -45,9 +33,8 @@ Install MinGW at C:\MinGW.  This is needed to build the FMSLogo screen saver
 and functiontest.dll, which is used to help test DLLCALL.
 
 Install the MSW version of wxWidgets 2.8.12 to e:\wxMSW-2.8.12 (or install it
-wherever you like and update the paths in wxwidgets\Makefile).  Build it according
-to the instructions in wxwidgets\configure-wxwidgets.sh.  This is needed
-to build the wxWidgets version of FMSLogo.
+wherever you like and update the paths in src\Makefile).  Build it according
+to the instructions in src\configure-wxwidgets.sh.  This is needed to build FMSLogo.
 
 Once these steps are complete, you can build the entire FMSLogo package by running
 "gmake binaryexe" in the current directory.

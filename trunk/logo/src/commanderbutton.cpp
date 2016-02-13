@@ -1,52 +1,69 @@
-// Copyright (C) 2005 by David Costanzo
-//
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 2 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
-#include <owl/compat.h>
-
 #include "commanderbutton.h"
-#include "cmdwind.h"
-#include "debugheap.h"
+#include "commander.h"
+#include "commanderinput.h"
+#include "stringadapter.h"
 
-TCommanderButton::TCommanderButton(
-    TMyCommandWindow* parent,
-    int               id
-    ) : TButton(parent, id),
-        Parent(parent)
+CCommanderButton::CCommanderButton(
+    CCommander *    Parent, 
+    wxWindowID      Id, 
+    const char *    Label
+    ) :
+    wxButton(
+        Parent,
+        Id,
+        WXSTRING(Label),
+        wxDefaultPosition,
+        wxDefaultSize,
+        wxWANTS_CHARS)
 {
 }
 
-TCommanderButton::~TCommanderButton()
+void CCommanderButton::OnKeyDown(wxKeyEvent& Event)
 {
-}
+    const int keyCode = Event.GetKeyCode();
 
-
-void TCommanderButton::EvKeyDown(UINT, UINT, UINT)
-{
-    TMessage Msg = __GetTMessage();
-
-    if (Parent->EditBoxWantsKeyEvent(Msg.WParam))
+    if (keyCode == WXK_SPACE)
     {
-        // we don't want this key press.
-        // give it to the commander's edit box.
-        Parent->PostKeyDownToEditBox(
-            Msg.WParam,
-            Msg.LParam);
+        // Spaces are transformed into button presses,
+        // so we want to handle this event.
+        Event.Skip();
+    }
+    else if (keyCode == WXK_TAB)
+    {
+        if (Event.ShiftDown())
+        {
+            // Shift+Tab means navigate backward.
+            Navigate(wxNavigationKeyEvent::IsBackward);
+        }
+        else
+        {
+            // Tab means navigate forward.
+            Navigate(wxNavigationKeyEvent::IsForward);
+        }
+    }
+    else if (keyCode == WXK_RETURN)
+    {
+        // Convert this into a button press
+        wxCommandEvent remappedEvent(wxEVT_COMMAND_BUTTON_CLICKED, GetId());
+        ProcessEvent(remappedEvent);
+    }
+    else if (keyCode == WXK_UP ||
+             keyCode == WXK_NUMPAD_UP ||
+             CCommanderInput::WantsKeyEvent(keyCode))
+    {
+        // We don't handle this key stroke.
+        // Give focus to the edit box and send the press to it.
+        CCommander * commander = static_cast<CCommander*>(GetParent());
+        commander->ProcessKeyDownEventAtInputControl(Event);
+    }
+    else
+    {
+        // Continue with default event processing.
+        Event.Skip();
     }
 }
 
-DEFINE_RESPONSE_TABLE1(TCommanderButton, TButton)
-    EV_WM_KEYDOWN,
-END_RESPONSE_TABLE;
+
+BEGIN_EVENT_TABLE(CCommanderButton, wxButton)
+    EVT_KEY_DOWN(CCommanderButton::OnKeyDown)
+END_EVENT_TABLE()

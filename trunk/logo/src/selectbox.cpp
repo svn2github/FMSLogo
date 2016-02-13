@@ -1,112 +1,136 @@
-/*
- *  Copyright (C) 2007 by David Costanzo
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- */
-
 #include "selectbox.h"
-#include "mainframe.h"
-#include "logorc.h"
-#include "stringprintednode.h"
-#include "debugheap.h"
 
+#include <wx/listbox.h>
+#include <wx/textctrl.h>
+#include <wx/sizer.h>
+#include <wx/button.h>
+
+#include "guiutils.h"
 #include "localizedstrings.h"
+#include "stringadapter.h" // for WXSTRING
+#include "logocore.h"      // for ARRAYSIZE
+
+// Control IDs
+enum
+{
+   ID_CHOICELIST = wxID_HIGHEST,
+};
+
+// ----------------------------------------------------------------------------
+// CSelectBox
+// ----------------------------------------------------------------------------
 
 CSelectBox::CSelectBox(
-    TWindow     * Parent,
-    const char  * Title,
-    struct NODE * Choices
-    ) : TDialog(Parent, IDD_SELECTBOX),
-        m_ListBox(this, ID_CHOICES),
-        m_Choices(Choices),
-        m_Selection(-1)
+    wxWindow            * Parent, 
+    const wxString      & Caption,
+    const wxArrayString & Choices
+    )
+    : wxDialog(
+        Parent,
+        wxID_ANY,
+        Caption,
+        wxDefaultPosition,
+        wxDefaultSize,
+        wxCAPTION | wxCLOSE_BOX | wxRESIZE_BORDER | wxDEFAULT_DIALOG_STYLE),
+      m_Choices(NULL),
+      m_Selection(-1)
 {
-    SetCaption(Title);
-}
+    wxBoxSizer *topLevelSizer = new wxBoxSizer(wxHORIZONTAL);
 
+    // Add the choices list
+    m_Choices = new wxListBox(
+        this,
+        ID_CHOICELIST,
+        wxDefaultPosition,
+        wxDefaultSize,
+        Choices);
+    m_Choices->SetMinSize(wxSize(200, 150));
 
-void CSelectBox::SetupWindow()
-{
-    TDialog::SetupWindow();
+    topLevelSizer->Add(
+        m_Choices,
+        1,
+        wxALIGN_CENTER | wxTOP | wxLEFT | wxBOTTOM | wxEXPAND,
+        15);
 
-    // set the text in all of the controls
-    static const MENUITEM text[] = {
-        {LOCALIZED_SELECTBOX_OK,     IDOK},
-        {LOCALIZED_SELECTBOX_CANCEL, IDCANCEL},
+    // add the column of buttons
+    wxBoxSizer *buttonSizer = new wxBoxSizer(wxVERTICAL);
+
+    static const MENUITEM buttonInfo[] = {
+        {LOCALIZED_SELECTBOX_OK,     wxID_OK},
+        {LOCALIZED_SELECTBOX_CANCEL, wxID_CANCEL},
     };
-    SetTextOnChildWindows(this, text, ARRAYSIZE(text));
-
-    // add a string to the pick-list for each choice
-    for (NODE * choices = m_Choices;
-         choices != NIL;
-         choices = cdr(choices))
+    for (size_t i = 0; i < ARRAYSIZE(buttonInfo); i++)
     {
-        CStringPrintedNode choice(car(choices));
+        wxButton * button = new wxButton(
+            this,
+            buttonInfo[i].MenuId,
+            WXSTRING(buttonInfo[i].MenuText),
+            wxDefaultPosition,
+            wxDefaultSize);
 
-        m_ListBox.AddString(choice);
+        buttonSizer->Add(
+            button,
+            0,
+            wxALIGN_CENTER | wxALL,
+            10);
+
+        // Make the "OK" button the default.
+        if (buttonInfo[i].MenuId == wxID_OK)
+        {
+            button->SetDefault();
+        }
     }
+
+    topLevelSizer->Add(
+        buttonSizer,
+        0,
+        wxALIGN_CENTER_VERTICAL | wxALL,
+        15);
+
+    SetSizer(topLevelSizer);
+    topLevelSizer->Fit(this);
+
+    // Set a minimum size of the overall
+    SetMinSize(GetSize());
 
     // select the first item
-    if (m_ListBox.GetCount() != 0) 
+    if (!m_Choices->IsEmpty()) 
     {
-        m_ListBox.SetSelIndex(0);
-        m_ListBox.SetCaretIndex(0, false);
+        m_Choices->SetSelection(0);
     }
 }
 
-
-// User pressed OK
-void
-CSelectBox::CmOk()
+CSelectBox::~CSelectBox()
 {
-    // Get selection from the listbox
-    m_Selection = m_ListBox.GetSelIndex();
-    if (m_Selection < 0)
+}
+
+int CSelectBox::DoDialog()
+{
+    // Show the dialog as a modal box
+    int returnCode = ShowModal();
+    if (returnCode != wxID_OK)
     {
-        m_Selection = 0;
+        return -1;
     }
 
-    TDialog::CmOk();
-}
-
-
-// User double-clicked on a choice.
-void
-CSelectBox::OnDoubleClick()
-{
-    // Get selection from the listbox
-    m_Selection = m_ListBox.GetSelIndex();
-    if (m_Selection < 0)
+    // For compatibility with the OWL implementation, if there are
+    // no choices and the user presses OK, return 0.
+    if (m_Choices->IsEmpty())
     {
-        m_Selection = 0;
+        return 0;
     }
 
-    CloseWindow();
+    // Return the index of the selection
+    return m_Choices->GetSelection();
 }
 
-//
-// Return the result of the selection.
-//
-int
-CSelectBox::GetSelection() const
+void CSelectBox::OnDoubleClick(wxCommandEvent& Event)
 {
-    return m_Selection;
+    // A double-click is the same as pressing OK
+    SetReturnCode(wxID_OK);
+    Destroy();
 }
 
-DEFINE_RESPONSE_TABLE1(CSelectBox, TDialog)
-    EV_CHILD_NOTIFY(ID_CHOICES, CBN_DBLCLK, OnDoubleClick),
-    EV_COMMAND(IDOK, CmOk),
-END_RESPONSE_TABLE;
+BEGIN_EVENT_TABLE(CSelectBox, wxDialog)
+    EVT_LISTBOX_DCLICK(ID_CHOICELIST, CSelectBox::OnDoubleClick)
+END_EVENT_TABLE()

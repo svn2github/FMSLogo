@@ -4,20 +4,16 @@ include lcids.mk
 BINARYBASENAME=fmslogo-$(FMSLOGO_VERSION)
 BINARYZIP=$(BINARYBASENAME).zip
 BINARYEXE=$(BINARYBASENAME).exe
-WXBINARYEXE=wx$(BINARYBASENAME).exe
 SOURCEZIP=fmslogo-src-$(FMSLOGO_VERSION).zip
-
-ZIPEXCLUDE=\*/.cvsignore \*/CVS/ \*/CVS/\* \*/\*/.cvsignore \*/\*/CVS/ \*/\*/CVS/\* \*/\*/\*/CVS/ \*/\*/\*/CVS/\*
 
 MANUALS      = $(addprefix manual/logohelp-,     $(addsuffix .chm, $(LCIDS)))
 EXES         = $(addprefix src/fmslogo-,         $(addsuffix .exe, $(LCIDS)))
-WXEXES       = $(addprefix wxwidgets/fmslogo-,   $(addsuffix .exe, $(LCIDS)))
 SCREENSAVERS = $(addprefix screensaver/fmslogo-, $(addsuffix .scr, $(LCIDS)))
 
 .SECONDARY : $(MANUALS) $(EXES) $(SCREENSAVERS) setup/fmslogo.exe $(BINARYEXE) $(BINARYZIP) $(SOURCEZIP)
 
 # top level targets
-binaryexe : $(BINARYEXE) $(WXBINARYEXE) ;
+binaryexe : $(BINARYEXE) ;
 binaryzip : $(BINARYZIP) ;
 sourcezip : $(SOURCEZIP) ;
 all : sourcezip binaryzip binaryexe;
@@ -25,10 +21,6 @@ all : sourcezip binaryzip binaryexe;
 # make the executables
 src/fmslogo-%.exe : src/*.cpp src/*.h version.mk
 	$(MAKE) -C src $(notdir $@)
-
-# make the wxwidgets-based executables
-wxwidgets/fmslogo-%.exe : wxwidgets/*.cpp wxwidgets/*.h src/*.cpp src/*.h version.mk
-	$(MAKE) -C wxwidgets $(notdir $@)
 
 # make the screensaver
 screensaver/fmslogo-%.scr : screensaver/*.cpp screensaver/*.h src/*.cpp src/*.h version.mk
@@ -42,16 +34,9 @@ manual/logohelp-%.chm : manual/*.xml version.mk
 setup/fmslogo.exe : $(EXES) $(SCREENSAVERS) $(MANUALS)
 	$(MAKE) -C setup $(notdir $@)
 
-setup/wxfmslogo.exe : $(WXEXES) $(SCREENSAVERS) $(MANUALS)
-	$(MAKE) -C setup $(notdir $@)
-
 # make the binary self-extracting executable release
 $(BINARYEXE) : setup/fmslogo.exe ;
 	cp $< $@
-
-$(WXBINARYEXE) : setup/wxfmslogo.exe ;
-	cp $< $@
-
 
 # make the binary ZIP release
 $(BINARYZIP) : $(MANUALS) $(EXES) $(SCREENSAVERS)
@@ -67,7 +52,7 @@ $(BINARYZIP) : $(MANUALS) $(EXES) $(SCREENSAVERS)
 	cp --recursive src/Examples    $(BINARYBASENAME)
 	chmod --recursive a+rx $(BINARYBASENAME)
 	$(RM) $(shell /usr/bin/find $(BINARYBASENAME) -name '*~')
-	zip -r -9 -X $@ $(BINARYBASENAME) -x $(ZIPEXCLUDE)
+	zip -r -9 -X $@ $(BINARYBASENAME)
 	rm -rf $(BINARYBASENAME)
 
 # make the source release
@@ -75,12 +60,11 @@ $(SOURCEZIP) :
 	$(RM) $(shell /usr/bin/find -name '*~')
 	$(RM) $(shell /usr/bin/find -name '*.obj')
 	$(RM) $(shell /usr/bin/find -name '*.bak')
-	zip -r -9 -X $@ Makefile lcids.mk version.mk HOWTO-BUILD.txt src screensaver manual setup wxwidgets -x $(ZIPEXCLUDE)
+	zip -r -9 -X $@ Makefile lcids.mk version.mk HOWTO-BUILD.txt src screensaver manual setup
 
 clean :
 	-$(MAKE) -C src         $@
 	-$(MAKE) -C manual      $@
 	-$(MAKE) -C screensaver $@
 	-$(MAKE) -C setup       $@
-	-$(MAKE) -C wxwidgets   $@
 	$(RM) $(wildcard *~)

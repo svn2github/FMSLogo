@@ -17,119 +17,83 @@
 *
 */
 #include "selectstartupinstruction.h"
-#include "localizedstrings.h"
-#include "logorc.h"
-#include "mainframe.h"
 
+#include <wx/listbox.h>
+#include <wx/textctrl.h>
+#include <wx/sizer.h>
+#include <wx/button.h>
+#include <wx/stattext.h>
+
+#include "localizedstrings.h"
+#include "logocore.h"
+#include "guiutils.h"
 #include "wrksp.h"
-#include "argumentutils.h"
-#include "debugheap.h"
+#include "stringprintednode.h"
+#include "stringadapter.h"
+
+enum
+{
+   ID_INSTRUCTIONTEXT = wxID_HIGHEST,
+   ID_PROCEDURELIST,
+};
 
 CSelectStartupInstructionDialog::CSelectStartupInstructionDialog(
-    TWindow    * Parent,
-    EXPLAINTEXT  ExplainText
+    wxWindow    * Parent,
+    EXPLAINTEXT   ExplainText
     )
-    : TDialog(Parent, IDD_SELECTSTARTUPINSTRUCTION)
+    : wxDialog(
+        Parent,
+        wxID_ANY,
+        WXSTRING(LOCALIZED_SELECTSTARTUP_CAPTION)),
+      m_InstructionText(NULL),
+      m_ProcedureList(NULL)
 {
-    SetCaption(LOCALIZED_SELECTSTARTUP_CAPTION);
+    wxBoxSizer *topLevelSizer = new wxBoxSizer(wxVERTICAL);
+
+    // Add the explain text
+    const char * explainText = "";
 
     switch (ExplainText)
     {
     case EXPLAINTEXT_StartupNotDefined:
-        m_ExplainText = LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED;
+        explainText = LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED;
         break;
 
     case EXPLAINTEXT_StartupEmpty:
-        m_ExplainText = LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY;
+        explainText = LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY;
         break;
 
     case EXPLAINTEXT_StartupNotList:
-        m_ExplainText = LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST;
-        break;
-    }
-
-    m_SelectedInstruction[0] = '\0';
-}
-
-void CSelectStartupInstructionDialog::DoEditControl(UINT message)
-{
-    switch (message)
-    {
-    case EN_CHANGE:
-        // Something changed.  Read the update into our buffer.
-        GetDlgItemText(
-            ID_SELECTSTARTUPINSTRUCTION_EDIT,
-            m_SelectedInstruction,
-            ARRAYSIZE(m_SelectedInstruction));
-        break;
-    }
-}
-
-void CSelectStartupInstructionDialog::DoListBox(UINT message)
-{
-    switch (message)
-    {
-    case LBN_DBLCLK:
-        CloseWindow(TRUE);
+        explainText = LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST;
         break;
 
-    case LBN_SELCHANGE:
-        // Get the index of the selected item
-        int selection = SendDlgItemMsg(
-            ID_SELECTSTARTUPINSTRUCTION_LISTBOX,
-            LB_GETCURSEL,
-            0,
-            0);
-        if (selection != LB_ERR)
-        {
-            SendDlgItemMsg(
-                ID_SELECTSTARTUPINSTRUCTION_LISTBOX,
-                LB_GETTEXT,
-                selection,
-                (LPARAM) m_SelectedInstruction);
-
-            ::SetWindowText(
-                GetDlgItem(ID_SELECTSTARTUPINSTRUCTION_EDIT),
-                m_SelectedInstruction);
-        }
-        break;
-    }
-}
-
-const char * CSelectStartupInstructionDialog::GetSelectedInstruction() const
-{
-    return m_SelectedInstruction;
-}
-
-bool CSelectStartupInstructionDialog::CanClose()
-{
-    if (m_SelectedInstruction[0] == '\0')
-    {
-        // Until something is entered into the list
-        // box, we cannot close.
-        return false;
+    default:
+        assert(0); // can't happen
     }
 
-    return true;
-}
+    wxStaticText * explainTextCtrl = new wxStaticText(
+        this,
+        wxID_ANY,
+        WXSTRING(explainText),
+        wxDefaultPosition,
+        wxDefaultSize);
 
-void CSelectStartupInstructionDialog::CmOk(TCommandEnabler& commandHandler)
-{
-    commandHandler.Enable(m_SelectedInstruction[0] != '\0');
-}
+    topLevelSizer->Add(
+        explainTextCtrl,
+        0,
+        wxALIGN_CENTER | wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
+        5);
 
-void CSelectStartupInstructionDialog::SetupWindow()
-{
-    TDialog::SetupWindow();
+    // Add the text input
+    m_InstructionText = new wxTextCtrl(this, ID_INSTRUCTIONTEXT);
+    topLevelSizer->Add(
+        m_InstructionText,
+        0,
+        wxALIGN_CENTER | wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
+        5);
 
-    static const MENUITEM text[] = {
-        {LOCALIZED_SELECTPROCEDURE_OK,     IDOK},
-        {LOCALIZED_SELECTPROCEDURE_CANCEL, IDCANCEL},
-    };
-
-    // fill in the text
-    SetTextOnChildWindows(this, text, ARRAYSIZE(text));
-    SetDlgItemText(ID_SELECTSTARTUPINSTRUCTION_EXPLAINTEXT, m_ExplainText);
+    // add the procedures list
+    m_ProcedureList = new wxListBox(this, ID_PROCEDURELIST);
 
     // get procedures
     NODE * proclist = lprocedures(NIL);
@@ -140,13 +104,10 @@ void CSelectStartupInstructionDialog::SetupWindow()
              proclist_node != NIL;
              proclist_node = cdr(proclist_node))
         {
-            char tempbuff[MAX_BUFFER_SIZE];
-            cnv_strnode_string(tempbuff, proclist_node);
-            SendDlgItemMsg(
-                ID_SELECTSTARTUPINSTRUCTION_LISTBOX,
-                LB_ADDSTRING,
-                0,
-                (LONG) tempbuff);
+            // REVISIT: the procedure name should be useable
+            // as-is without further conversion.
+            CStringPrintedNode procedureName(car(proclist_node));
+            m_ProcedureList->Append(WXSTRING(procedureName.GetString()));
         }
 
         gcref(proclist);
@@ -154,21 +115,149 @@ void CSelectStartupInstructionDialog::SetupWindow()
     else
     {
         // There are no procedures
-        SendDlgItemMsg(
-            ID_SELECTSTARTUPINSTRUCTION_LISTBOX,
-            LB_ADDSTRING, 
+        m_ProcedureList->Append(WXSTRING(LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED));
+        m_ProcedureList->Disable();
+    }
+
+    topLevelSizer->Add(
+        m_ProcedureList,
+        0,
+        wxALIGN_CENTER | wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
+        5);
+
+    // add the row of buttons
+    wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
+
+    static const MENUITEM buttonInfo[] = {
+        {LOCALIZED_SELECTPROCEDURE_OK,     wxID_OK},
+        {LOCALIZED_SELECTPROCEDURE_CANCEL, wxID_CANCEL},
+    };
+
+
+    // HACK: 
+    // Create and destroy each button to get the width and height
+    // of the "exact fit" size of the largest button.  We will
+    // use this size when we recreate the buttons later.
+    // Ideally, we'd just be able to resize the buttons, but I haven't
+    // figured out how to do that.
+    int maxHeight = 0;
+    int maxWidth  = 0;
+    for (size_t i = 0; i < ARRAYSIZE(buttonInfo); i++)
+    {
+        wxButton * button = new wxButton(
+            this,
+            wxID_ANY,
+            WXSTRING(buttonInfo[i].MenuText),
+            wxDefaultPosition,
+            wxDefaultSize,
+            wxBU_EXACTFIT);
+
+        if (maxWidth < button->GetBestSize().GetWidth())
+        {
+            maxWidth = button->GetBestSize().GetWidth();
+        }
+
+        if (maxHeight < button->GetBestSize().GetHeight())
+        {
+            maxHeight = button->GetBestSize().GetHeight();
+        }
+
+        delete button;
+    }
+
+    // create all of the buttons to be the same size.
+    const wxSize buttonSize(maxWidth, maxHeight);
+    for (size_t i = 0; i < ARRAYSIZE(buttonInfo); i++)
+    {
+        wxButton * button = new wxButton(
+            this,
+            buttonInfo[i].MenuId,
+            WXSTRING(buttonInfo[i].MenuText),
+            wxDefaultPosition,
+            buttonSize);
+
+        buttonSizer->Add(
+            button,
             0, 
-            (LONG) LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED);
-        
-        ::EnableWindow(
-            GetDlgItem(ID_SELECTSTARTUPINSTRUCTION_LISTBOX),
-            false);
+            wxALIGN_RIGHT | wxLEFT,
+            10);
+
+        // Make the "OK" button the default.
+        if (buttonInfo[i].MenuId == wxID_OK)
+        {
+            button->SetDefault();
+        }
+    }
+
+    topLevelSizer->Add(
+        buttonSizer,
+        0,
+        wxALIGN_RIGHT | wxALL,
+        5);
+
+    SetSizer(topLevelSizer);
+    topLevelSizer->Fit(this);
+}
+
+const wxString CSelectStartupInstructionDialog::GetSelectedInstruction() const
+{
+    return m_SelectedInstruction;
+}
+
+void CSelectStartupInstructionDialog::OnInstructionTextChange(wxCommandEvent& Event)
+{
+    // Save the new text
+    m_SelectedInstruction = m_InstructionText->GetValue();
+
+    // The user changed the text within the text box.
+    // Scroll the listbox to the location of the typed text.
+    const wxArrayString & allProcedures = m_ProcedureList->GetStrings();
+
+    for (int i = 0; i < static_cast<int>(allProcedures.GetCount()); i++)
+    {
+        int comparison = allProcedures[i].Cmp(m_SelectedInstruction);
+        if (0 <= comparison)
+        {
+            // We have found the item in the list box that is greater than
+            // what the user has typed.  We want to scroll the listbox so
+            // that this item is at the top.
+            m_ProcedureList->SetFirstItem(i);
+
+            if (comparison == 0)
+            {
+                // The user has typed a perfect match for
+                // this item.  Select it.
+                m_ProcedureList->Select(i);
+            }
+            else
+            {
+                // The text doesn't match any item.
+                // Make sure that none are selected.
+                m_ProcedureList->Select(wxNOT_FOUND);
+            }
+            break;
+        }
     }
 }
 
-DEFINE_RESPONSE_TABLE1(CSelectStartupInstructionDialog, TDialog)
-    EV_CHILD_NOTIFY_ALL_CODES(ID_SELECTSTARTUPINSTRUCTION_EDIT,    DoEditControl),
-    EV_CHILD_NOTIFY_ALL_CODES(ID_SELECTSTARTUPINSTRUCTION_LISTBOX, DoListBox),
-    EV_COMMAND_ENABLE(IDOK, CmOk),
-END_RESPONSE_TABLE;
+void CSelectStartupInstructionDialog::OnProcedureSelect(wxCommandEvent& Event)
+{
+    // Copy the selection to the our saved string
+    m_SelectedInstruction = m_ProcedureList->GetStringSelection();
 
+    // Copy the selection to the text control
+    m_InstructionText->ChangeValue(m_SelectedInstruction);
+}
+
+void CSelectStartupInstructionDialog::OnUpdateOk(wxUpdateUIEvent& Event)
+{
+    // Don't enable the OK button unless a startup instruction
+    // list has been selected.
+    Event.Enable(!m_SelectedInstruction.IsEmpty());
+}
+
+BEGIN_EVENT_TABLE(CSelectStartupInstructionDialog, wxDialog)
+    EVT_TEXT(ID_INSTRUCTIONTEXT,   CSelectStartupInstructionDialog::OnInstructionTextChange)
+    EVT_LISTBOX(ID_PROCEDURELIST,  CSelectStartupInstructionDialog::OnProcedureSelect)
+    EVT_UPDATE_UI(wxID_OK,         CSelectStartupInstructionDialog::OnUpdateOk)
+END_EVENT_TABLE()

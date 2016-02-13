@@ -11,13 +11,13 @@ Build the Release Files
    perl make-translation-tables.pl
    copy /Y translations-*.xml ..\manual
 
-1.d) Commit all changes, "cvs up -APd", and tag the tree VER-X-Y-Z
+1.d) Commit all changes, "svn up", and tag the tree VER-X-Y-Z
 1.e) Open up a fresh command prompt and cleanly build everything with:
 
      gmake clean
      gmake binaryexe binaryzip
 
-1.f) Copy resulting fmslogo-X-Y-Z.exe, fmslogo-X-Y-Z.zip, and wxfmslogo-X-Y-Z.exe
+1.f) Copy resulting fmslogo-X-Y-Z.exe, fmslogo-X-Y-Z.zip
      to \\dcostanz\dcostanz\logo
 
      copy /Y *fmslogo-6.34.0* \\dcostanz\dcostanz\logo
@@ -26,8 +26,7 @@ Build the Release Files
 Test the Candidate Release
 ==================================================================================
 
-1) Test the Borland and wxWidgets versions on Windows XP and
-   test the Borland version Windows 95
+1) Test on Windows XP
 1.a) Install FMSLogo and run "test\testharness.lgo".
 1.b) Do a file comparison against the testlog.baseline.txt to look for regressions
 1.c) Run DEMO
@@ -41,9 +40,8 @@ Release the files
        README.TXT 
        fmslogo-x-y-z.exe
        fmslogo-x-y-z.zip
-       wxfmslogo-x-y-z.exe
-1.c) Set wxfmslogo-x-y-z.exe as the default file for Windows.
-1.d) Set wxfmslogo-x-y-z.exe as the default file for Linux.
+1.c) Exclude README.TXT from download statistics
+1.d) Set fmslogo-x-y-z.exe as the default file for Windows and Linux
 
 2) Update the manual on the Web site
 2.a) Build an updated manual ("gmake website" within "manual")

@@ -1,201 +1,128 @@
-// Copyright (C) 2006 by the David Costanzo
-//
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 2 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-//
-
 #include "minieditor.h"
 
-#include "utils.h"
-#include "logorc.h"
+#include <wx/button.h>
+#include <wx/textctrl.h>
+#include <wx/sizer.h>
+#include <wx/settings.h>
+
+#include "minieditortextctrl.h"
+#include "fontutils.h"
+#include "stringadapter.h"
 #include "localizedstrings.h"
-#include "debugheap.h"
 
-TMiniEditorRichEdit::TMiniEditorRichEdit(TWindow * Parent)
-    : TRichEditWithPopup(Parent, ID_MINIEDITCTRL)
+// Menu IDs
+enum
 {
-    Attr.Style |= ES_WANTRETURN | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_SUNKEN;
+   ID_MINIEDITOR_RICHTEXTCONTROL = wxID_HIGHEST,
+};
+
+// ----------------------------------------------------------------------------
+// CMiniEditor
+// ----------------------------------------------------------------------------
+
+CMiniEditor::CMiniEditor(
+    wxWindow   * Parent, 
+    const char * ToLineString
+    )
+    : wxDialog(
+        Parent,
+        wxID_ANY,
+        WXSTRING(ToLineString),
+        wxDefaultPosition,
+        wxSize(240, 212),
+        wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
+      m_TextField(NULL)
+{
+    wxBoxSizer * topLevelSizer = new wxBoxSizer(wxVERTICAL);
+
+    // add the To Line input
+    wxTextCtrl * toLine = new wxTextCtrl(
+        this,
+        wxID_ANY,
+        WXSTRING(ToLineString),
+        wxDefaultPosition,
+        wxDefaultSize,
+        wxTE_READONLY);
+
+    // The background color should be light gray to indicate that this
+    // is a read-only control.
+    toLine->SetBackgroundColour(
+        wxSystemSettings::GetColour(wxSYS_COLOUR_3DLIGHT));
+
+    topLevelSizer->Add(
+        toLine,
+        0,
+        wxALIGN_CENTER | wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
+        10);
+
+    // add the procedure body (the editor)
+    m_TextField = new CMiniEditorTextCtrl(
+        this,
+        ID_MINIEDITOR_RICHTEXTCONTROL,
+        wxSize(240, 200));
+    topLevelSizer->Add(
+        m_TextField,
+        1, // expand this control with the size of the dialog box
+        wxALIGN_CENTER | wxBOTTOM | wxLEFT | wxRIGHT | wxEXPAND,
+        10);
+
+    // Set the font to whatever is defined in the configuraton
+    wxFont font;
+    font.SetFamily(wxFONTFAMILY_TELETYPE); // default to using a fixed-width font
+    GetConfigurationFont("CommanderFont", font);
+    m_TextField->SetFont(font);
+
+    // Add a row for the two buttons (End and Cancel)
+    wxBoxSizer *buttonRow = new wxBoxSizer(wxHORIZONTAL);
+    topLevelSizer->Add(
+        buttonRow,
+        0,
+        wxALIGN_CENTER | wxBOTTOM | wxLEFT | wxRIGHT | wxEXPAND,
+        10);
+
+    // Add the "end" button
+    wxButton * endButton = new wxButton(
+        this,
+        wxID_OK,
+        WXSTRING(LOCALIZED_ALTERNATE_END));
+    buttonRow->Add(
+        endButton,
+        0,
+        wxALIGN_LEFT);
+    endButton->SetDefault();
+
+    // Add a stretch spacer between End and Cancel so
+    // that they can be on the left and right of the
+    // dialog box, instead of next to each other.
+    buttonRow->AddStretchSpacer();
+
+    // Add the "Cancel" button.
+    // While a Cancel button was not in the original design, wxWidgets
+    // requires that it exist in order for the ESC key to act like a cancel.
+    // Without it, ESC would simulate a keypress on the End button,
+    // causing the definition to be accepted, instead of abandoned.
+    wxButton * cancelButton = new wxButton(
+        this,
+        wxID_CANCEL,
+        WXSTRING(LOCALIZED_GENERAL_CANCELBUTTON));
+    buttonRow->Add(
+        cancelButton,
+        0,
+        wxALIGN_RIGHT);
+
+    SetSizer(topLevelSizer);
+
+    // Ensure that the user doesn't resize the window so small
+    // that the buttons overlap or are off-screen.
+    topLevelSizer->SetSizeHints(this);
 }
 
-
-//
-// constructor for a TMiniEditor
-//
-// initializes its data fields using passed parameters and default values
-// constructs its child edit control
-//
-TMiniEditor::TMiniEditor(
-    TWindow *    Parent,
-    const char * ToLine
-    ) : TDialog(Parent, IDD_MINIEDITOR),
-        m_TextField(this),
-        m_ToLine(this, ID_TOLINE, 0),
-        m_EndButton(this, IDOK),
-        m_EditorContents(NULL),
-        m_EditorContentsLength(0)
+CMiniEditor::~CMiniEditor()
 {
-    m_ToLineString = strnewdup(ToLine);
-
-    SetCaption(ToLine);
 }
 
-TMiniEditor::~TMiniEditor()
+const wxString
+CMiniEditor::GetProcedureBody() const
 {
-    delete [] m_EditorContents;
-    delete [] m_ToLineString;
+    return m_TextField->GetValue();
 }
-
-// responds to an incoming WM_SETFOCUS message by setting the focus to
-// the child edit control
-//
-void TMiniEditor::EvSetFocus(HWND)
-{
-    m_TextField.SetFocus();
-}
-
-void TMiniEditor::SetupWindow()
-{
-    TDialog::SetupWindow();
-
-    m_ToLine.Create();
-    m_ToLine.SetCaption(m_ToLineString);
-
-    SetDlgItemText(IDOK, LOCALIZED_ALTERNATE_END);
-
-    m_EndButton.Create();
-
-    m_TextField.Create();
-
-    LOGFONT lf;
-    GetConfigurationFont("CommanderFont", lf);
-    HFONT font = CreateFontIndirect(&lf);
-    if (font != NULL)
-    {
-        m_TextField.SetWindowFont(font, TRUE);
-        DeleteObject(font);
-    }
-
-    RecalculateLayout();
-
-    m_TextField.SetFocus();
-}
-
-
-void TMiniEditor::CmOk()
-{
-    // Copy from the editor into a buffer
-
-    // reset any value that may be in the editor
-    delete [] m_EditorContents;
-    m_EditorContentsLength = 0;
-
-    // copy the data from the rich edit into a flat buffer
-    m_EditorContentsLength = m_TextField.GetWindowTextLength();
-
-    m_EditorContents = new char [m_EditorContentsLength + 1];
-    if (m_EditorContents != NULL)
-    {
-        memset(m_EditorContents, 0, m_EditorContentsLength + 1);
-
-        m_TextField.GetSubText(m_EditorContents, 0, m_EditorContentsLength);
-    }
-
-    TDialog::CmOk();
-}
-
-
-const char * TMiniEditor::GetText()
-{
-    return m_EditorContents;
-}
-
-void TMiniEditor::RecalculateLayout()
-{
-    TRect windowRect;
-    GetWindowRect(windowRect);
-
-
-    const int minHeight = 200;
-    const int minWidth  = 100;
-    if (windowRect.Width() < minWidth || windowRect.Height() < minHeight)
-    {
-        // don't let the size go below 100x100
-        const int width  = windowRect.Width()  < minWidth  ? minWidth : windowRect.Width();
-        const int height = windowRect.Height() < minHeight ? minHeight : windowRect.Height();
-
-        SetWindowPos(NULL, 0, 0, width, height, SWP_NOMOVE);
-    }
-
-    TRect clientRect;
-    GetClientRect(clientRect);
-
-    TRect toLineRect;
-    m_ToLine.GetWindowRect(toLineRect);
-
-    TRect endButtonRect;
-    m_EndButton.GetWindowRect(endButtonRect);
-
-    const int totalWidth    = clientRect.Width();
-    const int totalHeight   = clientRect.Height();
-
-    const int toLineHeight    = toLineRect.Height();
-    const int endButtonHeight = endButtonRect.Height();
-    const int endButtonWidth  = endButtonRect.Width();
-
-    const int xBorder = 4;
-    const int yBorder = 4;
-   
-
-    // position the "END" button
-    m_EndButton.SetWindowPos(
-        NULL, 
-        xBorder,
-        totalHeight - yBorder - endButtonHeight,
-        endButtonWidth,
-        endButtonHeight,
-        0);
-
-    // position the procedure body
-    m_TextField.SetWindowPos(
-        NULL,
-        xBorder,
-        toLineHeight + 2 * yBorder,
-        totalWidth - xBorder * 2,
-        totalHeight - (4 * yBorder + toLineHeight + endButtonHeight),
-        0);
-
-    // position the "TO" line
-    m_ToLine.SetWindowPos(
-        NULL,
-        xBorder,
-        yBorder,
-        totalWidth - xBorder * 2,
-        toLineHeight,
-        0);
-}
-
-void TMiniEditor::EvSize(UINT Arg1, TSize & NewSize)
-{
-    TDialog::EvSize(Arg1, NewSize);
-
-    RecalculateLayout();
-
-    Invalidate(true);
-}
-
-DEFINE_RESPONSE_TABLE1(TMiniEditor, TDialog)
-    EV_WM_SETFOCUS,
-    EV_WM_SIZE,
-    EV_COMMAND(IDOK, CmOk),
-END_RESPONSE_TABLE;
