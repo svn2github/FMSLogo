@@ -276,8 +276,8 @@ obj/$(1)-%.o : %.cpp version.h
 obj/$(1)-%.o : %.cpp version.h
 	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
 
-obj/$(1)-%.o : scintilla/src/%.cxx
-	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 -Iscintilla/include $$<
+obj/$(1)-%.o : scintilla/%.cxx
+	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 -I$(wx_top_srcdir)/contrib/src/stc/scintilla/include -I$(wx_top_srcdir)/contrib/src/stc/scintilla/src $$<
 
 obj/$(1)-%_rc.o : %.rc version.h
 	$(RC) -i$$< -o$$@ -DLOCALE=$1 --define __WX$(TOOLKIT)__ $(addprefix --include-dir ,$(INCLUDES))

@@ -14,9 +14,8 @@
 
 #include "wrksp.h" // for g_CharactersSuccessfullyParsedInEditor
 
-#include "scintilla/include/Platform.h"
-#include "scintilla/include/Scintilla.h"
-#include "scintilla/include/SciLexer.h"
+#include "scintilla/SciLexer.h"
+#include "../src/stc/scintilla/include/Scintilla.h"
 
 CLogoCodeCtrl::CLogoCodeCtrl(
     wxWindow *      Parent,
