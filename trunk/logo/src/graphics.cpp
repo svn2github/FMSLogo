@@ -76,10 +76,6 @@ typedef struct __HDC * HDC;
 
 #include "localizedstrings.h"
 
-#ifdef FMSLOGO_OWL
-#include "mainframe.h"  // for docking/undocking commander
-#endif
-
 #define screen_left   (-BitMapWidth/2)
 #define screen_right  ( BitMapWidth/2)
 #define screen_bottom (-BitMapHeight/2)
