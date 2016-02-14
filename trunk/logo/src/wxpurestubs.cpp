@@ -40,33 +40,6 @@ bool CheckOnScreenControls()
     return true;
 }
 
-void MyBeep(unsigned int frequency, unsigned int duration)
-{
-}
-
-unsigned char Myinportb(short portid)
-{
-    return 0;
-}
-
-void Myoutportb(short portid, unsigned char value)
-{
-}
-
-void Myoutport(short portid, short value)
-{
-}
-
-short Myinport(short portid)
-{
-    return 0;
-}
-
-int Myingameport(short portid, short mask)
-{
-    return 0;
-}
-
 void uninitialize_windows()
 {
 }

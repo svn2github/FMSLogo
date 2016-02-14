@@ -550,15 +550,59 @@ NODE *loutportb(NODE *args)
     int portid = getint(nonnegative_int_arg(args));
     int value = getint(nonnegative_int_arg(cdr(args)));
 
-    Myoutportb(portid, value);
-
     return Unbound;
+}
+
+// A special case for reading the joystick port.
+// Reading it directly is impossible from user-mode,
+// but we can read it through the Win32 API.
+static int simulate_inport(int portid) {
+    int value = 0;
+    if (portid == 0x201)
+    {
+        // hardware port for the joystick port
+        UINT totalJoysticks = joyGetNumDevs();
+        if (totalJoysticks != 0)
+        {
+            JOYCAPS joystickCapabilities;
+        
+            MMRESULT result = joyGetDevCaps(
+                JOYSTICKID1,
+                &joystickCapabilities,
+                sizeof joystickCapabilities);
+            if (result == JOYERR_NOERROR)
+            {
+                JOYINFOEX joystickInfo;
+                joystickInfo.dwSize  = sizeof joystickInfo;
+                joystickInfo.dwFlags = JOY_RETURNBUTTONS;
+            
+                result = joyGetPosEx(JOYSTICKID1, &joystickInfo);
+                if (result == JOYERR_NOERROR)
+                {
+                    // Reassemble the original value from the hardware port
+                    // It doesn't have to be exact, just good enough.
+                    int button1Released = (joystickInfo.dwButtons & JOY_BUTTON1) == 0;
+                    int button2Released = (joystickInfo.dwButtons & JOY_BUTTON2) == 0;
+                    int button3Released = (joystickInfo.dwButtons & JOY_BUTTON3) == 0;
+                    int button4Released = (joystickInfo.dwButtons & JOY_BUTTON4) == 0;
+
+                    value =
+                        (button1Released << 4) |
+                        (button2Released << 5) |
+                        (button3Released << 6) |
+                        (button4Released << 7);
+                }
+            }
+        }
+    }
+
+    return value;
 }
 
 NODE *linportb(NODE *args)
 {
     int portid = getint(nonnegative_int_arg(args));
-    int value = Myinportb(portid);
+    unsigned char value = simulate_inport(portid) & 0xFF;
 
     return make_intnode(value);
 }
@@ -569,16 +613,14 @@ NODE *loutport(NODE *args)
     int portid = getint(nonnegative_int_arg(args));
     int value = getint(nonnegative_int_arg(cdr(args)));
 
-    Myoutport(portid, value);
-
     return Unbound;
 }
 
 NODE *linport(NODE *args)
 {
     int portid = getint(nonnegative_int_arg(args));
-    int value = Myinport(portid);
 
+    short value = simulate_inport(portid) & 0xFFFF;
     return make_intnode(value);
 }
 
@@ -597,7 +639,65 @@ NODE *lingameport(NODE *args)
         portid = getint(nonnegative_int_arg(cdr(args)));
     }
 
-    int value = Myingameport(portid, mask);
+    int value = -1;
+
+    UINT totalJoysticks = joyGetNumDevs();
+    if (totalJoysticks != 0)
+    {
+        JOYCAPS joystickCapabilities;
+
+        MMRESULT result = joyGetDevCaps(
+            JOYSTICKID1,
+            &joystickCapabilities,
+            sizeof joystickCapabilities);
+        if (result == JOYERR_NOERROR)
+        {
+            JOYINFOEX joystickInfo;
+            joystickInfo.dwSize  = sizeof joystickInfo;
+            joystickInfo.dwFlags = JOY_RETURNX | JOY_RETURNY | JOY_RETURNZ | JOY_RETURNR;
+
+            result = joyGetPosEx(JOYSTICKID1, &joystickInfo);
+            if (result == JOYERR_NOERROR)
+            {
+                if (mask == 1)
+                {
+                    if (joystickCapabilities.wXmin != joystickCapabilities.wXmax)
+                    {
+                        value =
+                            (joystickInfo.dwXpos - joystickCapabilities.wXmin) * 1000 /
+                            (joystickCapabilities.wXmax - joystickCapabilities.wXmin);
+                    }
+                }
+                else if (mask == 2)
+                {
+                    if (joystickCapabilities.wYmin != joystickCapabilities.wYmax)
+                    {
+                        value = 
+                            (joystickInfo.dwYpos - joystickCapabilities.wYmin) * 1000 /
+                            (joystickCapabilities.wYmax - joystickCapabilities.wYmin);
+                    }
+                }
+                else if (mask == 4)
+                {
+                    if (joystickCapabilities.wRmin != joystickCapabilities.wRmax)
+                    {
+                        value = 
+                            (joystickInfo.dwRpos - joystickCapabilities.wRmin) * 1000 /
+                            (joystickCapabilities.wRmax - joystickCapabilities.wRmin);
+                    }
+                }
+                else if (mask == 8)
+                {
+                    if (joystickCapabilities.wZmin != joystickCapabilities.wZmax)
+                    {
+                        value = 
+                            (joystickInfo.dwZpos - joystickCapabilities.wZmin) * 1000 /
+                            (joystickCapabilities.wZmax - joystickCapabilities.wZmin);
+                    }
+                }
+            }
+        }
+    }
 
     return make_intnode(value);
 }

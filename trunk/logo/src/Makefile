@@ -109,7 +109,6 @@ LIBDIRNAME = $(wx_top_builddir)/lib
 CXXFLAGS  += -D__WX$(TOOLKIT)__ $(CPPFLAGS)
 
 MSW_OBJECTS =                  \
-    assembly.o                 \
     dib.o                      \
     dllwind.o                  \
     fmslogo_rc.o               \

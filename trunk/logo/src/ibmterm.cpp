@@ -179,5 +179,8 @@ void tone(FIXNUM frequency, FIXNUM duration)
         frequency = 37;
     }
 
-    MyBeep(frequency, duration);
+#ifndef WX_PURE
+    // use the Win32 Beep
+    Beep(frequency, duration);
+#endif
 }
