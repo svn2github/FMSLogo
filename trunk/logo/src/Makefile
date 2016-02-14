@@ -28,6 +28,8 @@ LDFLAGS  += -pthread
 
 # TODO: CPPFLAGS += -DWX_PRECOMP
 
+SCINTILLA_INCLUDES = scintilla/include
+
 else
 
 # assume this is my Windows XP box
@@ -55,6 +57,8 @@ LDFLAGS  += -mwindows
 TOOLKIT = MSW
 
 EXTRALIBS = -static-libgcc -static-libstdc++ -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lcomctl32 -lcomdlg32 -lctl3d32 -ladvapi32 -lwsock32 -lgdi32 -luser32 -limm32 
+
+SCINTILLA_INCLUDES = $(wx_top_srcdir)/contrib/src/stc/scintilla/include $(wx_top_srcdir)/contrib/src/stc/scintilla/src
 
 endif
 
@@ -276,7 +280,7 @@ obj/$(1)-%.o : %.cpp version.h
 	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
 
 obj/$(1)-%.o : scintilla/%.cxx
-	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 -I$(wx_top_srcdir)/contrib/src/stc/scintilla/include -I$(wx_top_srcdir)/contrib/src/stc/scintilla/src $$<
+	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $(addprefix -I,$(SCINTILLA_INCLUDES)) $$<
 
 obj/$(1)-%_rc.o : %.rc version.h
 	$(RC) -i$$< -o$$@ -DLOCALE=$1 --define __WX$(TOOLKIT)__ $(addprefix --include-dir ,$(INCLUDES))

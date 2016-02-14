@@ -39,7 +39,7 @@ typedef struct __HDC * HDC;
 
 #include "fmslogo.h"
 #include "screen.h"
-#include "../wxwidgets/mainframe.h"
+#include "mainframe.h"
 
 #else // WX_PURE
 

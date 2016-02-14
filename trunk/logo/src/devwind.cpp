@@ -558,6 +558,7 @@ NODE *loutportb(NODE *args)
 // but we can read it through the Win32 API.
 static int simulate_inport(int portid) {
     int value = 0;
+#ifndef WX_PURE
     if (portid == 0x201)
     {
         // hardware port for the joystick port
@@ -595,7 +596,7 @@ static int simulate_inport(int portid) {
             }
         }
     }
-
+#endif
     return value;
 }
 
@@ -640,7 +641,7 @@ NODE *lingameport(NODE *args)
     }
 
     int value = -1;
-
+#ifndef WX_PURE
     UINT totalJoysticks = joyGetNumDevs();
     if (totalJoysticks != 0)
     {
@@ -698,6 +699,6 @@ NODE *lingameport(NODE *args)
             }
         }
     }
-
+#endif
     return make_intnode(value);
 }

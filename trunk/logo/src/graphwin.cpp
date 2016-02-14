@@ -46,7 +46,7 @@ struct RECT {
 #include <wx/gdicmn.h>
 #include "fmslogo.h"
 #include "screen.h"
-#include "../wxwidgets/mainframe.h"
+#include "mainframe.h"
 
 #else
 #include <windows.h>

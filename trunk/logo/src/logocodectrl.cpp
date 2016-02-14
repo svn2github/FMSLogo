@@ -15,7 +15,11 @@
 #include "wrksp.h" // for g_CharactersSuccessfullyParsedInEditor
 
 #include "scintilla/SciLexer.h"
-#include "../src/stc/scintilla/include/Scintilla.h"
+#ifdef WX_PURE
+  #include "scintilla/include/Scintilla.h"
+#else
+  #include "../src/stc/scintilla/include/Scintilla.h"
+#endif
 
 CLogoCodeCtrl::CLogoCodeCtrl(
     wxWindow *      Parent,
@@ -683,7 +687,7 @@ void CLogoCodeCtrl::ReopenAfterError()
     m_IsDirty = true;
 
     // Move the caret to the line that had the error.
-    SendMsg(SCI_GOTOPOS, g_CharactersSuccessfullyParsedInEditor);
+    GotoPos(g_CharactersSuccessfullyParsedInEditor);
 }
 
 void CLogoCodeCtrl::OnContextMenu(wxContextMenuEvent& Event)
