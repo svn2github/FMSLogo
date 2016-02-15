@@ -19,7 +19,6 @@
 #include "mainframe.h"
 #include "graphwin.h"
 #include "screenwindow.h"
-#include "main.h"
 #include "startup.h"
 #include "logocore.h"
 

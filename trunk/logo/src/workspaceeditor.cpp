@@ -7,7 +7,6 @@
 #include <wx/msgdlg.h>
 
 #include "workspaceeditor.h"
-#include "commander.h"
 #include "logocodectrl.h"
 #include "localizedstrings.h"
 #include "guiutils.h"
@@ -21,7 +20,7 @@
 #include "screenwindow.h" // for TraceOutput
 #include "eval.h"         // for process_special_conditions
 #include "startup.h"      // for TempPathName
-#include "main.h"         // for putcombobox
+#include "commander.h"    // for putcombobox
 #include "graphwin.h"     // for do_help
 #include "helputils.h"    // for ContextHelp
 #include "stringadapter.h"

@@ -28,7 +28,7 @@ using namespace std;
 
 #include "parse.h"
 #include "argumentutils.h"
-#include "main.h"
+#include "fmslogo.h"
 #include "logocore.h"
 #include "dynamicbuffer.h"
 #include "error.h"

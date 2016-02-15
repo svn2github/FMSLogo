@@ -19,11 +19,9 @@
  */
 
 #include "ibmterm.h"
-#include "main.h"
 #include "error.h"
 #include "wrksp.h"
 #include "logodata.h"
-#include "assembly.h"
 #include "graphwin.h"
 #include "logoeventqueue.h"
 #include "debugheap.h"

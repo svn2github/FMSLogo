@@ -20,8 +20,8 @@
 #include "logocore.h" // for ARRAYSIZE
 #include "mainframe.h"
 #include "graphwin.h"
+#include "error.h"
 #include "wrksp.h"
-#include "main.h"
 #include "startup.h"
 #include "utils.h"
 #include "mmwind.h"

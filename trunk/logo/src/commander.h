@@ -1,10 +1,21 @@
 // -*- c++ -*-
 
-#include <wx/panel.h>
-#include <wx/dialog.h>
-
 // TODO: refactor so that this isn't needed
 #include "print.h" // for MESSAGETYPE
+
+////////////////////////////////////////////////////////////////////////
+// Functions
+void putcombobox(const char *Text, MESSAGETYPE);
+void clearcombobox();
+void RunLogoInstructionFromGui(char * LogoInstruction);
+
+////////////////////////////////////////////////////////////////////////
+// Classes
+
+#ifdef FMSLOGO_WXWIDGETS
+
+#include <wx/panel.h>
+#include <wx/dialog.h>
 
 class CCommanderButton;
 class CCommanderToggleButton;
@@ -103,8 +114,5 @@ private:
     DECLARE_EVENT_TABLE();
 };
 
+#endif // FMSLOGO_WXWIDGETS
 
-void
-RunLogoInstructionFromGui(
-    char * LogoInstruction
-    );

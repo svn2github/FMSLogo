@@ -49,12 +49,10 @@
 //-----------------------------------------------------------------------------
 
 #include "dib.h"
-#include "main.h"
+#include "messagebox.h"
 #include "screenwindow.h"
 #include "localizedstrings.h"
 #include "debugheap.h"
-
-#define PALVERSION 0x300
 
 extern LPSTR FindDIBBits(LPSTR lpbi);
 extern WORD DIBNumColors(LPSTR lpbi);

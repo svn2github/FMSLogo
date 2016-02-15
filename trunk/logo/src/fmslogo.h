@@ -1,9 +1,12 @@
 // -*- c++ -*-
+#ifndef __FMSLOGO_H_
+#define __FMSLOGO_H_
 
-#include "wx/app.h"
+#include "logocore.h" // for MAX_BUFFER_SIZE
 
 class CMainFrame;
 class wxFileName;
+struct NODE;
 
 ///////////////////////////////////////////////////////////////
 // Constants
@@ -20,6 +23,21 @@ extern wxFileName * g_TempClipName;    // path to temp clipboard file
 extern wxFileName * g_HelpFileName;    // path to help file
 extern wxFileName * g_MciHelpFileName; // path to MCI help file
 
+extern int  BitMapWidth;
+extern int  BitMapHeight;
+
+extern bool bFixed;
+
+extern char edit_editexit[MAX_BUFFER_SIZE]; // editor callback instruction list
+
+///////////////////////////////////////////////////////////////
+// Functions
+void single_step_box(NODE * the_line);
+char * promptuser(const char *prompt);
+
+#ifdef FMSLOGO_WXWIDGETS
+
+#include "wx/app.h"
 
 ///////////////////////////////////////////////////////////////
 // Classes
@@ -42,3 +60,6 @@ private:
     DECLARE_EVENT_TABLE();
 };
 
+#endif // FMSLOGO_WXWIDGETS
+
+#endif // __FMSLOGO_H_

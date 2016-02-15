@@ -64,7 +64,8 @@
 #include "setcolor.h"
 #include "graphwin.h"
 #include "init.h"
-#include "main.h"
+#include "error.h"          // for err_logo
+#include "messagebox.h"     // for ShowErrorMessage
 #include "screenwindow.h"   // for TraceOutput
 #include "mainwind.h"
 #include "logoeventqueue.h"

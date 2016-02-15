@@ -25,7 +25,6 @@
 
 #include "mem.h"
 #include "logodata.h"
-#include "main.h"
 #include "error.h"
 #include "status.h"
 #include "debugheap.h"

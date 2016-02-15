@@ -20,8 +20,8 @@
  *
  */
 
-#include "main.h"
 #include "stringprintednode.h"
+#include "commander.h"
 #include "init.h"
 #include "logodata.h"
 #include "debugheap.h"

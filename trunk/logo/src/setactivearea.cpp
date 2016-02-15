@@ -8,7 +8,7 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 
-#include "main.h"
+#include "fmslogo.h"
 #include "localizedstrings.h"
 #include "stringadapter.h"
 

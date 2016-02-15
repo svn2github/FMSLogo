@@ -21,7 +21,6 @@
 
 #include "dlgwind.h"
 
-#include "main.h"
 #include "localizedstrings.h"
 #include "init.h"
 #include "argumentutils.h"

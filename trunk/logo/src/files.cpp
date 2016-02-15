@@ -31,7 +31,6 @@
 #include "fileswnd.h"
 #include "logocore.h"
 #include "init.h"
-#include "main.h"
 #include "parse.h"
 #include "error.h"
 #include "logomath.h"

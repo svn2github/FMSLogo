@@ -19,7 +19,7 @@
 #include "logoeventqueue.h"
 
 #include "init.h"
-#include "main.h"
+#include "messagebox.h"
 #include "graphics.h"
 #include "argumentutils.h"
 #include "stringprintednode.h"

@@ -8,9 +8,9 @@
 #include <wx/dcclient.h>
 
 #include "logocore.h"
+#include "commander.h"
 #include "graphics.h"
 #include "logodata.h"
-#include "main.h"
 #include "stringadapter.h"
 #include "localizedstrings.h"
 

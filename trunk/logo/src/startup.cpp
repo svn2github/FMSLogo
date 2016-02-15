@@ -33,7 +33,7 @@
 #include "activearea.h"
 #include "graphwin.h"
 #include "utils.h"
-#include "main.h"
+#include "fmslogo.h"
 #include "debugheap.h"
 
 #include "localizedstrings.h"

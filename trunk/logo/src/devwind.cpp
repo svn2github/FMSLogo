@@ -36,7 +36,6 @@
 #include "logocore.h"
 #include "graphics.h"
 #include "graphwin.h"
-#include "main.h"
 #include "init.h"
 #include "logodata.h"
 #include "localizedstrings.h"
@@ -44,7 +43,7 @@
 #include "eval.h"
 #include "error.h"
 #include "screenwindow.h"
-#include "assembly.h"
+#include "messagebox.h"
 #include "debugheap.h"
 
 // global variables

@@ -18,6 +18,10 @@
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
+#ifndef WX_PURE
+  #include <windows.h>
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -30,10 +34,10 @@
 #endif
 
 #include "unix.h"
-#include "main.h"
 #include "init.h"
 #include "logodata.h"
 #include "parse.h"
+#include "commander.h"
 #include "stringprintednode.h"
 #include "dynamicbuffer.h"
 #include "appendablelist.h"

@@ -21,13 +21,13 @@
 
 #include <algorithm>
 
-#include "main.h"
 #include "const.h"
 #include "activearea.h"
 #include "screenwindow.h"
 #include "startup.h"
 #include "graphwin.h"
 #include "cursor.h"
+#include "fmslogo.h"
 #include "debugheap.h"
 
 // Writes the contents of the screen window that is

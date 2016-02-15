@@ -25,9 +25,9 @@
 #include <string.h>
 
 #include "eval.h"
+#include "fmslogo.h"
 #include "init.h"
 #include "files.h"
-#include "main.h"
 #include "graphwin.h"
 #include "logocore.h"
 #include "logodata.h"

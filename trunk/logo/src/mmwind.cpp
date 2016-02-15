@@ -26,7 +26,7 @@
 #include "logocore.h"
 #include "logodata.h"
 #include "lists.h"
-#include "main.h"
+#include "messagebox.h"
 #include "graphics.h"
 #include "error.h"
 #include "init.h"

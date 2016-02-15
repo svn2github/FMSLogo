@@ -16,9 +16,9 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #include "activearea.h"
+#include "fmslogo.h"
 #include "logocore.h"
 #include "graphics.h"
-#include "main.h"
 #include "eval.h"
 #include "error.h"
 #include "utils.h"

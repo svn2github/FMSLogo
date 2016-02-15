@@ -25,7 +25,6 @@
 #include "init.h"
 #include "eval.h"
 #include "parse.h"
-#include "main.h" // for current_line
 #include "debugheap.h"
 
 #include "localizedstrings.h"

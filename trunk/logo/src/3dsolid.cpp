@@ -21,7 +21,6 @@
 #include "status.h"
 #include "graphics.h"
 #include "graphwin.h"
-#include "main.h"
 #include "ibmterm.h"
 #include "unix.h"
 #include "screenwindow.h"

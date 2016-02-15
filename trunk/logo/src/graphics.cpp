@@ -37,7 +37,6 @@ struct LOGPEN;
 typedef struct __PEN * HPEN;
 typedef struct __HDC * HDC;
 
-#include "fmslogo.h"
 #include "screen.h"
 #include "mainframe.h"
 
@@ -54,10 +53,11 @@ typedef struct __HDC * HDC;
 #define _finite(D) isfinite(D)
 #endif
 
+#include "fmslogo.h"
 #include "wrksp.h"
 #include "graphics.h"
 #include "stringprintednode.h"
-#include "main.h"
+#include "messagebox.h"
 #include "logodata.h"
 #include "init.h"
 #include "eval.h"

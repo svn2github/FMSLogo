@@ -8,8 +8,8 @@
 #include <wx/dcclient.h>
 
 #include "logodata.h"
+#include "commander.h"
 #include "logocore.h"
-#include "main.h"
 #include "stringadapter.h"
 #include "localizedstrings.h"
 

@@ -70,7 +70,8 @@ struct RECT {
 #include "vector.h"
 #include "parse.h"
 #include "error.h"
-#include "main.h"
+#include "fmslogo.h" // BitMapWidth, BitMapHeight
+#include "messagebox.h" // ShowErrorMessage
 #include "wrksp.h"
 #include "lists.h"
 #include "eval.h"
