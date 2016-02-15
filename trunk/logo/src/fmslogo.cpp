@@ -10,6 +10,7 @@
 #include <wx/clipbrd.h>
 #include <wx/gdicmn.h> 
 #include <wx/settings.h>
+#include <wx/stdpaths.h>
 
 #ifdef __WXMSW__
    #include "wx/msw/private.h"
@@ -81,8 +82,6 @@ IMPLEMENT_APP(CFmsLogo)
 CFmsLogo::CFmsLogo()
 {
 }
-
-#ifndef WX_PURE
 
 // Read an integer command-line argument, given as either "-W500" or "-W 500".
 //
@@ -236,8 +235,6 @@ void CFmsLogo::ProcessCommandLine()
     }
 }
 
-#endif // WX_PURE
-
 bool CFmsLogo::OnInit()
 {
     bool rval = true;
@@ -267,85 +264,24 @@ bool CFmsLogo::OnInit()
 
     init_osversion();
 
-    // Figure out the path that contains fmslogo.exe
-    //
-    // TODO: Once wxWidgets becomes the main logo project,
-    // we will be able to assume that Logolib is in whatever
-    // directory holds fmslogo.
-    // In the meantime, we use the path that holds the 
-    // latest installed version.
-#ifndef WX_PURE
-    HKEY fmslogoKey;
-    LONG result;
-    result = RegOpenKeyEx(
-        HKEY_LOCAL_MACHINE,
-        "Software\\FMSLogo",
-        0, // reserved
-        KEY_QUERY_VALUE,
-        &fmslogoKey);
-    if (result == ERROR_SUCCESS)
-    {
-        DWORD valueSize = ARRAYSIZE(g_FmslogoBaseDirectory) - 2;  // leave room for the backslash and NUL
-        BYTE *valuePtr  = reinterpret_cast<BYTE*>(g_FmslogoBaseDirectory);
-        DWORD valueType;
+    // Figure out the path that contains fmslogo.exe, which we
+    // assume also holds Logolib.
+    const wxFileName fmslogoExecutable(wxStandardPaths::Get().GetExecutablePath());
+    const wxString & fmslogoPath = fmslogoExecutable.GetPath(wxPATH_GET_SEPARATOR);
 
-        LONG result = RegQueryValueEx(
-            fmslogoKey,
-            "Install_Dir",
-            0,   // reserved
-            &valueType,
-            valuePtr,
-            &valueSize);
-        if (result == ERROR_SUCCESS && 
-            valueType == REG_SZ     &&
-            valueSize < ARRAYSIZE(g_FmslogoBaseDirectory) - 2)
-        {
-            // We successfully read the value as a string.
-
-            // The NUL character is not always included in string values,
-            // but if it's present, we need to set valueSize so that it
-            // doesn't include the NUL.
-            if (valueSize != 0 && g_FmslogoBaseDirectory[valueSize - 1] == '\0')
-            {
-                valueSize--;
-            }
-
-            // Append the missing backslash
-            g_FmslogoBaseDirectory[valueSize + 0] = '\\';
-            g_FmslogoBaseDirectory[valueSize + 1] = '\0';
-        }
-
-        RegCloseKey(fmslogoKey);
-    }
-    else
-    {
-        // FMSLogo was not installed through the normal means.
-        // Figure out the path that contains fmslogo.exe.
-        DWORD nFileNameLength = ::GetModuleFileName(
-            GetModuleHandle(NULL),
-            g_FmslogoBaseDirectory,
-            ARRAYSIZE(g_FmslogoBaseDirectory));
-
-        // start at the end of the full path of fmslogo.exe and walk
-        // backwards in the string until we find the final directory delimiter
-        for (char * charPtr = g_FmslogoBaseDirectory + nFileNameLength;
-             charPtr > g_FmslogoBaseDirectory;
-             charPtr--)
-        {
-            if (*charPtr == '\\')
-            {
-                // found the last backslash
-                break;
-            }
-            *charPtr = '\0';
-        }
-    }
+    strncpy(
+        g_FmslogoBaseDirectory,
+        WXSTRING_TO_STRING(fmslogoPath),
+        ARRAYSIZE(g_FmslogoBaseDirectory));
+    g_FmslogoBaseDirectory[ARRAYSIZE(g_FmslogoBaseDirectory) - 1] = '\0';
 
     //_control87(EM_OVERFLOW,  EM_OVERFLOW);
     //_control87(EM_UNDERFLOW, EM_UNDERFLOW);
     TopOfStack = (int*) &rval;
 
     ProcessCommandLine();
+
+#ifndef WX_PURE
 
     // Grab the single instance lock.
     g_SingleInstanceMutex = CreateMutex(
