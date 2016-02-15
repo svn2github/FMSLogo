@@ -3,15 +3,19 @@
 include ../version.mk
 include ../lcids.mk
 
-CXX=c:/mingw/bin/gcc.exe
-WINDRES=c:/mingw/bin/windres.exe
+CC  = i686-w64-mingw32-gcc
+CXX = i686-w64-mingw32-g++
+RC  = windres --preprocessor=$(CXX) --preprocessor-arg=-E --preprocessor-arg=-xc-header
 
 INCLUDES = -I../src -I"C:\Program Files\HTML Help Workshop\include"
 DEFINES=FMSLOGO_SCREENSAVER
 CPPFLAGS=$(INCLUDES) $(addprefix -D,$(DEFINES))
 
-DEBUG_CXXFLAGS += -Wall -Wundef -Wno-ctor-dtor-privacy -O0 -g -DDEBUG -DMEM_DEBUG
-RELEASE_CXXFLAGS += -Wall -Wundef -Wno-ctor-dtor-privacy -O2 -fno-strict-aliasing -DNDEBUG
+DEBUG_CFLAGS   += -Wall -Wundef -O0 -g -DDEBUG -DMEM_DEBUG
+DEBUG_CXXFLAGS += $(DEBUG_CFLAGS) -Wno-ctor-dtor-privacy
+
+RELEASE_CFLAGS   += -Wall -Wundef -O2 -fno-strict-aliasing -DNDEBUG
+RELEASE_CXXFLAGS += $(RELEASE_CFLAGS) -Wno-ctor-dtor-privacy
 
 LDFLAGS=-mwindows
 
@@ -78,8 +82,6 @@ LIBS=\
     scrnsave \
     comctl32 \
     uuid     \
-    msvcrt   \
-    stdc++   \
     winmm    \
     wsock32  \
     comdlg32 \
@@ -96,8 +98,11 @@ debug : $(TARGET)d.scr ;
 #
 # Rules for building the debug version of the screensaver
 #
-$(TARGET)d.scr : $(addprefix obj/debug-,$(DEBUG_OBJECTS))
-	$(CXX) -o$@ $(LDFLAGS) -def:screensaver.def $^ $(addprefix -l,$(LIBS))
+$(TARGET)d.scr : $(addprefix obj/debug-,$(DEBUG_OBJECTS) scrnsave.o)
+	$(CXX) -o$@ $(LDFLAGS) -def:screensaver.def $^ $(addprefix -l,$(LIBS)) -static-libgcc -static-libstdc++
+
+obj/debug-%.o: %.c
+	$(CC) -c -o$@ $(DEBUG_CFLAGS) $(CPPFLAGS) -DLOCALE=$1 $<
 
 obj/debug-%.o: %.cpp
 	$(CXX) -c -o$@ $(DEBUG_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
@@ -106,15 +111,15 @@ obj/debug-%.o: ../src/%.cpp
 	$(CXX) -c -o$@ $(DEBUG_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
 
 obj/debug-%res.o : %.rc
-	$(WINDRES) $(CPPFLAGS) -DLOCALE=$(DEFAULT_LCID) --output=$@ $<
+	$(RC) $(CPPFLAGS) -DLOCALE=$(DEFAULT_LCID) --output=$@ $<
 
 #
 # Rules for building a debug version of the screensaver with Microsoft's
 # compilers so that .PDB files exist for debugging with windbg.exe.
 #
 msdbg : $(TARGET)msdbg.scr ;
-MSLIBS     = $(subst msvcrt,,$(subst stdc++,,$(LIBS)))
-MSCPPFLAGS = $(CPPFLAGS) -I"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\Include" -I"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\include" -D_CRT_SECURE_NO_WARNINGS -DNOASM
+MSLIBS     = $(LIBS)
+MSCPPFLAGS = $(CPPFLAGS) -I"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\Include" -I"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\include" -D_CRT_SECURE_NO_WARNINGS
 
 $(TARGET)msdbg.scr : $(addprefix obj/msdbg-,$(DEBUG_OBJECTS))
 	link.exe /nologo /OUT:$@ /DEBUG /LIBPATH:"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\lib" /LIBPATH:"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\lib" /subsystem:windows /machine:I386 $(addsuffix .lib,$(MSLIBS)) -def:screensaver.def $^
@@ -133,9 +138,12 @@ obj/msdbg-%res.o : %.rc
 # Generate the rules to build the release version of the screensaver for each locale
 #
 define FMSLOGO_SCREENSAVER_template
-$$(TARGET)-$(1).scr : $$(addprefix obj/$(1)-,$$(OBJECTS))
-	$(CXX) -o$$@ $(LDFLAGS) -def:screensaver.def $$^ $(addprefix -l,$(LIBS))
+$$(TARGET)-$(1).scr : $$(addprefix obj/$(1)-,$$(OBJECTS) scrnsave.o)
+	$(CXX) -o$$@ $(LDFLAGS) -def:screensaver.def $$^ $(addprefix -l,$(LIBS)) -static-libgcc -static-libstdc++
 	strip $$@
+
+obj/$(1)-%.o: %.c
+	$(CC) -c -o$$@ $(RELEASE_CFLAGS) $(CPPFLAGS) -DLOCALE=$1 $$<
 
 obj/$(1)-%.o: %.cpp
 	$(CXX) -c -o$$@ $(RELEASE_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$1 $$<
@@ -144,7 +152,7 @@ obj/$(1)-%.o: ../src/%.cpp
 	$(CXX) -c -o$$@ $(RELEASE_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$1 $$<
 
 obj/$(1)-%res.o : %.rc
-	$(WINDRES) $(CPPFLAGS) -DLOCALE=$1 --output=$$@ $$<
+	$(RC) $(CPPFLAGS) -DLOCALE=$1 --output=$$@ $$<
 
 endef
 
