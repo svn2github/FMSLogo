@@ -28,6 +28,14 @@
 #include "const.h"
 #include "debugheap.h"
 
+#ifdef max // MS compilers #define max in windows.h
+#undef max
+#endif
+
+#ifdef min // MS compilers #define min in windows.h
+#undef min
+#endif
+
 TThreeDSolid ThreeD;
 
 TThreeD::TThreeD()

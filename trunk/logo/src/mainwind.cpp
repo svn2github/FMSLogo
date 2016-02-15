@@ -30,6 +30,14 @@
 #include "fmslogo.h"
 #include "debugheap.h"
 
+#ifdef max // MS compilers #define max in windows.h
+#undef max
+#endif
+
+#ifdef min // MS compilers #define min in windows.h
+#undef min
+#endif
+
 // Writes the contents of the screen window that is
 // within the ACTIVEAREA window to the screen to the given
 // file stream as a Windows Bitmap.

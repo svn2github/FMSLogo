@@ -25,12 +25,11 @@
 #include "init.h"
 #include "eval.h"
 #include "parse.h"
+#include "screenwindow.h"
+#include "cursor.h"
 #include "debugheap.h"
 
 #include "localizedstrings.h"
-
-#include "screenwindow.h"
-#include "cursor.h"
 
 void filesave(const char *FileName)
 {

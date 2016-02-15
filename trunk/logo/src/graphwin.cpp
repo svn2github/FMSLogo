@@ -23,10 +23,6 @@
 #include <string.h>
 #include <algorithm>
 
-#ifdef max // MS compilers #define max in windows.h
-#undef max
-#endif
-
 #ifdef WX_PURE
 typedef struct __BITMAP      * HBITMAP;
 typedef struct __LOGPALLETTE * PLOGPALETTE;
@@ -41,8 +37,6 @@ struct RECT {
     int bottom;
 };
 
-#include <algorithm>
-
 #include <wx/gdicmn.h>
 #include "fmslogo.h"
 #include "screen.h"
@@ -51,6 +45,15 @@ struct RECT {
 #else
 #include <windows.h>
 #include <htmlhelp.h>
+
+#ifdef max // MS compilers #define max in windows.h
+#undef max
+#endif
+
+#ifdef min // MS compilers #define min in windows.h
+#undef min
+#endif
+
 #endif
 
 #include "activearea.h"
