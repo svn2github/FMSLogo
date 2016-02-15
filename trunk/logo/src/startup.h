@@ -32,9 +32,12 @@ extern char TempClipName[];
 extern char szHelpFileName[];
 
 #ifndef WX_PURE
-extern OSVERSIONINFO g_OsVersionInformation;
-extern char          g_FmslogoBaseDirectory[MAX_PATH+1];
+  extern OSVERSIONINFO g_OsVersionInformation;
+#else
+  #define MAX_PATH (260)
 #endif // WX_PURE
+
+extern char g_FmslogoBaseDirectory[MAX_PATH+1];
 
 #ifdef FMSLOGO_OWL
 // OWL's thunking for window message handling triggers DEP exceptions.

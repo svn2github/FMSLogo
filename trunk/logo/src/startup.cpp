@@ -38,10 +38,6 @@
 
 #include "localizedstrings.h"
 
-#ifdef WX_PURE
-#define MAX_PATH 260
-#endif
-
 Color dfld;                        // Current flood color
 Color dscn;                        // Current screen color
 

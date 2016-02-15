@@ -55,7 +55,7 @@ static HANDLE g_SingleInstanceMutex = NULL;
 #endif
 
 #ifdef WX_PURE
-#define MAX_PATH 260
+#define MAX_PATH (260)
 #endif
 static char g_FileToLoad[MAX_PATH] = ""; // routine to exec on start
 static bool g_EnterPerspectiveMode = false;
@@ -74,6 +74,14 @@ static HMODULE         g_User32              = NULL;
 #endif // __WXMSW__
 #endif // MEM_DEBUG
 
+
+#ifdef WX_PURE
+  #if wxUSE_UNICODE
+    // Use the wchar_t variants of the ANSI C string functions
+    #define strtoul wcstoul
+    #define strlen  wcslen
+  #endif
+#endif
 
 ////////////////////////////////////////////////////////////////////
 // CFmsLogo
@@ -227,7 +235,7 @@ void CFmsLogo::ProcessCommandLine()
 
             strncpy(
                 &g_FileToLoad[fileToLoadIndex],
-                argument,
+                WXSTRING_TO_STRING(argument),
                 ARRAYSIZE(g_FileToLoad) - 1 - fileToLoadIndex);
 
             fileToLoadIndex += strlen(argument);
