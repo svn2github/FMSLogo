@@ -230,8 +230,7 @@ clean:
 	$(RM) ./*.bak
 	$(RM) ./*~
 	$(RM) ./*.stackdump
-	$(RM) $(foreach lcid,$(LCIDS),fmslogo-${lcid}$(EXEEXT))
-	$(RM) fmslogo*$(EXEEXT)
+	$(RM) $(foreach lcid,$(LCIDS),fmslogo-${lcid}$(EXEEXT)) fmslogo$(EXEEXT)
 	$(RM) logohelp.chm
 	$(RM) $(wildcard version.h)
 	$(RM) $(shell /usr/bin/find . -iname '*.obj')
