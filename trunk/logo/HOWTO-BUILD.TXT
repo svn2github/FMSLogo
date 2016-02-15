@@ -23,14 +23,12 @@ If you do not install HTML Help Workshop to the default location, then you
 will have to modify some Makefiles.
 
 Install Perl.  I use the Perl from http://activestate.com but any Perl
-distribution should suffice.  Add perl.exe to your PATH.
+distribution should suffice.  Add perl.exe to your PATH.  Perl is used in
+various parts of the build, as well as by some of the tests.
 
 Install the Nullsoft Scriptable Installation System (NSIS) to C:\Program Files\NSIS.
 You can download this from http://sourceforge.net/projects/nsis.
 This is needed to build the self-extracting installer executable.
-
-Install MinGW at C:\MinGW.  This is needed to build the FMSLogo screen saver
-and functiontest.dll, which is used to help test DLLCALL.
 
 Install the MSW version of wxWidgets 2.8.12 to e:\wxMSW-2.8.12 (or install it
 wherever you like and update the paths in src\Makefile).  Build it according

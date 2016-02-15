@@ -1,4 +1,4 @@
-CXX=c:/MinGW/bin/mingw32-gcc.exe
+CXX = i686-w64-mingw32-g++
 
 all : testfunction.dll
 
