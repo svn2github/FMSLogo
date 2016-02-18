@@ -94,6 +94,7 @@ clean :
 	$(RM) logohelp.dvi
 	$(RM) logohelp.ps
 	$(RM) logohelp.fo
+	$(RM) logoversion.xml
 	$(RM) $(wildcard *.html)
 	$(RM) $(wildcard *.htm)
 	$(RM) $(wildcard *.hhp)
