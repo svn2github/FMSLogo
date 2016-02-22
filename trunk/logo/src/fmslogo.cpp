@@ -235,7 +235,7 @@ void CFmsLogo::ProcessCommandLine()
 
             strncpy(
                 &g_FileToLoad[fileToLoadIndex],
-                WXSTRING_TO_STRING(argument),
+                WXCHAR_TO_STRING(argument),
                 ARRAYSIZE(g_FileToLoad) - 1 - fileToLoadIndex);
 
             fileToLoadIndex += strlen(argument);
