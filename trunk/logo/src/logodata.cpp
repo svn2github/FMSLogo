@@ -899,18 +899,6 @@ NODE *make_array(int len)
 {
     assert(0 <= len);  // can't have a negative length array
 
-#ifdef BORLAND
-        // Borland's calloc() doesn't handle overflow,
-        // so we must do it ourselves.
-        if (sizeof(NODE*) * len + 100 < len)
-        {
-            // There would be an integer overflow when
-            // calculating the size of the internal array.
-            err_logo(OUT_OF_MEM, NIL);
-            return Unbound;
-        }
-#endif
-
     NODE ** data;
     if (len != 0)
     {
