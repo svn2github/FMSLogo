@@ -143,6 +143,7 @@ $CONFIGURE                        \
     --disable-splines             \
     --disable-unicode             \
     --disable-sysoptions          \
+    --disable-compat26            \
     --enable-no_deps              \
     --disable-dependency-tracking \
     --host=i686-w64-mingw32       \

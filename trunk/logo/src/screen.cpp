@@ -731,11 +731,11 @@ void CScreen::OnKeyDown(wxKeyEvent& Event)
         calllists.insert(callevent);
         checkqueue();
     }
-    else if (keyCode == WXK_PRIOR ||
-             keyCode == WXK_UP    ||
-             keyCode == WXK_NEXT  ||
-             keyCode == WXK_DOWN  ||
-             keyCode == WXK_LEFT  ||
+    else if (keyCode == WXK_PAGEUP   ||
+             keyCode == WXK_UP       ||
+             keyCode == WXK_PAGEDOWN ||
+             keyCode == WXK_DOWN     ||
+             keyCode == WXK_LEFT     ||
              keyCode == WXK_RIGHT)
     {
         // scroll main window with arrow keys
