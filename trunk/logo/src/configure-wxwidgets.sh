@@ -23,23 +23,6 @@ CONFIGURE=$1/configure
 export PATH=/usr/bin:$PATH
 export MAKE=gmake
 
-#
-# The minimum system requirements for the OWL FMSLogo are Windows 95, running
-# on a Pentium.  To prevent the compiler from generating instructions that
-# are not supported on a Pentium, we specify -march=i586.
-#
-# Without this, the i686 MinGW compiler emits a CMOVNBE instruction in a
-# static initializers. Since CMOVcc is only supported on Pentium Pro CPUs
-# and higher, the result is that FMSLogo raises an unknown instruction
-# exception on startup when run on a Pentium.
-#
-# For reference, the opcode of a CMOVcc is
-#
-#   0x0F 0x48 ..
-#
-export CFLAGS=-march=i586
-export CXXFLAGS=-march=i586
-
 if [ ! -f $CONFIGURE ];
 then
   echo The file $CONFIGURE does not exist

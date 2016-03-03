@@ -101,10 +101,6 @@ CXXFLAGS += -DFMSLOGO_WXWIDGETS
 CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
 CXXFLAGS += -I"/cygdrive/c/Program Files/HTML Help Workshop/include"
 
-# Meet FMSLogo's minimum system requirements
-CXXFLAGS += -march=pentium
-
-
 #BK_DEPS = $(wx_top_builddir)/bk-deps
 LIBS = -lm
 CXX = $(TARGET_PREFIX)g++
