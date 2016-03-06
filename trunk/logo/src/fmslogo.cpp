@@ -524,9 +524,6 @@ int CFmsLogo::OnExit()
 #endif // __WXMSW__
 #endif // MEM_DEBUG
 
-
-    HtmlHelpUninitialize();
-
 #if wxUSE_CLIPBOARD
     // wxWidgets clears the clipboard when it exits, presumably to save memory.
     // To me, this behavior is unintuitative and confusing, as it's something
