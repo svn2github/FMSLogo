@@ -32,7 +32,6 @@
 #include <wx/scrolbar.h>
 
 #include "fmslogo.h"
-#include "mainframe.h"
 #include "logoeventqueue.h"
 #include "screen.h"
 #include "coms.h"
@@ -1194,7 +1193,7 @@ NODE *lwindowcreate(NODE *args)
     else
     {
         // The parent doesn't exist.  Use the top-level window as the parent.
-        wxParent = CFmsLogo::GetMainFrame();
+        wxParent = GetMainWxWindow();
         child->m_Parent = NULL;
     }
 
@@ -1387,7 +1386,6 @@ NODE *ldialogcreate(NODE *args)
         WXSTRING(titlename.GetString()),
         clientrect);
     child->m_Parent = (char *)wxParent;
-
     g_LogoWidgets.insert(child);
 
     // Modal windows must have a callback to set them up
@@ -1463,7 +1461,7 @@ NODE *llistboxcreate(NODE *args)
         child->m_Parent = NULL;
 
         child->ListBox = new CLogoListBox(
-            CFmsLogo::GetMainFrame()->GetScreen(),
+            GetScreenWxWindow(),
             clientrect);
     }
 
@@ -1632,7 +1630,7 @@ NODE *lcomboboxcreate(NODE *args)
         child->m_Parent = NULL;
 
         child->ComboBox = new CLogoComboBox(
-            CFmsLogo::GetMainFrame()->GetScreen(),
+            GetScreenWxWindow(),
             clientrect);
     }
 
@@ -1800,7 +1798,7 @@ NODE *lscrollbarcreate(NODE *args)
         child->m_Parent = NULL;
 
         child->ScrollBar = new CLogoScrollBar(
-            CFmsLogo::GetMainFrame()->GetScreen(),
+            GetScreenWxWindow(),
             clientrect,
             isHorizontalScrollbar,
             callback);
@@ -1941,7 +1939,7 @@ NODE *lstaticcreate(NODE *args)
         child->m_Parent = NULL;
             
         child->StaticText = new CLogoStaticText(
-            CFmsLogo::GetMainFrame()->GetScreen(),
+            GetScreenWxWindow(),
             titlename,
             clientrect);
     }
@@ -2046,7 +2044,7 @@ NODE *lbuttoncreate(NODE *args)
         child->m_Parent = NULL;
 
         child->Button = new CLogoButton(
-            CFmsLogo::GetMainFrame()->GetScreen(),
+            GetScreenWxWindow(),
             titlename,
             clientrect,
             callback);
@@ -2144,7 +2142,7 @@ NODE *lgroupboxcreate(NODE *args)
         child->m_Parent = NULL;
             
         child->GroupBox = new CLogoGroupBox(
-            CFmsLogo::GetMainFrame()->GetScreen(), 
+            GetScreenWxWindow(),
             clientrect);
     }
 
@@ -2230,7 +2228,7 @@ NODE *lradiobuttoncreate(NODE *args)
         child->m_Parent = NULL;
 
         child->RadioButton = new CLogoRadioButton(
-            CFmsLogo::GetMainFrame()->GetScreen(),
+            GetScreenWxWindow(),
             titlename,
             clientrect,
             group->GroupBox);
@@ -2370,7 +2368,7 @@ NODE *lcheckboxcreate(NODE *args)
         child->m_Parent = NULL;
 
         child->CheckBox = new CLogoCheckBox(
-            CFmsLogo::GetMainFrame()->GetScreen(),
+            GetScreenWxWindow(),
             WXSTRING(titlename.GetString()),
             clientrect,
             group->GroupBox);
@@ -2504,7 +2502,7 @@ NODE *lquestionbox(NODE *args)
     }
 
     CQuestionBox questionBox(
-        CFmsLogo::GetMainFrame(),
+        GetMainWxWindow(),
         WXSTRING(banner.GetString()),
         WXSTRING(body.GetString()));
 
@@ -2543,7 +2541,7 @@ NODE *lselectbox(NODE *args)
     }
 
     CSelectBox selectBox(
-        CFmsLogo::GetMainFrame(),
+        GetMainWxWindow(),
         WXSTRING(banner.GetString()),
         choices);
 

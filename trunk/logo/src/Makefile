@@ -1,7 +1,7 @@
 # =========================================================================
 # NOTE: this makefile is a stop-gap solution for me (david costanzo) to
-# to build the experimental wxWidgets on my two dev boxes.  I don't expect
-# this to work for anyone else.
+# to build the FMSlogo on my machines.  I don't expect this to work for
+# anyone else without modification.
 # =========================================================================
 include ../version.mk
 include ../lcids.mk

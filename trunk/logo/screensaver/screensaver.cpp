@@ -4,6 +4,9 @@
 #include <scrnsave.h>
 #include <stdlib.h>
 
+#include <wx/window.h>
+#include <wx/app.h> 
+
 #include "init.h"
 #include "graphwin.h"
 #include "startup.h"
@@ -35,6 +38,8 @@ int *TopOfStack  = NULL;
 int BitMapWidth  = 0;
 int BitMapHeight = 0;
 
+char edit_editexit[MAX_BUFFER_SIZE];     // editor callback instruction list
+
 static UINT   g_Timer;
 static CHAR   g_FileToLoad[MAX_PATH] = "";
 static HANDLE g_SingleInstanceMutex  = NULL;
@@ -51,11 +56,13 @@ static HANDLE          g_Fmslogo             = NULL;
 static HMODULE         g_User32              = NULL;
 #endif
 
-static HWND    g_ScreenWindow = NULL;
-static HDC     g_ScreenDeviceContext = NULL;
-static HDC     g_MemoryDeviceContext = NULL;
-static HDC     g_BackBufferDeviceContext = NULL;
-static HBITMAP g_BackBuffer = NULL;
+static HWND       g_ScreenWindow = NULL;
+static HDC        g_ScreenDeviceContext = NULL;
+static HDC        g_MemoryDeviceContext = NULL;
+static HDC        g_BackBufferDeviceContext = NULL;
+static HBITMAP    g_BackBuffer = NULL;
+static wxWindow * g_WxScreenWindow = NULL;
+static wxApp    * g_DummyApp = NULL;
 
 static DWORD g_TickCountOfMostRecentLoad = 0;
 
@@ -63,6 +70,7 @@ static int   g_NextTextLine = 0;
 
 
 const DWORD DELAYTIME_MILLISECONDS = 10000;
+
 
 
 static
@@ -127,9 +135,24 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
     BOOL updateRectangleExists;
     RECT updateRectangle;
 
+    int argc = 0;
+
     switch(message)
     {
     case WM_CREATE:
+
+        // Initialize the wxWidget library.
+        // Normally, ::wxInitialize() would be sufficient, but since
+        // some FMSLogo commands require the wxWindow subsystem, we
+        // must instanciate a full wxApp and initialize it.
+        g_DummyApp = new wxApp();
+        g_DummyApp->Initialize(argc, NULL);
+
+        // Wrap the native HWND in a wxWindow object so that
+        // it can be passed to other parts of the system.
+        g_WxScreenWindow = new wxWindow();
+        g_WxScreenWindow->SetHWND(hwnd);
+        g_WxScreenWindow->AdoptAttributesFromHWND();
 
         g_ScreenWindow = hwnd;
         GetClientRect(g_ScreenWindow, &FullRect);
@@ -350,7 +373,7 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
             // This is the screen saver's event
             if (!g_IsLoadingFile)
             {
-                // Run the file to load it it's been more than DELAYTIME
+                // Run the file to load if it's been more than DELAYTIME
                 // milliseconds since the last time we ran it.
                 if (g_TickCountOfMostRecentLoad + DELAYTIME_MILLISECONDS <= GetTickCount())
                 {
@@ -470,6 +493,27 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         {
             // We are not in the Logo evaluator, so we can cleanup here.
             UninitializeLogoEngine();
+
+            // Note that we cannot delete the wxWindow while the Logo
+            // engine is running because it could be calling a modal
+            // wxWidgets routine, like a CQuestionBox, which, although
+            // it's created as a child of g_WxScreenWindow, is cleaned
+            // up by the Logo engine on proper shutdown.  Destroying
+            // g_WxScreenWindow while such a CQuestionBox exists would
+            // cause a double-free.
+            if (g_WxScreenWindow != NULL)
+            {
+                g_WxScreenWindow->SetHWND(NULL);
+                g_WxScreenWindow->Destroy();
+                g_WxScreenWindow = NULL;
+            }
+
+            if (g_DummyApp != NULL)
+            {
+                g_DummyApp->CleanUp();
+                delete g_DummyApp;
+                g_DummyApp = NULL;
+            }
         }
         break;
 
@@ -597,12 +641,6 @@ BOOL WINAPI RegisterDialogClasses(HANDLE hInst)
     return TRUE;
 }
 
-// stubs that abstract the logo engine from the window toolkit
-bool CheckOnScreenControls()
-{
-    return false;
-}
-
 void single_step_box(NODE *the_line)
 {
 }
@@ -679,6 +717,13 @@ void putcombobox(const char *Text, MESSAGETYPE type)
     g_NextTextLine += size.cy + 10;
 }
 
+void clearcombobox()
+{
+    // reset the screen and text area
+    lclearscreen(NULL);
+    g_NextTextLine = 0;
+}
+
 char * promptuser(const char *prompt)
 {
     return NULL;
@@ -694,6 +739,16 @@ HWND GetMainWindow()
     // Return the screen so that WM_TIMER events that are
     // created by SetTimer() get posted to the ScreenSaverProc.
     return g_ScreenWindow;
+}
+
+wxWindow * GetMainWxWindow()
+{
+    return g_WxScreenWindow;
+}
+
+wxWindow * GetScreenWxWindow()
+{
+    return g_WxScreenWindow;
 }
 
 HWND GetCommanderWindow()

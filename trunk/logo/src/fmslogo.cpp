@@ -658,8 +658,15 @@ HWND GetEditorWindow()
 
     return reinterpret_cast<HWND>(editor->GetHandle());
 }
-
 #endif // WX_PURE
+
+wxWindow * GetMainWxWindow() {
+    return CFmsLogo::GetMainFrame();
+}
+
+wxWindow * GetScreenWxWindow() {
+    return CFmsLogo::GetMainFrame()->GetScreen();
+}
 
 UINT GetScreenHorizontalScrollPosition()
 {

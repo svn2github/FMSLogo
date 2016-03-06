@@ -34,6 +34,9 @@ HWND GetCommanderWindow();
 HWND GetParentWindowForDialog();
 #endif
 
+class wxWindow * GetMainWxWindow();
+class wxWindow * GetScreenWxWindow();
+
 UINT GetScreenHorizontalScrollPosition();
 UINT GetScreenVerticalScrollPosition();
 void SetScreenScrollPosition(UINT x, UINT y);
