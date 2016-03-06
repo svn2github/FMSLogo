@@ -19,6 +19,7 @@
 #include "eval.h"
 #include "mem.h"
 #include "stringadapter.h"
+#include "screenwindow.h"
 
 bool status_flag = false;   // Flag to signal status box is popped up
 
@@ -459,10 +460,12 @@ void CStatusDialog::OnClose(wxCloseEvent& Event)
 
 #endif
 
+#ifdef FMSLOGO_WXWIDGETS
     CMainFrame * mainFrame = CFmsLogo::GetMainFrame();
 
     mainFrame->ClearStatusDialog();
     mainFrame->GetCommander()->UpdateStatusButtonState();
+#endif
 
     // default processing will destroy the dialog box
     Event.Skip();
@@ -471,14 +474,6 @@ void CStatusDialog::OnClose(wxCloseEvent& Event)
 BEGIN_EVENT_TABLE(CStatusDialog, wxDialog)
     EVT_CLOSE(CStatusDialog::OnClose)
 END_EVENT_TABLE()
-
-static
-CStatusDialog * GetStatusDialog()
-{
-    CStatusDialog * statusDialog = CFmsLogo::GetMainFrame()->GetStatusDialog();
-    assert(statusDialog != NULL);
-    return statusDialog;
-}
 
 void update_status_turtleposition(void)
 {

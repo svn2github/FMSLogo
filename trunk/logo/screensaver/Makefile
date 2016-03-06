@@ -71,7 +71,7 @@ OBJECTS=\
     selectbox.o         \
     sort.o              \
     startup.o           \
-    status.o            \
+    statusdialog.o      \
     stringprintednode.o \
     term.o              \
     threed.o            \

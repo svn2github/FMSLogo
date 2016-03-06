@@ -724,6 +724,13 @@ void OpenStatusWindow()
     mainFrame->GetCommander()->UpdateStatusButtonState();
 }
 
+CStatusDialog * GetStatusDialog()
+{
+    CStatusDialog * statusDialog = CFmsLogo::GetMainFrame()->GetStatusDialog();
+    assert(statusDialog != NULL);
+    return statusDialog;
+}
+
 void CloseStatusWindow()
 {
     CMainFrame * mainFrame = CFmsLogo::GetMainFrame();

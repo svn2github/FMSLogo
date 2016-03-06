@@ -76,6 +76,7 @@ bool TranslateKeyboardShortcut(MSG & Message);
 
 void OpenStatusWindow();
 void CloseStatusWindow();
+class CStatusDialog * GetStatusDialog();
 
 void AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor);
 void UndockCommanderWindow();

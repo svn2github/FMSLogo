@@ -25,6 +25,7 @@
 #include "logorc.h"
 #include "netwind.h"
 #include "screenwindow.h"
+#include "statusdialog.h"
 
 #include "resource.h"
 
@@ -61,8 +62,10 @@ static HDC        g_ScreenDeviceContext = NULL;
 static HDC        g_MemoryDeviceContext = NULL;
 static HDC        g_BackBufferDeviceContext = NULL;
 static HBITMAP    g_BackBuffer = NULL;
-static wxWindow * g_WxScreenWindow = NULL;
-static wxApp    * g_DummyApp = NULL;
+
+static wxWindow      * g_WxScreenWindow = NULL;
+static wxApp         * g_DummyApp = NULL;
+static CStatusDialog * g_StatusDialog = NULL;
 
 static DWORD g_TickCountOfMostRecentLoad = 0;
 
@@ -820,14 +823,35 @@ HDC GetBackBufferDeviceContext()
 
 void OpenStatusWindow()
 {
+    // create a new status dialog, if necessary
+    if (g_StatusDialog == NULL)
+    {
+        g_StatusDialog = new CStatusDialog(g_WxScreenWindow);
+        g_StatusDialog->PopulateAllFields();
+        g_StatusDialog->Show();
+    }
+}
+
+CStatusDialog * GetStatusDialog()
+{
+    assert(g_StatusDialog != NULL);
+    return g_StatusDialog;
 }
 
 void CloseStatusWindow()
 {
+    if (g_StatusDialog != NULL)
+    {
+        // Close the status window
+        g_StatusDialog->Close();
+        g_StatusDialog = NULL;
+    }
 }
 
 void AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor)
 {
+    // The screen saver's drawing surface is not resizable, so there
+    // are never scrollbars to adjust.
 }
 
 void UndockCommanderWindow()
