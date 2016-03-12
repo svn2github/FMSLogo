@@ -317,11 +317,15 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         break;
 
     case WM_ERASEBKGND:
-        // Fill the screen with whiteness.
-        FillRect(
-            g_ScreenDeviceContext,
-            &FullRect,
-            (HBRUSH) GetStockObject(WHITE_BRUSH));
+        updateRectangleExists = GetUpdateRect(hwnd, &updateRectangle, FALSE);
+        if (updateRectangleExists)
+        {
+            // Fill the dirty region with whiteness.
+            FillRect(
+                reinterpret_cast<HDC>(wParam),
+                &updateRectangle,
+                reinterpret_cast<HBRUSH>(GetStockObject(WHITE_BRUSH)));
+        }
 
         // mark the background as being erased
         rval = 1;
