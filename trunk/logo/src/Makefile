@@ -262,8 +262,8 @@ define FMSLOGO_template
 fmslogo-$(1)$$(EXEEXT) : $$(addprefix obj/$(1)/,$$(OBJECTS))
 	$(CXX) -o $$@ $$^ $(LDFLAGS) -L$(LIBDIRNAME) $(LIBS) $(EXTRALIBS)
 
-obj/$(1)/pch.h.gch : pch/pch.h
-	-mkdir $$(dir $$@)
+obj/$(1)/pch.h.gch : pch/pch.h *.h
+	-?mkdir $$(dir $$@)
 	$(CXX) -c -o $$@ -Iobj/$(1) $(CXXFLAGS) -DLOCALE=$1 $$<
 
 ifeq "$(TOOLKIT)" "GTK"
