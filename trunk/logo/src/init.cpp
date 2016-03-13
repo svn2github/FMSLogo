@@ -20,39 +20,42 @@
  *
  */
 
-#include <string.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <string.h>
 
-#include "localizednode.h"
-#include "eval.h"
-#include "paren.h"
-#include "intern.h"
-#include "logodata.h"
-#include "logomath.h"
-#include "wrksp.h"
-#include "coms.h"
-#include "lists.h"
-#include "activearea.h"
-#include "files.h"
-#include "graphics.h"
-#include "unix.h"
-#include "error.h"
-#include "mem.h"
-#include "parse.h"
-#include "print.h"
-#include "term.h"
-#include "logocore.h"
+   #include "localizednode.h"
+   #include "eval.h"
+   #include "paren.h"
+   #include "intern.h"
+   #include "logodata.h"
+   #include "logomath.h"
+   #include "wrksp.h"
+   #include "coms.h"
+   #include "lists.h"
+   #include "activearea.h"
+   #include "files.h"
+   #include "graphics.h"
+   #include "unix.h"
+   #include "error.h"
+   #include "mem.h"
+   #include "parse.h"
+   #include "print.h"
+   #include "term.h"
+   #include "logocore.h"
 
-#include "mmwind.h"
-#include "dllwind.h"
-#include "devwind.h"
-#include "logoeventqueue.h"
-#include "netwind.h"
-#include "graphwin.h"
-#include "dlgwind.h"
-#include "cursor.h"
-#include "debugheap.h"
+   #include "mmwind.h"
+   #include "dllwind.h"
+   #include "devwind.h"
+   #include "logoeventqueue.h"
+   #include "netwind.h"
+   #include "graphwin.h"
+   #include "dlgwind.h"
+   #include "cursor.h"
+   #include "debugheap.h"
 
-#include "localizedstrings.h"
+   #include "localizedstrings.h"
+#endif
 
 struct PRIMTYPE
 {

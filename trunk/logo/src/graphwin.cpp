@@ -18,76 +18,79 @@
  *
  */
 
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
-#include <algorithm>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <math.h>
+   #include <stdlib.h>
+   #include <string.h>
+   #include <algorithm>
 
-#ifdef WX_PURE
-typedef struct __BITMAP      * HBITMAP;
-typedef struct __LOGPALLETTE * PLOGPALETTE;
-typedef struct __WND         * HWND;
+   #ifdef WX_PURE
+      typedef struct __BITMAP      * HBITMAP;
+      typedef struct __LOGPALLETTE * PLOGPALETTE;
+      typedef struct __WND         * HWND;
 
-typedef int LONG;
+      typedef int LONG;
 
-struct RECT {
-    int left;
-    int top;
-    int right;
-    int bottom;
-};
+      struct RECT {
+          int left;
+          int top;
+          int right;
+          int bottom;
+      };
 
-#include <wx/gdicmn.h>
-#include "fmslogo.h"
-#include "screen.h"
-#include "mainframe.h"
+      #include <wx/gdicmn.h>
+      #include "fmslogo.h"
+      #include "screen.h"
+      #include "mainframe.h"
 
-#else
-#include <windows.h>
-#include <htmlhelp.h>
+   #else
+      #include <windows.h>
+      #include <htmlhelp.h>
 
-#ifdef max // MS compilers #define max in windows.h
-#undef max
+      #ifdef max // MS compilers #define max in windows.h
+         #undef max
+      #endif
+
+      #ifdef min // MS compilers #define min in windows.h
+         #undef min
+      #endif
+
+   #endif
+
+   #include "activearea.h"
+   #include "graphwin.h"
+   #include "mainwind.h"
+
+   #include "devwind.h"
+   #include "cursor.h"
+   #include "status.h"
+
+   #include "utils.h"
+   #include "stringprintednode.h"
+   #include "appendablelist.h"
+   #include "logomath.h"
+   #include "dib.h"
+   #include "logodata.h"
+   #include "vector.h"
+   #include "parse.h"
+   #include "error.h"
+   #include "fmslogo.h" // BitMapWidth, BitMapHeight
+   #include "messagebox.h" // ShowErrorMessage
+   #include "wrksp.h"
+   #include "lists.h"
+   #include "eval.h"
+   #include "init.h"
+   #include "coms.h"
+   #include "unix.h"
+   #include "const.h"
+   #include "threed.h"
+   #include "screenwindow.h"
+   #include "startup.h"
+   #include "debugheap.h"
+
+   #include "localizedstrings.h"
 #endif
-
-#ifdef min // MS compilers #define min in windows.h
-#undef min
-#endif
-
-#endif
-
-#include "activearea.h"
-#include "graphwin.h"
-#include "mainwind.h"
-
-#include "devwind.h"
-#include "cursor.h"
-#include "status.h"
-
-#include "utils.h"
-#include "stringprintednode.h"
-#include "appendablelist.h"
-#include "logomath.h"
-#include "dib.h"
-#include "logodata.h"
-#include "vector.h"
-#include "parse.h"
-#include "error.h"
-#include "fmslogo.h" // BitMapWidth, BitMapHeight
-#include "messagebox.h" // ShowErrorMessage
-#include "wrksp.h"
-#include "lists.h"
-#include "eval.h"
-#include "init.h"
-#include "coms.h"
-#include "unix.h"
-#include "const.h"
-#include "threed.h"
-#include "screenwindow.h"
-#include "startup.h"
-#include "debugheap.h"
-
-#include "localizedstrings.h"
 
 struct CUTMAP
 {

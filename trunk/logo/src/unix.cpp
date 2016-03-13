@@ -16,34 +16,37 @@
  *      You should have received a copy of the GNU General Public License
  *      along with this program; if not, write to the Free Software
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
  */
-#ifndef WX_PURE
-  #include <windows.h>
+
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #ifndef WX_PURE
+      #include <windows.h>
+    #endif
+
+    #include <stdio.h>
+    #include <string.h>
+    #include <errno.h>
+
+    #ifdef __GNUC__
+        #include <unistd.h>
+        #include <sys/stat.h>
+    #else
+        #include <direct.h>
+    #endif
+
+    #include "unix.h"
+    #include "init.h"
+    #include "logodata.h"
+    #include "parse.h"
+    #include "commander.h"
+    #include "stringprintednode.h"
+    #include "dynamicbuffer.h"
+    #include "appendablelist.h"
+    #include "sort.h"
+    #include "debugheap.h"
+    #include "localizedstrings.h"
 #endif
-
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
-
-#ifdef __GNUC__
-#include <unistd.h>
-#include <sys/stat.h>
-#else
-#include <direct.h>
-#endif
-
-#include "unix.h"
-#include "init.h"
-#include "logodata.h"
-#include "parse.h"
-#include "commander.h"
-#include "stringprintednode.h"
-#include "dynamicbuffer.h"
-#include "appendablelist.h"
-#include "sort.h"
-#include "debugheap.h"
-#include "localizedstrings.h"
 
 jmp_buf iblk_buf;
 

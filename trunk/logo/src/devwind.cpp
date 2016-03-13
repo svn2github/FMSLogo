@@ -19,32 +19,35 @@
 *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 *
 */
-#ifndef WX_PURE
-#include <windows.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #ifndef WX_PURE
+      #include <windows.h>
 
-#ifdef min // MS compilers #define min in windows.h
-#undef min
+      #ifdef min // MS compilers #define min in windows.h
+        #undef min
+      #endif
+   #endif
+
+   #include <string.h>
+   #include <algorithm>
+
+   #include "devwind.h"
+   #include "stringprintednode.h"
+   #include "argumentutils.h"
+   #include "logocore.h"
+   #include "graphics.h"
+   #include "graphwin.h"
+   #include "init.h"
+   #include "logodata.h"
+   #include "localizedstrings.h"
+   #include "lists.h"
+   #include "eval.h"
+   #include "error.h"
+   #include "screenwindow.h"
+   #include "messagebox.h"
+   #include "debugheap.h"
 #endif
-#endif
-
-#include <string.h>
-#include <algorithm>
-
-#include "devwind.h"
-#include "stringprintednode.h"
-#include "argumentutils.h"
-#include "logocore.h"
-#include "graphics.h"
-#include "graphwin.h"
-#include "init.h"
-#include "logodata.h"
-#include "localizedstrings.h"
-#include "lists.h"
-#include "eval.h"
-#include "error.h"
-#include "screenwindow.h"
-#include "messagebox.h"
-#include "debugheap.h"
 
 // global variables
 KEYBOARDCAPTURE KeyboardCapture = KEYBOARDCAPTURE_Off; // Flag to signal Keyboard is enabled

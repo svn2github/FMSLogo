@@ -48,11 +48,14 @@
 // is a great example of how to go about doing this.
 //-----------------------------------------------------------------------------
 
-#include "dib.h"
-#include "messagebox.h"
-#include "screenwindow.h"
-#include "localizedstrings.h"
-#include "debugheap.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "dib.h"
+   #include "messagebox.h"
+   #include "screenwindow.h"
+   #include "localizedstrings.h"
+   #include "debugheap.h"
+#endif
 
 extern LPSTR FindDIBBits(LPSTR lpbi);
 extern WORD DIBNumColors(LPSTR lpbi);

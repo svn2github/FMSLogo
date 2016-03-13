@@ -18,11 +18,13 @@
 *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 *
 */
-
-#include "cursor.h"
-#include "init.h"
-#include "logocore.h"
-#include "debugheap.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "cursor.h"
+   #include "init.h"
+   #include "logocore.h"
+   #include "debugheap.h"
+#endif
 
 #ifndef WX_PURE
 HCURSOR hCursorWait;               // handle for hourglass cursor

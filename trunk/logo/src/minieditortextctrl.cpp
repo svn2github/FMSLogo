@@ -1,9 +1,12 @@
-#include "minieditortextctrl.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "minieditortextctrl.h"
 
-#include <wx/event.h>
+   #include <wx/event.h>
 
-#include "stringadapter.h"
-#include "helputils.h" // for ContextHelp()
+   #include "stringadapter.h"
+   #include "helputils.h" // for ContextHelp()
+#endif
 
 // ----------------------------------------------------------------------------
 // CMiniEditorTextCtrl

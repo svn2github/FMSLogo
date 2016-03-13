@@ -20,33 +20,36 @@
  *
  */
 
-#include <stdlib.h>
-#include <string.h>
-#include <setjmp.h>
-#ifndef WX_PURE
-#include <windows.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <stdlib.h>
+   #include <string.h>
+   #include <setjmp.h>
+   #ifndef WX_PURE
+      #include <windows.h>
+   #endif
+
+   #include "files.h"
+   #include "fileswnd.h"
+   #include "logocore.h"
+   #include "init.h"
+   #include "parse.h"
+   #include "error.h"
+   #include "logomath.h"
+   #include "eval.h"
+   #include "coms.h"
+   #include "lists.h"
+   #include "wrksp.h"
+   #include "print.h"
+   #include "unix.h"
+   #include "graphics.h"
+   #include "startup.h"
+   #include "screenwindow.h"
+   #include "cursor.h"
+   #include "debugheap.h"
+
+   #include "localizedstrings.h"
 #endif
-
-#include "files.h"
-#include "fileswnd.h"
-#include "logocore.h"
-#include "init.h"
-#include "parse.h"
-#include "error.h"
-#include "logomath.h"
-#include "eval.h"
-#include "coms.h"
-#include "lists.h"
-#include "wrksp.h"
-#include "print.h"
-#include "unix.h"
-#include "graphics.h"
-#include "startup.h"
-#include "screenwindow.h"
-#include "cursor.h"
-#include "debugheap.h"
-
-#include "localizedstrings.h"
 
 class CFileListNode
 {

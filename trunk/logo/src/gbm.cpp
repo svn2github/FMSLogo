@@ -4,27 +4,31 @@ gbm.c - Generalised Bitmap Module
 
 */
 
-/*...sincludes:0:*/
-#include <stdio.h>
-#include <ctype.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include <memory.h>
-#ifdef WX_PURE
-#include <unistd.h>
-#else
-#include <io.h>
-#endif
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include "gbm.h"
-#include "gbmhelp.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   /*...sincludes:0:*/
+   #include <stdio.h>
+   #include <ctype.h>
+   #include <stddef.h>
+   #include <stdlib.h>
+   #include <string.h>
+   #include <memory.h>
+   #ifdef WX_PURE
+      #include <unistd.h>
+   #else
+      #include <io.h>
+   #endif
+   #include <fcntl.h>
+   #include <sys/types.h>
+   #include <sys/stat.h>
+   #include "gbm.h"
+   #include "gbmhelp.h"
 
-#include "gbmbmp.h"
-#include "gbmgif.h"
-#include "debugheap.h"
+   #include "gbmbmp.h"
+   #include "gbmgif.h"
+   #include "debugheap.h"
+#endif
+
 
 struct FT
 {

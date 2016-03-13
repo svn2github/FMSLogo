@@ -8,17 +8,20 @@ There are horrific file structure alignment considerations hence each
 word,dword is read individually.
 */
 
-/*...sincludes:0:*/
-#include <stdio.h>
-#include <ctype.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include <memory.h>
-#include <malloc.h>
-#include "gbm.h"
-#include "gbmhelp.h"
-#include "debugheap.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   /*...sincludes:0:*/
+   #include <stdio.h>
+   #include <ctype.h>
+   #include <stddef.h>
+   #include <stdlib.h>
+   #include <string.h>
+   #include <memory.h>
+   #include <malloc.h>
+   #include "gbm.h"
+   #include "gbmhelp.h"
+   #include "debugheap.h"
+#endif
 
 #ifndef min
 #define min(a,b)        (((a)<(b))?(a):(b))

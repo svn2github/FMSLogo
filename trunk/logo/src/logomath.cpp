@@ -20,27 +20,30 @@
  *
  */
 
-#include <setjmp.h>
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
-#include <signal.h>
-#include <float.h>
-#include <errno.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <setjmp.h>
+   #include <math.h>
+   #include <stdlib.h>
+   #include <string.h>
+   #include <signal.h>
+   #include <float.h>
+   #include <errno.h>
 
-#ifdef __GNUC__
-#define _isnan(D) isnan(D)
+   #include "logodata.h"
+   #include "init.h"
+   #include "lists.h"
+   #include "eval.h"
+   #include "graphics.h"
+   #include "error.h"
+   #include "ibmterm.h"
+   #include "const.h"
+   #include "debugheap.h"
 #endif
 
-#include "logodata.h"
-#include "init.h"
-#include "lists.h"
-#include "eval.h"
-#include "graphics.h"
-#include "error.h"
-#include "ibmterm.h"
-#include "const.h"
-#include "debugheap.h"
+#ifdef __GNUC__
+  #define _isnan(D) isnan(D)
+#endif
 
 const char MATHFUNC_Sum        = '+';
 const char MATHFUNC_Difference = '-';

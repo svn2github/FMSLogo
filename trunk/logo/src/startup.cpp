@@ -18,25 +18,28 @@
  *
  */
 
-#ifndef WX_PURE
-#include <windows.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #ifndef WX_PURE
+        #include <windows.h>
 
-#ifdef max // MS compilers #define max in windows.h
-#undef max
+        #ifdef max // MS compilers #define max in windows.h
+            #undef max
+        #endif
+    #endif
+
+    #include <algorithm>
+    #include <string.h>
+
+    #include "startup.h"
+    #include "activearea.h"
+    #include "graphwin.h"
+    #include "utils.h"
+    #include "fmslogo.h"
+    #include "debugheap.h"
+
+    #include "localizedstrings.h"
 #endif
-#endif
-
-#include <algorithm>
-#include <string.h>
-
-#include "startup.h"
-#include "activearea.h"
-#include "graphwin.h"
-#include "utils.h"
-#include "fmslogo.h"
-#include "debugheap.h"
-
-#include "localizedstrings.h"
 
 Color dfld;                        // Current flood color
 Color dscn;                        // Current screen color

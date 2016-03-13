@@ -1,7 +1,10 @@
-#include "debugutils.h"
-#include "screenwindow.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "debugutils.h"
+   #include "screenwindow.h"
 
-#include <wx/event.h>
+   #include <wx/event.h>
+#endif
 
 const char *
 KeyCodeToString(

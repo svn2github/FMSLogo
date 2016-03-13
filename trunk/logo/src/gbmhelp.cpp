@@ -4,23 +4,28 @@ gbmhelp.c - Helpers for GBM file I/O stuff
 
 */
 
-#include <stdio.h>
-#include <ctype.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include <memory.h>
-#include <malloc.h>
-#ifdef __GNUC__
-#include <unistd.h>
-#else
-#include <io.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <stdio.h>
+   #include <ctype.h>
+   #include <stddef.h>
+   #include <stdlib.h>
+   #include <string.h>
+   #include <memory.h>
+   #include <malloc.h>
+   #ifdef __GNUC__
+      #include <unistd.h>
+   #else
+      #include <io.h>
+   #endif
+   #include <fcntl.h>
+   #include <sys/types.h>
+   #include <sys/stat.h>
+   #include "gbm.h"
+   #include "gbmhelp.h"
+   #include "debugheap.h"
 #endif
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include "gbm.h"
-#include "debugheap.h"
+
 
 BOOLEAN gbm_same(const char *s1, const char *s2, int n)
 {
@@ -80,15 +85,6 @@ int gbm_file_write(int fd, const void *buf, int len)
 {
     return write(fd, buf, len);
 }
-
-#define	AHEAD_BUF 0x4000
-
-typedef struct
-{
-    byte buf[AHEAD_BUF];
-    int inx, cnt;
-    int fd;
-} AHEAD;
 
 AHEAD *gbm_create_ahead(int fd)
 {

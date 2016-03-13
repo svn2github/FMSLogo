@@ -1,38 +1,41 @@
-#ifdef __WXMSW__
-#  include <windows.h>  // for LOGFONT
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+  #ifdef __WXMSW__
+  #  include <windows.h>  // for LOGFONT
+  #endif
+
+  #include "commander.h"
+
+  #include <wx/msgdlg.h>
+  #include <wx/sizer.h>
+  #include <wx/defs.h>
+  #include <wx/fontdlg.h>
+  #include <wx/richtext/richtextctrl.h>
+
+  #include "fmslogo.h"
+  #include "mainframe.h"
+  #include "statusdialog.h"
+  #include "workspaceeditor.h"
+  #include "localizedstrings.h"
+  #include "utils.h"
+  #include "logocore.h"
+  #include "logodata.h"
+  #include "commanderbutton.h"
+  #include "commandertogglebutton.h"
+  #include "commanderinput.h"
+  #include "commanderhistory.h"
+  #include "dynamicbuffer.h"
+  #include "parse.h"
+  #include "error.h"
+  #include "eval.h"
+  #include "graphics.h"
+  #include "graphwin.h"
+  #include "status.h"
+  #include "fontutils.h"
+  #include "mmwind.h"
+  #include "print.h" // for MESSAGETYPE
+  #include "stringadapter.h"
 #endif
-
-#include "commander.h"
-
-#include <wx/msgdlg.h>
-#include <wx/sizer.h>
-#include <wx/defs.h>
-#include <wx/fontdlg.h>
-#include <wx/richtext/richtextctrl.h>
-
-#include "fmslogo.h"
-#include "mainframe.h"
-#include "statusdialog.h"
-#include "workspaceeditor.h"
-#include "localizedstrings.h"
-#include "utils.h"
-#include "logocore.h"
-#include "logodata.h"
-#include "commanderbutton.h"
-#include "commandertogglebutton.h"
-#include "commanderinput.h"
-#include "commanderhistory.h"
-#include "dynamicbuffer.h"
-#include "parse.h"
-#include "error.h"
-#include "eval.h"
-#include "graphics.h"
-#include "graphwin.h"
-#include "status.h"
-#include "fontutils.h"
-#include "mmwind.h"
-#include "print.h" // for MESSAGETYPE
-#include "stringadapter.h"
 
 bool g_IsOkayToUseCommanderWindow = true;
 

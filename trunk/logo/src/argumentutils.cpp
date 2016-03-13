@@ -15,13 +15,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
  */
-#include "argumentutils.h"
 
-#include "logocore.h"
-#include "print.h"
-#include "debugheap.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+  #include "argumentutils.h"
+
+  #include "logocore.h"
+  #include "print.h"
+  #include "debugheap.h"
+#endif
 
 void cnv_strnode_string(char *textbuf, NODE *arg)
 {

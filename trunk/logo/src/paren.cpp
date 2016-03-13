@@ -20,16 +20,19 @@
  *
  */
 
-#include "paren.h"
-#include "logodata.h"
-#include "eval.h"
-#include "init.h"
-#include "error.h"
-#include "lists.h"
-#include "logomath.h"
-#include "appendablelist.h"
-#include "logocore.h"
-#include "debugheap.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "paren.h"
+    #include "logodata.h"
+    #include "eval.h"
+    #include "init.h"
+    #include "error.h"
+    #include "lists.h"
+    #include "logomath.h"
+    #include "appendablelist.h"
+    #include "logocore.h"
+    #include "debugheap.h"
+#endif
 
 NODE *the_generation;
 bool tree_dk_how;

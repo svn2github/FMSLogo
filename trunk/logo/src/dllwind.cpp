@@ -18,19 +18,22 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <windows.h>
-#include <windowsx.h> // for GlobalFreePtr()
-#include <assert.h>
-#include <stdio.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <windows.h>
+   #include <windowsx.h> // for GlobalFreePtr()
+   #include <assert.h>
+   #include <stdio.h>
 
-#include "logocore.h"
-#include "stringprintednode.h"
-#include "eval.h"
-#include "init.h"
-#include "error.h"
-#include "logodata.h"
-#include "parse.h"
-#include "debugheap.h"
+   #include "logocore.h"
+   #include "stringprintednode.h"
+   #include "eval.h"
+   #include "init.h"
+   #include "error.h"
+   #include "logodata.h"
+   #include "parse.h"
+   #include "debugheap.h"
+#endif
 
 #ifdef __BORLANDC__
 

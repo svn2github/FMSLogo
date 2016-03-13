@@ -17,17 +17,19 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
-#ifndef WX_PURE
-#include <windows.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #ifndef WX_PURE
+      #include <windows.h>
+   #endif
+
+   #include "messagebox.h"
+   #include "screenwindow.h"
+   #include "error.h"
+   #include "debugheap.h"
+
+   #include "localizedstrings.h"
 #endif
-
-#include "messagebox.h"
-#include "screenwindow.h"
-#include "error.h"
-#include "debugheap.h"
-
-#include "localizedstrings.h"
-
 
 void 
 ShowMessage(

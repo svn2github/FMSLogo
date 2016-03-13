@@ -2,10 +2,8 @@
 // headers
 // ----------------------------------------------------------------------------
 
-// For compilers that support precompilation, includes "wx/wx.h".
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
     #include <wx/log.h>
 
     #include <wx/app.h>
@@ -25,61 +23,62 @@
 
     #include <wx/fontutil.h> // for wxNativeFontInfo
     #include <wx/msgdlg.h>   // for wxMessageBox
+
+    #include <algorithm>
+
+    #ifndef WX_PURE
+        #include <shlobj.h>
+    #endif
+
+    #ifdef WX_PURE
+        #define MAX_PATH (260)
+    #endif
+
+    #include "logorc.h" // for WM_*
+    #include "guiutils.h"
+    #include "commander.h"
+    #include "activearea.h"
+    #include "setactivearea.h"
+    #include "aboutfmslogo.h"
+    #include "aboutmultiplesclerosis.h"
+    #include "savebeforeexitdialog.h"
+    #include "logocore.h"
+    #include "localizedstrings.h"
+    #include "fmslogo.h"
+    #include "mainframe.h"
+    #include "setpensize.h"
+    #include "utils.h"
+    #include "statusdialog.h"
+    #include "screen.h"
+    #include "selectstartupinstruction.h"
+    #include "editproceduredialog.h"
+    #include "eraseproceduredialog.h"
+    #include "commanderhistory.h"
+    #include "commanderinput.h"
+    #include "minieditor.h"
+    #include "workspaceeditor.h"
+    #include "logodata.h"
+    #include "setcolor.h"
+    #include "graphwin.h"
+    #include "init.h"
+    #include "error.h"          // for err_logo
+    #include "messagebox.h"     // for ShowErrorMessage
+    #include "screenwindow.h"   // for TraceOutput
+    #include "mainwind.h"
+    #include "logoeventqueue.h"
+    #include "wrksp.h"
+    #include "eval.h"
+    #include "fileswnd.h"
+    #include "graphwin.h"
+    #include "mmwind.h" // for uninitialize_timers()
+    #include "startup.h"
+    #include "fontutils.h"
+    #include "netwind.h"
+    #include "questionbox.h"
+    #include "stringadapter.h"
+    #include "debugheap.h"
 #endif
 
-#include <algorithm>
-
-#ifndef WX_PURE
-#include <shlobj.h>
-#endif
-
-#ifdef WX_PURE
-#define MAX_PATH (260)
-#endif
-
-#include "logorc.h" // for WM_*
-#include "guiutils.h"
-#include "commander.h"
-#include "activearea.h"
-#include "setactivearea.h"
-#include "aboutfmslogo.h"
-#include "aboutmultiplesclerosis.h"
-#include "savebeforeexitdialog.h"
-#include "logocore.h"
-#include "localizedstrings.h"
-#include "fmslogo.h"
-#include "mainframe.h"
-#include "setpensize.h"
-#include "utils.h"
-#include "statusdialog.h"
-#include "screen.h"
-#include "selectstartupinstruction.h"
-#include "editproceduredialog.h"
-#include "eraseproceduredialog.h"
-#include "commanderhistory.h"
-#include "commanderinput.h"
-#include "minieditor.h"
-#include "workspaceeditor.h"
-#include "logodata.h"
-#include "setcolor.h"
-#include "graphwin.h"
-#include "init.h"
-#include "error.h"          // for err_logo
-#include "messagebox.h"     // for ShowErrorMessage
-#include "screenwindow.h"   // for TraceOutput
-#include "mainwind.h"
-#include "logoeventqueue.h"
-#include "wrksp.h"
-#include "eval.h"
-#include "fileswnd.h"
-#include "graphwin.h"
-#include "mmwind.h" // for uninitialize_timers()
-#include "startup.h"
-#include "fontutils.h"
-#include "netwind.h"
-#include "questionbox.h"
-#include "stringadapter.h"
-#include "debugheap.h"
 
 // ----------------------------------------------------------------------------
 // CMainFrame::CLogoPicturePrintout

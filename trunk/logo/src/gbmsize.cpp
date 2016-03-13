@@ -1,15 +1,17 @@
 // gbmsize.cpp - Functions for converting BMP to GIF and GIF to BMP
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <stdio.h>
+   #include <stdlib.h>
+   #include <fcntl.h>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-
-#ifdef WX_PURE
-#define O_BINARY 0
+   #include "gbm.h"
+   #include "debugheap.h"
 #endif
 
-#include "gbm.h"
-#include "debugheap.h"
+#ifdef WX_PURE
+   #define O_BINARY 0
+#endif
 
 const int FILETYPE_BMP = 0;
 const int FILETYPE_GIF = 1;

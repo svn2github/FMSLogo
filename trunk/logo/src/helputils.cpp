@@ -1,10 +1,13 @@
-#include "helputils.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "helputils.h"
 
-#include <wx/string.h>
+   #include <wx/string.h>
 
-#include "logocore.h" // for IsSpace
-#include "graphwin.h" // for do_help
-#include "stringadapter.h"
+   #include "logocore.h" // for IsSpace
+   #include "graphwin.h" // for do_help
+   #include "stringadapter.h"
+#endif
 
 
 // Open the help to the topic specified in the first word of SelectedText.

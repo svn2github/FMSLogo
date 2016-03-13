@@ -15,14 +15,17 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 
-#include "dynamicbuffer.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "dynamicbuffer.h"
 
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h>
-#include <algorithm>
+   #include <assert.h>
+   #include <stdlib.h>
+   #include <string.h>
+   #include <algorithm>
 
-#include "debugheap.h"
+   #include "debugheap.h"
+#endif
 
 const int DEFAULT_BUFFER_SIZE = 256;
 

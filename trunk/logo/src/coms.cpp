@@ -1,41 +1,43 @@
 /*
-*      coms.cpp     program execution control module      dvb
-*
-*       Copyright (C) 1995 by the Regents of the University of California
-*       Copyright (C) 1995 by George Mills
-*
-*      This program is free software; you can redistribute it and/or modify
-*      it under the terms of the GNU General Public License as published by
-*      the Free Software Foundation; either version 2 of the License, or
-*      (at your option) any later version.
-*
-*      This program is distributed in the hope that it will be useful,
-*      but WITHOUT ANY WARRANTY; without even the implied warranty of
-*      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*      GNU General Public License for more details.
-*
-*      You should have received a copy of the GNU General Public License
-*      along with this program; if not, write to the Free Software
-*      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-*
-*/
-#include <math.h>
-#include <time.h>
-#include <string.h>
+ * coms.cpp     program execution control module      dvb
+ *
+ *  Copyright (C) 1995 by the Regents of the University of California
+ *  Copyright (C) 1995 by George Mills
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+  #include <math.h>
+  #include <time.h>
+  #include <string.h>
 
-#include "coms.h"
-#include "logocore.h"
-#include "logodata.h"
-#include "eval.h"
-#include "init.h"
-#include "error.h"
-#include "logomath.h"
-#include "parse.h"
-#include "lists.h"
-#include "graphwin.h"
-#include "graphics.h"
-#include "stringprintednode.h"
-#include "debugheap.h"
+  #include "coms.h"
+  #include "logocore.h"
+  #include "logodata.h"
+  #include "eval.h"
+  #include "init.h"
+  #include "error.h"
+  #include "logomath.h"
+  #include "parse.h"
+  #include "lists.h"
+  #include "graphwin.h"
+  #include "graphics.h"
+  #include "stringprintednode.h"
+  #include "debugheap.h"
+#endif
 
 // ift_iff_flag: flag for if TEST has been called within the scope
 // -1 : TEST has not been called.

@@ -1,26 +1,24 @@
-#include "screen.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "screen.h"
 
-// For compilers that support precompilation, includes "wx/wx.h".
-#include "wx/wxprec.h"
+    #include <algorithm>
 
-#include <algorithm>
-
-#ifndef WX_PRECOMP
     #include <wx/event.h>
     #include <wx/dc.h>
     #include <wx/dcmemory.h>
-#endif
 
-#include "devwind.h"
-#include "logoeventqueue.h"
-#include "fmslogo.h"
-#include "commander.h"
-#include "commanderinput.h"
-#include "mainframe.h"
-#include "graphwin.h"
-#include "screenwindow.h"
-#include "startup.h"
-#include "logocore.h"
+    #include "devwind.h"
+    #include "logoeventqueue.h"
+    #include "fmslogo.h"
+    #include "commander.h"
+    #include "commanderinput.h"
+    #include "mainframe.h"
+    #include "graphwin.h"
+    #include "screenwindow.h"
+    #include "startup.h"
+    #include "logocore.h"
+#endif
 
 // ----------------------------------------------------------------------------
 // CScreen

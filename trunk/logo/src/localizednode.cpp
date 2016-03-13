@@ -20,15 +20,18 @@
  *
  */
 
-#include <string.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <string.h>
 
-#include "localizednode.h"
-#include "logocore.h"
-#include "intern.h"
-#include "logodata.h"
-#include "logomath.h"
-#include "init.h"
-#include "debugheap.h"
+   #include "localizednode.h"
+   #include "logocore.h"
+   #include "intern.h"
+   #include "logodata.h"
+   #include "logomath.h"
+   #include "init.h"
+   #include "debugheap.h"
+#endif
 
 CLocalizedNode::CLocalizedNode() :
     m_Primary(NIL),

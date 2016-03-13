@@ -1,8 +1,11 @@
-#include "editproceduredialog.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "editproceduredialog.h"
 
-#include "localizedstrings.h"
-#include "wrksp.h"  // for ledit
-#include "eval.h"   // for process_special_conditions
+   #include "localizedstrings.h"
+   #include "wrksp.h"  // for ledit
+   #include "eval.h"   // for process_special_conditions
+#endif
 
 // ----------------------------------------------------------------------------
 // CEditProcedureDialog

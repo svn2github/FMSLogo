@@ -1,17 +1,20 @@
-#include "setpensize.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "setpensize.h"
 
-#include <wx/button.h>
-#include <wx/gdicmn.h>
-#include <wx/sizer.h>
-#include <wx/slider.h>
-#include <wx/stattext.h>
-#include <wx/dcclient.h>
+    #include <wx/button.h>
+    #include <wx/gdicmn.h>
+    #include <wx/sizer.h>
+    #include <wx/slider.h>
+    #include <wx/stattext.h>
+    #include <wx/dcclient.h>
 
-#include "logodata.h"
-#include "commander.h"
-#include "logocore.h"
-#include "stringadapter.h"
-#include "localizedstrings.h"
+    #include "logodata.h"
+    #include "commander.h"
+    #include "logocore.h"
+    #include "stringadapter.h"
+    #include "localizedstrings.h"
+#endif
 
 // ----------------------------------------------------------------------------
 // CSetPenSize::CPenSizeWindow

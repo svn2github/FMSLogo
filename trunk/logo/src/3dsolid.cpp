@@ -7,26 +7,29 @@
 // object. Implements the BSP algorithm described in Chapter 17 in order
 // to display the surfaces of objects correctly. Compile with VECTOR.CPP,
 // 3DSOLID.RC, and THREED.CPP.
-#include "3dsolid.h"
+#include "pch.h"
 
-#include <stdio.h>
+#ifndef USE_PRECOMPILED_HEADER
+   #include "3dsolid.h"
+   #include <stdio.h>
 
-#ifdef WX_PURE
-#define GetRValue(rgb) (((rgb) >> 0)  & 0xFF)
-#define GetGValue(rgb) (((rgb) >> 8)  & 0xFF)
-#define GetBValue(rgb) (((rgb) >> 16) & 0xFF)
-#define RGB(r, g, b) (((r) & 0xFF) | (((g) & 0xFF) << 8) | (((b) & 0xFF) << 16))
+   #ifdef WX_PURE
+     #define GetRValue(rgb) (((rgb) >> 0)  & 0xFF)
+     #define GetGValue(rgb) (((rgb) >> 8)  & 0xFF)
+     #define GetBValue(rgb) (((rgb) >> 16) & 0xFF)
+     #define RGB(r, g, b) (((r) & 0xFF) | (((g) & 0xFF) << 8) | (((b) & 0xFF) << 16))
+   #endif
+
+  #include "status.h"
+  #include "graphics.h"
+  #include "graphwin.h"
+  #include "ibmterm.h"
+  #include "unix.h"
+  #include "screenwindow.h"
+  #include "debugheap.h"
+
+  #include "localizedstrings.h"
 #endif
-
-#include "status.h"
-#include "graphics.h"
-#include "graphwin.h"
-#include "ibmterm.h"
-#include "unix.h"
-#include "screenwindow.h"
-#include "debugheap.h"
-
-#include "localizedstrings.h"
 
 const double epsilon2=0.001;
 // const double epsilon3=0.001;

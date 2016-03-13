@@ -18,15 +18,18 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "ibmterm.h"
-#include "error.h"
-#include "wrksp.h"
-#include "logodata.h"
-#include "graphwin.h"
-#include "logoeventqueue.h"
-#include "debugheap.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "ibmterm.h"
+   #include "error.h"
+   #include "wrksp.h"
+   #include "logodata.h"
+   #include "graphwin.h"
+   #include "logoeventqueue.h"
+   #include "debugheap.h"
 
-#include "localizedstrings.h"
+   #include "localizedstrings.h"
+#endif
 
 /************************************************************/
 

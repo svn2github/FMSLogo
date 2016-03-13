@@ -10,7 +10,7 @@ RC  = windres --preprocessor=$(CXX) --preprocessor-arg=-E --preprocessor-arg=-xc
 wx_top_srcdir   = /cygdrive/e/wxMSW-2.8.12-src
 wx_top_builddir = /cygdrive/e/wxMSW-2.8.12
 
-INCLUDES   = -I. -I$(wx_top_srcdir)/include -I$(wx_top_srcdir)/contrib/include -I../src -I"C:\Program Files\HTML Help Workshop\include"
+INCLUDES   = -I. -I$(wx_top_srcdir)/include -I$(wx_top_srcdir)/contrib/include -I../src -I../src/pch -I"C:\Program Files\HTML Help Workshop\include"
 DEFINES    = FMSLOGO_SCREENSAVER
 LIBDIRNAME = $(wx_top_builddir)/lib
 

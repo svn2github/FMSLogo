@@ -2,12 +2,15 @@
 gbmgif.cpp - Graphics Interchange Format support
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "gbm.h"
-#include "gbmhelp.h"
-#include "debugheap.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <stdio.h>
+   #include <stdlib.h>
+   #include <string.h>
+   #include "gbm.h"
+   #include "gbmhelp.h"
+   #include "debugheap.h"
+#endif
 
 
 #define low_byte(w)     ((byte)  (          (w)&0x00ffU)    )

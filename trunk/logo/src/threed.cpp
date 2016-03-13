@@ -16,24 +16,27 @@
  *      You should have received a copy of the GNU General Public License
  *      along with this program; if not, write to the Free Software
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
  */
-#include "threed.h"
 
-#include <math.h>
-#include <algorithm>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "threed.h"
 
-#include "graphics.h"
-#include "graphwin.h"
-#include "const.h"
-#include "debugheap.h"
+    #include <math.h>
+    #include <algorithm>
 
-#ifdef max // MS compilers #define max in windows.h
-#undef max
-#endif
+    #include "graphics.h"
+    #include "graphwin.h"
+    #include "const.h"
+    #include "debugheap.h"
 
-#ifdef min // MS compilers #define min in windows.h
-#undef min
+    #ifdef max // MS compilers #define max in windows.h
+        #undef max
+    #endif
+
+    #ifdef min // MS compilers #define min in windows.h
+        #undef min
+    #endif
 #endif
 
 TThreeDSolid ThreeD;

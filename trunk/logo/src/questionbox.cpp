@@ -1,14 +1,17 @@
-#include "questionbox.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "questionbox.h"
 
-#include <algorithm>
+    #include <algorithm>
 
-#include <wx/sizer.h>
-#include <wx/stattext.h>
-#include <wx/button.h>
-#include <wx/textctrl.h>
+    #include <wx/sizer.h>
+    #include <wx/stattext.h>
+    #include <wx/button.h>
+    #include <wx/textctrl.h>
 
-#include "stringadapter.h"
-#include "localizedstrings.h"
+    #include "stringadapter.h"
+    #include "localizedstrings.h"
+#endif
 
 // ----------------------------------------------------------------------------
 // CQuestionBox

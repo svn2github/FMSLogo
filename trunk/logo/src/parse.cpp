@@ -20,32 +20,34 @@
  *
  */
 
-#include <stdio.h>
-#include <string.h>
-#include <setjmp.h>
-#include <algorithm>
-using namespace std;
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include <stdio.h>
+    #include <string.h>
+    #include <setjmp.h>
+    #include <algorithm>
 
-#include "parse.h"
-#include "argumentutils.h"
-#include "fmslogo.h"
-#include "logocore.h"
-#include "dynamicbuffer.h"
-#include "error.h"
-#include "init.h"
-#include "ibmterm.h"
-#include "unix.h"
-#include "logodata.h"
-#include "lists.h"
-#include "eval.h"
-#include "intern.h"
-#include "logomath.h"
-#include "appendablelist.h"
-#include "stringprintednode.h"
-#include "graphics.h"
-#include "screenwindow.h"
-#include "localizedstrings.h"
-#include "debugheap.h"
+    #include "parse.h"
+    #include "argumentutils.h"
+    #include "fmslogo.h"
+    #include "logocore.h"
+    #include "dynamicbuffer.h"
+    #include "error.h"
+    #include "init.h"
+    #include "ibmterm.h"
+    #include "unix.h"
+    #include "logodata.h"
+    #include "lists.h"
+    #include "eval.h"
+    #include "intern.h"
+    #include "logomath.h"
+    #include "appendablelist.h"
+    #include "stringprintednode.h"
+    #include "graphics.h"
+    #include "screenwindow.h"
+    #include "localizedstrings.h"
+    #include "debugheap.h"
+#endif
 
 FILE *loadstream = stdin;
 FILE *dribblestream = NULL;
@@ -188,7 +190,7 @@ void CStringNodeBuffer::GrowBy(size_t ExtraLength)
         // long words takes a *very* long time because we repeatedly
         // reallocate the buffer to be one byte larger.
         size_t usedPortion = m_StringLimit - m_Buffer;
-        size_t newsize = max(m_BufferLength * 2, requiredLength);
+        size_t newsize = std::max(m_BufferLength * 2, requiredLength);
 
         m_Buffer       = (char *) realloc(m_Buffer, newsize);
         m_StringLimit  = m_Buffer + usedPortion;

@@ -1,14 +1,17 @@
-#include "selectbox.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "selectbox.h"
 
-#include <wx/listbox.h>
-#include <wx/textctrl.h>
-#include <wx/sizer.h>
-#include <wx/button.h>
+    #include <wx/listbox.h>
+    #include <wx/textctrl.h>
+    #include <wx/sizer.h>
+    #include <wx/button.h>
 
-#include "guiutils.h"
-#include "localizedstrings.h"
-#include "stringadapter.h" // for WXSTRING
-#include "logocore.h"      // for ARRAYSIZE
+    #include "guiutils.h"
+    #include "localizedstrings.h"
+    #include "stringadapter.h" // for WXSTRING
+    #include "logocore.h"      // for ARRAYSIZE
+#endif
 
 // Control IDs
 enum

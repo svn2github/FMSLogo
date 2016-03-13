@@ -20,28 +20,32 @@
 *
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <setjmp.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <stdio.h>
+   #include <stdlib.h>
+   #include <string.h>
+   #include <setjmp.h>
 
-#include "error.h"
-#include "logocore.h"
-#include "print.h"
-#include "eval.h"
-#include "localizedstrings.h"
-#include "coms.h"
-#include "unix.h"
-#include "mem.h"
-#include "wrksp.h"
-#include "graphwin.h" // for MyMessageScan
-#include "init.h"
-#include "parse.h"
-#include "logomath.h"
-#include "ibmterm.h"
-#include "logoeventqueue.h"
-#include "mmwind.h"
-#include "debugheap.h"
+   #include "error.h"
+   #include "logocore.h"
+   #include "print.h"
+   #include "eval.h"
+   #include "localizedstrings.h"
+   #include "coms.h"
+   #include "unix.h"
+   #include "mem.h"
+   #include "wrksp.h"
+   #include "graphwin.h" // for MyMessageScan
+   #include "init.h"
+   #include "parse.h"
+   #include "logomath.h"
+   #include "ibmterm.h"
+   #include "logoeventqueue.h"
+   #include "mmwind.h"
+   #include "debugheap.h"
+#endif
+
 
 NODE *    throw_node = NIL;
 

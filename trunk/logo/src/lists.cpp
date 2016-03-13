@@ -19,19 +19,22 @@
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <math.h>
-#include <stdio.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <math.h>
+   #include <stdio.h>
 
-#include "logodata.h"
-#include "init.h"
-#include "eval.h"
-#include "error.h"
-#include "ibmterm.h"
-#include "logomath.h"
-#include "lists.h"
-#include "appendablelist.h"
-#include "graphics.h"
-#include "debugheap.h"
+   #include "logodata.h"
+   #include "init.h"
+   #include "eval.h"
+   #include "error.h"
+   #include "ibmterm.h"
+   #include "logomath.h"
+   #include "lists.h"
+   #include "appendablelist.h"
+   #include "graphics.h"
+   #include "debugheap.h"
+#endif
 
 static
 NODE *bfable_arg(NODE *args)

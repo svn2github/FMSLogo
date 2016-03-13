@@ -1,16 +1,19 @@
-#include "commanderhistory.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+  #include "commanderhistory.h"
 
-#include <wx/settings.h>
-#include <wx/button.h>
-#include <wx/menu.h>
+  #include <wx/settings.h>
+  #include <wx/button.h>
+  #include <wx/menu.h>
 
-#include "commander.h"
-#include "commanderinput.h"
-#include "helputils.h" // for ContextHelp()
-#include "guiutils.h"  // for FillMenu()
-#include "logocore.h"  // for ARRAYSIZE
+  #include "commander.h"
+  #include "commanderinput.h"
+  #include "helputils.h" // for ContextHelp()
+  #include "guiutils.h"  // for FillMenu()
+  #include "logocore.h"  // for ARRAYSIZE
 
-#include "localizedstrings.h"
+  #include "localizedstrings.h"
+#endif
 
 // Menu IDs
 enum

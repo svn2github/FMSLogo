@@ -19,34 +19,38 @@
 *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 *
 */
-#include <stdio.h>
-#include <setjmp.h>
-#include <stdlib.h> // abort()
-#include <string.h>
 
-#include "eval.h"
-#include "fmslogo.h"
-#include "init.h"
-#include "files.h"
-#include "graphwin.h"
-#include "logocore.h"
-#include "logodata.h"
-#include "mem.h"
-#include "error.h"
-#include "print.h"
-#include "logomath.h"
-#include "coms.h"
-#include "paren.h"
-#include "status.h"
-#include "ibmterm.h"
-#include "localizedstrings.h"
-#include "wrksp.h"
-#include "parse.h"
-#include "unix.h"
-#include "intern.h"
-#include "lists.h"
-#include "startup.h"
-#include "debugheap.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <stdio.h>
+   #include <setjmp.h>
+   #include <stdlib.h> // abort()
+   #include <string.h>
+
+   #include "eval.h"
+   #include "fmslogo.h"
+   #include "init.h"
+   #include "files.h"
+   #include "graphwin.h"
+   #include "logocore.h"
+   #include "logodata.h"
+   #include "mem.h"
+   #include "error.h"
+   #include "print.h"
+   #include "logomath.h"
+   #include "coms.h"
+   #include "paren.h"
+   #include "status.h"
+   #include "ibmterm.h"
+   #include "localizedstrings.h"
+   #include "wrksp.h"
+   #include "parse.h"
+   #include "unix.h"
+   #include "intern.h"
+   #include "lists.h"
+   #include "startup.h"
+   #include "debugheap.h"
+#endif
 
 inline
 bool

@@ -15,16 +15,19 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#include "activearea.h"
-#include "fmslogo.h"
-#include "logocore.h"
-#include "graphics.h"
-#include "eval.h"
-#include "error.h"
-#include "utils.h"
-#include "logodata.h"
-#include "init.h"
-#include "debugheap.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "activearea.h"
+   #include "fmslogo.h"
+   #include "logocore.h"
+   #include "graphics.h"
+   #include "eval.h"
+   #include "error.h"
+   #include "utils.h"
+   #include "logodata.h"
+   #include "init.h"
+   #include "debugheap.h"
+#endif
 
 // Active area dimensions
 int g_PrinterAreaXLow;

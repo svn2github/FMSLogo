@@ -1,8 +1,11 @@
-#include "eraseproceduredialog.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "eraseproceduredialog.h"
 
-#include "localizedstrings.h"
-#include "wrksp.h"  // for lerase
-#include "eval.h"   // for process_special_conditions
+   #include "localizedstrings.h"
+   #include "wrksp.h"  // for lerase
+   #include "eval.h"   // for process_special_conditions
+#endif
 
 // ----------------------------------------------------------------------------
 // CEraseProcedureDialog

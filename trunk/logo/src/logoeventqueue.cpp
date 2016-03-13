@@ -15,20 +15,23 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
  */
-#include <string.h>
-#include <stdlib.h>
 
-#include "logoeventqueue.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <string.h>
+   #include <stdlib.h>
 
-#include "logodata.h"
-#include "eval.h"
-#include "wrksp.h"
-#include "init.h"
-#include "netwind.h"
-#include "devwind.h"
-#include "debugheap.h"
+   #include "logoeventqueue.h"
+
+   #include "logodata.h"
+   #include "eval.h"
+   #include "wrksp.h"
+   #include "init.h"
+   #include "netwind.h"
+   #include "devwind.h"
+   #include "debugheap.h"
+#endif
 
 calllist calllists;
 

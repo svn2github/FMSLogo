@@ -17,34 +17,37 @@
  *      You should have received a copy of the GNU General Public License
  *      along with this program; if not, write to the Free Software
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
  */
-#include <stdlib.h>
-#include <string.h>
 
-#include "wrksp.h"
-#include "logodata.h"
-#include "appendablelist.h"
-#include "intern.h"
-#include "init.h"
-#include "mem.h"
-#include "parse.h"
-#include "eval.h"
-#include "error.h"
-#include "logomath.h"
-#include "paren.h"
-#include "ibmterm.h"
-#include "startup.h"
-#include "print.h"
-#include "files.h"
-#include "unix.h"
-#include "avltree.h"
-#include "sort.h"
-#include "debugheap.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include <stdlib.h>
+    #include <string.h>
 
-#include "localizedstrings.h"
-#include "cursor.h"
-#include "screenwindow.h"
+    #include "wrksp.h"
+    #include "logodata.h"
+    #include "appendablelist.h"
+    #include "intern.h"
+    #include "init.h"
+    #include "mem.h"
+    #include "parse.h"
+    #include "eval.h"
+    #include "error.h"
+    #include "logomath.h"
+    #include "paren.h"
+    #include "ibmterm.h"
+    #include "startup.h"
+    #include "print.h"
+    #include "files.h"
+    #include "unix.h"
+    #include "avltree.h"
+    #include "sort.h"
+    #include "debugheap.h"
+
+    #include "localizedstrings.h"
+    #include "cursor.h"
+    #include "screenwindow.h"
+#endif
 
 bool bExpert    = false;               // Expert mode
 bool yield_flag = true;                // Flag to signal yield state

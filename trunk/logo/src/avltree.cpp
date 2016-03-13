@@ -14,17 +14,20 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
-#include <algorithm>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <algorithm>
 
-#include "avltree.h"
-#include "mem.h"
-#include "logodata.h"
-#include "appendablelist.h"
-#include "debugheap.h"
+   #include "avltree.h"
+   #include "mem.h"
+   #include "logodata.h"
+   #include "appendablelist.h"
+   #include "debugheap.h"
+#endif
 
 // There isn't enough space to hold a single AVL node in a NODE*,
-// so it's spread across two NODE objects with accessors to abtract
-// this impelemention detail.
+// so it's spread across two NODE objects with accessors to abstract
+// this implemention detail.
 //
 // +-----------------+
 // | car = AVL left  |

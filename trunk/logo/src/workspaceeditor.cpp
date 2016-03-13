@@ -1,29 +1,32 @@
-#ifdef __WXMSW__
-#  include <windows.h>  // for LOGFONT
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #ifdef __WXMSW__
+    #  include <windows.h>  // for LOGFONT
+    #endif
+
+    #include <wx/menu.h>
+    #include <wx/fontdlg.h>
+    #include <wx/msgdlg.h>
+
+    #include "workspaceeditor.h"
+    #include "logocodectrl.h"
+    #include "localizedstrings.h"
+    #include "guiutils.h"
+    #include "fontutils.h"
+    #include "fmslogo.h"
+    #include "mainframe.h"
+    #include "logoeventqueue.h"
+    #include "utils.h"
+    #include "logocore.h"     // for ARRAYSIZE
+    #include "wrksp.h"        // for bExpert
+    #include "screenwindow.h" // for TraceOutput
+    #include "eval.h"         // for process_special_conditions
+    #include "startup.h"      // for TempPathName
+    #include "commander.h"    // for putcombobox
+    #include "graphwin.h"     // for do_help
+    #include "helputils.h"    // for ContextHelp
+    #include "stringadapter.h"
 #endif
-
-#include <wx/menu.h>
-#include <wx/fontdlg.h>
-#include <wx/msgdlg.h>
-
-#include "workspaceeditor.h"
-#include "logocodectrl.h"
-#include "localizedstrings.h"
-#include "guiutils.h"
-#include "fontutils.h"
-#include "fmslogo.h"
-#include "mainframe.h"
-#include "logoeventqueue.h"
-#include "utils.h"
-#include "logocore.h"     // for ARRAYSIZE
-#include "wrksp.h"        // for bExpert
-#include "screenwindow.h" // for TraceOutput
-#include "eval.h"         // for process_special_conditions
-#include "startup.h"      // for TempPathName
-#include "commander.h"    // for putcombobox
-#include "graphwin.h"     // for do_help
-#include "helputils.h"    // for ContextHelp
-#include "stringadapter.h"
 
 enum
 {

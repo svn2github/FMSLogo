@@ -1,14 +1,17 @@
-#include "minieditor.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "minieditor.h"
 
-#include <wx/button.h>
-#include <wx/textctrl.h>
-#include <wx/sizer.h>
-#include <wx/settings.h>
+   #include <wx/button.h>
+   #include <wx/textctrl.h>
+   #include <wx/sizer.h>
+   #include <wx/settings.h>
 
-#include "minieditortextctrl.h"
-#include "fontutils.h"
-#include "stringadapter.h"
-#include "localizedstrings.h"
+   #include "minieditortextctrl.h"
+   #include "fontutils.h"
+   #include "stringadapter.h"
+   #include "localizedstrings.h"
+#endif
 
 // Menu IDs
 enum

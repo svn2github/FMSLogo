@@ -18,27 +18,31 @@
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
-#include <windows.h>
 
-#include "mmwind.h"
-#include "argumentutils.h"
-#include "stringprintednode.h"
-#include "logocore.h"
-#include "logodata.h"
-#include "lists.h"
-#include "messagebox.h"
-#include "graphics.h"
-#include "error.h"
-#include "init.h"
-#include "eval.h"
-#include "parse.h"
-#include "ibmterm.h"
-#include "screenwindow.h"
-#include "debugheap.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include <windows.h>
 
-#include "devwind.h"
+    #include "mmwind.h"
+    #include "argumentutils.h"
+    #include "stringprintednode.h"
+    #include "logocore.h"
+    #include "logodata.h"
+    #include "lists.h"
+    #include "messagebox.h"
+    #include "graphics.h"
+    #include "error.h"
+    #include "init.h"
+    #include "eval.h"
+    #include "parse.h"
+    #include "ibmterm.h"
+    #include "screenwindow.h"
+    #include "debugheap.h"
 
-#include "localizedstrings.h"
+    #include "devwind.h"
+
+    #include "localizedstrings.h"
+#endif
 
 // global variables
 char mci_callback[MAX_BUFFER_SIZE];    // MCI callback code

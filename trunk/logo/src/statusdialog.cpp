@@ -1,25 +1,28 @@
-#include "statusdialog.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "statusdialog.h"
 
-#include <wx/sizer.h>
-#include <wx/stattext.h>
-#include <wx/button.h>
-#include <wx/statbox.h>
+    #include <wx/sizer.h>
+    #include <wx/stattext.h>
+    #include <wx/button.h>
+    #include <wx/statbox.h>
 
-#include "commander.h"
-#include "fmslogo.h"
-#include "mainframe.h"
-#include "localizedstrings.h"
-#include "logocore.h" // for ARRAYSIZE
-#include "mainwind.h" // for checkwindow()
-#include "utils.h"
-#include "status.h"
-#include "startup.h"
-#include "graphics.h"
-#include "graphwin.h"
-#include "eval.h"
-#include "mem.h"
-#include "stringadapter.h"
-#include "screenwindow.h"
+    #include "commander.h"
+    #include "fmslogo.h"
+    #include "mainframe.h"
+    #include "localizedstrings.h"
+    #include "logocore.h" // for ARRAYSIZE
+    #include "mainwind.h" // for checkwindow()
+    #include "utils.h"
+    #include "status.h"
+    #include "startup.h"
+    #include "graphics.h"
+    #include "graphwin.h"
+    #include "eval.h"
+    #include "mem.h"
+    #include "stringadapter.h"
+    #include "screenwindow.h"
+#endif
 
 bool status_flag = false;   // Flag to signal status box is popped up
 

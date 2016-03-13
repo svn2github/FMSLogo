@@ -20,61 +20,64 @@
  *
  */
 
-#include <algorithm>
-#include <string.h>
-#include <math.h>
-#include <float.h>
-#include <limits.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <algorithm>
+   #include <string.h>
+   #include <math.h>
+   #include <float.h>
+   #include <limits.h>
 
-#ifdef WX_PURE
+   #ifdef WX_PURE
 
-#ifndef WX_PRECOMP
-    #include <wx/dc.h>
-    #include <wx/dcmemory.h>
-#endif
+      #ifndef WX_PRECOMP
+         #include <wx/dc.h>
+         #include <wx/dcmemory.h>
+      #endif
 
-struct LOGPEN;
-typedef struct __PEN * HPEN;
-typedef struct __HDC * HDC;
+      struct LOGPEN;
+      typedef struct __PEN * HPEN;
+      typedef struct __HDC * HDC;
 
-#include "screen.h"
-#include "mainframe.h"
+      #include "screen.h"
+      #include "mainframe.h"
 
-#else // WX_PURE
+   #else // WX_PURE
 
-#include <windows.h>
+      #include <windows.h>
 
-#ifdef max // MS compilers #define max in windows.h
-#undef max
-#endif
+      #ifdef max // MS compilers #define max in windows.h
+         #undef max
+      #endif
+   #endif
+
+   #include "fmslogo.h"
+   #include "wrksp.h"
+   #include "graphics.h"
+   #include "stringprintednode.h"
+   #include "messagebox.h"
+   #include "logodata.h"
+   #include "init.h"
+   #include "eval.h"
+   #include "lists.h"
+   #include "error.h"
+   #include "ibmterm.h"
+   #include "graphwin.h"
+   #include "coms.h"
+   #include "logomath.h"
+   #include "const.h"
+   #include "screenwindow.h"
+   #include "debugheap.h"
+
+   #include "graphwin.h"
+   #include "status.h"
+
+   #include "localizedstrings.h"
 #endif
 
 #ifdef __GNUC__
-#define _finite(D) isfinite(D)
+   #define _finite(D) isfinite(D)
 #endif
-
-#include "fmslogo.h"
-#include "wrksp.h"
-#include "graphics.h"
-#include "stringprintednode.h"
-#include "messagebox.h"
-#include "logodata.h"
-#include "init.h"
-#include "eval.h"
-#include "lists.h"
-#include "error.h"
-#include "ibmterm.h"
-#include "graphwin.h"
-#include "coms.h"
-#include "logomath.h"
-#include "const.h"
-#include "screenwindow.h"
-#include "debugheap.h"
-
-#include "graphwin.h"
-#include "status.h"
-
-#include "localizedstrings.h"
 
 #define screen_left   (-BitMapWidth/2)
 #define screen_right  ( BitMapWidth/2)

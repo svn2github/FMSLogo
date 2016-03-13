@@ -1,13 +1,16 @@
-#ifdef __WXMSW__
-#  include <windows.h>  // for keybd_event
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #ifdef __WXMSW__
+   #  include <windows.h>  // for keybd_event
+   #endif
+
+   #include <wx/clipbrd.h>
+   #include "commanderinput.h"
+
+   #include "commander.h"
+   #include "logocore.h"  // for ARRAYSIZE
+   #include "helputils.h" // for ContextHelp
 #endif
-
-#include <wx/clipbrd.h>
-#include "commanderinput.h"
-
-#include "commander.h"
-#include "logocore.h"  // for ARRAYSIZE
-#include "helputils.h" // for ContextHelp
 
 #ifndef __WXMSW__
 

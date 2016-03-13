@@ -17,15 +17,18 @@
  *      You should have received a copy of the GNU General Public License
  *      along with this program; if not, write to the Free Software
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
  */
-#include <stdlib.h>
-#include <string.h>
 
-#include "sort.h"
-#include "logocore.h"
-#include "logodata.h"
-#include "logomath.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include <stdlib.h>
+    #include <string.h>
+
+    #include "sort.h"
+    #include "logocore.h"
+    #include "logodata.h"
+    #include "logomath.h"
+#endif
 
 // Modify a list such that each element in the list
 // is inserted into its own, one-element list.

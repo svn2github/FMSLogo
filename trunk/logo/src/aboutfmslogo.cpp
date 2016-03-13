@@ -1,12 +1,15 @@
-#include "aboutfmslogo.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "aboutfmslogo.h"
 
-#include <wx/sizer.h>
-#include <wx/stattext.h>
-#include <wx/button.h>
+   #include <wx/sizer.h>
+   #include <wx/stattext.h>
+   #include <wx/button.h>
 
-#include "localizedstrings.h"
-#include "logocore.h" // for ARRAYSIZE
-#include "stringadapter.h"
+   #include "localizedstrings.h"
+   #include "logocore.h" // for ARRAYSIZE
+   #include "stringadapter.h"
+#endif
 
 // ----------------------------------------------------------------------------
 // CAboutFmsLogo

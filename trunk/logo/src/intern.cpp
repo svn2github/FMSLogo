@@ -20,16 +20,19 @@
  *
  */
 
-#include <string.h>
-#include <stdlib.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include <string.h>
+   #include <stdlib.h>
 
-#include "logodata.h"
-#include "eval.h"
-#include "init.h"
-#include "logomath.h"
-#include "wrksp.h"
-#include "mem.h"
-#include "debugheap.h"
+   #include "logodata.h"
+   #include "eval.h"
+   #include "init.h"
+   #include "logomath.h"
+   #include "wrksp.h"
+   #include "mem.h"
+   #include "debugheap.h"
+#endif
 
 
 // hash_table is an array of NODE*.

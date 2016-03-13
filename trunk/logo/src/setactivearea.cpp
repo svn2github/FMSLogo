@@ -1,16 +1,19 @@
-#include "setactivearea.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "setactivearea.h"
 
-#include <wx/button.h>
-#include <wx/gdicmn.h>
-#include <wx/sizer.h>
-#include <wx/statbox.h>
-#include <wx/statline.h>
-#include <wx/stattext.h>
-#include <wx/textctrl.h>
+    #include <wx/button.h>
+    #include <wx/gdicmn.h>
+    #include <wx/sizer.h>
+    #include <wx/statbox.h>
+    #include <wx/statline.h>
+    #include <wx/stattext.h>
+    #include <wx/textctrl.h>
 
-#include "fmslogo.h"
-#include "localizedstrings.h"
-#include "stringadapter.h"
+    #include "fmslogo.h"
+    #include "localizedstrings.h"
+    #include "stringadapter.h"
+#endif
 
 // ----------------------------------------------------------------------------
 // CSetActiveArea::CSmallIntegerCtrl

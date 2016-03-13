@@ -95,7 +95,7 @@ LDFLAGS  += --coverage
 endif
 
 INCLUDES = . $(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) $(wx_top_srcdir)/include $(wx_top_srcdir)/contrib/include
-CPPFLAGS += -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES $(addprefix -I, $(INCLUDES))
+CPPFLAGS += -DUSE_PRECOMPILED_HEADER -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES $(addprefix -I, $(INCLUDES))
 CXXFLAGS += -Wall -fno-strict-aliasing
 CXXFLAGS += -DFMSLOGO_WXWIDGETS
 CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
@@ -221,8 +221,8 @@ all : $(addsuffix $(EXEEXT),$(addprefix fmslogo-,$(LCIDS)));
 	perl -W make-translation-tables.pl
 
 clean: 
-	rm -rf ./.deps ./.pch
-	$(RM) obj/*.o
+	rm -rf ./.deps
+	$(RM) -rf $(addprefix obj/,$(LCIDS))
 	$(RM) ./*.bak
 	$(RM) ./*~
 	$(RM) ./*.stackdump
@@ -253,35 +253,34 @@ endif
 	echo \#define FMSLOGO_VERSION \"$(FMSLOGO_VERSION)\"         >> $@
 
 
+
 #
 # Generate the rules to build the release version of the screensaver for each locale
 #
 define FMSLOGO_template
 
-fmslogo-$(1)$$(EXEEXT) : $$(addprefix obj/$(1)-,$$(OBJECTS))
+fmslogo-$(1)$$(EXEEXT) : $$(addprefix obj/$(1)/,$$(OBJECTS))
 	$(CXX) -o $$@ $$^ $(LDFLAGS) -L$(LIBDIRNAME) $(LIBS) $(EXTRALIBS)
+
+obj/$(1)/pch.h.gch : pch/pch.h
+	-mkdir $$(dir $$@)
+	$(CXX) -c -o $$@ -Iobj/$(1) $(CXXFLAGS) -DLOCALE=$1 $$<
 
 ifeq "$(TOOLKIT)" "GTK"
 
-obj/$(1)-%.o: linux/%.cpp
+obj/$(1)/%.o: linux/%.cpp obj/$(1)/pch.h.gch
 	$(CXXC) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
 
 endif
 
-obj/$(1)-%.o : %.cpp version.h
-	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
+obj/$(1)/%.o : %.cpp version.h obj/$(1)/pch.h.gch
+	$(CXX) -c -o $$@ -Iobj/$(1) $(CXXFLAGS) -DLOCALE=$1 $$<
 
-obj/$(1)-%.o : %.cpp version.h
-	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
+obj/$(1)/%.o : scintilla/%.cxx obj/$(1)/pch.h.gch
+	$(CXX) -c -o $$@ -Iobj/$(1) $(CXXFLAGS) -DLOCALE=$1 $(addprefix -I,$(SCINTILLA_INCLUDES)) $$<
 
-obj/$(1)-%.o : scintilla/%.cxx
-	$(CXX) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $(addprefix -I,$(SCINTILLA_INCLUDES)) $$<
-
-obj/$(1)-%_rc.o : %.rc version.h
+obj/$(1)/%_rc.o : %.rc version.h obj/$(1)/pch.h.gch
 	$(RC) -i$$< -o$$@ -DLOCALE=$1 --define __WX$(TOOLKIT)__ $(addprefix --include-dir ,$(INCLUDES))
-
-
-fmslogo_rc.o: fmslogo.rc fmslogo.ico
 
 endef
 

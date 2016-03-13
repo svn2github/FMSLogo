@@ -1,46 +1,49 @@
-#include "fmslogo.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "fmslogo.h"
 
-#include <algorithm>
+   #include <algorithm>
 
-#include <wx/msgdlg.h>
-#include <wx/filename.h>
-#include <wx/string.h>
-#include <wx/dcclient.h>
-#include <wx/dcmemory.h>
-#include <wx/clipbrd.h>
-#include <wx/gdicmn.h> 
-#include <wx/settings.h>
-#include <wx/stdpaths.h>
+   #include <wx/msgdlg.h>
+   #include <wx/filename.h>
+   #include <wx/string.h>
+   #include <wx/dcclient.h>
+   #include <wx/dcmemory.h>
+   #include <wx/clipbrd.h>
+   #include <wx/gdicmn.h> 
+   #include <wx/settings.h>
+   #include <wx/stdpaths.h>
 
-#ifdef __WXMSW__
-   #include "wx/msw/private.h"
+   #ifdef __WXMSW__
+      #include "wx/msw/private.h"
+   #endif
+
+   #include "init.h"
+   #include "localizedstrings.h"
+   #include "logocore.h" // for ARRAYSIZE
+   #include "mainframe.h"
+   #include "graphwin.h"
+   #include "error.h"
+   #include "wrksp.h"
+   #include "startup.h"
+   #include "utils.h"
+   #include "mmwind.h"
+   #include "files.h"
+   #include "mainwind.h"
+   #include "cursor.h"
+   #include "logoeventqueue.h"
+   #include "eval.h"
+   #include "print.h"
+   #include "screenwindow.h"
+   #include "workspaceeditor.h"
+   #include "minieditor.h"
+   #include "dynamicbuffer.h"
+   #include "stringprintednode.h"
+   #include "stringadapter.h"
+
+   #include "screen.h"
+   #include "commander.h"
 #endif
-
-#include "init.h"
-#include "localizedstrings.h"
-#include "logocore.h" // for ARRAYSIZE
-#include "mainframe.h"
-#include "graphwin.h"
-#include "error.h"
-#include "wrksp.h"
-#include "startup.h"
-#include "utils.h"
-#include "mmwind.h"
-#include "files.h"
-#include "mainwind.h"
-#include "cursor.h"
-#include "logoeventqueue.h"
-#include "eval.h"
-#include "print.h"
-#include "screenwindow.h"
-#include "workspaceeditor.h"
-#include "minieditor.h"
-#include "dynamicbuffer.h"
-#include "stringprintednode.h"
-#include "stringadapter.h"
-
-#include "screen.h"
-#include "commander.h"
 
 // global variables declared in main.h
 char edit_editexit[MAX_BUFFER_SIZE];     // editor callback instruction list 

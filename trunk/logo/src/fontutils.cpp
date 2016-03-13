@@ -1,11 +1,14 @@
-#ifdef __WXMSW__
-#  include <windows.h>  // for LOGFONT
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #ifdef __WXMSW__
+   #  include <windows.h>  // for LOGFONT
+   #endif
+
+   #include <wx/fontutil.h>
+
+   #include "utils.h"
+   #include "graphwin.h"
 #endif
-
-#include <wx/fontutil.h>
-
-#include "utils.h"
-#include "graphwin.h"
 
 #ifdef __WXMSW__
 

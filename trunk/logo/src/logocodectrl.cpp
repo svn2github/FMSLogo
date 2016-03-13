@@ -1,18 +1,21 @@
-#ifndef WX_PURE
-#include <wx/msw/private.h> // for wxGetInstance()
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #ifndef WX_PURE
+      #include <wx/msw/private.h> // for wxGetInstance()
+   #endif
+
+   #include <wx/gdicmn.h>      // for wxPoint
+   #include <wx/printdlg.h>
+
+   #include "logocodectrl.h"
+   #include "localizedstrings.h"
+   #include "logocore.h"      // for ARRAYSIZE
+   #include "guiutils.h"
+   #include "helputils.h"     // for ContextHelp
+   #include "stringadapter.h"
+
+   #include "wrksp.h" // for g_CharactersSuccessfullyParsedInEditor
 #endif
-
-#include <wx/gdicmn.h>      // for wxPoint
-#include <wx/printdlg.h>
-
-#include "logocodectrl.h"
-#include "localizedstrings.h"
-#include "logocore.h"      // for ARRAYSIZE
-#include "guiutils.h"
-#include "helputils.h"     // for ContextHelp
-#include "stringadapter.h"
-
-#include "wrksp.h" // for g_CharactersSuccessfullyParsedInEditor
 
 #include "scintilla/SciLexer.h"
 #ifdef WX_PURE

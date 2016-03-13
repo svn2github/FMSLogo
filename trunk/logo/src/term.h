@@ -18,6 +18,7 @@
 #ifndef __TERM_H_
 #define __TERM_H_
 
+struct NODE;
 extern NODE *lcleartext(NODE *args);
 extern NODE *lcursor(NODE *args);
 extern NODE *lsetcursor(NODE *args);

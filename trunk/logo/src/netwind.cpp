@@ -15,23 +15,26 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#include "netwind.h"
-#include "logoeventqueue.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "netwind.h"
+    #include "logoeventqueue.h"
 
-#include "init.h"
-#include "messagebox.h"
-#include "graphics.h"
-#include "argumentutils.h"
-#include "stringprintednode.h"
-#include "logodata.h"
-#include "logorc.h"
-#include "lists.h"
-#include "eval.h"
-#include "logomath.h"
-#include "parse.h"
-#include "screenwindow.h"
-#include "debugheap.h"
-#include "localizedstrings.h"
+    #include "init.h"
+    #include "messagebox.h"
+    #include "graphics.h"
+    #include "argumentutils.h"
+    #include "stringprintednode.h"
+    #include "logodata.h"
+    #include "logorc.h"
+    #include "lists.h"
+    #include "eval.h"
+    #include "logomath.h"
+    #include "parse.h"
+    #include "screenwindow.h"
+    #include "debugheap.h"
+    #include "localizedstrings.h"
+#endif
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Manifest Constants

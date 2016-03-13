@@ -1,7 +1,10 @@
-#include "commanderbutton.h"
-#include "commander.h"
-#include "commanderinput.h"
-#include "stringadapter.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "commanderbutton.h"
+   #include "commander.h"
+   #include "commanderinput.h"
+   #include "stringadapter.h"
+#endif
 
 CCommanderButton::CCommanderButton(
     CCommander *    Parent, 

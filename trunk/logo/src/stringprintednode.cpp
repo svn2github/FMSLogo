@@ -14,12 +14,15 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#include "stringprintednode.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "stringprintednode.h"
 
-#include "logocore.h"
-#include "print.h"
-#include "init.h"
-#include "debugheap.h"
+    #include "logocore.h"
+    #include "print.h"
+    #include "init.h"
+    #include "debugheap.h"
+#endif
 
 
 CStringPrintedNode::CStringPrintedNode(

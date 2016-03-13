@@ -20,11 +20,16 @@
  *
  */
 
-#include "stringprintednode.h"
-#include "commander.h"
-#include "init.h"
-#include "logodata.h"
-#include "debugheap.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "term.h"
+
+    #include "stringprintednode.h"
+    #include "commander.h"
+    #include "init.h"
+    #include "logodata.h"
+    #include "debugheap.h"
+#endif
 
 NODE *lcleartext(NODE *)
 {

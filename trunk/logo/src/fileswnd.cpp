@@ -19,17 +19,20 @@
 *
 */
 
-#include "fileswnd.h"
-#include "wrksp.h"
-#include "files.h"
-#include "init.h"
-#include "eval.h"
-#include "parse.h"
-#include "screenwindow.h"
-#include "cursor.h"
-#include "debugheap.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "fileswnd.h"
+   #include "wrksp.h"
+   #include "files.h"
+   #include "init.h"
+   #include "eval.h"
+   #include "parse.h"
+   #include "screenwindow.h"
+   #include "cursor.h"
+   #include "debugheap.h"
 
-#include "localizedstrings.h"
+   #include "localizedstrings.h"
+#endif
 
 void filesave(const char *FileName)
 {

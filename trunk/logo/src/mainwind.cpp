@@ -17,25 +17,28 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
-#include "mainwind.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "mainwind.h"
 
-#include <algorithm>
+   #include <algorithm>
 
-#include "const.h"
-#include "activearea.h"
-#include "screenwindow.h"
-#include "startup.h"
-#include "graphwin.h"
-#include "cursor.h"
-#include "fmslogo.h"
-#include "debugheap.h"
+   #include "const.h"
+   #include "activearea.h"
+   #include "screenwindow.h"
+   #include "startup.h"
+   #include "graphwin.h"
+   #include "cursor.h"
+   #include "fmslogo.h"
+   #include "debugheap.h"
 
-#ifdef max // MS compilers #define max in windows.h
-#undef max
-#endif
+   #ifdef max // MS compilers #define max in windows.h
+      #undef max
+   #endif
 
-#ifdef min // MS compilers #define min in windows.h
-#undef min
+   #ifdef min // MS compilers #define min in windows.h
+      #undef min
+   #endif
 #endif
 
 // Writes the contents of the screen window that is

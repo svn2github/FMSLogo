@@ -5,7 +5,10 @@
 // Each one of these is a bug that must by removed in order for the WX_PURE
 // version to work.
 
-#include "mainwind.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "mainwind.h"
+#endif
 
 void init_timers()
 {

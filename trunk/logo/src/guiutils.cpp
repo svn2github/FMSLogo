@@ -1,10 +1,13 @@
-#include "guiutils.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "guiutils.h"
 
-#include <wx/menu.h>
-#include <wx/icon.h>
-#include <wx/toplevel.h>
+   #include <wx/menu.h>
+   #include <wx/icon.h>
+   #include <wx/toplevel.h>
 
-#include "stringadapter.h"
+   #include "stringadapter.h"
+#endif
 
 void
 SetFmsLogoIcon(

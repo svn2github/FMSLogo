@@ -20,32 +20,35 @@
  *
  */
 
-#ifndef WX_PURE
-#include <windows.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #ifndef WX_PURE
+      #include <windows.h>
+   #endif
+
+   #include <string.h>
+   #include <limits.h>
+   #include <ctype.h>
+   #include <stdlib.h>
+
+   #include "logodata.h"
+   #include "version.h"
+   #include "init.h"
+   #include "error.h"
+   #include "mem.h"
+   #include "parse.h"
+   #include "logomath.h"
+   #include "lists.h"
+   #include "eval.h"
+   #include "intern.h"
+   #include "print.h"
+   #include "files.h"
+   #include "appendablelist.h"
+   #include "avltree.h"
+   #include "debugheap.h"
+
+   #include "localizedstrings.h"
 #endif
-
-#include <string.h>
-#include <limits.h>
-#include <ctype.h>
-#include <stdlib.h>
-
-#include "logodata.h"
-#include "version.h"
-#include "init.h"
-#include "error.h"
-#include "mem.h"
-#include "parse.h"
-#include "logomath.h"
-#include "lists.h"
-#include "eval.h"
-#include "intern.h"
-#include "print.h"
-#include "files.h"
-#include "appendablelist.h"
-#include "avltree.h"
-#include "debugheap.h"
-
-#include "localizedstrings.h"
 
 #if WX_PURE
 // wxTODO: The original, non-internationalized code is used when not on Windows.

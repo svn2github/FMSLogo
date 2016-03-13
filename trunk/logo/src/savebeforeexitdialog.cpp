@@ -1,11 +1,14 @@
-#include "savebeforeexitdialog.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "savebeforeexitdialog.h"
 
-#include <wx/sizer.h>
-#include <wx/stattext.h>
-#include <wx/button.h>
+    #include <wx/sizer.h>
+    #include <wx/stattext.h>
+    #include <wx/button.h>
 
-#include "stringadapter.h"
-#include "localizedstrings.h"
+    #include "stringadapter.h"
+    #include "localizedstrings.h"
+#endif
 
 // ----------------------------------------------------------------------------
 // CSaveBeforeExitDialog

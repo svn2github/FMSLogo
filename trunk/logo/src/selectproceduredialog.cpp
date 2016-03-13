@@ -1,18 +1,21 @@
-#include "selectproceduredialog.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "selectproceduredialog.h"
 
-#include <wx/listbox.h>
-#include <wx/textctrl.h>
-#include <wx/sizer.h>
-#include <wx/button.h>
+    #include <wx/listbox.h>
+    #include <wx/textctrl.h>
+    #include <wx/sizer.h>
+    #include <wx/button.h>
 
-#include "logocore.h"          // for ARRAYSIZE
-#include "wrksp.h"             // for lprocedures
-#include "stringprintednode.h" // for CStringPrintedNode
-#include "logodata.h"          // for make_strnode
-#include "screenwindow.h"      // for TraceOutput
-#include "guiutils.h"
-#include "stringadapter.h"
-#include "localizedstrings.h"
+    #include "logocore.h"          // for ARRAYSIZE
+    #include "wrksp.h"             // for lprocedures
+    #include "stringprintednode.h" // for CStringPrintedNode
+    #include "logodata.h"          // for make_strnode
+    #include "screenwindow.h"      // for TraceOutput
+    #include "guiutils.h"
+    #include "stringadapter.h"
+    #include "localizedstrings.h"
+#endif
 
 // Control IDs
 enum

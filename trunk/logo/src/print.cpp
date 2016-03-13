@@ -19,24 +19,26 @@
 *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 
-#include <stdarg.h>
-#include <stdio.h>
-#include <string.h>
-#include <algorithm>
-using namespace std;
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include <stdarg.h>
+    #include <stdio.h>
+    #include <string.h>
+    #include <algorithm>
 
-#include "unix.h"
-#include "parse.h"
-#include "print.h"
-#include "logocore.h"
-#include "logodata.h"
-#include "ibmterm.h"
-#include "init.h"
-#include "eval.h"
-#include "files.h"
-#include "debugheap.h"
+    #include "unix.h"
+    #include "parse.h"
+    #include "print.h"
+    #include "logocore.h"
+    #include "logodata.h"
+    #include "ibmterm.h"
+    #include "init.h"
+    #include "eval.h"
+    #include "files.h"
+    #include "debugheap.h"
 
-#include "localizedstrings.h"
+    #include "localizedstrings.h"
+#endif
 
 // structures
 struct STRING_PRINT_INFORMATION
@@ -312,8 +314,8 @@ real_print_node(
         }
         else
         {
-            totalCharsToPrint = max(width, 10);
-            totalCharsToPrint = min(totalCharsToPrint, getstrlen(nd));
+            totalCharsToPrint = std::max(width, 10);
+            totalCharsToPrint = std::min(totalCharsToPrint, getstrlen(nd));
         }
 
         // should we print some elipses at the end?

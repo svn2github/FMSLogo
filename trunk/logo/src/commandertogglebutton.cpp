@@ -1,7 +1,10 @@
-#include "commandertogglebutton.h"
-#include "commander.h"
-#include "commanderinput.h"
-#include "stringadapter.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "commandertogglebutton.h"
+   #include "commander.h"
+   #include "commanderinput.h"
+   #include "stringadapter.h"
+#endif
 
 CCommanderToggleButton::CCommanderToggleButton(
     CCommander *    Parent, 

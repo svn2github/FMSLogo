@@ -1,18 +1,21 @@
-#include "setcolor.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include "setcolor.h"
 
-#include <wx/button.h>
-#include <wx/gdicmn.h>
-#include <wx/sizer.h>
-#include <wx/slider.h>
-#include <wx/stattext.h>
-#include <wx/dcclient.h>
+    #include <wx/button.h>
+    #include <wx/gdicmn.h>
+    #include <wx/sizer.h>
+    #include <wx/slider.h>
+    #include <wx/stattext.h>
+    #include <wx/dcclient.h>
 
-#include "logocore.h"
-#include "commander.h"
-#include "graphics.h"
-#include "logodata.h"
-#include "stringadapter.h"
-#include "localizedstrings.h"
+    #include "logocore.h"
+    #include "commander.h"
+    #include "graphics.h"
+    #include "logodata.h"
+    #include "stringadapter.h"
+    #include "localizedstrings.h"
+#endif
 
 // ----------------------------------------------------------------------------
 // CSetColor::CColorWindow

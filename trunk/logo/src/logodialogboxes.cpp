@@ -15,45 +15,48 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#include "dlgwind.h"
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+   #include "dlgwind.h"
 
-#include <windows.h>
-#include <windowsx.h> // for combobox macros
-#include <commctrl.h> // for combobox style manifest constants
+   #include <windows.h>
+   #include <windowsx.h> // for combobox macros
+   #include <commctrl.h> // for combobox style manifest constants
 
-#include <wx/app.h>
-#include <wx/button.h>
-#include <wx/listbox.h>
-#include <wx/combobox.h>
-#include <wx/stattext.h>
-#include <wx/statbox.h>
-#include <wx/checkbox.h>
-#include <wx/radiobut.h>
-#include <wx/scrolbar.h>
+   #include <wx/app.h>
+   #include <wx/button.h>
+   #include <wx/listbox.h>
+   #include <wx/combobox.h>
+   #include <wx/stattext.h>
+   #include <wx/statbox.h>
+   #include <wx/checkbox.h>
+   #include <wx/radiobut.h>
+   #include <wx/scrolbar.h>
 
-#include "fmslogo.h"
-#include "logoeventqueue.h"
-#include "screen.h"
-#include "coms.h"
-#include "parse.h"
-#include "logodata.h"
-#include "logomath.h"
-#include "localizedstrings.h"
-#include "commander.h"
-#include "init.h"
-#include "argumentutils.h"
-#include "graphwin.h"
-#include "error.h"
-#include "eval.h"
-#include "logocore.h"
-#include "lists.h"
-#include "print.h"
-#include "stringprintednode.h"
-#include "screenwindow.h"
-#include "questionbox.h"
-#include "selectbox.h"
-#include "stringadapter.h"
-#include "debugheap.h"
+   #include "fmslogo.h"
+   #include "logoeventqueue.h"
+   #include "screen.h"
+   #include "coms.h"
+   #include "parse.h"
+   #include "logodata.h"
+   #include "logomath.h"
+   #include "localizedstrings.h"
+   #include "commander.h"
+   #include "init.h"
+   #include "argumentutils.h"
+   #include "graphwin.h"
+   #include "error.h"
+   #include "eval.h"
+   #include "logocore.h"
+   #include "lists.h"
+   #include "print.h"
+   #include "stringprintednode.h"
+   #include "screenwindow.h"
+   #include "questionbox.h"
+   #include "selectbox.h"
+   #include "stringadapter.h"
+   #include "debugheap.h"
+#endif
 
 enum WINDOWTYPE 
 {

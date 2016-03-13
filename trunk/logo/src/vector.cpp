@@ -1,8 +1,11 @@
-#include <math.h>
-#include <stddef.h>
+#include "pch.h"
+#ifndef USE_PRECOMPILED_HEADER
+    #include <math.h>
+    #include <stddef.h>
 
-#include "vector.h"
-#include "debugheap.h"
+    #include "vector.h"
+    #include "debugheap.h"
+#endif
 
 // Magnitude of a vector
 double Mag(const VECTOR &v)
