@@ -21,11 +21,11 @@ II. New features/bugs fixed:
   Changed in 7.0.0
   o Dropped support for the Win 9X versions of Windows.
   o Dropped support for the original Pentium processor.
-  o Implemented more of feature request #373; the screen saver now supports
-    the DLLCALL and windowing commands.
+  o Partial fix for bug #373; the screen saver now supports the DLLCALL,
+    STATUS, and windowing command sets.
 
   For a complete history of changes across all versions of FMSLogo, see
-  http://fmslogo.cvs.sourceforge.net/viewvc/fmslogo/logo/src/CHANGELOG.TXT
+  https://sourceforge.net/p/fmslogo/source/HEAD/tree/trunk/logo/src/CHANGELOG.TXT
 
 III. Standard features
 
