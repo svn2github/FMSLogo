@@ -115,8 +115,20 @@
   #define RGB(r, g, b) (((r) & 0xFF) | (((g) & 0xFF) << 8) | (((b) & 0xFF) << 16))
 
   struct LOGPEN;
-  typedef struct __PEN * HPEN;
-  typedef struct __HDC * HDC;
+  typedef struct __PEN         * HPEN;
+  typedef struct __HDC         * HDC;
+  typedef struct __BITMAP      * HBITMAP;
+  typedef struct __LOGPALLETTE * PLOGPALETTE;
+  typedef struct __WND         * HWND;
+
+  typedef int LONG;
+
+  struct RECT {
+      int left;
+      int top;
+      int right;
+      int bottom;
+  };
 #endif
 
 // FMSLogo header files
