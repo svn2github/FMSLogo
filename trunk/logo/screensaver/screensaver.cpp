@@ -6,6 +6,7 @@
 
 #include <wx/window.h>
 #include <wx/app.h> 
+#include <wx/dc.h> 
 
 #include "init.h"
 #include "graphwin.h"
@@ -57,6 +58,9 @@ static HANDLE          g_Fmslogo             = NULL;
 static HMODULE         g_User32              = NULL;
 #endif
 
+// TODO: These native handles are from when the screensaver didn't use
+// wxWidgets.  Now, all of these should be replaceable with a structured
+// wxWidgets class.
 static HWND       g_ScreenWindow = NULL;
 static HDC        g_ScreenDeviceContext = NULL;
 static HDC        g_MemoryDeviceContext = NULL;
@@ -66,6 +70,7 @@ static HBITMAP    g_BackBuffer = NULL;
 static wxWindow      * g_WxScreenWindow = NULL;
 static wxApp         * g_DummyApp = NULL;
 static CStatusDialog * g_StatusDialog = NULL;
+static wxDC          * g_WxBackBufferDeviceContext = NULL;
 
 static DWORD g_TickCountOfMostRecentLoad = 0;
 
@@ -481,6 +486,9 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
             g_BackBufferDeviceContext = NULL;
         }
 
+        delete g_WxBackBufferDeviceContext;
+        g_WxBackBufferDeviceContext = NULL;
+
         if (g_ScreenDeviceContext != NULL)
         {
             ReleaseDC(g_ScreenWindow, g_ScreenDeviceContext);
@@ -810,19 +818,21 @@ HDC GetMemoryDeviceContext()
     return g_MemoryDeviceContext;
 }
 
-HDC GetBackBufferDeviceContext()
+wxDC * GetBackBufferDeviceContext()
 {
     // The back buffer is only needed if there are sprite bitmaps.
     // To avoid making all programmer pay the cost of creating a
     // duplicate memory bitmap, we create it lazily.
-    if (g_BackBufferDeviceContext == NULL)
+    if (g_WxBackBufferDeviceContext == NULL)
     {
         g_BackBufferDeviceContext = CreateCompatibleDC(g_ScreenDeviceContext);
         g_BackBuffer = CreateCompatibleBitmap(g_ScreenDeviceContext, BitMapWidth, BitMapHeight);
         SelectObject(g_BackBufferDeviceContext, g_BackBuffer);
+
+        g_WxBackBufferDeviceContext = new wxDCTemp(g_BackBufferDeviceContext);
     }
 
-    return g_BackBufferDeviceContext;
+    return g_WxBackBufferDeviceContext;
 }
 
 void OpenStatusWindow()

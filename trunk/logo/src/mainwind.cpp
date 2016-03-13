@@ -23,6 +23,8 @@
 
    #include <algorithm>
 
+   #include <wx/dc.h>
+
    #include "const.h"
    #include "activearea.h"
    #include "screenwindow.h"
@@ -733,7 +735,8 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
     HDC sourceDeviceContext;
     if (useBackBuffer)
     {
-        sourceDeviceContext = GetBackBufferDeviceContext();
+        wxDC * wxSourceDeviceContext = GetBackBufferDeviceContext();
+        sourceDeviceContext = static_cast<HDC>(wxSourceDeviceContext->GetHDC());
 
         // Copy the portion of the memory image to the back buffer
         // that corresponds to the portion of the screen that is
@@ -750,7 +753,7 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
             SRCCOPY);
 
         // draw the turtles on top of the image
-        paste_all_turtles(sourceDeviceContext, 1.0);
+        paste_all_turtles(*wxSourceDeviceContext, 1.0);
 
         if (EnablePalette)
         {
@@ -813,7 +816,10 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
     // draw the turtles on top of the image
     if (!useBackBuffer)
     {
-        paste_all_turtles(PaintDC, the_zoom);
+#ifndef WX_PURE
+        wxDCTemp paintDeviceContext(PaintDC);
+        paste_all_turtles(paintDeviceContext, the_zoom);
+#endif
     }
 
     // restore resources

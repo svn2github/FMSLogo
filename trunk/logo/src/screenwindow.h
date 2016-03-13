@@ -55,10 +55,6 @@ HDC GetScreenDeviceContext();
 // Returns the device context for MemoryBitMap
 HDC GetMemoryDeviceContext();
 
-// Returns a device context of a bitmap that is distinct from MemoryBitMap,
-// but has the same characteristics (bit depth, width, height, etc.)
-HDC GetBackBufferDeviceContext();
-
 // Locates the window for which the message was generated and attempts to
 // translate it as a keyboard accelerator (keyboard shortcut) using that
 // window's accelerator table.
@@ -73,6 +69,10 @@ HDC GetBackBufferDeviceContext();
 bool TranslateKeyboardShortcut(MSG & Message);
 
 #endif
+
+// Returns a device context of a bitmap that is distinct from MemoryBitMap,
+// but has the same characteristics (bit depth, width, height, etc.)
+class wxDC * GetBackBufferDeviceContext();
 
 void OpenStatusWindow();
 void CloseStatusWindow();

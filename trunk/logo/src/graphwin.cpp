@@ -25,6 +25,8 @@
    #include <string.h>
    #include <algorithm>
 
+   #include <wx/dc.h>
+
    #ifdef WX_PURE
       typedef struct __BITMAP      * HBITMAP;
       typedef struct __LOGPALLETTE * PLOGPALETTE;
@@ -3214,39 +3216,34 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
 #endif
 }
 
-void paste_all_turtles(HDC DeviceContext, FLONUM zoom)
+void paste_all_turtles(wxDC & DeviceContext, FLONUM zoom)
 {
     for (int j = 0; j <= g_MaxTurtle; j++)
     {
         if (g_Turtles[j].IsShown)
         {
-#ifndef WX_PURE
             if (g_Turtles[j].BitmapRasterMode)
             {
-                SetROP2(DeviceContext, R2_COPYPEN);
-                turtlepaste(DeviceContext, j, zoom);
+                DeviceContext.SetLogicalFunction(wxCOPY);
+#ifndef WX_PURE
+                turtlepaste(static_cast<HDC>(DeviceContext.GetHDC()), j, zoom);
+#endif
             }
             else
             {
-                SetROP2(DeviceContext, R2_NOT);
+                DeviceContext.SetLogicalFunction(wxINVERT);
                 for (int i = 0; i < 4; i++)
                 {
                     if (g_Turtles[j].Points[i].bValid)
                     {
-                        MoveToEx(
-                            DeviceContext,
+                        DeviceContext.DrawLine(
                             g_Turtles[j].Points[i].from.x * zoom,
                             g_Turtles[j].Points[i].from.y * zoom,
-                            0);
-
-                        LineTo(
-                            DeviceContext,
                             g_Turtles[j].Points[i].to.x * zoom,
                             g_Turtles[j].Points[i].to.y * zoom);
                     }
                 }
             }
-#endif
         }
     }
 }

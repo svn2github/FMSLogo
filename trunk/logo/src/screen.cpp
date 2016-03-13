@@ -286,10 +286,8 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
                 sourceRectTop);
         }
 
-#ifndef WX_PURE
         // draw the turtles on top of the image
-        paste_all_turtles(static_cast<HDC>(sourceDeviceContext->GetHDC()), 1.0);
-#endif
+        paste_all_turtles(*sourceDeviceContext, 1.0);
     }
     else
     {
@@ -467,8 +465,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
     // draw the turtles on top of the image
     if (!useBackBuffer)
     {
-        // draw the turtles on top of the image
-        paste_all_turtles(PaintDC, the_zoom);
+        paste_all_turtles(paintContext, the_zoom);
     }
 
     /* restore resources */
