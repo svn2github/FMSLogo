@@ -461,6 +461,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
                 SRCCOPY);
         }
     }
+#endif // WX_PURE
 
     // draw the turtles on top of the image
     if (!useBackBuffer)
@@ -468,13 +469,13 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
         paste_all_turtles(paintContext, the_zoom);
     }
 
+#ifndef WX_PURE
     /* restore resources */
     if (EnablePalette)
     {
         SelectPalette(memoryDC, oldPalette2, FALSE);
         SelectPalette(PaintDC, oldPalette, FALSE);
     }
-
 #endif // WX_PURE
 }
 
