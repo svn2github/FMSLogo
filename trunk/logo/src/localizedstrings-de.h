@@ -101,12 +101,6 @@
 //             |  DoubleQuote      |        \"        |
 //             +--------------------------------------+
 //
-// Due to a bug in Borland's resource compiler, two forward slashes cannot
-// appear in a quoted string.  To work around this problem, I "escape" the
-// first slash, as in:
-// 
-//    "http://fmslogo.org/" -> "http:\x2F/fmslogo.org/
-//
 /////////////////////////////////////////////////////////////////////////////
 
 //
@@ -862,14 +856,14 @@
 //
 #define LOCALIZED_ABOUTFMS                     "Über "LOCALIZED_GENERAL_PRODUCTNAME
 #define LOCALIZED_ABOUTFMS_VERSION             "Version"
-#define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
+#define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills\nSoftronics, Inc.\nhttp://www.softronix.com/"
 #define LOCALIZED_ABOUTFMS_CORE                "Core by Brian Harvey\nUniversity of California Berkeley"
-#define LOCALIZED_ABOUTFMS_INSTALLER           "Installer based on Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net/"
-#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http:\x2F/www.softronix.com/\nPapert, Seymour: Gedankenblitze 8126 rororo"
+#define LOCALIZED_ABOUTFMS_INSTALLER           "Installer based on Nullsoft Scriptable Install System\nhttp://nsis.sourceforge.net/"
+#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http://www.softronix.com/\nPapert, Seymour: Gedankenblitze 8126 rororo"
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Special Thanks to Yehuda Katz and Erich Neuwirth"
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" is free software\nSee GNU Public License"
-#define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp:\x2F/groups.yahoo.com/group/LogoForum/"
-#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "To learn the internals of computers,\ntry MultiMedia Logic from Softronics, Inc.\nVerändert/übersetzt von Stephan Vogel\nAugust-Ruf-Bildungszentrum Ettenheim/Südbaden\nSeine Logo-Projekte: http:\x2F/www.lehrer.uni-karlsruhe.de/~za1880/itg/index.htm"
+#define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp://groups.yahoo.com/group/LogoForum/"
+#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "To learn the internals of computers,\ntry MultiMedia Logic from Softronics, Inc.\nVerändert/übersetzt von Stephan Vogel\nAugust-Ruf-Bildungszentrum Ettenheim/Südbaden\nSeine Logo-Projekte: http://www.lehrer.uni-karlsruhe.de/~za1880/itg/index.htm"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON
 
 
@@ -878,7 +872,7 @@
 //
 #define LOCALIZED_ABOUTMS                      "Über FMS"
 #define LOCALIZED_ABOUTMS_FMS                  "FMS steht für 'Fight Multiple Sclerosis'." 
-#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Spenden für National Multiple Sclerosis Society\nerbeten, http:\x2F/www.nmss.org, 1-800-FIGHT-MS\nRechnen und Steuern in M, Inf, Ph und Te.\nFraktale und Rekursionen in Oberstufen"
+#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Spenden für National Multiple Sclerosis Society\nerbeten, http://www.nmss.org, 1-800-FIGHT-MS\nRechnen und Steuern in M, Inf, Ph und Te.\nFraktale und Rekursionen in Oberstufen"
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON
 
 

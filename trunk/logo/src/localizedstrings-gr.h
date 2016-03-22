@@ -101,12 +101,6 @@
 //             |  DoubleQuote      |        \"        |
 //             +--------------------------------------+
 //
-// Due to a bug in Borland's resource compiler, two forward slashes cannot
-// appear in a quoted string.  To work around this problem, I "escape" the
-// first slash, as in:
-// 
-//    "http://fmslogo.org/" -> "http:\x2F/fmslogo.org/
-//
 /////////////////////////////////////////////////////////////////////////////
 
 //
@@ -862,13 +856,13 @@
 //
 #define LOCALIZED_ABOUTFMS                     "Πληροφορίες για την "LOCALIZED_GENERAL_PRODUCTNAME 
 #define LOCALIZED_ABOUTFMS_VERSION             "έκδοση"
-#define LOCALIZED_ABOUTFMS_GUI                 "GUI από τον George Mills\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
+#define LOCALIZED_ABOUTFMS_GUI                 "GUI από τον George Mills\nSoftronics, Inc.\nhttp://www.softronix.com/"
 #define LOCALIZED_ABOUTFMS_CORE                "Πυρήνας από τον Brian Harvey\nUniversity of California Berkeley"
-#define LOCALIZED_ABOUTFMS_INSTALLER           "Εγκαταστάτης βασισμένος στο Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net"
-#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nΓράφτηκε και δωρίστηκε από τον Jim Muller\nΔιαθέσιμο στο http:\x2F/www.softronix.com/"
+#define LOCALIZED_ABOUTFMS_INSTALLER           "Εγκαταστάτης βασισμένος στο Nullsoft Scriptable Install System\nhttp://nsis.sourceforge.net"
+#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nΓράφτηκε και δωρίστηκε από τον Jim Muller\nΔιαθέσιμο στο http://www.softronix.com/"
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Ευχαριστούμε τους Yehuda Katz και Erich Neuwirth"
 #define LOCALIZED_ABOUTFMS_GPL                 "Η "LOCALIZED_GENERAL_PRODUCTNAME" είναι ελεύθερο λογισμικό\nΔείτε τη GNU Public License"
-#define LOCALIZED_ABOUTFMS_NEWSGROUP           "News Group στο Διαδίκτυο: comp.lang.logo\nΕπισκεφθείτε το Logo-Forum στο\nhttp:\x2F/groups.yahoo.com/group/LogoForum/"
+#define LOCALIZED_ABOUTFMS_NEWSGROUP           "News Group στο Διαδίκτυο: comp.lang.logo\nΕπισκεφθείτε το Logo-Forum στο\nhttp://groups.yahoo.com/group/LogoForum/"
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Μετάφραση στα Ελληνικά:\nΘοδωρής Χατζηγιαννάκης (teo64x@yahoo.gr)"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON
 
@@ -878,7 +872,7 @@
 //
 #define LOCALIZED_ABOUTMS                      "Πληροφορίες για το FMS" // 
 #define LOCALIZED_ABOUTMS_FMS                  "FMS σημαίνει Fight Multiple Sclerosis." //
-#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Please consider donating to the\nNational Multiple Sclerosis Society.\nhttp:\x2F/www.nmss.org\n1-800-FIGHT-MS" // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Please consider donating to the\nNational Multiple Sclerosis Society.\nhttp://www.nmss.org\n1-800-FIGHT-MS" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON // 
 
 

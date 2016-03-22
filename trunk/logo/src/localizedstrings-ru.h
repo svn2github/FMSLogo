@@ -101,12 +101,6 @@
 //             |  DoubleQuote      |        \"        |
 //             +--------------------------------------+
 //
-// Due to a bug in Borland's resource compiler, two forward slashes cannot
-// appear in a quoted string.  To work around this problem, I "escape" the
-// first slash, as in:
-// 
-//    "http://fmslogo.org/" -> "http:\x2F/fmslogo.org/
-//
 /////////////////////////////////////////////////////////////////////////////
 
 //
@@ -862,13 +856,13 @@
 //
 #define LOCALIZED_ABOUTFMS                     "О "LOCALIZED_GENERAL_PRODUCTNAME 
 #define LOCALIZED_ABOUTFMS_VERSION             "Версия"
-#define LOCALIZED_ABOUTFMS_GUI                 "ГИП Джорджа Миллза\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/" 
+#define LOCALIZED_ABOUTFMS_GUI                 "ГИП Джорджа Миллза\nSoftronics, Inc.\nhttp://www.softronix.com/" 
 #define LOCALIZED_ABOUTFMS_CORE                "Ядро Брайена Харви\nКалифорнийский университет Беркли" 
-#define LOCALIZED_ABOUTFMS_INSTALLER           "Инсталляция базируется на Nullsoft Scriptable Install \nhttp:\x2F/nsis.sourceforge.net/" 
-#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nнаписанная и переданная Джимом Мюллером\nдоступна на http:\x2F/www.softronix.com/" 
+#define LOCALIZED_ABOUTFMS_INSTALLER           "Инсталляция базируется на Nullsoft Scriptable Install \nhttp://nsis.sourceforge.net/" 
+#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nнаписанная и переданная Джимом Мюллером\nдоступна на http://www.softronix.com/" 
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Благодарим Йегуду Катца и Эриха Нейвиртза" 
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" распространяется свободно\nСм. лицензию ГНУ"
-#define LOCALIZED_ABOUTFMS_NEWSGROUP           "Группа новостей в Интернете: comp.lang.logo\nпосетите форум на\nhttp:\x2F/groups.yahoo.com/group/LogoForum/" 
+#define LOCALIZED_ABOUTFMS_NEWSGROUP           "Группа новостей в Интернете: comp.lang.logo\nпосетите форум на\nhttp://groups.yahoo.com/group/LogoForum/" 
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Для Изучение внутренних свойств компьютера,\nиспользуйте  MultiMedia Logic от Softronics, Inc.\nАдаптация и локализация на русский язык Баглаева Игоря\nБурятский государственный университет, Улан-Удэ, bii@bsu.ru"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON 
 
@@ -878,7 +872,7 @@
 //
 #define LOCALIZED_ABOUTMS                      "О FMS" 
 #define LOCALIZED_ABOUTMS_FMS                  "FMS означает 'Fight Multiple Sclerosis'." 
-#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Пожалуйста, рассмотрите возможность помощи\nNational Multiple Sclerosis Society.\nhttp:\x2F/www.nmss.org\n1-800-FIGHT-MS" 
+#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Пожалуйста, рассмотрите возможность помощи\nNational Multiple Sclerosis Society.\nhttp://www.nmss.org\n1-800-FIGHT-MS" 
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON 
 
 
