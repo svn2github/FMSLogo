@@ -518,7 +518,7 @@ LoadBitmapFile(
         // if loaded ok then invalidate to display 
         if (OpenDIB(file, dwPixelWidth, dwPixelHeight))
         {
-            ::InvalidateRect(GetScreenWindow(), NULL, TRUE);
+            ::InvalidateRect(GetScreenWindow(), NULL, FALSE);
         }
         else
         {

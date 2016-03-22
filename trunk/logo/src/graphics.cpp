@@ -574,7 +574,7 @@ transline_helper(
         const UINT scrollerY = GetScreenVerticalScrollPosition();
         screenRect.Offset(-scrollerX, -scrollerY);
 
-	screen->RefreshRect(screenRect);
+	screen->RefreshRect(screenRect, false);
     }
 #else
     HDC MemDC = GetMemoryDeviceContext();

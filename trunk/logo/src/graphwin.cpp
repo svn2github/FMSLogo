@@ -806,7 +806,7 @@ static void InvalidateRectangleOnScreen(const RECT & ScreenRectangle)
     refreshRegion.SetRight(adjustedRectangle.right);
     refreshRegion.SetTop(adjustedRectangle.top);
     refreshRegion.SetBottom(adjustedRectangle.bottom);
-    CFmsLogo::GetMainFrame()->GetScreen()->RefreshRect(refreshRegion);
+    CFmsLogo::GetMainFrame()->GetScreen()->RefreshRect(refreshRegion, false);
 #else
     ::InvalidateRect(GetScreenWindow(), &adjustedRectangle, FALSE);
 #endif
@@ -1415,7 +1415,7 @@ void ChangeActiveScreenColor(int Red, int Green, int Blue)
     FillRect(MemDC, &FullRect, tempBrush);
     DeleteObject(tempBrush);
 
-    ::InvalidateRect(GetScreenWindow(), NULL, TRUE);
+    ::InvalidateRect(GetScreenWindow(), NULL, FALSE);
 #endif
 
     update_status_screencolor();
@@ -1506,7 +1506,7 @@ void zoom_helper(FLONUM NewZoomFactor)
 
 #ifndef WX_PURE
         // paint the entire window
-        InvalidateRect(GetScreenWindow(), NULL, TRUE);
+        InvalidateRect(GetScreenWindow(), NULL, FALSE);
 #endif
     }
 }
