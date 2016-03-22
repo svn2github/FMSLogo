@@ -34,5 +34,9 @@ Install the MSW version of wxWidgets 2.8.12 to e:\wxMSW-2.8.12 (or install it
 wherever you like and update the paths in src\Makefile).  Build it according
 to the instructions in src\configure-wxwidgets.sh.  This is needed to build FMSLogo.
 
+Checkout the trunk of the "logo" project from FMSLogo's subversion repository.
+
+  svn checkout svn://svn.code.sf.net/p/fmslogo/source/logo/trunk fmslogo-trunk
+
 Once these steps are complete, you can build the entire FMSLogo package by running
-"gmake binaryexe" in the current directory.
+"gmake binaryexe" in the fmslogo-trunk.
