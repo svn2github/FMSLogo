@@ -296,14 +296,14 @@ screensaver :
 	$(MAKE) -C ../screensaver
 
 test :
-	perl ../../extras/check-extra.pl Logolib/*
-	perl ../../extras/check-extra.pl Examples/3d/*.LGO
-	perl ../../extras/check-extra.pl Examples/Misc/*.LGO
-	perl ../../extras/check-extra.pl Examples/Multimed/*.LGO
-	perl ../../extras/check-extra.pl Examples/Network/*.LGO
-	perl ../../extras/check-extra.pl Examples/Pascal/*.LGO
-	perl ../../extras/check-extra.pl Examples/UCBLogo/*.LGO
-	perl ../../extras/check-extra.pl Examples/Windows/*.LGO
+	perl check-logo-code.pl Logolib/*
+	perl check-logo-code.pl Examples/3d/*.LGO
+	perl check-logo-code.pl Examples/Misc/*.LGO
+	perl check-logo-code.pl Examples/Multimed/*.LGO
+	perl check-logo-code.pl Examples/Network/*.LGO
+	perl check-logo-code.pl Examples/Pascal/*.LGO
+	perl check-logo-code.pl Examples/UCBLogo/*.LGO
+	perl check-logo-code.pl Examples/Windows/*.LGO
 
 
 .PHONY: all clean default test
