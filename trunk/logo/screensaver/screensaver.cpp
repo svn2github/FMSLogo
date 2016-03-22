@@ -668,12 +668,6 @@ void putcombobox(const char *Text, MESSAGETYPE type)
     HDC     memoryDeviceContext = GetMemoryDeviceContext();
     HBITMAP oldBitmap           = (HBITMAP) SelectObject(memoryDeviceContext, MemoryBitMap);
 
-    if (EnablePalette)
-    {
-        OldPalette = SelectPalette(memoryDeviceContext, ThePalette, FALSE);
-        RealizePalette(memoryDeviceContext);
-    }
-
     SetBkColor(memoryDeviceContext, scolor);
     SetBkMode(memoryDeviceContext, TRANSPARENT);
     if (type == MESSAGETYPE_Error)
@@ -708,11 +702,6 @@ void putcombobox(const char *Text, MESSAGETYPE type)
         g_NextTextLine,
         Text,
         strlen(Text));
-
-    if (EnablePalette)
-    {
-        SelectPalette(memoryDeviceContext, OldPalette, FALSE);
-    }
 
     SelectObject(memoryDeviceContext, oldFont);
     SelectObject(memoryDeviceContext, oldBitmap);

@@ -51,13 +51,7 @@ If your image does not use many colors you can reduce the size of the GIF file p
 
 <para>
 The optional <parameter>transcolorvector</parameter> input takes the form [red green blue] and specifies which colors in the image will be transparent.
-For this to work reliably you should be in 256 color video mode.
 If this input is not specified then no color is transparent.
-</para>
-
-<para>
-GIFSAVE will work best when your computer is in 256 color mode.
-You can call <link linkend="command-clearpalette">CLEARPALETTE</link> between each frame because each frame has its own color palette.
 </para>
 
 </listitem>

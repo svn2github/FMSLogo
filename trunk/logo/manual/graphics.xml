@@ -209,27 +209,6 @@ You can create 16.7 million different colors by mixing different amounts of red,
 </para>
 
 <para>
-If you're running with a 256 color Windows Driver for your monitor you will get "real" colors.
-The colors are stored in a table called a palette.
-The palette has room for 256 colors (chosen from 16.7 possibilities).
-You can tell if you are running in 256 color mode (have a palette) by popping up the <link linkend="command-status">STATUS</link> window and looking at the palette usage.
-If it shows "N/A" (Not Applicable) you are not running in 256 color mode.
-See the <link linkend="command-clearpalette">CLEARPALETTE</link> command for more details about managing the palette.
-</para>
-
-
-<para>
-If you are running with 16 (or less) color Windows Driver for your monitor Windows will simulate all the colors by mixing (dithering) the 16 (or less) colors.
-If the <link linkend="command-setpensize">SETPENSIZE</link> is too narrow (if it equals 1) Windows cannot mix (dither) colors.
-Windows does not mix (dither) colors on Fonts either.
-If your hardware can support a 256 Windows Driver you should look into loading the appropriate driver.
-The documentation with your graphics card explains the capabilities and how to load new drivers.
-&PRODUCTNAME; is fun in any mode but it's even more fun in 256 color mode.
-You can load 256 color bitmaps and do some incredible things with them.
-</para>
-
-
-<para>
 Example of instructions that set some common pen colors:
 
 <informaltable frame='all'>
@@ -250,26 +229,9 @@ Example of instructions that set some common pen colors:
 </para>
 
 <para>
-Note that when running 256 color mode with a palette that several advantages and disadvantages occur:
-</para>
-
-<para>
-Printing a 256 color image on a mono printer will be less pleasing than printing in 16 color mode.
-This is because no "dithering" (mixing dots) is used in 256 color mode.
-</para>
-
-<para>
-Running in 256 color mode is slower and takes more memory and may not be possible on some smaller machines or machines with limited video capabilities.
-</para>
-
-<para>
-Running in 256 color does give much more pleasant colors and even allows manipulation of 256 color bitmap files.
-</para>
-
-<para>
 For compatibility with other &GENERICNAME; implementations and simplicity for young programmers, &PRODUCTNAME; also supports single index colors.
 If you set any color with an 16 color index, then &PRODUCTNAME; outputs all colors as a 16 color index.
-If you set any color with an [red green blue] color vector or with a word such as <userinput>"red</userinput>, then &PRODUCTNAME; will output all colors as [red green blue] color vectors.
+If you set any color with an [red green blue] color vector or with a word such as <userinput>"red</userinput>, then &PRODUCTNAME; outputs all colors as [red green blue] color vectors.
 </para>
 
 

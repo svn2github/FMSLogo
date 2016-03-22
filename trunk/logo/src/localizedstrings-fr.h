@@ -807,7 +807,6 @@
 #define LOCALIZED_STATUS_PENCOLOR               "Crayon(RVB):"
 #define LOCALIZED_STATUS_FLOODCOLOR             "Remplis(RVB):"
 #define LOCALIZED_STATUS_SCREENCOLOR            "Ecran(RVB):"
-#define LOCALIZED_STATUS_PALETTE                "Palette:"
 #define LOCALIZED_STATUS_KERNEL                 "Noyau"
 #define LOCALIZED_STATUS_CALLS                  "Appels:"
 #define LOCALIZED_STATUS_PEAKMEMORY             "Mémoire:"

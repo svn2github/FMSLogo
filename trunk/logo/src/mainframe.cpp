@@ -192,13 +192,6 @@ CMainFrame::CLogoPicturePrintout::OnPrintPage(
     int tempWidth  = GetDeviceCaps(PrintDC, LOGPIXELSX);
     int tempHeight = GetDeviceCaps(PrintDC, LOGPIXELSY);
 
-    // if palette allocate it
-    if (EnablePalette)
-    {
-        OldPalette = SelectPalette(screenDc, ThePalette, FALSE);
-        RealizePalette(screenDc);
-    }
-
     // set up an assured contrast ?
     SetTextColor(PrintDC, 0x00000000L);
     SetBkColor(PrintDC, 0x00ffffffL);
@@ -254,12 +247,6 @@ CMainFrame::CLogoPicturePrintout::OnPrintPage(
             WXSTRING(LOCALIZED_ERROR),
             wxICON_ERROR);
         isOk = false;
-    }
-
-    // restore resources 
-    if (EnablePalette)
-    {
-        SelectPalette(screenDc, OldPalette, FALSE);
     }
 
     delete [] bitsPtr;

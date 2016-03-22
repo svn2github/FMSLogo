@@ -5,7 +5,6 @@ TO WINDOWTEST.SMOKETEST
    ; switch to window mode
    WINDOW
    CLEARSCREEN
-   CLEARPALETTE
 
    ; draw a circle whose edges are just barely visible
    SETPENCOLOR 0

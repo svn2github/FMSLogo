@@ -42,10 +42,6 @@ extern HPEN   g_ErasePen;
 extern LOGBRUSH FloodBrush;
 extern LOGBRUSH ScreenBrush;
 
-extern bool EnablePalette;
-extern HPALETTE OldPalette;
-extern HPALETTE ThePalette;
-
 #endif // WX_PURE
 
 extern int xoffset;
@@ -61,8 +57,6 @@ extern bool IsTimeToHalt;
 #ifndef WX_PURE
 
 extern HBITMAP MemoryBitMap;
-
-extern PLOGPALETTE MyLogPalette;
 
 #endif // WX_PURE
 
@@ -118,7 +112,6 @@ extern void set_pen_width(int w);
 extern int get_pen_height(void);
 extern void set_pen_height(int h);
 extern void GetWorkingAreaDimensions(int & workingAreaWidth, int & workingAreaHeight);
-extern RGBCOLOR LoadColor(int dpenr, int dpeng, int dpenb);
 extern struct PENSTATE & GetPenStateForSelectedTurtle();
 extern void paste_all_turtles(class wxDC & DeviceContext, FLONUM zoom);
 extern void exit_program(void);

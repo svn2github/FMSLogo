@@ -180,22 +180,6 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
     // mixing scaled painting and scaled drawing. Printing is never zoomed.
     // User can use Bitfit if he/she wants data scaled.
     HDC PaintDC = static_cast<HDC>(paintContext.GetHDC());
-
-    // grab the client area's backing store (a bitmap)
-    HDC memoryDC = static_cast<HDC>(m_MemoryDeviceContext->GetHDC());
-
-    HPALETTE oldPalette  = NULL;
-    HPALETTE oldPalette2 = NULL;
-
-    // If we have a palette, then use it.
-    if (EnablePalette)
-    {
-        oldPalette = SelectPalette(PaintDC, ThePalette, FALSE);
-        RealizePalette(PaintDC);
-
-        oldPalette2 = SelectPalette(memoryDC, ThePalette, FALSE);
-        RealizePalette(memoryDC);
-    }
 #endif
 
     // draw the turtles on top of the image
@@ -214,14 +198,6 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
     {
         // Allocate the back buffer (if needed)
         sourceDeviceContext = &GetBackBufferDeviceContext();
-
-#ifndef WX_PURE
-        if (EnablePalette)
-        {
-            SelectPalette(static_cast<HDC>(sourceDeviceContext->GetHDC()), ThePalette, FALSE);
-            RealizePalette(static_cast<HDC>(sourceDeviceContext->GetHDC()));
-        }
-#endif
 
         // Copy the portion of the memory image to the back buffer
         // that corresponds to the portion of the screen that is
@@ -468,15 +444,6 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
     {
         paste_all_turtles(paintContext, the_zoom);
     }
-
-#ifndef WX_PURE
-    /* restore resources */
-    if (EnablePalette)
-    {
-        SelectPalette(memoryDC, oldPalette2, FALSE);
-        SelectPalette(PaintDC, oldPalette, FALSE);
-    }
-#endif // WX_PURE
 }
 
 

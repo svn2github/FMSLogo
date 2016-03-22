@@ -44,6 +44,7 @@ LOAD "port.lgo
 LOAD "fontfacenames.lgo
 LOAD "label.lgo
 LOAD "pen.lgo
+LOAD "clearpalette.lgo
 LOAD "curves.lgo
 LOAD "fill.lgo
 LOAD "directory.lgo
@@ -232,6 +233,7 @@ TO TESTALL
   FONTFACENAMESTEST    ; from fontfacenames.lgo
   LABELTEST            ; from label.lgo
   PENTEST              ; from pen.lgo
+  CLEARPALETTETEST     ; from clearpalette.lgo
   ARCTEST              ; from curves.lgo
   FILLTEST             ; from fill.lgo
   FILETEST             ; from file.lgo

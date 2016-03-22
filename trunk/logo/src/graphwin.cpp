@@ -29,7 +29,6 @@
 
    #ifdef WX_PURE
       typedef struct __BITMAP      * HBITMAP;
-      typedef struct __LOGPALLETTE * PLOGPALETTE;
       typedef struct __WND         * HWND;
 
       typedef int LONG;
@@ -132,10 +131,6 @@ HPEN   g_ErasePen;                     // Handle to "Erase" Pen
 LOGBRUSH FloodBrush;                   // Handle to the "floodfill" brush
 LOGBRUSH ScreenBrush;                  // Handle to the "screen" background brush
 
-bool EnablePalette;                    // Flag to signal 256 color mode with palette
-HPALETTE OldPalette;                   // place holder for windows resources
-HPALETTE ThePalette;                   // Handle for the single color palette
-
 #endif  // WX_PURE
 
 int xoffset = 0;                       // Used to go from logo to windows coords x
@@ -151,8 +146,6 @@ bool zoom_flag = false;                // flag to signal in zoomed state
 FLONUM the_zoom = 1.0;                 // current zoom factor
 
 HBITMAP MemoryBitMap;                  // Backing store bitmap
-
-PLOGPALETTE MyLogPalette;              // Handle for the single logical color palette
 
 // Flag to signal that focus should go to the commander's editbox.  This is
 // initially set to true in TMyCommandWindow::DoButtonExecute(), but can
@@ -172,7 +165,6 @@ static CUTMAP * g_Bitmaps;
 static int      g_BitmapsLimit;
 
 static PENSTATE g_PenState;              // The state of the current pen (color, mode, etc.)
-static long     MaxColors = 0;           // The maximum # of colors available
 
 struct font_find_t
 {
@@ -439,50 +431,6 @@ PENSTATE & GetPenStateForSelectedTurtle()
     // the current turtle uses the global pen state
     return g_PenState;
 }
-
-#ifndef WX_PURE
-
-/* adds color to palette */
-RGBCOLOR LoadColor(int dpenr, int dpeng, int dpenb)
-{
-    /* convert to color and find nearest match */
-    RGBCOLOR color = PALETTERGB(dpenr, dpeng, dpenb);
-    int Index = GetNearestPaletteIndex(ThePalette, color);
-
-    /* if not exact and room for more then allocate it */
-    if ((PALETTERGB(
-             MyLogPalette->palPalEntry[Index].peRed,
-             MyLogPalette->palPalEntry[Index].peGreen,
-             MyLogPalette->palPalEntry[Index].peBlue) != color) && 
-        (MyLogPalette->palNumEntries < (MaxColors - 1)))
-    {
-
-        /* Why do check again? */
-        if (MyLogPalette->palNumEntries < 255)
-        {
-
-            // kill old palette
-            DeleteObject(ThePalette);
-
-            MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peRed = dpenr;
-            MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peGreen = dpeng;
-            MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peBlue = dpenb;
-            MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peFlags = 0;
-            MyLogPalette->palNumEntries++;
-
-            // if status window then update palette usage
-            update_status_paletteuse();
-
-            // make new palette with added color
-            ThePalette = CreatePalette(MyLogPalette);
-        }
-    }
-
-    /* return color new, matched or close */
-    return color;
-}
-
-#endif // WX_PURE
 
 // returns the dimensions of the working area, that is
 // the size of the desktop without the task bar.
@@ -1223,34 +1171,16 @@ NODE *lsetpixel(NODE *args)
         // memory
         HDC MemDC = GetMemoryDeviceContext();
 
-        if (EnablePalette)
-        {
-            OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
-            RealizePalette(MemDC);
-        }
-
         SetPixel(
             MemDC,
             +dest.x + xoffset,
             -dest.y + yoffset,
             color);
 
-        if (EnablePalette)
-        {
-            SelectPalette(MemDC, OldPalette, FALSE);
-        }
-
         //screen
         HDC ScreenDC = GetScreenDeviceContext();
 
         draw_turtle(false);
-
-        HPALETTE oldPalette2;
-        if (EnablePalette)
-        {
-            oldPalette2 = SelectPalette(ScreenDC, ThePalette, FALSE);
-            RealizePalette(ScreenDC);
-        }
 
         if (zoom_flag)
         {
@@ -1270,11 +1200,6 @@ NODE *lsetpixel(NODE *args)
                 +dest.x - GetScreenHorizontalScrollPosition() + xoffset,
                 -dest.y - GetScreenVerticalScrollPosition()   + yoffset,
                 color);
-        }
-
-        if (EnablePalette)
-        {
-            SelectPalette(ScreenDC, oldPalette2, FALSE);
         }
 
         draw_turtle(true);
@@ -1318,18 +1243,7 @@ NODE *lpixel(NODE *)
     // memory
     HDC MemDC = GetMemoryDeviceContext();
 
-    if (EnablePalette)
-    {
-        OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
-        RealizePalette(MemDC);
-    }
-
     RGBCOLOR the_color = GetPixel(MemDC, dest.x + xoffset, -dest.y + yoffset);
-
-    if (EnablePalette)
-    {
-        SelectPalette(MemDC, OldPalette, FALSE);
-    }
 
     if (bIndexMode)
     {
@@ -1362,12 +1276,6 @@ void logofill(bool bOld)
     // memory
     HDC MemDC = GetMemoryDeviceContext();
 
-    if (EnablePalette)
-    {
-        OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
-        RealizePalette(MemDC);
-    }
-
     SetTextColor(MemDC, pcolor);
 
     HBRUSH oldBrush = (HBRUSH) SelectObject(MemDC, JunkBrush);
@@ -1383,9 +1291,7 @@ void logofill(bool bOld)
     }
     else
     {
-        RGBCOLOR tcolor =
-            GetPixel(MemDC, dest.x + xoffset, -dest.y + yoffset) |
-            0x02000000; // for paletted devices
+        RGBCOLOR tcolor = GetPixel(MemDC, dest.x + xoffset, -dest.y + yoffset);
 
         ExtFloodFill(
             MemDC,
@@ -1393,11 +1299,6 @@ void logofill(bool bOld)
             -dest.y + yoffset,
             tcolor,
             FLOODFILLSURFACE);
-    }
-
-    if (EnablePalette)
-    {
-        SelectPalette(MemDC, OldPalette, FALSE);
     }
 
     SelectObject(MemDC, oldBrush);
@@ -1434,7 +1335,6 @@ NODE *lpencolor(NODE *)
 
 // Do all of the things necessary when the pen color changes:
 // * Sets the pen color on the active turtle
-// * Updates the palette, if necessary
 // * Updates the global pen
 // * Updates the values in the status window
 void ChangeActivePenColor(int Red, int Green, int Blue)
@@ -1444,16 +1344,7 @@ void ChangeActivePenColor(int Red, int Green, int Blue)
     penColor.green = Green;
     penColor.blue  = Blue;
 
-#ifndef WX_PURE
-    if (EnablePalette)
-    {
-        pcolor = LoadColor(Red, Green, Blue);
-    }
-    else
-#endif
-    {
-        pcolor = MAKERGB(Red, Green, Blue);
-    }
+    pcolor = MAKERGB(Red, Green, Blue);
 
     UpdateNormalPen(GetPenStateForSelectedTurtle().Width, pcolor);
 
@@ -1470,7 +1361,6 @@ NODE *lfloodcolor(NODE *)
 
 // Do all of the things necessary when the flood color changes:
 // * Sets the global flood color
-// * Updates the palette, if necessary
 // * Updates the global flood color brush
 // * Updates the values in the status window
 void ChangeActiveFloodColor(int Red, int Green, int Blue)
@@ -1479,16 +1369,9 @@ void ChangeActiveFloodColor(int Red, int Green, int Blue)
     dfld.green = Green;
     dfld.blue  = Blue;
 
-#ifndef WX_PURE
-    if (EnablePalette)
-    {
-        fcolor = LoadColor(dfld.red, dfld.green, dfld.blue);
-    }
-    else
-    {
-        fcolor = RGB(dfld.red, dfld.green, dfld.blue);
-    }
+    fcolor = RGB(dfld.red, dfld.green, dfld.blue);
 
+#ifndef WX_PURE
     FloodBrush.lbStyle = BS_SOLID;
     FloodBrush.lbColor = fcolor;
     FloodBrush.lbHatch = HS_VERTICAL;
@@ -1505,7 +1388,6 @@ NODE *lscreencolor(NODE *)
 
 // Do all of the things necessary when the screen color changes:
 // * Sets the global screen color
-// * Updates the palette, if necessary
 // * Updates the global screen brush (and erase brush)
 // * Updates the values in the status window
 void ChangeActiveScreenColor(int Red, int Green, int Blue)
@@ -1514,15 +1396,8 @@ void ChangeActiveScreenColor(int Red, int Green, int Blue)
     dscn.green = Green;
     dscn.blue  = Blue;
 
+    scolor = RGB(dscn.red, dscn.green, dscn.blue);
 #ifndef WX_PURE
-    if (EnablePalette)
-    {
-        scolor = LoadColor(dscn.red, dscn.green, dscn.blue);
-    }
-    else
-    {
-        scolor = RGB(dscn.red, dscn.green, dscn.blue);
-    }
 
     ScreenBrush.lbStyle = BS_SOLID;
     ScreenBrush.lbColor = scolor;
@@ -1536,20 +1411,9 @@ void ChangeActiveScreenColor(int Red, int Green, int Blue)
     // memory
     HDC MemDC = GetMemoryDeviceContext();
 
-    if (EnablePalette)
-    {
-        OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
-        RealizePalette(MemDC);
-    }
-
     HBRUSH tempBrush = CreateBrushIndirect(&ScreenBrush);
     FillRect(MemDC, &FullRect, tempBrush);
     DeleteObject(tempBrush);
-
-    if (EnablePalette)
-    {
-        SelectPalette(MemDC, OldPalette, FALSE);
-    }
 
     ::InvalidateRect(GetScreenWindow(), NULL, TRUE);
 #endif
@@ -1583,22 +1447,9 @@ void set_pen_height(int h)
 
 NODE *lclearpalette(NODE *)
 {
-#ifndef WX_PURE
-    // kill the palette and recreate it with just black and white
-    if (EnablePalette)
-    {
-        DeleteObject(ThePalette);
-
-        MyLogPalette->palNumEntries = 2;
-
-        update_status_paletteuse();
-
-        ThePalette = CreatePalette(MyLogPalette);
-
-        ::InvalidateRect(GetMainWindow(), NULL, TRUE);
-    }
-#endif
-
+    // MSWLogo supported display depths of 256 and under.
+    // FMSLogo no longer supports these, but retains the
+    // procedure as a no-op for compatibility.
     return Unbound;
 }
 
@@ -1701,12 +1552,6 @@ NODE *lbitblock(NODE *arg)
             HBRUSH fillBrush = CreateBrushIndirect(&FloodBrush);
             HDC    memDC     = GetMemoryDeviceContext();
 
-            if (EnablePalette)
-            {
-                OldPalette = SelectPalette(memDC, ThePalette, FALSE);
-                RealizePalette(memDC);
-            }
-
             RECT memoryRect;
             memoryRect.left   = +turtleLocation.x + xoffset;
             memoryRect.right  = memoryRect.left + cutWidth;
@@ -1714,11 +1559,6 @@ NODE *lbitblock(NODE *arg)
             memoryRect.top    = memoryRect.bottom - cutHeight;
 
             FillRect(memDC, &memoryRect, fillBrush);
-
-            if (EnablePalette)
-            {
-                SelectPalette(memDC, OldPalette, FALSE);
-            }
 
             //screen
             if (zoom_flag)
@@ -1970,28 +1810,12 @@ CopyFromBitmapArrayToClipboard()
         CF_BITMAP,
         g_Bitmaps[0].MemoryBitMap);
 
-    if (EnablePalette)
-    {
-        // If we have a palette given him a DIB and a palette too
-        ::SetClipboardData(
-            CF_DIB,
-            BitmapToDIB(
-                g_Bitmaps[0].MemoryBitMap,
-                ThePalette));
-
-        ::SetClipboardData(
-            CF_PALETTE,
-            CreatePalette(MyLogPalette));
-    }
-    else
-    {
-        // else give him a DIB using system palette
-        ::SetClipboardData(
-            CF_DIB,
-            BitmapToDIB(
-                g_Bitmaps[0].MemoryBitMap,
-                NULL));
-    }
+    // give him a DIB using system palette
+    ::SetClipboardData(
+        CF_DIB,
+        BitmapToDIB(
+            g_Bitmaps[0].MemoryBitMap,
+            NULL));
 
     ::CloseClipboard();
 #endif
@@ -2017,21 +1841,6 @@ PasteFromClipboardToBitmapArray()
         // we work in bmps here
         g_Bitmaps[0].MemoryBitMap = ::DIBToBitmap(tempDIB, tempPal);
 
-        // Fill our logical palette with the Palette from the clipboard
-        if (EnablePalette && (tempPal != NULL))
-        {
-            MyLogPalette->palNumEntries = ::GetPaletteEntries(
-                tempPal,
-                0,
-                256,
-                &MyLogPalette->palPalEntry[0]);
-
-            // now rebuild palette
-            ::DeleteObject(ThePalette);
-            ThePalette = ::CreatePalette(MyLogPalette);
-            update_status_paletteuse();
-        }
-
         // Let code know below that we have something
         g_Bitmaps[0].IsValid = true;
 
@@ -2042,24 +1851,10 @@ PasteFromClipboardToBitmapArray()
         ::EmptyClipboard();
         ::SetClipboardData(CF_BITMAP, g_Bitmaps[0].MemoryBitMap);
 
-        // If we have a palette given him a DIB and a palette too
-        if (EnablePalette)
-        {
-            ::SetClipboardData(
-                CF_DIB,
-                BitmapToDIB(g_Bitmaps[0].MemoryBitMap, ThePalette));
-
-            ::SetClipboardData(
-                CF_PALETTE,
-                CreatePalette(MyLogPalette));
-        }
-        else
-        {
-            // else give him a DIB using system palette
-            ::SetClipboardData(
-                CF_DIB,
-                BitmapToDIB(g_Bitmaps[0].MemoryBitMap, NULL));
-        }
+        // give him a DIB using system palette
+        ::SetClipboardData(
+            CF_DIB,
+            BitmapToDIB(g_Bitmaps[0].MemoryBitMap, NULL));
     }
     else
     {
@@ -2294,29 +2089,11 @@ NODE *lbitfit(NODE *arg)
             // TODO: Use bitmap device context.
             HBITMAP savedMemBitmap = (HBITMAP) SelectObject(MemDC, g_SelectedBitmap->MemoryBitMap);
 
-            HPALETTE savedScreenPalette;
-            HPALETTE savedMemoryPalette;
-            if (EnablePalette)
-            {
-                savedScreenPalette = SelectPalette(ScreenDC, ThePalette, FALSE);
-                RealizePalette(ScreenDC);
-
-                savedMemoryPalette = SelectPalette(MemDC, ThePalette, FALSE);
-                RealizePalette(MemDC);
-            }
-
             HBITMAP newMemoryBitmap = CreateCompatibleBitmap(ScreenDC, newWidth, newHeight);
             if (newMemoryBitmap != NULL)
             {
                 HDC tempMemDC = CreateCompatibleDC(ScreenDC);
                 HBITMAP savedTempMemoryBitmap = (HBITMAP) SelectObject(tempMemDC, newMemoryBitmap);
-
-                HPALETTE savedTempMemoryPalette;
-                if (EnablePalette)
-                {
-                    savedTempMemoryPalette = SelectPalette(tempMemDC, ThePalette, FALSE);
-                    RealizePalette(tempMemDC);
-                }
 
                 if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
                 {
@@ -2347,11 +2124,6 @@ NODE *lbitfit(NODE *arg)
                 // Restore the arrow cursor.
                 ::SetCursor(oldCursor);
 
-                if (EnablePalette)
-                {
-                    SelectPalette(tempMemDC, savedTempMemoryPalette, FALSE);
-                }
-
                 SelectObject(tempMemDC, savedTempMemoryBitmap);
                 DeleteDC(tempMemDC);
 
@@ -2365,13 +2137,6 @@ NODE *lbitfit(NODE *arg)
             else
             {
                 err_logo(OUT_OF_MEM, NIL);
-            }
-
-
-            if (EnablePalette)
-            {
-                SelectPalette(MemDC,    savedMemoryPalette, FALSE);
-                SelectPalette(ScreenDC, savedScreenPalette, FALSE);
             }
 
             SelectObject(MemDC, savedMemBitmap);
@@ -2913,15 +2678,6 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
                     for (int x = 0; x < bitmap->Width; x++)
                     {
                         RGBCOLOR pixel = ::GetPixel(TempMemDC, x, y);
-
-                        // If we're using a palette, then set a flag so that
-                        // Windows knows to use the palette.  This is what
-                        // PALETTERGB would do.
-                        if (EnablePalette && pixel != TRANSPARENT_COLOR)
-                        {
-                            pixel |= 0x02000000;
-                        }
-
                         *nextPixel++ = pixel;
                     }
                 }
@@ -2933,234 +2689,197 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
             // rectangle to guarantee that each pixel gets covered.
             const FLONUM deltaSourceX =  cosine;
             const FLONUM deltaSourceY = -sine;
-            if (EnablePalette)
+
+            // Use bilinear interpolation to make the picture look nice at rough angles.
+            for (int y = miny; y < maxy; y++)
             {
-                // The display has a palette, so bilinear interpolation would not work.
-                for (int y = miny; y < maxy; y++)
+                FLONUM sourceX = X_ROTATED(minx, y, cosine, sine) + xOrigin - 0.5;
+                FLONUM sourceY = Y_ROTATED(minx, y, cosine, sine) + yOrigin - 0.5;
+
+                for (int x = minx; x < maxx; x++)
                 {
-                    FLONUM sourceX = X_ROTATED(minx, y, cosine, sine) + xOrigin - 0.5;
-                    FLONUM sourceY = Y_ROTATED(minx, y, cosine, sine) + yOrigin - 0.5;
+                    // sourceX and sourceY look like this if computed in an absolute manner.
+                    // sourceX = X_ROTATED(x, y, cosine, sine) + xOrigin - 0.5;
+                    // sourceY = Y_ROTATED(x, y, cosine, sine) + yOrigin - 0.5;
 
-                    for (int x = minx; x < maxx; x++)
+                    if (-1.0 < sourceX && sourceX < sourceWidth &&
+                        -1.0 < sourceY && sourceY < sourceHeight)
                     {
-                        // sourceX and sourceY look like this if computed in an absolute manner.
-                        // sourceX = X_ROTATED(x, y, cosine, sine) + xOrigin - 0.5;
-                        // sourceY = Y_ROTATED(x, y, cosine, sine) + yOrigin - 0.5;
-
-                        if (0 <= sourceX && sourceX < sourceWidth &&
-                            0 <= sourceY && sourceY < sourceHeight)
+                        // Perform bilinear interpolation across the (potentially)
+                        // four pixels on the source bitmap on which this screen
+                        // pixel falls.
+                        FLONUM sourceXInt;
+                        FLONUM xFraction = modf(sourceX, &sourceXInt);
+                        if (sourceX < 0)
                         {
-                            int sourceXInt = static_cast<int>(sourceX);
-                            int sourceYInt = static_cast<int>(sourceY);
-                            const RGBCOLOR pixel = sourceBitmap[sourceYInt * bitmap->Width + sourceXInt];
-                            if (pixel != TRANSPARENT_COLOR)
-                            {
-                                SetWrappedPixel(
-                                    PaintDeviceContext,
-                                    x + xScreenOffset,
-                                    y + yScreenOffset,
-                                    pixel);
-                            }
+                            sourceXInt = -1.0;
+                            xFraction  = 1.0 + xFraction;
                         }
 
-                        sourceX += deltaSourceX;
-                        sourceY += deltaSourceY;
-                    }
-                }
-            }
-            else
-            {
-                // Use bilinear interpolation to make the picture look nice at rough angles.
-                for (int y = miny; y < maxy; y++)
-                {
-                    FLONUM sourceX = X_ROTATED(minx, y, cosine, sine) + xOrigin - 0.5;
-                    FLONUM sourceY = Y_ROTATED(minx, y, cosine, sine) + yOrigin - 0.5;
-
-                    for (int x = minx; x < maxx; x++)
-                    {
-                        // sourceX and sourceY look like this if computed in an absolute manner.
-                        // sourceX = X_ROTATED(x, y, cosine, sine) + xOrigin - 0.5;
-                        // sourceY = Y_ROTATED(x, y, cosine, sine) + yOrigin - 0.5;
-
-                        if (-1.0 < sourceX && sourceX < sourceWidth &&
-                            -1.0 < sourceY && sourceY < sourceHeight)
+                        FLONUM sourceYInt;
+                        FLONUM yFraction = modf(sourceY, &sourceYInt);
+                        if (sourceY < 0)
                         {
-                            // Perform bilinear interpolation across the (potentially)
-                            // four pixels on the source bitmap on which this screen
-                            // pixel falls.
-                            FLONUM sourceXInt;
-                            FLONUM xFraction = modf(sourceX, &sourceXInt);
-                            if (sourceX < 0)
+                            sourceYInt = -1.0;
+                            yFraction  = 1.0 + yFraction;
+                        }
+
+                        int sourceXInteger = static_cast<int>(sourceXInt);
+                        int sourceYInteger = static_cast<int>(sourceYInt);
+                        const RGBCOLOR * x0y0Ptr = sourceBitmap + sourceYInteger * bitmap->Width + sourceXInteger;
+                        const RGBCOLOR * x0y1Ptr = x0y0Ptr + bitmap->Width;
+
+                        // Read the four pixels from the bitmap. If any pixel falls
+                        // outside the bitmap, then use the screen's pixel, instead.
+                        RGBCOLOR pixelx0y0;
+                        RGBCOLOR pixelx1y0;
+                        RGBCOLOR pixelx0y1;
+                        RGBCOLOR pixelx1y1;
+                        if (0 <= sourceXInteger && sourceXInteger < bitmap->Width - 1)
+                        {
+                            // The "X0" and "X1" pixels both fall on the bitmap
+
+                            if (0 <= sourceYInteger && sourceYInteger < bitmap->Height - 1)
                             {
-                                sourceXInt = -1.0;
-                                xFraction  = 1.0 + xFraction;
+                                // All four source pixels are on the bitmap.
+                                pixelx0y0 = x0y0Ptr[0];
+                                pixelx1y0 = x0y0Ptr[1];
+                                pixelx0y1 = x0y1Ptr[0];
+                                pixelx1y1 = x0y1Ptr[1];
                             }
-
-                            FLONUM sourceYInt;
-                            FLONUM yFraction = modf(sourceY, &sourceYInt);
-                            if (sourceY < 0)
+                            else if (sourceYInteger < 0)
                             {
-                                sourceYInt = -1.0;
-                                yFraction  = 1.0 + yFraction;
-                            }
-
-                            int sourceXInteger = static_cast<int>(sourceXInt);
-                            int sourceYInteger = static_cast<int>(sourceYInt);
-                            const RGBCOLOR * x0y0Ptr = sourceBitmap + sourceYInteger * bitmap->Width + sourceXInteger;
-                            const RGBCOLOR * x0y1Ptr = x0y0Ptr + bitmap->Width;
-
-                            // Read the four pixels from the bitmap. If any pixel falls
-                            // outside the bitmap, then use the screen's pixel, instead.
-                            RGBCOLOR pixelx0y0;
-                            RGBCOLOR pixelx1y0;
-                            RGBCOLOR pixelx0y1;
-                            RGBCOLOR pixelx1y1;
-                            if (0 <= sourceXInteger && sourceXInteger < bitmap->Width - 1)
-                            {
-                                // The "X0" and "X1" pixels both fall on the bitmap
-
-                                if (0 <= sourceYInteger && sourceYInteger < bitmap->Height - 1)
-                                {
-                                    // All four source pixels are on the bitmap.
-                                    pixelx0y0 = x0y0Ptr[0];
-                                    pixelx1y0 = x0y0Ptr[1];
-                                    pixelx0y1 = x0y1Ptr[0];
-                                    pixelx1y1 = x0y1Ptr[1];
-                                }
-                                else if (sourceYInteger < 0)
-                                {
-                                    // The "Y0" pixels falls below the bitmap.
-                                    pixelx0y0 = TRANSPARENT_COLOR;
-                                    pixelx1y0 = TRANSPARENT_COLOR;
-                                    pixelx0y1 = x0y1Ptr[0];
-                                    pixelx1y1 = x0y1Ptr[1];
-                                }
-                                else
-                                {
-                                    // The "Y1" pixels fall above the bitmap.
-                                    pixelx0y0 = x0y0Ptr[0];
-                                    pixelx1y0 = x0y0Ptr[1];
-                                    pixelx0y1 = TRANSPARENT_COLOR;
-                                    pixelx1y1 = TRANSPARENT_COLOR;
-                                }
-                            }
-                            else if (sourceXInteger < 0)
-                            {
-                                // The "X0" pixels fall to the left of the bitmap.
+                                // The "Y0" pixels falls below the bitmap.
                                 pixelx0y0 = TRANSPARENT_COLOR;
-                                pixelx0y1 = TRANSPARENT_COLOR;
-
-                                if (0 <= sourceYInteger && sourceYInteger < bitmap->Height - 1)
-                                {
-                                    // The Y0 and Y1 are on the bitmap.
-                                    pixelx1y0 = x0y0Ptr[1];
-                                    pixelx1y1 = x0y1Ptr[1];
-                                }
-                                else if (sourceYInteger < 0)
-                                {
-                                    // The "Y0" pixels fall below the bitmap.
-                                    pixelx1y0 = TRANSPARENT_COLOR;
-                                    pixelx1y1 = x0y1Ptr[1];
-                                }
-                                else
-                                {
-                                    // The "Y1" pixels fall above the bitmap.
-                                    pixelx1y0 = x0y0Ptr[1];
-                                    pixelx1y1 = TRANSPARENT_COLOR;
-                                }
-                            }
-                            else
-                            {
-                                // The "X1" pixels fall to the right of the bitmap.
                                 pixelx1y0 = TRANSPARENT_COLOR;
-                                pixelx1y1 = TRANSPARENT_COLOR;
-
-                                if (0 <= sourceYInteger && sourceYInteger < bitmap->Height - 1)
-                                {
-                                    // The Y0 and Y1 are on the bitmap.
-                                    pixelx0y0 = x0y0Ptr[0];
-                                    pixelx0y1 = x0y1Ptr[0];
-                                }
-                                else if (sourceYInteger < 0)
-                                {
-                                    // The "Y0" pixels fall below the bitmap.
-                                    pixelx0y0 = TRANSPARENT_COLOR;
-                                    pixelx0y1 = x0y1Ptr[0];
-                                }
-                                else
-                                {
-                                    // The "Y1" pixels fall above the bitmap.
-                                    pixelx0y0 = x0y0Ptr[0];
-                                    pixelx0y1 = TRANSPARENT_COLOR;
-                                }
-                            }
-
-                            if (pixelx0y0 == pixelx0y1 &&
-                                pixelx0y0 == pixelx1y0 &&
-                                pixelx0y0 == pixelx1y1)
-                            {
-                                // If all of the adjacent pixels are the same, then
-                                // bilinear interpolation is unnecessary.  For a typical
-                                // sprite image, this optimization yields a 10% speed
-                                // improvement.
-                                if (pixelx0y0 != TRANSPARENT_COLOR)
-                                {
-                                    SetWrappedPixel(
-                                        PaintDeviceContext,
-                                        x + xScreenOffset,
-                                        y + yScreenOffset,
-                                        pixelx0y0);
-                                }
+                                pixelx0y1 = x0y1Ptr[0];
+                                pixelx1y1 = x0y1Ptr[1];
                             }
                             else
                             {
-                                // Get the screen's value for each of the transparent pixels.
-                                // If there aren't any, then we don't need to read the screen
-                                // pixel.
-                                if (pixelx0y0 == TRANSPARENT_COLOR ||
-                                    pixelx1y0 == TRANSPARENT_COLOR ||
-                                    pixelx0y1 == TRANSPARENT_COLOR ||
-                                    pixelx1y1 == TRANSPARENT_COLOR)
-                                {
-                                    const RGBCOLOR screenPixel = GetWrappedPixel(
-                                        PaintDeviceContext,
-                                        x + xScreenOffset,
-                                        y + yScreenOffset);
+                                // The "Y1" pixels fall above the bitmap.
+                                pixelx0y0 = x0y0Ptr[0];
+                                pixelx1y0 = x0y0Ptr[1];
+                                pixelx0y1 = TRANSPARENT_COLOR;
+                                pixelx1y1 = TRANSPARENT_COLOR;
+                            }
+                        }
+                        else if (sourceXInteger < 0)
+                        {
+                            // The "X0" pixels fall to the left of the bitmap.
+                            pixelx0y0 = TRANSPARENT_COLOR;
+                            pixelx0y1 = TRANSPARENT_COLOR;
 
-                                    if (pixelx0y0 == TRANSPARENT_COLOR)
-                                    {
-                                        pixelx0y0 = screenPixel;
-                                    }
-                                    if (pixelx1y0 == TRANSPARENT_COLOR)
-                                    {
-                                        pixelx1y0 = screenPixel;
-                                    }
-                                    if (pixelx0y1 == TRANSPARENT_COLOR)
-                                    {
-                                        pixelx0y1 = screenPixel;
-                                    }
-                                    if (pixelx1y1 == TRANSPARENT_COLOR)
-                                    {
-                                        pixelx1y1 = screenPixel;
-                                    }
-                                }
+                            if (0 <= sourceYInteger && sourceYInteger < bitmap->Height - 1)
+                            {
+                                // The Y0 and Y1 are on the bitmap.
+                                pixelx1y0 = x0y0Ptr[1];
+                                pixelx1y1 = x0y1Ptr[1];
+                            }
+                            else if (sourceYInteger < 0)
+                            {
+                                // The "Y0" pixels fall below the bitmap.
+                                pixelx1y0 = TRANSPARENT_COLOR;
+                                pixelx1y1 = x0y1Ptr[1];
+                            }
+                            else
+                            {
+                                // The "Y1" pixels fall above the bitmap.
+                                pixelx1y0 = x0y0Ptr[1];
+                                pixelx1y1 = TRANSPARENT_COLOR;
+                            }
+                        }
+                        else
+                        {
+                            // The "X1" pixels fall to the right of the bitmap.
+                            pixelx1y0 = TRANSPARENT_COLOR;
+                            pixelx1y1 = TRANSPARENT_COLOR;
 
-                                // interpolate in the X direction, then the Y direction
-                                RGBCOLOR pixely0 = InterpolateColors(pixelx0y0, pixelx1y0, xFraction);
-                                RGBCOLOR pixely1 = InterpolateColors(pixelx0y1, pixelx1y1, xFraction);
-                                RGBCOLOR pixel   = InterpolateColors(pixely0, pixely1, yFraction);
+                            if (0 <= sourceYInteger && sourceYInteger < bitmap->Height - 1)
+                            {
+                                // The Y0 and Y1 are on the bitmap.
+                                pixelx0y0 = x0y0Ptr[0];
+                                pixelx0y1 = x0y1Ptr[0];
+                            }
+                            else if (sourceYInteger < 0)
+                            {
+                                // The "Y0" pixels fall below the bitmap.
+                                pixelx0y0 = TRANSPARENT_COLOR;
+                                pixelx0y1 = x0y1Ptr[0];
+                            }
+                            else
+                            {
+                                // The "Y1" pixels fall above the bitmap.
+                                pixelx0y0 = x0y0Ptr[0];
+                                pixelx0y1 = TRANSPARENT_COLOR;
+                            }
+                        }
 
+                        if (pixelx0y0 == pixelx0y1 &&
+                            pixelx0y0 == pixelx1y0 &&
+                            pixelx0y0 == pixelx1y1)
+                        {
+                            // If all of the adjacent pixels are the same, then
+                            // bilinear interpolation is unnecessary.  For a typical
+                            // sprite image, this optimization yields a 10% speed
+                            // improvement.
+                            if (pixelx0y0 != TRANSPARENT_COLOR)
+                            {
                                 SetWrappedPixel(
                                     PaintDeviceContext,
                                     x + xScreenOffset,
                                     y + yScreenOffset,
-                                    pixel);
+                                    pixelx0y0);
                             }
                         }
+                        else
+                        {
+                            // Get the screen's value for each of the transparent pixels.
+                            // If there aren't any, then we don't need to read the screen
+                            // pixel.
+                            if (pixelx0y0 == TRANSPARENT_COLOR ||
+                                pixelx1y0 == TRANSPARENT_COLOR ||
+                                pixelx0y1 == TRANSPARENT_COLOR ||
+                                pixelx1y1 == TRANSPARENT_COLOR)
+                            {
+                                const RGBCOLOR screenPixel = GetWrappedPixel(
+                                    PaintDeviceContext,
+                                    x + xScreenOffset,
+                                    y + yScreenOffset);
 
-                        sourceX += deltaSourceX;
-                        sourceY += deltaSourceY;
+                                if (pixelx0y0 == TRANSPARENT_COLOR)
+                                {
+                                    pixelx0y0 = screenPixel;
+                                }
+                                if (pixelx1y0 == TRANSPARENT_COLOR)
+                                {
+                                    pixelx1y0 = screenPixel;
+                                }
+                                if (pixelx0y1 == TRANSPARENT_COLOR)
+                                {
+                                    pixelx0y1 = screenPixel;
+                                }
+                                if (pixelx1y1 == TRANSPARENT_COLOR)
+                                {
+                                    pixelx1y1 = screenPixel;
+                                }
+                            }
+
+                            // interpolate in the X direction, then the Y direction
+                            RGBCOLOR pixely0 = InterpolateColors(pixelx0y0, pixelx1y0, xFraction);
+                            RGBCOLOR pixely1 = InterpolateColors(pixelx0y1, pixelx1y1, xFraction);
+                            RGBCOLOR pixel   = InterpolateColors(pixely0, pixely1, yFraction);
+
+                            SetWrappedPixel(
+                                PaintDeviceContext,
+                                x + xScreenOffset,
+                                y + yScreenOffset,
+                                pixel);
+                        }
                     }
+
+                    sourceX += deltaSourceX;
+                    sourceY += deltaSourceY;
                 }
             }
         }
@@ -3826,7 +3545,7 @@ NODE *lmachine(NODE *)
         cons(make_intnode((FIXNUM) 32),
         cons(make_intnode((FIXNUM) BitMapWidth),
         cons(make_intnode((FIXNUM) BitMapHeight),
-        cons(make_intnode((FIXNUM) (EnablePalette ? 1 : 0)),
+        cons(make_intnode((FIXNUM) 0),
         cons(make_intnode((FIXNUM) (LOBYTE(LOWORD(GetVersion())))),
         cons(make_intnode((FIXNUM) (HIBYTE(LOWORD(GetVersion())))),
         cons(make_intnode((FIXNUM) workingAreaWidth),
@@ -3887,12 +3606,6 @@ void label(const char *s)
     // memory
     HDC MemDC = GetMemoryDeviceContext();
 
-    if (EnablePalette)
-    {
-        OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
-        RealizePalette(MemDC);
-    }
-
     SetBkColor(MemDC, scolor);
     SetBkMode(MemDC, TRANSPARENT);
 
@@ -3923,23 +3636,11 @@ void label(const char *s)
         s,
         strlen(s));
 
-    if (EnablePalette)
-    {
-        SelectPalette(MemDC, OldPalette, FALSE);
-    }
-
     SelectObject(MemDC, oldFont);
 
 
     // screen
     HDC ScreenDC = GetScreenDeviceContext();
-
-    if (EnablePalette)
-    {
-        OldPalette = SelectPalette(ScreenDC, ThePalette, FALSE);
-        RealizePalette(ScreenDC);
-    }
-
     SetBkColor(ScreenDC, scolor);
     SetBkMode(ScreenDC, TRANSPARENT);
 
@@ -3970,12 +3671,6 @@ void label(const char *s)
     }
 
     SelectObject(ScreenDC, oldFont);
-
-    if (EnablePalette)
-    {
-        SelectPalette(ScreenDC, OldPalette, FALSE);
-    }
-
     DeleteObject(tempFont);
 }
 
@@ -4015,57 +3710,9 @@ void MyMessageScan()
 void init_videomode()
 {
 #ifndef WX_PURE
-    // Get video mode parameters
-    HDC screenDeviceContext = GetDC(0);
-    if (screenDeviceContext)
-    {
-        int bitsPerPixel = GetDeviceCaps(screenDeviceContext, BITSPIXEL);
-        int totalPlanes  = GetDeviceCaps(screenDeviceContext, PLANES);
-
-        MaxColors = pow(2.0, bitsPerPixel + totalPlanes);
-
-        ReleaseDC(0, screenDeviceContext);
-    }
-
     // Get Dialog Units for Controls
     BaseUnitsx = LOWORD(GetDialogBaseUnits());
     BaseUnitsy = HIWORD(GetDialogBaseUnits());
-
-    // check if a palette exists
-    HDC screen = CreateDC("DISPLAY", NULL, NULL, NULL);
-    if (screen != NULL)
-    {
-        if ((GetDeviceCaps(screen, RASTERCAPS) & RC_PALETTE) == 0)
-        {
-            EnablePalette = false;
-        }
-        else
-        {
-            EnablePalette = true;
-        }
-
-        DeleteDC(screen);
-    }
-
-    /* If palette then build one */
-    if (EnablePalette)
-    {
-        MyLogPalette = (LPLOGPALETTE) new char[sizeof(LOGPALETTE) + sizeof(PALETTEENTRY) * MaxColors];
-        MyLogPalette->palVersion = 0x300;
-        MyLogPalette->palNumEntries = 2;
-
-        MyLogPalette->palPalEntry[0].peRed = 0;
-        MyLogPalette->palPalEntry[0].peGreen = 0;
-        MyLogPalette->palPalEntry[0].peBlue = 0;
-        MyLogPalette->palPalEntry[0].peFlags = 0;
-
-        MyLogPalette->palPalEntry[1].peRed = 255;
-        MyLogPalette->palPalEntry[1].peGreen = 255;
-        MyLogPalette->palPalEntry[1].peBlue = 255;
-        MyLogPalette->palPalEntry[1].peFlags = 0;
-
-        ThePalette = CreatePalette(MyLogPalette);
-    }
 #endif
 }
 

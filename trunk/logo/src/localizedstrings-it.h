@@ -807,7 +807,6 @@
 #define LOCALIZED_STATUS_PENCOLOR               "Penna(RGB):"
 #define LOCALIZED_STATUS_FLOODCOLOR             "Riempimento(RGB):"
 #define LOCALIZED_STATUS_SCREENCOLOR            "Schermo(RGB):"
-#define LOCALIZED_STATUS_PALETTE                "Usa paletta:"
 #define LOCALIZED_STATUS_KERNEL                 "Kernel"
 #define LOCALIZED_STATUS_CALLS                  "Chiamate:"
 #define LOCALIZED_STATUS_PEAKMEMORY             "Picco Memoria Allocata:"

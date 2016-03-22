@@ -3,7 +3,6 @@ LOAD "testlib.lgo
 TO BITLOADSIZETEST :width :height :bitdepth
   ; this is a regression test for bug #1324580
   CLEARSCREEN
-  CLEARPALETTE
   HIDETURTLE
   REPEAT 500 [ FORWARD REPCOUNT RIGHT 91 ]
   SHOWTURTLE
@@ -48,7 +47,6 @@ END
 TO BITCOPYTEST
 
   CLEARSCREEN
-  CLEARPALETTE
   SETBITMODE 1
   PENDOWN
 
@@ -204,7 +202,6 @@ TO BITSAVE.TESTHELPER :bitdepth :activearea :pictureinstructions
 
     ; Draw a distinctive picture.
     CLEARSCREEN
-    CLEARPALETTE
     HIDETURTLE
     RUN :pictureinstructions
     SHOWTURTLE
@@ -312,7 +309,6 @@ TO BITSAVE.WITHACTIVEAREA
     LOCALMAKE "savedPenColor   PENCOLOR
 
     CLEARSCREEN
-    CLEARPALETTE
     REPEAT 500 [ FORWARD REPCOUNT RIGHT 91 SETPENCOLOR REPCOUNT ]
     
     SETACTIVEAREA [ 0 0 200 200 ]

@@ -579,12 +579,6 @@ transline_helper(
 #else
     HDC MemDC = GetMemoryDeviceContext();
 
-    if (EnablePalette)
-    {
-        OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
-        RealizePalette(MemDC);
-    }
-
     SetROP2(MemDC, LineMode);
 
     HPEN oldPen = (HPEN) SelectObject(MemDC, Pen);
@@ -605,11 +599,6 @@ transline_helper(
     if (penState.Width < 2 && penState.Mode != XOR_PUT)
     {
         SetPixel(MemDC, ToX, ToY, LogicalPen.lopnColor);
-    }
-
-    if (EnablePalette)
-    {
-        SelectPalette(MemDC, OldPalette, FALSE);
     }
 
     // restore the previous bitmap and pen
@@ -671,12 +660,6 @@ transline_helper(
         HDC ScreenDC = GetScreenDeviceContext();
         SetROP2(ScreenDC, LineMode);
 
-        if (EnablePalette)
-        {
-            OldPalette = SelectPalette(ScreenDC, ThePalette, FALSE);
-            RealizePalette(ScreenDC);
-        }
-
         oldPen = (HPEN) SelectObject(ScreenDC, Pen);
 
         UINT screenFromX = FromX - GetScreenHorizontalScrollPosition();
@@ -692,11 +675,6 @@ transline_helper(
         if (penState.Width < 2 && penState.Mode != XOR_PUT)
         {
             SetPixel(ScreenDC, screenFromX, screenFromY, LogicalPen.lopnColor);
-        }
-
-        if (EnablePalette)
-        {
-            SelectPalette(ScreenDC, OldPalette, FALSE);
         }
 
         // restore the previous pen
@@ -2880,15 +2858,6 @@ GetColorArgument(
             arg = car(args);
         }
     }
-
-#ifndef WX_PURE
-    if (EnablePalette)
-    {
-        // We're using a palette, so use the closest matching
-        // color that is available.
-        color = LoadColor(RedValue(color), GreenValue(color), BlueValue(color));
-    }
-#endif
 
     return color;
 }

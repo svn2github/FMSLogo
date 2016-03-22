@@ -22,7 +22,6 @@
 extern void update_status_evals(void);
 extern void update_status_floodcolor(void);
 extern void update_status_memory(void);
-extern void update_status_paletteuse(void);
 extern void update_status_pencolor(void);
 extern void update_status_pencontact(void);
 extern void update_status_penstyle(void);

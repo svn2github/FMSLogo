@@ -215,7 +215,7 @@
 #define LOCALIZED_ALTERNATE_CHECKBOXGET            "пкаисио_екецвоу_тилг" // 
 #define LOCALIZED_ALTERNATE_CHECKBOXSET            "пкаисио_екецвоу_ояислос" // 
 #define LOCALIZED_ALTERNATE_CLEAN                  "йахаяислос" // 
-#define LOCALIZED_ALTERNATE_CLEARPALETTE           "clearpalette" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_CLEARPALETTE           "clearpalette" //
 #define LOCALIZED_ALTERNATE_CLEARSCREEN            "йахаяислос_охомгс" // 
 #define LOCALIZED_ALTERNATE_CLEARTEXT              "йахаяилсос_йеилемоу" // 
 #define LOCALIZED_ALTERNATE_CLEARTIMER             "йахаяислос_вяомолетяоу" // 
@@ -807,7 +807,6 @@
 #define LOCALIZED_STATUS_PENCOLOR               "пщМА (йпц/RGB):" //
 #define LOCALIZED_STATUS_FLOODCOLOR             "цщЛИСЛА (йпц/RGB):" // 
 #define LOCALIZED_STATUS_SCREENCOLOR            "оХЭМГ (йпц/RGB):" // 
-#define LOCALIZED_STATUS_PALETTE                "пАКщТА:" // 
 #define LOCALIZED_STATUS_KERNEL                 "пУЯчМАР" // 
 #define LOCALIZED_STATUS_CALLS                  "йКчСЕИР:" // 
 #define LOCALIZED_STATUS_PEAKMEMORY             "лМчЛГ:" // 

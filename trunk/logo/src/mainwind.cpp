@@ -174,15 +174,6 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitmapBitDepth)
         }
         else
         {
-            // if palette yank it in 
-            HPALETTE oldPalette2;
-            if (EnablePalette)
-            {
-                oldPalette2 = SelectPalette(dc, ThePalette, FALSE);
-                RealizePalette(dc);
-            }
-
-
             // build file header
             BITMAPFILEHEADER bitmapFileHeader;
             bitmapFileHeader.bfType = 19778;
@@ -311,11 +302,6 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitmapBitDepth)
             }
 
             // restore some of the resources
-            if (EnablePalette)
-            {
-                SelectPalette(dc, oldPalette2, FALSE);
-            }
-
             free(dibBuffer);
         }
     }
@@ -392,42 +378,12 @@ OpenDIB(
             ReadBitmapInfo->bmiHeader.biClrUsed = 1 << ReadBitmapInfo->bmiHeader.biBitCount;
         }
 
-        /* only allow bitcount equal to display capability */
-        WORD ReadbitCount = ReadBitmapInfo->bmiHeader.biBitCount;
-
-        // if palette load up palette from bitmap color table
-        if (EnablePalette)
-        {
-            if (ReadbitCount == 8)
-            {
-                for (DWORD i = 0; i < ReadBitmapInfo->bmiHeader.biClrUsed; i++)
-                {
-                    LoadColor(
-                        ReadBitmapInfo->bmiColors[i].rgbRed,
-                        ReadBitmapInfo->bmiColors[i].rgbGreen,
-                        ReadBitmapInfo->bmiColors[i].rgbBlue);
-                }
-            }
-            else
-            {
-                // fill palette with a wide range
-                for (int i = 0; i < 5; i++)
-                {
-                    for (int j = 0; j < 5; j++)
-                    {
-                        for (int k = 0; k < 5; k++)
-                        {
-                            LoadColor(i * 42, j * 42, k * 42);
-                        }
-                    }
-                }
-            }
-        }
-
-
         // compute image size if not set
         if (ReadBitmapInfo->bmiHeader.biSizeImage == 0)
         {
+            /* only allow bitcount equal to display capability */
+            WORD ReadbitCount = ReadBitmapInfo->bmiHeader.biBitCount;
+
             long longWidth = (((NewPixelWidth * ReadbitCount) + 31) / 32) * 4;
 
             ReadBitmapInfo->bmiHeader.biSizeImage = longWidth * NewPixelHeight;
@@ -446,19 +402,6 @@ OpenDIB(
 
         HDC DCHandle = CreateCompatibleDC(screen);
 
-        HPALETTE oldPalette  = NULL;
-        HPALETTE oldPalette2 = NULL;
-
-        // if palette yank it
-        if (EnablePalette)
-        {
-            oldPalette = SelectPalette(memoryDC, ThePalette, FALSE);
-            RealizePalette(memoryDC);
-
-            oldPalette2 = SelectPalette(screen, ThePalette, FALSE);
-            RealizePalette(screen);
-        }
-
         // now create the bitmap with the bits just loaded
         HBITMAP NewBitmapHandle = CreateDIBitmap(
             screen,
@@ -471,13 +414,7 @@ OpenDIB(
         // now dump the bits 
         delete [] bitsPtr;
       
-        if (EnablePalette)
-        {
-            SelectPalette(screen, oldPalette2, FALSE);
-        }
-
         // now that things are clean we can check if we are ok 
-
         if (!NewBitmapHandle)
         {
             return false;
@@ -485,12 +422,6 @@ OpenDIB(
 
         // We've now made a bonefide bitmap. 
         // But we want to copy it into the existing backing store.
-        if (EnablePalette)
-        {
-            oldPalette2 = SelectPalette(DCHandle, ThePalette, FALSE);
-            RealizePalette(DCHandle);
-        }
-
         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(DCHandle, NewBitmapHandle);
 
         /* if either dimension is more than half then put in corner */
@@ -544,12 +475,6 @@ OpenDIB(
         }
 
         // return resources
-        if (EnablePalette)
-        {
-            SelectPalette(memoryDC, oldPalette, FALSE);
-            SelectPalette(DCHandle, oldPalette2, FALSE);
-        }
-
         SelectObject(DCHandle, oldBitmap2);
         DeleteDC(DCHandle);
 
@@ -629,15 +554,6 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
 
     // grab the client area's backing store (a bitmap)
     HDC memoryDC = GetMemoryDeviceContext();
-
-    HPALETTE oldPalette  = NULL;
-
-    // If we have a palette, then use it.
-    if (EnablePalette)
-    {
-        oldPalette = SelectPalette(PaintDC, ThePalette, FALSE);
-        RealizePalette(PaintDC);
-    }
 
     // Use a back buffer if we are drawing sprite turtles
     // (turtles with rotating bitmaps).
@@ -754,12 +670,6 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
 
         // draw the turtles on top of the image
         paste_all_turtles(*wxSourceDeviceContext, 1.0);
-
-        if (EnablePalette)
-        {
-            SelectPalette(sourceDeviceContext, ThePalette, FALSE);
-            RealizePalette(sourceDeviceContext);
-        }
     }
     else
     {
@@ -820,12 +730,6 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
         wxDCTemp paintDeviceContext(PaintDC);
         paste_all_turtles(paintDeviceContext, the_zoom);
 #endif
-    }
-
-    // restore resources
-    if (EnablePalette)
-    {
-        SelectPalette(PaintDC, oldPalette, FALSE);
     }
 }
 

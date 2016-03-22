@@ -28,7 +28,6 @@ TO PERSPECTIVETEST.SMOKETEST
    ; switch to perspective mode
    PERSPECTIVE
    CLEARSCREEN
-   CLEARPALETTE
  
    ; draw a cube
    SETPENCOLOR 0

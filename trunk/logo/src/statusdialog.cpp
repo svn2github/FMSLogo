@@ -33,7 +33,6 @@ enum
    ID_STATUS_PENCOLOR,
    ID_STATUS_FLOODCOLOR,
    ID_STATUS_SCREENCOLOR,
-   ID_STATUS_PALETTE,
    ID_STATUS_WIDTH,
    ID_STATUS_VISIBILITY,
    ID_STATUS_STYLE,
@@ -129,13 +128,11 @@ CStatusDialog::CStatusDialog(wxWindow * Parent)
                 LOCALIZED_STATUS_PENCOLOR,
                 LOCALIZED_STATUS_FLOODCOLOR, 
                 LOCALIZED_STATUS_SCREENCOLOR,
-                LOCALIZED_STATUS_PALETTE,
             },
             {
                 &m_PenColor,
                 &m_FloodColor,
                 &m_ScreenColor,
-                &m_PaletteUse,
             },
         },
         {
@@ -232,7 +229,6 @@ CStatusDialog::CStatusDialog(wxWindow * Parent)
     SetPenColor(255, 255, 255);
     SetFloodColor(255, 255, 255);
     SetScreenColor(255, 255, 255);
-    SetPaletteUse(-1);
     SetCalls(8888888);
     SetPeakMemory(8888888);
     SetVectors(8888888);
@@ -251,7 +247,6 @@ void CStatusDialog::PopulateAllFields()
     update_status_evals();
     update_status_floodcolor();
     update_status_memory();
-    update_status_paletteuse();
     update_status_pencolor();
     update_status_pencontact();
     update_status_penstyle();
@@ -375,22 +370,6 @@ void CStatusDialog::SetFloodColor(int Red, int Green, int Blue)
     colorString.Printf(WXSTRING("%d,%d,%d"), Red, Green, Blue);
 
     m_FloodColor->SetLabel(colorString);
-}
-
-void CStatusDialog::SetPaletteUse(int ColorsUsed)
-{
-    wxString paletteUseString;
-
-    if (ColorsUsed < 0)
-    {
-        paletteUseString = WXSTRING(LOCALIZED_STATUS_NOT_APPLICABLE);
-    }
-    else
-    {
-        paletteUseString.Printf(WXSTRING("%d"), ColorsUsed);
-    }
-
-    m_PaletteUse->SetLabel(paletteUseString);
 }
 
 void CStatusDialog::SetCalls(int TotalCalls)
@@ -518,28 +497,6 @@ void update_status_screencolor(void)
         GetStatusDialog()->SetScreenColor(dscn.red, dscn.green, dscn.blue);
     }
 }
-
-void update_status_paletteuse(void)
-{
-    if (status_flag)
-    {
-        int totalColorsUsed;
-
-#ifndef WX_PURE
-        if (EnablePalette)
-        {
-            totalColorsUsed = MyLogPalette->palNumEntries;
-        }
-        else
-#endif
-        {
-            totalColorsUsed = -1;
-        }
-
-        GetStatusDialog()->SetPaletteUse(totalColorsUsed);
-    }
-}
-
 
 void update_status_penwidth(void)
 {

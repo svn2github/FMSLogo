@@ -989,23 +989,9 @@ POINT t[MAXVERT];   // Screen coordinates of POLYGON to display
 // Display the POLYGON
 void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
 {
-#ifndef WX_PURE
     // PrecomputeCentroid(Poly);
 
     RGBCOLOR color = ComputeColor(Poly->Centroid, Poly->Normal, Poly->ColorNdx);
-
-    if (EnablePalette)
-    {
-        WORD palPrevNumEntries = MyLogPalette->palNumEntries;
-        color = LoadColor(GetRValue(color), GetGValue(color), GetBValue(color));
-
-        if (palPrevNumEntries != MyLogPalette->palNumEntries)
-        {
-            SelectPalette(m_MemDC, OldPalette, FALSE);
-            OldPalette = SelectPalette(m_MemDC, ThePalette, FALSE);
-            RealizePalette(m_MemDC);
-        }
-    }
 
     VERTEXLIST * vertices = Poly->Vertices;
 
@@ -1023,6 +1009,8 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
         }
         vertices = vertices->Next;
     } while (vertices != Poly->Vertices);
+
+#ifndef WX_PURE
 
 // t[i].x = t[0].x;
 // t[i].y = t[0].y;    // Close off the POLYGON
@@ -1122,12 +1110,6 @@ void TThreeDSolid::View()
     // memory
     m_MemDC = GetMemoryDeviceContext();
 
-    if (EnablePalette)
-    {
-        OldPalette = SelectPalette(m_MemDC, ThePalette, FALSE);
-        RealizePalette(m_MemDC);
-    }
-
     // Create the correct brush and display the POLYGON
     HPEN hOldpen = HPEN(SelectObject(m_MemDC, GetStockObject(NULL_PEN)));
 
@@ -1136,11 +1118,6 @@ void TThreeDSolid::View()
     TraverseTree(m_Tree);
 
     SelectObject(m_MemDC, hOldpen);
-
-    if (EnablePalette)
-    {
-        SelectPalette(m_MemDC, OldPalette, FALSE);
-    }
 
     ::InvalidateRect(GetScreenWindow(), NULL, FALSE);
 #endif

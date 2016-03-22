@@ -59,7 +59,7 @@ Where the meaning of each member is given by the table below.
       <row>
         <entry>5</entry>
         <entry>IsPaletteEnabled</entry>
-        <entry>1, if a palette is enabled, 0, otherwise.</entry>
+        <entry>0, always (&PRODUCTNAME; does not support displays that use palettes).</entry>
       </row>
       <row>
         <entry>6</entry>

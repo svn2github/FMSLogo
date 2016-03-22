@@ -807,7 +807,6 @@
 #define LOCALIZED_STATUS_PENCOLOR               "pseudo.Pen(RGB):"
 #define LOCALIZED_STATUS_FLOODCOLOR             "pseudo.Flood(RGB):"
 #define LOCALIZED_STATUS_SCREENCOLOR            "pseudo.Screen(RGB):"
-#define LOCALIZED_STATUS_PALETTE                "pseudo.Palette use:"
 #define LOCALIZED_STATUS_KERNEL                 "pseudo.Kernel"
 #define LOCALIZED_STATUS_CALLS                  "pseudo.Calls:"
 #define LOCALIZED_STATUS_PEAKMEMORY             "pseudo.Peak Memory:"

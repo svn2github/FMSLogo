@@ -21,6 +21,7 @@ II. New features/bugs fixed:
   Changed in 7.0.0
   o Dropped support for the Win 9X versions of Windows.
   o Dropped support for the original Pentium processor.
+  o Dropped support for display depths less than 16-bit true color.
   o Partial fix for bug #373; the screen saver now supports the DLLCALL,
     STATUS, and windowing command sets.
 

@@ -12,7 +12,7 @@ TO MACHINETEST.SMOKETEST
    SIMPLEREPORTTEST [ITEM 2 MACHINE] 32            ; word size
    FAILIFNOTTRUE    [LESSP ITEM 3 MACHINE 20000]   ; screen width
    FAILIFNOTTRUE    [LESSP ITEM 4 MACHINE 20000]   ; screen height
-   FAILIFNOTTRUE    [MEMBERP ITEM 5 MACHINE [0 1]] ; paletted
+   SIMPLEREPORTTEST [ITEM 5 MACHINE] 0             ; is paletted
    FAILIFNOTTRUE    [LESSP ITEM 6 MACHINE 20]      ; windows major version
    FAILIFNOTTRUE    [LESSP ITEM 7 MACHINE 10]      ; windows minor version
    FAILIFNOTTRUE    [LESSP ITEM 8 MACHINE 20000]   ; working area width

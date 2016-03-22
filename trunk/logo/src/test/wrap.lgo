@@ -5,7 +5,6 @@ TO WRAPTEST.SMOKETEST
    ; switch to wrap mode
    WRAP
    CLEARSCREEN
-   CLEARPALETTE
 
    ; draw a circle whose edges fall outside the window boundaries
    SETPENCOLOR 0

@@ -33,7 +33,6 @@ TO BITMODETEST.SMOKETEST
 
    ; erase everything
    CLEARSCREEN
-   CLEARPALETTE
 
    ; paste the pattern onto a neutral background
    ; in all of the possible modes

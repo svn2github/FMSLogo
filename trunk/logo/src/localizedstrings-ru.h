@@ -807,7 +807,6 @@
 #define LOCALIZED_STATUS_PENCOLOR               "Перо(RGB):" 
 #define LOCALIZED_STATUS_FLOODCOLOR             "Заливка(RGB):" 
 #define LOCALIZED_STATUS_SCREENCOLOR            "Экран(RGB):" 
-#define LOCALIZED_STATUS_PALETTE                "Используемая палитра:" 
 #define LOCALIZED_STATUS_KERNEL                 "Ядро" 
 #define LOCALIZED_STATUS_CALLS                  "Вызовы:" 
 #define LOCALIZED_STATUS_PEAKMEMORY             "Пиковая память:" 

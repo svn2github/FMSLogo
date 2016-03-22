@@ -22,7 +22,6 @@ public:
     void SetPenColor(int Red, int Green, int Blue);
     void SetScreenColor(int Red, int Green, int Blue);
     void SetFloodColor(int Red, int Green, int Blue);
-    void SetPaletteUse(int ColorsUsed);
     void SetCalls(int TotalCalls);
     void SetPeakMemory(int TotalNodes);
     void SetVectors(int TotalVectors);
@@ -46,7 +45,6 @@ private:
     wxStaticText * m_PenColor;
     wxStaticText * m_FloodColor;
     wxStaticText * m_ScreenColor;
-    wxStaticText * m_PaletteUse;
 
     wxStaticText * m_TotalCalls;
     wxStaticText * m_PeakMemory;

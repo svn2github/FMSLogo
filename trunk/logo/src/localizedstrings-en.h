@@ -807,7 +807,6 @@
 #define LOCALIZED_STATUS_PENCOLOR               "Pen(RGB):"
 #define LOCALIZED_STATUS_FLOODCOLOR             "Flood(RGB):"
 #define LOCALIZED_STATUS_SCREENCOLOR            "Screen(RGB):"
-#define LOCALIZED_STATUS_PALETTE                "Palette use:"
 #define LOCALIZED_STATUS_KERNEL                 "Kernel"
 #define LOCALIZED_STATUS_CALLS                  "Calls:"
 #define LOCALIZED_STATUS_PEAKMEMORY             "Peak Memory:"

@@ -200,6 +200,8 @@ $Exceptions{'command-checkboxcreate.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 
 $Exceptions{'command-checkboxget.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 
+$Exceptions{'command-clearpalette.xml'}{'bannedword'}{'function'} = 1;
+
 $Exceptions{'command-comboboxaddstring.xml'}{'allcaps'}{'DODRAW'} = 1;
 
 $Exceptions{'command-comboboxgettext.xml'}{'allcaps'}{'DODRAW'} = 1;
