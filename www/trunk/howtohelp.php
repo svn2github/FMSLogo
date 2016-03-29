@@ -16,17 +16,13 @@
 				</p>
 
 				<ul>
-					<li>Of course, you can help with the programming side of things. 
-					There are three version of FMSLogo: the wxWidgets version, the screensaver, and the OWL version.
-					The wxWidgets can be compiled with i686-w64-mingw32-gcc package from cygwin.
-					The screensaver can be compiled with MinGW.
-					The OWL version can be compiled old versions of Borland C++ and TASM, which are not available in stores anymore.
-					If you want to help on the programming side of things, you must first obtain one of these products.
+					<li>If you program in C++, then you can help by fixing bugs or implementing new features. 
+					FMSLogo is built using completely free and zero-cost tools.
+					There is a thumbnail sketch of how to setup a build environment at <a href="https://sourceforge.net/p/fmslogo/source/HEAD/tree/logo/trunk/HOWTO-BUILD.TXT">BUILD.TXT</a>.
 					To my knowledge, I am the only one who has ever compiled FMSLogo, so don't expect this to be easy.
-					I wrote a thumbnail sketch of how to build it in BUILD.TXT.
-					Even if you are unable to build FMSLogo, if report where you get stuck, you may help other developers.</li>
+					Even if you are unable to build FMSLogo, if report where you get stuck in the FMSLogo ticketing system on SourceForge, you may help other developers.</li>
 
-				  <li>The build system consists of hand-written Makefiles that have hard-coded paths that only work on machine.
+				  <li>The build system consists of hand-written Makefiles that have hard-coded paths that only work on my machine.
 					If you know how to generalize the build to work like other GPL projects (with configure), that would be a great contribution.</li>
 
 				  <li>I would like to bundle FMSLogo with lots of high-quality mini-applications written in FMSLogo that show off what it's capable of.
@@ -55,7 +51,8 @@
 
 				  <li>File bugs. 
 					  FMSLogo is full of them and they should all be tracked.
-					  If you know of a bug, please file it in the <a href="https://sourceforge.net/p/fmslogo/bugs/">bug tracker</a>.</li>
+					  If you know of a bug, please file it in the <a href="https://sourceforge.net/p/fmslogo/bugs/">bug tracker</a>.
+					  You must have a SourceForge account to create a bug ticket.</li>
 
 				<li>If you're a GNU/Linux user, you can become a <a href="http://appdb.winehq.org/">WINE application maintainer</a> for FMSLogo.
 					  I intend to port FMSLogo to GNU/Linux some day, but that could be years from now.
