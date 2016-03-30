@@ -289,7 +289,7 @@ $(foreach lcid,$(LCIDS),$(eval $(call FMSLOGO_template,$(lcid))))
 # Include dependency info, if present:
 -include .deps/*.d
 
-tags : *.cpp *.h *.c
+tags : *.cpp *.h
 	etags localizedstrings-en.h $(shell /usr/bin/find . -iname '*.cpp' -o -iname '*.h' -o -iname '*.c' -o -iname '*.cxx')
 
 screensaver :
