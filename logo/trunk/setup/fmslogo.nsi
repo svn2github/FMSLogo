@@ -23,6 +23,7 @@
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+!include MUI2.nsh
 !include LogicLib.nsh
 !include x64.nsh
 
@@ -35,11 +36,15 @@ Name "FMSLogo"
 ; The file to write
 OutFile "${FMSLOGO_OUTPUT_FILE}"
 
-; Use an XP manifest
-XPStyle on
+
+; Modern UI Options
+!define MUI_HEADERIMAGE
+!define MUI_HEADERIMAGE_BITMAP "fmslogo-header-icon.bmp"
+!define MUI_ICON               "../src/fmslogo.ico"
 
 ; Add a Vista manifest for UAC that requests admin rights, if available.
 RequestExecutionLevel highest
+
 
 ; The default installation directory
 InstallDir "$PROGRAMFILES\FMSLogo"
@@ -58,30 +63,53 @@ VIAddVersionKey "FileVersion"     "${FMSLOGO_VERSION}"
 
 VIProductVersion ${FMSLOGO_MAJOR_VERSION}.${FMSLOGO_MINOR_VERSION}.${FMSLOGO_MICRO_VERSION}.0
 
+Var StartMenuFolder
+
 ;--------------------------------
 
 ; Pages
 
-Page components
-Page directory
-Page instfiles
+!insertmacro MUI_PAGE_LICENSE "..\src\License.txt"
+!insertmacro MUI_PAGE_COMPONENTS
+!insertmacro MUI_PAGE_DIRECTORY
 
-UninstPage uninstConfirm
-UninstPage instfiles
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER      "FMSLogo"          ; default start menu folder
+!define MUI_STARTMENUPAGE_REGISTRY_ROOT      SHELL_CONTEXT      ; where to store the custom start menu folder
+!define MUI_STARTMENUPAGE_REGISTRY_KEY       "Software\FMSLogo"
+!define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "StartMenuFolder"
+!insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
+
+!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_PAGE_FINISH
+  
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
+!insertmacro MUI_UNPAGE_FINISH
 
 ; variables
 var previousinstalldir ; full path to the uninstaller
 
 ; Languages
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"  ; the default language
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\German.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Italian.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Spanish.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Greek.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Portuguese.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Russian.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Croatian.nlf"
+!insertmacro MUI_LANGUAGE "English"  ; the default language
+!insertmacro MUI_LANGUAGE "German"
+!insertmacro MUI_LANGUAGE "Italian"
+!insertmacro MUI_LANGUAGE "Spanish"
+!insertmacro MUI_LANGUAGE "French"
+!insertmacro MUI_LANGUAGE "Greek"
+!insertmacro MUI_LANGUAGE "Portuguese"
+!insertmacro MUI_LANGUAGE "Russian"
+!insertmacro MUI_LANGUAGE "Croatian"
+!define MUI_LANGDLL_ALLLANGUAGES ; don't filter language to system code page
+
+LangString FMSLogoDescription ${LANG_ENGLISH}    "Install the FMSLogo programming environment."
+LangString FMSLogoDescription ${LANG_GERMAN}     "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
+LangString FMSLogoDescription ${LANG_SPANISH}    "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
+LangString FMSLogoDescription ${LANG_ITALIAN}    "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
+LangString FMSLogoDescription ${LANG_PORTUGUESE} "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
+LangString FMSLogoDescription ${LANG_FRENCH}     "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
+LangString FMSLogoDescription ${LANG_GREEK}      "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
+LangString FMSLogoDescription ${LANG_RUSSIAN}    "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
+LangString FMSLogoDescription ${LANG_CROATIAN}   "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
 
 LangString DesktopShortcut ${LANG_ENGLISH}    "Desktop Shortcut"
 LangString DesktopShortcut ${LANG_GERMAN}     "Desktop Shortcut" ; NOT_YET_LOCALIZED
@@ -93,15 +121,15 @@ LangString DesktopShortcut ${LANG_GREEK}      "Óõíôüìåõóç ÅðéöÜíåéáò Åñãáóßáò"
 LangString DesktopShortcut ${LANG_RUSSIAN}    "ßðëûê ðàáî÷åãî ñòîëà" 
 LangString DesktopShortcut ${LANG_CROATIAN}   "Preèac na Radnu površinu"
 
-LangString StartMenuShortcuts ${LANG_ENGLISH}    "Start Menu Shortcuts"
-LangString StartMenuShortcuts ${LANG_GERMAN}     "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
-LangString StartMenuShortcuts ${LANG_SPANISH}    "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
-LangString StartMenuShortcuts ${LANG_ITALIAN}    "Collegamento nel Menu Start"
-LangString StartMenuShortcuts ${LANG_PORTUGUESE} "Atalho no Menu Iniciar"
-LangString StartMenuShortcuts ${LANG_FRENCH}     "Raccourcis Menu Démarrer" 
-LangString StartMenuShortcuts ${LANG_GREEK}      "Óõíôïìåýóåéò Ìåíïý ¸íáñîç" 
-LangString StartMenuShortcuts ${LANG_RUSSIAN}    "ßðëûê ìåíþ Ïóñê" 
-LangString StartMenuShortcuts ${LANG_CROATIAN}   "Preèaci za Start izbornik"
+LangString DesktopShortcutDescription ${LANG_ENGLISH}    "Put a shortcut to FMSLogo on the desktop."
+LangString DesktopShortcutDescription ${LANG_GERMAN}     "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
+LangString DesktopShortcutDescription ${LANG_SPANISH}    "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
+LangString DesktopShortcutDescription ${LANG_ITALIAN}    "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
+LangString DesktopShortcutDescription ${LANG_PORTUGUESE} "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
+LangString DesktopShortcutDescription ${LANG_FRENCH}     "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
+LangString DesktopShortcutDescription ${LANG_GREEK}      "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
+LangString DesktopShortcutDescription ${LANG_RUSSIAN}    "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
+LangString DesktopShortcutDescription ${LANG_CROATIAN}   "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
 
 LangString ScreenSaver ${LANG_ENGLISH}    "Screen Saver"
 LangString ScreenSaver ${LANG_GERMAN}     "Screen Saver" ; NOT_YET_LOCALIZED
@@ -112,6 +140,16 @@ LangString ScreenSaver ${LANG_FRENCH}     "Screen Saver" ; NOT_YET_LOCALIZED
 LangString ScreenSaver ${LANG_GREEK}      "Screen Saver" ; NOT_YET_LOCALIZED 
 LangString ScreenSaver ${LANG_RUSSIAN}    "Screen Saver" ; NOT_YET_LOCALIZED 
 LangString ScreenSaver ${LANG_CROATIAN}   "Screen Saver" ; NOT_YET_LOCALIZED 
+
+LangString ScreenSaverDescription ${LANG_ENGLISH}    "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this."
+LangString ScreenSaverDescription ${LANG_GERMAN}     "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
+LangString ScreenSaverDescription ${LANG_SPANISH}    "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
+LangString ScreenSaverDescription ${LANG_ITALIAN}    "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
+LangString ScreenSaverDescription ${LANG_PORTUGUESE} "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
+LangString ScreenSaverDescription ${LANG_FRENCH}     "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
+LangString ScreenSaverDescription ${LANG_GREEK}      "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
+LangString ScreenSaverDescription ${LANG_RUSSIAN}    "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
+LangString ScreenSaverDescription ${LANG_CROATIAN}   "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
 
 ; uninstall must be able to remove all traces of any previous installation.
 Function uninstall
@@ -193,11 +231,11 @@ Function uninstall
   Delete $previousinstalldir\uninstall.exe
 
   ; Remove shortcuts, if any
-  Delete "$SMPROGRAMS\FMSLogo\*.*"
-  Delete "$DESKTOP\FMSLogo.lnk"
+  !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
+  RMDir  /r "$SMPROGRAMS\$StartMenuFolder"
+  Delete    "$DESKTOP\FMSLogo.lnk"
 
   ; Remove directories used
-  RMDir "$SMPROGRAMS\FMSLogo"
   RMDir /r "$previousinstalldir\logolib"
   RMDir /r "$previousinstalldir\examples"
   RMDir "$previousinstalldir"
@@ -209,7 +247,6 @@ Function uninstall
 FunctionEnd
 
 
-!include Sections.nsh
 !include FileFunc.nsh
 !insertmacro GetParameters
 !insertmacro GetOptions
@@ -252,10 +289,17 @@ FunctionEnd
   !insertmacro InstallLanguageFile.PerLanguage ${LANG_CROATIAN}   ${build_path} ${filename_stem} ${filename_extension}
 !macroend
 
+  
+; Because we are using solid compression, files that are required before
+; the actual installation should be stored first in the data block.
+; This makes the installer start faster.
+!insertmacro MUI_RESERVEFILE_LANGDLL
+
+
 ;--------------------------------
 
 ; The stuff to install
-Section "FMSLogo"
+Section "FMSLogo" FMSLogoSectionId
 
   SectionIn RO
 
@@ -294,30 +338,32 @@ Section "FMSLogo"
   ;
   ; create a file association for .lgo
   ;
-  WriteRegStr SHELL_CONTEXT "software\classes\.lgo"      ""             "Logo program"
-  WriteRegStr SHELL_CONTEXT "software\classes\.lgo"      "Logo program" "Logo program"
-  WriteRegStr SHELL_CONTEXT "software\classes\Logo program\shell"              "" "open"
+  WriteRegStr SHELL_CONTEXT "software\classes\.lgo"  ""             "Logo program"
+  WriteRegStr SHELL_CONTEXT "software\classes\.lgo"  "Logo program" "Logo program"
+  WriteRegStr SHELL_CONTEXT "software\classes\Logo program\shell"              ""  "open"
   WriteRegStr SHELL_CONTEXT "software\classes\Logo program\DefaultIcon"        "" '$INSTDIR\fmslogo.exe,0'
   WriteRegStr SHELL_CONTEXT "software\classes\Logo program\shell\open\command" "" '$INSTDIR\fmslogo.exe -L%1'
 
+  ;
+  ; Create Start Menu shortcuts (if requested)
+  ;
+  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+    CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
+    CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk"        "$INSTDIR\uninstall.exe"       "" "$INSTDIR\uninstall.exe" 0
+    CreateShortCut "$SMPROGRAMS\$StartMenuFolder\FMSLogo.lnk"          "$INSTDIR\fmslogo.exe"         "" "$INSTDIR\fmslogo.exe" 0
+    CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Examples.lnk"         "$INSTDIR\examples"            "" "$INSTDIR\examples" 0
+    CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Examples (index).lnk" "$INSTDIR\examples\index.html" "" "$INSTDIR\examples\index.html" 0
+  !insertmacro MUI_STARTMENU_WRITE_END
+
 SectionEnd
 
 
-Section $(StartMenuShortcuts)
-  CreateDirectory "$SMPROGRAMS\FMSLogo"
-  CreateShortCut "$SMPROGRAMS\FMSLogo\Uninstall.lnk"        "$INSTDIR\uninstall.exe"       "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\FMSLogo\FMSLogo.lnk"          "$INSTDIR\fmslogo.exe"         "" "$INSTDIR\fmslogo.exe" 0
-  CreateShortCut "$SMPROGRAMS\FMSLogo\Examples.lnk"         "$INSTDIR\examples"            "" "$INSTDIR\examples" 0
-  CreateShortCut "$SMPROGRAMS\FMSLogo\Examples (index).lnk" "$INSTDIR\examples\index.html" "" "$INSTDIR\examples\index.html" 0
-SectionEnd
-
-
-Section $(DesktopShortcut)
+Section $(DesktopShortcut) DesktopShortcutSectionId
   CreateShortCut "$DESKTOP\FMSLogo.lnk" "$INSTDIR\fmslogo.exe" "" "$INSTDIR\fmslogo.exe" 0 
 SectionEnd
 
 
-Section /o $(ScreenSaver) sectionid_screensaver
+Section /o $(ScreenSaver) ScreenSaverSectionId
   ; Install the screen saver to the system directory.
   SetOutPath $SYSDIR
   !insertmacro InstallLanguageFile ..\screensaver\ fmslogo .scr
@@ -326,6 +372,7 @@ SectionEnd
 
 Function .onInit
 
+  ; First, read the language from the command-line
   ${GetParameters} $R0
   ClearErrors
   ${GetOptions} $R0 /LCID= $LANGUAGE
@@ -338,45 +385,19 @@ Function .onInit
   StrCmp $LANGUAGE ${LANG_PORTUGUESE} SetupUser
   StrCmp $LANGUAGE ${LANG_RUSSIAN}    SetupUser
   StrCmp $LANGUAGE ${LANG_SPANISH}    SetupUser
-  IfSilent SetupUser
 
-  ; An LCID was specified, but it's not one that we support
 
-  StrCmp $LANGUAGE "" SelectLanguage
-  MessageBox MB_OK|MB_ICONEXCLAMATION "Unrecognized LCID $LANGUAGE.$\nLCID must be one of the following:$\n  ${LANG_CROATIAN} (Croatian),$\n$\n  ${LANG_ENGLISH} (English),$\n  ${LANG_FRENCH} (French),$\n  ${LANG_GERMAN} (German),$\n  ${LANG_GREEK} (Greek),$\n  ${LANG_ITALIAN} (Italian),$\n  ${LANG_PORTUGUESE} (Portuguese),$\n  ${LANG_RUSSIAN} (Russian), and$\n  ${LANG_SPANISH} (Spanish).$\n"
-  Abort
-
-SelectLanguage:
-  ; Language selection dialog
-  Push ""
+  ; Either no language was passed on the command-line or
+  ; one whose LCID isn't supported was given.
+  ; Launch the language picker (from modern UI) 
+  ; default to English
   Push ${LANG_ENGLISH}
-  Push " English" ; HACK: put a space in before "English" to make it appear first and be the default
-  Push ${LANG_CROATIAN}
-  Push Croatian
-  Push ${LANG_FRENCH}
-  Push French
-  Push ${LANG_GERMAN}
-  Push German
-  Push ${LANG_GREEK}
-  Push Greek
-  Push ${LANG_ITALIAN}
-  Push Italian
-  Push ${LANG_PORTUGUESE}
-  Push Portuguese
-  Push ${LANG_RUSSIAN}
-  Push Russian
-  Push ${LANG_SPANISH}
-  Push Spanish
-  Push A ; A means auto count languages
-         ; for the auto count to work the first empty push (Push "") must remain
-  LangDLL::LangDialog "Installer Language" "Please select the language to install"
-
   Pop $LANGUAGE
-  StrCmp $LANGUAGE "cancel" 0 SetupUser
-    Abort
+  !insertmacro MUI_LANGDLL_DISPLAY
 
-  ; assume regular user until we know they are a power user
 SetupUser:
+
+  ; assume non-privileged user until we know they are an administrator
   SetShellVarContext current
   StrLen $2 "$PROFILE\FMSLogo"
   StrCpy $INSTDIR "$PROFILE\FMSLogo" $2 0
@@ -399,9 +420,9 @@ SetupUser.AllUsers:
   StrCpy $INSTDIR "$PROGRAMFILES\FMSLogo" $2 0
 
   ; We can write to the system directory, so enable the screen saver
-  SectionGetFlags ${sectionid_screensaver} $3
+  SectionGetFlags ${ScreenSaverSectionId} $3
   IntOp $3 $3 | ${SF_SELECTED}
-  SectionSetFlags ${sectionid_screensaver} $3
+  SectionSetFlags ${ScreenSaverSectionId} $3
 
   goto SetupUser.Done
 
@@ -611,48 +632,9 @@ Section "Uninstall"
 
   ; Remove files and uninstaller
   Delete $INSTDIR\fmslogo.exe
-  Delete $INSTDIR\fmslogo-${LANG_ENGLISH}.exe
-  Delete $INSTDIR\fmslogo-${LANG_GERMAN}.exe
-  Delete $INSTDIR\fmslogo-${LANG_SPANISH}.exe
-  Delete $INSTDIR\fmslogo-${LANG_ITALIAN}.exe
-  Delete $INSTDIR\fmslogo-${LANG_PORTUGUESE}.exe
-  Delete $INSTDIR\fmslogo-${LANG_GREEK}.exe
-  Delete $INSTDIR\fmslogo-${LANG_FRENCH}.exe
-  Delete $INSTDIR\fmslogo-${LANG_RUSSIAN}.exe
-  Delete $INSTDIR\fmslogo-${LANG_CROATIAN}.exe
-
   Delete $INSTDIR\startup.logoscript
-  Delete $INSTDIR\startup-${LANG_ENGLISH}.logoscript
-  Delete $INSTDIR\startup-${LANG_GERMAN}.logoscript
-  Delete $INSTDIR\startup-${LANG_SPANISH}.logoscript
-  Delete $INSTDIR\startup-${LANG_ITALIAN}.logoscript
-  Delete $INSTDIR\startup-${LANG_PORTUGUESE}.logoscript
-  Delete $INSTDIR\startup-${LANG_GREEK}.logoscript
-  Delete $INSTDIR\startup-${LANG_FRENCH}.logoscript
-  Delete $INSTDIR\startup-${LANG_RUSSIAN}.logoscript
-  Delete $INSTDIR\startup-${LANG_CROATIAN}.logoscript
-
   Delete $INSTDIR\logohelp.chm
-  Delete $INSTDIR\logohelp-${LANG_ENGLISH}.chm
-  Delete $INSTDIR\logohelp-${LANG_GERMAN}.chm
-  Delete $INSTDIR\logohelp-${LANG_SPANISH}.chm
-  Delete $INSTDIR\logohelp-${LANG_ITALIAN}.chm
-  Delete $INSTDIR\logohelp-${LANG_PORTUGUESE}.chm
-  Delete $INSTDIR\logohelp-${LANG_GREEK}.chm
-  Delete $INSTDIR\logohelp-${LANG_FRENCH}.chm
-  Delete $INSTDIR\logohelp-${LANG_RUSSIAN}.chm
-  Delete $INSTDIR\logohelp-${LANG_CROATIAN}.chm
-
   Delete $SYSDIR\fmslogo.scr
-  Delete $INSTDIR\fmslogo-${LANG_ENGLISH}.scr
-  Delete $INSTDIR\fmslogo-${LANG_GERMAN}.scr
-  Delete $INSTDIR\fmslogo-${LANG_SPANISH}.scr
-  Delete $INSTDIR\fmslogo-${LANG_ITALIAN}.scr
-  Delete $INSTDIR\fmslogo-${LANG_PORTUGUESE}.scr
-  Delete $INSTDIR\fmslogo-${LANG_GREEK}.scr
-  Delete $INSTDIR\fmslogo-${LANG_FRENCH}.scr
-  Delete $INSTDIR\fmslogo-${LANG_RUSSIAN}.scr
-  Delete $INSTDIR\fmslogo-${LANG_CROATIAN}.scr
 
   Delete $INSTDIR\README.TXT
   Delete $INSTDIR\LICENSE.TXT
@@ -660,13 +642,12 @@ Section "Uninstall"
 
   Delete $INSTDIR\uninstall.exe
 
-
   ; Remove shortcuts, if any
-  Delete "$SMPROGRAMS\FMSLogo\*.*"
-  Delete "$DESKTOP\FMSLogo.lnk"
+  !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
+  RMDir  /r "$SMPROGRAMS\$StartMenuFolder"
+  Delete    "$DESKTOP\FMSLogo.lnk"
 
   ; Remove directories used
-  RMDir "$SMPROGRAMS\FMSLogo"
   RMDir /r "$INSTDIR\logolib"
   RMDir /r "$INSTDIR\examples"
   RMDir "$INSTDIR"
@@ -676,3 +657,9 @@ Section "Uninstall"
   DeleteRegKey   SHELL_CONTEXT "software\classes\Logo program"
 
 SectionEnd
+
+!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${DesktopShortcutSectionId} $(DesktopShortcutDescription)
+  !insertmacro MUI_DESCRIPTION_TEXT ${ScreenSaverSectionId}     $(ScreenSaverDescription)
+  !insertmacro MUI_DESCRIPTION_TEXT ${FMSLogoSectionId}         $(FMSLogoDescription)
+!insertmacro MUI_FUNCTION_DESCRIPTION_END

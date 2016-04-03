@@ -24,6 +24,10 @@ II. New features/bugs fixed:
   o Dropped support for display depths less than 16-bit true color.
   o Partial fix for bug #373; the screen saver now supports the DLLCALL,
     STATUS, and windowing command sets.
+  o Implemented feature #37; the installer now shows a clear "completed" page
+    when it is done.
+  o UI improvements to the installer, including a configurable start menu
+    folder.
 
   For a complete history of changes across all versions of FMSLogo, see
   https://sourceforge.net/p/fmslogo/source/HEAD/tree/trunk/logo/src/CHANGELOG.TXT
