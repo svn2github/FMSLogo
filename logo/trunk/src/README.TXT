@@ -19,12 +19,14 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 7.0.0
-  o Dropped support for the Win 9X versions of Windows.
-  o Dropped support for the original Pentium processor.
-  o Dropped support for display depths less than 16-bit true color.
+  o Drop support for the Win 9X versions of Windows.
+  o Drop support for the original Pentium processor.
+  o Drop support for display depths less than 16-bit true color.
   o Partial fix for bug #373; the screen saver now supports the DLLCALL,
     STATUS, and windowing command sets.
-  o Implemented feature #37; the installer now shows a clear "completed" page
+  o Fix bug #471; the uninstaller now removes the preferences that are stored
+    in the registry.
+  o Implement feature #37; the installer now shows a clear "completed" page
     when it is done.
   o Various improvements to the installer, including a configurable start menu
     folder and faster start time.

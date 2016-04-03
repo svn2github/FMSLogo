@@ -204,102 +204,6 @@ LangString CannotFindInstallationMessage ${LANG_RUSSIAN}     "Èëè FMSLogo áûë óæ
 LangString CannotFindInstallationMessage ${LANG_CROATIAN}    "Ili je FMSLogo veæ izbrisan ili nemaš dopuštenje da ga deinstaliraš.$\nU svakom sluèaju, ova se deinstalacija ne može nastaviti."
 
 
-; uninstall must be able to remove all traces of any previous installation.
-Function uninstall
-
-  ; Remove registry keys
-  DeleteRegKey SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
-
-  ; Remove files and uninstaller
-  Delete $previousinstalldir\fmslogo.exe
-  Delete $previousinstalldir\fmslogo-${LANG_ENGLISH}.exe
-  Delete $previousinstalldir\fmslogo-${LANG_GERMAN}.exe
-  Delete $previousinstalldir\fmslogo-${LANG_SPANISH}.exe
-  Delete $previousinstalldir\fmslogo-${LANG_ITALIAN}.exe
-  Delete $previousinstalldir\fmslogo-${LANG_PORTUGUESE}.exe
-  Delete $previousinstalldir\fmslogo-${LANG_GREEK}.exe
-  Delete $previousinstalldir\fmslogo-${LANG_FRENCH}.exe
-  Delete $previousinstalldir\fmslogo-${LANG_RUSSIAN}.exe
-  Delete $previousinstalldir\fmslogo-${LANG_CROATIAN}.exe
-
-  Delete $previousinstalldir\startup.logoscript
-  Delete $previousinstalldir\startup-${LANG_ENGLISH}.logoscript
-  Delete $previousinstalldir\startup-${LANG_GERMAN}.logoscript
-  Delete $previousinstalldir\startup-${LANG_SPANISH}.logoscript
-  Delete $previousinstalldir\startup-${LANG_ITALIAN}.logoscript
-  Delete $previousinstalldir\startup-${LANG_PORTUGUESE}.logoscript
-  Delete $previousinstalldir\startup-${LANG_GREEK}.logoscript
-  Delete $previousinstalldir\startup-${LANG_FRENCH}.logoscript
-  Delete $previousinstalldir\startup-${LANG_RUSSIAN}.logoscript
-  Delete $previousinstalldir\startup-${LANG_CROATIAN}.logoscript
-
-  Delete $previousinstalldir\logohelp.chm
-  Delete $previousinstalldir\logohelp-${LANG_ENGLISH}.chm
-  Delete $previousinstalldir\logohelp-${LANG_GERMAN}.chm
-  Delete $previousinstalldir\logohelp-${LANG_SPANISH}.chm
-  Delete $previousinstalldir\logohelp-${LANG_ITALIAN}.chm
-  Delete $previousinstalldir\logohelp-${LANG_PORTUGUESE}.chm
-  Delete $previousinstalldir\logohelp-${LANG_GREEK}.chm
-  Delete $previousinstalldir\logohelp-${LANG_FRENCH}.chm
-  Delete $previousinstalldir\logohelp-${LANG_RUSSIAN}.chm
-  Delete $previousinstalldir\logohelp-${LANG_CROATIAN}.chm
-
-  Delete $SYSDIR\fmslogo.scr
-  Delete $previousinstalldir\fmslogo-${LANG_ENGLISH}.scr
-  Delete $previousinstalldir\fmslogo-${LANG_GERMAN}.scr
-  Delete $previousinstalldir\fmslogo-${LANG_SPANISH}.scr
-  Delete $previousinstalldir\fmslogo-${LANG_ITALIAN}.scr
-  Delete $previousinstalldir\fmslogo-${LANG_PORTUGUESE}.scr
-  Delete $previousinstalldir\fmslogo-${LANG_GREEK}.scr
-  Delete $previousinstalldir\fmslogo-${LANG_FRENCH}.scr
-  Delete $previousinstalldir\fmslogo-${LANG_RUSSIAN}.scr
-  Delete $previousinstalldir\fmslogo-${LANG_CROATIAN}.scr
-
-  ; For FMSLogo 6.27.0, Windows applied a compatibility shim that disabled
-  ; file system redirection, resulting in FMSLogo.scr, the screen saver
-  ; binary, being written to the real system32 directory, instead of
-  ; to syswow64, like most 32-bit programs.  In FMSLogo 6.28.0 or later,
-  ; Windows no longer does this.  In order to be able to clean up for
-  ; for 6.27.0, we must disable file system redirection, then re-delete
-  ; the screensaver.
-  ${If} ${RunningX64}
-    ${DisableX64FSRedirection}
-    Delete $SYSDIR\fmslogo.scr
-    ${EnableX64FSRedirection}
-  ${EndIf}
-
-  Delete $previousinstalldir\logo.hlp
-  Delete $previousinstalldir\logo.gid
-  Delete $previousinstalldir\logo.fts
-
-  Delete $previousinstalldir\mcistrwh.hlp
-  Delete $previousinstalldir\mcistrwh.gid
-  Delete $previousinstalldir\mcistrwh.fts
-
-  Delete $previousinstalldir\README.TXT
-  Delete $previousinstalldir\FMSLOGO.TXT
-  Delete $previousinstalldir\license.txt
-  Delete $previousinstalldir\turtle.bmp
-
-  Delete $previousinstalldir\uninstall.exe
-
-  ; Remove shortcuts, if any
-  !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
-  RMDir  /r "$SMPROGRAMS\$StartMenuFolder"
-  Delete    "$DESKTOP\FMSLogo.lnk"
-
-  ; Remove directories used
-  RMDir /r "$previousinstalldir\logolib"
-  RMDir /r "$previousinstalldir\examples"
-  RMDir "$previousinstalldir"
-
-  ; remove the file association for .LGO
-  DeleteRegValue SHELL_CONTEXT "software\classes\.lgo" "Logo program"
-  DeleteRegKey   SHELL_CONTEXT "software\classes\Logo program"
-
-FunctionEnd
-
-
 !include FileFunc.nsh
 !insertmacro GetParameters
 !insertmacro GetOptions
@@ -533,8 +437,107 @@ abort:
     Abort
 
 uninstall:
-    ; uninstall the old version of Logo
-    Call uninstall
+  ;
+  ; uninstall the old version of Logo.
+  ; The code below must be able to remove all traces from any previous installed
+  ; version.  Therefore it removes relics that no longer exist.
+  ;
+  
+  ; Remove registry keys
+  ; Note that we retain the registry key that has the preferences so that upgrading
+  ; to a newer version doesn't cause any data loss.
+  DeleteRegKey SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
+
+  ; Remove files and uninstaller
+  Delete $previousinstalldir\fmslogo.exe
+  Delete $previousinstalldir\fmslogo-${LANG_ENGLISH}.exe
+  Delete $previousinstalldir\fmslogo-${LANG_GERMAN}.exe
+  Delete $previousinstalldir\fmslogo-${LANG_SPANISH}.exe
+  Delete $previousinstalldir\fmslogo-${LANG_ITALIAN}.exe
+  Delete $previousinstalldir\fmslogo-${LANG_PORTUGUESE}.exe
+  Delete $previousinstalldir\fmslogo-${LANG_GREEK}.exe
+  Delete $previousinstalldir\fmslogo-${LANG_FRENCH}.exe
+  Delete $previousinstalldir\fmslogo-${LANG_RUSSIAN}.exe
+  Delete $previousinstalldir\fmslogo-${LANG_CROATIAN}.exe
+
+  Delete $previousinstalldir\startup.logoscript
+  Delete $previousinstalldir\startup-${LANG_ENGLISH}.logoscript
+  Delete $previousinstalldir\startup-${LANG_GERMAN}.logoscript
+  Delete $previousinstalldir\startup-${LANG_SPANISH}.logoscript
+  Delete $previousinstalldir\startup-${LANG_ITALIAN}.logoscript
+  Delete $previousinstalldir\startup-${LANG_PORTUGUESE}.logoscript
+  Delete $previousinstalldir\startup-${LANG_GREEK}.logoscript
+  Delete $previousinstalldir\startup-${LANG_FRENCH}.logoscript
+  Delete $previousinstalldir\startup-${LANG_RUSSIAN}.logoscript
+  Delete $previousinstalldir\startup-${LANG_CROATIAN}.logoscript
+
+  Delete $previousinstalldir\logohelp.chm
+  Delete $previousinstalldir\logohelp-${LANG_ENGLISH}.chm
+  Delete $previousinstalldir\logohelp-${LANG_GERMAN}.chm
+  Delete $previousinstalldir\logohelp-${LANG_SPANISH}.chm
+  Delete $previousinstalldir\logohelp-${LANG_ITALIAN}.chm
+  Delete $previousinstalldir\logohelp-${LANG_PORTUGUESE}.chm
+  Delete $previousinstalldir\logohelp-${LANG_GREEK}.chm
+  Delete $previousinstalldir\logohelp-${LANG_FRENCH}.chm
+  Delete $previousinstalldir\logohelp-${LANG_RUSSIAN}.chm
+  Delete $previousinstalldir\logohelp-${LANG_CROATIAN}.chm
+
+  Delete $SYSDIR\fmslogo.scr
+  Delete $previousinstalldir\fmslogo-${LANG_ENGLISH}.scr
+  Delete $previousinstalldir\fmslogo-${LANG_GERMAN}.scr
+  Delete $previousinstalldir\fmslogo-${LANG_SPANISH}.scr
+  Delete $previousinstalldir\fmslogo-${LANG_ITALIAN}.scr
+  Delete $previousinstalldir\fmslogo-${LANG_PORTUGUESE}.scr
+  Delete $previousinstalldir\fmslogo-${LANG_GREEK}.scr
+  Delete $previousinstalldir\fmslogo-${LANG_FRENCH}.scr
+  Delete $previousinstalldir\fmslogo-${LANG_RUSSIAN}.scr
+  Delete $previousinstalldir\fmslogo-${LANG_CROATIAN}.scr
+
+  ; For FMSLogo 6.27.0, Windows applied a compatibility shim that disabled
+  ; file system redirection, resulting in FMSLogo.scr, the screen saver
+  ; binary, being written to the real system32 directory, instead of
+  ; to syswow64, like most 32-bit programs.  In FMSLogo 6.28.0 or later,
+  ; Windows no longer does this.  In order to be able to clean up for
+  ; for 6.27.0, we must disable file system redirection, then re-delete
+  ; the screensaver.
+  ${If} ${RunningX64}
+    ${DisableX64FSRedirection}
+    Delete $SYSDIR\fmslogo.scr
+    ${EnableX64FSRedirection}
+  ${EndIf}
+
+  Delete $previousinstalldir\logo.hlp
+  Delete $previousinstalldir\logo.gid
+  Delete $previousinstalldir\logo.fts
+
+  Delete $previousinstalldir\mcistrwh.hlp
+  Delete $previousinstalldir\mcistrwh.gid
+  Delete $previousinstalldir\mcistrwh.fts
+
+  Delete $previousinstalldir\README.TXT
+  Delete $previousinstalldir\FMSLOGO.TXT
+  Delete $previousinstalldir\license.txt
+  Delete $previousinstalldir\turtle.bmp
+
+  Delete $previousinstalldir\uninstall.exe
+
+  ; Remove shortcuts, if any.
+  ; Note that if no start menu is configured in the registry, as is the
+  ; case with version prior to 7.0, then the default folder of FMSLogo
+  ; will be used, which is where versions prior to 7.0 stored their
+  ; start menu shortcuts.
+  !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
+  RMDir  /r "$SMPROGRAMS\$StartMenuFolder"
+  Delete    "$DESKTOP\FMSLogo.lnk"
+
+  ; Remove directories used
+  RMDir /r "$previousinstalldir\logolib"
+  RMDir /r "$previousinstalldir\examples"
+  RMDir "$previousinstalldir"
+
+  ; remove the file association for .LGO
+  DeleteRegValue SHELL_CONTEXT "software\classes\.lgo" "Logo program"
+  DeleteRegKey   SHELL_CONTEXT "software\classes\Logo program"
 
 end:
 
@@ -597,9 +600,6 @@ FunctionEnd
 
 
 Section "Uninstall"
-  ; Remove registry keys
-  DeleteRegKey SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
-
   ; Remove files and uninstaller
   Delete $INSTDIR\fmslogo.exe
   Delete $INSTDIR\startup.logoscript
@@ -625,6 +625,10 @@ Section "Uninstall"
   ; remove the file association
   DeleteRegValue SHELL_CONTEXT "software\classes\.lgo" "Logo program"
   DeleteRegKey   SHELL_CONTEXT "software\classes\Logo program"
+
+  ; Remove registry keys
+  DeleteRegKey SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
+  DeleteRegKey SHELL_CONTEXT "Software\FMSLogo"
 
 SectionEnd
 
