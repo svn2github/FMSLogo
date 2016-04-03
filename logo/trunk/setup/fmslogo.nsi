@@ -41,6 +41,8 @@ OutFile "${FMSLOGO_OUTPUT_FILE}"
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_BITMAP "fmslogo-header-icon.bmp"
 !define MUI_ICON               "../src/fmslogo.ico"
+!define MUI_CUSTOMFUNCTION_GUIINIT   PreInstallSteps
+!define MUI_CUSTOMFUNCTION_UNGUIINIT un.PreInstallSteps
 
 ; Add a Vista manifest for UAC that requests admin rights, if available.
 RequestExecutionLevel highest
@@ -101,6 +103,7 @@ var previousinstalldir ; full path to the uninstaller
 !insertmacro MUI_LANGUAGE "Croatian"
 !define MUI_LANGDLL_ALLLANGUAGES ; don't filter language to system code page
 
+; The description of the main installation component
 LangString FMSLogoDescription ${LANG_ENGLISH}    "Install the FMSLogo programming environment."
 LangString FMSLogoDescription ${LANG_GERMAN}     "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
 LangString FMSLogoDescription ${LANG_SPANISH}    "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
@@ -111,6 +114,7 @@ LangString FMSLogoDescription ${LANG_GREEK}      "Install the FMSLogo programmin
 LangString FMSLogoDescription ${LANG_RUSSIAN}    "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
 LangString FMSLogoDescription ${LANG_CROATIAN}   "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
 
+; The label for the "desktop shortcut" checkbox.
 LangString DesktopShortcut ${LANG_ENGLISH}    "Desktop Shortcut"
 LangString DesktopShortcut ${LANG_GERMAN}     "Desktop Shortcut" ; NOT_YET_LOCALIZED
 LangString DesktopShortcut ${LANG_SPANISH}    "Desktop Shortcut" ; NOT_YET_LOCALIZED
@@ -121,6 +125,7 @@ LangString DesktopShortcut ${LANG_GREEK}      "”хнфьмехуз ≈рйц№нейбт ≈сгбуябт"
 LangString DesktopShortcut ${LANG_RUSSIAN}    "ярлык рабочего стола" 
 LangString DesktopShortcut ${LANG_CROATIAN}   "Preиac na Radnu povrЪinu"
 
+; The description of the desktop shortcut to FMSLogo
 LangString DesktopShortcutDescription ${LANG_ENGLISH}    "Put a shortcut to FMSLogo on the desktop."
 LangString DesktopShortcutDescription ${LANG_GERMAN}     "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
 LangString DesktopShortcutDescription ${LANG_SPANISH}    "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
@@ -131,6 +136,7 @@ LangString DesktopShortcutDescription ${LANG_GREEK}      "Put a shortcut to FMSL
 LangString DesktopShortcutDescription ${LANG_RUSSIAN}    "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
 LangString DesktopShortcutDescription ${LANG_CROATIAN}   "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
 
+; The label for the "screen saver" checkbox.
 LangString ScreenSaver ${LANG_ENGLISH}    "Screen Saver"
 LangString ScreenSaver ${LANG_GERMAN}     "Screen Saver" ; NOT_YET_LOCALIZED
 LangString ScreenSaver ${LANG_SPANISH}    "Salvapantallas"
@@ -141,6 +147,7 @@ LangString ScreenSaver ${LANG_GREEK}      "Screen Saver" ; NOT_YET_LOCALIZED
 LangString ScreenSaver ${LANG_RUSSIAN}    "Screen Saver" ; NOT_YET_LOCALIZED 
 LangString ScreenSaver ${LANG_CROATIAN}   "Screen Saver" ; NOT_YET_LOCALIZED 
 
+; The description of the screensaver component.
 LangString ScreenSaverDescription ${LANG_ENGLISH}    "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this."
 LangString ScreenSaverDescription ${LANG_GERMAN}     "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
 LangString ScreenSaverDescription ${LANG_SPANISH}    "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
@@ -150,6 +157,52 @@ LangString ScreenSaverDescription ${LANG_FRENCH}     "Install a screensaver that
 LangString ScreenSaverDescription ${LANG_GREEK}      "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
 LangString ScreenSaverDescription ${LANG_RUSSIAN}    "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
 LangString ScreenSaverDescription ${LANG_CROATIAN}   "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
+
+; An error message to show when attempting to install FMSLogo when it is already running.
+LangString AlreadyRunningCannotInstallMessage ${LANG_ENGLISH}     "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
+LangString AlreadyRunningCannotInstallMessage ${LANG_GERMAN}      "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED     
+LangString AlreadyRunningCannotInstallMessage ${LANG_SPANISH}     "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED    
+LangString AlreadyRunningCannotInstallMessage ${LANG_ITALIAN}     "L'installatore o FMSLogo sono giа in esecuzione.$\nL'installazione non puт continuare."
+LangString AlreadyRunningCannotInstallMessage ${LANG_PORTUGUESE}  "O instalador ou o FMSLogo estб rodando.$\nEssa instalaзгo nгo poderб prosseguir."
+LangString AlreadyRunningCannotInstallMessage ${LANG_FRENCH}      "L'installateur ou bien FMSLogo est en cours d'exйcution.$\nL'installation ne peut continuer." 
+LangString AlreadyRunningCannotInstallMessage ${LANG_GREEK}       "ѕ егкбфбуф№фзт ё з FMSLogo екфелеяфбй ёдз.$\nЅхфё з егкбф№уфбуз де мрпсея нб ухнечйуфея."
+LangString AlreadyRunningCannotInstallMessage ${LANG_RUSSIAN}     "»ли инсталл€тор или FMSLogo в насто€щее врем€ запущены.$\n”становка не может быть продолжена." 
+LangString AlreadyRunningCannotInstallMessage ${LANG_CROATIAN}    "Trenutno je pokrenut ili instalacijski program ili FMSLogo.$\nOva se instalacija ne moЮe nastaviti."
+
+; A notification message when installing FMSLogo when another version is already installed.
+; This tells the user that the old installation will be uninstalled.
+LangString MustUninstallBeforeInstallingMessage ${LANG_ENGLISH}     "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting $\"No$\" will abort the installation)"
+LangString MustUninstallBeforeInstallingMessage ${LANG_GERMAN}      "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" ; NOT_YET_LOCALIZED
+LangString MustUninstallBeforeInstallingMessage ${LANG_SPANISH}     "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)"
+LangString MustUninstallBeforeInstallingMessage ${LANG_ITALIAN}     "La versione attualmente installata di FMSLogo deve essere disinstallata prima di procedere.$\nVuoi procedere con la disinstallazione?$\n$\n(Selezionando No verrа interrotta l'installazione)"
+LangString MustUninstallBeforeInstallingMessage ${LANG_PORTUGUESE}  "Jб existe uma cуpia do FMSLogo e precisa ser desinstalada para prosseguir.$\nDeseja desinstalб-la?$\n$\n(Escolher Nгo cessarб a instalaзгo)"
+LangString MustUninstallBeforeInstallingMessage ${LANG_FRENCH}      "La version existante de FMSLogo doit кtre dйsinstallйe pour continuer.$\nVoulez-vous la dйsinstaller?$\n$\n(Choisir Non terminera l'installation)"
+LangString MustUninstallBeforeInstallingMessage ${LANG_GREEK}       "‘п хр№счпн бнфягсбцп фзт FMSLogo рсЁрей нб брегкбфбуфбиея рсйн ухнечйуфея бхфё з егкбф№уфбуз.$\n»Ёлефе нб фп егкбфбуфёуефе;$\n$\n(≈рйлЁгпнфбт Љчй з егкбф№уфбуз иб клеяуей.)"
+LangString MustUninstallBeforeInstallingMessage ${LANG_RUSSIAN}     "—уществующа€ копи€ FMSLogo должна быть удалена, чтобы продолжить.$\n¬ы хотите удалить ее?$\n$\n(¬ыбор Ќет прервет установку)"
+LangString MustUninstallBeforeInstallingMessage ${LANG_CROATIAN}    "Postojeжa se verzija programa FMSLogo mora deinstalirati ako ЮeliЪ nastaviti.$\nОeliЪ li je deinstalirati?$\n$\n(Ako odabereЪ $\"Ne$\", instalacija жe se prekinuti)"
+
+; An error message to show when attempting to *uninstall* FMSLogo when it is running.
+LangString AlreadyRunningCannotUninstallMessage ${LANG_ENGLISH}     "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue."
+LangString AlreadyRunningCannotUninstallMessage ${LANG_GERMAN}      "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
+LangString AlreadyRunningCannotUninstallMessage ${LANG_SPANISH}     "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
+LangString AlreadyRunningCannotUninstallMessage ${LANG_ITALIAN}     "L'installatore o FMSLogo sono giа in esecuzione.$\nL'installazione non puт continuare."
+LangString AlreadyRunningCannotUninstallMessage ${LANG_PORTUGUESE}  "O instalador ou o FMSLogo estб rodando.$\n$\nEssa desinstalaзгo nгo poderб prosseguir." ; NOT_YET_LOCALIZED
+LangString AlreadyRunningCannotUninstallMessage ${LANG_FRENCH}      "L'installateur ou bien FMSLogo est encours d'exйcution.$\nLa dйsinstallation ne peut continuer."
+LangString AlreadyRunningCannotUninstallMessage ${LANG_GREEK}       "ѕ егкбфбуф№фзт ё з FMSLogo екфелеяфбй ёдз.$\nЅхфё з брегкбф№уфбуз де мрпсея нб ухнечйуфея."
+LangString AlreadyRunningCannotUninstallMessage ${LANG_RUSSIAN}     "»ли инсталл€тор или FMSLogo в насто€щее врем€ запущены.$\nн”даление не может быть продолжено."
+LangString AlreadyRunningCannotUninstallMessage ${LANG_CROATIAN}    "Trenutno je pokrenut ili instalacijski program ili FMSLogo.$\nOva se deinstalacija ne moЮe nastaviti."
+
+; An error message to show when the uninstaller cannot find the installation.
+LangString CannotFindInstallationMessage ${LANG_ENGLISH}     "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue."
+LangString CannotFindInstallationMessage ${LANG_GERMAN}      "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
+LangString CannotFindInstallationMessage ${LANG_SPANISH}     "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
+LangString CannotFindInstallationMessage ${LANG_ITALIAN}     "L'installatore o FMSLogo sono giа in esecuzione.$\nL'installazione non puт continuare."
+LangString CannotFindInstallationMessage ${LANG_PORTUGUESE}  "Ou o FMSLogo jб foi deletado ou vocк nгo possui permissгo para desinstalб-lo.$\nEm ambos os casos, essa desinstalaзгo nгo poderб continuar." 
+LangString CannotFindInstallationMessage ${LANG_FRENCH}      "FMSLogo a dйjа йtй supprimй ou vous n'avez pas la permission de le dйsinstaller.$\nLa dйsinstallation ne peut continuer." 
+LangString CannotFindInstallationMessage ${LANG_GREEK}       "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
+LangString CannotFindInstallationMessage ${LANG_RUSSIAN}     "»ли FMSLogo был уже удален, или ¬ы не имеете прав удал€ть ее.$\n¬ любом случае, удаление не может быть продолжено." 
+LangString CannotFindInstallationMessage ${LANG_CROATIAN}    "Ili je FMSLogo veж izbrisan ili nemaЪ dopuЪtenje da ga deinstaliraЪ.$\nU svakom sluиaju, ova se deinstalacija ne moЮe nastaviti."
+
 
 ; uninstall must be able to remove all traces of any previous installation.
 Function uninstall
@@ -376,28 +429,28 @@ Function .onInit
   ${GetParameters} $R0
   ClearErrors
   ${GetOptions} $R0 /LCID= $LANGUAGE
-  StrCmp $LANGUAGE ${LANG_CROATIAN}   SetupUser
-  StrCmp $LANGUAGE ${LANG_ENGLISH}    SetupUser
-  StrCmp $LANGUAGE ${LANG_FRENCH}     SetupUser
-  StrCmp $LANGUAGE ${LANG_GERMAN}     SetupUser
-  StrCmp $LANGUAGE ${LANG_GREEK}      SetupUser
-  StrCmp $LANGUAGE ${LANG_ITALIAN}    SetupUser
-  StrCmp $LANGUAGE ${LANG_PORTUGUESE} SetupUser
-  StrCmp $LANGUAGE ${LANG_RUSSIAN}    SetupUser
-  StrCmp $LANGUAGE ${LANG_SPANISH}    SetupUser
-
+  ${Switch} $LANGUAGE
+    ${Case} ${LANG_ENGLISH}
+    ${Case} ${LANG_GERMAN}
+    ${Case} ${LANG_SPANISH}
+    ${Case} ${LANG_ITALIAN}
+    ${Case} ${LANG_PORTUGUESE}
+    ${Case} ${LANG_FRENCH}
+    ${Case} ${LANG_GREEK}
+    ${Case} ${LANG_RUSSIAN}
+    ${Case} ${LANG_CROATIAN}
+        goto SetupUser
+  ${EndSwitch}
 
   ; Either no language was passed on the command-line or
   ; one whose LCID isn't supported was given.
-  ; Launch the language picker (from modern UI) 
-  ; default to English
+  ; Launch the language picker (from modern UI), defaulting to English
   Push ${LANG_ENGLISH}
   Pop $LANGUAGE
   !insertmacro MUI_LANGDLL_DISPLAY
 
 SetupUser:
-
-  ; assume non-privileged user until we know they are an administrator
+  ; Assume non-privileged user until we know they are an administrator
   SetShellVarContext current
   StrLen $2 "$PROFILE\FMSLogo"
   StrCpy $INSTDIR "$PROFILE\FMSLogo" $2 0
@@ -409,24 +462,29 @@ SetupUser:
   UserInfo::GetAccountType
   Pop $1
 
-  StrCmp $1 "Admin" SetupUser.AllUsers +1
-  StrCmp $1 "Power" SetupUser.AllUsers +1
-  goto SetupUser.Done
-
+  ${Switch} $1
+    ${Case} "Admin"
+    ${Case} "Power"
 SetupUser.Win9x:
-SetupUser.AllUsers:
-  SetShellVarContext all
-  StrLen $2       "$PROGRAMFILES\FMSLogo"
-  StrCpy $INSTDIR "$PROGRAMFILES\FMSLogo" $2 0
+      ; This user can install software as an administrator
+      SetShellVarContext all
+      StrLen $2       "$PROGRAMFILES\FMSLogo"
+      StrCpy $INSTDIR "$PROGRAMFILES\FMSLogo" $2 0
 
-  ; We can write to the system directory, so enable the screen saver
-  SectionGetFlags ${ScreenSaverSectionId} $3
-  IntOp $3 $3 | ${SF_SELECTED}
-  SectionSetFlags ${ScreenSaverSectionId} $3
+      ; We can write to the system directory, so enable the screen saver
+      SectionGetFlags ${ScreenSaverSectionId} $3
+      IntOp $3 $3 | ${SF_SELECTED}
+      SectionSetFlags ${ScreenSaverSectionId} $3
+  ${EndSwitch}
 
-  goto SetupUser.Done
+FunctionEnd
 
-SetupUser.Done:
+; Create a second initialization function that executes after the
+; language has been chosen.  This is invoked after ${LANGUAGE} is
+; fixed, so it can use the $() macros for reading strings from the
+; language tables.  (If this were done in onInit, we'd have to use
+; flow control on the $LANGUAGE variable to accomplish this.)
+Function PreInstallSteps
 
   ;
   ; Abort if another instance of the installer is running
@@ -439,33 +497,7 @@ SetupUser.Done:
   IfSilent Abort
 
   ; Notify the user that the install cannot continue.
-  ; We can't use a LangString because those aren't available in .onInit
-  StrCmp $LANGUAGE ${LANG_GERMAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED 
-     Abort
-  StrCmp $LANGUAGE ${LANG_SPANISH} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
-     Abort
-  StrCmp $LANGUAGE ${LANG_ITALIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "L'installatore o FMSLogo sono giа in esecuzione.$\nL'installazione non puт continuare."
-     Abort
-  StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "O instalador ou o FMSLogo estб rodando.$\nEssa instalaзгo nгo poderб prosseguir."
-     Abort
-  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "L'installateur ou bien FMSLogo est en cours d'exйcution.$\nL'installation ne peut continuer." 
-     Abort
-  StrCmp $LANGUAGE ${LANG_GREEK} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "ѕ егкбфбуф№фзт ё з FMSLogo екфелеяфбй ёдз.$\nЅхфё з егкбф№уфбуз де мрпсея нб ухнечйуфея."
-     Abort
-  StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "»ли инсталл€тор или FMSLogo в насто€щее врем€ запущены.$\n”становка не может быть продолжена." 
-     Abort
-  StrCmp $LANGUAGE ${LANG_CROATIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Trenutno je pokrenut ili instalacijski program ili FMSLogo.$\nOva se instalacija ne moЮe nastaviti."
-     Abort
-  ; default to English
-  MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
+  MessageBox MB_OK|MB_ICONEXCLAMATION $(AlreadyRunningCannotInstallMessage)
   Abort
 
 checkifinstalled:
@@ -475,9 +507,10 @@ checkifinstalled:
   ;
 
   ; If this is a silent install, assume that the user wants it
-  ; to succeed (unintall the previous instance of logo).
+  ; to succeed (uninstall the previous instance of logo).
   IfSilent uninstall
 
+  ; Infer the path of any previous FMSLogo installation by looking for its uninstaller
   ReadRegStr $0 SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
 
   ; If no uninstaller was found, then we're done
@@ -489,25 +522,7 @@ checkifinstalled:
   IfFileExists "$previousinstalldir\*.*" 0 end
 
   ; Notify the user that the install cannot continue until the existing FMSLogo is uninstalled
-  ; We can't use a LangString because those aren't available in .onInit
-  StrCmp $LANGUAGE ${LANG_GERMAN} 0 +2
-    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
-  StrCmp $LANGUAGE ${LANG_SPANISH} 0 +2
-    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
-  StrCmp $LANGUAGE ${LANG_ITALIAN} 0 +2
-    MessageBox MB_YESNO "La versione attualmente installata di FMSLogo deve essere disinstallata prima di procedere.$\nVuoi procedere con la disinstallazione?$\n$\n(Selezionando No verrа interrotta l'installazione)" IDYES uninstall IDNO abort
-  StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +2
-    MessageBox MB_YESNO "Jб existe uma cуpia do FMSLogo e precisa ser desinstalada para prosseguir.$\nDeseja desinstalб-la?$\n$\n(Escolher Nгo cessarб a instalaзгo)" IDYES uninstall IDNO abort
-  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
-    MessageBox MB_YESNO "La version existante de FMSLogo doit кtre dйsinstallйe pour continuer.$\nVoulez-vous la dйsinstaller?$\n$\n(Choisir Non terminera l'installation)" IDYES uninstall IDNO abort
-  StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
-    MessageBox MB_YESNO "‘п хр№счпн бнфягсбцп фзт FMSLogo рсЁрей нб брегкбфбуфбиея рсйн ухнечйуфея бхфё з егкбф№уфбуз.$\n»Ёлефе нб фп егкбфбуфёуефе;$\n$\n(≈рйлЁгпнфбт Љчй з егкбф№уфбуз иб клеяуей.)" IDYES uninstall IDNO abort
-  StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +2
-    MessageBox MB_YESNO "—уществующа€ копи€ FMSLogo должна быть удалена, чтобы продолжить.$\n¬ы хотите удалить ее?$\n$\n(¬ыбор Ќет прервет установку)" IDYES uninstall IDNO abort
-  StrCmp $LANGUAGE ${LANG_CROATIAN} 0 +2
-    MessageBox MB_YESNO "Postojeжa se verzija programa FMSLogo mora deinstalirati ako ЮeliЪ nastaviti.$\nОeliЪ li je deinstalirati?$\n$\n(Ako odabereЪ $\"Ne$\", instalacija жe se prekinuti)" IDYES uninstall IDNO abort
-  ; default to English
-  MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting $\"No$\" will abort the installation)" IDYES uninstall IDNO abort
+  MessageBox MB_YESNO $(MustUninstallBeforeInstallingMessage) IDYES uninstall IDNO abort
 
 abort:
     Abort
@@ -522,48 +537,12 @@ FunctionEnd
 
 
 
-
 ;--------------------------------
 ; Uninstaller
 
 Function un.onInit
 
-  System::Call 'kernel32::CreateMutexA(i 0, i 0, t "LogoForWindowsMutex") i .r1 ?e'
-  Pop $R0
-  StrCmp $R0 0 SetupUser
-
-  ; Notify the user that the uninstall cannot continue.
-  ; We can't use a LangString because those aren't available in .onInit
-  StrCmp $LANGUAGE ${LANG_GERMAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
-     Abort
-  StrCmp $LANGUAGE ${LANG_SPANISH} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
-     Abort
-  StrCmp $LANGUAGE ${LANG_ITALIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "L'installatore o FMSLogo sono giа in esecuzione.$\nL'installazione non puт continuare."
-     Abort
-  StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "O instalador ou o FMSLogo estб rodando.$\n$\nEssa desinstalaзгo nгo poderб prosseguir." ; NOT_YET_LOCALIZED
-     Abort
-  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "L'installateur ou bien FMSLogo est encours d'exйcution.$\nLa dйsinstallation ne peut continuer." 
-     Abort
-  StrCmp $LANGUAGE ${LANG_GREEK} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "ѕ егкбфбуф№фзт ё з FMSLogo екфелеяфбй ёдз.$\nЅхфё з брегкбф№уфбуз де мрпсея нб ухнечйуфея."
-     Abort
-  StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "»ли инсталл€тор или FMSLogo в насто€щее врем€ запущены.$\nн”даление не может быть продолжено."
-     Abort
-  StrCmp $LANGUAGE ${LANG_CROATIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Trenutno je pokrenut ili instalacijski program ili FMSLogo.$\nOva se deinstalacija ne moЮe nastaviti."
-     Abort
-  ; default to English
-  MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue."
-  Abort
-
-SetupUser:
-  ; assume regular user until we know they are a power user
+  ; Assume non-privileged user until we know they are an administrator
   SetShellVarContext current
 
   ClearErrors
@@ -573,52 +552,38 @@ SetupUser:
   UserInfo::GetAccountType
   Pop $1
 
-  StrCmp $1 "Admin" SetupUser.AllUsers +1
-  StrCmp $1 "Power" SetupUser.AllUsers +1
-  goto SetupUser.Done
-
+  ${Switch} $1
+    ${Case} "Admin"
+    ${Case} "Power"
 SetupUser.Win9x:
-SetupUser.AllUsers:
-  SetShellVarContext all
-  goto SetupUser.Done
+      ; This user is an administrator
+      SetShellVarContext all
+  ${EndSwitch}
 
-SetupUser.Done:
+FunctionEnd
+
+Function un.PreInstallSteps
+
+  System::Call 'kernel32::CreateMutexA(i 0, i 0, t "LogoForWindowsMutex") i .r1 ?e'
+  Pop $R0
+  StrCmp $R0 0 CheckIfInstallExists
+
+  ; Notify the user that the uninstall cannot continue.
+  MessageBox MB_OK|MB_ICONEXCLAMATION $(AlreadyRunningCannotUninstallMessage)
+  Abort
+
+CheckIfInstallExists:
 
   ReadRegStr $1 SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
   StrCpy $INSTDIR $1 -15 1 ; hack: assumes the string is quoted and ends in `\uninstall.exe"'.
 
-  ; check if FMSLogo exists where we think it does
+  ; Confirm that FMSLogo exists where we think it does
   StrCmp $INSTDIR "" CheckIfInstallExists.ShowError 0
   IfFileExists "$INSTDIR\*.*" CheckIfInstallExists.Done CheckIfInstallExists.ShowError
 
 CheckIfInstallExists.ShowError:
   ; Notify the user that FMSLogo does not exist where we think it does.
-  ; We can't use a LangString because those aren't available in .onInit
-  StrCmp $LANGUAGE ${LANG_GERMAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
-     Abort
-  StrCmp $LANGUAGE ${LANG_SPANISH} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
-     Abort
-  StrCmp $LANGUAGE ${LANG_ITALIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "L'installatore o FMSLogo sono giа in esecuzione.$\nL'installazione non puт continuare."
-     Abort
-  StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Ou o FMSLogo jб foi deletado ou vocк nгo possui permissгo para desinstalб-lo.$\nEm ambos os casos, essa desinstalaзгo nгo poderб continuar." 
-     Abort
-  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "FMSLogo a dйjа йtй supprimй ou vous n'avez pas la permission de le dйsinstaller.$\nLa dйsinstallation ne peut continuer." 
-     Abort
-  StrCmp $LANGUAGE ${LANG_GREEK} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
-     Abort
-  StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "»ли FMSLogo был уже удален, или ¬ы не имеете прав удал€ть ее.$\n¬ любом случае, удаление не может быть продолжено." 
-     Abort
-  StrCmp $LANGUAGE ${LANG_CROATIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Ili je FMSLogo veж izbrisan ili nemaЪ dopuЪtenje da ga deinstaliraЪ.$\nU svakom sluиaju, ova se deinstalacija ne moЮe nastaviti."
-  ; default to English
-  MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue."
+  MessageBox MB_OK|MB_ICONEXCLAMATION $(CannotFindInstallationMessage)
   Abort
 
 CheckIfInstallExists.Done:
