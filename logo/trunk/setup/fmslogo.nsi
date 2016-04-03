@@ -318,8 +318,8 @@ Section "FMSLogo" FMSLogoSectionId
   File "..\src\README.TXT"
   File "..\src\LICENSE.TXT"
   File "..\src\turtle.bmp"
-  File /r /x CVS "..\src\logolib"
-  File /r /x CVS "..\src\examples"
+  File /r "..\src\logolib"
+  File /r "..\src\examples"
 
   ;
   ; Write the uninstall keys for Windows
