@@ -49,7 +49,6 @@ III. Standard features
   * Supports "Standard" Logo parsing.
   * Supports Floodfill.
   * Supports Save and restore images in .BMP format files.
-  * Supports 1, 4, 8, 16, 24 bits per pixels colors.
   * Supports standard Windows Hypertext Help.
   * Supports standard Windows Printing.
   * Supports separate library and work area.
@@ -77,9 +76,8 @@ VI. Sources
 
   The FMSLogo sources were written/compiled with:
 
-    MinGW (for the screen saver)
-    MinGW package of cygwin (for .EXE)
-    wxWidgets (GUI toolkit used for .EXE)
+    MinGW w64 (for .EXE and screen saver)
+    wxWidgets (GUI toolkit for .EXE and screen saver)
     DocBook, xsltproc, and Microsoft Help Workshop (for online help)
     Nullsoft Scriptable Install System (NSIS) (for the installer)
 
