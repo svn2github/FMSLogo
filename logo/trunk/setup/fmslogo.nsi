@@ -345,9 +345,10 @@ FunctionEnd
   
 ; Because we are using solid compression, files that are required before
 ; the actual installation should be stored first in the data block.
-; This makes the installer start faster.
+; This makes the installer start faster as it eliminates the
+; "unpacking data xx%" dialog box.
 !insertmacro MUI_RESERVEFILE_LANGDLL
-
+ReserveFile "${NSISDIR}\Plugins\UserInfo.dll"
 
 ;--------------------------------
 

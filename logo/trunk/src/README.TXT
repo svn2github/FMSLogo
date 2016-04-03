@@ -26,8 +26,8 @@ II. New features/bugs fixed:
     STATUS, and windowing command sets.
   o Implemented feature #37; the installer now shows a clear "completed" page
     when it is done.
-  o UI improvements to the installer, including a configurable start menu
-    folder.
+  o Various improvements to the installer, including a configurable start menu
+    folder and faster start time.
 
   For a complete history of changes across all versions of FMSLogo, see
   https://sourceforge.net/p/fmslogo/source/HEAD/tree/trunk/logo/src/CHANGELOG.TXT
