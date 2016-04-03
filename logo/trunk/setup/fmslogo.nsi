@@ -342,7 +342,7 @@ FunctionEnd
   !insertmacro InstallLanguageFile.PerLanguage ${LANG_CROATIAN}   ${build_path} ${filename_stem} ${filename_extension}
 !macroend
 
-  
+
 ; Because we are using solid compression, files that are required before
 ; the actual installation should be stored first in the data block.
 ; This makes the installer start faster as it eliminates the
@@ -355,7 +355,7 @@ ReserveFile "${NSISDIR}\Plugins\UserInfo.dll"
 ; The stuff to install
 Section "FMSLogo" FMSLogoSectionId
 
-  SectionIn RO
+  SectionIn RO ; read-only (always checked)
 
   ;
   ; Set output path to the installation directory.
@@ -418,6 +418,9 @@ SectionEnd
 
 
 Section /o $(ScreenSaver) ScreenSaverSectionId
+
+  SectionIn RO ; read-only (only enabled for admins)
+
   ; Install the screen saver to the system directory.
   SetOutPath $SYSDIR
   !insertmacro InstallLanguageFile ..\screensaver\ fmslogo .scr
@@ -474,7 +477,8 @@ SetupUser.Win9x:
 
       ; We can write to the system directory, so enable the screen saver
       SectionGetFlags ${ScreenSaverSectionId} $3
-      IntOp $3 $3 | ${SF_SELECTED}
+      IntOp $3 $3 & ~${SF_RO}      ; enable the screensaver component
+      IntOp $3 $3 | ${SF_SELECTED} ; select it by default
       SectionSetFlags ${ScreenSaverSectionId} $3
   ${EndSwitch}
 
