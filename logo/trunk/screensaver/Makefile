@@ -124,7 +124,7 @@ obj/debug-%.o: %.cpp
 obj/debug-%.o: ../src/%.cpp
 	$(CXX) -c -o$@ $(DEBUG_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
 
-obj/debug-%res.o : %.rc
+obj/debug-%res.o : %.rc ../src/fmslogo.ico
 	$(RC) $(CPPFLAGS) -DLOCALE=$(DEFAULT_LCID) --output=$@ $<
 
 
@@ -145,7 +145,7 @@ obj/$(1)-%.o: %.cpp
 obj/$(1)-%.o: ../src/%.cpp
 	$(CXX) -c -o$$@ $(RELEASE_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$1 $$<
 
-obj/$(1)-%res.o : %.rc
+obj/$(1)-%res.o : %.rc ../src/fmslogo.ico
 	$(RC) $(CPPFLAGS) -DLOCALE=$1 --output=$$@ $$<
 
 endef

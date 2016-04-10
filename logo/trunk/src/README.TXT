@@ -28,6 +28,8 @@ II. New features/bugs fixed:
     in the registry.
   o Implement feature #37; the installer now shows a clear "completed" page
     when it is done.
+  o Implement feature #59; use a new icon that doesn't look like a mismash of
+    red, white, and black.   The icon was provided by Jan Grabe.
   o Various improvements to the installer, including a configurable start menu
     folder and faster start time.
 

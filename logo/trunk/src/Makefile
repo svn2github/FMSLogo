@@ -279,7 +279,7 @@ obj/$(1)/%.o : %.cpp version.h obj/$(1)/pch.h.gch
 obj/$(1)/%.o : scintilla/%.cxx obj/$(1)/pch.h.gch
 	$(CXX) -c -o $$@ -Iobj/$(1) $(CXXFLAGS) -DLOCALE=$1 $(addprefix -I,$(SCINTILLA_INCLUDES)) $$<
 
-obj/$(1)/%_rc.o : %.rc version.h obj/$(1)/pch.h.gch
+obj/$(1)/%_rc.o : %.rc version.h obj/$(1)/pch.h.gch fmslogo.ico
 	$(RC) -i$$< -o$$@ -DLOCALE=$1 --define __WX$(TOOLKIT)__ $(addprefix --include-dir ,$(INCLUDES))
 
 endef
