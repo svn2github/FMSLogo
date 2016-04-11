@@ -33,6 +33,9 @@
    #include <wx/radiobut.h>
    #include <wx/scrolbar.h>
 
+   #include <wx/filename.h>
+   #include <wx/filedlg.h> 
+
    #include "fmslogo.h"
    #include "logoeventqueue.h"
    #include "screen.h"
@@ -2480,9 +2483,9 @@ NODE *lmessagebox(NODE *args)
     if (NOT_THROWING)
     {
         if (::MessageBox(
-                GetParentWindowForDialog(),
-                body, 
-                banner, 
+                reinterpret_cast<HWND>(GetParentWindowForDialog()->GetHWND()),
+                body,
+                banner,
                 MB_OKCANCEL) == IDCANCEL)
         {
             err_logo(STOP_ERROR, NIL);
@@ -2567,7 +2570,7 @@ NODE *lyesnobox(NODE *args)
     if (NOT_THROWING)
     {
         int status = ::MessageBox(
-            GetParentWindowForDialog(),
+            reinterpret_cast<HWND>(GetParentWindowForDialog()->GetHWND()),
             body,
             banner,
             MB_YESNOCANCEL | MB_ICONQUESTION);
@@ -2591,36 +2594,22 @@ NODE *lyesnobox(NODE *args)
 
 NODE *ldialogfileopen(NODE *args)
 {
-    char filename[MAX_PATH];
-    PrintNodeToString(car(args), filename, ARRAYSIZE(filename));
+    char filenameBuffer[MAX_PATH];
+    PrintNodeToString(car(args), filenameBuffer, ARRAYSIZE(filenameBuffer));
 
-    OPENFILENAME openFileName;
-    ZeroMemory(&openFileName, sizeof openFileName);
-    openFileName.lStructSize       = sizeof openFileName;
-    openFileName.hwndOwner         = GetParentWindowForDialog();
-    openFileName.hInstance         = NULL;
-    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_ALLFILES;
-    openFileName.lpstrCustomFilter = NULL;
-    openFileName.nMaxCustFilter    = 0;
-    openFileName.nFilterIndex      = 0;
-    openFileName.lpstrFile         = filename;
-    openFileName.nMaxFile          = ARRAYSIZE(filename);
-    openFileName.lpstrFileTitle    = NULL;
-    openFileName.nMaxFileTitle     = 0;
-    openFileName.lpstrInitialDir   = NULL;
-    openFileName.lpstrTitle        = NULL;
-    openFileName.Flags             = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
-    openFileName.nFileOffset       = 0;
-    openFileName.nFileExtension    = 0;
-    openFileName.lpstrDefExt       = NULL;
-    openFileName.lCustData         = 0;
-    openFileName.lpfnHook          = NULL;
-    openFileName.lpTemplateName    = NULL;
+    wxFileName filename(filenameBuffer);
 
-    // if user found a file then try to load it
-    if (GetOpenFileName(&openFileName))
+    const wxString selectedFilename = wxFileSelector(
+        wxEmptyString,                            // title/message
+        filename.GetPath(),                       // default path
+        filename.GetFullName(),                   // default file name
+        filename.GetExt(),                        // default file extension
+        WXSTRING(LOCALIZED_FILEFILTER_ALLFILES),  // file filters
+        wxFD_OPEN | wxFD_FILE_MUST_EXIST,         // flags
+        GetParentWindowForDialog());              // parent window
+    if (!selectedFilename.empty())
     {
-        return make_strnode(filename);
+        return make_strnode(WXSTRING_TO_STRING(selectedFilename));
     }
     else
     {
@@ -2630,36 +2619,22 @@ NODE *ldialogfileopen(NODE *args)
 
 NODE *ldialogfilesave(NODE *args)
 {
-    char filename[MAX_PATH];
-    PrintNodeToString(car(args), filename, ARRAYSIZE(filename));
+    char filenameBuffer[MAX_PATH];
+    PrintNodeToString(car(args), filenameBuffer, ARRAYSIZE(filenameBuffer));
 
-    OPENFILENAME openFileName;
-    ZeroMemory(&openFileName, sizeof openFileName);
-    openFileName.lStructSize       = sizeof openFileName;
-    openFileName.hwndOwner         = GetParentWindowForDialog();
-    openFileName.hInstance         = NULL;
-    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_ALLFILES;
-    openFileName.lpstrCustomFilter = NULL;
-    openFileName.nMaxCustFilter    = 0;
-    openFileName.nFilterIndex      = 0;
-    openFileName.lpstrFile         = filename;
-    openFileName.nMaxFile          = ARRAYSIZE(filename);
-    openFileName.lpstrFileTitle    = NULL;
-    openFileName.nMaxFileTitle     = 0;
-    openFileName.lpstrInitialDir   = NULL;
-    openFileName.lpstrTitle        = NULL;
-    openFileName.Flags             = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
-    openFileName.nFileOffset       = 0;
-    openFileName.nFileExtension    = 0;
-    openFileName.lpstrDefExt       = NULL;
-    openFileName.lCustData         = 0;
-    openFileName.lpfnHook          = NULL;
-    openFileName.lpTemplateName    = NULL;
+    wxFileName filename(filenameBuffer);
 
-    // if user found a file then try to load it
-    if (GetSaveFileName(&openFileName))
+    const wxString selectedFilename = wxFileSelector(
+        wxEmptyString,                            // title/message
+        filename.GetPath(),                       // default path
+        filename.GetFullName(),                   // default file name
+        filename.GetExt(),                        // default file extension
+        WXSTRING(LOCALIZED_FILEFILTER_ALLFILES),  // file filters
+        wxFD_SAVE | wxFD_OVERWRITE_PROMPT,        // flags
+        GetParentWindowForDialog());              // parent window
+    if (!selectedFilename.empty())
     {
-        return make_strnode(filename, strlen(filename), STRING, strnzcpy);
+        return make_strnode(WXSTRING_TO_STRING(selectedFilename));
     }
     else
     {

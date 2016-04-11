@@ -621,6 +621,11 @@ char * promptuser(const char *prompt)
     return CFmsLogo::GetMainFrame()->PromptUserForInput(prompt);
 }
 
+wxWindow * GetParentWindowForDialog()
+{
+    return CFmsLogo::GetMainFrame()->GetCommander();
+}
+
 #ifndef WX_PURE
 HWND GetScreenWindow()
 {
@@ -641,11 +646,6 @@ HWND GetCommanderWindow()
     CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
     assert(mainFrame != NULL);
     return reinterpret_cast<HWND>(mainFrame->GetTopLevelWindowForCommander()->GetHandle());
-}
-
-HWND GetParentWindowForDialog()
-{
-    return GetCommanderWindow();
 }
 
 HWND GetEditorWindow()

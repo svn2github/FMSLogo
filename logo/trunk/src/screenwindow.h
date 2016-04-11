@@ -31,11 +31,11 @@ HWND GetScreenWindow();
 HWND GetMainWindow();
 HWND GetEditorWindow();
 HWND GetCommanderWindow();
-HWND GetParentWindowForDialog();
 #endif
 
 class wxWindow * GetMainWxWindow();
 class wxWindow * GetScreenWxWindow();
+class wxWindow * GetParentWindowForDialog();
 
 UINT GetScreenHorizontalScrollPosition();
 UINT GetScreenVerticalScrollPosition();

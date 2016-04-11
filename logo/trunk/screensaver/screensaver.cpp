@@ -5,8 +5,10 @@
 #include <stdlib.h>
 
 #include <wx/window.h>
-#include <wx/app.h> 
-#include <wx/dc.h> 
+#include <wx/app.h>
+#include <wx/dc.h>
+#include <wx/filedlg.h>
+#include <wx/filename.h>
 
 #include "init.h"
 #include "graphwin.h"
@@ -27,6 +29,7 @@
 #include "netwind.h"
 #include "screenwindow.h"
 #include "statusdialog.h"
+#include "stringadapter.h"
 
 #include "resource.h"
 
@@ -134,6 +137,20 @@ UninitializeLogoEngine()
 #endif // MEM_DEBUG
 }
 
+static wxWindow * WrapNativeHwnd(HWND NativeHwnd)
+{
+    wxWindow * wrapperWindow = new wxWindow();
+    wrapperWindow->SetHWND(NativeHwnd);
+    wrapperWindow->AdoptAttributesFromHWND();
+    return wrapperWindow;
+}
+
+static void DeleteWrapperWindow(wxWindow * WrapperWindow)
+{
+    WrapperWindow->SetHWND(NULL);
+    WrapperWindow->Destroy();
+}
+
 LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     LRESULT     rval = 0;
@@ -158,9 +175,7 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 
         // Wrap the native HWND in a wxWindow object so that
         // it can be passed to other parts of the system.
-        g_WxScreenWindow = new wxWindow();
-        g_WxScreenWindow->SetHWND(hwnd);
-        g_WxScreenWindow->AdoptAttributesFromHWND();
+        g_WxScreenWindow = WrapNativeHwnd(hwnd);
 
         g_ScreenWindow = hwnd;
         GetClientRect(g_ScreenWindow, &FullRect);
@@ -518,8 +533,7 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
             // cause a double-free.
             if (g_WxScreenWindow != NULL)
             {
-                g_WxScreenWindow->SetHWND(NULL);
-                g_WxScreenWindow->Destroy();
+                DeleteWrapperWindow(g_WxScreenWindow);
                 g_WxScreenWindow = NULL;
             }
 
@@ -542,9 +556,9 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 // This is the function Windows calls to launch our dialog box.
 BOOL WINAPI ScreenSaverConfigureDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    DWORD        bytesWritten;
-    OPENFILENAME openFileName;
-    char         logoFileFilter[256];
+    DWORD      bytesWritten;
+    wxFileName fileToLoad;
+    wxWindow * dialog;
 
     switch (message)
     {
@@ -594,56 +608,38 @@ BOOL WINAPI ScreenSaverConfigureDialog(HWND hDlg, UINT message, WPARAM wParam, L
             EndDialog(hDlg, FALSE);
             return TRUE;
    
-            // They hit the Reset to Defaults button, so set all the edit boxes to good defaults.
         case IDC_LOCATE:
+            // The user pressed the "Locate" button to look for a file.
+            fileToLoad.Assign(WXSTRING(g_FileToLoad));
 
-            // translate from the file filter format which
-            // Borland uses to the one which the screensaver uses.
-            // This saves the translators time in that they don't have
-            // to localize two strings.
-            size_t i = 0;
-            while (i < ARRAYSIZE(logoFileFilter) &&
-                   LOCALIZED_FILEFILTER_LOGO[i] != '\0')
-            {
-                logoFileFilter[i] = LOCALIZED_FILEFILTER_LOGO[i];
-                if (logoFileFilter[i] == '|')
-                {
-                    // map all | characters to \0
-                    logoFileFilter[i] = '\0';
-                }
+            // Wrap the hDlg in a wxWindow so that we can use it as
+            // the parent window for a wxFileSelector (which we only do
+            // so that we can use the LOCALIZED_FILEFILTER_LOGO without
+            // modifying it for the win32 API.
+            dialog = WrapNativeHwnd(hDlg);
 
-                i++;
-            }
-            // Add another NULL terminator
-            logoFileFilter[i] = '\0';
+            const wxString selectedFilename = wxFileSelector(
+                wxEmptyString,                            // title/message
+                fileToLoad.GetPath(),                     // default path
+                fileToLoad.GetFullName(),                 // default file name
+                WXSTRING(LOCALIZED_LOGO_FILE_EXTENSION),  // default file extension
+                WXSTRING(LOCALIZED_FILEFILTER_LOGO),      // file filters
+                wxFD_OPEN | wxFD_FILE_MUST_EXIST,         // flags
+                dialog);                                  // parent window
+            if (!selectedFilename.empty()) {
+                // Update the global variable so if the user presses "Locate"
+                // again, they will start at the same file that they just
+                // selected.
+                strncpy(
+                    g_FileToLoad,
+                    WXSTRING_TO_STRING(selectedFilename),
+                    ARRAYSIZE(g_FileToLoad));
 
-            ZeroMemory(&openFileName, sizeof openFileName);
-            openFileName.lStructSize       = sizeof openFileName;
-            openFileName.hwndOwner         = hDlg;
-            openFileName.hInstance         = NULL;
-            openFileName.lpstrFilter       = logoFileFilter;
-            openFileName.lpstrCustomFilter = NULL;
-            openFileName.nMaxCustFilter    = 0;
-            openFileName.nFilterIndex      = 0;
-            openFileName.lpstrFile         = g_FileToLoad;
-            openFileName.nMaxFile          = ARRAYSIZE(g_FileToLoad);
-            openFileName.lpstrFileTitle    = NULL;
-            openFileName.nMaxFileTitle     = 0;
-            openFileName.lpstrInitialDir   = NULL;
-            openFileName.lpstrTitle        = NULL;
-            openFileName.Flags             = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
-            openFileName.nFileOffset       = 0;
-            openFileName.nFileExtension    = 0;
-            openFileName.lpstrDefExt       = NULL;
-            openFileName.lCustData         = 0;
-            openFileName.lpfnHook          = NULL;
-            openFileName.lpTemplateName    = NULL;
-
-            if (GetOpenFileName(&openFileName))
-            {
                 // update the dialog box item
-                ::SetDlgItemText(hDlg, IDC_LOGOFILEEDIT, openFileName.lpstrFile);
+                ::SetDlgItemText(hDlg, IDC_LOGOFILEEDIT, g_FileToLoad);
             }
+
+            DeleteWrapperWindow(dialog);
             return TRUE;
         }
         return FALSE;
@@ -760,12 +756,12 @@ HWND GetCommanderWindow()
     return NULL;
 }
 
-HWND GetParentWindowForDialog()
+wxWindow * GetParentWindowForDialog()
 {
     // Because the screen window is full screen and always on top,
     // it must be the parent of any dialog box that we want to
     // show, or else that dialog wouldn't be visible.
-    return GetScreenWindow();
+    return g_WxScreenWindow;
 }
 
 HWND GetEditorWindow()
