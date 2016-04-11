@@ -23,6 +23,7 @@
 
     #include <wx/fontutil.h> // for wxNativeFontInfo
     #include <wx/msgdlg.h>   // for wxMessageBox
+    #include <wx/filefn.h>   // for wxSetWorkingDirectory
 
     #include <algorithm>
 
@@ -407,11 +408,6 @@ CMainFrame::CMainFrame(
       m_SetFloodColorDialog(NULL),
       m_SetScreenColorDialog(NULL)
 {
-#ifndef WX_PURE
-    m_FileName[0]   = '\0';
-    m_BitmapName[0] = '\0';
-#endif
-
     //
     // Construct the main menu
     //
@@ -1398,37 +1394,6 @@ void CMainFrame::OnFileNew(wxCommandEvent& WXUNUSED(Event))
     EraseContentsOfWorkspace();
 }
 
-#ifndef WX_PURE
-void
-CMainFrame::InitializeOpenFileNameForLogoFiles(
-    OPENFILENAME & OpenFileData
-    )
-{
-    ZeroMemory(&OpenFileData, sizeof OpenFileData);
-    OpenFileData.lStructSize       = sizeof OpenFileData;
-    OpenFileData.hwndOwner         = static_cast<HWND>(GetHandle());
-    OpenFileData.hInstance         = NULL;
-    OpenFileData.lpstrFilter       = LOCALIZED_FILEFILTER_LOGO;
-    OpenFileData.lpstrCustomFilter = NULL;
-    OpenFileData.nMaxCustFilter    = 0;
-    OpenFileData.nFilterIndex      = 0;
-    OpenFileData.lpstrFile         = m_FileName;
-    OpenFileData.nMaxFile          = ARRAYSIZE(m_FileName);
-    OpenFileData.lpstrFileTitle    = NULL;
-    OpenFileData.nMaxFileTitle     = 0;
-    OpenFileData.lpstrInitialDir   = NULL;
-    OpenFileData.lpstrTitle        = NULL;
-    OpenFileData.Flags             = OFN_HIDEREADONLY | OFN_EXPLORER;
-    OpenFileData.nFileOffset       = 0;
-    OpenFileData.nFileExtension    = 0;
-    OpenFileData.lpstrDefExt       = LOCALIZED_LOGO_FILE_EXTENSION;
-    OpenFileData.lCustData         = 0;
-    OpenFileData.lpfnHook          = NULL;
-    OpenFileData.lpTemplateName    = NULL;
-}
-
-#endif // WX_PURE
-
 void CMainFrame::OnFileLoad(wxCommandEvent& WXUNUSED(Event))
 {
     if (IsDirty)
@@ -1447,24 +1412,36 @@ void CMainFrame::OnFileLoad(wxCommandEvent& WXUNUSED(Event))
     }
 
     // show the user a file-picker dialog
-#ifndef WX_PURE
-    // TODO: switch to use wxFileSelector
-    OPENFILENAME openFileName;
-    InitializeOpenFileNameForLogoFiles(openFileName);
-    openFileName.Flags |= OFN_FILEMUSTEXIST;
-
-    // if user found a file then try to load it
-    if (GetOpenFileName(&openFileName))
+    const wxString fileToLoad = wxFileSelector(
+        WXSTRING(LOCALIZED_FILE_LOAD_DIALOG_TITLE), // title/message
+        m_LastLoadedLogoFile.GetPath(),             // default path
+        m_LastLoadedLogoFile.GetFullName(),         // default file name
+        WXSTRING(LOCALIZED_LOGO_FILE_EXTENSION),    // default file extension
+        WXSTRING(LOCALIZED_FILEFILTER_LOGO),        // file filters
+        wxFD_OPEN | wxFD_FILE_MUST_EXIST,           // flags
+        this);                                      // parent window
+    if (!fileToLoad.empty())
     {
+        // The user made a selection.
+        // Save it for seeding a default in future dialog boxes.
+        m_LastLoadedLogoFile.Assign(fileToLoad);
+
+        // For compatibility with MSWLogo, we adopt the same logic that
+        // exists within the win32 API, which is to change the current
+        // working directory to whatever directory the file is in.
+        // Otherwise, files which are loaded by this dialog cannot
+        // "LOAD" other files within the same directory.
+        wxSetWorkingDirectory(m_LastLoadedLogoFile.GetPath());
+
         m_IsNewFile = false;
 
         start_execution();
 
-        bool isOk = fileload(m_FileName);
-        if (!isOk) 
+        bool isOk = fileload(WXSTRING_TO_STRING(fileToLoad));
+        if (!isOk)
         {
             err_logo(
-                FILE_ERROR, 
+                FILE_ERROR,
                 make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTOPEN));
         }
 
@@ -1473,7 +1450,6 @@ void CMainFrame::OnFileLoad(wxCommandEvent& WXUNUSED(Event))
 
         stop_execution();
     }
-#endif // WX_PURE
 }
 
 void CMainFrame::OnFileOpen(wxCommandEvent& WXUNUSED(Event))
@@ -1493,15 +1469,28 @@ void CMainFrame::OnFileOpen(wxCommandEvent& WXUNUSED(Event))
         }
     }
 
-#ifndef WX_PURE
     // show the user a file-picker dialog
-    OPENFILENAME openFileName;
-    InitializeOpenFileNameForLogoFiles(openFileName);
-    openFileName.Flags |= OFN_FILEMUSTEXIST;
-
-    // if user found a file then try to open it
-    if (GetOpenFileName(&openFileName))
+    const wxString fileToLoad = wxFileSelector(
+        WXSTRING(LOCALIZED_FILE_OPEN_DIALOG_TITLE), // title/message
+        m_LastLoadedLogoFile.GetPath(),             // default path
+        m_LastLoadedLogoFile.GetFullName(),         // default file name
+        WXSTRING(LOCALIZED_LOGO_FILE_EXTENSION),    // default file extension
+        WXSTRING(LOCALIZED_FILEFILTER_LOGO),        // file filters
+        wxFD_OPEN | wxFD_FILE_MUST_EXIST,           // flags
+        this);                                      // parent window
+    if (!fileToLoad.empty())
     {
+        // The user made a selection.
+        // Save it for seeding a default in future dialog boxes.
+        m_LastLoadedLogoFile.Assign(fileToLoad);
+
+        // For compatibility with MSWLogo, we adopt the same logic that
+        // exists within the win32 API, which is to change the current
+        // working directory to whatever directory the file is in.
+        // Otherwise, files which are loaded by this dialog cannot
+        // "LOAD" other files within the same directory.
+        wxSetWorkingDirectory(m_LastLoadedLogoFile.GetPath());
+
         // start with a clean plate
         m_IsNewFile = false;
 
@@ -1510,11 +1499,11 @@ void CMainFrame::OnFileOpen(wxCommandEvent& WXUNUSED(Event))
 
         start_execution();
 
-        bool isOk = fileload(m_FileName);
-        if (!isOk) 
+        bool isOk = fileload(WXSTRING_TO_STRING(fileToLoad));
+        if (!isOk)
         {
             err_logo(
-                FILE_ERROR, 
+                FILE_ERROR,
                 make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTOPEN));
         }
 
@@ -1523,7 +1512,6 @@ void CMainFrame::OnFileOpen(wxCommandEvent& WXUNUSED(Event))
 
         stop_execution();
     }
-#endif
 }
 
 // Displays a warning if the workspace is empty
@@ -1562,23 +1550,35 @@ bool CMainFrame::WarnIfSavingEmptyWorkspace()
 // file couldn't be saved for other reasons.
 bool CMainFrame::SaveFileAs()
 {
-#ifdef WX_PURE
-    return false;
-#else
-    // if new the nulify File name
+    // if new, then nulify File name
     if (m_IsNewFile)
     {
-        m_FileName[0] = '\0';
+        m_LastLoadedLogoFile.Clear();
     }
 
     // Get file name from user and then save the file
-    OPENFILENAME openFileName;
-    InitializeOpenFileNameForLogoFiles(openFileName);
-    openFileName.Flags |= OFN_OVERWRITEPROMPT;
-
     bool isOk;
-    if (GetSaveFileName(&openFileName))
+    const wxString fileToSave = wxFileSelector(
+        WXSTRING(LOCALIZED_FILE_SAVE_DIALOG_TITLE), // title/message
+        m_LastLoadedLogoFile.GetPath(),             // default path
+        m_LastLoadedLogoFile.GetFullName(),         // default file name
+        WXSTRING(LOCALIZED_LOGO_FILE_EXTENSION),    // default file extension
+        WXSTRING(LOCALIZED_FILEFILTER_LOGO),        // file filters
+        wxFD_SAVE | wxFD_OVERWRITE_PROMPT,          // flags
+        this);                                      // parent window
+    if (!fileToSave.empty())
     {
+        // The user made a selection.
+        // Save it for seeding a default in future dialog boxes.
+        m_LastLoadedLogoFile.Assign(fileToSave);
+
+        // For compatibility with MSWLogo, we adopt the same logic that
+        // exists within the win32 API, which is to change the current
+        // working directory to whatever directory the file is in.
+        // This is more important for load/open, and I don't know if this
+        // is even needed for saving.
+        wxSetWorkingDirectory(m_LastLoadedLogoFile.GetPath());
+
         m_IsNewFile = false;
         isOk = SaveFile();
     }
@@ -1588,14 +1588,11 @@ bool CMainFrame::SaveFileAs()
     }
 
     return isOk;
-#endif
 }
 
 bool CMainFrame::SaveFile()
 {
-#ifndef WX_PURE
-    filesave(m_FileName);
-#endif
+    filesave(WXSTRING_TO_STRING(m_LastLoadedLogoFile.GetFullPath()));
 
     // handle any error that may have occured
     process_special_conditions();
@@ -1889,48 +1886,39 @@ void CMainFrame::OnBitmapNew(wxCommandEvent& WXUNUSED(Event))
 
 void CMainFrame::OnBitmapOpen(wxCommandEvent& WXUNUSED(Event))
 {
-#ifndef WX_PURE
-    OPENFILENAME openFileName;
-    ZeroMemory(&openFileName, sizeof openFileName);
-    openFileName.lStructSize       = sizeof openFileName;
-    openFileName.hwndOwner         = static_cast<HWND>(GetHandle());
-    openFileName.hInstance         = NULL;
-    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_IMAGE;
-    openFileName.lpstrCustomFilter = NULL;
-    openFileName.nMaxCustFilter    = 0;
-    openFileName.nFilterIndex      = 0;
-    openFileName.lpstrFile         = m_BitmapName;
-    openFileName.nMaxFile          = ARRAYSIZE(m_BitmapName);
-    openFileName.lpstrFileTitle    = NULL;
-    openFileName.nMaxFileTitle     = 0;
-    openFileName.lpstrInitialDir   = NULL;
-    openFileName.lpstrTitle        = NULL;
-    openFileName.Flags             = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
-    openFileName.nFileOffset       = 0;
-    openFileName.nFileExtension    = 0;
-    openFileName.lpstrDefExt       = "bmp";
-    openFileName.lCustData         = 0;
-    openFileName.lpfnHook          = NULL;
-    openFileName.lpTemplateName    = NULL;
-
-    // if user found a file then try to load it
-    if (GetOpenFileName(&openFileName))
+    const wxString fileToLoad = wxFileSelector(
+        WXSTRING(LOCALIZED_BITMAP_OPEN_DIALOG_TITLE), // title/message
+        m_LastLoadedBitmapFile.GetPath(),             // default path
+        m_LastLoadedBitmapFile.GetFullName(),         // default file name
+        WXSTRING(".bmp"),                             // default file extension
+        WXSTRING(LOCALIZED_FILEFILTER_IMAGE),         // file filters
+        wxFD_OPEN | wxFD_FILE_MUST_EXIST,             // flags
+        this);                                        // parent window
+    if (!fileToLoad.empty())
     {
+        // The user made a selection.
+        // Save it for seeding a default in future dialog boxes.
+        m_LastLoadedBitmapFile.Assign(fileToLoad);
+
         unsigned int dwPixelWidth  = 1;
         unsigned int dwPixelHeight = 1;
 
         m_IsNewBitmap = false;
 
         ERR_TYPES status;
-        char ext[_MAX_EXT];
-        _splitpath(m_BitmapName, NULL, NULL, NULL, ext);
-        if (stricmp(ext, ".gif") == 0)
+        if (m_LastLoadedBitmapFile.GetExt().IsSameAs(WXSTRING(".gif"), false))
         {
-            status = gifload_helper(m_BitmapName, dwPixelWidth, dwPixelHeight);
+            status = gifload_helper(
+                WXSTRING_TO_STRING(m_LastLoadedBitmapFile.GetFullPath()),
+                dwPixelWidth,
+                dwPixelHeight);
         }
         else
         {
-            status = LoadBitmapFile(m_BitmapName, dwPixelWidth, dwPixelHeight);
+            status = LoadBitmapFile(
+                WXSTRING_TO_STRING(m_LastLoadedBitmapFile.GetFullPath()),
+                dwPixelWidth,
+                dwPixelHeight);
         }
 
         if (status != SUCCESS)
@@ -1938,72 +1926,61 @@ void CMainFrame::OnBitmapOpen(wxCommandEvent& WXUNUSED(Event))
             ShowErrorMessage(status);
         }
     }
-#endif // WX_PURE
 }
 
 void CMainFrame::SaveBitmap()
 {
-#ifndef WX_PURE
     ERR_TYPES status;
-
-    char ext[_MAX_EXT];
-    _splitpath(m_BitmapName, NULL, NULL, NULL, ext);
-    if (stricmp(ext, ".gif") == 0)
+    if (m_LastLoadedBitmapFile.GetExt().IsSameAs(WXSTRING(".gif"), false))
     {
-        status = gifsave_helper(m_BitmapName, -1, 0, -1, -1, 8);
+        status = gifsave_helper(
+            WXSTRING_TO_STRING(m_LastLoadedBitmapFile.GetFullPath()),
+            -1,
+            0,
+            -1,
+            -1,
+            8);
     }
     else
     {
-        status = DumpBitmapFile(m_BitmapName, 32);
+        status = DumpBitmapFile(
+            WXSTRING_TO_STRING(m_LastLoadedBitmapFile.GetFullPath()),
+            32);
     }
 
     if (status != SUCCESS)
     {
         ShowErrorMessage(status);
     }
-#endif // WX_PURE
 }
 
 void CMainFrame::SaveBitmapAs()
 {
-#ifndef WX_PURE
     // if new then nulify File name
     if (m_IsNewBitmap)
     {
-        m_BitmapName[0] = '\0';
+        m_LastLoadedBitmapFile.Clear();
     }
 
     // Get file name from user
-    OPENFILENAME openFileName;
-    ZeroMemory(&openFileName, sizeof openFileName);
-    openFileName.lStructSize       = sizeof openFileName;
-    openFileName.hwndOwner         = static_cast<HWND>(GetHandle());
-    openFileName.hInstance         = NULL;
-    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_IMAGE;
-    openFileName.lpstrCustomFilter = NULL;
-    openFileName.nMaxCustFilter    = 0;
-    openFileName.nFilterIndex      = 0;
-    openFileName.lpstrFile         = m_BitmapName;
-    openFileName.nMaxFile          = ARRAYSIZE(m_BitmapName);
-    openFileName.lpstrFileTitle    = NULL;
-    openFileName.nMaxFileTitle     = 0;
-    openFileName.lpstrInitialDir   = NULL;
-    openFileName.lpstrTitle        = NULL;
-    openFileName.Flags             = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
-    openFileName.nFileOffset       = 0;
-    openFileName.nFileExtension    = 0;
-    openFileName.lpstrDefExt       = "bmp";
-    openFileName.lCustData         = 0;
-    openFileName.lpfnHook          = NULL;
-    openFileName.lpTemplateName    = NULL;
-
-    if (GetSaveFileName(&openFileName))
+    const wxString fileToSave = wxFileSelector(
+        WXSTRING(LOCALIZED_BITMAP_SAVE_DIALOG_TITLE), // title/message
+        m_LastLoadedBitmapFile.GetPath(),             // default path
+        m_LastLoadedBitmapFile.GetFullName(),         // default file name
+        WXSTRING(".bmp"),                             // default file extension
+        WXSTRING(LOCALIZED_FILEFILTER_IMAGE),         // file filters
+        wxFD_SAVE | wxFD_OVERWRITE_PROMPT,            // flags
+        this);                                        // parent window
+    if (!fileToSave.empty())
     {
+        // The user made a selection.
+        // Save it for seeding a default in future dialog boxes.
+        m_LastLoadedBitmapFile.Assign(fileToSave);
+
         // Save the bitmap using the new file name
         m_IsNewBitmap = false;
         SaveBitmap();
     }
-#endif // WX_PURE
 }
 
 void CMainFrame::OnBitmapSave(wxCommandEvent& WXUNUSED(Event))

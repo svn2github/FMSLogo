@@ -80,6 +80,7 @@
 #include <wx/dialog.h>
 #include <wx/event.h>
 #include <wx/filename.h>
+#include <wx/filefn.h>
 #include <wx/fontdlg.h>
 #include <wx/fontutil.h>
 #include <wx/frame.h>

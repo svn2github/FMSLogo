@@ -7,6 +7,7 @@
 
 #include <wx/frame.h>
 #include <wx/print.h>
+#include <wx/filename.h>
 
 #include "localizedstrings.h" // for MANUAL_HAS_TRANSLATION_TABLES
 
@@ -192,11 +193,6 @@ private:
         COLORREF        InitialColor,
         const char *    LogoCommand
         );
-
-    void
-    InitializeOpenFileNameForLogoFiles(
-        OPENFILENAME & OpenFileData
-        );
 #endif // WX_PURE
 
     bool WarnIfSavingEmptyWorkspace();
@@ -234,11 +230,10 @@ private:
     // m_PageSetupData stores printer preferences across printouts.
     wxPageSetupDialogData m_PageSetupData;
 
-#ifndef WX_PURE
-    // TODO: Make these wxString objects
-    char m_FileName[MAX_PATH];
-    char m_BitmapName[MAX_PATH];
-#endif // WX_PURE
+    // The file name of the most recently loaded/saved file.
+    // This is used to suggest a name when loading/saving the next file.
+    wxFileName m_LastLoadedLogoFile;
+    wxFileName m_LastLoadedBitmapFile;
 
     CSetColor * m_SetPenColorDialog;
     CSetColor * m_SetFloodColorDialog;

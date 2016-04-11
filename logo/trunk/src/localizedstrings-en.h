@@ -935,10 +935,16 @@
 // 
 //  Strings used in the File-Open filters
 //
+#define LOCALIZED_FILE_LOAD_DIALOG_TITLE    "Select the Logo program to load (merge into workspace)"
+#define LOCALIZED_FILE_OPEN_DIALOG_TITLE    "Select the Logo program to open (replace the workspace with)"
+#define LOCALIZED_FILE_SAVE_DIALOG_TITLE    "Select the file to which the workspace will be saved"
+#define LOCALIZED_BITMAP_OPEN_DIALOG_TITLE  "Select the image to load"
+#define LOCALIZED_BITMAP_SAVE_DIALOG_TITLE  "Select the file to which the active area will be saved"
+
 #define LOCALIZED_LOGO_FILE_EXTENSION "lgo"
-#define LOCALIZED_FILEFILTER_ALLFILES "All Files (*.*)\0*.*\0"
-#define LOCALIZED_FILEFILTER_LOGO     "Logo Files (*.lgo)\0*.lgo\0"LOCALIZED_FILEFILTER_ALLFILES
-#define LOCALIZED_FILEFILTER_IMAGE    "Bitmap Files (*.bmp)\0*.bmp\0GIF Files (*.gif)\0*.gif\0"LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_ALLFILES "All Files (*.*)|*.*"
+#define LOCALIZED_FILEFILTER_LOGO     "Logo Files (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_IMAGE    "Bitmap Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES
 
 
 
