@@ -147,13 +147,6 @@ FLONUM the_zoom = 1.0;                 // current zoom factor
 
 HBITMAP MemoryBitMap;                  // Backing store bitmap
 
-// Flag to signal that focus should go to the commander's editbox.  This is
-// initially set to true in TMyCommandWindow::DoButtonExecute(), but can
-// be overridden and set to false by some commands, such as EDIT and SETFOCUS.
-// If the flag is still true after the instruction has finished executing, then
-// focus is given to the commander's editbox.
-bool GiveFocusToEditbox = false;
-
 #ifndef WX_PURE
 typedef HWND ( __stdcall *HTMLHELPFUNC)(HWND, PCSTR, UINT, DWORD);
 static HTMLHELPFUNC g_HtmlHelpFunc;
@@ -3057,7 +3050,6 @@ NODE *lsetfocus(NODE *arg)
         ::SetFocus(window);
     }
 #endif
-    GiveFocusToEditbox = false;
 
     return Unbound;
 }
@@ -3079,8 +3071,6 @@ NODE *lgetfocus(NODE *)
         ::GetWindowText(TempH, textbuf, ARRAYSIZE(textbuf));
     }
 #endif
-
-    GiveFocusToEditbox = false;
 
     // Return caption as a list
     NODE * arg = make_strnode(textbuf);
@@ -3117,11 +3107,10 @@ NODE *lwindowset(NODE *args)
             window = FindWindow(NULL, caption);
         }
 
-        // if it exists set its state it.
+        // if it exists set its state.
         if (window != NULL)
         {
             ShowWindow(window, mode);
-            GiveFocusToEditbox = false;
         }
     }
 #endif

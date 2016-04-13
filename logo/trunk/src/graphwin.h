@@ -68,8 +68,6 @@ extern bool zoom_flag;
 
 extern FLONUM the_zoom;
 
-extern bool GiveFocusToEditbox;
-
 // function declarations
 extern ERR_TYPES gifsave_helper(const char *GifFileName, int iDelay_, int bAppendMode_, int iLoop_, int iTrans, int iMaxColorDepth);
 extern ERR_TYPES gifload_helper(const char *GifFileName, unsigned int &dwPixelWidth, unsigned int &dwPixelHeight);

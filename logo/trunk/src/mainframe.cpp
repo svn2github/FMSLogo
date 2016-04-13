@@ -880,8 +880,6 @@ CMainFrame::PopupEditor(
         EditArguments,
         CheckForErrors,
         OpenToError);
-
-    GiveFocusToEditbox = false;
 }
 
 void CMainFrame::PopupEditorToError(const char *FileName)
@@ -1158,7 +1156,6 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
             editor->Iconize(false);
             editor->Show();
             editor->Raise();
-            GiveFocusToEditbox = false;
 
             // Notify the user that they will lose the changes
             // in this editor if they continue.
