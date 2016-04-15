@@ -694,10 +694,14 @@ void silent_load(NODE *arg, const char *prefix)
             // prefix is too long
             return;
         }
+
+        // Normalize the case to how we expect it to be on the file system.
+        // Using lowercase was inherited from UCBLogo.
         noparitylow_strnzcpy(filenamePtr, argString, argStringLength);
 
-        // Replace characters that are illegal in filename (such as '?')
-        // characters that are illegal in procedure names (such as '+')
+        // Replace characters that are legal in procedure names, but illegal
+        // in file names (such as '?') with characters that are illegal in
+        // procedure names, but legal in file names (such as '+').
         // This permits us to load "?REST" as a Logolib routine.
         for (const char * limit = filenamePtr + argStringLength;
              filenamePtr < limit;
