@@ -25,7 +25,6 @@
   #include <windows.h>  // for LOGFONT
   #include <windowsx.h> // for GlobalFreePtr()
   #include <commctrl.h> // for combobox style manifest constants
-  #include <htmlhelp.h>
   #include <shlobj.h>
 
   #ifdef min // MS compilers #define min in windows.h
@@ -85,6 +84,7 @@
 #include <wx/fontutil.h>
 #include <wx/frame.h>
 #include <wx/gdicmn.h> 
+#include <wx/help.h>
 #include <wx/listbox.h>
 #include <wx/log.h>
 #include <wx/menu.h>
@@ -107,7 +107,6 @@
 #ifdef __WXMSW__
   #include <wx/msw/private.h>
 #endif
-
 
 #ifdef WX_PURE
   #define GetRValue(rgb) (((rgb) >> 0)  & 0xFF)

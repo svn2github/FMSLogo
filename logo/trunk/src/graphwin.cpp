@@ -26,6 +26,8 @@
    #include <algorithm>
 
    #include <wx/dc.h>
+   #include <wx/help.h>
+   #include <wx/msgdlg.h> 
 
    #ifdef WX_PURE
       typedef struct __BITMAP      * HBITMAP;
@@ -47,7 +49,6 @@
 
    #else
       #include <windows.h>
-      #include <htmlhelp.h>
 
       #ifdef max // MS compilers #define max in windows.h
          #undef max
@@ -87,7 +88,8 @@
    #include "const.h"
    #include "threed.h"
    #include "screenwindow.h"
-   #include "startup.h"
+   #include "startup.h" // g_HelpFileName
+   #include "stringadapter.h"
    #include "debugheap.h"
 
    #include "localizedstrings.h"
@@ -147,11 +149,8 @@ FLONUM the_zoom = 1.0;                 // current zoom factor
 
 HBITMAP MemoryBitMap;                  // Backing store bitmap
 
-#ifndef WX_PURE
-typedef HWND ( __stdcall *HTMLHELPFUNC)(HWND, PCSTR, UINT, DWORD);
-static HTMLHELPFUNC g_HtmlHelpFunc;
-static HMODULE      g_HtmlHelpLib;
-#endif
+static wxHelpController * g_HelpController;
+static wxWindow         * g_HelpParent;
 
 static CUTMAP * g_SelectedBitmap;
 static CUTMAP * g_Bitmaps;
@@ -3239,35 +3238,31 @@ HtmlHelpInitialize(
     void
     )
 {
-    if (g_HtmlHelpFunc != NULL)
+    if (g_HelpController != NULL)
     {
-        // The HTML Help subsystem has already been initialized
+        // The Help subsystem has already been initialized
         return true;
     }
 
-    // Load the ActiveX control
-    g_HtmlHelpLib = ::LoadLibrary("hhctrl.ocx");
-    if (g_HtmlHelpLib == NULL) 
-    {
-        ::MessageBox(
-            GetDesktopWindow(), 
-            LOCALIZED_ERROR_HHCTRLNOTLOADED, 
-            LOCALIZED_ERROR,
-            MB_OK);
-        return false;
-    }
+#ifdef __WXMSW__
+    // For compatibility with MSWLogo, the deskop is the parent of the help.
+    // This ensures that the window for the main environment can be positioned
+    // over the help and gives the help window a unique icon.
+    g_HelpParent = new wxWindow();
+    g_HelpParent->SetHWND(GetDesktopWindow());
+    g_HelpParent->AdoptAttributesFromHWND();
+#endif
 
-    // Get the HtmlHelpA() function pointer
-    g_HtmlHelpFunc = (HTMLHELPFUNC) ::GetProcAddress(
-        g_HtmlHelpLib, 
-        ATOM_HTMLHELP_API_ANSI);
-    if (g_HtmlHelpFunc == NULL)
+    g_HelpController = new wxHelpController(g_HelpParent);
+
+    // This is the only place that reads g_HelpFileName,
+    // so its allocation should be part of this
+    // lazy initialization.
+    if (!g_HelpController->Initialize(*g_HelpFileName))
     {
-        ::MessageBox(
-            GetDesktopWindow(),
-            LOCALIZED_ERROR_HHCTRLATOMNOTFOUND,
-            LOCALIZED_ERROR,
-            MB_OK);
+        wxMessageBox(
+            WXSTRING(LOCALIZED_ERROR_HHCTRLNOTLOADED),
+            WXSTRING(LOCALIZED_ERROR));
 
         HtmlHelpUninitialize();
         return false;
@@ -3284,52 +3279,39 @@ HtmlHelpUninitialize(
     void
     )
 {
-#ifndef WX_PURE
-    if (g_HtmlHelpFunc != NULL)
+    if (g_HelpController != NULL)
     {
-        g_HtmlHelpFunc(NULL, NULL, HH_CLOSE_ALL, 0);
-        g_HtmlHelpFunc = NULL;
-    }
+        // Close the help.
+        g_HelpController->Quit();
 
-    if (g_HtmlHelpLib != NULL)
-    {
-        ::FreeLibrary(g_HtmlHelpLib);
-        g_HtmlHelpLib = NULL;
-    }
+        delete g_HelpController;
+        g_HelpController = NULL;
+
+#ifdef __WXMSW__
+        g_HelpParent->SetHWND(NULL);
+        g_HelpParent->Destroy();
+        g_HelpParent = NULL;
 #endif
+    }
 }
 
 // if arg is NULL then we jump to index
 void do_help(const char *arg)
 {
-#ifndef WX_PURE
     if (!HtmlHelpInitialize())
     {
         return;
     }
 
-    g_HtmlHelpFunc(
-        GetDesktopWindow(), 
-        szHelpFileName,
-        HH_DISPLAY_TOPIC,
-        0);
-
-    HH_AKLINK aklink = {0};
-    aklink.cbStruct     = sizeof aklink;
-    aklink.fReserved    = FALSE;
-    aklink.pszKeywords  = arg;
-    aklink.pszUrl       = NULL;
-    aklink.pszMsgText   = NULL;
-    aklink.pszMsgTitle  = NULL;
-    aklink.pszWindow    = "Main";
-    aklink.fIndexOnFail = TRUE;
-
-    g_HtmlHelpFunc(
-        GetDesktopWindow(), 
-        szHelpFileName,
-        HH_KEYWORD_LOOKUP, 
-        (DWORD) &aklink);
-#endif
+    if (arg != NULL)
+    {
+        // A specific help topic was requested.
+        g_HelpController->KeywordSearch(WXSTRING(arg));
+    }
+    else
+    {
+        g_HelpController->DisplaySection(WXSTRING("index.htm"));
+    }
 }
 
 NODE *lhelp(NODE *arg)

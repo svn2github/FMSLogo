@@ -17,10 +17,9 @@ Microsoft's SDK.
 
 Install Microsoft HTML Help Workshop to "C:\Program Files\HTML Help Workshop".
 You can download this from http://microsoft.com/.
-This is needed both to compile the source code (for htmlhelp.h) and to build
-the .CHM for the online manual (for hhc.exe).
+This is needed build the .CHM for the online manual (for hhc.exe).
 If you do not install HTML Help Workshop to the default location, then you 
-will have to modify some Makefiles.
+will have to modify manual\Makefile.
 
 Install Perl.  I use the Perl from http://activestate.com but any Perl
 distribution should suffice.  Add perl.exe to your PATH.  Perl is used in

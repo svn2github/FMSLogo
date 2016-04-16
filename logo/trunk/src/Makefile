@@ -99,7 +99,6 @@ CPPFLAGS += -DUSE_PRECOMPILED_HEADER -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES $(add
 CXXFLAGS += -Wall -fno-strict-aliasing
 CXXFLAGS += -DFMSLOGO_WXWIDGETS
 CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
-CXXFLAGS += -I"/cygdrive/c/Program Files/HTML Help Workshop/include"
 
 #BK_DEPS = $(wx_top_builddir)/bk-deps
 LIBS = -lm

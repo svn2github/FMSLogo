@@ -95,7 +95,6 @@ $CONFIGURE                        \
     --disable-tipwindow           \
     --disable-largefile           \
     --disable-animatectrl         \
-    --disable-dynamicloader       \
     --disable-display             \
     --disable-tga                 \
     --disable-pcx                 \
@@ -108,7 +107,7 @@ $CONFIGURE                        \
     --disable-wizarddlg           \
     --disable-threads             \
     --disable-docview             \
-    --disable-help                \
+    --disable-htmlhelp            \
     --disable-metafile            \
     --disable-dnd                 \
     --disable-dragimage           \

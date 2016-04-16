@@ -494,8 +494,7 @@ int CFmsLogo::OnExit()
 
     uninit_graphics();
 
-
-    // release the HTML Help subsystem
+    // release the Help subsystem
     HtmlHelpUninitialize();
 
 #ifndef WX_PURE
