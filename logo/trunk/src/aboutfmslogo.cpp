@@ -15,11 +15,10 @@
 // CAboutFmsLogo
 // ----------------------------------------------------------------------------
 
-#define LOCALIZED_ABOUTFMS_WXWIDGETS_VERSION    \
-    LOCALIZED_GENERAL_PRODUCTNAME               \
-    " " LOCALIZED_ABOUTFMS_VERSION " "          \
-    FMSLOGO_VERSION " - wxWidgets\n"            \
-    "http://sourceforge.net/projects/fmslogo"   \
+#define LOCALIZED_ABOUTFMS_WXWIDGETS_VERSION                \
+    LOCALIZED_GENERAL_PRODUCTNAME                           \
+    " " LOCALIZED_ABOUTFMS_VERSION " " FMSLOGO_VERSION "\n" \
+    "http://sourceforge.net/projects/fmslogo"               \
 
 CAboutFmsLogo::CAboutFmsLogo(wxWindow * Parent)
     : wxDialog(Parent, wxID_ANY, WXSTRING(LOCALIZED_ABOUTFMS))
