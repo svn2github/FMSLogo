@@ -1133,7 +1133,6 @@
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Таймер не найден" 
 
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Онлайн-помощь недоступна, т.к. hhctrl.ocx не может быть загружена." 
-#define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "Онлайн-помощь недоступна, т.к. hhctrl.ocx не содержит ATOM_HTMLHELP_API_ANSI."
 
 #define LOCALIZED_ERROR_BADCOMMANDLINE        "Ошибка командной строки"  
 

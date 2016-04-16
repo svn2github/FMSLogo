@@ -1133,7 +1133,6 @@
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Timer non trovato"
 
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Help online non disponibile in quanto non è stato possibile caricare il file hhctrl.ocx"
-#define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "Help online non disponibile in quanto il file hhctrl.ocx non contiene ATOM_HTMLHELP_API_ANSI."
 
 #define LOCALIZED_ERROR_BADCOMMANDLINE        "Linea di comando non valida"
 

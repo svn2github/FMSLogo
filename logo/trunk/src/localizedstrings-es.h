@@ -1133,7 +1133,6 @@
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Temporizador no encontrado"
 
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Ayuda en línea no disponible porque no se pudo cargar hhctrl.ocx"
-#define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "Ayuda en línea no disponible porque hhctrl.ocx no contiene ATOM_HTMLHELP_API_ANSI"
 
 #define LOCALIZED_ERROR_BADCOMMANDLINE        "Línea de comandos incorrecta"
 
