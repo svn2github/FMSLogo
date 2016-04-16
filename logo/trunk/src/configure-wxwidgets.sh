@@ -40,9 +40,9 @@ then
 else
   export ADDITIONAL_OPTIONS="--disable-debug --enable-optimise"
 
-  # Enable link-time optimization so that the resulting galaxql.exe isn't 12MB.
+  # Enable link-time optimization so that the resulting fmslogo.exe isn't 5MB.
   # Without this, all of the uncalled member functions remain in the final executable.
-  ## Unfortunately, there's a bug in the -flto in i686-w64-mingw32-g++ (GCC) 4.9.2
+  ## Unfortunately, there's a bug in the -flto in i686-w64-mingw32-g++ (GCC) 5.3.0
   ## So until this is fixed, wxWidgets cannot be compiled with this flag, which means
   ## that dead code cannot be removed.
   ##export CFLAGS=-flto
