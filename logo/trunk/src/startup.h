@@ -25,11 +25,11 @@
 extern Color dfld;
 extern Color dscn;
 
-extern char LibPathName[];
+extern class wxString * g_LibPathName;
+extern class wxString * g_HelpFileName;
 extern char TempPathName[];
 extern char TempBmpName[];
 extern char TempClipName[];
-extern char szHelpFileName[];
 
 #ifndef WX_PURE
   extern OSVERSIONINFO g_OsVersionInformation;
@@ -41,6 +41,7 @@ extern char g_FmslogoBaseDirectory[MAX_PATH+1];
 
 extern void MakeHelpPathName(char *szFileName, const char *);
 extern void init_graphics();
+extern void uninit_graphics();
 extern void init_osversion();
 extern void init_cursors();
 

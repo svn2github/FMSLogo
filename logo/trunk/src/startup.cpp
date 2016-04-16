@@ -31,6 +31,9 @@
     #include <algorithm>
     #include <string.h>
 
+    #include <wx/string.h>
+    #include <wx/filename.h>
+
     #include "startup.h"
     #include "activearea.h"
     #include "graphwin.h"
@@ -44,11 +47,11 @@
 Color dfld;                        // Current flood color
 Color dscn;                        // Current screen color
 
-char LibPathName[MAX_PATH + 1];    // path to library
+wxString * g_LibPathName;          // path to library
+wxString * g_HelpFileName;         // path to help file
 char TempPathName[MAX_PATH + 1];   // path to temp edit file
 char TempBmpName[MAX_PATH + 1];    // path to temp bitmap file
 char TempClipName[MAX_PATH + 1];   // path to temp clipboard file
-char szHelpFileName[MAX_PATH + 1]; // path to help file
 
 RGBCOLOR scolor;                   // screen color
 RGBCOLOR fcolor;                   // flood color
@@ -58,9 +61,9 @@ RGBCOLOR pcolor;                   // pen color
 OSVERSIONINFO g_OsVersionInformation;
 #endif
 
-char g_FmslogoBaseDirectory[MAX_PATH+1]; // The directory that contains FMSLogo.exe
+char g_FmslogoBaseDirectory[MAX_PATH+1]; // The directory that contains fmslogo.exe
 
-// Creates path relative to the directory from to which FMSLogo is installed.
+// Creates path relative to the directory in which FMSLogo is installed.
 void MakeHelpPathName(char *OutBuffer, const char * TheFileName)
 {
     strncpy(OutBuffer, g_FmslogoBaseDirectory, MAX_PATH);
@@ -157,8 +160,13 @@ void init_graphics()
     g_PrinterAreaPixels = std::max(BitMapWidth, BitMapHeight) / 8;
 
     // init paths to library and help files based on location of .EXE
-    MakeHelpPathName(LibPathName,     "logolib\\");
-    MakeHelpPathName(szHelpFileName,  "logohelp.chm");
+    const wxString & fmslogoDirectory = WXSTRING(g_FmslogoBaseDirectory);
+
+    const wxFileName libPathName(fmslogoDirectory + WXSTRING("logolib/"));
+    g_LibPathName  = new wxString(libPathName.GetPathWithSep());
+
+    const wxFileName helpFileName(fmslogoDirectory + WXSTRING("logohelp.chm"));
+    g_HelpFileName = new wxString(helpFileName.GetFullPath());
 
 #ifdef WX_PURE
     const char * tempPath = getenv("TMP");
@@ -215,4 +223,13 @@ void init_graphics()
     g_PrinterAreaYLow   = GetConfigurationInt("Printer.Ylow",  -BitMapHeight / 2);
     g_PrinterAreaYHigh  = GetConfigurationInt("Printer.YHigh", +BitMapHeight / 2);
     g_PrinterAreaPixels = GetConfigurationInt("Printer.Pixels", std::max(BitMapWidth, BitMapHeight) / 8);
+}
+
+void uninit_graphics()
+{
+    delete g_LibPathName;
+    g_LibPathName = NULL;
+
+    delete g_HelpFileName;
+    g_HelpFileName = NULL;
 }

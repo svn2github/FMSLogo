@@ -492,6 +492,9 @@ int CFmsLogo::OnExit()
 
     uninit_turtles();
 
+    uninit_graphics();
+
+
     // release the HTML Help subsystem
     HtmlHelpUninitialize();
 

@@ -105,6 +105,8 @@ UninitializeLogoEngine()
 
     uninit_turtles();
 
+    uninit_graphics();
+
     // release the HTML Help subsystem
     HtmlHelpUninitialize();
 
