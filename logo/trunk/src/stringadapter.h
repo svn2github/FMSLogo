@@ -1,5 +1,5 @@
 // -*- c++ -*-
-#include <wx/setup.h>
+#include <wx/string.h>
 
 // WXSTRING - converts from const char * to wxString
 #if wxUSE_UNICODE
