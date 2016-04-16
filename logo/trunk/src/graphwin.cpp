@@ -1163,6 +1163,10 @@ NODE *lsetpixel(NODE *args)
         // memory
         HDC MemDC = GetMemoryDeviceContext();
 
+        // Set the foreground mix mode in case a previous call had set it
+        // to something that would modify the pixel.
+        SetROP2(MemDC, R2_COPYPEN);
+
         SetPixel(
             MemDC,
             +dest.x + xoffset,
@@ -1171,6 +1175,10 @@ NODE *lsetpixel(NODE *args)
 
         //screen
         HDC ScreenDC = GetScreenDeviceContext();
+
+        // Set the foreground mix mode in case a previous call had set it
+        // to something that would modify the pixel.
+        SetROP2(ScreenDC, R2_COPYPEN);
 
         draw_turtle(false);
 

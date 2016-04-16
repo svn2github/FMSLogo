@@ -26,6 +26,7 @@ II. New features/bugs fixed:
     STATUS, and windowing command sets.
   o Fix bug #471; the uninstaller now removes the preferences that are stored
     in the registry.
+  o Fix bug #472; SETPIXEL now behaves correctly in PENREVERSE mode.
   o Implement feature #37; the installer now shows a clear "completed" page
     when it is done.
   o Implement feature #59; use a new icon that doesn't look like a mismash of

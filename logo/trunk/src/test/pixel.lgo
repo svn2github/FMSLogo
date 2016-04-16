@@ -29,6 +29,27 @@ TO SETPIXELTEST.SMOKETEST
 
 END
 
+TO SETPIXELTEST.PENMODE
+   ; bug #472 is that SETPIXEL was subject to the last raster mode
+   ; that was used by the turtle
+   PENREVERSE                     ; enter penreverse mode
+   FORWARD 1                      ; use the penreverse mode
+   SETSCREENCOLOR [255 255 255]   ; white background
+   SETPENCOLOR    [0     0   0]   ; black pen
+
+   TRACEINSTRUCTION [ SETPIXEL [ 255 0 0 ] ] ; set a red pixel
+   SIMPLEREPORTTEST [ PIXEL  ] [ 255 0 0 ]   ; confirm that it was drawn red
+
+   PENPAINT   ; reset state
+   FORWARD 1  ; use the new raster
+   PENUP      ; SETPIXEL should work when pen is up
+
+   TRACEINSTRUCTION [ SETPIXEL [ 0 255 0 ] ] ; set a green pixel
+   SIMPLEREPORTTEST [ PIXEL  ] [ 0 255 0 ]   ; confirm that it was drawn green
+
+   PENDOWN    ; restore state
+END
+
 TO SETPIXELTEST.BADINPUT
 
    ; Draw a pixel so that we can ensure that none of the
@@ -84,6 +105,7 @@ TO PIXELTEST
 
   SETPIXELTEST.SMOKETEST
   SETPIXELTEST.BADINPUT
+  SETPIXELTEST.PENMODE
 
   PIXELTEST.SMOKETEST
   PIXELTEST.BADINPUT
