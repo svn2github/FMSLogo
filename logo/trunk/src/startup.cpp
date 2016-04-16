@@ -39,6 +39,7 @@
     #include "graphwin.h"
     #include "utils.h"
     #include "fmslogo.h"
+    #include "stringadapter.h"
     #include "debugheap.h"
 
     #include "localizedstrings.h"
