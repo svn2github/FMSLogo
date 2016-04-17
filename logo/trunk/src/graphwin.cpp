@@ -3241,6 +3241,8 @@ setfont(
     ReleaseDC(::GetFocus(), hdc);
 }
 
+#endif // WX_PURE
+
 bool
 HtmlHelpInitialize(
     void
@@ -3259,9 +3261,12 @@ HtmlHelpInitialize(
     g_HelpParent = new wxWindow();
     g_HelpParent->SetHWND(GetDesktopWindow());
     g_HelpParent->AdoptAttributesFromHWND();
-#endif
 
     g_HelpController = new wxHelpController(g_HelpParent);
+#else
+    g_HelpController = new wxHelpController();
+#endif
+
 
     // This is the only place that reads g_HelpFileName,
     // so its allocation should be part of this
@@ -3279,8 +3284,6 @@ HtmlHelpInitialize(
     // success
     return true;
 }
-
-#endif // WX_PURE
 
 void
 HtmlHelpUninitialize(

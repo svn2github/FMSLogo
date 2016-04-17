@@ -15,10 +15,10 @@ TOOLKIT = GTK
 wx_top_builddir = $(shell wx-config --prefix)
 
 ifeq "$(DEBUG)" "1"
-LDFLAGS  = $(shell wx-config --debug=yes --libs base,core,stc,richtext)
+LDFLAGS  = $(shell wx-config --debug=yes --libs base,core,stc,richtext,html)
 TOOLCHAIN_FULLNAME = gtk2-unicode-debug-$(shell wx-config --release)
 else
-LDFLAGS  = $(shell wx-config --debug=no --libs base,core,stc,richtext)
+LDFLAGS  = $(shell wx-config --debug=no --libs base,core,stc,richtext,html)
 TOOLCHAIN_FULLNAME = gtk2-unicode-release-$(shell wx-config --release)
 endif
 
