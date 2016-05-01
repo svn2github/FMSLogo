@@ -14,7 +14,7 @@
 #if wxUSE_UNICODE
 #define WXSTRING_TO_STRING(STRING) ((STRING).mb_str(wxConvUTF8).data())
 #else
-#define WXSTRING_TO_STRING(STRING) ((STRING).c_str())
+#define WXSTRING_TO_STRING(STRING) static_cast<const char*>((STRING).c_str())
 #endif
 
 // WXCHAR_TO_STRING - converts from wxChar * to const char *.

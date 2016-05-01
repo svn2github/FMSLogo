@@ -3,18 +3,20 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <assert.h>
+#include <ctype.h>
 
-#include "Platform.h"
-
-#include "PropSet.h"
-#include "Accessor.h"
-#include "KeyWords.h"
-#include "Scintilla.h"
+#include "ILexer.h"
 #include "SciLexer.h"
+
+#include "WordList.h"
+#include "LexAccessor.h"
+#include "Accessor.h"
 #include "StyleContext.h"
+#include "CharacterSet.h"
+#include "LexerModule.h"
 
 #ifdef SCI_NAMESPACE
 using namespace Scintilla;
@@ -84,7 +86,7 @@ static
 void
 ColorizeFmsLogoDoc(
     unsigned int   startPos,
-    int            length, 
+    int            length,
     int            initStyle,
     WordList    *  keywordlists[],
     Accessor    &  styler

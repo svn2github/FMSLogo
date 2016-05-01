@@ -10,6 +10,8 @@
 #include <wx/filedlg.h>
 #include <wx/filename.h>
 
+#include <wx/msw/dc.h> // for wxDCTemp
+
 #include "init.h"
 #include "graphwin.h"
 #include "startup.h"

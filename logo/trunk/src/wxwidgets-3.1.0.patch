@@ -1,0 +1,14 @@
+--- wxWidgets-3.1.0-src-original/src/stc/ScintillaWX.cpp	2016-02-28 22:33:38.000000000 -0800
++++ wxWidgets-3.1.0-src/src/stc/ScintillaWX.cpp	2016-05-01 08:57:48.000000000 -0700
+@@ -544,7 +544,10 @@
+         evt.SetString(text);
+         stc->GetEventHandler()->ProcessEvent(evt);
+ 
+-        wxWX2MBbuf buf = (wxWX2MBbuf)wx2stc(evt.GetString());
++        // Hold the updated string in a local variable to prevent "buf"
++        // from being deallocated before we're done with it.
++        const wxString updatedString = evt.GetString();
++        wxWX2MBbuf buf = (wxWX2MBbuf)wx2stc(updatedString);
+ 
+ #if wxUSE_UNICODE
+         // free up the old character buffer in case the text is real big

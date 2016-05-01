@@ -382,13 +382,16 @@ void putcombobox(const char *Text, MESSAGETYPE MessageType)
                 if (MessageType == MESSAGETYPE_Error)
                 {
                     commanderHistory->SetInsertionPointEnd();
-                    commanderHistory->BeginTextColour(wxColor(0xFF, 0, 0));
+                    commanderHistory->BeginTextColour(*wxRED);
                     commanderHistory->WriteText(WXSTRING(Text));
                     commanderHistory->EndTextColour();
                 }
                 else
                 {
-                    commanderHistory->AppendText(WXSTRING(Text));
+                    commanderHistory->SetInsertionPointEnd();
+                    commanderHistory->BeginTextColour(*wxBLACK);
+                    commanderHistory->WriteText(WXSTRING(Text));
+                    commanderHistory->EndTextColour();
                 }
             }
 

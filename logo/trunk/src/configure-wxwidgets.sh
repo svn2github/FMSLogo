@@ -1,21 +1,21 @@
 #! bash
 ###########################################################################
-# This file is a reminder of how I built wxwidgets on Windows.
+# This file is a reminder of how I built wxWidgets 3.1.0 on Windows.
 #
 # Use the script like:
+#
 #   bash
 #   cd [wxwidgets_src_dir]
-#   patch -p1 < [path_to_this_script]/wxwidgets-2.8.12.patch
+#   patch -p1 < [path_to_this_script]/wxwidgets-3.1.0.patch
 #
-#   cd [wxwidgets_bin_dir]
+#   cd [wxwidgets_bin_dir]/retail
 #   [path_to_this_script]/configure-wxwidgets.sh [wxwidgets_src_dir]
 #   gmake clean all
-#   gmake -C contrib/src/stc clean all
 #
 #   export DEBUG=1
+#   cd [wxwidgets_bin_dir]/debug
 #   [path_to_this_script]/configure-wxwidgets.sh [wxwidgets_src_dir]
 #   gmake clean all
-#   gmake -C contrib/src/stc clean all
 #
 ###########################################################################
 CONFIGURE=$1/configure
@@ -38,9 +38,9 @@ if [ "$DEBUG" == "1" ];
 then
   export ADDITIONAL_OPTIONS="--enable-debug --enable-debug_gdb --enable-debug_info --disable-optimise"
 else
-  export ADDITIONAL_OPTIONS="--disable-debug --enable-optimise"
+  export ADDITIONAL_OPTIONS="--disable-debug_flag --enable-optimise"
 
-  # Enable link-time optimization so that the resulting fmslogo.exe isn't 5MB.
+  # Enable link-time optimization so that the resulting fmslogo.exe isn't 10MB.
   # Without this, all of the uncalled member functions remain in the final executable.
   ## Unfortunately, there's a bug in the -flto in i686-w64-mingw32-g++ (GCC) 5.3.0
   ## So until this is fixed, wxWidgets cannot be compiled with this flag, which means
@@ -60,13 +60,15 @@ $CONFIGURE                        \
     --with-msw                    \
     --disable-rtti                \
     --disable-exceptions          \
-    --with-expat=no               \
+    --with-expat=builtin          \
     --with-regex=no               \
     --with-libpng=no              \
     --with-zlib=no                \
     --with-libjpeg=no             \
     --with-libtiff=no             \
+    --with-opengl=no              \
     --enable-monolithic           \
+    --enable-stc                  \
     --disable-shared              \
     --disable-catch_segvs         \
     --disable-toolbar             \
@@ -126,6 +128,7 @@ $CONFIGURE                        \
     --disable-unicode             \
     --disable-sysoptions          \
     --disable-compat26            \
+    --disable-svg                 \
     --enable-no_deps              \
     --disable-dependency-tracking \
     --host=i686-w64-mingw32       \

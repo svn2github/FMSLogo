@@ -15,7 +15,7 @@
 
 #define SCLEX_CONTAINER 0
 #define SCLEX_NULL      1
-#define SCLEX_FMSLOGO   80 // beyond all of the built-in ones
+#define SCLEX_FMSLOGO   200 // beyond all of the built-in ones
 #define SCLEX_AUTOMATIC 1000
 
 #define SCE_FMS_DEFAULT          0

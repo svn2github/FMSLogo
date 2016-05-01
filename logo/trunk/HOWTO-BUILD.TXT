@@ -25,7 +25,7 @@ Install the Nullsoft Scriptable Installation System (NSIS) to C:\Program Files\N
 You can download this from http://sourceforge.net/projects/nsis.
 This is needed to build the self-extracting installer executable.
 
-Install the MSW version of wxWidgets 2.8.12 to e:\wxMSW-2.8.12 (or install it
+Install the MSW version of wxWidgets 3.1.0 to e:\wxWidgets-3.1.0-src (or install it
 wherever you like and update the paths in src\Makefile and screensaver\Makefile).
 Build it according to the instructions in src\configure-wxwidgets.sh.
 This is needed to build FMSLogo.

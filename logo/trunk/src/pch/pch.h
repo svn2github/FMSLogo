@@ -79,6 +79,7 @@
 #include <wx/dialog.h>
 #include <wx/event.h>
 #include <wx/filename.h>
+#include <wx/filedlg.h>
 #include <wx/filefn.h>
 #include <wx/fontdlg.h>
 #include <wx/fontutil.h>
@@ -96,6 +97,7 @@
 #include <wx/scrolwin.h>
 #include <wx/settings.h>
 #include <wx/sizer.h>
+#include <wx/slider.h>
 #include <wx/splitter.h>
 #include <wx/statbox.h>
 #include <wx/statline.h>
@@ -106,6 +108,7 @@
 
 #ifdef __WXMSW__
   #include <wx/msw/private.h>
+  #include <wx/msw/dc.h>
 #endif
 
 #ifdef WX_PURE

@@ -39,16 +39,16 @@ EXEEXT = .exe
 # Compile with MinGW
 RC = windres --preprocessor=$(CXX) --preprocessor-arg=-E --preprocessor-arg=-xc-header
 
-wx_top_srcdir   = /cygdrive/e/wxMSW-2.8.12-src
-wx_top_builddir = /cygdrive/e/wxMSW-2.8.12
+wx_top_srcdir   = /cygdrive/e/wxWidgets-3.1.0-src
 
 ifeq "$(DEBUG)" "1"
-LDFLAGS  = -lwx_mswd_stc-2.8 -lwx_mswd-2.8
-TOOLCHAIN_FULLNAME = msw-ansi-debug-static-2.8
+wx_top_builddir = /cygdrive/e/wxWidgets-3.1.0-fmslogo/debug
 else
-LDFLAGS  = -lwx_msw_stc-2.8 -lwx_msw-2.8 
-TOOLCHAIN_FULLNAME = msw-ansi-release-static-2.8
+wx_top_builddir = /cygdrive/e/wxWidgets-3.1.0-fmslogo/retail
 endif
+
+LDFLAGS            = -lwx_msw-3.1-i686-w64-mingw32 -lwxscintilla-3.1-i686-w64-mingw32
+TOOLCHAIN_FULLNAME = i686-w64-mingw32-msw-ansi-static-3.1
 
 TARGET_PREFIX=i686-w64-mingw32-
 
@@ -56,9 +56,9 @@ LDFLAGS  += -mwindows
 
 TOOLKIT = MSW
 
-EXTRALIBS = -static-libgcc -static-libstdc++ -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lcomctl32 -lcomdlg32 -lctl3d32 -ladvapi32 -lwsock32 -lgdi32 -luser32 -limm32 
+EXTRALIBS = -static-libgcc -static-libstdc++ -lwxexpat-3.1-i686-w64-mingw32 -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lshlwapi -lcomctl32 -lcomdlg32 -ladvapi32 -lversion -lwsock32 -lgdi32
 
-SCINTILLA_INCLUDES = $(wx_top_srcdir)/contrib/src/stc/scintilla/include $(wx_top_srcdir)/contrib/src/stc/scintilla/src
+SCINTILLA_INCLUDES = $(wx_top_srcdir)/src/stc/scintilla/include $(wx_top_srcdir)/src/stc/scintilla/lexlib $(wx_top_srcdir)/src/stc/scintilla/src
 
 endif
 
@@ -67,7 +67,7 @@ ifeq "$(DEBUG)" "1"
 CPPFLAGS += -D__WXDEBUG__ -DMEM_DEBUG -DDEBUG
 CXXFLAGS += -O0 -g -ggdb
 else
-CPPFLAGS += -DNDEBUG
+CPPFLAGS += -DNDEBUG -DwxDEBUG_LEVEL=0
 CXXFLAGS += -O2
 
 ifneq "$(PROFILE)"  "1"
@@ -94,11 +94,10 @@ CXXFLAGS += --coverage
 LDFLAGS  += --coverage
 endif
 
-INCLUDES = . $(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) $(wx_top_srcdir)/include $(wx_top_srcdir)/contrib/include
-CPPFLAGS += -DUSE_PRECOMPILED_HEADER -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES $(addprefix -I, $(INCLUDES))
+INCLUDES = . $(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) $(wx_top_srcdir)/include
+CPPFLAGS += -DUSE_PRECOMPILED_HEADER $(addprefix -I, $(INCLUDES))
 CXXFLAGS += -Wall -fno-strict-aliasing
 CXXFLAGS += -DFMSLOGO_WXWIDGETS
-CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
 
 #BK_DEPS = $(wx_top_builddir)/bk-deps
 LIBS = -lm
@@ -121,6 +120,7 @@ GTK_OBJECTS =                  \
 
 WX_OBJECTS =                   \
     LexFmsLogo.o               \
+    LexFmsLogoRegisterer.o     \
     3dsolid.o                  \
     aboutfmslogo.o             \
     aboutmultiplesclerosis.o   \

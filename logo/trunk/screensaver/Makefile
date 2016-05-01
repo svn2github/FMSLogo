@@ -7,24 +7,23 @@ CC  = i686-w64-mingw32-gcc
 CXX = i686-w64-mingw32-g++
 RC  = windres --preprocessor=$(CXX) --preprocessor-arg=-E --preprocessor-arg=-xc-header
 
-wx_top_srcdir   = /cygdrive/e/wxMSW-2.8.12-src
-wx_top_builddir = /cygdrive/e/wxMSW-2.8.12
+wx_top_srcdir      = /cygdrive/e/wxWidgets-3.1.0-src
+wx_top_builddir    = /cygdrive/e/wxWidgets-3.1.0-fmslogo
+TOOLCHAIN_FULLNAME = i686-w64-mingw32-msw-ansi-static-3.1
 
-INCLUDES   = -I. -I$(wx_top_srcdir)/include -I$(wx_top_srcdir)/contrib/include -I../src -I../src/pch
+INCLUDES   = -I. -I$(wx_top_srcdir)/include -I../src -I../src/pch
 DEFINES    = FMSLOGO_SCREENSAVER
-LIBDIRNAME = $(wx_top_builddir)/lib
 
 CPPFLAGS   = $(INCLUDES) $(addprefix -D,$(DEFINES))
-LDFLAGS    = -mwindows -L$(LIBDIRNAME)
+LDFLAGS    = -mwindows -lwx_msw-3.1-i686-w64-mingw32
 
-DEBUG_CFLAGS     += -Wall -Wundef -O0 -g -DDEBUG -DMEM_DEBUG -I$(wx_top_builddir)/lib/wx/include/msw-ansi-debug-static-2.8
+DEBUG_CFLAGS     += -Wall -Wundef -O0 -g -DDEBUG -DMEM_DEBUG -I$(wx_top_builddir)/debug/lib/wx/include/$(TOOLCHAIN_FULLNAME)
 DEBUG_CXXFLAGS   += $(DEBUG_CFLAGS) -Wno-ctor-dtor-privacy
-DEBUG_LDFLAGS    += -lwx_mswd_stc-2.8 -lwx_mswd-2.8
+DEBUG_LDFLAGS    += -L$(wx_top_builddir)/debug/lib
 
-RELEASE_CFLAGS   += -Wall -Wundef -O2 -fno-strict-aliasing -DNDEBUG -I$(wx_top_builddir)/lib/wx/include/msw-ansi-release-static-2.8
+RELEASE_CFLAGS   += -Wall -Wundef -O2 -fno-strict-aliasing -DNDEBUG -DwxDEBUG_LEVEL=0 -I$(wx_top_builddir)/retail/lib/wx/include/$(TOOLCHAIN_FULLNAME)
 RELEASE_CXXFLAGS += $(RELEASE_CFLAGS) -Wno-ctor-dtor-privacy
-RELEASE_LDFLAGS  += -lwx_msw_stc-2.8 -lwx_msw-2.8 
-
+RELEASE_LDFLAGS  += -L$(wx_top_builddir)/retail/lib
 
 OBJECTS=\
     3dsolid.o           \
@@ -91,6 +90,7 @@ LIBS=\
     kernel32 \
     user32   \
     scrnsave \
+    shlwapi  \
     comctl32 \
     ole32    \
     oleaut32 \
@@ -99,6 +99,7 @@ LIBS=\
     winspool \
     wsock32  \
     comdlg32 \
+    version  \
 
 TARGET=fmslogo
 
@@ -113,7 +114,7 @@ debug : $(TARGET)d.scr ;
 # Rules for building the debug version of the screensaver
 #
 $(TARGET)d.scr : $(addprefix obj/debug-,$(DEBUG_OBJECTS) scrnsave.o)
-	$(CXX) -o$@ $(LDFLAGS) -def:screensaver.def $^ $(DEBUG_LDFLAGS) $(addprefix -l,$(LIBS)) -static-libgcc -static-libstdc++
+	$(CXX) -o$@ -def:screensaver.def $^ $(LDFLAGS) $(DEBUG_LDFLAGS) $(addprefix -l,$(LIBS)) -static-libgcc -static-libstdc++
 
 obj/debug-%.o: %.c
 	$(CC) -c -o$@ $(DEBUG_CFLAGS) $(CPPFLAGS) -DLOCALE=$1 $<

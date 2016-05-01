@@ -307,8 +307,7 @@ public:
         int valueLength = ComboBox_GetTextLength(static_cast<HWND>(GetHandle()));
 
         // Allocate space for the value.
-        wxString value;
-        wxChar * buffer = value.GetWriteBuf(valueLength + 1);
+        wxChar * buffer = new wxChar[valueLength + 1];
 
         // Read the value into the allocated space
         ComboBox_GetText(
@@ -316,8 +315,9 @@ public:
             buffer,
             valueLength + 1);
 
-        // Put the string back into a usable state
-        value.wxString::UngetWriteBuf();
+        // Convert the buffer into a wxString
+        wxString value(buffer);
+        delete buffer;
 
         // Return the value
         return value;

@@ -24,6 +24,9 @@
    #include <algorithm>
 
    #include <wx/dc.h>
+   #ifdef __WXMSW__
+     #include <wx/msw/dc.h> // for wxDCTemp
+   #endif
 
    #include "const.h"
    #include "activearea.h"
