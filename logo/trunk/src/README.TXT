@@ -24,6 +24,7 @@ II. New features/bugs fixed:
   o Drop support for display depths less than 16-bit true color.
   o Partial fix for bug #373; the screen saver now supports the DLLCALL,
     STATUS, and windowing command sets.
+  o Fix bug #401; the commander history no longer hides lines >65535 characters.
   o Fix bug #471; the uninstaller now removes the preferences that are stored
     in the registry.
   o Fix bug #472; SETPIXEL now behaves correctly in PENREVERSE mode.
