@@ -84,7 +84,7 @@ CSelectStartupInstructionDialog::CSelectStartupInstructionDialog(
     topLevelSizer->Add(
         explainTextCtrl,
         0,
-        wxALIGN_CENTER | wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
+        wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
         5);
 
     // Add the text input
@@ -92,7 +92,7 @@ CSelectStartupInstructionDialog::CSelectStartupInstructionDialog(
     topLevelSizer->Add(
         m_InstructionText,
         0,
-        wxALIGN_CENTER | wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
+        wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
         5);
 
     // add the procedures list
@@ -125,7 +125,7 @@ CSelectStartupInstructionDialog::CSelectStartupInstructionDialog(
     topLevelSizer->Add(
         m_ProcedureList,
         0,
-        wxALIGN_CENTER | wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
+        wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
         5);
 
     // add the row of buttons
@@ -179,11 +179,7 @@ CSelectStartupInstructionDialog::CSelectStartupInstructionDialog(
             wxDefaultPosition,
             buttonSize);
 
-        buttonSizer->Add(
-            button,
-            0, 
-            wxALIGN_RIGHT | wxLEFT,
-            10);
+        buttonSizer->Add(button, 0, wxLEFT, 10);
 
         // Make the "OK" button the default.
         if (buttonInfo[i].MenuId == wxID_OK)

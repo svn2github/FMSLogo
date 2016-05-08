@@ -89,7 +89,7 @@ CSetActiveArea::CSetActiveArea(
         wxEmptyString,
         wxDefaultPosition,
         boxSize);
-    topLevelSizer->Add(box, 0, wxALIGN_CENTER | wxEXPAND | wxALL, 5);
+    topLevelSizer->Add(box, 0, wxEXPAND | wxALL, 5);
 
     // The contents of the main group box are too complex for any of the
     // sizer classes.  Therefore, we must do the layout the old-fashioned
@@ -198,7 +198,8 @@ CSetActiveArea::CSetActiveArea(
         WXSTRING(LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH));
     pixelsPerInchRow->Add(
         pixelsPerInchLabel,
-        0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxALIGN_CENTER_VERTICAL,
+        0,
+        wxFIXED_MINSIZE | wxALIGN_CENTER_VERTICAL,
         5);
 
     m_PixelsPerInch = new CSmallIntegerCtrl(
@@ -208,7 +209,7 @@ CSetActiveArea::CSetActiveArea(
     pixelsPerInchRow->Add(
         m_PixelsPerInch,
         0,
-        wxALIGN_RIGHT | wxFIXED_MINSIZE | wxALIGN_CENTER_VERTICAL | wxALL,
+        wxFIXED_MINSIZE | wxALIGN_CENTER_VERTICAL | wxALL,
         5);
 
     topLevelSizer->Add(pixelsPerInchRow, 0, wxALIGN_RIGHT);

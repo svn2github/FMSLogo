@@ -50,7 +50,7 @@ CSelectProcedureDialog::CSelectProcedureDialog(
     topLevelSizer->Add(
         m_SelectedProcedure,
         0,
-        wxALIGN_CENTER | wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
+        wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
         15);
 
     // add the procedures list
@@ -75,7 +75,7 @@ CSelectProcedureDialog::CSelectProcedureDialog(
     topLevelSizer->Add(
         m_ProcedureList,
         0,
-        wxALIGN_CENTER | wxBOTTOM | wxLEFT | wxRIGHT | wxEXPAND,
+        wxBOTTOM | wxLEFT | wxRIGHT | wxEXPAND,
         15);
 
     // add the row of buttons

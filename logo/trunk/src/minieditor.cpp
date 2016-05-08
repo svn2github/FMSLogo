@@ -55,7 +55,7 @@ CMiniEditor::CMiniEditor(
     topLevelSizer->Add(
         toLine,
         0,
-        wxALIGN_CENTER | wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
+        wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
         10);
 
     // add the procedure body (the editor)
@@ -66,7 +66,7 @@ CMiniEditor::CMiniEditor(
     topLevelSizer->Add(
         m_TextField,
         1, // expand this control with the size of the dialog box
-        wxALIGN_CENTER | wxBOTTOM | wxLEFT | wxRIGHT | wxEXPAND,
+        wxBOTTOM | wxLEFT | wxRIGHT | wxEXPAND,
         10);
 
     // Set the font to whatever is defined in the configuraton
@@ -80,7 +80,7 @@ CMiniEditor::CMiniEditor(
     topLevelSizer->Add(
         buttonRow,
         0,
-        wxALIGN_CENTER | wxBOTTOM | wxLEFT | wxRIGHT | wxEXPAND,
+        wxBOTTOM | wxLEFT | wxRIGHT | wxEXPAND,
         10);
 
     // Add the "end" button
@@ -88,10 +88,7 @@ CMiniEditor::CMiniEditor(
         this,
         wxID_OK,
         WXSTRING(LOCALIZED_ALTERNATE_END));
-    buttonRow->Add(
-        endButton,
-        0,
-        wxALIGN_LEFT);
+    buttonRow->Add(endButton);
     endButton->SetDefault();
 
     // Add a stretch spacer between End and Cancel so
@@ -108,10 +105,7 @@ CMiniEditor::CMiniEditor(
         this,
         wxID_CANCEL,
         WXSTRING(LOCALIZED_GENERAL_CANCELBUTTON));
-    buttonRow->Add(
-        cancelButton,
-        0,
-        wxALIGN_RIGHT);
+    buttonRow->Add(cancelButton);
 
     SetSizer(topLevelSizer);
 

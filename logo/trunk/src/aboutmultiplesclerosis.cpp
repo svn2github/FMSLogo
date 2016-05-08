@@ -45,7 +45,7 @@ CAboutMultipleSclerosis::CAboutMultipleSclerosis(wxWindow * Parent)
 #ifdef __WXGTK__
     const int style = wxALIGN_CENTER | wxALL; // work around an alignment bug in wx 2.8
 #else
-    const int style = wxALIGN_CENTER | wxALL | wxEXPAND;
+    const int style = wxALL | wxEXPAND;
 #endif
 
     wxBoxSizer *sizerTop = new wxBoxSizer(wxVERTICAL);

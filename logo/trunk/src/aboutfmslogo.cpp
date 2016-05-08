@@ -55,7 +55,7 @@ CAboutFmsLogo::CAboutFmsLogo(wxWindow * Parent)
 #ifdef __WXGTK__
             wxALIGN_CENTER | wxALL, // work around an alignment bug in wx 2.8
 #else
-            wxALIGN_CENTER | wxALL | wxEXPAND,
+            wxALL | wxEXPAND,
 #endif
             5);
     }

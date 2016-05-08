@@ -103,11 +103,7 @@ CSetColor::CSetColor(
     // Add the left-hand pane, which has thickness setting by picture on
     // the top and thickness setting by slider on the bottom.
     //
-    topLevelSizer->Add(
-        colorSettingSizer,
-        0,
-        wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxEXPAND | wxALL,
-        5);
+    topLevelSizer->Add(colorSettingSizer, 0, wxEXPAND | wxALL, 5);
 
 
     //
@@ -133,11 +129,7 @@ CSetColor::CSetColor(
 
         colorByPictures->Add(picture, 0, wxALIGN_CENTER | wxALL, 5);
     }
-    colorSettingSizer->Add(
-        colorByPictures,
-        0,
-        wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxEXPAND | wxALL,
-        5);
+    colorSettingSizer->Add(colorByPictures, 0, wxEXPAND | wxALL, 5);
 
 
     colorSettingSizer->AddSpacer(10);
@@ -189,17 +181,9 @@ CSetColor::CSetColor(
             wxSize(250, 24),
             wxSL_HORIZONTAL);
 
-        slidersSizer->Add(
-            *sliderData[i].Slider,
-            0,
-            wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL | wxEXPAND | wxALL,
-            5);
+        slidersSizer->Add(*sliderData[i].Slider, 0, wxEXPAND | wxALL, 5);
     }
-    colorSettingSizer->Add(
-        slidersSizer, 
-        0, 
-        wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxEXPAND | wxALL,
-        5);
+    colorSettingSizer->Add(slidersSizer, 0, wxEXPAND | wxALL, 5);
 
 
     //

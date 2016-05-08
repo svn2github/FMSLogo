@@ -164,7 +164,7 @@ CStatusDialog::CStatusDialog(wxWindow * Parent)
         topLevelSizer->Add(
             staticBoxSizer, 
             0, 
-            wxALIGN_CENTER | wxALL | wxEXPAND, 
+            wxALL | wxEXPAND, 
             5);
 
         wxBoxSizer * fieldNameSizer  = new wxBoxSizer(wxVERTICAL);

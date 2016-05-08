@@ -115,11 +115,7 @@ CSetPenSize::CSetPenSize(
     // Add the left-hand pane, which has thickness setting by picture on
     // the top and thickness setting by slider on the bottom.
     //
-    topLevelSizer->Add(
-        thicknessSettingSizer,
-        0,
-        wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxEXPAND | wxALL,
-        5);
+    topLevelSizer->Add(thicknessSettingSizer, 0, wxEXPAND | wxALL, 5);
 
 
     //
@@ -155,11 +151,7 @@ CSetPenSize::CSetPenSize(
 
         thicknessByPictures->Add(picture, 0, wxALIGN_CENTER | wxALL, 5);
     }
-    thicknessSettingSizer->Add(
-        thicknessByPictures,
-        0,
-        wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxEXPAND | wxALL,
-        5);
+    thicknessSettingSizer->Add(thicknessByPictures, 0, wxEXPAND | wxALL, 5);
 
 
     thicknessSettingSizer->AddSpacer(10);
@@ -191,17 +183,9 @@ CSetPenSize::CSetPenSize(
         wxDefaultPosition,
         wxSize(250, 24),
         wxSL_HORIZONTAL);
-    thicknessBySlider->Add(
-        m_ThicknessSlider,
-        0,
-        wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxEXPAND | wxALL,
-        5);
+    thicknessBySlider->Add(m_ThicknessSlider, 0, wxEXPAND | wxALL, 5);
 
-    thicknessSettingSizer->Add(
-        thicknessBySlider, 
-        0, 
-        wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxEXPAND | wxALL,
-        5);
+    thicknessSettingSizer->Add(thicknessBySlider, 0, wxEXPAND | wxALL, 5);
 
 
 
