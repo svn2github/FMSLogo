@@ -55,6 +55,11 @@ then
 export ADDITIONAL_OPTIONS="$ADDITIONAL_OPTIONS --enable-profile"
 fi
 
+# Statically link to libc.  This has no impact on FMSLogo, as we only build a static
+# library for for FMSLogo and the linker is not involved in that.  However, this makes
+# it easier to run the wxWidgets sample applications.
+export LDFLAGS="-static-libgcc -static-libstdc++" $LDFLAGS
+
 $CONFIGURE                        \
     $ADDITIONAL_OPTIONS           \
     --host=i686-w64-mingw32       \
