@@ -28,6 +28,7 @@
    #include "screenwindow.h" // for TraceOutput
 #endif
 
+#ifdef DEBUG
 
 // ASSUME_NO_INVALID_FREES
 // false - Check that each block is in our list before freeing it.
@@ -614,3 +615,5 @@ void operator delete (void * block)
 {
     debug_free(block);
 }
+
+#endif // DEBUG
