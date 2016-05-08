@@ -40,7 +40,7 @@ then
 else
   export ADDITIONAL_OPTIONS="--disable-debug_flag --enable-optimise"
 
-  # Enable link-time optimization so that the resulting fmslogo.exe isn't 10MB.
+  # Enable link-time optimization so that the resulting fmslogo.exe isn't 8 MiB.
   # Without this, all of the uncalled member functions remain in the final executable.
   ## Unfortunately, there's a bug in the -flto in i686-w64-mingw32-g++ (GCC) 5.3.0
   ## So until this is fixed, wxWidgets cannot be compiled with this flag, which means
@@ -57,9 +57,16 @@ fi
 
 $CONFIGURE                        \
     $ADDITIONAL_OPTIONS           \
+    --host=i686-w64-mingw32       \
+    --disable-all-features        \
+    --disable-metafile            \
+    --disable-postscript          \
+    --disable-largefile           \
+    --disable-compat30            \
+    --disable-gtktest             \
+    --disable-sdltest             \
+    --disable-dependency-tracking \
     --with-msw                    \
-    --disable-rtti                \
-    --disable-exceptions          \
     --with-expat=builtin          \
     --with-regex=no               \
     --with-libpng=no              \
@@ -67,68 +74,72 @@ $CONFIGURE                        \
     --with-libjpeg=no             \
     --with-libtiff=no             \
     --with-opengl=no              \
-    --enable-monolithic           \
-    --enable-stc                  \
-    --disable-shared              \
-    --disable-catch_segvs         \
-    --disable-toolbar             \
-    --disable-aui                 \
-    --disable-toolbook            \
-    --disable-joystick            \
-    --disable-splash              \
-    --disable-tooltips            \
-    --disable-sockets             \
-    --disable-aboutdlg            \
-    --disable-protocol            \
-    --disable-protocols           \
-    --disable-protocol-http       \
-    --disable-protocol-ftp        \
-    --disable-protocol-file       \
-    --disable-ftp                 \
-    --disable-http                \
-    --disable-fileproto           \
-    --disable-fs_archive          \
-    --disable-fs_inet             \
-    --disable-fs_zip              \
-    --disable-url                 \
-    --disable-tarstream           \
-    --disable-mdi                 \
-    --disable-tipdlg              \
-    --disable-tipwindow           \
-    --disable-largefile           \
-    --disable-animatectrl         \
-    --disable-display             \
-    --disable-tga                 \
-    --disable-pcx                 \
-    --disable-iff                 \
-    --disable-pnm                 \
-    --disable-png                 \
-    --disable-gif                 \
-    --disable-xrc                 \
-    --disable-zipstream           \
-    --disable-wizarddlg           \
-    --disable-threads             \
-    --disable-docview             \
-    --disable-htmlhelp            \
-    --disable-metafile            \
-    --disable-dnd                 \
-    --disable-dragimage           \
-    --disable-miniframe           \
-    --disable-calendar            \
-    --disable-datepick            \
-    --disable-logwindow           \
-    --disable-logdialog           \
-    --disable-listbook            \
-    --disable-numberdlg           \
-    --disable-progressdlg         \
-    --disable-postscript          \
-    --disable-cmdline             \
-    --disable-mimetype            \
-    --disable-splines             \
+    --with-libnotify=no           \
     --disable-unicode             \
-    --disable-sysoptions          \
-    --disable-compat26            \
-    --disable-svg                 \
-    --enable-no_deps              \
-    --disable-dependency-tracking \
-    --host=i686-w64-mingw32       \
+    --enable-monolithic           \
+    --disable-shared              \
+    --enable-stc                  \
+    --enable-stopwatch            \
+    --enable-longlong             \
+    --enable-menus                \
+    --enable-notifmsg             \
+    --enable-timer                \
+    --enable-button               \
+    --enable-stattext             \
+    --enable-image                \
+    --enable-bmpbutton            \
+    --enable-statbmp              \
+    --enable-textctrl             \
+    --enable-scrollbar            \
+    --enable-streams              \
+    --enable-clipboard            \
+    --enable-file                 \
+    --enable-dataobj              \
+    --enable-ole                  \
+    --enable-variant              \
+    --enable-listctrl             \
+    --enable-listbox              \
+    --enable-imaglist             \
+    --enable-richtext             \
+    --enable-html                 \
+    --enable-filesystem           \
+    --enable-printarch            \
+    --enable-combobox             \
+    --enable-choice               \
+    --enable-msgdlg               \
+    --enable-fontmap              \
+    --enable-finddlg              \
+    --enable-togglebtn            \
+    --enable-mshtmlhelp           \
+    --enable-help                 \
+    --enable-textbuf              \
+    --enable-textfile             \
+    --enable-choicedlg            \
+    --enable-dynamicloader        \
+    --enable-dynlib               \
+    --enable-fontdlg              \
+    --enable-fontenum             \
+    --enable-propgrid             \
+    --enable-coldlg               \
+    --enable-odcombobox           \
+    --enable-comboctrl            \
+    --enable-editablebox          \
+    --enable-regkey               \
+    --enable-filedlg              \
+    --enable-dirdlg               \
+    --enable-treectrl             \
+    --enable-notebook             \
+    --enable-caret                \
+    --enable-accel                \
+    --enable-spinbtn              \
+    --enable-checkbox             \
+    --enable-radiobtn             \
+    --enable-statline             \
+    --enable-spinctrl             \
+    --enable-textdlg              \
+    --enable-statbox              \
+    --enable-slider               \
+    --enable-splitter             \
+    --enable-uxtheme              \
+    --enable-dccache              \
+    --enable-wxdib                \
