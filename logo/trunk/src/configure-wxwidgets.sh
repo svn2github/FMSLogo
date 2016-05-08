@@ -138,6 +138,7 @@ $CONFIGURE                        \
     --enable-spinctrl             \
     --enable-textdlg              \
     --enable-statbox              \
+    --enable-stdpaths             \
     --enable-slider               \
     --enable-splitter             \
     --enable-uxtheme              \
