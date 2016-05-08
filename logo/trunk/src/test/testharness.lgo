@@ -227,6 +227,7 @@ TO TESTALL
   READRAWLINETEST      ; from readrawline.lgo
   READCHARTEST         ; from readchar.lgo
   READCHARSTEST        ; from readchars.lgo
+  WINDOWSETTEST        ; from windowset.lgo
   EDITORTEST           ; from editor.lgo 
   WINDOWFILEEDITTEST   ; from windowfileedit.lgo
   PORTTEST             ; from port.lgo
@@ -258,7 +259,6 @@ TO TESTALL
   SCRUNCHTEST          ; from scrunch.lgo
   ZOOMTEST             ; from zoom.lgo
   HELPTEST             ; from help.lgo
-  WINDOWSETTEST        ; from windowset.lgo
   DLLTEST              ; from dll.lgo
   MAPTEST              ; from map.lgo
   CROSSMAPTEST         ; from crossmap.lgo
