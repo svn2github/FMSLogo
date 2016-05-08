@@ -18,7 +18,6 @@
 #endif
 
 #include "scintilla/SciLexer.h"
-#include "scintilla/LexFmsLogoRegisterer.h"
 #ifdef WX_PURE
   #include "scintilla/include/Scintilla.h"
 #else
@@ -32,9 +31,6 @@ CLogoCodeCtrl::CLogoCodeCtrl(
     wxStyledTextCtrl(Parent, Id),
     m_IsDirty(false)
 {
-    // Register the "FMSLogo" lexer in case it's not already registered.
-    RegisterFmslogoLexer();
-
     // Hide the margin that Scintilla creates by default.
     // We don't use it for anything, so it just looks weird.
     SetMarginWidth(1, 0);
