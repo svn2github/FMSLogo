@@ -22,9 +22,12 @@ II. New features/bugs fixed:
   o Drop support for the Win 9X versions of Windows.
   o Drop support for the original Pentium processor.
   o Drop support for display depths less than 16-bit true color.
+  o Fix bug #212 up/down arrow is no longer sluggish when the commander history
+    has a very long line.
   o Partial fix for bug #373; the screen saver now supports the DLLCALL,
     STATUS, and windowing command sets.
-  o Fix bug #401; the commander history no longer hides lines >65535 characters.
+  o Fix bug #401; the commander history no longer hides very long lines
+    (>65535 characters).
   o Fix bug #471; the uninstaller now removes the preferences that are stored
     in the registry.
   o Fix bug #472; SETPIXEL now behaves correctly in PENREVERSE mode.
