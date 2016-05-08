@@ -203,14 +203,12 @@ TO UIAUTOMATION.PUSHCOMMANDERBUTTON :buttontext [:UseSendApi "True]
      STOP
   ]
 
-  ; In the wxWidgets version, the buttons are not direct children of the
-  ; commander window, but, instead are on a child panel (called "panel")
-  IF ISWX [
-      MAKE "commanderHwnd UIAUTOMATION.FINDCHILDWINDOW :commanderHwnd "panel 0
-      if :commanderHwnd = 0 [
-         REPORTTESTBUG "|Couldn't find panel within Commander window|
-         STOP
-      ]
+  ; The buttons are not direct children of the commander window, but are
+  ; instead on a child panel (called "panel")
+  MAKE "commanderHwnd UIAUTOMATION.FINDCHILDWINDOW :commanderHwnd "panel 0
+  if :commanderHwnd = 0 [
+     REPORTTESTBUG "|Couldn't find panel within Commander window|
+     STOP
   ]
 
   LOCALMAKE "button UIAUTOMATION.FINDCHILDWINDOW :commanderHwnd :buttontext 0

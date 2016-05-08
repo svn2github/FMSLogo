@@ -93,7 +93,7 @@ TO WINDOWSETTEST.BUG1429960
   SPLITSCREEN
   ICON "Commander
 
-  LOCALMAKE "hwnd UIAUTOMATION.FINDWINDOW "Commander IFELSE ISWX ["#32770] ["LogoCommander]
+  LOCALMAKE "hwnd UIAUTOMATION.FINDWINDOW "Commander "#32770
   IFELSE EQUALP :hwnd 0 [
     ; FINDWINDOW couldn't find the Commander.
     ; It could be that ICON failed or that "Commander" is localized.

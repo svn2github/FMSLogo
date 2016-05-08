@@ -850,13 +850,6 @@ TO MAKEDEEPARRAY :depth
 END
 BURY [MAKEDEEPARRAY]
 
-TO ISWX
-  ; Outputs TRUE if this is wxWidgets. Outputs FALSE if it's OWL.
-  OUTPUT SUBSTRINGP "1e-005 POWER 10 -5
-END
-BURY [ISWX]
-
-
 
 TO PTEST [:procedures PROCEDURES]
   ; Prints out all top-level tests (ones that take no arguments).
