@@ -149,3 +149,4 @@ $CONFIGURE                        \
     --enable-uxtheme              \
     --enable-dccache              \
     --enable-wxdib                \
+    --enable-statusbar            \
