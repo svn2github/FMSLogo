@@ -5,7 +5,7 @@
 
 #include <wx/dialog.h>
 
-class wxRichTextCtrl;
+class CMiniEditorTextCtrl;
 
 class CMiniEditor : public wxDialog
 {
@@ -17,7 +17,7 @@ public:
 
 private:
 
-    wxRichTextCtrl * m_TextField;
+    CMiniEditorTextCtrl * m_TextField;
 
     DECLARE_NO_COPY_CLASS(CMiniEditor);
 };

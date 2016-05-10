@@ -3,16 +3,14 @@
 #ifndef _MINIEDITORTEXTCTRL_H_
 #define _MINIEDITORTEXTCTRL_H_
 
-#ifndef WX_PRECOMP
-  #include <wx/richtext/richtextctrl.h>
-#endif
+#include "logocodectrl.h"
 
 class wxKeyEvent;
 
-class CMiniEditorTextCtrl : public wxRichTextCtrl
+class CMiniEditorTextCtrl : public CLogoCodeCtrl
 {
 public:
-    CMiniEditorTextCtrl(wxWindow *Parent, wxWindowID Id, const wxSize & Size);
+    CMiniEditorTextCtrl(wxWindow *Parent, wxWindowID Id);
     ~CMiniEditorTextCtrl();
 
     void OnKeyDown(wxKeyEvent& Event);

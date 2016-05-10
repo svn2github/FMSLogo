@@ -14,15 +14,8 @@
 
 CMiniEditorTextCtrl::CMiniEditorTextCtrl(
     wxWindow*      Parent,
-    wxWindowID     Id,
-    const wxSize & Size
-    ) : wxRichTextCtrl(
-        Parent,
-        Id,
-        wxEmptyString,
-        wxDefaultPosition,
-        Size,
-        wxRE_MULTILINE | wxWANTS_CHARS)
+    wxWindowID     Id
+    ) : CLogoCodeCtrl(Parent, Id)
 {
 }
 
@@ -68,6 +61,6 @@ void CMiniEditorTextCtrl::OnKeyDown(wxKeyEvent& Event)
 }
 
 
-BEGIN_EVENT_TABLE(CMiniEditorTextCtrl, wxRichTextCtrl)
+BEGIN_EVENT_TABLE(CMiniEditorTextCtrl, CLogoCodeCtrl)
     EVT_KEY_DOWN(CMiniEditorTextCtrl::OnKeyDown)
 END_EVENT_TABLE()

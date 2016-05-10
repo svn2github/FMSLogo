@@ -16,7 +16,7 @@
 // Menu IDs
 enum
 {
-   ID_MINIEDITOR_RICHTEXTCONTROL = wxID_HIGHEST,
+   ID_MINIEDITOR_BODYTEXT = wxID_HIGHEST,
 };
 
 // ----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ CMiniEditor::CMiniEditor(
         wxID_ANY,
         WXSTRING(ToLineString),
         wxDefaultPosition,
-        wxSize(240, 212),
+        wxSize(300, 400),
         wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
       m_TextField(NULL)
 {
@@ -59,10 +59,7 @@ CMiniEditor::CMiniEditor(
         10);
 
     // add the procedure body (the editor)
-    m_TextField = new CMiniEditorTextCtrl(
-        this,
-        ID_MINIEDITOR_RICHTEXTCONTROL,
-        wxSize(240, 200));
+    m_TextField = new CMiniEditorTextCtrl(this, ID_MINIEDITOR_BODYTEXT);
     topLevelSizer->Add(
         m_TextField,
         1, // expand this control with the size of the dialog box
@@ -72,7 +69,7 @@ CMiniEditor::CMiniEditor(
     // Set the font to whatever is defined in the configuraton
     wxFont font;
     font.SetFamily(wxFONTFAMILY_TELETYPE); // default to using a fixed-width font
-    GetConfigurationFont("CommanderFont", font);
+    GetConfigurationFont("EditFont", font);
     m_TextField->SetFont(font);
 
     // Add a row for the two buttons (End and Cancel)
@@ -111,7 +108,7 @@ CMiniEditor::CMiniEditor(
 
     // Ensure that the user doesn't resize the window so small
     // that the buttons overlap or are off-screen.
-    topLevelSizer->SetSizeHints(this);
+    SetMinSize(GetSize());
 }
 
 CMiniEditor::~CMiniEditor()
@@ -121,5 +118,5 @@ CMiniEditor::~CMiniEditor()
 const wxString
 CMiniEditor::GetProcedureBody() const
 {
-    return m_TextField->GetValue();
+    return m_TextField->GetText();
 }

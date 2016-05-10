@@ -1,4 +1,6 @@
 // -*- c++ -*-
+#ifndef _LOGOCODECTRL_H_
+#define _LOGOCODECTRL_H_
 
 #include <wx/stc/stc.h>
 #include <wx/fdrepdlg.h>
@@ -148,3 +150,5 @@ private:
     // since they were last synchronized with the file.
     bool m_IsDirty;
 };
+
+#endif // _LOGOCODECTRL_H_
