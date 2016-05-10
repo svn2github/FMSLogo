@@ -787,20 +787,28 @@ ShowProcedureMiniEditor(
     else
     {
         // copy the new definition into the read buffer.
-        const wxChar * src = miniEditor.GetProcedureBody().c_str();
-        while (*src != '\0')
+        bool haveCarriageReturn = false;
+        const wxString & body = miniEditor.GetProcedureBody();
+        for (wxString::const_iterator i = body.begin(); i != body.end(); ++i)
         {
-            if (src[0] == '\r' && src[1] == '\n')
+            if (haveCarriageReturn && *i != '\n')
             {
-                // Skip past the CR in a CRLF sequence because 
-                // the caller expects a UNIX EOL sequence.
-                src++;
+                // The carriage return was not followed by a newline,
+                // so it was not part of an EOL sequence.
+                ReadBuffer.AppendChar('\r');
+            }
+            if (*i == '\r')
+            {
+                // Delay writing the CR in case the next character is an LF.
+                // This will map the CRLF into the UNIX EOL sequence.
+                haveCarriageReturn = true;
+                continue;
             }
 
             // BUG: On Unicode builds, this has data loss because it
             // converts a wchar_t to a char.
-            ReadBuffer.AppendChar(*src);
-            src++;
+            ReadBuffer.AppendChar(*i);
+            haveCarriageReturn = false;
         }
 
         ReadBuffer.AppendChar('\n');
