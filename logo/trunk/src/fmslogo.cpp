@@ -160,6 +160,24 @@ void CFmsLogo::ProcessCommandLine()
     bool   copyRemaingArgsAsFilename = false;
     size_t fileToLoadIndex           = 0;
 
+#if wxUSE_UNICODE
+    // On wxWidgets 3.X, argv is no longer a wxChar**, but a wxCmdLineArgsArray.
+    // This mostly emulates a real argv, but does not ensure that argv[argc]==0.
+    // This break the code below in a way that would disruptive to rewrite.
+    // I opened http://trac.wxwidgets.org/ticket/17531 to track this in hopes that
+    // it would be accepted as a bug fixed before a Unicode FMSLogo is ever released.
+    // Instead, this code creates a shadow variable for argv and initializes it
+    // how it was in wxWidgets 2.8.
+    const wxArrayString & realArgv = argv.GetArguments();
+    size_t argvSize = realArgv.GetCount();
+    wxChar ** argv = new wxChar* [argvSize + 1];
+    for (size_t i = 0; i < argvSize; i++)
+    {
+        argv[i] = realArgv[i].wchar_str();
+    }
+    argv[argvSize] = NULL;
+#endif
+
     for (wxChar ** nextArgument = argv + 1;
          *nextArgument != NULL; 
          nextArgument++)
@@ -244,6 +262,10 @@ void CFmsLogo::ProcessCommandLine()
             fileToLoadIndex += strlen(argument);
         }
     }
+
+#if wxUSE_UNICODE
+    delete [] argv;
+#endif
 }
 
 bool CFmsLogo::OnInit()
@@ -822,14 +844,12 @@ TraceOutput(
     ...
     )
 {
-    // Format the message into a wxString
+    // Format and print the message to stderr
     va_list args;
     va_start(args, FormatString);
-    wxString message = wxString::FormatV(WXSTRING(FormatString), args);
+    vfprintf(stderr, FormatString, args);
     va_end(args);
 
-    // print the string
-    fputs(WXSTRING_TO_STRING(message), stderr);
 #ifndef WX_PURE
     OutputDebugString(message.c_str());
 #endif
