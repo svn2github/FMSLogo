@@ -12,28 +12,6 @@
    #include "helputils.h" // for ContextHelp
 #endif
 
-#ifndef __WXMSW__
-
-  // !HACK!HACK!HACK!
-  // In CCommanderInput::SimulateKeyPress(wxKeyEvent & KeyEvent) we need a way
-  // to forward wxKeyEvent to Scintilla, but wxSytledTextCtrl provides no public
-  // member function for doing this.  However, there is a private interface that
-  // does exactly this.  The wxStyledTextCtrl wraps a bridge object (ScintillaWX)
-  // into Scintilla and this bridge object has a method for doing this.
-  // This bridge object is protected, so we have access to it, although we don't
-  // have access to the ScintillaWX class's definition to be able to invoke it.
-  //
-  // Below is a subset of the private, internal interface that we need access to.
-  // It was copied from ScintillaWX.h.
-  // 
-  class ScintillaWX {
-  public:
-      int DoKeyDown(const wxKeyEvent& event, bool* consumed);
-  };
-
-#endif
-
-
 enum
 {
     KEY_CODE_CLOSE_BRACKET = 0xDD,
@@ -157,8 +135,44 @@ void CCommanderInput::SimulateKeyPress(wxKeyEvent & KeyEvent)
     ::keybd_event(code, 0, 0 /* key press */, 0);
     ::keybd_event(code, 0, KEYEVENTF_KEYUP, 0);
 #else
-    bool consumed = false;
-    m_swx->DoKeyDown(KeyEvent, &consumed);
+    wxChar key = KeyEvent.GetUnicodeKey();
+    if (KeyEvent.HasModifiers() || key == WXK_NONE || key < 32 || key == 0x7F)
+    {
+        // This character has no character representation or it's
+        // control key, or there's a modifier (like Ctrl being down)
+        // that makes it not intended to be treated literally.
+        // In short, it's some kind of navigation or selection
+        // keystroke, such as Ctrl+Shift+Right to extend the selection.
+        // Forward this to Scintilla to be handled correctly.
+        wxStyledTextCtrl::OnKeyDown(KeyEvent);
+
+        // Ctrl+A doesn't select all, possibly because we disable all
+        // built-in Scintilla acelerators.  Therefore, we must have
+        // a special case for it.
+        if (key == 'A' || KeyEvent.GetModifiers() == wxMOD_CONTROL)
+        {
+            SelectAll();
+        }
+    }
+    else
+    {
+        // Some normal text is being typed.  Figure out what it is.
+        wxString character(key);
+        if (KeyEvent.ShiftDown())
+        {
+            // TODO: handle remapping like Shift+; to :
+        }
+        else
+        {
+            // All key event are interpreted as capital letters.
+            // Since the Shift key is NOT pressed, we need to make
+            // the character lowercase.
+            character.MakeLower();
+        }
+
+        // Insert tbe character at the insertion point.
+        WriteText(character);
+    }
 #endif
 }
 
