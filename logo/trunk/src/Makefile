@@ -12,17 +12,19 @@ EXEEXT =
 
 TOOLKIT = GTK
 
-wx_top_builddir = $(shell wx-config --prefix)
+WXCONFIG = wx-config-3.0
+
+wx_top_builddir = $(shell $(WXCONFIG) --prefix)
 
 ifeq "$(DEBUG)" "1"
-LDFLAGS  = $(shell wx-config --debug=yes --libs base,core,stc,richtext,html)
-TOOLCHAIN_FULLNAME = gtk2-unicode-debug-$(shell wx-config --release)
+LDFLAGS  = $(shell $(WXCONFIG) --debug=yes --libs base,core,stc,richtext,html)
+TOOLCHAIN_FULLNAME = gtk2-unicode-debug-$(shell $(WXCONFIG) --release)
 else
-LDFLAGS  = $(shell wx-config --debug=no --libs base,core,stc,richtext,html)
-TOOLCHAIN_FULLNAME = gtk2-unicode-release-$(shell wx-config --release)
+LDFLAGS  = $(shell $(WXCONFIG) --debug=no --libs base,core,stc,richtext,html)
+TOOLCHAIN_FULLNAME = gtk2-unicode-release-$(shell $(WXCONFIG) --release)
 endif
 
-CPPFLAGS += $(shell wx-config --cppflags) -DWX_PURE
+CPPFLAGS += $(shell $(WXCONFIG) --cppflags) -DWX_PURE
 CXXFLAGS += -pthread -Wno-unused-variable -Wno-unused-local-typedefs -Wno-unused-function -Wno-unused-but-set-variable
 LDFLAGS  += -pthread
 
@@ -107,6 +109,8 @@ LIBDIRNAME = $(wx_top_builddir)/lib
 CXXFLAGS  += -D__WX$(TOOLKIT)__ $(CPPFLAGS)
 
 MSW_OBJECTS =                  \
+    LexFmsLogo.o               \
+    LexFmsLogoRegisterer.o     \
     dib.o                      \
     dllwind.o                  \
     fmslogo_rc.o               \
@@ -119,8 +123,6 @@ GTK_OBJECTS =                  \
     wxpurestubs.o              \
 
 WX_OBJECTS =                   \
-    LexFmsLogo.o               \
-    LexFmsLogoRegisterer.o     \
     3dsolid.o                  \
     aboutfmslogo.o             \
     aboutmultiplesclerosis.o   \
