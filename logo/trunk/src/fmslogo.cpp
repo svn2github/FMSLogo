@@ -850,7 +850,20 @@ TraceOutput(
     vfprintf(stderr, FormatString, args);
     va_end(args);
 
-#ifndef WX_PURE
-    OutputDebugString(message.c_str());
+#ifdef __WXMSW__
+    char formattedString[256] = {0};
+
+    va_start(args, FormatString);
+    int bytesNeeded = vsnprintf(
+        formattedString,
+        ARRAYSIZE(formattedString) - 1,
+        FormatString,
+        args);
+    va_end(args);
+
+    if (0 <= bytesNeeded)
+    {
+        OutputDebugString(formattedString);
+    }
 #endif
 }
