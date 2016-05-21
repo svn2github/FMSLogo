@@ -465,9 +465,9 @@ bool CFmsLogo::OnInit()
 
         GetConfigurationQuadruple("Screen", &x, &y, &w, &h);
 
-        // the smallest reasonable size is 200 x 200.
-        h = std::max(h, 200);
-        w = std::max(w, 200);
+        // the smallest reasonable size is 400 x 400.
+        h = std::max(h, 400);
+        w = std::max(w, 400);
 
         // sanitize against screen size
         checkwindow(&x, &y, &w, &h);
