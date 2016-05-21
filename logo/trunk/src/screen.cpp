@@ -29,14 +29,14 @@ CScreen::CScreen(
     int       logicalScreenWidth,
     int       logicalScreenHeight
     ) : 
-    wxScrolledWindow(
+    wxScrolled<wxWindow>(
         parent, 
         wxID_ANY, 
         wxDefaultPosition,
         wxDefaultSize,
         wxHSCROLL | wxVSCROLL |
-        wxCLIP_CHILDREN | // to eliminate flicker when there are child controls
-        wxWANTS_CHARS),   // to get Enter and Tab for KEYBOARDON
+            wxCLIP_CHILDREN | // to eliminate flicker when there are child controls
+            wxWANTS_CHARS),   // to get Enter and Tab for KEYBOARDON
     m_ScreenDeviceContext(0),
     m_MemoryDeviceContext(0),
     m_MemoryBitmap(0),
@@ -67,7 +67,8 @@ CScreen::CScreen(
 
     if (!m_MemoryDeviceContext->IsOk())
     {
-        // TODO: report an error
+        // TODO: report an error to the user
+        TraceOutput("Failed to initialize memory device context\n");
     }
 
 #ifndef WX_PURE
@@ -77,7 +78,7 @@ CScreen::CScreen(
 
     // clear the bitmap to all white
     SetBackgroundColour(*wxWHITE);
-    m_MemoryDeviceContext->SetBrush(*wxWHITE_BRUSH);
+    m_MemoryDeviceContext->SetBackground(*wxWHITE_BRUSH);
     m_MemoryDeviceContext->Clear();
 }
 
@@ -165,7 +166,7 @@ void CScreen::AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor)
 void CScreen::OnPaint(wxPaintEvent& PaintEvent)
 {
     wxPaintDC paintContext(this);
-    PrepareDC(paintContext);
+    DoPrepareDC(paintContext); // set origin to account for scrollbar
 
     // Determine the top left corner of where the window is scrolled
     int vbX;
@@ -944,7 +945,7 @@ void CScreen::OnSize(wxSizeEvent& Event)
     Event.Skip();
 }
 
-BEGIN_EVENT_TABLE(CScreen, wxScrolledWindow)
+BEGIN_EVENT_TABLE(CScreen, wxScrolled<wxWindow>)
     EVT_KEY_DOWN(CScreen::OnKeyDown)
     EVT_KEY_UP(CScreen::OnKeyUp)
     EVT_CHAR(CScreen::OnChar)

@@ -1,14 +1,11 @@
-#ifndef WX_PRECOMP
-    #include "wx/scrolwin.h"
-#endif
-
+#include "wx/scrolwin.h"
 #include <logocore.h> // for FLONUM
 
 class wxClientDC;
 class wxMemoryDC;
 class wxBitMap;
 
-class CScreen: public wxScrolledWindow
+class CScreen : public wxScrolled<wxWindow>
 {
 public:
     CScreen(wxWindow* parent, int width, int height);
