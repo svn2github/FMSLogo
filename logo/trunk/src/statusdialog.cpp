@@ -12,7 +12,6 @@
     #include "mainframe.h"
     #include "localizedstrings.h"
     #include "logocore.h" // for ARRAYSIZE
-    #include "mainwind.h" // for checkwindow()
     #include "utils.h"
     #include "status.h"
     #include "startup.h"
@@ -22,6 +21,7 @@
     #include "mem.h"
     #include "stringadapter.h"
     #include "screenwindow.h"
+    #include "debugheap.h"
 #endif
 
 bool status_flag = false;   // Flag to signal status box is popped up
@@ -61,8 +61,6 @@ CStatusDialog::CStatusDialog(wxWindow * Parent)
         wxDefaultSize, 
         wxCAPTION | wxCLOSE_BOX | wxSYSTEM_MENU)
 {
-#ifdef __WXMSW__ // utils.cpp only builds on Windows
-
     // build default coords
     int x = 0;
     int y = 0;
@@ -75,7 +73,6 @@ CStatusDialog::CStatusDialog(wxWindow * Parent)
 
     // now set position
     Move(x, y);
-#endif
 
     struct STATICBOX
     {

@@ -26,12 +26,6 @@
 #include "logocore.h"
 
 // function declarations
-extern void checkwindow(
-    int *x,
-    int *y,
-    int *w,
-    int *h
-    );
 
 ERR_TYPES
 DumpBitmapFile(

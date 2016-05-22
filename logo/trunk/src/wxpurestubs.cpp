@@ -22,12 +22,6 @@ void halt_all_timers()
 {
 }
 
-void checkwindow(int *x, int *y, int *w, int *h)
-{
-    // -1 tells wxWidgets to use default size and position.
-    *x = *y = *w = *h = -1;
-}
-
 ERR_TYPES DumpBitmapFile(const char * Filename, int MaxBitCount)
 {
     return FILE_ERROR;

@@ -3662,6 +3662,44 @@ void label(const char *s)
 
 #endif
 
+void checkwindow(int *x, int *y, int *w, int *h)
+{
+    const wxRect & displayRect = wxGetClientDisplayRect();
+
+    int minX      = displayRect.GetLeft();
+    int minY      = displayRect.GetTop();
+    int maxWidth  = displayRect.GetWidth();
+    int maxHeight = displayRect.GetHeight();
+
+    // sanity check window coordinates
+    if (*x < minX)
+    {
+        *x = minX;
+    }
+    if (*y < minY) 
+    {
+        *y = minY;
+    }
+    if (*w > maxWidth) 
+    {
+        *w = maxWidth;
+    }
+    if (*h > maxHeight) 
+    {
+        *h = maxHeight;
+    }
+
+    // Move the window so that it's on-screen.
+    if (*x + *w > displayRect.GetRight())
+    {
+        *x = displayRect.GetRight() - *w;
+    }
+    if (*y + *h > displayRect.GetBottom())
+    {
+        *y = displayRect.GetBottom() - *h;
+    }
+}
+
 void MyMessageScan()
 {
     // depending on yield flag check for messages
