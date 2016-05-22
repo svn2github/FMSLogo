@@ -23,6 +23,7 @@
 
    #include <algorithm>
 
+   #include <wx/gdicmn.h>
    #include <wx/dc.h>
    #ifdef __WXMSW__
      #include <wx/msw/dc.h> // for wxDCTemp
@@ -739,13 +740,12 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
 
 void checkwindow(int *x, int *y, int *w, int *h)
 {
-    RECT workingArea;
-    SystemParametersInfo(SPI_GETWORKAREA, 0, &workingArea, 0);
+    const wxRect & displayRect = wxGetClientDisplayRect();
 
-    int minX      = workingArea.left;
-    int minY      = workingArea.top;
-    int maxWidth  = workingArea.right  - workingArea.left;
-    int maxHeight = workingArea.bottom - workingArea.top;
+    int minX      = displayRect.GetLeft();
+    int minY      = displayRect.GetTop();
+    int maxWidth  = displayRect.GetWidth();
+    int maxHeight = displayRect.GetHeight();
 
     // sanity check window coordinates
     if (*x < minX)
@@ -765,12 +765,13 @@ void checkwindow(int *x, int *y, int *w, int *h)
         *h = maxHeight;
     }
 
-    if (*x + *w > workingArea.right) 
+    // Move the window so that it's on-screen.
+    if (*x + *w > displayRect.GetRight())
     {
-        *x = workingArea.right - *w;
+        *x = displayRect.GetRight() - *w;
     }
-    if (*y + *h > workingArea.bottom)
+    if (*y + *h > displayRect.GetBottom())
     {
-        *y = workingArea.bottom - *h;
+        *y = displayRect.GetBottom() - *h;
     }
 }
