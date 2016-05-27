@@ -74,6 +74,9 @@ bool TranslateKeyboardShortcut(MSG & Message);
 // but has the same characteristics (bit depth, width, height, etc.)
 class wxDC * GetBackBufferDeviceContext();
 
+// Returns a device context of the main bitmap.
+class wxDC * GetWxMemoryDeviceContext();
+
 void OpenStatusWindow();
 void CloseStatusWindow();
 class CStatusDialog * GetStatusDialog();

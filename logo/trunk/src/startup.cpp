@@ -140,10 +140,6 @@ void init_graphics()
     FloodBrush.lbColor = fcolor;
     FloodBrush.lbHatch = HS_VERTICAL;
 
-    ScreenBrush.lbStyle = BS_SOLID;
-    ScreenBrush.lbColor = scolor;
-    ScreenBrush.lbHatch = HS_VERTICAL;
-
     // Set handy rectangle of full bitmap
     SetRect(&FullRect, 0, 0, BitMapWidth, BitMapHeight);
 #endif

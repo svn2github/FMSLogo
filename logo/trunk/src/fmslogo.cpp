@@ -733,11 +733,15 @@ HDC GetScreenDeviceContext()
 
 HDC GetMemoryDeviceContext()
 {
-    CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
-    return static_cast<HDC>(mainFrame->GetScreen()->GetMemoryDeviceContext().GetHDC());
+    return static_cast<HDC>(GetWxMemoryDeviceContext().GetHDC());
 }
 
 #endif // WX_PURE
+
+wxDC * GetWxMemoryDeviceContext()
+{
+    return &CFmsLogo::GetMainFrame()->GetScreen()->GetMemoryDeviceContext();
+}
 
 wxDC * GetBackBufferDeviceContext()
 {

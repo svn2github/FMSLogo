@@ -40,7 +40,6 @@ extern LOGPEN g_LogicalErasePen;
 extern HPEN   g_ErasePen;
 
 extern LOGBRUSH FloodBrush;
-extern LOGBRUSH ScreenBrush;
 
 #endif // WX_PURE
 

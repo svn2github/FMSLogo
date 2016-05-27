@@ -131,7 +131,6 @@ LOGPEN g_LogicalErasePen;              // Handle to "Erase" logical Pen
 HPEN   g_ErasePen;                     // Handle to "Erase" Pen
 
 LOGBRUSH FloodBrush;                   // Handle to the "floodfill" brush
-LOGBRUSH ScreenBrush;                  // Handle to the "screen" background brush
 
 #endif  // WX_PURE
 
@@ -1397,26 +1396,15 @@ void ChangeActiveScreenColor(int Red, int Green, int Blue)
     dscn.blue  = Blue;
 
     scolor = RGB(dscn.red, dscn.green, dscn.blue);
+
 #ifndef WX_PURE
-
-    ScreenBrush.lbStyle = BS_SOLID;
-    ScreenBrush.lbColor = scolor;
-    ScreenBrush.lbHatch = HS_VERTICAL;
-
     // When the screen changes we change the erase pen which basically
     // writes the screen color
     UpdateErasePen(GetPenStateForSelectedTurtle().Width, scolor);
-
-
-    // memory
-    HDC MemDC = GetMemoryDeviceContext();
-
-    HBRUSH tempBrush = CreateBrushIndirect(&ScreenBrush);
-    FillRect(MemDC, &FullRect, tempBrush);
-    DeleteObject(tempBrush);
-
-    ::InvalidateRect(GetScreenWindow(), NULL, FALSE);
 #endif
+
+    // Clear the screen using the new color
+    ibm_clear_screen();
 
     update_status_screencolor();
 }
@@ -3128,28 +3116,21 @@ NODE *lwindowset(NODE *args)
     return Unbound;
 }
 
-void ibm_clear_screen(void)
+void ibm_clear_screen()
 {
     ASSERT_TURTLE_INVARIANT;
-#ifndef WX_PURE
 
-    HBRUSH tempBrush = ::CreateBrushIndirect(&ScreenBrush);
-    if (tempBrush != NULL)
-    {
-        // memory
-        HDC memoryDC  = GetMemoryDeviceContext();
+    wxColour screenColor(dscn.red, dscn.green, dscn.blue);
+    wxBrush  screenBrush(screenColor);
 
-        ::FillRect(memoryDC, &FullRect, tempBrush);
+    // Reset the on-screen bitmap.
+    wxDC * memoryDeviceContext = GetWxMemoryDeviceContext();
+    memoryDeviceContext->SetBackground(screenColor);
+    memoryDeviceContext->Clear();
 
-        ::SetBkColor(memoryDC, scolor);
-        ::SetBkMode(memoryDC, TRANSPARENT);
-
-        ::DeleteObject(tempBrush);
-    }
-
-    // screen
-    InvalidateRect(GetScreenWindow(), NULL, FALSE);
-#endif
+    // Refresh the screen window so that it will repainted
+    // to match the memory device context.
+    GetScreenWxWindow()->Refresh(false);
 }
 
 #ifndef WX_PURE

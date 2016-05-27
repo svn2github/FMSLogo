@@ -1855,27 +1855,8 @@ void CMainFrame::OnEraseProcedure(wxCommandEvent& WXUNUSED(Event))
 
 void CMainFrame::OnBitmapNew(wxCommandEvent& WXUNUSED(Event))
 {
-#ifndef WX_PURE
-    // Reset the on-screen bitmap.
-    HBRUSH brush = ::CreateBrushIndirect(&ScreenBrush);
-    if (brush != NULL)
-    {
-        HDC memoryDC = static_cast<HDC>(m_Screen->GetMemoryDeviceContext().GetHDC());
-
-        ::SelectObject(memoryDC, MemoryBitMap);
-
-        ::FillRect(memoryDC, &FullRect, brush);
-
-        ::SetBkColor(memoryDC, scolor);
-        ::SetBkMode(memoryDC, TRANSPARENT);
-
-        ::DeleteObject(brush);
-    }
-#endif
-
-    // Refresh the screen window so that it will repainted
-    // to match the memory device context.
-    m_Screen->Refresh(true);
+    // Reset the on-screen bitmap
+    ibm_clear_screen();
 
     // Mark the bitmap as not ever having been saved.
     m_IsNewBitmap = true;
