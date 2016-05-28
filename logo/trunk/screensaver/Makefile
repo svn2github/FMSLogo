@@ -167,4 +167,4 @@ clean :
 # fmslogod.scr /p hwnd - runs the screensaver in a target window (preview)
 # To run the screensaver directory, run "fmslogod.scr /s".
 test : $(TARGET)d.scr
-	rundll32.exe desk.cpl,InstallScreenSaver "C:\Documents and Settings\Dave\My Documents\fmslogo-source\trunk\logo\screensaver\$(TARGET)d.scr"
+	rundll32.exe desk.cpl,InstallScreenSaver "C:\Documents and Settings\Dave\My Documents\fmslogo-source\logo\trunk\screensaver\$(TARGET)d.scr"
