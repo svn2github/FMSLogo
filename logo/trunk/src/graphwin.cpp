@@ -1978,7 +1978,8 @@ BitCopyOrCut(NODE *arg, bool IsCut)
 
             if (IsCut)
             {
-                // this is a cut operation (as opposed to a copy operation)
+                // This is a cut operation (as opposed to a copy operation)
+                // Replace the cut bitmap with the screen color.
 
                 // memory
                 RECT tempRect;
@@ -1989,7 +1990,11 @@ BitCopyOrCut(NODE *arg, bool IsCut)
                     +dest.x + xoffset + g_SelectedBitmap->Width,
                     -dest.y + yoffset + LL);
 
-                HBRUSH tempBrush = CreateBrushIndirect(&ScreenBrush);
+                LOGBRUSH screenBrushLog;
+                screenBrushLog.lbStyle = BS_SOLID;
+                screenBrushLog.lbColor = scolor;
+                screenBrushLog.lbHatch = HS_VERTICAL;
+                HBRUSH tempBrush = CreateBrushIndirect(&screenBrushLog);
 
                 FillRect(memDC, &tempRect, tempBrush);
 

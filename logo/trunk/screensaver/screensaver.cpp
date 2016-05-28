@@ -7,6 +7,7 @@
 #include <wx/window.h>
 #include <wx/app.h>
 #include <wx/dc.h>
+#include <wx/dcmemory.h>
 #include <wx/filedlg.h>
 #include <wx/filename.h>
 
@@ -68,11 +69,12 @@ static HMODULE         g_User32              = NULL;
 // wxWidgets class.
 static HWND       g_ScreenWindow = NULL;
 static HDC        g_ScreenDeviceContext = NULL;
-static HDC        g_MemoryDeviceContext = NULL;
 static HDC        g_BackBufferDeviceContext = NULL;
 static HBITMAP    g_BackBuffer = NULL;
 
 static wxWindow      * g_WxScreenWindow = NULL;
+static wxMemoryDC    * g_WxMemoryDeviceContext = NULL;
+static wxBitmap      * g_WxMemoryBitmap = NULL;
 static wxApp         * g_DummyApp = NULL;
 static CStatusDialog * g_StatusDialog = NULL;
 static wxDC          * g_WxBackBufferDeviceContext = NULL;
@@ -188,18 +190,15 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         BitMapHeight = FullRect.bottom;
         BitMapWidth  = FullRect.right;
 
-        // Fill the screen with blackness.
+        // Create a device context to write to the screen.
         g_ScreenDeviceContext = GetDC(g_ScreenWindow);
-        g_MemoryDeviceContext = CreateCompatibleDC(g_ScreenDeviceContext);
 
-        // create the in-memory image of the bitmap
-        MemoryBitMap = CreateCompatibleBitmap(
-            g_ScreenDeviceContext,
-            BitMapWidth,
-            BitMapHeight);
+        // Create the in-memory image of the bitmap
+        g_WxMemoryBitmap        = new wxBitmap(BitMapWidth, BitMapHeight);
+        g_WxMemoryDeviceContext = new wxMemoryDC(*g_WxMemoryBitmap);
 
-        // set the bitmap object of the screen
-        SelectObject(g_MemoryDeviceContext, MemoryBitMap);
+        // Get native handles to the in-memory image of the screen
+        MemoryBitMap = static_cast<HBITMAP>(g_WxMemoryBitmap->GetHBITMAP());
 
 #ifdef MEM_DEBUG
         g_Fmslogo = NULL;
@@ -481,16 +480,17 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
             g_Timer = 0;
         }
 
-        if (MemoryBitMap != NULL)
+        if (g_WxMemoryDeviceContext != NULL)
         {
-            DeleteObject(MemoryBitMap);
-            MemoryBitMap = NULL;
+            g_WxMemoryDeviceContext->SelectObject(wxNullBitmap);
+            delete g_WxMemoryDeviceContext;
+            g_WxMemoryDeviceContext = NULL;
         }
 
-        if (g_MemoryDeviceContext != NULL)
+        if (g_WxMemoryBitmap != NULL)
         {
-            DeleteDC(g_MemoryDeviceContext);
-            g_MemoryDeviceContext = NULL;
+            delete g_WxMemoryBitmap;
+            g_WxMemoryBitmap = NULL;
         }
 
         if (g_BackBuffer != NULL)
@@ -804,7 +804,12 @@ HDC GetScreenDeviceContext()
 
 HDC GetMemoryDeviceContext()
 {
-    return g_MemoryDeviceContext;
+    return static_cast<HDC>(g_WxMemoryDeviceContext->GetHDC());
+}
+
+wxDC * GetWxMemoryDeviceContext()
+{
+    return g_WxMemoryDeviceContext;
 }
 
 wxDC * GetBackBufferDeviceContext()

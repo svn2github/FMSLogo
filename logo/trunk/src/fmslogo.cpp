@@ -733,7 +733,7 @@ HDC GetScreenDeviceContext()
 
 HDC GetMemoryDeviceContext()
 {
-    return static_cast<HDC>(GetWxMemoryDeviceContext().GetHDC());
+    return static_cast<HDC>(GetWxMemoryDeviceContext()->GetHDC());
 }
 
 #endif // WX_PURE
