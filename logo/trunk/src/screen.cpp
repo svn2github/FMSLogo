@@ -7,6 +7,7 @@
     #include <wx/event.h>
     #include <wx/dc.h>
     #include <wx/dcmemory.h>
+    #include <wx/dcclient.h>
 
     #include "devwind.h"
     #include "logoeventqueue.h"

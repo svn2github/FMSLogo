@@ -7,6 +7,7 @@
     #include <wx/menu.h>
     #include <wx/fontdlg.h>
     #include <wx/msgdlg.h>
+    #include <wx/sizer.h>
 
     #include "workspaceeditor.h"
     #include "logocodectrl.h"

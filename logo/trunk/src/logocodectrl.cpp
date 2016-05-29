@@ -6,6 +6,8 @@
 
    #include <wx/gdicmn.h>      // for wxPoint
    #include <wx/printdlg.h>
+   #include <wx/msgdlg.h>
+   #include <wx/menu.h>
 
    #include "logocodectrl.h"
    #include "localizedstrings.h"
