@@ -1,10 +1,7 @@
 // -*- c++ -*-
 #include <map>
 
-#ifndef WX_PURE
-#include <windows.h> // for COLORREF
-#endif // WX_PURE
-
+#include <wx/defs.h>
 #include <wx/frame.h>
 #include <wx/print.h>
 #include <wx/filename.h>
@@ -185,15 +182,13 @@ private:
 
     void SetSashPosition(int position);
 
-#ifndef WX_PURE
     void
     SetColorHelper(
         CSetColor * &   SetColorDialog,
         const char *    DialogTitle,
-        COLORREF        InitialColor,
+        wxUint32        InitialColor,
         const char *    LogoCommand
         );
-#endif // WX_PURE
 
     bool WarnIfSavingEmptyWorkspace();
     bool FileSave();

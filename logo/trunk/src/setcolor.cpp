@@ -121,11 +121,7 @@ CSetColor::CSetColor(
             ID_SETCOLOR_COLOR1 + i,
             wxDefaultPosition,
             wxSize(width, height),
-#ifdef WX_PURE
-            wxColor(128, 128, 128));
-#else
             wxColor(colortable[i]));
-#endif
 
         colorByPictures->Add(picture, 0, wxALIGN_CENTER | wxALL, 5);
     }

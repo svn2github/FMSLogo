@@ -1368,7 +1368,7 @@ void ChangeActiveFloodColor(int Red, int Green, int Blue)
     dfld.green = Green;
     dfld.blue  = Blue;
 
-    fcolor = RGB(dfld.red, dfld.green, dfld.blue);
+    fcolor = MAKERGB(dfld.red, dfld.green, dfld.blue);
 
 #ifndef WX_PURE
     FloodBrush.lbStyle = BS_SOLID;
@@ -1395,7 +1395,7 @@ void ChangeActiveScreenColor(int Red, int Green, int Blue)
     dscn.green = Green;
     dscn.blue  = Blue;
 
-    scolor = RGB(dscn.red, dscn.green, dscn.blue);
+    scolor = MAKERGB(dscn.red, dscn.green, dscn.blue);
 
 #ifndef WX_PURE
     // When the screen changes we change the erase pen which basically
@@ -2657,7 +2657,7 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
             const int xScreenOffset = (+dest.x + xoffset);
             const int yScreenOffset = (-dest.y + yoffset);
 
-            const RGBCOLOR TRANSPARENT_COLOR = RGB(255, 255, 255);
+            const RGBCOLOR TRANSPARENT_COLOR = MAKERGB(255, 255, 255);
 
             // Read the bitmap into a local buffer for faster access.
             // Because this takes a long time, we also cache this in the CUTMAP.

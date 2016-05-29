@@ -19,6 +19,8 @@
 #ifndef __STARTUP_H_
 #define __STARTUP_H_
 
+#include <wx/defs.h> // for wxUint32
+
 #include "graphics.h"
 
 // global variable declarations
@@ -30,6 +32,10 @@ extern class wxString * g_HelpFileName;
 extern char TempPathName[];
 extern char TempBmpName[];
 extern char TempClipName[];
+
+extern wxUint32 scolor;  // screen color
+extern wxUint32 fcolor;  // flood color
+extern wxUint32 pcolor;  // pen color
 
 #ifndef WX_PURE
   extern OSVERSIONINFO g_OsVersionInformation;

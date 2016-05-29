@@ -31,6 +31,7 @@
     #include <algorithm>
     #include <string.h>
 
+    #include <wx/defs.h>
     #include <wx/string.h>
     #include <wx/filename.h>
 
@@ -54,9 +55,9 @@ char TempPathName[MAX_PATH + 1];   // path to temp edit file
 char TempBmpName[MAX_PATH + 1];    // path to temp bitmap file
 char TempClipName[MAX_PATH + 1];   // path to temp clipboard file
 
-RGBCOLOR scolor;                   // screen color
-RGBCOLOR fcolor;                   // flood color
-RGBCOLOR pcolor;                   // pen color
+wxUint32 scolor;                   // screen color
+wxUint32 fcolor;                   // flood color
+wxUint32 pcolor;                   // pen color
 
 #ifndef WX_PURE
 OSVERSIONINFO g_OsVersionInformation;

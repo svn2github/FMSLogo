@@ -30,10 +30,8 @@
 
    #ifdef WX_PURE
 
-      #ifndef WX_PRECOMP
-         #include <wx/dc.h>
-         #include <wx/dcmemory.h>
-      #endif
+      #include <wx/dc.h>
+      #include <wx/dcmemory.h>
 
       struct LOGPEN;
       typedef struct __PEN * HPEN;
@@ -67,6 +65,7 @@
    #include "logomath.h"
    #include "const.h"
    #include "screenwindow.h"
+   #include "startup.h"
    #include "debugheap.h"
 
    #include "graphwin.h"

@@ -18,8 +18,9 @@
     #include <wx/dcmirror.h>
     #include <wx/fontdlg.h>
     #include <wx/printdlg.h>
-
+    #include <wx/filedlg.h>
     #include <wx/dcmemory.h>
+    #include <wx/settings.h>
 
     #include <wx/fontutil.h> // for wxNativeFontInfo
     #include <wx/msgdlg.h>   // for wxMessageBox
@@ -78,6 +79,7 @@
     #include "questionbox.h"
     #include "stringadapter.h"
     #include "debugheap.h"
+
 #endif
 
 
@@ -2071,22 +2073,17 @@ void CMainFrame::OnSetPenSize(wxCommandEvent& WXUNUSED(Event))
     }
 }
 
-#ifndef WX_PURE
-
 void
 CMainFrame::SetColorHelper(
     CSetColor * &   SetColorDialog,
     const char  *   DialogTitle,
-    COLORREF        InitialColor,
+    wxUint32        InitialColor,
     const char  *   LogoCommand
     )
 {
     if (SetColorDialog == NULL)
     {
-        const wxColor initialColor(
-            GetRValue(InitialColor),
-            GetGValue(InitialColor),
-            GetBValue(InitialColor));
+        const wxColor initialColor(InitialColor);
 
         SetColorDialog = new CSetColor(
             this,
@@ -2103,39 +2100,32 @@ CMainFrame::SetColorHelper(
     }
 }
 
-#endif
 
 void CMainFrame::OnSetPenColor(wxCommandEvent& WXUNUSED(Event))
 {
-#ifndef WX_PURE
     SetColorHelper(
         m_SetPenColorDialog,
         LOCALIZED_SETCOLOR_PENCOLOR,
         pcolor,
         LOCALIZED_ALTERNATE_SETPENCOLOR);
-#endif
 }
 
 void CMainFrame::OnSetFloodColor(wxCommandEvent& WXUNUSED(Event))
 {
-#ifndef WX_PURE
     SetColorHelper(
         m_SetFloodColorDialog,
         LOCALIZED_SETCOLOR_FLOODCOLOR,
         fcolor,
         LOCALIZED_ALTERNATE_SETFLOODCOLOR);
-#endif
 }
 
 void CMainFrame::OnSetScreenColor(wxCommandEvent& WXUNUSED(Event))
 {
-#ifndef WX_PURE
     SetColorHelper(
         m_SetScreenColorDialog,
         LOCALIZED_SETCOLOR_SCREENCOLOR,
         scolor,
         LOCALIZED_ALTERNATE_SETSCREENCOLOR);
-#endif
 }
 
 void CMainFrame::ShowStatus()

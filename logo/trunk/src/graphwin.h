@@ -59,10 +59,6 @@ extern HBITMAP MemoryBitMap;
 
 #endif // WX_PURE
 
-extern RGBCOLOR scolor;
-extern RGBCOLOR fcolor;
-extern RGBCOLOR pcolor;
-
 extern bool zoom_flag;
 
 extern FLONUM the_zoom;
