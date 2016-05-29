@@ -16,6 +16,7 @@
     #include <wx/splitter.h>
     #include <wx/statusbr.h>
     #include <wx/dcmirror.h>
+    #include <wx/dcclient.h>
     #include <wx/fontdlg.h>
     #include <wx/printdlg.h>
     #include <wx/filedlg.h>
