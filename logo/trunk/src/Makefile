@@ -28,8 +28,6 @@ CPPFLAGS += $(shell $(WXCONFIG) --cppflags) -DWX_PURE
 CXXFLAGS += -pthread -Wno-unused-variable -Wno-unused-local-typedefs -Wno-unused-function -Wno-unused-but-set-variable
 LDFLAGS  += -pthread
 
-# TODO: CPPFLAGS += -DWX_PRECOMP
-
 SCINTILLA_INCLUDES = scintilla/include
 
 else
