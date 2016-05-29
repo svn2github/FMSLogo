@@ -39,7 +39,9 @@ public:
     void UndockCommanderWindow();
     void DockCommanderWindow();
 #ifndef WX_PURE
-    bool TranslateKeyboardShortcut(MSG & Message);
+#ifdef __WXMSW__
+    bool TranslateKeyboardShortcut(struct tagMSG & Message);
+#endif
 #endif
 
     void ShowStatus();

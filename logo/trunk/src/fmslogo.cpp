@@ -786,11 +786,13 @@ void DockCommanderWindow()
 }
 
 #ifndef WX_PURE
+#ifdef __WXMSW__
 bool TranslateKeyboardShortcut(MSG & Message)
 {
     return CFmsLogo::GetMainFrame()->TranslateKeyboardShortcut(Message);
 }
-#endif // WX_PURE
+#endif
+#endif
 
 int ShowEditorForFile(const char *FileName, NODE * EditArguments)
 {

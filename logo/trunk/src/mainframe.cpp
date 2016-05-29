@@ -702,6 +702,7 @@ void CMainFrame::SetSashPosition(int position)
 }
 
 #ifndef WX_PURE
+#ifdef __WXMSW__
 
 static bool IsDescendentOf(HWND PossibleDescendant, const wxWindow * Ancestor)
 {
@@ -787,6 +788,7 @@ bool CMainFrame::TranslateKeyboardShortcut(MSG & Message)
     return false;
 }
 
+#endif // __WXMSW__
 #endif // WX_PURE
 
 bool CMainFrame::IsEditorOpen() const
