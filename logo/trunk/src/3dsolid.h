@@ -5,7 +5,6 @@
 #include "threed.h"
 
 #define NUM_SHADES 255
-#define SHARE
 
 // 32-bit number in 0x00BBGGRR form
 typedef unsigned int RGBCOLOR;
@@ -27,12 +26,7 @@ struct VERTEXLIST
     Point Vertex;
     VERTEXLIST *Next;
     VERTEXLIST *Prev;
-#ifdef SHARE
     VERTEXLIST *Share;
-#endif
-#ifdef NOASM
-    BOOL Hack;
-#endif
 };
 
 struct POLYGON
@@ -75,9 +69,6 @@ class TThreeDSolid : public TThreeD
 
  public: // HACK: should be private
     long m_iPolyCount;
-#ifdef NOASM
-    long m_iSplitPolyCount;
-#endif
 
     BSPNode* m_Tree;     // Pointer to the root of the BSP tree
 
@@ -86,10 +77,9 @@ class TThreeDSolid : public TThreeD
 
  private:
     int m_PolyClass;      // Local variables to Recursive AddtoBSPTree
-#ifdef SHARE
+
     int m_ThisPointClass;
     int m_LastInOutPointClass;
-#endif
 
     POLYGON* m_PolyA;
     POLYGON* m_PolyB;
@@ -104,12 +94,10 @@ class TThreeDSolid : public TThreeD
     VERTEXLIST* m_Vertices;
     VERTEXLIST* m_VerticesIn;
 
-#ifdef SHARE
     VERTEXLIST* m_ShareA;
     VERTEXLIST* m_ShareB;
     VERTEXLIST* m_DeferVerticesOut;
     VERTEXLIST* m_DeferVerticesIn;
-#endif
 
  public:
     TThreeDSolid();

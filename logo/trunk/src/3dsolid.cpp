@@ -46,9 +46,6 @@ TThreeDSolid::TThreeDSolid() : TThreeD()
 
     m_Tree = NULL;
     m_iPolyCount = 0;
-#ifdef NOASM
-    m_iSplitPolyCount = 0;
-#endif
 }
 
 TThreeDSolid::~TThreeDSolid()
@@ -67,9 +64,6 @@ void TThreeDSolid::DisposeTree()
     DisposeBSP(m_Tree);
     m_Tree = NULL;
     m_iPolyCount = 0;
-#ifdef NOASM
-    m_iSplitPolyCount = 0;
-#endif
 }
 
 // Sets up the dimensions of the window and various default values
@@ -237,12 +231,7 @@ void TThreeDSolid::AddPoint(VERTEXLIST** v, Point &pt)
     VERTEXLIST * vn = new VERTEXLIST;
 
     vn->Vertex = pt;
-#ifdef SHARE
     vn->Share = NULL;
-#endif
-#ifdef NOASM
-    vn->Hack = 0;
-#endif
 
     if (*v)
     {
@@ -265,58 +254,16 @@ void TThreeDSolid::RemovePoint(VERTEXLIST* v)
     VERTEXLIST * vp = v->Prev;
     VERTEXLIST * vn = v->Next;
 
-    //   if (vp == v)
-    //      {
-    ////      vn = v->Next;
-    //      printfx("Trouble");
-    //      return;
-    //      }
     delete v;
     vp->Next = vn;
     vn->Prev = vp;
 }
-
-/*
-void TThreeDSolid::AddPoint(VERTEXLIST** v, Point &pt)
-{
-    VERTEXLIST* vn;
-
-    if (*v)
-    {
-        vn = *v;
-
-        while (vn->Next) vn = vn->Next;
-        vn->Next = new VERTEXLIST;
-        vn = vn->Next;
-    }
-    else
-    {
-        *v = new VERTEXLIST;
-
-        vn = *v;
-    }
-
-    vn->Vertex = pt;
-    vn->Next = NULL;
-#ifdef SHARE
-    vn->Share = NULL;
-#endif
-    vn->Hack = 0;
-}
-*/
 
 void TThreeDSolid::InsertPoint(VERTEXLIST* v, Point &pt)
 {
     VERTEXLIST* vn = new VERTEXLIST;
 
     vn->Vertex = pt;
-#ifdef SHARE
-    vn->Share = NULL;
-#endif
-
-#ifdef NOASM
-    vn->Hack = 0;
-#endif
 
     vn->Next = v->Next;
     vn->Prev = v;
@@ -350,58 +297,36 @@ void TThreeDSolid::DisposeFalseShares(VERTEXLIST* list)
    
     curr = list;
 
-    do 
+    do
     {
-#ifdef SHARE
         if (curr->Share)
         {
-//          char buff[64];
-//          sprintf(buff, "ShareX = %ld", (unsigned long) (curr->Share));
-//          printfx(buff);
             if (curr->Share->Share == NULL)
             {
-//              char buff[64];
-//              sprintf(buff, "ShareY = %ld", (unsigned long) (curr->Share));
-//              printfx(buff);
                 RemovePoint(curr->Share);
             }
         }
-#endif
         curr = curr->Next;
     } while (curr != list);
 }
-
-#ifdef NOASM
-#define POLYCOUNT 31
-
-static VERTEXLIST* Save2 = NULL;
-static VERTEXLIST* Save3 = NULL;
-#endif
 
 // Make the BSP tree structure
 void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
 {
     if (!*Root)
     {
-#ifdef NOASM
-        m_iSplitPolyCount++;
-        update_status_vectors();
-#endif
         *Root = MakeBSPNode(Poly);
     }
     else
     {
-        // VERTEXLIST* VerticesIn;
         VERTEXLIST* VerticesOut = NULL;
 
         m_VerticesIn = NULL;
 
-#ifdef SHARE
         m_DeferVerticesIn = NULL;
         m_DeferVerticesOut = NULL;
 
         m_LastInOutPointClass = HC_ON;
-#endif
 
         m_PolyClass = HC_ON;  // assume plane_3d and polygon coincident for starters
 
@@ -409,9 +334,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
 
         m_PtA    = m_Vertices->Vertex;
         m_SideA  = CalcSign(m_PtA, (*Root)->Poly);  // classify it relative to the plane_3d
-#ifdef SHARE
         m_ShareA = m_Vertices->Share;
-#endif
 
         m_Vertices = m_Vertices->Next;
 
@@ -421,26 +344,11 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
       {
           m_PtB    = m_Vertices->Vertex;
           m_SideB  = CalcSign(m_PtB, (*Root)->Poly);  // classify it relative to the plane_3d
-#ifdef SHARE
           m_ShareB = m_Vertices->Share;
-#endif
-
-#ifdef SHARE
-// This disables sharing
-//       if (m_ShareB)
-//       {
-//           Vertices->Share->Share = NULL;
-//           Vertices->Share = NULL;
-//           m_ShareB = NULL;
-//       }
-#endif
 
           if (m_SideB > epsilon2)  // if the current point_3d is on the positive side
           { // begin
-
-#ifdef SHARE
               m_ThisPointClass = HC_OUT;
-#endif
               if (m_PolyClass == HC_ON)        // if the polygon classification is on
               {
                   m_PolyClass = HC_OUT;         // classify the polygon as out
@@ -455,30 +363,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                   Point pt;
                   Intersect((*Root)->Poly, m_PtA, m_PtB, pt);
 
-#ifdef NOASM
-                  if (m_iPolyCount == POLYCOUNT)
-                  {
-                      char buffer[256];
-                      sprintf(
-                          buffer,
-                          "SplitA: %p ptA %6.3f %6.3f %6.3f %p ptB %6.3f %6.3f %6.3f pt %6.3f %6.3f %6.3f", 
-                          m_Vertices,
-                          m_PtA.x, 
-                          m_PtA.y, 
-                          m_PtA.z, 
-                          m_Vertices->Prev,
-                          m_PtB.x, 
-                          m_PtB.y, 
-                          m_PtB.z, 
-                          pt.x, 
-                          pt.y, 
-                          pt.z);
-                      printfx(buffer);
-                  }
-#endif
-
                   // if we are potentially on a shared seqment
-#ifdef SHARE
                   if (m_ShareA && m_ShareB)
                   {
                       // if we are on a shared segment
@@ -508,15 +393,12 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                       }
                   }
                   else
-#endif
                   {
                       AddPoint(&m_VerticesIn,  pt);
                       AddPoint(&VerticesOut, pt);
 
-#ifdef SHARE
                       m_VerticesIn->Prev->Share = VerticesOut->Prev;
                       VerticesOut->Prev->Share = m_VerticesIn->Prev;
-#endif
                   }
                   m_PolyClass = HC_SPANNING; // set the PolyClass appropriately
               } // end
@@ -524,19 +406,15 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
               AddPoint(&VerticesOut, m_PtB);
 
               // If old vertex was share copy it to the new poly (back link later)
-#ifdef SHARE
               if (m_ShareB)
               {
                   VerticesOut->Prev->Share = m_ShareB;
               }
-#endif
           } // end
           else if (m_SideB < -epsilon2)  // the current point_3d is on the negative side
           { // begin
 
-#ifdef SHARE
               m_ThisPointClass = HC_IN;
-#endif
               if (m_PolyClass == HC_ON)      // if the polygon classification is on
               {
                   m_PolyClass = HC_IN;        // classify the polygon as out
@@ -552,31 +430,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                   Point pt;
                   Intersect((*Root)->Poly, m_PtA, m_PtB, pt);
 
-#ifdef NOASM
-                  if (m_iPolyCount == POLYCOUNT)
-                  {
-                      char buffer[256];
-                      sprintf(
-                          buffer,
-                          "SplitB: %p ptA %6.3f %6.3f %6.3f %p ptB %6.3f %6.3f %6.3f pt %6.3f %6.3f %6.3f", 
-                          m_Vertices, 
-                          m_PtA.x, 
-                          m_PtA.y, 
-                          m_PtA.z, 
-                          m_Vertices->Prev, 
-                          m_PtB.x, 
-                          m_PtB.y, 
-                          m_PtB.z, 
-                          pt.x, 
-                          pt.y, 
-                          pt.z);
-                      printfx(buffer);
-                  }
-#endif
-
                   // if we are potentially on a shared seqment
-
-#ifdef SHARE
                   if (m_ShareA && m_ShareB)
                   {
                       // if we are on a shared segment
@@ -607,15 +461,12 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                       }
                   }
                   else
-#endif
                   {
                       AddPoint(&m_VerticesIn, pt);
                       AddPoint(&VerticesOut, pt);
 
-#ifdef SHARE
                       m_VerticesIn->Prev->Share  = VerticesOut->Prev;
                       VerticesOut->Prev->Share = m_VerticesIn->Prev;
-#endif
                   }
 
                   m_PolyClass = HC_SPANNING; // set the PolyClass appropriately
@@ -623,36 +474,18 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
 
               AddPoint(&m_VerticesIn, m_PtB);
 
-#ifdef SHARE
               if (m_ShareB)
               {
                   m_VerticesIn->Prev->Share = m_ShareB;
               }
-#endif
           } // end
           else // the current point_3d is on the plane_3d
           {
-#ifdef SHARE
               m_ThisPointClass = HC_ON;
 
               if (m_ShareB)
               {
-#ifdef NOASM
-                  if (m_iPolyCount == POLYCOUNT)
-                  {
-                      char buffer[256];
-                      sprintf(
-                          buffer,
-                          "ShareB: %p ptB %6.3f %6.3f %6.3f",
-                          m_ShareB,
-                          m_PtB.x,
-                          m_PtB.y,
-                          m_PtB.z);
-                      printfx(buffer);
-                  }
-#endif
                   // If we have previous point's IN or OUT classification
-
                   if (m_LastInOutPointClass != HC_ON)
                   {
                       if (m_LastInOutPointClass == HC_OUT)
@@ -664,9 +497,6 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                           VerticesOut->Prev->Share  = m_VerticesIn->Prev;
 
                           AddPoint(&VerticesOut, m_PtB);
-#ifdef NOASM
-                          m_ShareB->Hack = 1;
-#endif
                           VerticesOut->Prev->Share = m_ShareB;
                       }
                       else // must be HC_IN
@@ -678,9 +508,6 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                           m_VerticesIn->Prev->Share = VerticesOut->Prev;
 
                           AddPoint(&m_VerticesIn, m_PtB);
-#ifdef NOASM
-                          m_ShareB->Hack = 1;
-#endif
                           m_VerticesIn->Prev->Share = m_ShareB;
                       }
                   }
@@ -696,9 +523,6 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
 
                       AddPoint(&VerticesOut, m_PtB);
                       AddPoint(&m_VerticesIn, m_PtB);
-#ifdef NOASM
-                      m_ShareB->Hack = 2;
-#endif
                       VerticesOut->Prev->Share = m_ShareB;
                       m_VerticesIn->Prev->Share = m_ShareB;
                       // if (m_DeferVerticesIn)
@@ -713,21 +537,18 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                   m_LastInOutPointClass = HC_ON;
               }
               else
-#endif
               {
                   AddPoint(&m_VerticesIn, m_PtB);
                   AddPoint(&VerticesOut, m_PtB);
-#ifdef SHARE
+
                   m_VerticesIn->Prev->Share  = VerticesOut->Prev;
                   VerticesOut->Prev->Share = m_VerticesIn->Prev;
-#endif
               }
           }
 
           m_PtA    = m_PtB;   // copy the current point_3d to the last point_3d
           m_SideA  = m_SideB; // copy the current point_3d's side information...
 
-#ifdef SHARE
           m_ShareA = m_ShareB;
 
           if (m_ThisPointClass == HC_IN || m_ThisPointClass == HC_OUT)
@@ -750,19 +571,17 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                   m_DeferVerticesOut = NULL;
               }
           }
-#endif
 
           m_Vertices = m_Vertices->Next;
 
       } while (m_Vertices != m_VerticesStart);
 
-#ifdef NOASM
       if (m_DeferVerticesIn)
       {
           RemovePoint(m_DeferVerticesIn);
           RemovePoint(m_DeferVerticesOut);
       }
-#endif
+
       switch (m_PolyClass) // perform the appropriate action based on the classification
       { // begin
       case HC_OUT: // if the polygon is entirely positive
@@ -790,7 +609,6 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
 
           // Do all back share links now
 
-#ifdef SHARE
           m_Vertices = m_VerticesIn;
           do
           {
@@ -811,94 +629,8 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
               }
               m_Vertices = m_Vertices->Next;
           } while (m_Vertices != VerticesOut);
-#endif
-
-#ifdef NOASM
-          if (m_iPolyCount == POLYCOUNT)
-          {
-              m_Vertices=Poly->Vertices;
-              do
-              {
-                  char buffer[80];
-                  sprintf(
-                      buffer,
-                      "Poly: %p %6.3f %6.3f %6.3f %p", 
-                      m_Vertices, 
-                      m_Vertices->Vertex.x, 
-                      m_Vertices->Vertex.y, 
-                      m_Vertices->Vertex.z, 
-                      m_Vertices->Share);
-                  printfx(buffer);
-
-                  m_Vertices = m_Vertices->Next;
-              } while (m_Vertices != Poly->Vertices);
-
-              m_Vertices = VerticesOut;
-              Save2 = m_Vertices;
-              do
-              {
-                  char buffer[80];
-                  sprintf(
-                      buffer,
-                      " Out: %p %6.3f %6.3f %6.3f %p",
-                      m_Vertices,
-                      m_Vertices->Vertex.x,
-                      m_Vertices->Vertex.y, 
-                      m_Vertices->Vertex.z,
-                      m_Vertices->Share);
-                  printfx(buffer);
-
-                  m_Vertices->Hack = 2;
-                  m_Vertices = m_Vertices->Next;
-              } while (m_Vertices != VerticesOut);
-
-              m_Vertices = m_VerticesIn;
-              Save3 = m_Vertices;
-              do
-              {
-                  char buffer[80];
-                  sprintf(
-                      buffer,
-                      "  In: %p %6.3f %6.3f %6.3f %p", 
-                      m_Vertices,
-                      m_Vertices->Vertex.x,
-                      m_Vertices->Vertex.y,
-                      m_Vertices->Vertex.z,
-                      m_Vertices->Share);
-                  printfx(buffer);
-                  m_Vertices->Hack = 2;
-                  m_Vertices = m_Vertices->Next;
-              } while (m_Vertices != m_VerticesIn);
-          }
-
-/*
-          if (Save2)
-          {
-              Vertices=Save2;
-              do
-              {
-                  char buffer[80];
-                  sprintf(buffer," Out: %p %6.3f %6.3f %6.3f %08X", Vertices, Vertices->Vertex.x, Vertices->Vertex.y, Vertices->Vertex.z, Vertices->Share);
-                  printfx(buffer);
-                  Vertices = Vertices->Next;
-              } while (Vertices != Save2);
-
-              Vertices=Save3;
-              do
-              {
-                  char buffer[80];
-                  sprintf(buffer,"  In: %p %6.3f %6.3f %6.3f %p", Vertices, Vertices->Vertex.x, Vertices->Vertex.y, Vertices->Vertex.z, Vertices->Share);
-                  printfx(buffer);
-                  Vertices = Vertices->Next;
-              } while (Vertices != Save3);
-
-          }
-*/
-
-#endif
 
           m_PolyA = new POLYGON;
-
           *m_PolyA = *Poly;
 
           m_PolyA->Vertices = m_VerticesIn;
@@ -944,12 +676,9 @@ bool TThreeDSolid::WorldToDisplay(double x, double y, double z, POINT& disp)
     else if (ym >  1.0) return false;
     else if (ym < -1.0) return false;
 
-//   disp.x = ((long) cut_error((A * xm + B))) + xoffset;
-//   disp.y = ((long) cut_error((C * ym + D))) + yoffset;
     disp.x = ((long) g_round((A * xm + B))) + xoffset;
     disp.y = ((long) g_round((C * ym + D))) + yoffset;
-//    disp.x = ((long) ((A * xm + B))) + xoffset;
-//    disp.y = ((long) ((C * ym + D))) + yoffset;
+
     return true;
 }
 
@@ -1011,93 +740,16 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
     } while (vertices != Poly->Vertices);
 
 #ifndef WX_PURE
-
-// t[i].x = t[0].x;
-// t[i].y = t[0].y;    // Close off the POLYGON
-
-#ifdef NOASMX
-    HBRUSH hBrush = CreateSolidBrush(rand());
-#else
     HBRUSH hBrush = CreateSolidBrush(color);
-#endif
     HBRUSH oldBrush = (HBRUSH) SelectObject(m_MemDC, hBrush);
 
-    //if (Poly->ColorNdx != 0x000000FF)
     if (i > 2)
     {
         Polygon(m_MemDC, t, i);    // Display the POLYGON
     }
 
-#ifdef NOASMX
-    vertices = Poly->Vertices;
-
-    do
-    {
-        if (vertices->Hack == 1)
-        {
-            WorldToDisplay(vertices->Vertex.x, vertices->Vertex.y, vertices->Vertex.z, t[0]);
-            t[0].x = t[0].x - 4 + (rand() % 9);
-            t[0].y = t[0].y - 4 + (rand() % 9);
-            SetPixel(m_MemDC, t[0].x  , t[0].y  , 0x0000FF00);
-            SetPixel(m_MemDC, t[0].x  , t[0].y+1, 0x0000FF00);
-            SetPixel(m_MemDC, t[0].x+1, t[0].y  , 0x0000FF00);
-            SetPixel(m_MemDC, t[0].x  , t[0].y-1, 0x0000FF00);
-            SetPixel(m_MemDC, t[0].x-1, t[0].y  , 0x0000FF00);
-        }
-        else if (vertices->Hack == 2)
-        {
-            WorldToDisplay(vertices->Vertex.x, vertices->Vertex.y, vertices->Vertex.z, t[0]);
-            t[0].x = t[0].x - 4 + (rand() % 9);
-            t[0].y = t[0].y - 4 + (rand() % 9);
-            SetPixel(m_MemDC, t[0].x  , t[0].y  , 0x000000FF);
-            for (i=0;i<=1;i++)
-            {
-                SetPixel(m_MemDC, t[0].x  , t[0].y+i, 0x000000FF);
-                SetPixel(m_MemDC, t[0].x+i, t[0].y  , 0x000000FF);
-                SetPixel(m_MemDC, t[0].x  , t[0].y-i, 0x000000FF);
-                SetPixel(m_MemDC, t[0].x-i, t[0].y  , 0x000000FF);
-            }
-        }
-        else if (vertices->Share)
-        {
-            WorldToDisplay(vertices->Vertex.x, vertices->Vertex.y, vertices->Vertex.z, t[0]);
-            t[0].x = t[0].x - 4 + (rand() % 9);
-            t[0].y = t[0].y - 4 + (rand() % 9);
-            SetPixel(m_MemDC, t[0].x  , t[0].y  , 0x00FF0000);
-            SetPixel(m_MemDC, t[0].x  , t[0].y+1, 0x00FF0000);
-            SetPixel(m_MemDC, t[0].x+1, t[0].y  , 0x00FF0000);
-            SetPixel(m_MemDC, t[0].x  , t[0].y-1, 0x00FF0000);
-            SetPixel(m_MemDC, t[0].x-1, t[0].y  , 0x00FF0000);
-        }
-        else
-        {
-            WorldToDisplay(vertices->Vertex.x, vertices->Vertex.y, vertices->Vertex.z, t[0]);
-            t[0].x = t[0].x - 4 + (rand() % 9);
-            t[0].y = t[0].y - 4 + (rand() % 9);
-            SetPixel(m_MemDC, t[0].x  , t[0].y  , 0x00FFFFFF);
-            SetPixel(m_MemDC, t[0].x  , t[0].y+1, 0x00FFFFFF);
-            SetPixel(m_MemDC, t[0].x+1, t[0].y  , 0x00FFFFFF);
-            SetPixel(m_MemDC, t[0].x  , t[0].y-1, 0x00FFFFFF);
-            SetPixel(m_MemDC, t[0].x-1, t[0].y  , 0x00FFFFFF);
-        }
-        vertices = m_Vertices->Next;
-    } while (vertices != Poly->Vertices);
-#endif
-
-    // NormalPen.lopnColor = color;
-    // NormalPen.lopnWidth.x = 0;
-
-    // HPEN hPen = CreatePenIndirect(&NormalPen);
-    // OldPen = (HPEN) SelectObject(m_MemDC, hPen);
-
-    // Polyline(m_MemDC, t, i);
-
-    // SelectObject(m_MemDC, OldPen);
-
     SelectObject(m_MemDC, oldBrush);
     DeleteObject(hBrush);
-
-    // DeleteObject(hPen);
 #endif
 }
 
