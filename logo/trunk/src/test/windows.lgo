@@ -2,72 +2,62 @@ LOAD "testlib.lgo
 LOAD "uiautomationlib.lgo
 
 TO WINDOWSTEST.SETUP :toplevelwindow
+  ; A shared helper command that adds one of each widget to a window
 
-  localmake "width 100
-  localmake "xpos  10
-  localmake "ypos  0
+  ; On the main window, the dialog boxes use the turtle coordinate system
+  localmake "ydir  IFELSE :toplevelwindow = "main [ -1   ] [ 1   ]
+  localmake "xpos  IFELSE :toplevelwindow = "main [ -100 ] [ 10  ]
+  localmake "ypos  IFELSE :toplevelwindow = "main [  200 ] [ 10  ]
+  localmake "width IFELSE :toplevelwindow = "main [  200 ] [ 100 ]
 
-  STATICCREATE :toplevelwindow "statictext [This is static text] :xpos :ypos :width 10
-  make "ypos :ypos + 15
+  STATICCREATE :toplevelwindow "statictext [This is static text] :xpos :ypos :width 15
+  make "ypos :ypos + 15*:ydir
 
-  COMBOBOXCREATE :toplevelwindow "combobox  :xpos :ypos :width 40
+  COMBOBOXCREATE :toplevelwindow "combobox  :xpos :ypos :width 50
   COMBOBOXADDSTRING "combobox [banana]
   COMBOBOXADDSTRING "combobox [apple]
   COMBOBOXADDSTRING "combobox [orange]
-  make "ypos :ypos + 50
+  make "ypos :ypos + 55*:ydir
 
-  LISTBOXCREATE     :toplevelwindow "listbox :xpos :ypos :width 50
+  LISTBOXCREATE     :toplevelwindow "listbox :xpos :ypos :width 40
   LISTBOXADDSTRING  "listbox [option C]
   LISTBOXADDSTRING  "listbox [option B]
   LISTBOXADDSTRING  "listbox [option A]
-  make "ypos :ypos + 55
+  make "ypos :ypos + 45*:ydir
 
   SCROLLBARCREATE :toplevelwindow "horziontalscrollbar :xpos :ypos :width 20 []
-  make "ypos :ypos + 25
+  make "ypos :ypos + 25*:ydir
 
   SCROLLBARCREATE :toplevelwindow "verticalscrollbar1 :xpos + 10 :ypos 20 80 []
   SCROLLBARCREATE :toplevelwindow "verticalscrollbar2 :xpos + 70 :ypos 20 80 []
-  make "ypos :ypos + 100
+  make "ypos :ypos + 100*:ydir
 
-  ; create a group box for some radio buttons
-  GROUPBOXCREATE :toplevelwindow "radiogroupbox :xpos :ypos 80 60
-  make "ypos :ypos + 10
-
-  RADIOBUTTONCREATE :toplevelwindow "radiogroupbox "radiooptiona [Choice A] :xpos + 10 :ypos 60 20
-  make "ypos :ypos + 20
-
-  RADIOBUTTONCREATE :toplevelwindow "radiogroupbox "radiooptionb [Choice B] :xpos + 10 :ypos 60 20
-  make "ypos :ypos + 20
-
+  ; create a group box with some radio buttons
+  GROUPBOXCREATE :toplevelwindow "radiogroupbox :xpos :ypos :width 45
+  RADIOBUTTONCREATE :toplevelwindow "radiogroupbox "radiooptiona [Choice A] :xpos+10 :ypos+:ydir*10 :width-20 15
+  RADIOBUTTONCREATE :toplevelwindow "radiogroupbox "radiooptionb [Choice B] :xpos+10 :ypos+:ydir*25 :width-20 15
   RADIOBUTTONSET "radiooptiona "true  ; "true should be okay in all locales
   RADIOBUTTONSET "radiooptionb "false ; "false should be okay in all locales
-  make "ypos :ypos + 10
+  make "ypos :ypos + 50*:ydir
 
   ; create a group box for some checkboxes
-  GROUPBOXCREATE :toplevelwindow "checkboxgroupbox :xpos :ypos 80 60
-  make "ypos :ypos + 10
-
-  CHECKBOXCREATE :toplevelwindow "checkboxgroupbox "checkboxa [Checkbox A] :xpos + 10 :ypos 60 20
-  make "ypos :ypos + 20
-
-  CHECKBOXCREATE :toplevelwindow "checkboxgroupbox "checkboxb [Checkbox B] :xpos + 10 :ypos 60 20
-  make "ypos :ypos + 20
-
+  GROUPBOXCREATE :toplevelwindow "checkboxgroupbox :xpos :ypos :width 45
+  CHECKBOXCREATE :toplevelwindow "checkboxgroupbox "checkboxa [Checkbox A] :xpos+10 :ypos+:ydir*10 :width-20 15
+  CHECKBOXCREATE :toplevelwindow "checkboxgroupbox "checkboxb [Checkbox B] :xpos+10 :ypos+:ydir*25 :width-20 15
   CHECKBOXSET "checkboxa "true
   CHECKBOXSET "checkboxb "false
-  make "ypos :ypos + 10
-
+  make "ypos :ypos + 50*:ydir
 
   ; make this an exit button for dialogs, just in case
-  BUTTONCREATE :toplevelwindow "button "button :xpos :ypos :width 20 (list "dialogdelete quoted :toplevelwindow)
-  make "ypos :ypos + 25
+  BUTTONCREATE :toplevelwindow "button "|Press to Continue| :xpos :ypos :width 15 (list "dialogdelete quoted :toplevelwindow)
+  make "ypos :ypos + 25*:ydir
 
 END
 
 TO WINDOWSTEST.WINDOW.SMOKETEST
 
   ; create a root window, add a widget of each type 
-  windowcreate "root "testwindow [window smoke test] 0 0 120 400 [WINDOWSTEST.SETUP "testwindow]
+  windowcreate "root "testwindow [window smoke test] 0 0 120 380 [WINDOWSTEST.SETUP "testwindow]
 
   wait 60
 
@@ -76,7 +66,7 @@ TO WINDOWSTEST.WINDOW.SMOKETEST
 
   ; Delete a window from the context of its callback
   ; Commented out because of bug #385
-  ; windowcreate "root "testwindow [delete window from callback] 0 0 120 400 [
+  ; windowcreate "root "testwindow [delete window from callback] 0 0 120 380 [
   ;   windowdelete "testwindow
   ; ]
 
@@ -142,10 +132,9 @@ END
 TO WINDOWSTEST.DIALOG.SMOKETEST
 
   ; create a root dialog, add a widget of each type, then delete the dialog
-  dialogcreate "root "testdialog [dialog smoke test] 0 0 120 400 [
-    WINDOWSTEST.SETUP "testdialog 
-    wait 60 
-    dialogdelete "testdialog
+  dialogcreate "root "testdialog [dialog smoke test] 0 0 120 380 [
+    WINDOWSTEST.SETUP "testdialog
+    SETTIMER 31 1000 [dialogdelete "testdialog CLEARTIMER 31]
   ]
 
 END
@@ -217,10 +206,6 @@ TO WINDOWSTEST.DIALOG.BADINPUT
 
 END
 
-TO WINDOWSTEST.MAINWINDOW.SMOKETEST.MODALSETUP
-  BUTTONCREATE "mydialog "myok [Press to continue tests] 10 10 100 20 [ WINDOWDELETE "main ]
-END
-
 TO WINDOWSTEST.MAINWINDOW.SMOKETEST
 
   ; pull a widget of each type onto the screen window
@@ -229,10 +214,10 @@ TO WINDOWSTEST.MAINWINDOW.SMOKETEST
   ; create a non-modal window on the desktop
   WINDOWCREATE "main "mywindow [This should disappear when you click the button] 0 0 150 30 []
 
-  ; Create a modal window on the desktop and delete all windows.
-
-  DIALOGCREATE "main "mydialog "mytitle 0 50 130 50 [WINDOWSTEST.MAINWINDOW.SMOKETEST.MODALSETUP]
-
+  ; Create a modal window on the desktop that will block until deleted
+  DIALOGCREATE "main "mydialog "mytitle 0 50 130 50 [
+    BUTTONCREATE "mydialog "myok [Press to continue tests] 10 10 100 20 [ WINDOWDELETE "main ]
+  ]
 END
 
 
