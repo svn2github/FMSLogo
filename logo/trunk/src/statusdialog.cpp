@@ -52,14 +52,14 @@ enum
 // CStatusDialog
 // ----------------------------------------------------------------------------
 
-CStatusDialog::CStatusDialog(wxWindow * Parent)
+CStatusDialog::CStatusDialog(wxWindow * Parent, long AdditionalStyle)
     : wxDialog(
         Parent, 
         wxID_ANY, 
         WXSTRING(LOCALIZED_STATUS), 
         wxDefaultPosition, 
         wxDefaultSize, 
-        wxCAPTION | wxCLOSE_BOX | wxSYSTEM_MENU)
+        wxCAPTION | wxCLOSE_BOX | wxSYSTEM_MENU | AdditionalStyle)
 {
     // build default coords
     int x = 0;

@@ -851,7 +851,7 @@ void OpenStatusWindow()
     // create a new status dialog, if necessary
     if (g_StatusDialog == NULL)
     {
-        g_StatusDialog = new CStatusDialog(g_WxScreenWindow);
+        g_StatusDialog = new CStatusDialog(g_WxScreenWindow, wxSTAY_ON_TOP);
         g_StatusDialog->PopulateAllFields();
         g_StatusDialog->Show();
     }
