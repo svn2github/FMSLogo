@@ -145,7 +145,7 @@ LOAD "setpensizedialog.lgo
 
 TO TESTALL
 
-  REPORTTESTINITIALIZE
+  REPORTTESTINITIALIZE "testlog.baseline.txt
 
   ; Preallocate startnodes and endnodes to account for their memory.
   localmake "endnodes   ITEM 1 NODES

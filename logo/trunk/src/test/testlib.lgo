@@ -226,9 +226,9 @@ BURY [FAILIFNOTFALSE]
 
 
 
-TO REPORTTESTINITIALIZE
+TO REPORTTESTINITIALIZE :testlogfilename 
 
-  MAKE "testlog  "testlog.baseline.txt
+  MAKE "testlog  :testlogfilename
 
   ; close the test log, if it is already open
   CATCH "ERROR [ CLOSE :testlog ]

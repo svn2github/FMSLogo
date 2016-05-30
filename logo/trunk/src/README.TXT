@@ -35,6 +35,8 @@ II. New features/bugs fixed:
     when it is done.
   o Implement feature #59; use a new icon that doesn't look like a mismash of
     red, white, and black.   The icon was provided by Jan Grabe.
+  o Change the working directory in the screensaver to be the directory which
+    holds the screen saver program.  This makes LOAD with a relative path work.
   o Add syntax coloring and matching paren highlights to the minieditor.
   o Various improvements to the installer, including a configurable start menu
     folder and faster start time.

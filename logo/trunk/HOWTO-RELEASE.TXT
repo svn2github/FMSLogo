@@ -30,7 +30,8 @@ Test the Candidate Release
 1.a) Install FMSLogo and run "test\testharness.lgo".
 1.b) Do a file comparison against the testlog.baseline.txt to look for regressions
 1.c) Run DEMO
-
+1.d) Configure the screensaver to use "test\screensaver-testharness.lgo" and
+     run the tests by previewing the screensaver.
 
 Release the files
 ==================================================================================

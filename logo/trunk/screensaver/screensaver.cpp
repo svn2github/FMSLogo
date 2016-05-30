@@ -10,6 +10,8 @@
 #include <wx/dcmemory.h>
 #include <wx/filedlg.h>
 #include <wx/filename.h>
+#include <wx/filefn.h>   // for wxSetWorkingDirectory
+#include <wx/filename.h>
 
 #include <wx/msw/dc.h> // for wxDCTemp
 
@@ -261,6 +263,10 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 
             RegCloseKey(fmslogoKey);
         }
+        else
+        {
+            TraceOutput("Unable to locate FMSLogo installation directory\n");
+        }
 
         //_control87(EM_OVERFLOW,  EM_OVERFLOW);
         //_control87(EM_UNDERFLOW, EM_UNDERFLOW);
@@ -419,6 +425,17 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
                         "");
                     if (g_FileToLoad[0] != '\0')
                     {
+                        // In order for LOAD to work with relative paths, we
+                        // set the working directory to the directory which
+                        // holds the file to load.  This is primarily done for
+                        // testing, but the programmer may benefit from this
+                        // as well, as the working directory would otherwise
+                        // be system32, which won't have any Logo files, nor
+                        // will it be writable.
+                        const wxString & fileToLoadString = WXSTRING(g_FileToLoad);
+                        const wxFileName fileToLoad(fileToLoadString);
+                        wxSetWorkingDirectory(fileToLoad.GetPath());
+
                         g_IsLoadingFile = true;
                         silent_load(NIL, g_FileToLoad);
                         g_TickCountOfMostRecentLoad = GetTickCount();
