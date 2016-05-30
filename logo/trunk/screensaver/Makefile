@@ -5,7 +5,7 @@ include ../lcids.mk
 
 CC  = i686-w64-mingw32-gcc
 CXX = i686-w64-mingw32-g++
-RC  = windres --preprocessor=$(CXX) --preprocessor-arg=-E --preprocessor-arg=-xc-header
+RC  = i686-w64-mingw32-windres --preprocessor=$(CXX) --preprocessor-arg=-E --preprocessor-arg=-xc-header
 
 wx_top_srcdir      = /cygdrive/e/wxWidgets-3.1.0-src
 wx_top_builddir    = /cygdrive/e/wxWidgets-3.1.0-fmslogo

@@ -36,9 +36,6 @@ else
 
 EXEEXT = .exe
 
-# Compile with MinGW
-RC = windres --preprocessor=$(CXX) --preprocessor-arg=-E --preprocessor-arg=-xc-header
-
 wx_top_srcdir   = /cygdrive/e/wxWidgets-3.1.0-src
 
 ifeq "$(DEBUG)" "1"
@@ -50,7 +47,9 @@ endif
 LDFLAGS            = -lwx_msw-3.1-i686-w64-mingw32 -lwxscintilla-3.1-i686-w64-mingw32
 TOOLCHAIN_FULLNAME = i686-w64-mingw32-msw-ansi-static-3.1
 
+# Compile with MinGW
 TARGET_PREFIX=i686-w64-mingw32-
+RC = $(TARGET_PREFIX)windres --preprocessor=$(CXX) --preprocessor-arg=-E --preprocessor-arg=-xc-header
 
 LDFLAGS  += -mwindows
 
