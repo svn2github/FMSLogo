@@ -17,7 +17,7 @@ SetFmsLogoIcon(
 #ifdef __WXMSW__
     // On Windows use the .ico in the resource.
     // Since we have already paid the size cost of compiling
-    // the icons into a source, there's no reason to compile
+    // the icons into a resource, there's no reason to compile
     // them into the executable a second time as an .XPM.
 
     // Note that, for any given DPI mode, only two of these
