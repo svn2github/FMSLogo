@@ -327,6 +327,20 @@ $Exceptions{'command-keyboardon.xml'}{'allcaps'}{'ONKEYDOWN'}   = 1;
 $Exceptions{'command-keyboardon.xml'}{'allcaps'}{'ONKEYUP'}     = 1;
 $Exceptions{'command-keyboardon.xml'}{'bannedword'}{'function'} = 1;
 
+$Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F1'}  = 1;
+$Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F2'}  = 1;
+$Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F3'}  = 1;
+$Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F4'}  = 1;
+$Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F5'}  = 1;
+$Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F6'}  = 1;
+$Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F7'}  = 1;
+$Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F8'}  = 1;
+$Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F9'}  = 1;
+$Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F10'} = 1;
+$Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F11'} = 1;
+$Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F12'} = 1;
+$Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'US'}  = 1;
+
 $Exceptions{'command-keyp.xml'}{'allcaps'}{'CBREAK'}  = 1;
 $Exceptions{'command-keyp.xml'}{'allcaps'}{'UNIX'}    = 1;
 

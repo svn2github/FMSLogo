@@ -40,6 +40,7 @@ II. New features/bugs fixed:
   o Add syntax coloring and matching paren highlights to the minieditor.
   o Various improvements to the installer, including a configurable start menu
     folder and faster start time.
+  o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
   https://sourceforge.net/p/fmslogo/source/HEAD/tree/trunk/logo/src/CHANGELOG.TXT
