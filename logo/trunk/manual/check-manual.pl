@@ -1037,8 +1037,9 @@ foreach my $filename (<../src/Logolib/*>) {
   # only files (not directories) are library routines
   if ( -f $filename ) {
 
-    # strip off the path to get the name of the library routine
-    if (my ($procedureName) = $filename =~ m!.*/(.*)!) {
+    # Strip off the path to get the name of the library routine.
+    # Also change it to upper-case to match procedure name conventions.
+    if (my ($procedureName) = uc($filename) =~ m!.*/(.*)!) {
 
       # make sure that this library routine appears in the manual
       if (not $Commands{$procedureName}) {
