@@ -68,7 +68,7 @@ The KEYBOARDVALUE assignments shown in the table below should be portable across
      <row> <entry>Up Arrow</entry>    <entry>38</entry>  </row>
      <row> <entry>Right Arrow</entry> <entry>39</entry>  </row>
      <row> <entry>Down Arrow</entry>  <entry>40</entry>  </row>
-     <row> <entry>Pause</entry>       <entry>44</entry>  </row>
+     <row> <entry>Print Screen</entry><entry>44</entry>  </row>
      <row> <entry>Insert</entry>      <entry>45</entry>  </row>
      <row> <entry>Delete</entry>      <entry>46</entry>  </row>
 
