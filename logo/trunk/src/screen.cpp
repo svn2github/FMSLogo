@@ -512,11 +512,107 @@ void CScreen::OnScroll(wxScrollWinEvent& Event)
     Event.Skip();
 }
 
+// The following key codes are Windows Virtual Key Codes, which is what MSWLogo
+// used for its KEYBOARDON events, and for compatibility is what FMSLogo also uses.
+// On Windows, these are defined with as VK_*, but since FMSLogo can be compiled
+// on non-Windows platforms, the definitions are duplicated.
+#ifdef KEY_EXECUTE
+#  undef KEY_EXECUTE  // This is defined on Windows platforms as registry permissions
+#endif
+static const unsigned char KEY_CONTROL_BREAK     = 3;
+static const unsigned char KEY_BACKSPACE         = 8;
+static const unsigned char KEY_TAB               = 9;
+static const unsigned char KEY_CLEAR             = 12;
+static const unsigned char KEY_ENTER             = 13;
+static const unsigned char KEY_SHIFT             = 16;
+static const unsigned char KEY_CONTROL           = 17;
+static const unsigned char KEY_ALT               = 18;
+static const unsigned char KEY_PAUSE             = 19;
+static const unsigned char KEY_CAPSLOCK          = 20;
+static const unsigned char KEY_ESCAPE            = 27;
+static const unsigned char KEY_SPACEBAR          = 32;
+static const unsigned char KEY_PAGE_UP           = 33;
+static const unsigned char KEY_PAGE_DOWN         = 34;
+static const unsigned char KEY_END               = 35;
+static const unsigned char KEY_HOME              = 36;
+static const unsigned char KEY_LEFT_ARROW        = 37;
+static const unsigned char KEY_UP_ARROW          = 38;
+static const unsigned char KEY_RIGHT_ARROW       = 39;
+static const unsigned char KEY_DOWN_ARROW        = 40;
+static const unsigned char KEY_SELECT            = 41;
+static const unsigned char KEY_PRINT             = 42;
+static const unsigned char KEY_EXECUTE           = 43;
+static const unsigned char KEY_PRINTSCREEN       = 44;
+static const unsigned char KEY_INSERT            = 45;
+static const unsigned char KEY_DELETE            = 46;
+static const unsigned char KEY_HELP              = 47;
+static const unsigned char KEY_NUMPAD_0          = 96;
+static const unsigned char KEY_NUMPAD_1          = 97;
+static const unsigned char KEY_NUMPAD_2          = 98;
+static const unsigned char KEY_NUMPAD_3          = 99;
+static const unsigned char KEY_NUMPAD_4          = 100;
+static const unsigned char KEY_NUMPAD_5          = 101;
+static const unsigned char KEY_NUMPAD_6          = 102;
+static const unsigned char KEY_NUMPAD_7          = 103;
+static const unsigned char KEY_NUMPAD_8          = 104;
+static const unsigned char KEY_NUMPAD_9          = 105;
+static const unsigned char KEY_NUMPAD_MULTIPLY   = 106;
+static const unsigned char KEY_NUMPAD_ADD        = 107;
+static const unsigned char KEY_NUMPAD_SUBTRACT   = 109;
+static const unsigned char KEY_NUMPAD_DECIMAL    = 110;
+static const unsigned char KEY_NUMPAD_DIVIDE     = 111;
+static const unsigned char KEY_F1                = 112;
+static const unsigned char KEY_F2                = 113;
+static const unsigned char KEY_F3                = 114;
+static const unsigned char KEY_F4                = 115;
+static const unsigned char KEY_F5                = 116;
+static const unsigned char KEY_F6                = 117;
+static const unsigned char KEY_F7                = 118;
+static const unsigned char KEY_F8                = 119;
+static const unsigned char KEY_F9                = 120;
+static const unsigned char KEY_F10               = 121;
+static const unsigned char KEY_F11               = 122;
+static const unsigned char KEY_F12               = 123;
+static const unsigned char KEY_F13               = 124;
+static const unsigned char KEY_F14               = 125;
+static const unsigned char KEY_F15               = 126;
+static const unsigned char KEY_F16               = 127;
+static const unsigned char KEY_F17               = 128;
+static const unsigned char KEY_F18               = 129;
+static const unsigned char KEY_F19               = 130;
+static const unsigned char KEY_F20               = 131;
+static const unsigned char KEY_F21               = 132;
+static const unsigned char KEY_F22               = 133;
+static const unsigned char KEY_F23               = 134;
+static const unsigned char KEY_F24               = 135;
+static const unsigned char KEY_NUM_LOCK          = 144;
+static const unsigned char KEY_SCROLL_LOCK       = 145;
+static const unsigned char KEY_LEFT_WINDOWS      = 91;
+static const unsigned char KEY_RIGHT_WINDOWS     = 92;
+static const unsigned char KEY_APPLICATIONS      = 93;
+static const unsigned char KEY_BROWSER_BACK      = 166;
+static const unsigned char KEY_BROWSER_FORWARD   = 167;
+static const unsigned char KEY_BROWSER_REFRESH   = 168;
+static const unsigned char KEY_BROWSER_STOP      = 169;
+static const unsigned char KEY_BROWSER_SEARCH    = 170;
+static const unsigned char KEY_BROWSER_FAVORITES = 171;
+static const unsigned char KEY_BROWSER_HOME      = 172;
+static const unsigned char KEY_VOLUME_MUTE       = 173;
+static const unsigned char KEY_VOLUME_DOWN       = 174;
+static const unsigned char KEY_VOLUME_UP         = 175;
+static const unsigned char KEY_MEDIA_NEXT_TRACK  = 176;
+static const unsigned char KEY_MEDIA_PREV_TRACK  = 177;
+static const unsigned char KEY_MEDIA_STOP        = 178;
+static const unsigned char KEY_MEDIA_PLAY_PAUSE  = 179;
+static const unsigned char KEY_LAUNCH_MAIL       = 180;
+static const unsigned char KEY_LAUNCH_APP1       = 181;
+static const unsigned char KEY_LAUNCH_APP2       = 182;
+
 // This function converts wxWidgets virtual key codes to Windows Virtual
 // Key Code, which is what FMSLogo programs expect to be given.
-// The code is based on wxCharCodeWXToMSW in wxMSW-2.8.12/src/msw/window.cpp,
-// but unlike wxKeyEvent.GetRawKeyCode(), it returns the windows key code on
-// non-Windows platforms.
+// The code is based on WXToVK() in wxWidgets/src/msw/window.cpp,
+// but unlike wxKeyEvent.GetRawKeyCode(), it returns the windows key code
+// on non-Windows platforms.
 static
 int
 WxKeyCodeToVirtualKeyCode(
@@ -525,107 +621,123 @@ WxKeyCodeToVirtualKeyCode(
 {
     static const struct wxKeyMapping
     {
-        int       WindowVirtualKeyCode;
-        wxKeyCode WxKeyCode;
+        unsigned char  LogoKeyCode;
+        wxKeyCode      WxKeyCode;
     } specialKeys[] =
     {
-#ifndef WX_PURE
-        {VK_CANCEL,        WXK_CANCEL},
-        {VK_BACK,          WXK_BACK},
-        {VK_TAB,           WXK_TAB},
-        {VK_CLEAR,         WXK_CLEAR},
-        {VK_SHIFT,         WXK_SHIFT},
-        {VK_CONTROL,       WXK_CONTROL},
-        {VK_MENU ,         WXK_ALT},
-        {VK_PAUSE,         WXK_PAUSE},
-        {VK_CAPITAL,       WXK_CAPITAL},
-        {VK_SPACE,         WXK_SPACE},
-        {VK_ESCAPE,        WXK_ESCAPE},
-        {VK_SELECT,        WXK_SELECT},
-        {VK_PRINT,         WXK_PRINT},
-        {VK_EXECUTE,       WXK_EXECUTE},
-        {VK_SNAPSHOT,      WXK_SNAPSHOT},
-        {VK_HELP,          WXK_HELP},
+        {KEY_CONTROL_BREAK,      WXK_CANCEL},
+        {KEY_BACKSPACE,          WXK_BACK},
+        {KEY_TAB,                WXK_TAB},
+        {KEY_CLEAR,              WXK_CLEAR},
+        {KEY_SHIFT,              WXK_SHIFT},
+        {KEY_CONTROL,            WXK_CONTROL},
+        {KEY_ALT,                WXK_ALT},
+        {KEY_PAUSE,              WXK_PAUSE},
+        {KEY_CAPSLOCK,           WXK_CAPITAL},
+        {KEY_SPACEBAR,           WXK_SPACE},
+        {KEY_ESCAPE,             WXK_ESCAPE},
+        {KEY_SELECT,             WXK_SELECT},
+        {KEY_PRINT,              WXK_PRINT},
+        {KEY_EXECUTE,            WXK_EXECUTE},
+        {KEY_PRINTSCREEN,        WXK_SNAPSHOT},
+        {KEY_HELP,               WXK_HELP},
 
-        {VK_NUMPAD0,       WXK_NUMPAD0},
-        {VK_NUMPAD1,       WXK_NUMPAD1},
-        {VK_NUMPAD2,       WXK_NUMPAD2},
-        {VK_NUMPAD3,       WXK_NUMPAD3},
-        {VK_NUMPAD4,       WXK_NUMPAD4},
-        {VK_NUMPAD5,       WXK_NUMPAD5},
-        {VK_NUMPAD6,       WXK_NUMPAD6},
-        {VK_NUMPAD7,       WXK_NUMPAD7},
-        {VK_NUMPAD8,       WXK_NUMPAD8},
-        {VK_NUMPAD9,       WXK_NUMPAD9},
-        {VK_MULTIPLY,      WXK_NUMPAD_MULTIPLY},
-        {VK_ADD,           WXK_NUMPAD_ADD},
-        {VK_SUBTRACT,      WXK_NUMPAD_SUBTRACT},
-        {VK_DECIMAL,       WXK_NUMPAD_DECIMAL},
-        {VK_DIVIDE,        WXK_NUMPAD_DIVIDE},
+        {KEY_NUMPAD_0,           WXK_NUMPAD0},
+        {KEY_NUMPAD_1,           WXK_NUMPAD1},
+        {KEY_NUMPAD_2,           WXK_NUMPAD2},
+        {KEY_NUMPAD_3,           WXK_NUMPAD3},
+        {KEY_NUMPAD_4,           WXK_NUMPAD4},
+        {KEY_NUMPAD_5,           WXK_NUMPAD5},
+        {KEY_NUMPAD_6,           WXK_NUMPAD6},
+        {KEY_NUMPAD_7,           WXK_NUMPAD7},
+        {KEY_NUMPAD_8,           WXK_NUMPAD8},
+        {KEY_NUMPAD_9,           WXK_NUMPAD9},
+        {KEY_NUMPAD_MULTIPLY,    WXK_NUMPAD_MULTIPLY},
+        {KEY_NUMPAD_ADD,         WXK_NUMPAD_ADD},
+        {KEY_NUMPAD_SUBTRACT,    WXK_NUMPAD_SUBTRACT},
+        {KEY_NUMPAD_DECIMAL,     WXK_NUMPAD_DECIMAL},
+        {KEY_NUMPAD_DIVIDE,      WXK_NUMPAD_DIVIDE},
 
-        {VK_F1,            WXK_F1},
-        {VK_F2,            WXK_F2},
-        {VK_F3,            WXK_F3},
-        {VK_F4,            WXK_F4},
-        {VK_F5,            WXK_F5},
-        {VK_F6,            WXK_F6},
-        {VK_F7,            WXK_F7},
-        {VK_F8,            WXK_F8},
-        {VK_F9,            WXK_F9},
-        {VK_F10,           WXK_F10},
-        {VK_F11,           WXK_F11},
-        {VK_F12,           WXK_F12},
-        {VK_F13,           WXK_F13},
-        {VK_F14,           WXK_F14},
-        {VK_F15,           WXK_F15},
-        {VK_F16,           WXK_F16},
-        {VK_F17,           WXK_F17},
-        {VK_F18,           WXK_F18},
-        {VK_F19,           WXK_F19},
-        {VK_F20,           WXK_F20},
-        {VK_F21,           WXK_F21},
-        {VK_F22,           WXK_F22},
-        {VK_F23,           WXK_F23},
-        {VK_F24,           WXK_F24},
+        {KEY_F1,                 WXK_F1},
+        {KEY_F2,                 WXK_F2},
+        {KEY_F3,                 WXK_F3},
+        {KEY_F4,                 WXK_F4},
+        {KEY_F5,                 WXK_F5},
+        {KEY_F6,                 WXK_F6},
+        {KEY_F7,                 WXK_F7},
+        {KEY_F8,                 WXK_F8},
+        {KEY_F9,                 WXK_F9},
+        {KEY_F10,                WXK_F10},
+        {KEY_F11,                WXK_F11},
+        {KEY_F12,                WXK_F12},
+        {KEY_F13,                WXK_F13},
+        {KEY_F14,                WXK_F14},
+        {KEY_F15,                WXK_F15},
+        {KEY_F16,                WXK_F16},
+        {KEY_F17,                WXK_F17},
+        {KEY_F18,                WXK_F18},
+        {KEY_F19,                WXK_F19},
+        {KEY_F20,                WXK_F20},
+        {KEY_F21,                WXK_F21},
+        {KEY_F22,                WXK_F22},
+        {KEY_F23,                WXK_F23},
+        {KEY_F24,                WXK_F24},
 
-        {VK_NUMLOCK,       WXK_NUMLOCK},
-        {VK_SCROLL,        WXK_SCROLL},
+        {KEY_NUM_LOCK,           WXK_NUMLOCK},
+        {KEY_SCROLL_LOCK,        WXK_SCROLL},
 
-        {VK_LWIN,          WXK_WINDOWS_LEFT},
-        {VK_RWIN,          WXK_WINDOWS_RIGHT},
-        {VK_APPS,          WXK_WINDOWS_MENU},
+        {KEY_LEFT_WINDOWS,       WXK_WINDOWS_LEFT},
+        {KEY_RIGHT_WINDOWS,      WXK_WINDOWS_RIGHT},
+        {KEY_APPLICATIONS,       WXK_WINDOWS_MENU},
+
+        {KEY_BROWSER_BACK,        WXK_BROWSER_BACK},
+        {KEY_BROWSER_FORWARD,     WXK_BROWSER_FORWARD},
+        {KEY_BROWSER_REFRESH,     WXK_BROWSER_REFRESH},
+        {KEY_BROWSER_STOP,        WXK_BROWSER_STOP},
+        {KEY_BROWSER_SEARCH,      WXK_BROWSER_SEARCH},
+        {KEY_BROWSER_FAVORITES,   WXK_BROWSER_FAVORITES},
+        {KEY_BROWSER_HOME,        WXK_BROWSER_HOME},
+        {KEY_VOLUME_MUTE,         WXK_VOLUME_MUTE},
+        {KEY_VOLUME_DOWN,         WXK_VOLUME_DOWN},
+        {KEY_VOLUME_UP,           WXK_VOLUME_UP},
+        {KEY_MEDIA_NEXT_TRACK,    WXK_MEDIA_NEXT_TRACK},
+        {KEY_MEDIA_PREV_TRACK,    WXK_MEDIA_PREV_TRACK},
+        {KEY_MEDIA_STOP,          WXK_MEDIA_STOP},
+        {KEY_MEDIA_PLAY_PAUSE,    WXK_MEDIA_PLAY_PAUSE},
+        {KEY_LAUNCH_MAIL,         WXK_LAUNCH_MAIL},
+        {KEY_LAUNCH_APP1,         WXK_LAUNCH_APP1},
+        {KEY_LAUNCH_APP2,         WXK_LAUNCH_APP2},
 
         // Add some keys codes that are not 1:1
-        {VK_PRIOR,         WXK_PAGEUP},
-        {VK_PRIOR,         WXK_NUMPAD_PAGEUP},
+        {KEY_PAGE_UP,      WXK_PAGEUP},
+        {KEY_PAGE_UP,      WXK_NUMPAD_PAGEUP},
 
-        {VK_NEXT,          WXK_PAGEDOWN},
-        {VK_NEXT,          WXK_NUMPAD_PAGEDOWN},
+        {KEY_PAGE_DOWN,    WXK_PAGEDOWN},
+        {KEY_PAGE_DOWN,    WXK_NUMPAD_PAGEDOWN},
 
-        {VK_END,           WXK_END},
-        {VK_END,           WXK_NUMPAD_END},
+        {KEY_END,          WXK_END},
+        {KEY_END,          WXK_NUMPAD_END},
 
-        {VK_HOME,          WXK_HOME},
-        {VK_HOME,          WXK_NUMPAD_HOME},
+        {KEY_HOME,         WXK_HOME},
+        {KEY_HOME,         WXK_NUMPAD_HOME},
 
-        {VK_LEFT,          WXK_LEFT},
-        {VK_LEFT,          WXK_NUMPAD_LEFT},
+        {KEY_LEFT_ARROW,   WXK_LEFT},
+        {KEY_LEFT_ARROW,   WXK_NUMPAD_LEFT},
 
-        {VK_UP,            WXK_UP},
-        {VK_UP,            WXK_NUMPAD_UP},
+        {KEY_UP_ARROW,     WXK_UP},
+        {KEY_UP_ARROW,     WXK_NUMPAD_UP},
 
-        {VK_RIGHT,         WXK_RIGHT},
-        {VK_RIGHT,         WXK_NUMPAD_RIGHT},
+        {KEY_RIGHT_ARROW,  WXK_RIGHT},
+        {KEY_RIGHT_ARROW,  WXK_NUMPAD_RIGHT},
 
-        {VK_DOWN,          WXK_DOWN},
-        {VK_DOWN,          WXK_NUMPAD_DOWN},
+        {KEY_DOWN_ARROW,   WXK_DOWN},
+        {KEY_DOWN_ARROW,   WXK_NUMPAD_DOWN},
 
-        {VK_INSERT,        WXK_INSERT},
-        {VK_INSERT,        WXK_NUMPAD_INSERT},
+        {KEY_INSERT,       WXK_INSERT},
+        {KEY_INSERT,       WXK_NUMPAD_INSERT},
 
-        {VK_DELETE,        WXK_DELETE},
-        {VK_DELETE,        WXK_NUMPAD_DELETE},
-#endif
+        {KEY_DELETE,       WXK_DELETE},
+        {KEY_DELETE,       WXK_NUMPAD_DELETE},
     };
 
     // check the table first
@@ -633,7 +745,7 @@ WxKeyCodeToVirtualKeyCode(
     {
         if (specialKeys[i].WxKeyCode == WxKeyCode)
         {
-            return specialKeys[i].WindowVirtualKeyCode;
+            return specialKeys[i].LogoKeyCode;
         }
     }
 
@@ -682,9 +794,11 @@ void CScreen::OnKeyDown(wxKeyEvent& Event)
         }
     }
 
-    // if keyboard was on and up and down is enabled then continue
     if (KeyboardCapture == KEYBOARDCAPTURE_KeyDownKeyUp)
     {
+        // KEYBOARDON for up and down events is enabled, so we send the
+        // keystroke to the Logo program, instead of to the window.
+
         // Map WX keycodes to Windows key codes
         int windowsKeyCode = WxKeyCodeToVirtualKeyCode(keyCode);
 
