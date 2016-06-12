@@ -607,11 +607,25 @@ static const unsigned char KEY_MEDIA_PLAY_PAUSE  = 179;
 static const unsigned char KEY_LAUNCH_MAIL       = 180;
 static const unsigned char KEY_LAUNCH_APP1       = 181;
 static const unsigned char KEY_LAUNCH_APP2       = 182;
+static const unsigned char KEY_PLUS              = 187;
+static const unsigned char KEY_COMMA             = 188;
+static const unsigned char KEY_MINUS             = 189;
+static const unsigned char KEY_PERIOD            = 190;
+
+static const unsigned char KEY_US_SEMICOLON      = 186;
+static const unsigned char KEY_US_SLASH          = 191;
+static const unsigned char KEY_US_BACKTICK       = 192;
+static const unsigned char KEY_US_OPEN_BRACKET   = 219;
+static const unsigned char KEY_US_BACKSLASH      = 220;
+static const unsigned char KEY_US_CLOSE_BRACKET  = 221;
+static const unsigned char KEY_US_QUOTE          = 222;
+static const unsigned char KEY_US_EQUALS         = KEY_PLUS;
+
 
 // This function converts wxWidgets virtual key codes to Windows Virtual
 // Key Code, which is what FMSLogo programs expect to be given.
 // The code is based on WXToVK() in wxWidgets/src/msw/window.cpp,
-// but unlike wxKeyEvent.GetRawKeyCode(), it returns the windows key code
+// but unlike wxKeyEvent::GetRawKeyCode(), it returns the windows key code
 // on non-Windows platforms.
 static
 int
@@ -738,6 +752,33 @@ WxKeyCodeToVirtualKeyCode(
 
         {KEY_DELETE,       WXK_DELETE},
         {KEY_DELETE,       WXK_NUMPAD_DELETE},
+
+        {KEY_ENTER,        WXK_NUMPAD_ENTER},
+
+
+        // Many WXK_ codes use ASCII instead of a symbolic value,
+        // some of which are different from the corresponding
+        // virtual key code.
+        {KEY_PLUS,               static_cast<wxKeyCode>('+')},
+        {KEY_COMMA,              static_cast<wxKeyCode>(',')},
+        {KEY_MINUS,              static_cast<wxKeyCode>('-')},
+        {KEY_PERIOD,             static_cast<wxKeyCode>('.')},
+
+        // Furthermoe, some of the ASCII values clash with the
+        // virtual key codes, creating ambiguitity.  From example,
+        // the ASCII value of "'" is 39, but this is KEY_LEFT_ARROW.
+        // Another problem is that [;:] on a US keyboard has the code
+        // VK_OEM_1 (186) but the ASCII value of ";" is 59.
+        // We can create a mapping for these characters, but they
+        // probably only work on US keyboard layouts.
+        {KEY_US_SEMICOLON,       static_cast<wxKeyCode>(';')},
+        {KEY_US_SLASH,           static_cast<wxKeyCode>('/')},
+        {KEY_US_BACKTICK,        static_cast<wxKeyCode>('`')},
+        {KEY_US_OPEN_BRACKET,    static_cast<wxKeyCode>('[')},
+        {KEY_US_BACKSLASH,       static_cast<wxKeyCode>('\\')},
+        {KEY_US_CLOSE_BRACKET,   static_cast<wxKeyCode>(']')},
+        {KEY_US_QUOTE,           static_cast<wxKeyCode>('\'')},
+        {KEY_PLUS,               static_cast<wxKeyCode>('=')},
     };
 
     // check the table first
@@ -799,8 +840,19 @@ void CScreen::OnKeyDown(wxKeyEvent& Event)
         // KEYBOARDON for up and down events is enabled, so we send the
         // keystroke to the Logo program, instead of to the window.
 
-        // Map WX keycodes to Windows key codes
+        // Map the WX keycode to the virtual key code that Logo programs expect.
+#ifdef __WXMSW__
+        // On Windows use the raw key code with is what MSWLogo used and
+        // so is guaranteed to be correct.
+        int windowsKeyCode = static_cast<int>(Event.GetRawKeyCode());
+
+        // Confirm that our logic for converting the key to a virtual key code
+        // matches the guaranteed-to-be-correct virtual key code.
+        assert(windowsKeyCode == WxKeyCodeToVirtualKeyCode(keyCode));
+#else // !__WXMSW__
+        // Translate the wxWidgets key code to a virtual key code.
         int windowsKeyCode = WxKeyCodeToVirtualKeyCode(keyCode);
+#endif
 
         // Post the event to the logo event queue
         callthing *callevent = callthing::CreateKeyboardEvent(
@@ -867,7 +919,7 @@ IsLogoCharCode(
 {
     // MSWLogo did not consider all keys to be "KeyDown" keycodes.
     // For example, the function keys and the shift key did not
-    // generate a KeyDown event.  For compatibility, only want to
+    // generate a KeyDown event.  For compatibility, we only
     // forward a keyboard event when MSWLogo would have.
 
     // Look for "bad" codes, rather than the "good" key codes 

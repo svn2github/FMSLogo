@@ -31,10 +31,13 @@ II. New features/bugs fixed:
   o Fix bug #471; the uninstaller now removes the preferences that are stored
     in the registry.
   o Fix bug #472; SETPIXEL now behaves correctly in PENREVERSE mode.
+  o Fix bug #473; KEYBOARDVALUE once again returns values for a handful of
+    characters on a US keyboard (;/`[]\=) that are consistent with previous
+    versions of FMSLogo.
   o Implement feature #37; the installer now shows a clear "completed" page
     when it is done.
   o Implement feature #59; use a new icon that doesn't look like a mismash of
-    red, white, and black.   The icon was provided by Jan Grabe.
+    red, white, and black.  The icon was provided by Jan Grabe.
   o Change the working directory in the screensaver to be the directory which
     holds the screen saver program.  This makes LOAD with a relative path work.
   o Add syntax coloring and matching paren highlights to the minieditor.
