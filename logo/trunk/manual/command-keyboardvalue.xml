@@ -56,6 +56,7 @@ The KEYBOARDVALUE assignments shown in the table below should be portable across
      <row> <entry>Enter</entry>       <entry>13</entry>  </row>
      <row> <entry>Shift</entry>       <entry>16</entry>  </row>
      <row> <entry>Ctrl</entry>        <entry>17</entry>  </row>
+     <row> <entry>Alt</entry>         <entry>18</entry>  </row>
      <row> <entry>Pause</entry>       <entry>19</entry>  </row>
      <row> <entry>Caps Lock</entry>   <entry>20</entry>  </row>
      <row> <entry>Esc</entry>         <entry>27</entry>  </row>
