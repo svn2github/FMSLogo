@@ -42,22 +42,15 @@ CAboutMultipleSclerosis::CAboutMultipleSclerosis(wxWindow * Parent)
         wxID_CANCEL,
         WXSTRING(LOCALIZED_ABOUTMS_OK));
 
-#ifdef __WXGTK__
-    const int style = wxALIGN_CENTER | wxALL; // work around an alignment bug in wx 2.8
-#else
-    const int style = wxALL | wxEXPAND;
-#endif
-
     wxBoxSizer *sizerTop = new wxBoxSizer(wxVERTICAL);
-    sizerTop->Add(text1,    0, style, 5);
-    sizerTop->Add(text2,    0, style, 5);
+    sizerTop->Add(text1,    0, wxALL | wxEXPAND, 5);
+    sizerTop->Add(text2,    0, wxALL | wxEXPAND, 5);
     sizerTop->Add(okButton, 0, wxALIGN_CENTER | wxALL, 5);
 
     SetSizer(sizerTop);
 
     sizerTop->SetSizeHints(this);
     sizerTop->Fit(this);
-
 
     // make the "Ok" button the default
     okButton->SetFocus();
