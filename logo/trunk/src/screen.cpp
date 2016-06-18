@@ -703,7 +703,7 @@ WxKeyCodeToVirtualKeyCode(
         {KEY_LEFT_WINDOWS,       WXK_WINDOWS_LEFT},
         {KEY_RIGHT_WINDOWS,      WXK_WINDOWS_RIGHT},
         {KEY_APPLICATIONS,       WXK_WINDOWS_MENU},
-
+#if wxCHECK_VERSION(3, 1, 0)
         {KEY_BROWSER_BACK,        WXK_BROWSER_BACK},
         {KEY_BROWSER_FORWARD,     WXK_BROWSER_FORWARD},
         {KEY_BROWSER_REFRESH,     WXK_BROWSER_REFRESH},
@@ -721,7 +721,7 @@ WxKeyCodeToVirtualKeyCode(
         {KEY_LAUNCH_MAIL,         WXK_LAUNCH_MAIL},
         {KEY_LAUNCH_APP1,         WXK_LAUNCH_APP1},
         {KEY_LAUNCH_APP2,         WXK_LAUNCH_APP2},
-
+#endif
         // Add some keys codes that are not 1:1
         {KEY_PAGE_UP,      WXK_PAGEUP},
         {KEY_PAGE_UP,      WXK_NUMPAD_PAGEUP},
