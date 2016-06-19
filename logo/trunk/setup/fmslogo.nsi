@@ -39,8 +39,10 @@ OutFile "${FMSLOGO_OUTPUT_FILE}"
 
 ; Modern UI Options
 !define MUI_HEADERIMAGE
-!define MUI_HEADERIMAGE_BITMAP "fmslogo-header-icon.bmp"
-!define MUI_ICON               "../src/fmslogo.ico"
+!define MUI_HEADERIMAGE_BITMAP   "fmslogo-header-icon.bmp"
+!define MUI_HEADERIMAGE_UNBITMAP "fmslogo-header-uninstall-icon.bmp"
+!define MUI_ICON                 "..\src\fmslogo.ico"
+!define MUI_UNICON               "${NSISDIR}\Contrib\Graphics\Icons\win-uninstall.ico"
 !define MUI_CUSTOMFUNCTION_GUIINIT   PreInstallSteps
 !define MUI_CUSTOMFUNCTION_UNGUIINIT un.PreInstallSteps
 
