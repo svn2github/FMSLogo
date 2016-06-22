@@ -108,7 +108,7 @@ var previousinstalldir ; full path to the uninstaller
 ; The description of the main installation component
 LangString FMSLogoDescription ${LANG_ENGLISH}    "Install the FMSLogo programming environment."
 LangString FMSLogoDescription ${LANG_GERMAN}     "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
-LangString FMSLogoDescription ${LANG_SPANISH}    "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
+LangString FMSLogoDescription ${LANG_SPANISH}    "Instale el entorno de programación FMSLogo."
 LangString FMSLogoDescription ${LANG_ITALIAN}    "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
 LangString FMSLogoDescription ${LANG_PORTUGUESE} "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
 LangString FMSLogoDescription ${LANG_FRENCH}     "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
@@ -119,7 +119,7 @@ LangString FMSLogoDescription ${LANG_CROATIAN}   "Install the FMSLogo programmin
 ; The label for the "desktop shortcut" checkbox.
 LangString DesktopShortcut ${LANG_ENGLISH}    "Desktop Shortcut"
 LangString DesktopShortcut ${LANG_GERMAN}     "Desktop Shortcut" ; NOT_YET_LOCALIZED
-LangString DesktopShortcut ${LANG_SPANISH}    "Desktop Shortcut" ; NOT_YET_LOCALIZED
+LangString DesktopShortcut ${LANG_SPANISH}    "Acceso directo del escritorio"
 LangString DesktopShortcut ${LANG_ITALIAN}    "Collegamento sul Desktop"
 LangString DesktopShortcut ${LANG_PORTUGUESE} "Atalho no Desktop"
 LangString DesktopShortcut ${LANG_FRENCH}     "Raccourci Bureau" 
@@ -130,7 +130,7 @@ LangString DesktopShortcut ${LANG_CROATIAN}   "Preèac na Radnu površinu"
 ; The description of the desktop shortcut to FMSLogo
 LangString DesktopShortcutDescription ${LANG_ENGLISH}    "Put a shortcut to FMSLogo on the desktop."
 LangString DesktopShortcutDescription ${LANG_GERMAN}     "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
-LangString DesktopShortcutDescription ${LANG_SPANISH}    "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
+LangString DesktopShortcutDescription ${LANG_SPANISH}    "Ponga un acceso directo a FMSLogo sobre el escritorio."
 LangString DesktopShortcutDescription ${LANG_ITALIAN}    "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
 LangString DesktopShortcutDescription ${LANG_PORTUGUESE} "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
 LangString DesktopShortcutDescription ${LANG_FRENCH}     "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
@@ -152,7 +152,7 @@ LangString ScreenSaver ${LANG_CROATIAN}   "Screen Saver" ; NOT_YET_LOCALIZED
 ; The description of the screensaver component.
 LangString ScreenSaverDescription ${LANG_ENGLISH}    "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this."
 LangString ScreenSaverDescription ${LANG_GERMAN}     "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
-LangString ScreenSaverDescription ${LANG_SPANISH}    "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
+LangString ScreenSaverDescription ${LANG_SPANISH}    "Instale un salvapantallas que puede ejecutar programas de FMSLogo.$\n$\nDebe ser un administrador para hacerlo."
 LangString ScreenSaverDescription ${LANG_ITALIAN}    "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
 LangString ScreenSaverDescription ${LANG_PORTUGUESE} "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
 LangString ScreenSaverDescription ${LANG_FRENCH}     "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
@@ -163,7 +163,7 @@ LangString ScreenSaverDescription ${LANG_CROATIAN}   "Install a screensaver that
 ; An error message to show when attempting to install FMSLogo when it is already running.
 LangString AlreadyRunningCannotInstallMessage ${LANG_ENGLISH}     "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
 LangString AlreadyRunningCannotInstallMessage ${LANG_GERMAN}      "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED     
-LangString AlreadyRunningCannotInstallMessage ${LANG_SPANISH}     "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED    
+LangString AlreadyRunningCannotInstallMessage ${LANG_SPANISH}     "O el instalador o FMSLogo ya está ejecutandose.$\nEsta instalación no puede continuar."
 LangString AlreadyRunningCannotInstallMessage ${LANG_ITALIAN}     "L'installatore o FMSLogo sono già in esecuzione.$\nL'installazione non può continuare."
 LangString AlreadyRunningCannotInstallMessage ${LANG_PORTUGUESE}  "O instalador ou o FMSLogo está rodando.$\nEssa instalação não poderá prosseguir."
 LangString AlreadyRunningCannotInstallMessage ${LANG_FRENCH}      "L'installateur ou bien FMSLogo est en cours d'exécution.$\nL'installation ne peut continuer." 
@@ -175,7 +175,7 @@ LangString AlreadyRunningCannotInstallMessage ${LANG_CROATIAN}    "Trenutno je p
 ; This tells the user that the old installation will be uninstalled.
 LangString MustUninstallBeforeInstallingMessage ${LANG_ENGLISH}     "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting $\"No$\" will abort the installation)"
 LangString MustUninstallBeforeInstallingMessage ${LANG_GERMAN}      "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" ; NOT_YET_LOCALIZED
-LangString MustUninstallBeforeInstallingMessage ${LANG_SPANISH}     "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)"
+LangString MustUninstallBeforeInstallingMessage ${LANG_SPANISH}     "La copia existente de FMSLogo debe ser desinstalado antes de continuar.$\n¿Quiere desinstalarlo?$\n$\n(Si selecciona No, se abortará la instalación)"
 LangString MustUninstallBeforeInstallingMessage ${LANG_ITALIAN}     "La versione attualmente installata di FMSLogo deve essere disinstallata prima di procedere.$\nVuoi procedere con la disinstallazione?$\n$\n(Selezionando No verrà interrotta l'installazione)"
 LangString MustUninstallBeforeInstallingMessage ${LANG_PORTUGUESE}  "Já existe uma cópia do FMSLogo e precisa ser desinstalada para prosseguir.$\nDeseja desinstalá-la?$\n$\n(Escolher Não cessará a instalação)"
 LangString MustUninstallBeforeInstallingMessage ${LANG_FRENCH}      "La version existante de FMSLogo doit être désinstallée pour continuer.$\nVoulez-vous la désinstaller?$\n$\n(Choisir Non terminera l'installation)"
@@ -186,7 +186,7 @@ LangString MustUninstallBeforeInstallingMessage ${LANG_CROATIAN}    "Postojeæa s
 ; An error message to show when attempting to *uninstall* FMSLogo when it is running.
 LangString AlreadyRunningCannotUninstallMessage ${LANG_ENGLISH}     "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue."
 LangString AlreadyRunningCannotUninstallMessage ${LANG_GERMAN}      "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
-LangString AlreadyRunningCannotUninstallMessage ${LANG_SPANISH}     "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
+LangString AlreadyRunningCannotUninstallMessage ${LANG_SPANISH}     "O el instalador o FMSLogo ya está ejecutandose.$\nEsta desinstalación no puede continuar."
 LangString AlreadyRunningCannotUninstallMessage ${LANG_ITALIAN}     "L'installatore o FMSLogo sono già in esecuzione.$\nL'installazione non può continuare."
 LangString AlreadyRunningCannotUninstallMessage ${LANG_PORTUGUESE}  "O instalador ou o FMSLogo está rodando.$\n$\nEssa desinstalação não poderá prosseguir." ; NOT_YET_LOCALIZED
 LangString AlreadyRunningCannotUninstallMessage ${LANG_FRENCH}      "L'installateur ou bien FMSLogo est encours d'exécution.$\nLa désinstallation ne peut continuer."
@@ -197,7 +197,7 @@ LangString AlreadyRunningCannotUninstallMessage ${LANG_CROATIAN}    "Trenutno je
 ; An error message to show when the uninstaller cannot find the installation.
 LangString CannotFindInstallationMessage ${LANG_ENGLISH}     "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue."
 LangString CannotFindInstallationMessage ${LANG_GERMAN}      "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
-LangString CannotFindInstallationMessage ${LANG_SPANISH}     "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
+LangString CannotFindInstallationMessage ${LANG_SPANISH}     "O FMSLogo ya ha sido borrado o no tiene permiso para desinstalarlo.$\nDe cualquier manera, esta desinstalación no puede continuar."
 LangString CannotFindInstallationMessage ${LANG_ITALIAN}     "L'installatore o FMSLogo sono già in esecuzione.$\nL'installazione non può continuare."
 LangString CannotFindInstallationMessage ${LANG_PORTUGUESE}  "Ou o FMSLogo já foi deletado ou você não possui permissão para desinstalá-lo.$\nEm ambos os casos, essa desinstalação não poderá continuar." 
 LangString CannotFindInstallationMessage ${LANG_FRENCH}      "FMSLogo a déjà été supprimé ou vous n'avez pas la permission de le désinstaller.$\nLa désinstallation ne peut continuer." 
