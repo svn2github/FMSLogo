@@ -69,7 +69,7 @@ struct Turtle
     bool     IsPenUp;
     bool     IsSpecial;
 
-    bool     IsSprite;
+    bool     IsSprite; // true if the bitmap rotates with the turtle, false otherwise.
 
     bool     HasOwnPenState;
     PENSTATE PenState;
