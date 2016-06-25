@@ -626,7 +626,7 @@
 #define LOCALIZED_FILE                  "&Archivo"
 #define LOCALIZED_FILE_NEW              "&Nuevo\t(borra el trabajo actual)"
 #define LOCALIZED_FILE_LOAD             "&Cargar...\t(une al trabajo actual)"
-#define LOCALIZED_FILE_OPEN             "A&brir...\t(remplaza el trabajo actual)"
+#define LOCALIZED_FILE_OPEN             "A&brir...\t(reemplaza el trabajo actual)"
 #define LOCALIZED_FILE_SAVE             "&Guardar"
 #define LOCALIZED_FILE_SAVEAS           "G&uardar como..."
 #define LOCALIZED_FILE_SETASSCREENSAVER "Establecer como &Protector de Pantalla"
@@ -738,7 +738,7 @@
 
 #define LOCALIZED_EDITOR_SEARCH                  "&Buscar"
 #define LOCALIZED_EDITOR_SEARCH_FIND             "&Encontrar...\tCtrl+F"
-#define LOCALIZED_EDITOR_SEARCH_REPLACE          "&Remplazar...\tCtrl+H"
+#define LOCALIZED_EDITOR_SEARCH_REPLACE          "&Reemplazar...\tCtrl+H"
 #define LOCALIZED_EDITOR_SEARCH_NEXT             "&Siguiente\tF3"
 
 #define LOCALIZED_EDITOR_SET                     "&Configurar"
@@ -1257,7 +1257,7 @@
 
 // The title of the Editor's Find/Replace dialog box
 #define LOCALIZED_EDITOR_TITLE_FIND     "Encontrar"
-#define LOCALIZED_EDITOR_TITLE_REPLACE  "Remplazar"
+#define LOCALIZED_EDITOR_TITLE_REPLACE  "Reemplazar"
 
 //
 // The text that's displayed when the Editor's Search->Find fails.
