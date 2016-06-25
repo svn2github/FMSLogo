@@ -744,7 +744,6 @@
 #define LOCALIZED_EDITOR_SET                     "&Option" 
 #define LOCALIZED_EDITOR_SET_FONT                "&Schrift..." 
 
-#define LOCALIZED_EDITOR_TEST_BUTTON             "Test"
 #define LOCALIZED_EDITOR_TEST                    "Test" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "&Run Selection\tCtrl+R" // NOT_YET_LOCALIZED
 

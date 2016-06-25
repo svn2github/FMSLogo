@@ -744,7 +744,6 @@
 #define LOCALIZED_EDITOR_SET                     "Se&t" 
 #define LOCALIZED_EDITOR_SET_FONT                "&Font..." 
 
-#define LOCALIZED_EDITOR_TEST_BUTTON             "Test!"
 #define LOCALIZED_EDITOR_TEST                    "Test"
 #define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "&Run Selection\tCtrl+R"
 
