@@ -161,7 +161,7 @@ END
 
 TO BITMAPTURTLETEST.ONEPIXEL
    ; Creates a bitmapped turtle that is a 1x1 image.
-   ; This should remain look like a single dot, be
+   ; This should look like a single dot, be
    ; visible at all rotations, and always be at the
    ; end of the drawing line.
 
