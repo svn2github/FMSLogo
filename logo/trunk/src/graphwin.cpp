@@ -152,8 +152,8 @@ static wxHelpController * g_HelpController;
 static wxWindow         * g_HelpParent;
 
 static CUTMAP * g_SelectedBitmap;
-static CUTMAP * g_Bitmaps;
-static int      g_BitmapsLimit;
+static CUTMAP * g_Bitmaps;               // an array of bitmaps
+static int      g_BitmapsLimit;          // number of bitmaps in g_Bitmaps array
 
 static PENSTATE g_PenState;              // The state of the current pen (color, mode, etc.)
 
@@ -246,11 +246,6 @@ public:
                 g_Turtles[i].BitmapRasterMode == MERGEPAINT  ||
                 g_Turtles[i].BitmapRasterMode == DSTINVERT);
 
-            if (g_Turtles[i].BitmapRasterMode != 0)
-            {
-                // make sure that the bitmap exists.
-                assert(i < g_BitmapsLimit);
-            }
             if (g_Turtles[i].IsSprite)
             {
                 // Even though the raster mode is not used,
@@ -2561,6 +2556,13 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
     ASSERT_TURTLE_INVARIANT;
     assert(0 <= TurtleToPaste);
     assert(TurtleToPaste <= g_MaxTurtle);
+
+    if (g_BitmapsLimit <= TurtleToPaste)
+    {
+        // There is no bitmap which corresponds to this turtle.
+        // We do nothing, equivalent to if the bitmap size is 0x0.
+        return;
+    }
 
     Turtle * const turtle = &g_Turtles[TurtleToPaste];
     CUTMAP * const bitmap = &g_Bitmaps[TurtleToPaste];
