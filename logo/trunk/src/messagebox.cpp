@@ -19,13 +19,12 @@
  */
 #include "pch.h"
 #ifndef USE_PRECOMPILED_HEADER
-   #ifndef WX_PURE
-      #include <windows.h>
-   #endif
+   #include <wx/msgdlg.h>
 
    #include "messagebox.h"
    #include "screenwindow.h"
    #include "error.h"
+   #include "stringadapter.h"
    #include "debugheap.h"
 
    #include "localizedstrings.h"
@@ -37,9 +36,11 @@ ShowMessage(
     const char * Message
     )
 {
-#ifndef WX_PURE
-    ::MessageBox(GetCommanderWindow(), Message, Title, MB_OK);
-#endif
+    wxMessageBox(
+        WXSTRING(Message),
+        WXSTRING(Title),
+        wxOK | wxCENTER,
+        GetParentWindowForDialog());
 }
 
 void
