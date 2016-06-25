@@ -1197,64 +1197,6 @@
 // This happens when a macro outputs nothing (instead of a list)
 #define LOCALIZED_UNBOUND       "pseudo.nothing"
 
-//
-// Strings that explain the purpose of each menu option.
-// I don't think that any of these strings can be seen by the user, 
-// so you probably don't have to translate these.
-//
-#define LOCALIZED_STRINGTABLE_FILESAVEAS "pseudo.Saves the contents of the workspace to a new file"
-#define LOCALIZED_STRINGTABLE_FILEOPEN "pseudo.Erases the current workspace and loads a Logo program as the new workspace"
-#define LOCALIZED_STRINGTABLE_FILELOAD "pseudo.Locates and loads a Logo program into the current workspace"
-#define LOCALIZED_STRINGTABLE_FILENEW "pseudo.Erases the contents of the workspace"
-#define LOCALIZED_STRINGTABLE_FILESAVE "pseudo.Saves the contents of the workspace"
-#define LOCALIZED_STRINGTABLE_FILEEDIT "pseudo.Selects a procedure to edit"
-#define LOCALIZED_STRINGTABLE_FILEERASE "pseudo.Selects a procedure to erase"
-#define LOCALIZED_STRINGTABLE_SETASSCREENSAVER "pseudo.Saves the contents of the workspace as the screen saver"
-#define LOCALIZED_STRINGTABLE_EXIT "pseudo.Exits Logo"
-#define LOCALIZED_STRINGTABLE_BITMAPNEW "pseudo.Clears the screen"
-#define LOCALIZED_STRINGTABLE_BITMAPOPEN "pseudo.Loads a new screen from a Windows bitmap file"
-#define LOCALIZED_STRINGTABLE_BITMAPSAVE "pseudo.Saves the contents of the screen to a bitmap"
-#define LOCALIZED_STRINGTABLE_BITMAPSAVEAS "pseudo.Saves the contents of the screen to a different file"
-#define LOCALIZED_STRINGTABLE_BITMAPPRINT "pseudo.Prints the contents of the screen"
-#define LOCALIZED_STRINGTABLE_BITMAPPRINTERSETUP "pseudo.Configures your printer"
-#define LOCALIZED_STRINGTABLE_BITMAPPRINTERAREA "pseudo.Sets the area of the screen that will be printed or saved to a bitmap"
-#define LOCALIZED_STRINGTABLE_SETPENSIZE "pseudo.Sets the thickness of the turtle's pen"
-#define LOCALIZED_STRINGTABLE_SETFONT "pseudo.Sets the font that is used by the LABEL command"
-#define LOCALIZED_STRINGTABLE_SETCOMMANDERFONT "pseudo.Sets the font used in the commander window"
-#define LOCALIZED_STRINGTABLE_SETPENCOLOR "pseudo.Sets the color of the turtle's pen"
-#define LOCALIZED_STRINGTABLE_SETFLOODCOLOR "pseudo.Sets the color used by the FILL command"
-#define LOCALIZED_STRINGTABLE_SETSCREENCOLOR "pseudo.Clears the screen and sets it to a new color"
-#define LOCALIZED_STRINGTABLE_ZOOMIN "pseudo.Zooms in on the screen"
-#define LOCALIZED_STRINGTABLE_ZOOMOUT "pseudo.Zooms out on the screen"
-#define LOCALIZED_STRINGTABLE_ZOOMNORMAL "pseudo.Restores the screen to its original size"
-#define LOCALIZED_STRINGTABLE_HELP "pseudo.Opens an index of help topics"
-#define LOCALIZED_STRINGTABLE_HELPMCI "pseudo.Opens an index of help topics for the Media Control Interface"
-#define LOCALIZED_STRINGTABLE_HELPHELP "pseudo.Opens help on using help"
-#define LOCALIZED_STRINGTABLE_HELPTUTORIAL "pseudo.Opens a short tutorial on using "LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_STRINGTABLE_HELPDEMO "pseudo.Shows a demonstration of some things you can do in "LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_STRINGTABLE_HELPEXAMPLES "pseudo.Displays an index of the sample programs"
-#define LOCALIZED_STRINGTABLE_HELPRELEASENOTES "pseudo.Displays the release notes for this version of "LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_STRINGTABLE_HELPABOUT "pseudo.Displays version and copyright information"
-#define LOCALIZED_STRINGTABLE_HELPABOUTMS "pseudo.Displays a message about Multiple Sclerosis"
-#define LOCALIZED_STRINGTABLE_EDITDELETE "pseudo.Deletes the current selection (and does not copy to the clipboard)"
-#define LOCALIZED_STRINGTABLE_EDITCLEAR "pseudo.Deletes all text"
-#define LOCALIZED_STRINGTABLE_EDITUNDO "pseudo.Undoes the previous action"
-#define LOCALIZED_STRINGTABLE_EDITCUT "pseudo.Removes the selected text and puts it on the clipboard"
-#define LOCALIZED_STRINGTABLE_EDITCOPY "pseudo.Copies the selected text to the clipboard"
-#define LOCALIZED_STRINGTABLE_EDITPASTE "pseudo.Inserts the text from the clipboard at the current position"
-#define LOCALIZED_STRINGTABLE_EDITSELECTALL "pseudo.Selects all text"
-#define LOCALIZED_STRINGTABLE_EDITFIND "pseudo.Searches for text"
-#define LOCALIZED_STRINGTABLE_EDITREPLACE "pseudo.Searches for text and replaces it with other text"
-#define LOCALIZED_STRINGTABLE_EDITFINDNEXT "pseudo.Repeats the previous Find or Replace command"
-#define LOCALIZED_STRINGTABLE_EDITSETFONT "pseudo.Sets the font for the editor window"
-#define LOCALIZED_STRINGTABLE_TEST "pseudo.Runs the selected Logo instructions"
-#define LOCALIZED_STRINGTABLE_HELPEDIT "pseudo.Displays help on using the editor"
-#define LOCALIZED_STRINGTABLE_HELPEDIT_TOPIC "pseudo.Displays help for Logo"
-#define LOCALIZED_STRINGTABLE_FILESAVEANDEXIT "pseudo.Saves and exits the current workspace"
-#define LOCALIZED_STRINGTABLE_FILESAVETOWORKSPACE "pseudo.Saves the current workspace"
-#define LOCALIZED_STRINGTABLE_FILEPRINT "pseudo.Prints the current workspace"
-#define LOCALIZED_STRINGTABLE_EDALLEXIT "pseudo.Closes the workspace"
-
 // The title of the Editor's Find/Replace dialog box
 #define LOCALIZED_EDITOR_TITLE_FIND     "pseudo.Find"
 #define LOCALIZED_EDITOR_TITLE_REPLACE  "pseudo.Replace" 

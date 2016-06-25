@@ -1197,64 +1197,6 @@
 // This happens when a macro outputs nothing (instead of a list)
 #define LOCALIZED_UNBOUND       "Ungebunden"
 
-//
-// Strings that explain the purpose of each menu option.
-// I don't think that any of these strings can be seen by the user, 
-// so you probably don't have to translate these.
-//
-#define LOCALIZED_STRINGTABLE_FILESAVEAS "Saves the contents of the workspace to a new file"
-#define LOCALIZED_STRINGTABLE_FILEOPEN "Erases the current workspace and loads a Logo program as the new workspace"
-#define LOCALIZED_STRINGTABLE_FILELOAD "Locates and loads a Logo program into the current workspace"
-#define LOCALIZED_STRINGTABLE_FILENEW "Erases the contents of the workspace"
-#define LOCALIZED_STRINGTABLE_FILESAVE "Saves the contents of the workspace"
-#define LOCALIZED_STRINGTABLE_FILEEDIT "Selects a procedure to edit"
-#define LOCALIZED_STRINGTABLE_FILEERASE "Selects a procedure to erase"
-#define LOCALIZED_STRINGTABLE_SETASSCREENSAVER "Saves the contents of the workspace as the screen saver" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EXIT "Exits Logo"
-#define LOCALIZED_STRINGTABLE_BITMAPNEW "Clears the screen"
-#define LOCALIZED_STRINGTABLE_BITMAPOPEN "Loads a new screen from a Windows bitmap file"
-#define LOCALIZED_STRINGTABLE_BITMAPSAVE "Saves the contents of the screen to a bitmap"
-#define LOCALIZED_STRINGTABLE_BITMAPSAVEAS "Saves the contents of the screen to a different file"
-#define LOCALIZED_STRINGTABLE_BITMAPPRINT "Prints the contents of the screen"
-#define LOCALIZED_STRINGTABLE_BITMAPPRINTERSETUP "Configures your printer"
-#define LOCALIZED_STRINGTABLE_BITMAPPRINTERAREA "Sets the area of the screen that will be printed or saved to a bitmap"
-#define LOCALIZED_STRINGTABLE_SETPENSIZE "Sets the thickness of the turtle's pen"
-#define LOCALIZED_STRINGTABLE_SETFONT "Sets the font that is used by the LABEL command"
-#define LOCALIZED_STRINGTABLE_SETCOMMANDERFONT "Sets the font used in the commander window"
-#define LOCALIZED_STRINGTABLE_SETPENCOLOR "Sets the color of the turtle's pen"
-#define LOCALIZED_STRINGTABLE_SETFLOODCOLOR "Sets the color used by the FILL command"
-#define LOCALIZED_STRINGTABLE_SETSCREENCOLOR "Clears the screen and sets it to a new color"
-#define LOCALIZED_STRINGTABLE_ZOOMIN "Zooms in on the screen"
-#define LOCALIZED_STRINGTABLE_ZOOMOUT "Zooms out on the screen"
-#define LOCALIZED_STRINGTABLE_ZOOMNORMAL "Restores the screen to its original size"
-#define LOCALIZED_STRINGTABLE_HELP "Opens an index of help topics"
-#define LOCALIZED_STRINGTABLE_HELPMCI "Opens an index of help topics for the Media Control Interface"
-#define LOCALIZED_STRINGTABLE_HELPHELP "Opens help on using help"
-#define LOCALIZED_STRINGTABLE_HELPTUTORIAL "Opens a short tutorial on using "LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_STRINGTABLE_HELPDEMO "Shows a demonstration of some things you can do in "LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_STRINGTABLE_HELPEXAMPLES "Displays an index of the sample programs"
-#define LOCALIZED_STRINGTABLE_HELPRELEASENOTES "Displays the release notes for this version of "LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_STRINGTABLE_HELPABOUT "Displays version and copyright information"
-#define LOCALIZED_STRINGTABLE_HELPABOUTMS "Displays a message about Multiple Sclerosis"
-#define LOCALIZED_STRINGTABLE_EDITDELETE "Deletes the current selection (and does not copy to the clipboard)"
-#define LOCALIZED_STRINGTABLE_EDITCLEAR "Deletes all text"
-#define LOCALIZED_STRINGTABLE_EDITUNDO "Undoes the previous action"
-#define LOCALIZED_STRINGTABLE_EDITCUT "Removes the selected text and puts it on the clipboard"
-#define LOCALIZED_STRINGTABLE_EDITCOPY "Copies the selected text to the clipboard"
-#define LOCALIZED_STRINGTABLE_EDITPASTE "Inserts the text from the clipboard at the current position"
-#define LOCALIZED_STRINGTABLE_EDITSELECTALL "Selects all text"
-#define LOCALIZED_STRINGTABLE_EDITFIND "Searches for text"
-#define LOCALIZED_STRINGTABLE_EDITREPLACE "Searches for text and replaces it with other text"
-#define LOCALIZED_STRINGTABLE_EDITFINDNEXT "Repeats the previous Find or Replace command"
-#define LOCALIZED_STRINGTABLE_EDITSETFONT "Sets the font for the editor window"
-#define LOCALIZED_STRINGTABLE_TEST "Runs the selected Logo instructions"
-#define LOCALIZED_STRINGTABLE_HELPEDIT "Displays help on using the editor"
-#define LOCALIZED_STRINGTABLE_HELPEDIT_TOPIC "Displays help for Logo"
-#define LOCALIZED_STRINGTABLE_FILESAVEANDEXIT "Saves and exits the current workspace"
-#define LOCALIZED_STRINGTABLE_FILESAVETOWORKSPACE "Saves the current workspace"
-#define LOCALIZED_STRINGTABLE_FILEPRINT "Prints the current workspace"
-#define LOCALIZED_STRINGTABLE_EDALLEXIT "Closes the workspace"
-
 // The title of the Editor's Find/Replace dialog box
 #define LOCALIZED_EDITOR_TITLE_FIND     "Finden"
 #define LOCALIZED_EDITOR_TITLE_REPLACE  "Ersetzen"
