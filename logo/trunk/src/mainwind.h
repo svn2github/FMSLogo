@@ -18,15 +18,10 @@
 #ifndef __MAINWIND_H_
 #define __MAINWIND_H_
 
-#ifndef WX_PURE
-#include <windows.h>
-#endif // WX_PURE
-
 #include <stdio.h>
 #include "logocore.h"
 
 // function declarations
-
 ERR_TYPES
 DumpBitmapFile(
     const char * Filename,
@@ -35,18 +30,17 @@ DumpBitmapFile(
 
 ERR_TYPES
 LoadBitmapFile(
-    const char *,
-    unsigned int &,
-    unsigned int &
+    const char   * Filename,
+    unsigned int & dwPixelWidth,
+    unsigned int & dwPixelHeight
     );
 
-#ifndef WX_PURE
 void
-PaintToScreenWindow(
-    HDC          PaintDC,
-    const RECT & PaintRect
+PaintToScreen(
+    class wxDC     & PaintDeviceContext,
+    class wxRegion   UpdateRegion,
+    int              ScrollX,
+    int              ScrollY
     );
-#endif // WX_PURE
 
 #endif // __MAINWIND_H_
-

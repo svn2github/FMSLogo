@@ -140,10 +140,11 @@ void init_graphics()
     FloodBrush.lbStyle = BS_SOLID;
     FloodBrush.lbColor = fcolor;
     FloodBrush.lbHatch = HS_VERTICAL;
+#endif
 
     // Set handy rectangle of full bitmap
-    SetRect(&FullRect, 0, 0, BitMapWidth, BitMapHeight);
-#endif
+    g_FullRect.SetWidth(BitMapWidth);
+    g_FullRect.SetHeight(BitMapHeight);
 
     // turtle coords are in center
     xoffset = BitMapWidth  / 2;

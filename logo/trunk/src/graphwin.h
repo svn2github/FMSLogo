@@ -19,29 +19,17 @@
 #ifndef __GRAPHWIN_H_
 #define __GRAPHWIN_H_
 
+#include <wx/gdicmn.h> // wxRect
+
 #include "logocore.h"
 #include "graphics.h"
 
 #ifdef WX_PURE
-
-typedef struct __HDC * HDC;
-
-#else
+  typedef struct __HDC * HDC;
+#endif
 
 // global variable declarations
-extern RECT FullRect;
-
-extern LOGFONT FontRec;
-
-extern LOGPEN g_LogicalNormalPen;
-extern HPEN   g_NormalPen;
-
-extern LOGPEN g_LogicalErasePen;
-extern HPEN   g_ErasePen;
-
-extern LOGBRUSH FloodBrush;
-
-#endif // WX_PURE
+extern wxRect g_FullRect;
 
 extern int xoffset;
 extern int yoffset;
@@ -53,15 +41,25 @@ extern bool IsTimeToExit;
 extern bool IsTimeToPause;
 extern bool IsTimeToHalt;
 
-#ifndef WX_PURE
-
-extern HBITMAP MemoryBitMap;
-
-#endif // WX_PURE
-
 extern bool zoom_flag;
 
 extern FLONUM the_zoom;
+
+#ifndef WX_PURE
+
+  extern LOGFONT FontRec;
+
+  extern LOGPEN g_LogicalNormalPen;
+  extern HPEN   g_NormalPen;
+
+  extern LOGPEN g_LogicalErasePen;
+  extern HPEN   g_ErasePen;
+
+  extern LOGBRUSH FloodBrush;
+
+  extern HBITMAP MemoryBitMap;
+
+#endif // WX_PURE
 
 // function declarations
 extern ERR_TYPES gifsave_helper(const char *GifFileName, int iDelay_, int bAppendMode_, int iLoop_, int iTrans, int iMaxColorDepth);

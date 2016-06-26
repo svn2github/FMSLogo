@@ -184,13 +184,13 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         // Wrap the native HWND in a wxWindow object so that
         // it can be passed to other parts of the system.
         g_WxScreenWindow = WrapNativeHwnd(hwnd);
+        g_FullRect = g_WxScreenWindow->GetClientRect();
 
         g_ScreenWindow = hwnd;
-        GetClientRect(g_ScreenWindow, &FullRect);
 
         // Size-to-fit
-        BitMapHeight = FullRect.bottom;
-        BitMapWidth  = FullRect.right;
+        BitMapHeight = g_FullRect.GetHeight();
+        BitMapWidth  = g_FullRect.GetWidth();
 
         // Create a device context to write to the screen.
         g_ScreenDeviceContext = GetDC(g_ScreenWindow);
@@ -328,16 +328,17 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         {
             // There is a dirty rectangle that needs to be redrawn.
             PAINTSTRUCT repaintInfo = {0};
-            HDC         deviceContext;
-
             repaintInfo.rcPaint = updateRectangle;
 
-            deviceContext = BeginPaint(hwnd, &repaintInfo);
+            HDC deviceContext = BeginPaint(hwnd, &repaintInfo);
             if (deviceContext)
             {
-                PaintToScreenWindow(
-                    deviceContext,
-                    FullRect);
+                wxDCTemp wxDeviceContext(deviceContext);
+                PaintToScreen(
+                    wxDeviceContext,
+                    wxRegion(g_FullRect),
+                    0,
+                    0);
 
                 EndPaint(hwnd, &repaintInfo);
             }

@@ -542,22 +542,20 @@ LoadBitmapFile(
     return status;
 }
 
-
-void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
+void
+PaintToScreen(
+    wxDC     & PaintDeviceContext,
+    wxRegion   UpdateRegion,
+    int        ScrollX,
+    int        ScrollY
+    )
 {
-    /*
-      This is a compromise between speed and memory (as is most code).
-      All drawing is written to the backing store 1 to 1 even when zoomed.
-      When zoomed all drawing and painting is scaled to the display on the fly.
-      Painting can be a bit slow while zoomed. It also can be inaccurate when
-      mixing scaled painting and scaled drawing. Printing is never zoomed.
-      User can use Bitfit if he/she wants data scaled.
-
-      Must of rewrote this routine 20 times, at least.
-    */
-
-    // grab the client area's backing store (a bitmap)
-    HDC memoryDC = GetMemoryDeviceContext();
+    // This is a compromise between speed and memory (as is most code).
+    // All drawing is written to the backing store 1 to 1 even when zoomed.
+    // When zoomed all drawing and painting is scaled to the display on the fly.
+    // Painting can be a bit slow while zoomed. It also can be inaccurate when
+    // mixing scaled painting and scaled drawing. Printing is never zoomed.
+    // User can use Bitfit if he/she wants data scaled.
 
     // Use a back buffer if we are drawing sprite turtles
     // (turtles with rotating bitmaps).
@@ -571,168 +569,255 @@ void PaintToScreenWindow(HDC PaintDC, const RECT & PaintRect)
         }
     }
 
-    HBRUSH whiteBrush = (HBRUSH) GetStockObject(WHITE_BRUSH);
-
-    RECT sourceRect;
-    if (!zoom_flag)
-    {
-        // fill the part to the right of the screen
-        if (BitMapWidth < PaintRect.right)
-        {
-            RECT toFill;
-            toFill.left   = BitMapWidth;
-            toFill.right  = PaintRect.right;
-            toFill.top    = 0;
-            toFill.bottom = BitMapHeight;
-
-            FillRect(PaintDC, &toFill, whiteBrush);
-        }
-        // fill the part below the screen.
-        if (BitMapHeight < PaintRect.bottom)
-        {
-            RECT toFill;
-            toFill.left   = PaintRect.left;
-            toFill.right  = PaintRect.right;
-            toFill.top    = BitMapHeight;
-            toFill.bottom = PaintRect.bottom;
-
-            FillRect(PaintDC, &toFill, whiteBrush);
-        }
-
-        sourceRect = PaintRect;
-    }
-    else
-    {
-        FLONUM sourceRectLeft   = PaintRect.left;
-        FLONUM sourceRectTop    = PaintRect.top;
-        FLONUM sourceRectRight  = PaintRect.right;
-        FLONUM sourceRectBottom = PaintRect.bottom;
-
-        // Expand the source rectangle a little bit based zoom factor 
-        // (rounding to the nearest integer, as necessary)
-        const FLONUM inflateIncrement = (the_zoom+0.5)*2.0;
-        sourceRectLeft   -= inflateIncrement;
-        sourceRectTop    -= inflateIncrement;
-        sourceRectRight  += inflateIncrement;
-        sourceRectBottom += inflateIncrement;
-
-        FLONUM scaledSourceRectLeft   = sourceRectLeft   / the_zoom;
-        FLONUM scaledSourceRectTop    = sourceRectTop    / the_zoom;
-        FLONUM scaledSourceRectRight  = sourceRectRight  / the_zoom;
-        FLONUM scaledSourceRectBottom = sourceRectBottom / the_zoom;
-
-        // fill the part to the right of the screen.
-        if (BitMapWidth < scaledSourceRectRight)
-        {
-            RECT toFill;
-            toFill.left   = BitMapWidth * the_zoom;
-            toFill.right  = sourceRectRight;
-            toFill.top    = 0;
-            toFill.bottom = BitMapHeight * the_zoom;
-
-            FillRect(PaintDC, &toFill, whiteBrush);
-        }
-        // fill the part below the screen.
-        if (BitMapHeight < scaledSourceRectBottom)
-        {
-            RECT toFill;
-            toFill.left   = sourceRectLeft;
-            toFill.right  = sourceRectRight;
-            toFill.top    = BitMapHeight * the_zoom;
-            toFill.bottom = sourceRectBottom;
-
-            FillRect(PaintDC, &toFill, whiteBrush);
-        }
-
-        // Make sure that none of rectangle's borders are off-screen
-        // after we inflated it.
-        sourceRect.left   = (int) (std::min(std::max(scaledSourceRectLeft,   0.0), (double)BitMapWidth));
-        sourceRect.top    = (int) (std::min(std::max(scaledSourceRectTop,    0.0), (double)BitMapHeight));
-        sourceRect.right  = (int) (std::min(std::max(scaledSourceRectRight,  0.0), (double)BitMapWidth));
-        sourceRect.bottom = (int) (std::min(std::max(scaledSourceRectBottom, 0.0), (double)BitMapHeight));
-    }
-
-    HDC sourceDeviceContext;
+    wxDC * sourceDeviceContext;
     if (useBackBuffer)
     {
-        wxDC * wxSourceDeviceContext = GetBackBufferDeviceContext();
-        sourceDeviceContext = static_cast<HDC>(wxSourceDeviceContext->GetHDC());
+        // Allocate the back buffer (if needed)
+        sourceDeviceContext = GetBackBufferDeviceContext();
 
         // Copy the portion of the memory image to the back buffer
         // that corresponds to the portion of the screen that is
         // being be painted.
-        BitBlt(
-            sourceDeviceContext,
-            sourceRect.left,
-            sourceRect.top,
-            sourceRect.right  - sourceRect.left,
-            sourceRect.bottom - sourceRect.top,
-            memoryDC,
-            sourceRect.left,
-            sourceRect.top,
-            SRCCOPY);
+        for (wxRegionIterator regionIterator(UpdateRegion);
+             regionIterator;
+             regionIterator++)
+        {
+            // regionIterator gives coordinates in terms of the client area.
+            // We need to determine what rectangle in memoryBitmap corresponds
+            // to this rectangle.
+            FLONUM sourceRectLeft   = regionIterator.GetX();
+            FLONUM sourceRectTop    = regionIterator.GetY();
+            FLONUM sourceRectRight  = sourceRectLeft + regionIterator.GetWidth();
+            FLONUM sourceRectBottom = sourceRectTop  + regionIterator.GetHeight();
+
+            // Shift the rectangle based on the scroll position.
+            sourceRectLeft   += ScrollX;
+            sourceRectRight  += ScrollX;
+            sourceRectTop    += ScrollY;
+            sourceRectBottom += ScrollY;
+
+            // If the screen is zoomed, then we must do some additional
+            // calculation to determine what part of the source image
+            // needs repainting.
+            if (zoom_flag)
+            {
+                // Expand the source rectangle a little bit based zoom factor,
+                // It doesn't hurt to copy a little more than necessary, but copying
+                // less can result in jaggies.
+                const FLONUM inflateIncrement = (the_zoom+0.5)*2.0;
+                sourceRectLeft   -= inflateIncrement;
+                sourceRectTop    -= inflateIncrement;
+                sourceRectRight  += inflateIncrement;
+                sourceRectBottom += inflateIncrement;
+
+                // Second, scale based on the zoom factor.
+                // We divide by the zoom factor to convert from screen coordinates
+                // to turtle coordinates.  If we're zoomed in, the_zoom greater
+                // than 1, so dividing by it will shrink the rectangle that
+                // we're going to copy from.
+                FLONUM scaledSourceRectLeft   = sourceRectLeft   / the_zoom;
+                FLONUM scaledSourceRectTop    = sourceRectTop    / the_zoom;
+                FLONUM scaledSourceRectRight  = sourceRectRight  / the_zoom;
+                FLONUM scaledSourceRectBottom = sourceRectBottom / the_zoom;
+
+                // Make sure that none of rectangle's borders are off-screen
+                // after we inflated it.
+                sourceRectLeft   = (int) (std::min(std::max(0.0, scaledSourceRectLeft),   (double)BitMapWidth));
+                sourceRectTop    = (int) (std::min(std::max(0.0, scaledSourceRectTop),    (double)BitMapHeight));
+                sourceRectRight  = (int) (std::min(std::max(0.0, scaledSourceRectRight),  (double)BitMapWidth));
+                sourceRectBottom = (int) (std::min(std::max(0.0, scaledSourceRectBottom), (double)BitMapHeight));
+            }
+
+            sourceDeviceContext->Blit(
+                sourceRectLeft,
+                sourceRectTop,
+                sourceRectRight - sourceRectLeft + 1,
+                sourceRectBottom - sourceRectTop + 1,
+                GetWxMemoryDeviceContext(),
+                sourceRectLeft,
+                sourceRectTop);
+        }
 
         // draw the turtles on top of the image
-        paste_all_turtles(*wxSourceDeviceContext, 1.0);
+        paste_all_turtles(*sourceDeviceContext, 1.0);
     }
     else
     {
-        sourceDeviceContext = memoryDC;
+        sourceDeviceContext = GetWxMemoryDeviceContext();
     }
+
 
     if (!zoom_flag)
     {
-        // The zoom is 1:1.  Just do a 1:1 BLIT (no scaling).
-        BitBlt(
-            PaintDC,
-            PaintRect.left,
-            PaintRect.top,
-            PaintRect.right  - PaintRect.left,
-            PaintRect.bottom - PaintRect.top,
-            sourceDeviceContext,
-            PaintRect.left,
-            PaintRect.top,
-            SRCCOPY);
+        // The image is not zoomed.  Do a normal BLIT
+
+        // Determine the size of the viewable area
+        const wxSize & screenSize = PaintDeviceContext.GetSize();
+
+        for (wxRegionIterator regionIterator(UpdateRegion);
+             regionIterator;
+             regionIterator++)
+        {
+            // The x,y coordinates are on the client area
+            wxCoord x      = regionIterator.GetX();
+            wxCoord y      = regionIterator.GetY();
+            wxCoord width  = regionIterator.GetWidth();
+            wxCoord height = regionIterator.GetHeight();
+
+            // Fill the part to the right of the screen.
+            if (BitMapWidth <= x + width)
+            {
+                PaintDeviceContext.SetBrush(*wxWHITE_BRUSH);
+                PaintDeviceContext.SetPen(*wxWHITE_PEN);
+
+                PaintDeviceContext.DrawRectangle(
+                    BitMapWidth,                         // x
+                    0,                                   // y
+                    screenSize.GetWidth() - BitMapWidth, // width
+                    BitMapHeight);                       // height
+            }
+
+            // Fill the part below the screen.
+            if (BitMapHeight <= y + height)
+            {
+                PaintDeviceContext.SetBrush(*wxWHITE_BRUSH);
+                PaintDeviceContext.SetPen(*wxWHITE_PEN);
+
+                PaintDeviceContext.DrawRectangle(
+                    x,                                       // x
+                    BitMapHeight,                            // y
+                    BitMapWidth,                             // width
+                    screenSize.GetHeight() - BitMapHeight);  // height
+            }
+
+            PaintDeviceContext.Blit(
+                x + ScrollX,
+                y + ScrollY,
+                width,
+                height,
+                sourceDeviceContext,
+                x + ScrollX,
+                y + ScrollY);
+        }
     }
+#ifndef WX_PURE
     else
     {
-        RECT destRect;
-        destRect.left   = sourceRect.left   * the_zoom;
-        destRect.top    = sourceRect.top    * the_zoom;
-        destRect.right  = sourceRect.right  * the_zoom;
-        destRect.bottom = sourceRect.bottom * the_zoom;
+        HDC paintHdc = static_cast<HDC>(PaintDeviceContext.GetHDC());
 
-        // We are zoomed in.  Compute scaling and then display
+        // We are zoomed.  Compute scaling and then display
         if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
         {
-            SetStretchBltMode(PaintDC, HALFTONE);
+            SetStretchBltMode(paintHdc, HALFTONE);
         }
         else
         {
             // HALFTONE is not supported on Win 95/98/ME
-            SetStretchBltMode(PaintDC, COLORONCOLOR);
+            SetStretchBltMode(paintHdc, COLORONCOLOR);
         }
 
-        StretchBlt(
-            PaintDC,
-            destRect.left,
-            destRect.top,
-            destRect.right  - destRect.left,
-            destRect.bottom - destRect.top,
-            sourceDeviceContext,
-            sourceRect.left,
-            sourceRect.top,
-            sourceRect.right  - sourceRect.left,
-            sourceRect.bottom - sourceRect.top,
-            SRCCOPY);
+        for (wxRegionIterator regionIterator(UpdateRegion);
+             regionIterator;
+             regionIterator++)
+        {
+            // regionIterator gives coordinates in terms of the
+            // client area.
+            // We need to determine what rectangle in memoryBitmap corresponds
+            // to this rectangle.
+            FLONUM sourceRectLeft   = regionIterator.GetX();
+            FLONUM sourceRectTop    = regionIterator.GetY();
+            FLONUM sourceRectRight  = sourceRectLeft + regionIterator.GetWidth();
+            FLONUM sourceRectBottom = sourceRectTop  + regionIterator.GetHeight();
+
+            // Shift the rectangle based on the scroll position.
+            sourceRectLeft   += ScrollX;
+            sourceRectRight  += ScrollX;
+            sourceRectTop    += ScrollY;
+            sourceRectBottom += ScrollY;
+
+            // First, expand the source rectangle a little bit based zoom factor,
+            // It doesn't hurt to copy a little more than necessary, but copying
+            // less can result in jaggies.
+            const FLONUM inflateIncrement = (the_zoom+0.5)*2.0;
+            sourceRectLeft   -= inflateIncrement;
+            sourceRectTop    -= inflateIncrement;
+            sourceRectRight  += inflateIncrement;
+            sourceRectBottom += inflateIncrement;
+
+            // Second, scale based on the zoom factor.
+            // We divide by the zoom factor to convert from screen coordinates
+            // to turtle coordinates.  If we're zoomed in, the_zoom greater
+            // than 1, so dividing by it will shrink the rectangle that
+            // we're going to copy from.
+            FLONUM scaledSourceRectLeft   = sourceRectLeft   / the_zoom;
+            FLONUM scaledSourceRectTop    = sourceRectTop    / the_zoom;
+            FLONUM scaledSourceRectRight  = sourceRectRight  / the_zoom;
+            FLONUM scaledSourceRectBottom = sourceRectBottom / the_zoom;
+
+            // fill the part to the right of the screen.
+            if (BitMapWidth < scaledSourceRectRight)
+            {
+                PaintDeviceContext.SetBrush(*wxWHITE_BRUSH);
+                PaintDeviceContext.SetPen(*wxWHITE_PEN);
+
+                PaintDeviceContext.DrawRectangle(
+                    BitMapWidth * the_zoom,
+                    0,
+                    sourceRectRight,
+                    BitMapHeight * the_zoom);
+            }
+
+            // fill the part below the screen.
+            if (BitMapHeight < scaledSourceRectBottom)
+            {
+                PaintDeviceContext.SetBrush(*wxWHITE_BRUSH);
+                PaintDeviceContext.SetPen(*wxWHITE_PEN);
+
+                PaintDeviceContext.DrawRectangle(
+                    sourceRectLeft,                              // x
+                    BitMapHeight * the_zoom,                     // y
+                    sourceRectRight - sourceRectLeft,            // width
+                    sourceRectBottom - BitMapHeight * the_zoom); // height
+            }
+
+            // Make sure that none of rectangle's borders are off-screen
+            // after we inflated it.
+            RECT sourceRect;
+            sourceRect.left   = (int) (std::min(std::max(0.0, scaledSourceRectLeft),   (double)BitMapWidth));
+            sourceRect.top    = (int) (std::min(std::max(0.0, scaledSourceRectTop),    (double)BitMapHeight));
+            sourceRect.right  = (int) (std::min(std::max(0.0, scaledSourceRectRight),  (double)BitMapWidth));
+            sourceRect.bottom = (int) (std::min(std::max(0.0, scaledSourceRectBottom), (double)BitMapHeight));
+
+            // Now project the source rectangle back onto the screen.
+            // This should be roughtly the same as the original regionIterator,
+            // but may be larger due to rounding and may be smaller due to 
+            // trucation of the off-world areas that still fit on the screen.
+            RECT destRect;
+            destRect.left   = sourceRect.left   * the_zoom;
+            destRect.top    = sourceRect.top    * the_zoom;
+            destRect.right  = sourceRect.right  * the_zoom;
+            destRect.bottom = sourceRect.bottom * the_zoom;
+
+            // Copy the corresponding part of the image to the screen
+            StretchBlt(
+                paintHdc,
+                destRect.left,
+                destRect.top,
+                destRect.right  - destRect.left,
+                destRect.bottom - destRect.top,
+                static_cast<HDC>(sourceDeviceContext->GetHDC()),
+                sourceRect.left,
+                sourceRect.top,
+                sourceRect.right  - sourceRect.left,
+                sourceRect.bottom - sourceRect.top,
+                SRCCOPY);
+        }
     }
+#endif // WX_PURE
 
     // draw the turtles on top of the image
     if (!useBackBuffer)
     {
-#ifndef WX_PURE
-        wxDCTemp paintDeviceContext(PaintDC);
-        paste_all_turtles(paintDeviceContext, the_zoom);
-#endif
+        paste_all_turtles(PaintDeviceContext, the_zoom);
     }
 }

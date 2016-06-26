@@ -119,9 +119,9 @@ int bAppendMode;
 int iLoop;
 int iTrans;
 
-#ifndef WX_PURE
-RECT FullRect;                         // rectangle of the full bitmap
+wxRect g_FullRect;                     // rectangle of the full screen
 
+#ifndef WX_PURE
 LOGFONT FontRec;                       // record for label font
 
 LOGPEN g_LogicalNormalPen;             // Handle to "Normal" logical Pen
