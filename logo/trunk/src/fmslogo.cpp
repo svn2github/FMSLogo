@@ -692,19 +692,19 @@ wxWindow * GetScreenWxWindow() {
     return CFmsLogo::GetMainFrame()->GetScreen();
 }
 
-UINT GetScreenHorizontalScrollPosition()
+int GetScreenHorizontalScrollPosition()
 {
     return CFmsLogo::GetMainFrame()->GetScreen()->GetScrollPos(wxHORIZONTAL);
 }
 
-UINT GetScreenVerticalScrollPosition()
+int GetScreenVerticalScrollPosition()
 {
     return CFmsLogo::GetMainFrame()->GetScreen()->GetScrollPos(wxVERTICAL);
 }
 
-void SetScreenScrollPosition(UINT x, UINT y)
+void SetScreenScrollPosition(int X, int Y)
 {
-    CFmsLogo::GetMainFrame()->GetScreen()->Scroll(x, y);
+    CFmsLogo::GetMainFrame()->GetScreen()->Scroll(X, Y);
 }
 
 bool IsEditorOpen()

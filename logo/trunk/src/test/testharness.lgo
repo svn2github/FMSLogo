@@ -114,6 +114,7 @@ LOAD "runresult.lgo
 LOAD "slowdraw.lgo
 LOAD "status.lgo
 LOAD "type.lgo
+LOAD "scroll.lgo
 LOAD "zoom.lgo
 LOAD "bitblock.lgo
 LOAD "turtle.lgo
@@ -257,6 +258,7 @@ TO TESTALL
   ORIENTATIONTEST      ; from orientation.lgo
   POLYGONTEST          ; from polygon.lgo
   SCRUNCHTEST          ; from scrunch.lgo
+  SCROLLTEST           ; from scroll.lgo
   ZOOMTEST             ; from zoom.lgo
   HELPTEST             ; from help.lgo
   DLLTEST              ; from dll.lgo

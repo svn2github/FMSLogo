@@ -18,10 +18,8 @@
 #ifndef __SCREENWINDOW_H_
 #define __SCREENWINDOW_H_
 
-#ifdef WX_PURE
-typedef unsigned int UINT;
-#else
-#include <windows.h>
+#ifndef WX_PURE
+  #include <windows.h>
 #endif // WX_PURE
 
 #include "logodata.h"
@@ -37,9 +35,9 @@ class wxWindow * GetMainWxWindow();
 class wxWindow * GetScreenWxWindow();
 class wxWindow * GetParentWindowForDialog();
 
-UINT GetScreenHorizontalScrollPosition();
-UINT GetScreenVerticalScrollPosition();
-void SetScreenScrollPosition(UINT x, UINT y);
+int GetScreenHorizontalScrollPosition();
+int GetScreenVerticalScrollPosition();
+void SetScreenScrollPosition(int X, int Y);
 
 bool IsEditorOpen();
 
