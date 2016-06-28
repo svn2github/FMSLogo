@@ -569,8 +569,8 @@ transline_helper(
 	screenRect.Inflate(penState.Width);
 
         // Reposition the invalidated rectangle, accounting for scrolling.
-        const UINT scrollerX = GetScreenHorizontalScrollPosition();
-        const UINT scrollerY = GetScreenVerticalScrollPosition();
+        const int scrollerX = GetScreenHorizontalScrollPosition();
+        const int scrollerY = GetScreenVerticalScrollPosition();
         screenRect.Offset(-scrollerX, -scrollerY);
 
 	screen->RefreshRect(screenRect, false);

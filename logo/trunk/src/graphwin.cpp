@@ -777,8 +777,8 @@ static void InvalidateRectangleOnScreen(const RECT & ScreenRectangle)
         adjustedRectangle.bottom *= the_zoom;
     }
 
-    const UINT scrollerX = GetScreenHorizontalScrollPosition();
-    const UINT scrollerY = GetScreenVerticalScrollPosition();
+    const int scrollerX = GetScreenHorizontalScrollPosition();
+    const int scrollerY = GetScreenVerticalScrollPosition();
 
     // Move the bounding box based on scroll position.
     adjustedRectangle.left   -= scrollerX;
