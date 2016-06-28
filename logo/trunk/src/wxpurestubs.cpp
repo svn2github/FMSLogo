@@ -22,16 +22,6 @@ void halt_all_timers()
 {
 }
 
-ERR_TYPES DumpBitmapFile(const char * Filename, int MaxBitCount)
-{
-    return FILE_ERROR;
-}
-
-ERR_TYPES LoadBitmapFile( const char *, unsigned int &, unsigned int &)
-{
-    return FILE_ERROR;
-}
-
 bool CheckOnScreenControls()
 {
     return true;

@@ -47,6 +47,8 @@
    #endif
 #endif
 
+#ifndef WX_PURE
+
 // Writes the contents of the screen window that is
 // within the ACTIVEAREA window to the screen to the given
 // file stream as a Windows Bitmap.
@@ -315,8 +317,13 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitmapBitDepth)
     return status;
 }
 
+#endif // WX_PURE
+
 ERR_TYPES DumpBitmapFile(const char * Filename, int MaxBitCount)
 {
+#ifdef WX_PURE
+    return FILE_ERROR;
+#else
     // open and check if ok
     FILE* file = fopen(Filename, "wb");
     if (file == NULL)
@@ -348,8 +355,10 @@ ERR_TYPES DumpBitmapFile(const char * Filename, int MaxBitCount)
     }
 
     return status;
+#endif // WX_PURE
 }
 
+#ifndef WX_PURE
 
 // Attempt to open a Windows 3.0 device independent bitmap
 static
@@ -492,6 +501,8 @@ OpenDIB(
     return true;
 }
 
+#endif // WX_PURE
+
 ERR_TYPES
 LoadBitmapFile(
     const char   * Filename,
@@ -499,6 +510,9 @@ LoadBitmapFile(
     unsigned int & dwPixelHeight
     )
 {
+#ifdef WX_PURE
+    return FILE_ERROR;
+#else
     // Test if Filename is a Windows 3.0 DIB bitmap and if so read it
 
     // open then check if open 
@@ -540,6 +554,7 @@ LoadBitmapFile(
     fclose(file);
 
     return status;
+#endif // WX_PURE
 }
 
 void

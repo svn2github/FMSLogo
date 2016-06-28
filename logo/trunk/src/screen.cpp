@@ -16,6 +16,7 @@
     #include "commanderinput.h"
     #include "mainframe.h"
     #include "graphwin.h"
+    #include "mainwind.h"
     #include "screenwindow.h"
     #include "startup.h"
     #include "logocore.h"
