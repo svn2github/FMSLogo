@@ -2552,7 +2552,8 @@ NODE *lselectbox(NODE *args)
     CSelectBox selectBox(
         GetMainWxWindow(),
         WXSTRING(banner.GetString()),
-        choices);
+        choices,
+        GetExtraWindowStyle());
 
     int status = selectBox.DoDialog();
     if (status < 0)

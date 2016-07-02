@@ -5,6 +5,13 @@ PASS: [DLLCALL [S FormatWord@4 W 123]] output [123] , as expected.
 PASS: [DLLCALL [S FormatWord@4 W 65537]] output [1] , as expected.
 PASS: [DLLCALL [S 1 F 2.2]] output [2.200000] , as expected.
 CALL: DLLFREE
+PASS: [SELECTBOX [SELECTBOX Test: Select First] [First Second Third]] output 1 , as expected.
+PASS: [SELECTBOX [SELECTBOX Test: Select Second] [First Second Third]] output 2 , as expected.
+PASS: [SELECTBOX [SELECTBOX Test: Select Third] [First Second Third]] output 3 , as expected.
+INFO: Running invalid instruction: [SELECTBOX [SELECTBOX Test: Press Cancel] [First Second Third]]
+PASS: error code is 16 , as expected.
+INFO: error text is Stopping... .
+PASS: [SELECTBOX [SELECTBOX Test: No Choice (press ok)] []] output 1 , as expected.
 PASS: [MCI [open test.wav type waveaudio alias wa1]] output [1] , as expected.
 CALL: MCI [seek wa1 to start]
 CALL: MCI [play wa1 wait]

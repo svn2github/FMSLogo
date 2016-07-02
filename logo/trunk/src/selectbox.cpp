@@ -26,7 +26,8 @@ enum
 CSelectBox::CSelectBox(
     wxWindow            * Parent, 
     const wxString      & Caption,
-    const wxArrayString & Choices
+    const wxArrayString & Choices,
+    long                  ExtraWindowStyle
     )
     : wxDialog(
         Parent,
@@ -34,7 +35,8 @@ CSelectBox::CSelectBox(
         Caption,
         wxDefaultPosition,
         wxDefaultSize,
-        wxCAPTION | wxCLOSE_BOX | wxRESIZE_BORDER | wxDEFAULT_DIALOG_STYLE),
+        wxCAPTION | wxCLOSE_BOX | wxRESIZE_BORDER |
+            wxDEFAULT_DIALOG_STYLE | ExtraWindowStyle),
       m_Choices(NULL),
       m_Selection(-1)
 {
@@ -97,7 +99,7 @@ CSelectBox::CSelectBox(
     SetMinSize(GetSize());
 
     // select the first item
-    if (!m_Choices->IsEmpty()) 
+    if (!m_Choices->IsEmpty())
     {
         m_Choices->SetSelection(0);
     }
