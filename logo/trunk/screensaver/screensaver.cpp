@@ -791,17 +791,17 @@ HWND GetEditorWindow()
     return NULL;
 }
 
-UINT GetScreenHorizontalScrollPosition()
+int GetScreenHorizontalScrollPosition()
 {
     return 0;
 }
 
-UINT GetScreenVerticalScrollPosition()
+int GetScreenVerticalScrollPosition()
 {
     return 0;
 }
 
-void SetScreenScrollPosition(UINT x, UINT y)
+void SetScreenScrollPosition(int X, int Y)
 {
 }
 
