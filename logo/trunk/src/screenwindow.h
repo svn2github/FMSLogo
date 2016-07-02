@@ -15,6 +15,13 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
+// This file defines an abstraction layer which the logo
+// core can use to talk to the different FMSLogo front-ends:
+//
+// * Main FMSLogo Environment
+// * Screensaver
+
+
 #ifndef __SCREENWINDOW_H_
 #define __SCREENWINDOW_H_
 
@@ -34,6 +41,7 @@ HWND GetCommanderWindow();
 class wxWindow * GetMainWxWindow();
 class wxWindow * GetScreenWxWindow();
 class wxWindow * GetParentWindowForDialog();
+long GetExtraWindowStyle();
 
 int GetScreenHorizontalScrollPosition();
 int GetScreenVerticalScrollPosition();

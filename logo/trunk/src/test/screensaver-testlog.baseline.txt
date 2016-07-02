@@ -5,12 +5,6 @@ PASS: [DLLCALL [S FormatWord@4 W 123]] output [123] , as expected.
 PASS: [DLLCALL [S FormatWord@4 W 65537]] output [1] , as expected.
 PASS: [DLLCALL [S 1 F 2.2]] output [2.200000] , as expected.
 CALL: DLLFREE
-INFO: Running invalid instruction: [WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []]
-PASS: error code is 13 , as expected.
-INFO: error text is I don't know how to WINDOWCREATE .
-INFO: Running invalid instruction: [DIALOGCREATE "main "mydialog "mytitle 0 0 100 75 []]
-PASS: error code is 13 , as expected.
-INFO: error text is I don't know how to DIALOGCREATE .
 PASS: [MCI [open test.wav type waveaudio alias wa1]] output [1] , as expected.
 CALL: MCI [seek wa1 to start]
 CALL: MCI [play wa1 wait]

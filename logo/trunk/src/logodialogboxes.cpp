@@ -145,7 +145,8 @@ public:
     CLogoDialog(
         wxWindow               * Parent,
         const wxString         & Caption,
-        const CClientRectangle & ClientRectangle
+        const CClientRectangle & ClientRectangle,
+        long                     ExtraStyle
         ) :
         wxDialog(
             Parent,
@@ -153,7 +154,7 @@ public:
             Caption,
             wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
             wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
-            wxCLIP_CHILDREN | wxCAPTION)
+            wxCLIP_CHILDREN | wxCAPTION | ExtraStyle)
     {
     }
 
@@ -1206,7 +1207,8 @@ NODE *lwindowcreate(NODE *args)
     child->Dialog = new CLogoDialog(
         wxParent,
         WXSTRING(titlename.GetString()),
-        clientrect);
+        clientrect,
+        GetExtraWindowStyle());
 
     g_LogoWidgets.insert(child);
 
@@ -1390,7 +1392,8 @@ NODE *ldialogcreate(NODE *args)
     child->Dialog = new CLogoDialog(
         wxParent,
         WXSTRING(titlename.GetString()),
-        clientrect);
+        clientrect,
+        GetExtraWindowStyle());
     child->m_Parent = (char *)wxParent;
     g_LogoWidgets.insert(child);
 

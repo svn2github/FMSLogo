@@ -786,6 +786,14 @@ wxWindow * GetParentWindowForDialog()
     return g_WxScreenWindow;
 }
 
+long GetExtraWindowStyle()
+{
+    // Because the screen window is full screen and always on top,
+    // any new dialog box that we create must be shown on top of it
+    // or else that dialog wouldn't be visible.
+    return wxSTAY_ON_TOP;
+}
+
 HWND GetEditorWindow()
 {
     return NULL;
