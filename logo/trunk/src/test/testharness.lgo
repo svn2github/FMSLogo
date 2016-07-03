@@ -100,6 +100,7 @@ LOAD "messagebox.lgo
 LOAD "yesnobox.lgo
 LOAD "selectbox.lgo
 LOAD "questionbox.lgo
+LOAD "dialogfile.lgo
 LOAD "shellscript.lgo
 LOAD "timer.lgo
 LOAD "shell.lgo
@@ -281,6 +282,7 @@ TO TESTALL
   YESNOBOXTEST         ; from yesnobox.lgo
   SELECTBOXTEST        ; from selectbox.lgo
   QUESTIONBOXTEST      ; from questionbox.lgo
+  DIALOGFILETEST       ; from dialogfile.lgo
   WINDOWSTEST          ; from windows.lgo
   MOUSETEST            ; from mouse.lgo
   MIDITEST             ; from midi.lgo
