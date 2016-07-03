@@ -35,6 +35,7 @@
 
    #include <wx/filename.h>
    #include <wx/filedlg.h> 
+   #include <wx/msgdlg.h> 
 
    #include "fmslogo.h"
    #include "logoeventqueue.h"
@@ -2569,21 +2570,20 @@ NODE *lyesnobox(NODE *args)
 
     if (NOT_THROWING)
     {
-        int status = ::MessageBox(
-            reinterpret_cast<HWND>(GetParentWindowForDialog()->GetHWND()),
-            body,
-            banner,
-            MB_YESNOCANCEL | MB_ICONQUESTION);
-
+        int status = wxMessageBox(
+            WXSTRING(body),
+            WXSTRING(banner),
+            wxYES_NO | wxCANCEL | wxCENTER,
+            GetParentWindowForDialog());
         switch (status)
         {
-        case IDYES:
+        case wxYES:
             return Truex.GetNode();
 
-        case IDNO:
+        case wxNO:
             return Falsex.GetNode();
 
-        case IDCANCEL:
+        case wxCANCEL:
             err_logo(STOP_ERROR, NIL);
             return Falsex.GetNode();
         }
