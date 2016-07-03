@@ -20,6 +20,7 @@
      #define RGB(r, g, b) (((r) & 0xFF) | (((g) & 0xFF) << 8) | (((b) & 0xFF) << 16))
    #endif
 
+  #include "logocore.h"
   #include "status.h"
   #include "graphics.h"
   #include "graphwin.h"
@@ -659,7 +660,10 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
     }
 }
 
-// Convert world coordinates to display coordinates
+// Converts a 3D world coordinate to the 2D display coordinates and stores
+// it in disp.
+// Returns true on success.
+// Returns false, otherwise (in which case disp is not modified).
 bool TThreeDSolid::WorldToDisplay(double x, double y, double z, POINT& disp)
 {
     double xc = (x * A1.x + A1.y * y + A1.z * z + Offset.x) * DVal;
@@ -711,46 +715,51 @@ RGBCOLOR TThreeDSolid::ComputeColor(Point& p, VECTOR& normal, RGBCOLOR colorNdx)
     return RGB(Red, Green, Blue);
 }
 
-#define MAXVERT 4096
-
-POINT t[MAXVERT];   // Screen coordinates of POLYGON to display
 
 // Display the POLYGON
 void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
 {
+    POINT t[4096]; // holds screen coordinates of Poly
+
     // PrecomputeCentroid(Poly);
 
-    RGBCOLOR color = ComputeColor(Poly->Centroid, Poly->Normal, Poly->ColorNdx);
-
+    // Transform all of this polygon's verticies from 3D world coordinates to
+    // 2D screen coordidates.
     VERTEXLIST * vertices = Poly->Vertices;
-
-    int i = 0;
+    size_t i = 0;
     do
     {
         if (!WorldToDisplay(vertices->Vertex.x, vertices->Vertex.y, vertices->Vertex.z, t[i]))
         {
+            // There was an error that prevents us from rendering
+            // this polygon.
             i = 0;
             break;
         }
-        if ((i < (MAXVERT-1)) && ((i == 0) || (t[i-1].x != t[i].x) || (t[i-1].y != t[i].y))) 
+        if ((i < ARRAYSIZE(t) - 1) &&
+            (i == 0 || t[i-1].x != t[i].x || t[i-1].y != t[i].y))
         {
             i++;
         }
         vertices = vertices->Next;
     } while (vertices != Poly->Vertices);
 
-#ifndef WX_PURE
-    HBRUSH hBrush = CreateSolidBrush(color);
-    HBRUSH oldBrush = (HBRUSH) SelectObject(m_MemDC, hBrush);
-
+    // Render the resulting polygon
     if (i > 2)
     {
-        Polygon(m_MemDC, t, i);    // Display the POLYGON
-    }
+        // We have at least two points, which defines an area.
+        // Render the polygon onto the screen.
+        RGBCOLOR color = ComputeColor(Poly->Centroid, Poly->Normal, Poly->ColorNdx);
+#ifndef WX_PURE
+        HBRUSH hBrush = CreateSolidBrush(color);
+        HBRUSH oldBrush = (HBRUSH) SelectObject(m_MemDC, hBrush);
 
-    SelectObject(m_MemDC, oldBrush);
-    DeleteObject(hBrush);
+        Polygon(m_MemDC, t, i); 
+
+        SelectObject(m_MemDC, oldBrush);
+        DeleteObject(hBrush);
 #endif
+    }
 }
 
 // Display the figure stored in the BSP tree
