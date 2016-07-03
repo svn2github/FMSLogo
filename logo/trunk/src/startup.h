@@ -37,9 +37,7 @@ extern wxUint32 scolor;  // screen color
 extern wxUint32 fcolor;  // flood color
 extern wxUint32 pcolor;  // pen color
 
-#ifndef WX_PURE
-  extern OSVERSIONINFO g_OsVersionInformation;
-#else
+#ifdef WX_PURE
   #define MAX_PATH (260)
 #endif // WX_PURE
 
@@ -48,7 +46,6 @@ extern char g_FmslogoBaseDirectory[MAX_PATH+1];
 extern void MakeHelpPathName(char *szFileName, const char *);
 extern void init_graphics();
 extern void uninit_graphics();
-extern void init_osversion();
 extern void init_cursors();
 
 #endif // __STARTUP_H_

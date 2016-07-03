@@ -2083,18 +2083,11 @@ NODE *lbitfit(NODE *arg)
                 HDC tempMemDC = CreateCompatibleDC(ScreenDC);
                 HBITMAP savedTempMemoryBitmap = (HBITMAP) SelectObject(tempMemDC, newMemoryBitmap);
 
-                if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
-                {
-                    SetStretchBltMode(tempMemDC, HALFTONE);
-                }
-                else
-                {
-                    // HALFTONE is not supported on Win 95/98/ME
-                    SetStretchBltMode(tempMemDC, COLORONCOLOR);
-                }
+                // Enable anti-aliasing on the strech blit.
+                SetStretchBltMode(tempMemDC, HALFTONE);
 
                 // Load hour-glass cursor.
-                HCURSOR oldCursor =::SetCursor(hCursorWait);
+                HCURSOR oldCursor = ::SetCursor(hCursorWait);
 
                 StretchBlt(
                     tempMemDC,

@@ -720,16 +720,9 @@ PaintToScreen(
     {
         HDC paintHdc = static_cast<HDC>(PaintDeviceContext.GetHDC());
 
-        // We are zoomed.  Compute scaling and then display
-        if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
-        {
-            SetStretchBltMode(paintHdc, HALFTONE);
-        }
-        else
-        {
-            // HALFTONE is not supported on Win 95/98/ME
-            SetStretchBltMode(paintHdc, COLORONCOLOR);
-        }
+        // We are zoomed.  Compute scaling and then display.
+        // Enable anti-aliasing
+        SetStretchBltMode(paintHdc, HALFTONE);
 
         for (wxRegionIterator regionIterator(UpdateRegion);
              regionIterator;

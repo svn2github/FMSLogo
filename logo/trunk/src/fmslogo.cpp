@@ -295,8 +295,6 @@ bool CFmsLogo::OnInit()
 #endif // __WXMSW__
 #endif // MEM_DEBUG
 
-    init_osversion();
-
     // Figure out the path that contains fmslogo.exe, which we
     // assume also holds Logolib.
     const wxFileName fmslogoExecutable(wxStandardPaths::Get().GetExecutablePath());

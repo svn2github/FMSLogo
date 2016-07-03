@@ -59,10 +59,6 @@ wxUint32 scolor;                   // screen color
 wxUint32 fcolor;                   // flood color
 wxUint32 pcolor;                   // pen color
 
-#ifndef WX_PURE
-OSVERSIONINFO g_OsVersionInformation;
-#endif
-
 char g_FmslogoBaseDirectory[MAX_PATH+1]; // The directory that contains fmslogo.exe
 
 // Creates path relative to the directory in which FMSLogo is installed.
@@ -93,17 +89,6 @@ void MakeTempFilename(char *OutBuffer, const char * TempPath, const char * FileN
     // append the filename
     strcpy(ptr, FileName);
 }
-
-
-void init_osversion()
-{
-#ifndef WX_PURE
-    memset(&g_OsVersionInformation, 0, sizeof g_OsVersionInformation);
-    g_OsVersionInformation.dwOSVersionInfoSize = sizeof g_OsVersionInformation;
-    GetVersionEx(&g_OsVersionInformation);
-#endif
-}
-
 
 void init_graphics()
 {
