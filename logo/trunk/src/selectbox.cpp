@@ -26,8 +26,7 @@ enum
 CSelectBox::CSelectBox(
     wxWindow            * Parent, 
     const wxString      & Caption,
-    const wxArrayString & Choices,
-    long                  ExtraWindowStyle
+    const wxArrayString & Choices
     )
     : wxDialog(
         Parent,
@@ -35,8 +34,7 @@ CSelectBox::CSelectBox(
         Caption,
         wxDefaultPosition,
         wxDefaultSize,
-        wxCAPTION | wxCLOSE_BOX | wxRESIZE_BORDER |
-            wxDEFAULT_DIALOG_STYLE | ExtraWindowStyle),
+        wxCAPTION | wxCLOSE_BOX | wxRESIZE_BORDER | wxDEFAULT_DIALOG_STYLE),
       m_Choices(NULL),
       m_Selection(-1)
 {

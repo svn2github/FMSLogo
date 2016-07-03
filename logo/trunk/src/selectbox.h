@@ -11,8 +11,7 @@ public:
     CSelectBox(
         wxWindow            * Parent, 
         const wxString      & Caption,
-        const wxArrayString & Choices,
-        long                  ExtraWindowStyle
+        const wxArrayString & Choices
         );
     ~CSelectBox();
 

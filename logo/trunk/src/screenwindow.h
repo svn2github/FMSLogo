@@ -41,7 +41,6 @@ HWND GetCommanderWindow();
 class wxWindow * GetMainWxWindow();
 class wxWindow * GetScreenWxWindow();
 class wxWindow * GetParentWindowForDialog();
-long GetExtraWindowStyle();
 
 int GetScreenHorizontalScrollPosition();
 int GetScreenVerticalScrollPosition();

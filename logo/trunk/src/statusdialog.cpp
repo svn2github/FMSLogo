@@ -52,14 +52,14 @@ enum
 // CStatusDialog
 // ----------------------------------------------------------------------------
 
-CStatusDialog::CStatusDialog(wxWindow * Parent, long AdditionalStyle)
+CStatusDialog::CStatusDialog(wxWindow * Parent)
     : wxDialog(
         Parent, 
         wxID_ANY, 
         WXSTRING(LOCALIZED_STATUS), 
         wxDefaultPosition, 
         wxDefaultSize, 
-        wxCAPTION | wxCLOSE_BOX | wxSYSTEM_MENU | AdditionalStyle)
+        wxCAPTION | wxCLOSE_BOX | wxSYSTEM_MENU)
 {
     // build default coords
     int x = 0;
@@ -158,11 +158,7 @@ CStatusDialog::CStatusDialog(wxWindow * Parent, long AdditionalStyle)
             this, 
             WXSTRING(data[i].Category));
 
-        topLevelSizer->Add(
-            staticBoxSizer, 
-            0, 
-            wxALL | wxEXPAND, 
-            5);
+        topLevelSizer->Add(staticBoxSizer, 0, wxALL | wxEXPAND, 5);
 
         wxBoxSizer * fieldNameSizer  = new wxBoxSizer(wxVERTICAL);
         staticBoxSizer->Add(fieldNameSizer);
@@ -186,10 +182,7 @@ CStatusDialog::CStatusDialog(wxWindow * Parent, long AdditionalStyle)
                 wxDefaultSize, 
                 wxALIGN_LEFT);
 
-            fieldNameSizer->Add(
-                fieldName,
-                0, 
-                wxEXPAND);
+            fieldNameSizer->Add(fieldName, 0, wxEXPAND);
 
             wxStaticText * fieldValue = new wxStaticText(
                 this,

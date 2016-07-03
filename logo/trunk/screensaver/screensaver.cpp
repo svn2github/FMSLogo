@@ -186,6 +186,21 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         g_WxScreenWindow = WrapNativeHwnd(hwnd);
         g_FullRect = g_WxScreenWindow->GetClientRect();
 
+        // Lower the screen saver.  This is counter-intuitive, since the screen
+        // saver is supposed to be on top of all windows, but it is needed so
+        // that any dialog boxes which the screensaver program creates (for
+        // example SELECTBOX) appear on top of the screensaver window and are
+        // visible.  While is possible for them to specific the wxSTAY_ON_TOP
+        // flag, that doesn't work for DIALOGFILEOPEN, because on Windows
+        // wxFileDialog is a dummy window that then uses the Windows common
+        // control for the file picker.  wxWidgets doesn't honor all of the
+        // styles, includin wxSTAY_ON_TOP.
+        //
+        // Surprisingly, this still keeps the screensaver window above other
+        // applications that are running, perhaps because it's called from
+        // the context of a WM_CREATE.
+        g_WxScreenWindow->Lower();
+
         g_ScreenWindow = hwnd;
 
         // Size-to-fit
@@ -786,14 +801,6 @@ wxWindow * GetParentWindowForDialog()
     return g_WxScreenWindow;
 }
 
-long GetExtraWindowStyle()
-{
-    // Because the screen window is full screen and always on top,
-    // any new dialog box that we create must be shown on top of it
-    // or else that dialog wouldn't be visible.
-    return wxSTAY_ON_TOP;
-}
-
 HWND GetEditorWindow()
 {
     return NULL;
@@ -860,7 +867,7 @@ void OpenStatusWindow()
     // create a new status dialog, if necessary
     if (g_StatusDialog == NULL)
     {
-        g_StatusDialog = new CStatusDialog(g_WxScreenWindow, wxSTAY_ON_TOP);
+        g_StatusDialog = new CStatusDialog(g_WxScreenWindow);
         g_StatusDialog->PopulateAllFields();
         g_StatusDialog->Show();
     }

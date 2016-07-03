@@ -650,11 +650,6 @@ wxWindow * GetParentWindowForDialog()
     return CFmsLogo::GetMainFrame()->GetCommander();
 }
 
-long GetExtraWindowStyle()
-{
-    return 0;
-}
-
 #ifndef WX_PURE
 HWND GetScreenWindow()
 {

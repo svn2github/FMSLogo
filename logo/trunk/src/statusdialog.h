@@ -7,7 +7,7 @@ class wxStaticText;
 class CStatusDialog : public wxDialog
 {
 public:
-    CStatusDialog(wxWindow *Parent, long AdditionalStyle = 0);
+    CStatusDialog(wxWindow *Parent);
     void PopulateAllFields();
 
     void SetPenContact(bool PenIsUp);

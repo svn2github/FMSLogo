@@ -145,8 +145,7 @@ public:
     CLogoDialog(
         wxWindow               * Parent,
         const wxString         & Caption,
-        const CClientRectangle & ClientRectangle,
-        long                     ExtraStyle
+        const CClientRectangle & ClientRectangle
         ) :
         wxDialog(
             Parent,
@@ -154,7 +153,7 @@ public:
             Caption,
             wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
             wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
-            wxCLIP_CHILDREN | wxCAPTION | ExtraStyle)
+            wxCLIP_CHILDREN | wxCAPTION)
     {
     }
 
@@ -1207,8 +1206,7 @@ NODE *lwindowcreate(NODE *args)
     child->Dialog = new CLogoDialog(
         wxParent,
         WXSTRING(titlename.GetString()),
-        clientrect,
-        GetExtraWindowStyle());
+        clientrect);
 
     g_LogoWidgets.insert(child);
 
@@ -1392,8 +1390,7 @@ NODE *ldialogcreate(NODE *args)
     child->Dialog = new CLogoDialog(
         wxParent,
         WXSTRING(titlename.GetString()),
-        clientrect,
-        GetExtraWindowStyle());
+        clientrect);
     child->m_Parent = (char *)wxParent;
     g_LogoWidgets.insert(child);
 
@@ -2552,8 +2549,7 @@ NODE *lselectbox(NODE *args)
     CSelectBox selectBox(
         GetMainWxWindow(),
         WXSTRING(banner.GetString()),
-        choices,
-        GetExtraWindowStyle());
+        choices);
 
     int status = selectBox.DoDialog();
     if (status < 0)
