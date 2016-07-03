@@ -2596,7 +2596,8 @@ NODE *lyesnobox(NODE *args)
     return Unbound;
 }
 
-NODE *ldialogfileopen(NODE *args)
+static
+NODE * dialogfile_helper(NODE * args, long fileDialogFlags)
 {
     char filenameBuffer[MAX_PATH];
     PrintNodeToString(car(args), filenameBuffer, ARRAYSIZE(filenameBuffer));
@@ -2604,13 +2605,13 @@ NODE *ldialogfileopen(NODE *args)
     wxFileName filename(filenameBuffer);
 
     const wxString selectedFilename = wxFileSelector(
-        wxEmptyString,                            // title/message
-        filename.GetPath(),                       // default path
-        filename.GetFullName(),                   // default file name
-        filename.GetExt(),                        // default file extension
-        WXSTRING(LOCALIZED_FILEFILTER_ALLFILES),  // file filters
-        wxFD_OPEN | wxFD_FILE_MUST_EXIST,         // flags
-        GetParentWindowForDialog());              // parent window
+        wxEmptyString,                             // title/message
+        filename.GetPath(),                        // default path
+        filename.GetFullName(),                    // default file name
+        filename.GetExt(),                         // default file extension
+        WXSTRING(LOCALIZED_FILEFILTER_ALLFILES),   // file filters
+        fileDialogFlags,                           // flags
+        GetParentWindowForDialog());               // parent window
     if (!selectedFilename.empty())
     {
         return make_strnode(WXSTRING_TO_STRING(selectedFilename));
@@ -2621,29 +2622,14 @@ NODE *ldialogfileopen(NODE *args)
     }
 }
 
+NODE *ldialogfileopen(NODE *args)
+{
+    return dialogfile_helper(args, wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+}
+
 NODE *ldialogfilesave(NODE *args)
 {
-    char filenameBuffer[MAX_PATH];
-    PrintNodeToString(car(args), filenameBuffer, ARRAYSIZE(filenameBuffer));
-
-    wxFileName filename(filenameBuffer);
-
-    const wxString selectedFilename = wxFileSelector(
-        wxEmptyString,                            // title/message
-        filename.GetPath(),                       // default path
-        filename.GetFullName(),                   // default file name
-        filename.GetExt(),                        // default file extension
-        WXSTRING(LOCALIZED_FILEFILTER_ALLFILES),  // file filters
-        wxFD_SAVE | wxFD_OVERWRITE_PROMPT,        // flags
-        GetParentWindowForDialog());              // parent window
-    if (!selectedFilename.empty())
-    {
-        return make_strnode(WXSTRING_TO_STRING(selectedFilename));
-    }
-    else
-    {
-        return NIL;
-    }
+    return dialogfile_helper(args, wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 }
 
 NODE *lwindowfileedit(NODE *args)
