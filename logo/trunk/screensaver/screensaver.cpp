@@ -38,12 +38,6 @@
 
 #include "resource.h"
 
-#ifdef __GNUC__
-#define USER_TIMER_MINIMUM (0x0000000A)
-#define GR_GDIOBJECTS      0
-#define GR_USEROBJECTS     1
-#endif
-
 int *TopOfStack  = NULL;
 int BitMapWidth  = 0;
 int BitMapHeight = 0;
