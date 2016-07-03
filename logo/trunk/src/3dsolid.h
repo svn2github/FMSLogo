@@ -52,8 +52,6 @@ struct BSPNode
     BSPNode* Outside;
 };
 
-#define MAXPOLYDEPTH 660 // Actual limit 
-
 #define HC_ON       0
 #define HC_IN       1
 #define HC_OUT      2
