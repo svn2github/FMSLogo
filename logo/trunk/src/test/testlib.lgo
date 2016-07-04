@@ -846,9 +846,9 @@ TO REPEATWORD :word :repcount
       MAKE "accumulator WORD :accumulator :accumulator
    ]
 
-   ; For the remainder, simply append N times.
-   REPEAT :repcount - (POWER 2 :doubler) [ MAKE "accumulator WORD :accumulator :word ]
-   OUTPUT :accumulator
+   ; For the repetitions that don't fit into the largest power of two,
+   ; recursively append the part that does to the part that doesn't.
+   OUTPUT WORD :accumulator REPEATWORD :word :repcount - (POWER 2 :doubler)
 END
 BURY [REPEATWORD]
 
