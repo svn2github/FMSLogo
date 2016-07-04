@@ -52,7 +52,7 @@ CSelectBox::CSelectBox(
     topLevelSizer->Add(
         m_Choices,
         1,
-        wxALIGN_CENTER | wxTOP | wxLEFT | wxBOTTOM | wxEXPAND,
+        wxTOP | wxLEFT | wxBOTTOM | wxEXPAND,
         15);
 
     // add the column of buttons
