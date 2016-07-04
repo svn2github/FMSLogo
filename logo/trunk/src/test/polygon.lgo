@@ -112,7 +112,7 @@ TO POLYGONTEST.SMOKETEST
   HIDETURTLE
   SETPENCOLOR 1
 
-  ; We draw a tetrahedron as a regression test for bug #1624729
+  ; We draw a tetrahedron as a regression test for bug #269
   POLYGONTEST.DEFINEPOLYGON 3 3 250
 
   ; rotate the perspective a bit
