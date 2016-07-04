@@ -825,9 +825,29 @@ TO WRITEBINARYDATA :filename :data
 END
 BURY [WRITEBINARYDATA]
 
+TO LOG2ROUNDDOWN :number
+   ; outputs LOG 2 :number, rounded down to the nearest whole number
+   REPEAT :number [
+      IF :number < POWER 2 REPCOUNT [OUTPUT REPCOUNT - 1]
+   ]
+   OUTPUT 0
+END
+BURY [LOG2ROUNDDOWN]
+
 TO REPEATWORD :word :repcount
-   LOCALMAKE "accumulator "||
-   REPEAT :repcount [ MAKE "accumulator WORD :accumulator :word ]
+   IF :repcount = 0 [ OUTPUT "|| ]
+
+   ; Start by doubling the word up to FLOOR(LOG 2 :repcount).
+   ; This part runs in O(Log N)
+   LOCAL [accumulator doubler]
+   MAKE "accumulator :word
+   MAKE "doubler     LOG2ROUNDDOWN :repcount
+   REPEAT :doubler [
+      MAKE "accumulator WORD :accumulator :accumulator
+   ]
+
+   ; For the remainder, simply append N times.
+   REPEAT :repcount - (POWER 2 :doubler) [ MAKE "accumulator WORD :accumulator :word ]
    OUTPUT :accumulator
 END
 BURY [REPEATWORD]
