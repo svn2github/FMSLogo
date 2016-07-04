@@ -56,11 +56,11 @@ CQuestionBox::CQuestionBox(
         this,
         wxID_ANY,
         normalizedQuestion);
-    topLevelSizer->Add(question, 1, wxALIGN_CENTER_VERTICAL | wxALL | wxEXPAND, 4);
+    topLevelSizer->Add(question, 1, wxALL | wxEXPAND, 4);
 
     m_Answer = new wxTextCtrl(this, wxID_ANY);
     m_Answer->SetInitialSize(wxSize(minWidth, -1));
-    topLevelSizer->Add(m_Answer, 0, wxALIGN_CENTER_VERTICAL | wxALL | wxEXPAND, 4);
+    topLevelSizer->Add(m_Answer, 0, wxALL | wxEXPAND, 4);
 
     // add the buttons
     wxBoxSizer * buttonSizer = new wxBoxSizer(wxHORIZONTAL);
