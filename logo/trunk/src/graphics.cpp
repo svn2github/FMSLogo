@@ -2443,16 +2443,16 @@ NODE *lpolyend(NODE *)
 {
     if (bPolyFlag)
     {
-        if (ThePolygon && 
-            (ThePolygon != ThePolygon->Next) && 
-            (ThePolygon->Next != ThePolygon->Next->Next))
+        if (ThePolygon &&                         // polygon was started
+            ThePolygon != ThePolygon->Next &&     // at least one vertex
+            ThePolygon != ThePolygon->Next->Next) // at least two vertices
         {
-            // there are at least three vertices in the polygon
+            // There are at least three vertices in the polygon.
             ThreeD.AddPolygon(ThePolygon, pcolor);
         }
         else
         {
-            // the polygon doesn't have three vertices
+            // The polygon doesn't have three vertices.
             ThreeD.DisposeVertices(ThePolygon);
             ThePolygon = NULL;
             ShowMessageAndStop(

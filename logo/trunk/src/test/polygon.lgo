@@ -59,7 +59,7 @@ TO POLYGONTEST.DRAWFACE :k :n
     SETORIENTATION :saved.orientation
 
     if NOT ORIENTATION = :saved.orientation [
-       ; this is too noisy right now (bug #1429938)
+       ; this is too noisy right now (bug #95)
        ; REPORTTESTFAILED (LIST "SETORIENTATION :saved.orientation "set "ORIENTATION "to ORIENTATION)
     ]
 
@@ -128,6 +128,88 @@ TO POLYGONTEST.SMOKETEST
   WRAP
 END
 
+TO POLYGONTEST.PENUP
+  ; Tests that movements when the pen is up are not
+  ; treated as polygon vertices.  We do this by confirming
+  ; that we get an error because the vertices are ignore.
+  PERSPECTIVE
+  CLEARSCREEN
+
+  POLYSTART
+  PENDOWN
+  REPEAT 1 [ FORWARD 100 RIGHT 90 ] ; counted
+  PENUP
+  REPEAT 2 [ FORWARD 100 RIGHT 90 ] ; not counted
+  PENDOWN
+  REPEAT 1 [ FORWARD 100 RIGHT 90 ] ; counted
+
+  ; We have added four vertices to the polygon, but two
+  ; of them were added while the pen was up.  These should
+  ; be ignored, so in effect we only added two vertices.
+  ; This should result in an error, because a polygon must
+  ; have at least three vertices.
+  RUNSTOPPINGTEST [ POLYEND ]
+
+  WRAP
+END
+
+TO POLYGONTEST.TRIANGLE
+  ; tests that there are no error when defining a polygon with three vertices
+  PERSPECTIVE
+
+  TRACEINSTRUCTION [ POLYSTART ]
+  TRACEINSTRUCTION [ FORWARD 100 ]           ; vertex #1
+  TRACEINSTRUCTION [ RIGHT 40 FORWARD 100  ] ; vertex #2
+  TRACEINSTRUCTION [ RIGHT 40 FORWARD 100  ] ; vertex #3
+  TRACEINSTRUCTION [ POLYEND ]
+  POLYVIEW
+
+  WRAP
+END
+
+TO POLYGONTEST.CLEARSCREEN
+  ; tests that the polygons are cleared with clearscreen.
+  PERSPECTIVE
+
+  TRACEINSTRUCTION [ POLYSTART REPEAT 4 [ FORWARD 100 RIGHT 90 ] POLYEND ] ; complete polygon
+  TRACEINSTRUCTION [ POLYSTART REPEAT 4 [ FORWARD 100 LEFT  90 ] ]         ; open polygon
+  TRACEINSTRUCTION [ CLEARSCREEN ] ; clears completed and open polygon
+  TRACEINSTRUCTION [ POLYVIEW ] ; should show nothing
+
+  CHECKSCREEN "polyview-after-clearscreen
+
+  WRAP
+END
+
+TO POLYGONTEST.BADINPUT
+  PERSPECTIVE
+
+  RUNTOOMANYINPUTSTEST [ (POLYSTART "toomany) ]
+  RUNTOOMANYINPUTSTEST [ (POLYEND   "toomany) ]
+  RUNTOOMANYINPUTSTEST [ (POLYVIEW  "toomany) ]
+
+  ; POLYSTART while in POLYSTART
+  TRACEINSTRUCTION [ POLYSTART ]
+  RUNSTOPPINGTEST  [ POLYSTART ]
+
+  ; POLYEND without POLYSTART
+  RUNSTOPPINGTEST [ POLYEND ]
+
+  ; POLYEND with one vertex
+  TRACEINSTRUCTION [ POLYSTART FORWARD 10 ]
+  RUNSTOPPINGTEST  [ POLYEND ]
+
+  ; POLYEND with two vertices
+  TRACEINSTRUCTION [ POLYSTART FORWARD 10 RIGHT 40 FORWARD 10 ]
+  RUNSTOPPINGTEST  [ POLYEND ]
+
+  WRAP
+END
+
 TO POLYGONTEST
-   POLYGONTEST.SMOKETEST
+  POLYGONTEST.SMOKETEST
+  POLYGONTEST.TRIANGLE
+  POLYGONTEST.PENUP
+  POLYGONTEST.CLEARSCREEN
+  POLYGONTEST.BADINPUT
 END
