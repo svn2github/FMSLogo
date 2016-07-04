@@ -13,9 +13,10 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-POLYEND completes the definition of a polygon that you started when you issued the command <link linkend="command-polystart">POLYSTART</link>.
-Note that the current coordinate is not added as a vertex when you issue the POLYEND command.
-But the move that you issued to get to the current coordinate is included.
+Completes the definition of a polygon that was started with the most recent <link linkend="command-polystart">POLYSTART</link> call.
+</para>
+
+<para>
 Make sure you understand the <link linkend="polygon-restrictions">Polygon Restrictions</link>.
 </para>
 

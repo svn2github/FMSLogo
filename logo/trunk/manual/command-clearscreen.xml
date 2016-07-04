@@ -16,7 +16,16 @@
 <listitem>
 <para>
 Fills the screen window with <link linkend="command-screencolor">SCREENCOLOR</link> and sends the turtle to its initial position and heading.
-CLEARSCREEN also removes all turtles created with <link linkend="command-setturtle">SETTURTLE</link> so that there is only one turtle.
+</para>
+
+<para>
+CLEARSCREEN also resets some state that is not directly related to the screen.
+<itemizedlist>
+  <listitem><para>It removes all turtles created with <link linkend="command-setturtle">SETTURTLE</link> so that there is only one turtle.</para></listitem>
+  <listitem><para>It removes all completed and in-progress polygons which were defined with <link linkend="command-polystart">POLYSTART</link> and <link linkend="command-polyend">POLYEND</link>.</para></listitem>
+</itemizedlist>
+
+
 </para>
 </listitem>
 </varlistentry>
