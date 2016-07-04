@@ -38,6 +38,8 @@ II. New features/bugs fixed:
   o Fix bug #473; KEYBOARDVALUE once again returns values for a handful of
     characters on a US keyboard (;/`[]\=) that are consistent with previous
     versions of FMSLogo.
+  o Fix bug #477; POLYEND now throws an error if the polygon has two vertices
+    (same as if the polygon has one vertex).
   o Implement feature #37; the installer now shows a clear "completed" page
     when it is done.
   o Implement feature #59; use a new icon that doesn't look like a mismash of
