@@ -50,8 +50,8 @@
    #include "localizedstrings.h"
 #endif
 
-#if WX_PURE
-// wxTODO: The original, non-internationalized code is used when not on Windows.
+#ifdef WX_PURE
+// TODO: The original, non-internationalized code is used when not on Windows.
 // This should be rewritten to use the Unicode-aware C routines.
 #define upper_p(c) (c >= 'A' && c <= 'Z')
 #endif
@@ -64,8 +64,8 @@
 //
 // REVISIT: why do "?" and the infix operators need to be backslashed?
 //
-//                                            1         2           3
-//                                   3 4 56789012345678901234 5 678901
+//                                                  1         2           3
+//                                         3 4 56789012345678901234 5 678901
 static char const g_SpecialCharacters[] = " \t\n(?????+++~)[]-*/=<>\"\\:;|{}";
 
 bool
