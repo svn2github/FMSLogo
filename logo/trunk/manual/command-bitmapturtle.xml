@@ -23,8 +23,8 @@ For example, turtle 2 can only be mapped to bitmap 2, not bitmap 1 or bitmap 3.
 
 <para>
 Because bitmap 0 is always mapped to the clipboard, BITMAPTURTLE can only map turtle 0 to the clipboard.
-That is, if you select turtle 0 and issue BITMAPTURTLE then the turtle will be whatever is in the clipboard and will be updated if the clipboard changes.
-Note the clipboard must have a bitmap in it (or &PRODUCTNAME; will complain).
+That is, if you select turtle 0 and run BITMAPTURTLE then the turtle will be whatever is in the clipboard and will be updated if the clipboard changes.
+Note the clipboard must have a bitmap in it or else &PRODUCTNAME; will complain.
 </para>
 
 <para>

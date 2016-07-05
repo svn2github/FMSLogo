@@ -109,7 +109,7 @@ See also the <link linkend="command-step">STEP</link> and <link linkend="command
       <title>Pause Button</title>
 <para>
 Pressing the Pause button stops &PRODUCTNAME; so that you can examine variables, make changes, or whatever else you want to do.
-To continue you can issue a <link linkend="command-continue">CONTINUE</link> command or press the Cancel button.
+To continue you can run the <link linkend="command-continue">CONTINUE</link> command or press the Cancel button.
 You can also run the <link linkend="command-pause">PAUSE</link> command from your programs to act as a "Break Point".
 </para>
    </section>

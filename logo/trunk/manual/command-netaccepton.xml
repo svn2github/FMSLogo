@@ -35,7 +35,7 @@ It is recommended that you use ports numbers greater than 1024.
 
 <para>
 The <parameter>sendready</parameter> input is an instruction list (a list of instructions or a procedure name) to run when data is ready to send again.
-The first time <parameter>sendready</parameter> is run is when &PRODUCTNAME; successfully issued an accept.
+The first time <parameter>sendready</parameter> is run is when &PRODUCTNAME; successfully invokes accept.
 The second time <parameter>sendready</parameter> is run is when &PRODUCTNAME; accepts a connection.
 The third time <parameter>sendready</parameter> is run is when &PRODUCTNAME; is ready to send data.
 After that, <parameter>sendready</parameter> is run when &PRODUCTNAME; is ready to send after an earlier call to NETACCEPTSENDVALUE failed.

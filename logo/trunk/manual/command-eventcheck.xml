@@ -16,7 +16,7 @@
 <para>
 The EVENTCHECK command is like calling <link linkend="command-yield">YIELD</link> immediately followed by <link linkend="command-noyield">NOYIELD</link>.
 It checks to see if any events are waiting to be processed.
-Some commands that issue "callbacks" run in a no-yield state.
+Some commands that input "callbacks" run them in a no-yield state.
 If the callback code is short and quick you won't see any problems.
 But if it's long the user will notice that they lose control during this period.
 If you sprinkle a few EVENTCHECK instructions around, then the user will not loose control for such a "long" period of time.

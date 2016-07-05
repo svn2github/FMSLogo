@@ -63,6 +63,9 @@ $main::TotalWarnings = 0;
   'constituents',     # use "items" or "members", instead
   'element',          # use "item" or "member", instead
   'elements',         # use "item" or "member", instead
+  'issue',            # use "run", "apply", or "call" instead
+  'issues',           # use "runs", "applies", or "calls", instead
+  'issued',           # use "ran", "applied", or "called", instead
 );
 
 my %Commands = ();

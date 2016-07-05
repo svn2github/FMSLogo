@@ -37,7 +37,7 @@ The <parameter>remoteport</parameter> input is an integer that is used to identi
 
 <para>
 The <parameter>sendready</parameter> input is an instruction list (a list of instructions or a procedure name) to run when data is ready to send again.
-The first time <parameter>sendready</parameter> is run is when &PRODUCTNAME; successfully issues the connection request.
+The first time <parameter>sendready</parameter> is run is when &PRODUCTNAME; successfully invokes the connection request.
 The second time <parameter>sendready</parameter> is run is when &PRODUCTNAME; actually connects to the remote machine.
 The third time <parameter>sendready</parameter> is run is when &PRODUCTNAME; is ready to send on the connection.
 After that, <parameter>sendready</parameter> is run when &PRODUCTNAME; is ready to send after an earlier call to NETCONNECTSENDVALUE failed.

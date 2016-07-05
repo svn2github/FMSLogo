@@ -18,7 +18,7 @@ As you read through the official reference manual, keep in mind that &PRODUCTNAM
 <title>MCI Overview</title>
 
 <para>
-All uses of the MCI follow the same pattern: you open a device, you issue some commands, then you close the device when you're done.
+All uses of the MCI follow the same pattern: you open a device, you run some commands, then you close the device when you're done.
 Each of these command must be followed by a device name.
 Many commands take additional parameters that can follow the device name, which further qualify what the command should do.
 These parameters may be given in any order.
@@ -49,7 +49,7 @@ For example, in the play command below, the <userinput>slow</userinput> flag jus
 
 <para>
 All commands are asynchronous, unless otherwise specified.
-This means that &PRODUCTNAME; will issue the command immediately, but won't wait for the command to finish before running the next &GENERICNAME; instruction.
+This means that &PRODUCTNAME; runs the command immediately, but doesn't wait for the command to finish before running the next &GENERICNAME; instruction.
 In general, this is what you want.
 However, all commands optionally accept a <userinput>wait</userinput> flag, which instructs &PRODUCTNAME; to wait until the command has finished before running the next instruction.
 During this time, &PRODUCTNAME; will be unresponsive, so use this flag with caution.
@@ -238,7 +238,7 @@ The <userinput>stop</userinput> command turns the microphone off and stops recor
 
 <para>
 The <userinput>save</userinput> command copies all of the recorded audio data to a file named <userinput>mysong.wav</userinput>.
-Keep in mind that all MCI commands are issued asynchronously, which means that &PRODUCTNAME; may start running other &GENERICNAME; instructions before the file has been fully written.
+Keep in mind that all MCI commands are run asynchronously, which means that &PRODUCTNAME; may start running other &GENERICNAME; instructions before the file has been fully written.
 To make sure that &PRODUCTNAME; waits until the file is 100% written, you can add the <userinput>wait</userinput> flag, like this:
 </para>
 
