@@ -558,6 +558,15 @@ void CMainFrame::UndockCommanderWindow()
 {
     if (m_CommanderIsDocked)
     {
+        // Remove the commander from whatever sizer it may be in,
+        // before calling CCommanderDialog, which may want to add
+        // the commander to its own sizer.
+        wxSizer * oldSizer = m_RealCommander->GetContainingSizer();
+        if (oldSizer != NULL)
+        {
+            oldSizer->Detach(m_RealCommander);
+        }
+
         CCommanderDialog * newCommander = new CCommanderDialog(
             this,
             m_RealCommander);
