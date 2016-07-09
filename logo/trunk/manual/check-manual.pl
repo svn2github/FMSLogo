@@ -482,6 +482,17 @@ $Exceptions{'command-radiobuttonset.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 
 $Exceptions{'command-readlist.xml'}{'logo'} = 1;
 
+$Exceptions{'command-readword.xml'}{'allcaps'}{'WITH'}     = 1;
+$Exceptions{'command-readword.xml'}{'allcaps'}{'ONE'}      = 1;
+$Exceptions{'command-readword.xml'}{'allcaps'}{'VERTICAL'} = 1;
+$Exceptions{'command-readword.xml'}{'allcaps'}{'BAR'}      = 1;
+$Exceptions{'command-readword.xml'}{'allcaps'}{'THIS'}     = 1;
+$Exceptions{'command-readword.xml'}{'allcaps'}{'IS'}       = 1;
+$Exceptions{'command-readword.xml'}{'allcaps'}{'NOW'}      = 1;
+$Exceptions{'command-readword.xml'}{'allcaps'}{'WITHIN'}   = 1;
+$Exceptions{'command-readword.xml'}{'allcaps'}{'THE'}      = 1;
+$Exceptions{'command-readword.xml'}{'allcaps'}{'IN'}       = 1;
+
 $Exceptions{'command-reduce.xml'}{'allcaps'}{'MAX'} = 1;
 
 $Exceptions{'command-restore.xml'}{'allcaps'}{'HIDEANDSHOW'} = 1;
