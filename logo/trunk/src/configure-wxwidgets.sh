@@ -149,4 +149,5 @@ $CONFIGURE                        \
     --enable-uxtheme              \
     --enable-dccache              \
     --enable-wxdib                \
+    --enable-mousewheel           \
     --enable-statusbar            \
