@@ -27,7 +27,7 @@
 
 				  <li><a href="http://www.cs.berkeley.edu/~bh/logo.html">Berkley Logo</a> - 
 					A powerful, cross-platform Logo environment written by Brian Harvey.
-					The Web page also links to three college-level textbooks taught in Logo.
+					The Web page also links to three high school level Computer Science textbooks taught using Logo.
 					FMSLogo uses the language engine from UCBLogo.</li>
 
 				  <li><a href="http://softronix.com/logo.html">MSWLogo Homepage</a> - 
