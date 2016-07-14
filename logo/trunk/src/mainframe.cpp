@@ -680,11 +680,22 @@ void CMainFrame::DockCommanderWindow()
 
         m_RealCommander->GetHistory()->ScrollToBottom();
 
-        // commit to the docked commander
+        // Commit to the docked commander.
+        // m_Commander is NULL when this is called from the constructor.
         if (m_Commander != NULL)
         {
-            // m_Commander is NULL when this is called from the constructor
-            m_Commander->Destroy();
+            // The wxWidgets documentation states that Destroy() does not
+            // immediately destroy the window, but waits until the program is
+            // idle.  This causes problems for test FMSLogo test pass, as
+            // FMSLogo may not become idle if running many commands, leading to
+            // a blank "Commander" dialog box being shown to the user, along
+            // with the docked commander. To work around this, we hide this
+            // commander from the user and rename it to hide it from
+            // FindWindow().
+            wxDialog * commander = static_cast<wxDialog*>(m_Commander);
+            commander->Hide();
+            commander->SetTitle(LOCALIZED_COMMANDER " ");
+            commander->Destroy();
         }
         m_Commander = m_RealCommander;
         m_Commander->Show();
