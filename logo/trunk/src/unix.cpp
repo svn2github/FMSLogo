@@ -112,15 +112,13 @@ int printfx(const char *str)
 
 int printfx(const char *fmt, const char *str)
 {
-    // BUG: this should use snprintf(), but it does
-    // not exist in Borland's compiler.
     size_t bufferSize =
         strlen(fmt) +
         (str ? strlen(str) : 0) +
         1;
 
     char * buff = new char [bufferSize];
-    int cnt = sprintf(buff, fmt, str);
+    int cnt = snprintf(buff, bufferSize, fmt, str);
 
     // check for a buffer overflow
     assert(cnt < (int)bufferSize);
