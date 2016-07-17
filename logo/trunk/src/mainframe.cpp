@@ -1339,9 +1339,8 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
 
     // Cleanup the pens
 #ifndef WX_PURE
-    // REVISIT: This is where the pens were destroyed in the OWL
-    // implementation, but it doesn't seem like the right place
-    // for it.
+    // REVISIT: This is where the pens were destroyed in MSWLogo,
+    // but it doesn't seem like the right place for it.
     if (g_NormalPen != NULL)
     {
         DeleteObject(g_NormalPen);

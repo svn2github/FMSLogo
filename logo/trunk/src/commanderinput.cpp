@@ -58,12 +58,9 @@ CCommanderInput::CCommanderInput(
 
     SetUseHorizontalScrollBar(false);
 
-    // For compatibility with the OWL version of FMSLogo, the selection
-    // should be shown as white on dark blue.
-    const wxColor white(0xFF, 0xFF, 0xFF);
-    const wxColor darkblue(0, 0, 0x80);
-    SetSelForeground(true, white);
-    SetSelBackground(true, darkblue);
+    // Show the selection as white on dark blue, as in MSWLogo.
+    SetSelForeground(true, *wxWHITE);
+    SetSelBackground(true, wxColor(0x00, 0x00, 0x80)); // dark blue
 }
 
 bool
@@ -262,8 +259,7 @@ void CCommanderInput::OnSelectMatchingParen(wxCommandEvent& WXUNUSED(Event))
 
 void CCommanderInput::OnKillFocus(wxFocusEvent & Event)
 {
-    // For compatibility with the OWL versin of FMSLogo, when
-    // the control loses focus, the selection should become invisible.
+    // When the control loses focus, the selection should become invisible.
     HideSelection(true);
     Event.Skip();
 }

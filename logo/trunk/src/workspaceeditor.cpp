@@ -788,9 +788,8 @@ void CWorkspaceEditor::OnRunSelection(wxCommandEvent& WXUNUSED(Event))
 {
     wxString selectedText = m_LogoCodeControl->GetSelectedText();
 
-    // This method could be written using wxString methods, but it was easier
-    // to copy the working code from the OWL-based implementation, which
-    // uses direct string manipulation.
+    // This function uses direct string manipulation because it was copied
+    // from MSWLogo.  It could be rewritten to use wxString functions.
     size_t theTextSize = selectedText.Len() + 1;
     char * theText = new char[theTextSize];
     memcpy(theText, selectedText.c_str(), theTextSize);

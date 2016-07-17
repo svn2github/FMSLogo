@@ -39,8 +39,8 @@ CQuestionBox::CQuestionBox(
 
     wxBoxSizer *topLevelSizer = new wxBoxSizer(wxVERTICAL);
 
-    // Normalize the question so that wxWidget's processing
-    // matches the OWL's processing.
+    // Replace any carriage returns in the question with a linefeed
+    // so that FMSLogo's behavior matches MSWLogo's behavior.
     wxString normalizedQuestion(Question);
     for (size_t i = 0; i < normalizedQuestion.Len(); i++)
     {

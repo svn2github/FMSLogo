@@ -116,7 +116,7 @@ int CSelectBox::DoDialog()
         return -1;
     }
 
-    // For compatibility with the OWL implementation, if there are
+    // For compatibility with MSWLogo, if there are
     // no choices and the user presses OK, return 0.
     if (m_Choices->IsEmpty())
     {

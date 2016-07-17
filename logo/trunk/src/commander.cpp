@@ -631,9 +631,9 @@ void CCommander::ProcessKeyDownEventAtInputControl(wxKeyEvent& Event)
 {
     int keyCode = Event.GetKeyCode();
 
-    // Special case for redirecting the right-arrow key press:
-    // Move the insertion point to the far left for compatability
-    // with the OWL-based FMSLogo.
+    // Special case for redirecting the right-arrow key press
+    // in the commander history: move the insertion point to
+    // the far left.
     if (keyCode == WXK_RIGHT || keyCode == WXK_NUMPAD_RIGHT)
     {
         m_NextInstruction->SetCurrentPos(0);
@@ -651,14 +651,14 @@ void CCommander::GiveControlToInputBox()
 
 void CCommander::GiveControlToHistoryBox()
 {
-    // advance to the bottom of the listbox
+    // Advance to the bottom of the listbox
     m_History->MoveEnd();
-    wxTextPos endPosition = m_History->GetLastPosition();
+    const wxTextPos & endPosition = m_History->GetLastPosition();
     m_History->ShowPosition(endPosition);
 
-    // give focus to the listbox.
+    // Give focus to the listbox.
     // This will copy the current line (which is blank) to
-    // the commander input, as it did in the OWL-based version.
+    // the commander input, as it did in the MSWLogo.
     m_History->SetFocus();
 }
 

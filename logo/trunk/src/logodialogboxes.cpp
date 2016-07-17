@@ -1211,8 +1211,8 @@ NODE *lwindowcreate(NODE *args)
 
     g_LogoWidgets.insert(child);
 
-    // Modeless windows have a callback to set them up due to
-    // legacy with the Borland OWL implementation of MSWLogo.
+    // Invoke the user-supplied instruction list that adds controls
+    // to this window before it is shown.
     do_execution(callback);
 
     child->Dialog->Show();
