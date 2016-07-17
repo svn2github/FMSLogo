@@ -4,7 +4,6 @@
    #  include <windows.h>  // for keybd_event
    #endif
 
-   #include <wx/clipbrd.h>
    #include "commanderinput.h"
 
    #include "commander.h"
@@ -276,11 +275,11 @@ void CCommanderInput::OnSetFocus(wxFocusEvent & Event)
     Event.Skip();
 }
 
-void CCommanderInput::OnPaste(wxCommandEvent& Event)
+void CCommanderInput::OnClipboardPaste(wxStyledTextEvent& Event)
 {
-    // This overrides the default paste handler to strip out
-    // and trailing newlines, which are present when copying
-    // and pasting code snippets from the manual or the Web.
+    // This overrides the default clipboard paste handler to
+    // strip out any trailing newlines, which may be present when
+    // copying and pasting code snippets from the manual or the Web.
     // Because the commander input is only one line tall, if we
     // included the trailing newline, then the user would see a
     // blank line after the pasting and it wouldn't be clear that
@@ -289,59 +288,35 @@ void CCommanderInput::OnPaste(wxCommandEvent& Event)
     // A more comprehensive solution would be to increase the size
     // of the commander input to show everything that was pasted,
     // or at least up to four lines.
-    
-    // In wxWidgets 3.1.0, this can use EVT_STC_CLIPBOARD_PASTE
 
-    bool handledEvent = false;
-    if (wxTheClipboard->Open())
+    // Determine where trailing newlines (if any) start, starting
+    // at the end of the string and moving toward the beginning while
+    // we see newlines.
+    wxString pastedText = Event.GetString();
+    int lastIndex;
+    for (lastIndex = pastedText.length() - 1; 0 <= lastIndex; lastIndex--)
     {
-        // Only special processing for text.
-        if (wxTheClipboard->IsSupported(wxDF_TEXT))
+        if (pastedText[lastIndex] == '\\')
         {
-            // Get the text that is being pasted.
-            wxTextDataObject data;
-            wxTheClipboard->GetData(data);
-            wxString pastedText = data.GetText();
-
-            // Determine where trailing newlines (if any) start.
-            size_t pastedTextLength = pastedText.length();
-            int lastIndex;
-            for (lastIndex = pastedTextLength - 1;
-                 0 <= lastIndex;
-                 lastIndex--)
-            {
-                if (pastedText[lastIndex] == '\\')
-                {
-                    // We shouldn't remove a quoted newline,
-                    // so put it back.
-                    lastIndex++;
-                    break;
-                }
-                else if (pastedText[lastIndex] != '\n' &&
-                         pastedText[lastIndex] != '\r')
-                {
-                    // We have found a trailing character
-                    // that isn't a newline, so we're done.
-                    break;
-                }
-            }
-
-            // Strip the trailing newlines
-            pastedText = pastedText.Truncate(lastIndex + 1);
-
-            // Perform the paste.
-            ReplaceSelection(pastedText);
-            handledEvent = true;
+            // We shouldn't remove a quoted newline,
+            // so put it back.
+            lastIndex++;
+            break;
         }
+        else if (pastedText[lastIndex] != '\n' &&
+                 pastedText[lastIndex] != '\r')
+        {
+            // We have found a trailing character
+            // that isn't a newline, so we're done.
+            break;
+        }
+    }
 
-        wxTheClipboard->Close();
-    }
-   
-    if (!handledEvent)
-    {
-        // Standard processing.
-        Event.Skip();
-    }
+    // Strip the trailing newlines
+    pastedText.Truncate(lastIndex + 1);
+
+    // Perform the replacement
+    Event.SetString(pastedText);
 }
 
 BEGIN_EVENT_TABLE(CCommanderInput, CLogoCodeCtrl)
@@ -351,5 +326,5 @@ BEGIN_EVENT_TABLE(CCommanderInput, CLogoCodeCtrl)
     EVT_KILL_FOCUS(CCommanderInput::OnKillFocus)
     EVT_MENU(ID_FINDMATCHINGPAREN,   CCommanderInput::OnFindMatchingParen)
     EVT_MENU(ID_SELECTMATCHINGPAREN, CCommanderInput::OnSelectMatchingParen)
-    EVT_MENU(wxID_PASTE,             CCommanderInput::OnPaste)
+    EVT_STC_CLIPBOARD_PASTE(wxID_ANY, CCommanderInput::OnClipboardPaste)
 END_EVENT_TABLE()

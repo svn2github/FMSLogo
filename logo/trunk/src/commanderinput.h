@@ -19,7 +19,7 @@ private:
     void OnKillFocus(wxFocusEvent & Event);
     void OnFindMatchingParen(wxCommandEvent& Event);
     void OnSelectMatchingParen(wxCommandEvent& Event);
-    void OnPaste(wxCommandEvent& Event);
+    void OnClipboardPaste(wxStyledTextEvent& Event);
 
     DECLARE_NO_COPY_CLASS(CCommanderInput);
     DECLARE_EVENT_TABLE();
