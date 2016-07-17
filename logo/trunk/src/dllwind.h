@@ -21,5 +21,6 @@
 extern NODE *ldllload(NODE *arg);
 extern NODE *ldllcall(NODE *arg);
 extern NODE *ldllfree(NODE *arg);
+extern void uninitialize_dlls();
 
 #endif // __DLL_WINDOW_H_

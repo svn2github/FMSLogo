@@ -817,4 +817,7 @@ void uninit()
 
     // free the state associated with the timer events
     uninitialize_timers();
+
+    // free the state associated with DLLs which the programmer loaded.
+    uninitialize_dlls();
 }

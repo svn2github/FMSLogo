@@ -619,3 +619,15 @@ NODE *ldllcall(NODE *args)
 
     return Unbound;
 }
+
+void uninitialize_dlls()
+{
+    // Unload all DLLs which have not been unloaded by the Logo programmer.
+    while (!g_LoadedDlls.IsEmpty())
+    {
+        CLoadedDll * leakedDll = g_LoadedDlls.GetFirst();
+        TraceOutput("DLLFREE not called on \"%s\".\n", leakedDll->GetFileName());
+
+        g_LoadedDlls.Remove(leakedDll);
+    }
+}
