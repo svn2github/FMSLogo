@@ -322,5 +322,7 @@ BEGIN_EVENT_TABLE(CCommanderInput, CLogoCodeCtrl)
     EVT_KILL_FOCUS(CCommanderInput::OnKillFocus)
     EVT_MENU(ID_FINDMATCHINGPAREN,   CCommanderInput::OnFindMatchingParen)
     EVT_MENU(ID_SELECTMATCHINGPAREN, CCommanderInput::OnSelectMatchingParen)
+#if wxCHECK_VERSION(3, 1, 0)
     EVT_STC_CLIPBOARD_PASTE(wxID_ANY, CCommanderInput::OnClipboardPaste)
+#endif
 END_EVENT_TABLE()
