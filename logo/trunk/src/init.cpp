@@ -190,9 +190,7 @@ static const PRIMTYPE prims[] =
     { "clean", 0, 0, 0, PREFIX_PRIORITY, lclean, LOCALIZED_ALTERNATE_CLEAN },
     { "clearpalette", 0, 0, 0, PREFIX_PRIORITY, lclearpalette, LOCALIZED_ALTERNATE_CLEARPALETTE },
     { "clearscreen", 0, 0, 0, PREFIX_PRIORITY, lclearscreen, LOCALIZED_ALTERNATE_CLEARSCREEN },
-#if !defined WX_PURE
     { "cleartext", 0, 0, 0, PREFIX_PRIORITY, lcleartext, LOCALIZED_ALTERNATE_CLEARTEXT },
-#endif
 #if !defined WX_PURE
     { "cleartimer", 1, 1, 1, PREFIX_PRIORITY, lcleartimer, LOCALIZED_ALTERNATE_CLEARTIMER },
 #endif
@@ -214,10 +212,8 @@ static const PRIMTYPE prims[] =
     { "cos", 1, 1, 1, PREFIX_PRIORITY, lcos, LOCALIZED_ALTERNATE_COS },
     { "count", 1, 1, 1, PREFIX_PRIORITY, lcount, LOCALIZED_ALTERNATE_COUNT },
     { "cs", 0, 0, 0, PREFIX_PRIORITY, lclearscreen, LOCALIZED_ALTERNATE_CS },
-#if !defined WX_PURE
     { "ct", 0, 0, 0, PREFIX_PRIORITY, lcleartext, LOCALIZED_ALTERNATE_CT },
     { "cursor", 0, 0, 0, PREFIX_PRIORITY, lcursor, LOCALIZED_ALTERNATE_CURSOR },
-#endif
 #if !defined WX_PURE
     { "debugwindows", 0, 0, 1, PREFIX_PRIORITY, ldebugwindows, LOCALIZED_ALTERNATE_DEBUGWINDOWS },
 #endif
@@ -532,9 +528,7 @@ static const PRIMTYPE prims[] =
     { "setitem", 3, 3, 3, PREFIX_PRIORITY, lsetitem, LOCALIZED_ALTERNATE_SETITEM },
     { "setlabelfont", 1, 1, 1, PREFIX_PRIORITY, lsetlabelfont, LOCALIZED_ALTERNATE_SETLABELFONT },
     { "setlight", 1, 1, 1, PREFIX_PRIORITY, lsetlight, LOCALIZED_ALTERNATE_SETLIGHT },
-#if !defined WX_PURE
     { "setmargins", 1, 1, 1, PREFIX_PRIORITY, lsetmargins, LOCALIZED_ALTERNATE_SETMARGINS },
-#endif
     { "setpc", 1, 1, 1, PREFIX_PRIORITY, lsetpencolor, LOCALIZED_ALTERNATE_SETPC },
     { "setpencolor", 1, 1, 1, PREFIX_PRIORITY, lsetpencolor, LOCALIZED_ALTERNATE_SETPENCOLOR },
     { "setpenpattern", 1, 1, 1, PREFIX_PRIORITY, lsetpenpattern, LOCALIZED_ALTERNATE_SETPENPATTERN },
@@ -574,9 +568,7 @@ static const PRIMTYPE prims[] =
     { "sqrt", 1, 1, 1, PREFIX_PRIORITY, lsqrt, LOCALIZED_ALTERNATE_SQRT },
     { "ss", 0, 0, 0, PREFIX_PRIORITY, lsplitscreen, LOCALIZED_ALTERNATE_SS },
     { "st", 0, 0, 0, PREFIX_PRIORITY, lshowturtle, LOCALIZED_ALTERNATE_ST },
-#if !defined WX_PURE
     { "standout", 1, 1, 1, PREFIX_PRIORITY, lstandout, LOCALIZED_ALTERNATE_STANDOUT },
-#endif
 #if !defined WX_PURE
     { "staticcreate", 7, 7, 7, PREFIX_PRIORITY, lstaticcreate, LOCALIZED_ALTERNATE_STATICCREATE },
     { "staticdelete", 1, 1, 1, PREFIX_PRIORITY, lstaticdelete, LOCALIZED_ALTERNATE_STATICDELETE },
