@@ -1,3 +1,4 @@
+diff -aur wxWidgets-3.1.0-src-original/src/stc/ScintillaWX.cpp wxWidgets-3.1.0-src/src/stc/ScintillaWX.cpp
 --- wxWidgets-3.1.0-src-original/src/stc/ScintillaWX.cpp	2016-02-28 22:33:38.000000000 -0800
 +++ wxWidgets-3.1.0-src/src/stc/ScintillaWX.cpp	2016-05-01 08:57:48.000000000 -0700
 @@ -544,7 +544,10 @@
@@ -12,3 +13,15 @@
  
  #if wxUSE_UNICODE
          // free up the old character buffer in case the text is real big
+diff -aur wxWidgets-3.1.0-src-original/src/stc/stc.cpp wxWidgets-3.1.0-src/src/stc/stc.cpp
+--- wxWidgets-3.1.0-src-original/src/stc/stc.cpp	2016-02-28 22:33:38.000000000 -0800
++++ wxWidgets-3.1.0-src/src/stc/stc.cpp	2016-07-16 16:03:00.000000000 -0700
+@@ -5118,7 +5118,7 @@
+         }
+ #else
+         int key = evt.GetKeyCode();
+-        if (key <= WXK_START || key > WXK_COMMAND) {
++        if (key < WXK_START || (WXK_SPECIAL1 <= key && key <= WXK_SPECIAL20)) {
+             m_swx->DoAddChar(key);
+             return;
+         }
