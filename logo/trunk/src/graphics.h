@@ -76,7 +76,6 @@ struct Turtle
 
     // a cache for lines that make up a turtle's body
     LINEX    Points[4];
-    bool     Padding;
 };
 
 // global variables
