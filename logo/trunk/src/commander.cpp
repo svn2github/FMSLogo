@@ -357,7 +357,6 @@ void clearcombobox()
 }
 
 // Appends Text to the end of the what is in the Commander's Recall box.
-// If Text doesn't fit, then some text is removed from the top to make it fit.
 void putcombobox(const char *Text, MESSAGETYPE MessageType)
 {
     // Check that the commander's history field is ready for input.
@@ -365,62 +364,33 @@ void putcombobox(const char *Text, MESSAGETYPE MessageType)
     {
         CCommanderHistory * commanderHistory = CFmsLogo::GetMainFrame()->GetCommander()->m_History;
 
-        // REVISIT: This looping logic was taken from MSWLogo and I'm
-        // not sure that it works in wxWidgets.  There might be a more
-        // direct way to handle out-of-memory errors.
-        for (int i = 0; i < 16; i++)
+        // Output to commander history.
+        // Don't append the empty string because that results in appending
+        // a newline.  When combined with the newline that gets added
+        // below, this would have the side-effect of inserting two lines.
+        if (Text != NULL && Text[0] != '\0')
         {
-            // remember where we started
-            wxTextPos uBefore = commanderHistory->GetLastPosition();
-
-            // Output to commander history.
-            // Don't append the empty string because that results in appending
-            // a newline.  When combined with the newline that gets added
-            // below, this would have the side-effect of inserting two lines.
-            if (Text != NULL && Text[0] != '\0')
+            if (MessageType == MESSAGETYPE_Error)
             {
-                if (MessageType == MESSAGETYPE_Error)
-                {
-                    commanderHistory->SetInsertionPointEnd();
-                    commanderHistory->BeginTextColour(*wxRED);
-                    commanderHistory->WriteText(WXSTRING(Text));
-                    commanderHistory->EndTextColour();
-                }
-                else
-                {
-                    commanderHistory->SetInsertionPointEnd();
-                    commanderHistory->BeginTextColour(*wxBLACK);
-                    commanderHistory->WriteText(WXSTRING(Text));
-                    commanderHistory->EndTextColour();
-                }
+                commanderHistory->SetInsertionPointEnd();
+                commanderHistory->BeginTextColour(*wxRED);
+                commanderHistory->WriteText(WXSTRING(Text));
+                commanderHistory->EndTextColour();
             }
-
-            // Append the newline
-            wxTextPos uCheck = commanderHistory->GetLastPosition();
-            commanderHistory->AppendText(WXSTRING("\n"));
-            wxTextPos uAfter = commanderHistory->GetLastPosition();
-
-            // if the newline was inserted ok, get out
-            if (uCheck + 1 == uAfter)
+            else
             {
-                commanderHistory->ShowPosition(uAfter);
-                return;
+                commanderHistory->SetInsertionPointEnd();
+                commanderHistory->BeginTextColour(*wxBLACK);
+                commanderHistory->WriteText(WXSTRING(Text));
+                commanderHistory->EndTextColour();
             }
-
-            // strip what we inserted
-            commanderHistory->SetEditable(true);
-
-            wxRichTextRange addedRange(uBefore, uAfter);
-            commanderHistory->DeleteSelection();
-
-            // Strip 4k off top
-            wxRichTextRange rangeToRemove(0, 4096);
-            commanderHistory->Delete(rangeToRemove);
         }
 
-        // If all else fails try erasing everything.
-        // We should never get here.
-        commanderHistory->SetValue(WXSTRING(Text));
+        // Append the newline
+        commanderHistory->AppendText(WXSTRING("\n"));
+
+        // Scroll to the bottom to show what was just added.
+        commanderHistory->ScrollToBottom();
     }
 }
 
