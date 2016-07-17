@@ -742,7 +742,7 @@ CCommanderDialog::CCommanderDialog(
         wxDefaultPosition,
         wxDefaultSize,
 #ifdef __WXMSW__
-        wxDEFAULT_DIALOG_STYLE | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
+        wxSYSTEM_MENU | wxCAPTION |  wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
 #else
         wxCAPTION | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
 #endif
