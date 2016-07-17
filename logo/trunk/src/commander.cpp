@@ -741,11 +741,7 @@ CCommanderDialog::CCommanderDialog(
         WXSTRING(LOCALIZED_COMMANDER),
         wxDefaultPosition,
         wxDefaultSize,
-#ifdef __WXMSW__
         wxSYSTEM_MENU | wxCAPTION |  wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
-#else
-        wxCAPTION | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
-#endif
 {
     // Put the commander inside the dialog box
     wxSizer * sizer = new wxBoxSizer(wxVERTICAL);
