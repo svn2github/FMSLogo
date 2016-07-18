@@ -24,6 +24,7 @@ II. New features/bugs fixed:
   o Drop support for display depths less than 16-bit true color.
   o Fix bug #212 up/down arrow is no longer sluggish when the commander history
     has a very long line.
+  o Fix bug #338; SETACTIVEAREA now throw errors when given non-integer values.
   o Fix bug #373; the screen saver now supports all commands that the main
     environment supports, although some commands which have no meaning in
     this environment do nothing (for example CLEARTEXT does nothing because
@@ -40,12 +41,12 @@ II. New features/bugs fixed:
     versions of FMSLogo.
   o Fix bug #477; POLYEND now throws an error if the polygon has two vertices
     (same as if the polygon has one vertex).
+  o Implement feature #32; the "X" close button on the undocked commander's
+    title bar is now disabled.
   o Implement feature #37; the installer now shows a clear "completed" page
     when it is done.
   o Implement feature #59; use a new icon that doesn't look like a mismash of
     red, white, and black.  The icon was provided by Jan Grabe.
-  o Implement feature #32; the "X" close button on the undocked commander's
-    title bar is now disabled.
   o Change the working directory in the screensaver to be the directory which
     holds the screen saver program.  This makes LOAD with a relative path work.
   o Add syntax coloring and matching paren highlights to the minieditor.

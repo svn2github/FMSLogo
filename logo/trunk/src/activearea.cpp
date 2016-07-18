@@ -57,27 +57,22 @@ bool IsActiveAreaOneToOneWithScreen()
 
 NODE *lsetactivearea(NODE *arg)
 {
-    NODE * args = vector_4_arg(arg);
+    NODE * args = int_vector_4_arg(arg);
     if (stopping_flag == THROWING)
     {
         return Unbound;
     }
 
-    // apply all args that are given
+    // All arguments are integers.
     const NODE * xLowNode  = car(args);
     const NODE * yLowNode  = car(cdr(args));
-    NODE * xHighNode = car(cdr(cdr(args)));
-    NODE * yHighNode = car(cdr(cdr(cdr(args))));
+    const NODE * xHighNode = car(cdr(cdr(args)));
+    const NODE * yHighNode = car(cdr(cdr(cdr(args))));
 
-    const int xLow  = numeric_node_to_fixnum(xLowNode);
-    const int yLow  = numeric_node_to_fixnum(yLowNode);
-    const int xHigh = numeric_node_to_fixnum(xHighNode); 
-    const int yHigh = numeric_node_to_fixnum(yHighNode); 
-
-    if (stopping_flag == THROWING)
-    {
-        return Unbound;
-    }
+    const int xLow  = getint(xLowNode);
+    const int yLow  = getint(yLowNode);
+    const int xHigh = getint(xHighNode); 
+    const int yHigh = getint(yHighNode); 
 
     if (xHigh <= xLow || yHigh <= yLow)
     {
@@ -86,7 +81,7 @@ NODE *lsetactivearea(NODE *arg)
         return Unbound;
     }
 
-    // now that we have validated the input, we can commit to it
+    // Now that we have validated the input, we can commit to it
     g_PrinterAreaXLow  = xLow;
     g_PrinterAreaYLow  = yLow;
     g_PrinterAreaXHigh = xHigh; 
@@ -96,7 +91,6 @@ NODE *lsetactivearea(NODE *arg)
     SetConfigurationInt("Printer.XHigh",  g_PrinterAreaXHigh);
     SetConfigurationInt("Printer.YLow",   g_PrinterAreaYLow);
     SetConfigurationInt("Printer.YHigh",  g_PrinterAreaYHigh);
-    SetConfigurationInt("Printer.Pixels", g_PrinterAreaPixels);
 
     return Unbound;
 }

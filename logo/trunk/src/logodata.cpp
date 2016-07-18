@@ -697,6 +697,37 @@ NODE *make_floatnode(FLONUM f)
     return nd;
 }
 
+// Returns an INTEGER node that has the value in ndi if it can be interpreted
+// as an integer without any information loss.
+// Caller must call gcref() on the returned value.
+// If the node cannot be converted to an integer, then Unbound is returned.
+NODE *cnv_node_to_intnode(NODE *ndi)
+{
+    NODE * val = cnv_node_to_numnode(ndi);
+    if (nodetype(val) == INTEGER)
+    {
+        return val;
+    }
+
+    if (nodetype(val) == FLOATINGPOINT)
+    {
+        FLONUM f = getfloat(val);
+        gcref(val);
+        if (-(FLONUM) FIXNUM_MAX <= f && f < (FLONUM) FIXNUM_MAX &&
+            fmod(f, 1.0) == 0.0)
+        {
+            // The floating point node can be converted to an integer
+            // without information loss.
+            FIXNUM i = f;
+            return make_intnode(i);
+        }
+    }
+
+    return Unbound;
+}
+
+// Returns a numeric node (INTEGER or FLOAT) that has the value in ndi if it can
+// be interpreted as a number.
 // Caller must call gcref() on the returned value
 NODE *cnv_node_to_numnode(NODE *ndi)
 {

@@ -978,7 +978,7 @@ void right_helper(FLONUM a)
 
 // If the first element in args can be interpreted as a number
 // then it is changed into an numeric node and returned.
-// Otherwise it is set to whatever ERRACT returns.
+// The programmer is given the opportunity to fix bad arguments using ERRACT.
 NODE *numeric_arg(NODE *args)
 {
     NODE *arg = car(args);
@@ -996,8 +996,8 @@ NODE *numeric_arg(NODE *args)
 }
 
 // If the first element in args can be interpreted as a non-negative number
-// then it is changed into an numeric node and returned.
-// Otherwise it is set to whatever ERRACT returns.
+// then it is changed into a non-negative numeric node and returned.
+// The programmer is given the opportunity to fix bad arguments using ERRACT.
 NODE *nonnegative_numeric_arg(NODE *args)
 {
     NODE *arg = car(args);
@@ -1018,8 +1018,8 @@ NODE *nonnegative_numeric_arg(NODE *args)
 }
 
 // If the first element in args can be interpreted as a positive number
-// then it is changed into an numeric node and returned.
-// Otherwise it is set to whatever ERRACT returns.
+// then it is changed into a positive numeric node and returned.
+// The programmer is given the opportunity to fix bad arguments using ERRACT.
 NODE *positive_numeric_arg(NODE *args)
 {
     NODE *arg = car(args);
@@ -2019,8 +2019,14 @@ static NODE *vec_arg_helper(NODE *Arguments, bool NegativeIsOk)
     return Unbound;
 }
 
-
-NODE *vector_4_arg(NODE *args)
+// Verfies that the first item in args is a list of four nodes that can be
+// converted into integer nodes.  If so, it converts each of them to an
+// integer node and return the list of four.
+//
+// If not, it returns Unbound.
+//
+// The programmer is given the opportunity to fix bad arguments using ERRACT.
+NODE * int_vector_4_arg(NODE *args)
 {
     NODE *arg = car(args);
 
@@ -2033,29 +2039,41 @@ NODE *vector_4_arg(NODE *args)
             cdr(cdr(cdr(arg))) != NIL &&
             cdr(cdr(cdr(cdr(arg)))) == NIL)
         {
-            NODE* val1 = cnv_node_to_numnode(car(arg));
-            NODE* val2 = cnv_node_to_numnode(car(cdr(arg)));
-            NODE* val3 = cnv_node_to_numnode(car(cdr(cdr(arg))));
-            NODE* val4 = cnv_node_to_numnode(car(cdr(cdr(cdr(arg)))));
-            if (val1 != Unbound &&
-                val2 != Unbound &&
-                val3 != Unbound &&
-                val4 != Unbound)
+            // We have a list of four nodes.
+            // Try to convert each of them to an integer.
+            NODE* int1 = cnv_node_to_intnode(car(arg));
+            NODE* int2 = cnv_node_to_intnode(car(cdr(arg)));
+            NODE* int3 = cnv_node_to_intnode(car(cdr(cdr(arg))));
+            NODE* int4 = cnv_node_to_intnode(car(cdr(cdr(cdr(arg)))));
+            if (int1 != Unbound &&
+                int2 != Unbound &&
+                int3 != Unbound &&
+                int4 != Unbound)
             {
-                setcar(arg, val1);
-                setcar(cdr(arg), val2);
-                setcar(cdr(cdr(arg)), val3);
-                setcar(cdr(cdr(cdr(arg))), val4);
+                // Success.
+                // Replace each of the nodes with its integer equivalent.
+                setcar(arg, int1);
+                setcar(cdr(arg), int2);
+                setcar(cdr(cdr(arg)), int3);
+                setcar(cdr(cdr(cdr(arg))), int4);
                 return arg;
             }
-            gcref(val1);
-            gcref(val2);
-            gcref(val3);
-            gcref(val4);
+
+            // Clean up and try again.
+            gcref(int1);
+            gcref(int2);
+            gcref(int3);
+            gcref(int4);
         }
+
+        // This is not a vector of four integer nodes.
+        // Throw a recoverable bad data error to give the programmer
+        // a chance to replace it with good data.
         setcar(args, err_logo(BAD_DATA, arg));
         arg = car(args);
     }
+
+    // The input is bad.
     return Unbound;
 }
 

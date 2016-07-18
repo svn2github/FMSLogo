@@ -123,7 +123,7 @@ extern NODE *lheading(NODE *arg);
 extern NODE *lroll(NODE *arg);
 extern NODE *lpitch(NODE *arg);
 extern NODE *vector_arg(NODE *args);
-extern NODE *vector_4_arg(NODE *args);
+extern NODE *int_vector_4_arg(NODE *args);
 extern NODE *pos_int_vector_arg(NODE *args);
 extern NODE *ltowards(NODE *args);
 extern NODE *ltowardsxyz(NODE *args);

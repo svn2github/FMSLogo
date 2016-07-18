@@ -18,11 +18,59 @@ TO ACTIVEAREATEST.SMOKETEST
    SETACTIVEAREA [-500 -500 500 500]
    SIMPLEREPORTTEST [ACTIVEAREA] [-500 -500 500 500]
 
-   ; floating point values are accepted (and truncated)
-   SETACTIVEAREA [-500.67 -500.43 500.00 500.9999]
-   SIMPLEREPORTTEST [ACTIVEAREA] [-500 -500 500 500]
+   ; floating point values are accepted if they can be
+   ; turned into integers without any loss
+   SETACTIVEAREA [-4e2 -300.000 3E2 4E+02]
+   SIMPLEREPORTTEST [ACTIVEAREA] [-400 -300 300 400]
 
    ; undo side-effects
+   SETACTIVEAREA :oldactivearea
+END
+
+TO ACTIVEAREATEST.PERSISTTEST
+   ; Tests that SETACTIVEAREA saves the active area for future instances
+   ; of FMSLogo.  It spawns an instance of FMSLogo to get its ACTIVEAREA.
+   ; Since SETACTIVEAREA sets the configuration, a subsequent instance
+   ; of FMSLogo should inherit its value.
+
+   ; Save the current active area
+   LOCALMAKE "oldactivearea ACTIVEAREA
+
+   ; Set the active area to an unusual and recognizable value.
+   TRACEINSTRUCTION [ SETACTIVEAREA [-10 -9 5 6] ]
+
+   ; Spawn an instance of FMSLogo that will write its ACTIVEAREA
+   LOCALMAKE "activeareafile "activeareatest.activearea.txt
+   LOCALMAKE "program        "selectboxfromstartup.lgo
+
+   IF FILEEXISTS :activeareafile [ ERASEFILE :activeareafile ]
+
+   WRITEBINARYDATA :program (WORD
+        "|LOAD "testlib.lgo\n|
+        "|\n|
+        "|MAKE "startup [\n|
+        "|  WRITEBINARYDATA "| :activeareafile "| ACTIVEAREA\n|
+        "|  BYE\n|
+        "|]\n|
+   )
+
+   IGNORE (shell (list "fmslogo.exe :program) "true)
+
+   IFELSE FILEEXISTS :activeareafile [
+       OPENREAD :activeareafile
+       SETREAD  :activeareafile
+       SIMPLEREPORTTEST [ READLIST ] [-10 -9 5 6]
+       SIMPLEREPORTTEST [ READLIST ] "||
+       CLOSE    :activeareafile
+
+       ERASEFILE :activeareafile
+   ][
+     REPORTTESTFAILED [TEST BUG: Failed to start other instance of FMSLogo.]
+   ]
+
+   ERASEFILE :program
+
+   ; Restore the original active area.
    SETACTIVEAREA :oldactivearea
 END
 
@@ -50,18 +98,22 @@ TO ACTIVEAREATEST.BADINPUT
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA 0            ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA "|0,0,50,50| ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA {0      0    50     50}     ]
+   RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0.5    0    50     50]     ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [zero   0    50     50]     ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [[0]    0    50     50]     ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [{0}    0    50     50]     ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [-1e20  0    50     50]     ]
+   RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0     0.5   50     50]     ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0     zero  50     50]     ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0     [0]   50     50]     ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0     {0}   50     50]     ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0    -1e20  50     50]     ]
+   RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0      0    50.5   50]     ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0      0    fifty  50]     ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0      0    [50]   50]     ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0      0    {50}   50]     ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0      0    1e20   50]     ]
+   RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0      0    50     50.5]   ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0      0    50     fifty]  ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0      0    50     [50]]   ]
    RUNDOESNTLIKEINPUTTEST [SETACTIVEAREA [0      0    50     {50}]   ]
@@ -83,8 +135,7 @@ TO ACTIVEAREATEST.BADINPUT
 END
 
 TO ACTIVEAREATEST
-
    ACTIVEAREATEST.SMOKETEST
    ACTIVEAREATEST.BADINPUT
-
+   ACTIVEAREATEST.PERSISTTEST
 END

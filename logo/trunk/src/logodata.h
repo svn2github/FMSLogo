@@ -56,6 +56,7 @@ extern NODE *make_caseobj(NODE *cstrnd, NODE *obj);
 extern NODE *make_colon(NODE *cnd);
 extern NODE *make_intnode(FIXNUM i);
 extern NODE *make_floatnode(FLONUM f);
+extern NODE *cnv_node_to_intnode(NODE *ndi);
 extern NODE *cnv_node_to_numnode(NODE *ndi);
 extern NODE *cnv_node_to_strnode(NODE *nd);
 extern NODE *make_static_strnode(const char *strptr);
