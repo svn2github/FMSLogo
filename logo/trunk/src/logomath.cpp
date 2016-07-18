@@ -77,20 +77,20 @@ const char MATHFUNC_Log10      = 'g';
 const char MATHFUNC_Ln         = 'n';
 const char MATHFUNC_Power      = 'p';
 
-// returns 0  if snd is not a number
-// returns 1  if snd is an integer
-// returns >1 if snd is a floating point value
+// returns 0   if snd is not a number
+// returns 1  if snd is already a number or can be converted to an integer
+// returns >1 if snd can be converted to a floating point value
 int numberp(NODE *snd)
 {
-    if (is_number(snd)) 
+    if (is_number(snd))
     {
-        return 1;
+        return 1; // is a number
     }
 
     NODE * stringnode = cnv_node_to_strnode(snd);
-    if (stringnode == Unbound) 
+    if (stringnode == Unbound)
     {
-        return 0;
+        return 0; // not a number
     }
 
     // HACK: only ref() and deref() stringnode if cnv_node_to_strnode()
@@ -112,7 +112,7 @@ int numberp(NODE *snd)
         {
             deref(stringnode);
         }
-        return 0;
+        return 0; // not a number
     }
 
     int dl   = 0; // how many digits are to the left of the decimal point
@@ -155,11 +155,11 @@ int numberp(NODE *snd)
     int rval;
     if ((dl == 0 && dr == 0) || pcnt != plen)
     {
-        rval = 0;
+        rval = 0; // not a number
     }
     else
     {
-        rval = dr + 1;
+        rval = dr + 1; // can be converted to a number
     }
 
     if (mustDerefStringnode)
