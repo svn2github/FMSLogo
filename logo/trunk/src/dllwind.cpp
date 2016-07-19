@@ -32,6 +32,7 @@
    #include "error.h"
    #include "logodata.h"
    #include "parse.h"
+   #include "screenwindow.h" // for TraceOutput
    #include "debugheap.h"
 #endif
 

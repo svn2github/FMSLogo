@@ -30,6 +30,7 @@
    #include <limits.h>
    #include <ctype.h>
    #include <stdlib.h>
+   #include <math.h> // fmod
 
    #include "logodata.h"
    #include "version.h"
