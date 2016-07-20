@@ -30,13 +30,12 @@ If ERRACT outputs another datum of bad input, then it will be run again to fix t
 <varlistentry><term>Example</term>
 <listitem>
 
-<programlisting><userinput>FENCE
-FORWARD 1000</userinput>
-Turtle out of bounds
+<programlisting><userinput>FORWARD [1]</userinput>
+FORWARD doesn't like [1] as input
 
-<userinput>MAKE "ERRACT [PRINT [You really blew it]]
-FORWARD 1000</userinput>
-You really blew it
+<userinput>MAKE "ERRACT [PRINT [Doing replacement] 100]
+FORWARD [1]</userinput>
+Doing replacement
 </programlisting>
 </listitem>
 </varlistentry>
