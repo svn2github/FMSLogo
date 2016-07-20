@@ -24,7 +24,10 @@ II. New features/bugs fixed:
   o Drop support for display depths less than 16-bit true color.
   o Fix bug #212 up/down arrow is no longer sluggish when the commander history
     has a very long line.
-  o Fix bug #338; SETACTIVEAREA now throw errors when given non-integer values.
+  o Fix bug #319; SETACTIVEAREA now throws a recoverable error when given points
+    that define a zero or negative area rectangle.  Before, the error was not
+    recoverable.
+  o Fix bug #338; SETACTIVEAREA now throws errors when given non-integer values.
   o Fix bug #373; the screen saver now supports all commands that the main
     environment supports, although some commands which have no meaning in
     this environment do nothing (for example CLEARTEXT does nothing because

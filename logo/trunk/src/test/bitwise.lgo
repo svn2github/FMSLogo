@@ -38,7 +38,7 @@ TO BITANDTEST.BADINPUT
   RUNRECOVERABLEERRORTEST ~
     [(BITAND "all "bad "input)] ~
     [1.2 11 1.4 5 1.2 7] ~
-    1
+    [1]
 
 END
 
@@ -80,7 +80,7 @@ TO BITORTEST.BADINPUT
   RUNRECOVERABLEERRORTEST ~
     [(BITOR "all "bad "input)] ~
     [1.2 1 1.4 2 1.2 4] ~
-    7
+    [7]
 END
 
 
@@ -123,7 +123,7 @@ TO BITXORTEST.BADINPUT
   RUNRECOVERABLEERRORTEST ~
     [(BITXOR "all "bad "input)] ~
     [1.2 6 1.4 2 1.2 10] ~
-    14
+    [14]
 END
 
 TO BITNOTTEST.SMOKETEST
@@ -146,7 +146,7 @@ TO BITNOTTEST.BADINPUT
   RUNDOESNTLIKEINPUTTEST [BITNOT 12.30]
 
   ; Confirm that the errors are really recoverable.
-  RUNRECOVERABLEERRORTEST [BITNOT "bad] [{456} 123] -124
+  RUNRECOVERABLEERRORTEST [BITNOT "bad] [{456} 123] [-124]
 END
 
 
@@ -181,7 +181,7 @@ TO LSHIFTTEST.BADINPUT
   ; Confirm that the errors are really recoverable.
   ; In this case, both initial inputs are bad, as
   ; are the first values output by ERRACT as replacements.
-  RUNRECOVERABLEERRORTEST [LSHIFT "bad "input] [bad 5 bad 2] 20
+  RUNRECOVERABLEERRORTEST [LSHIFT "bad "input] [bad 5 bad 2] [20]
 
 END
 
@@ -216,7 +216,7 @@ TO ASHIFTTEST.BADINPUT
   ; Confirm that the errors are really recoverable.
   ; In this case, both initial inputs are bad, as
   ; are the first values output by ERRACT as replacements.
-  RUNRECOVERABLEERRORTEST [ASHIFT "bad "input] [bad 5 bad 2] 20
+  RUNRECOVERABLEERRORTEST [ASHIFT "bad "input] [bad 5 bad 2] [20]
 
 END
 

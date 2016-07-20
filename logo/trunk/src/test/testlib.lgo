@@ -772,7 +772,7 @@ TO RUNRECOVERABLEERRORTEST.ERRACTROUTINE
   ; If we've run out of items, log an error and output
   ; the empty list.
   IF :erractindex > COUNT :erractoutputs [
-    REPORTTESTFAILED (LIST "|ERRACT routine was called| :erractindex "times.)
+    REPORTTESTFAILED (WORD "|ERRACT routine was called | :erractindex "| times.|)
 
     ; Best effort to recover by outputting a value that most commands like.
     OUTPUT 1
@@ -785,29 +785,47 @@ END
 BURY [RUNRECOVERABLEERRORTEST.ERRACTROUTINE]
 
 TO RUNRECOVERABLEERRORTEST :instructions :erractoutputs :expectedoutput
+   ; Runs a recoverable bad-input tests for a set of instructions.
+   ; It confirms that ERRACT handler was invoked the expected number of
+   ; times and that the instruction ultimately output the correct value.
+   ; If :instructions products no ouptut, then set :expectedoutput to the
+   ; empty list.
 
-   ; Setup the erract routine
+   ; Setup the erract routine.
    LOCALMAKE "erractindex 0
    LOCALMAKE "erract [RUNRECOVERABLEERRORTEST.ERRACTROUTINE]
 
-   ; Log what we're about to do
+   ; Log what we're about to do.
    REPORTTESTINFO (LIST "|Running instruction with recoverable error:| :instructions)
 
    ; NOTE: ERRACT doesn't get invoked within a CATCH "ERROR block,
    ; so we cannot use SIMPLEREPORTTEST.
-   localmake "actualoutput RUN :instructions
+   LOCALMAKE "actualoutput RUNRESULT :instructions
 
    ; Make sure that ERRACT was called the right number of times.
    IF NOTEQUAL? :erractindex COUNT :erractoutputs [
-      REPORTTESTFAILED (LIST "|ERRACT routine was called| :erractindex "|times.  We expected| COUNT :erractoutputs ".)
+      REPORTTESTFAILED (WORD 
+          "|ERRACT routine was called | :erractindex "| times.  |
+          "|We expected it to be called | COUNT :erractoutputs "| times.|)
    ]
 
    ; Verify the output
-   IFELSE EQUAL? :actualoutput :expectedoutput [
-     REPORTTESTPASSED (LIST :instructions "output :actualoutput "|, as expected.|)
+   IFELSE EMPTY? :actualoutput [
+      ; For RUNRESULT, outputting [] means that :instructions output nothing.
+      IFELSE EMPTY? :expectedoutput [
+        REPORTTESTPASSED (LIST :instructions "|stopped, as expected.|)
+      ][
+        REPORTTESTFAILED (LIST :instructions "|output nothing. We expected| :expectedoutput ".)
+      ]
    ][
-     REPORTTESTFAILED (LIST :instructions "output :actualoutput "|. We expected| :expectedoutput ".)
+      ; For RUNRESULT, the output of :instructions is the member of :actualoutput
+      IFELSE EQUAL? :actualoutput :expectedoutput [
+        REPORTTESTPASSED (LIST :instructions "output FIRST :actualoutput "|, as expected.|)
+      ][
+        REPORTTESTFAILED (LIST :instructions "output FIRST :actualoutput "|. We expected| FIRST :expectedoutput ".)
+      ]
    ]
+
 
 END
 BURY [RUNRECOVERABLEERRORTEST]

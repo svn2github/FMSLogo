@@ -413,7 +413,7 @@ TO REMAINDERTEST
   RUNRECOVERABLEERRORTEST ~
     [(REMAINDER "bad "input)] ~
     [[bad] 5 {bad} 3 ] ~
-    2
+    [2]
 
 END
 
@@ -476,7 +476,7 @@ TO MODULOTEST
   RUNRECOVERABLEERRORTEST ~
     [(MODULO "bad "input)] ~
     [[bad] 5 {bad} 3 ] ~
-    2
+    [2]
 
 END
 
