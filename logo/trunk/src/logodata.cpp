@@ -714,7 +714,7 @@ NODE *cnv_node_to_intnode(NODE *ndi)
     {
         FLONUM f = getfloat(val);
         gcref(val);
-        if (-(FLONUM) FIXNUM_MAX <= f && f < (FLONUM) FIXNUM_MAX &&
+        if (-(FLONUM) FIXNUM_MAX <= f && f <= (FLONUM) FIXNUM_MAX &&
             fmod(f, 1.0) == 0.0)
         {
             // The floating point node can be converted to an integer
