@@ -51,7 +51,7 @@ TO IFTEST
 
   ; single command instructions are allow in words
   LOCALMAKE "myvar if "true "OUTPUT.373
-  if EQUAL? :myvar 373 [
+  IFELSE EQUAL? :myvar 373 [
     REPORTTESTPASSED [IF could be used as an r-val, as expected.]
   ] [
     REPORTTESTFAILED [IF could NOT be used as an r-val.]
