@@ -738,18 +738,18 @@ NODE *integer_arg(NODE *args)
 // Otherwise the programmer is given a chance to correct it with ERRACT.
 NODE *ranged_integer_arg(NODE *args, int MinValue, int MaxValue)
 {
-    NODE * val;
-
     while (NOT_THROWING)
     {
         NODE * arg = car(args);
-        val = cnv_node_to_intnode(arg);
+        NODE * val = cnv_node_to_intnode(arg);
 
         if (nodetype(val) == INTEGER &&
             MinValue <= getint(val) && getint(val) <= MaxValue)
         {
-            // this is an integer within the requested range
-            break;
+            // This is an integer within the requested range.
+            // Update the arguments with the new node and return it.
+            setcar(args, val);
+            return val;
         }
 
         // grab a new value from ERRACT and try again
@@ -757,9 +757,7 @@ NODE *ranged_integer_arg(NODE *args, int MinValue, int MaxValue)
         setcar(args, err_logo(BAD_DATA, arg));
     }
 
-    // update the arguments with the new node and return it
-    setcar(args, val);
-    return val;
+    return Unbound;
 }
 
 // Returns an integer node if args can be interpreted as a non-negative integer.
