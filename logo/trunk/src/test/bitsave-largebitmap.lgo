@@ -5,7 +5,7 @@ TO BITSAVE.LARGEBITMAP
   ; Set the active area to whatever was passed in on the command line.
   make "width  (item 3 MACHINE)
   make "height (item 4 MACHINE)
-  SETACTIVEAREA (list -(:width / 2) -(:height / 2) (:width / 2) (:height / 2))
+  SETACTIVEAREA (list -(INT :width / 2) -(INT :height / 2) (INT :width / 2) (INT :height / 2))
 
   ; Draw something on the screen.
   CLEARSCREEN
