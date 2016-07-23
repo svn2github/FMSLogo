@@ -1,4 +1,5 @@
 LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
 
 TO STEPTEST.STEPPEDPROCEDURE
    SHOW [This is line one of STEPTEST.STEPPEDPROCEDURE]
@@ -18,26 +19,36 @@ END
 
 TO STEPTEST.PROCEDURE
 
-   ; make sure the procedure is not already traced
-   FAILIFNOTFALSE [MEMBERP "STEPTEST.STEPPEDPROCEDURE (ITEM 1 STEPPED) ]
+   UIAUTOMATION.INITIALIZE
 
-   ; step the procedure
-   TRACEINSTRUCTION [STEP "STEPTEST.STEPPEDPROCEDURE]
+   CATCH "ERROR [
+     ; make sure the procedure is not already traced
+     FAILIFNOTFALSE [MEMBERP "STEPTEST.STEPPEDPROCEDURE (ITEM 1 STEPPED) ]
 
-   ; make sure the procedure is stepped
-   FAILIFNOTTRUE [MEMBERP "STEPTEST.STEPPEDPROCEDURE (ITEM 1 STEPPED) ]
+     ; step the procedure
+     TRACEINSTRUCTION [STEP "STEPTEST.STEPPEDPROCEDURE]
 
-   ; call it (it should be single stepped step)
-   TRACEINSTRUCTION [STEPTEST.STEPPEDPROCEDURE]
+     ; make sure the procedure is stepped
+     FAILIFNOTTRUE [MEMBERP "STEPTEST.STEPPEDPROCEDURE (ITEM 1 STEPPED) ]
 
-   ; unstep the procedure
-   TRACEINSTRUCTION [UNSTEP "STEPTEST.STEPPEDPROCEDURE]
+     ; call it (it should be single stepped step)
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW "|Single Step| "Ok
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW "|Single Step| "Ok
+     TRACEINSTRUCTION [STEPTEST.STEPPEDPROCEDURE]
 
-   ; make sure the procedure is not stepped anymore
-   FAILIFNOTFALSE [MEMBERP "STEPTEST.STEPPEDPROCEDURE (ITEM 1 STEPPED) ]
+     ; unstep the procedure
+     TRACEINSTRUCTION [UNSTEP "STEPTEST.STEPPEDPROCEDURE]
 
-   ; call it (it should no longer trace the output)
-   TRACEINSTRUCTION [STEPTEST.STEPPEDPROCEDURE]
+     ; make sure the procedure is not stepped anymore
+     FAILIFNOTFALSE [MEMBERP "STEPTEST.STEPPEDPROCEDURE (ITEM 1 STEPPED) ]
+
+     ; call it (it should no longer trace the output)
+     TRACEINSTRUCTION [STEPTEST.STEPPEDPROCEDURE]
+   ]
+
+   IGNORE FAILIFERROR "STEPTEST.PROCEDURE
+
+   UIAUTOMATION.UNINITIALIZE
 
 END
 
@@ -107,10 +118,14 @@ END
 
 TO STEPTEST.STEPALL
  
-   ; step everything
+   UIAUTOMATION.INITIALIZE
 
    ; To make running this test easier, this test tries not to do too
    ; much while every procedure is stepped.
+   UIAUTOMATION.POSTBUTTONPUSHTOWINDOW "|Single Step| "Ok
+   UIAUTOMATION.POSTBUTTONPUSHTOWINDOW "|Single Step| "Ok
+
+   ; step everything
    REPORTTESTINFO [Running STEP CONTENTS]
    STEP CONTENTS
 
@@ -123,6 +138,8 @@ TO STEPTEST.STEPALL
    REPORTTESTINFO [Ran UNSTEP CONTENTS]
 
    SIMPLEREPORTTEST [STEPPED] [[][][]]
+
+   UIAUTOMATION.UNINITIALIZE
 END
 
 TO STEPTEST.BADINPUT
