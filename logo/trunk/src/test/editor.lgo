@@ -1,4 +1,5 @@
 LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
 
 TO EDALLTEST.DISPLAYBYHWND
 
@@ -10,7 +11,7 @@ TO EDALLTEST.DISPLAYBYHWND
 
   ; Doc and undock the commander while the editor is open.
   ; This has caused a crash in wxWidgets if the parent is
-  ; set to the commaner, as it is in MSWLogo.
+  ; set to the commander, as it is in MSWLogo.
   TEXTSCREEN
   SPLITSCREEN
 
@@ -89,52 +90,81 @@ TO EDITTEST.BADINPUT
    RUNBADINPUTTEST [ EDIT [[] [] {1}] ]
 END
 
+TO EDITORTEST.ISEDITORSHOWING
+  WAIT 12 ; wait 200 ms for the editor to appear
+  OUTPUT NOTEQUALP 0 UIAUTOMATION.FINDWINDOW "Editor 0
+END
+
 TO EDITORTEST.OPENTOERROR
+   LOCAL [isok]
 
-   ; Implicitly load a file that contains a parse error.
-   MESSAGEBOX [Notice] [After you dismiss this dialog box, another dialog should appear reporting an error.\nPress "Yes" on it.]
+   UIAUTOMATION.INITIALIZE
 
-   TRACEINSTRUCTION [ERASE "FileWithParseError]
-   SIMPLEREPORTTEST [FileWithParseError] "success
+   CATCH "ERROR [
+     ; Implicitly load a file that contains a parse error.
+     ; and automatically press "Yes" on the resulting dialog.
+     TRACEINSTRUCTION [ERASE "FileWithParseError]
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW "|Error in File| "&Yes
+     SIMPLEREPORTTEST [FileWithParseError] "success
 
-   LOCALMAKE "isok YESNOBOX ~
-     [Question] ~
-     [Press "Yes" if and only if\n
-\n
-1) The dialog box appeared\n
-\n
-2) The editor opened with the caret is positioned on the line that says:\n
-   CARET SHOULD BE HERE WHEN EDITOR IS OPENED\n
-\n
-3) The commander window shows the following explanation:\n
-   unexpected '\]' in SIMPLEREPORTTEST\n
-   [To ProcedureWithError]\n
-\n
-Fix the error then save the editor before answering.]
-   IFELSE :isok [
-     REPORTTESTPASSED [The caret was positioned to the error, as expected.]
-   ][
-     REPORTTESTFAILED [The caret was not positioned to the error.]
-   ]
+     IF NOT EDITORTEST.ISEDITORSHOWING [
+       REPORTTESTFAILED [Editor did not appear after requesting that it open.]
+     ]
+
+     MAKE "isok YESNOBOX ~
+       "Question ~
+       "|Press "Yes" if and only if
+
+1) A dialog box notifying you an error appeared (and was automatically dismissed by the test)
+
+2) The editor opened with the caret is positioned on the line that says:
+   CARET SHOULD BE HERE WHEN EDITOR IS OPENED
+
+3) The commander window shows the following explanation:
+   unexpected ']' in SIMPLEREPORTTEST
+   [To ProcedureWithError]
+
+Fix the error then save the editor before answering.|
+     IFELSE :isok [
+       REPORTTESTPASSED [The caret was positioned to the error, as expected.]
+     ][
+       REPORTTESTFAILED [The caret was not positioned to the error.]
+     ]
+  ]
+
+  IGNORE FAILIFERROR "EDITORTEST.OPENTOERROR
+
+  UIAUTOMATION.UNINITIALIZE
 
 END
 
 TO EDITORTEST.DONOTOPENTOERROR
 
-   ; Implicitly load a file that contains a parser error.
-   MESSAGEBOX [Notice] [After dismissing this dialog box, another dialog box should appear reporting an error.\nPress "No" on it.]
+   LOCAL [isok]
 
-   TRACEINSTRUCTION [ERASE "FileWithParseError]
-   SIMPLEREPORTTEST [FileWithParseError] "success
+   UIAUTOMATION.INITIALIZE
 
-   LOCALMAKE "isok YESNOBOX ~
-     [Question] ~
-     [Press "Yes" if the editor is NOT showing.]
-   IFELSE :isok [
-     REPORTTESTPASSED [The editor was not shown, as expected.]
-   ][
-     REPORTTESTFAILED [The editor was shown.]
+   IF EDITORTEST.ISEDITORSHOWING [
+       REPORTTESTFAILED [TEST BUG: the editor must not be showing when EDITORTEST.DONOTOPENTOERROR is run.]
    ]
+
+   CATCH "ERROR [
+     ; Implicitly load a file that contains a parse error
+     ; and automatically press "No" on the resulting dialog.
+     TRACEINSTRUCTION [ERASE "FileWithParseError]
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW "|Error in File| "&No
+     SIMPLEREPORTTEST [FileWithParseError] "success
+
+     IFELSE EDITORTEST.ISEDITORSHOWING [
+       REPORTTESTFAILED [Editor appeared after requesting that it not open.]
+     ][
+       REPORTTESTPASSED [Editor did not appear after requesting that it not open, as expected.]
+     ]
+  ]
+
+  IGNORE FAILIFERROR "EDITORTEST.DONOTOPENTOERROR
+
+  UIAUTOMATION.UNINITIALIZE
 
 END
 

@@ -902,8 +902,15 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
         return;
     }
 
-    // remove this window from the set of windows that the main window is tracking
+    // Remove this window from the set of windows that the main window
+    // is tracking.
     CFmsLogo::GetMainFrame()->CloseWorkspaceEditor(this);
+
+    // Because wxWidgets won't destroy the window until the applicaton is idle,
+    // it will still be visible to the tests.  This causes some tests to fail.
+    // To work around ths problem, we change the window's title in a way that
+    // the tests can see, but the users cannot.
+    SetTitle(GetTitle() + WXSTRING(" "));
 
     if (m_EditArguments != NIL || m_CheckForErrors)
     {

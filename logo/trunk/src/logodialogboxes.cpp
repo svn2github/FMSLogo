@@ -1299,7 +1299,14 @@ NODE *lwindowdelete(NODE *arg)
         if (window != NULL)
         {
             // The exact name and type exists matches.
-            // kill this window and all of its children.
+            // Kill this window and all of its children.
+            //
+            // Note that because wxWidgets doesn't destroy the window until
+            // the application is idle, some tests may think that the window
+            // is still open.  To signal to the tests that the window
+            // is scheduled to be destroyed, we change its name in a way that
+            // the tests will see, but the user won't.
+            window->Dialog->SetTitle(window->Dialog->GetTitle() + WXSTRING(" "));
             window->Dialog->Destroy();
             g_LogoWidgets.zap(windowname);
         }
