@@ -30,3 +30,7 @@ bool CheckOnScreenControls()
 void uninitialize_windows()
 {
 }
+
+void uninitialize_dlls()
+{
+}
