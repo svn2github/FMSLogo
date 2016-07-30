@@ -176,6 +176,7 @@ void CCommanderInput::SetText(const wxString & NewText)
 {
     CLogoCodeCtrl::SetText(NewText);
     SetSelection(0, 0);
+    ShowPosition(0);
     EmptyUndoBuffer();
 }
 
