@@ -49,15 +49,7 @@ CAboutFmsLogo::CAboutFmsLogo(wxWindow * Parent)
             wxDefaultSize, 
             wxALIGN_CENTRE | wxSUNKEN_BORDER);
 
-        sizerTop->Add(
-            info,
-            0,
-#ifdef __WXGTK__
-            wxALIGN_CENTER | wxALL, // work around an alignment bug in wx 2.8
-#else
-            wxALL | wxEXPAND,
-#endif
-            5);
+        sizerTop->Add(info, 0, wxALL | wxEXPAND, 5);
     }
 
     wxButton *okButton = new wxButton(
