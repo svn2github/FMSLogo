@@ -66,6 +66,7 @@
 #include <algorithm>
 
 // wxWidgets header files
+#include <wx/arrstr.h>
 #include <wx/app.h>
 #include <wx/button.h>
 #include <wx/checkbox.h>
@@ -77,6 +78,7 @@
 #include <wx/dcmirror.h>
 #include <wx/defs.h>
 #include <wx/dialog.h>
+#include <wx/dir.h>
 #include <wx/event.h>
 #include <wx/filename.h>
 #include <wx/filedlg.h>

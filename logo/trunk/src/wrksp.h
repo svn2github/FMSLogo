@@ -62,6 +62,7 @@ extern NODE *ldefinedp(NODE *args);
 extern NODE *lmacrop(NODE *args);
 extern NODE *larity(NODE *args);
 extern NODE *lcopydef(NODE *args);
+extern NODE* get_all_proc_names();
 
 
 // global variables

@@ -61,6 +61,7 @@ public:
     void OnSelectAll(wxCommandEvent& Event);
     void OnUpdateSelectAll(wxUpdateUIEvent& Event);
     void OnHelpTopicSearch(wxCommandEvent& Event);
+    void OnKeyDown(wxKeyEvent& Event);
 
 private:
 

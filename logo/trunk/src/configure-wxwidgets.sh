@@ -151,3 +151,4 @@ $CONFIGURE                        \
     --enable-wxdib                \
     --enable-mousewheel           \
     --enable-statusbar            \
+    --enable-popupwin             \

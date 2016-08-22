@@ -24,6 +24,10 @@
     #include <stdlib.h>
     #include <string.h>
 
+    #include <wx/arrstr.h>
+    #include <wx/dir.h>
+    #include <wx/filename.h>
+
     #include "wrksp.h"
     #include "logodata.h"
     #include "appendablelist.h"
@@ -42,11 +46,11 @@
     #include "unix.h"
     #include "avltree.h"
     #include "sort.h"
-    #include "debugheap.h"
-
+    #include "stringadapter.h"
     #include "localizedstrings.h"
     #include "cursor.h"
     #include "screenwindow.h"
+    #include "debugheap.h"
 #endif
 
 bool bExpert    = false;               // Expert mode
@@ -756,8 +760,8 @@ contents_map(
             return;
         }
 
-        // shift up one bit to the corresponding
-        // flag for variables.
+        // Shift up one bit to the corresponding flag for variables.
+        // For example, from PROC_BURIED to VAL_BURIED.
         flag_check <<= 1;
         if (bck(flag__object(sym, flag_check))) 
         {
@@ -773,8 +777,8 @@ contents_map(
             return;
         }
 
-        // shift up one bit to the corresponding
-        // flag for property lists.
+        // Shift up one bit to the corresponding flag for property lists.
+        // For example, from VAL_BURIED to PLIST_BURIED.
         flag_check <<= 2;
         if (bck(flag__object(sym, flag_check))) 
         {
@@ -1869,4 +1873,76 @@ NODE *lcopydef(NODE *args)
     }
 
     return Unbound;
+}
+
+// Gets the names of all unburied procedures
+NODE* get_all_proc_names()
+{
+    CAppendableList allProcedureNames;
+
+    // Start by collecting the names of all procedures in LOGOLIB.
+    wxArrayString libraryProcedureNames;
+    wxDir::GetAllFiles(*g_LibPathName, &libraryProcedureNames);
+    for (wxArrayString::const_iterator i = libraryProcedureNames.begin();
+         i != libraryProcedureNames.end();
+         ++i)
+    {
+        // The string in the iterator is the full path.
+        // The file name (without the path) is the name of the
+        // procedure contained within.
+        const wxFileName libraryFile(*i);
+        const wxString & procedureNameString = libraryFile.GetFullName();
+        const char * procedureName = WXSTRING_TO_STRING(procedureNameString);
+        NODE * procedureNameNode;
+        if (0 == strcmp(procedureName, "+rest"))
+        {
+            // There is one file in the LOGOLIB directory whose name doesn't
+            // match the procedure that is defined within it because windows
+            // file systems don't support file names with ? in them.  We
+            // don't want to suggest that "+rest" as a valid command, so we
+            // hard-code mapping it back to its real name.
+            procedureNameNode = make_static_strnode("?rest");
+        }
+        else
+        {
+            procedureNameNode = make_strnode(procedureName);
+        }
+
+        // Add this library routine to the list of procedures.
+        allProcedureNames.AppendElement(procedureNameNode);
+    }
+
+    // Next, collect all procedures that are included in
+    // the global symbol table.
+    for (int i = 0; i < HASH_LEN; i++)
+    {
+        for (NODE * nd = hash_table[i]; nd != NIL; nd = cdr(nd))
+        {
+            NODE * object = car(nd);
+
+            // If this symbol has no associated procedure, then skip it.
+            NODE * procnode = procnode__object(object);
+            if (procnode__object(object) == UNDEFINED)
+            {
+                continue;
+            }
+
+            // Remove infix operators
+            if (is_prim(procnode) && PREFIX_PRIORITY < getprimpri(procnode))
+            {
+                continue;
+            }
+
+            // If this symbol is buried, then skip it.
+            // This should omit any LOGOLIB routine.
+            if (flag__object(object,PROC_BURIED))
+            {
+                continue;
+            }
+
+            allProcedureNames.AppendElement(canonical__object(object));
+        }
+    }
+
+    return mergesort(allProcedureNames.GetList(), true);
 }
