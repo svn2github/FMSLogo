@@ -16,9 +16,13 @@ public:
     const wxString GetProcedureBody() const;
 
 private:
+    void OnFindMatchingParen(wxCommandEvent& Event);
+    void OnSelectMatchingParen(wxCommandEvent& Event);
+    void OnAutoComplete(wxCommandEvent& Event);
 
     CMiniEditorTextCtrl * m_TextField;
 
+    DECLARE_EVENT_TABLE();
     DECLARE_NO_COPY_CLASS(CMiniEditor);
 };
 

@@ -11,15 +11,11 @@
    #include "helputils.h" // for ContextHelp
 #endif
 
-enum
-{
-    KEY_CODE_CLOSE_BRACKET = 0xDD,
-};
-
 enum 
 {
     ID_FINDMATCHINGPAREN = wxID_HIGHEST,
     ID_SELECTMATCHINGPAREN,
+    ID_AUTOCOMPLETE,
 };
 
 CCommanderInput::CCommanderInput(
@@ -29,7 +25,7 @@ CCommanderInput::CCommanderInput(
     CLogoCodeCtrl(Parent, Id)
 {
     // Configure the keyboard shortcuts
-    wxAcceleratorEntry acceleratorEntries[8];
+    wxAcceleratorEntry acceleratorEntries[9];
 
     acceleratorEntries[0].Set(wxACCEL_CTRL, 'A', wxID_SELECTALL);
     acceleratorEntries[1].Set(wxACCEL_CTRL, 'Z', wxID_UNDO);
@@ -39,17 +35,16 @@ CCommanderInput::CCommanderInput(
     acceleratorEntries[5].Set(wxACCEL_CTRL, 'V', wxID_PASTE);
 
     // Ctrl+] moves to matching paren
-    acceleratorEntries[6].Set(
-        wxACCEL_CTRL,
-        KEY_CODE_CLOSE_BRACKET,
-        ID_FINDMATCHINGPAREN);
+    acceleratorEntries[6].Set(wxACCEL_CTRL, ']', ID_FINDMATCHINGPAREN);
 
     // Ctrl+Shift+] selects to matching paren
     acceleratorEntries[7].Set(
         wxACCEL_CTRL | wxACCEL_SHIFT,
-        KEY_CODE_CLOSE_BRACKET,
+        ']',
         ID_SELECTMATCHINGPAREN);
 
+    // Ctrl+Space does auto-complete
+    acceleratorEntries[8].Set(wxACCEL_CTRL, WXK_SPACE, ID_AUTOCOMPLETE);
 
     wxAcceleratorTable acceleratorTable(
         ARRAYSIZE(acceleratorEntries),
@@ -217,7 +212,14 @@ void CCommanderInput::OnKeyDown(wxKeyEvent& Event)
 
     case WXK_RETURN:
     case WXK_NUMPAD_ENTER:
-        static_cast<CCommander*>(GetParent())->Execute();
+        if (AutoCompActive())
+        {
+            Event.Skip();
+        }
+        else
+        {
+            static_cast<CCommander*>(GetParent())->Execute();
+        }
         break;
 
     default:
@@ -256,6 +258,11 @@ void CCommanderInput::OnFindMatchingParen(wxCommandEvent& WXUNUSED(Event))
 void CCommanderInput::OnSelectMatchingParen(wxCommandEvent& WXUNUSED(Event))
 {
     SelectMatchingParen();
+}
+
+void CCommanderInput::OnAutoComplete(wxCommandEvent& WXUNUSED(Event))
+{
+    AutoComplete();
 }
 
 void CCommanderInput::OnKillFocus(wxFocusEvent & Event)
@@ -323,6 +330,7 @@ BEGIN_EVENT_TABLE(CCommanderInput, CLogoCodeCtrl)
     EVT_KILL_FOCUS(CCommanderInput::OnKillFocus)
     EVT_MENU(ID_FINDMATCHINGPAREN,   CCommanderInput::OnFindMatchingParen)
     EVT_MENU(ID_SELECTMATCHINGPAREN, CCommanderInput::OnSelectMatchingParen)
+    EVT_MENU(ID_AUTOCOMPLETE,        CCommanderInput::OnAutoComplete)
 #if wxCHECK_VERSION(3, 1, 0)
     EVT_STC_CLIPBOARD_PASTE(wxID_ANY, CCommanderInput::OnClipboardPaste)
 #endif

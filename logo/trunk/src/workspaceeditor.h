@@ -67,6 +67,7 @@ private:
     void OnSetFont(wxCommandEvent& Event);
     void OnFindMatchingParen(wxCommandEvent& Event);
     void OnSelectMatchingParen(wxCommandEvent& Event);
+    void OnAutoComplete(wxCommandEvent& Event);
 
     void OnRunSelection(wxCommandEvent& Event);
     void OnUpdateRunSelection(wxUpdateUIEvent& Event);

@@ -267,7 +267,7 @@ void CLogoCodeCtrl::OnUpdateUi(wxStyledTextEvent& Event)
     }
 }
 
-void CLogoCodeCtrl::OnKeyDown(wxKeyEvent& Event)
+void CLogoCodeCtrl::AutoComplete()
 {
     enum CasePreference
     {
@@ -276,112 +276,103 @@ void CLogoCodeCtrl::OnKeyDown(wxKeyEvent& Event)
         INITIALCAPS,
     };
 
-    if (Event.GetKeyCode() == WXK_RETURN && Event.GetModifiers() == wxMOD_CONTROL)
+    // Determine what the programmer has typed so far that should be completed.
+    int caretPosition     = GetCurrentPos();
+    int wordStart         = WordStartPosition(caretPosition, true);
+    const wxString & word = GetTextRange(wordStart, caretPosition);
+    int prefixLength      = word.length();
+
+    int caretStyle;
+    if (caretPosition == 0 || prefixLength == 0)
     {
-        // Do the auto-completion
-
-        // Determine what the programmer has typed so far that should be completed.
-        int caretPosition     = GetCurrentPos();
-        int wordStart         = WordStartPosition(caretPosition, true);
-        const wxString & word = GetTextRange(wordStart, caretPosition);
-        int prefixLength      = word.length();
-
-        int caretStyle;
-        if (caretPosition == 0 || prefixLength == 0)
-        {
-            // At the begining of the file or within whitespace
-            // all procedure calls are legal.
-            caretStyle = SCE_FMS_DEFAULT;
-        }
-        else
-        {
-            // Get the style that is determined by the lexer.
-            // We must use one character before the current one
-            // because the variable and text styles end as the word
-            // break, but if another character were typed, it would
-            // be included in that style.
-            // BUG: :var with caret after : auto-completes as procedure
-            caretStyle = GetStyleAt(caretPosition - 1);
-        }
-
-        NODE * allProcedureNames;
-        if (caretStyle == SCE_FMS_DEFAULT || caretStyle == SCE_FMS_IDENTIFIER)
-        {
-            // We are completing in a context that accepts procedure names
-            allProcedureNames = get_all_proc_names();
-        }
-        else
-        {
-            // TODO: complete variable names using global and special variables
-            allProcedureNames = NIL;
-        }
-
-        // Because FMSLogo is case-insensitive, a programmer an use whatever
-        // casing scheme they prefer (upper case, lower case, initial caps).
-        // If the auto-completion suggested completions in a different
-        // casing scheme than the programmer wants, it would be so frustrating
-        // that it would be unusable.
-        // To mitigate this, we try to infer the casing scheme to the main
-        // preferences.
-        CasePreference casePreference;
-        if (word.Upper() == word)
-        {
-            // Default to ALLCAPS on empty word
-            casePreference = ALLCAPS;
-        }
-        else if (word.Lower() == word)
-        {
-            casePreference = LOWERCASE;
-        }
-        else
-        {
-            // Assume any mixed case style is initial caps.
-            casePreference = INITIALCAPS;
-        }
-
-        wxString completions;
-        for (NODE * nd = allProcedureNames; nd != NIL; nd = cdr(nd))
-        {
-            NODE * procedureNameNode = car(nd);
-            wxString procedureName(
-                getstrptr(procedureNameNode),
-                getstrlen(procedureNameNode));
-
-            // Because FMSLogo is case-insensitive, the auto-completion
-            // cannot use strict case comparision.
-            const wxString & prefix = procedureName.Left(prefixLength);
-            if (word.CmpNoCase(prefix) != 0)
-            {
-                // This procedure does not begin with the prefix.
-                continue;
-            }
-
-            // Use this completion following the casing preference
-            // that was inferred from the prefix.
-            wxString caseCorrectCompletion(word);
-            const wxString & rest = procedureName.Mid(prefixLength);
-            if (casePreference == ALLCAPS)
-            {
-                caseCorrectCompletion += rest.Upper();
-            }
-            else
-            {
-                caseCorrectCompletion += rest.Lower();
-            }
-
-            // Append this procedure name to the list of completions.
-            completions += caseCorrectCompletion + " ";
-        }
-        gcref(allProcedureNames);
-
-        if (!completions.IsEmpty())
-        {
-            AutoCompShow(prefixLength, completions);
-        }
+        // At the begining of the file or within whitespace
+        // all procedure calls are legal.
+        caretStyle = SCE_FMS_DEFAULT;
     }
     else
     {
-        Event.Skip();
+        // Get the style that is determined by the lexer.
+        // We must use one character before the current one
+        // because the variable and text styles end as the word
+        // break, but if another character were typed, it would
+        // be included in that style.
+        // BUG: :var with caret after : auto-completes as procedure
+        caretStyle = GetStyleAt(caretPosition - 1);
+    }
+
+    NODE * allProcedureNames;
+    if (caretStyle == SCE_FMS_DEFAULT || caretStyle == SCE_FMS_IDENTIFIER)
+    {
+        // We are completing in a context that accepts procedure names
+        allProcedureNames = get_all_proc_names();
+    }
+    else
+    {
+        // TODO: complete variable names using global and special variables
+        allProcedureNames = NIL;
+    }
+
+    // Because FMSLogo is case-insensitive, a programmer an use whatever
+    // casing scheme they prefer (upper case, lower case, initial caps).
+    // If the auto-completion suggested completions in a different
+    // casing scheme than the programmer wants, it would be so frustrating
+    // that it would be unusable.
+    // To mitigate this, we try to infer the casing scheme to the main
+    // preferences.
+    CasePreference casePreference;
+    if (word.Upper() == word)
+    {
+        // Default to ALLCAPS on empty word
+        casePreference = ALLCAPS;
+    }
+    else if (word.Lower() == word)
+    {
+        casePreference = LOWERCASE;
+    }
+    else
+    {
+        // Assume any mixed case style is initial caps.
+        casePreference = INITIALCAPS;
+    }
+
+    wxString completions;
+    for (NODE * nd = allProcedureNames; nd != NIL; nd = cdr(nd))
+    {
+        NODE * procedureNameNode = car(nd);
+        wxString procedureName(
+            getstrptr(procedureNameNode),
+            getstrlen(procedureNameNode));
+
+        // Because FMSLogo is case-insensitive, the auto-completion
+        // cannot use strict case comparision.
+        const wxString & prefix = procedureName.Left(prefixLength);
+        if (word.CmpNoCase(prefix) != 0)
+        {
+            // This procedure does not begin with the prefix.
+            continue;
+        }
+
+        // Use this completion following the casing preference
+        // that was inferred from the prefix.
+        wxString caseCorrectCompletion(word);
+        const wxString & rest = procedureName.Mid(prefixLength);
+        if (casePreference == ALLCAPS)
+        {
+            caseCorrectCompletion += rest.Upper();
+        }
+        else
+        {
+            caseCorrectCompletion += rest.Lower();
+        }
+
+        // Append this procedure name to the list of completions.
+        completions += caseCorrectCompletion + " ";
+    }
+    gcref(allProcedureNames);
+
+    if (!completions.IsEmpty())
+    {
+        AutoCompShow(prefixLength, completions);
     }
 }
 
@@ -917,7 +908,6 @@ BEGIN_EVENT_TABLE(CLogoCodeCtrl, wxStyledTextCtrl)
     EVT_STC_SAVEPOINTREACHED(wxID_ANY, CLogoCodeCtrl::OnSavePointReached)
     EVT_STC_SAVEPOINTLEFT(wxID_ANY,    CLogoCodeCtrl::OnSavePointLeft)
     EVT_CONTEXT_MENU(CLogoCodeCtrl::OnContextMenu)
-    EVT_KEY_DOWN(CLogoCodeCtrl::OnKeyDown)
     EVT_MENU(wxID_UNDO,                CLogoCodeCtrl::OnUndo)
     EVT_UPDATE_UI(wxID_UNDO,           CLogoCodeCtrl::OnUpdateUndo)
     EVT_MENU(wxID_REDO,                CLogoCodeCtrl::OnRedo)

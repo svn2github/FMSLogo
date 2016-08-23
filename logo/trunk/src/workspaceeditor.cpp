@@ -46,6 +46,7 @@ enum
 
     ID_FINDMATCHINGPAREN,
     ID_SELECTMATCHINGPAREN,
+    ID_AUTOCOMPLETE,
 
     ID_NEXT_WINDOW,
 };
@@ -92,6 +93,7 @@ BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
 
     EVT_MENU(ID_FINDMATCHINGPAREN,   CWorkspaceEditor::OnFindMatchingParen)
     EVT_MENU(ID_SELECTMATCHINGPAREN, CWorkspaceEditor::OnSelectMatchingParen)
+    EVT_MENU(ID_AUTOCOMPLETE,        CWorkspaceEditor::OnAutoComplete)
     EVT_CLOSE(CWorkspaceEditor::OnClose)
 
     EVT_FIND(wxID_ANY,             CWorkspaceEditor::OnFindDialog)
@@ -224,7 +226,7 @@ CWorkspaceEditor::CWorkspaceEditor(
     m_LogoCodeControl->SetFont(font);
 
     // Configure the keyboard shortcuts
-    wxAcceleratorEntry acceleratorEntries[3];
+    wxAcceleratorEntry acceleratorEntries[4];
 
     // Ctrl+] moves to matching paren
     acceleratorEntries[0].Set(
@@ -243,6 +245,12 @@ CWorkspaceEditor::CWorkspaceEditor(
         wxACCEL_CTRL,
         WXK_TAB,
         ID_NEXT_WINDOW);
+
+    // Ctrl+Enter starts auto-complete
+    acceleratorEntries[3].Set(
+        wxACCEL_CTRL,
+        WXK_SPACE,
+        ID_AUTOCOMPLETE);
 
     wxAcceleratorTable acceleratorTable(
         ARRAYSIZE(acceleratorEntries),
@@ -782,6 +790,11 @@ void CWorkspaceEditor::OnFindMatchingParen(wxCommandEvent& WXUNUSED(Event))
 void CWorkspaceEditor::OnSelectMatchingParen(wxCommandEvent& WXUNUSED(Event))
 {
     m_LogoCodeControl->SelectMatchingParen();
+}
+
+void CWorkspaceEditor::OnAutoComplete(wxCommandEvent& WXUNUSED(Event))
+{
+    m_LogoCodeControl->AutoComplete();
 }
 
 void CWorkspaceEditor::OnRunSelection(wxCommandEvent& WXUNUSED(Event))

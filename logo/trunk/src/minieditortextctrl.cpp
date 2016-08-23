@@ -34,12 +34,6 @@ void CMiniEditorTextCtrl::OnKeyDown(wxKeyEvent& Event)
         ContextHelp(GetStringSelection());
         break;
 
-    case WXK_RETURN:
-        // Enter writes a newline, instead of pressing the default button,
-        // which would close the mini-editor.
-        WriteText(WXSTRING("\n"));
-        break;
-
     case WXK_TAB:
         // Use TAB and SHIFT+TAB as a navigational key events
         if (Event.ShiftDown())
