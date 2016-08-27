@@ -132,7 +132,7 @@ In "Expert" mode the following occurs:
 </para>
 
 <para>
-POS and POSXYZ will not "round" the returned data and you may see positions such as [0 -1.0e-12].
+<link linkend="command-pos">POS</link> and <link linkend="command-posxyz">POSXYZ</link> will not "round" the returned data and you may see positions such as [0 -1.0e-12].
 This is due to "normal" floating point errors.
 Rounding POS serves no purpose other than to make the POS look good.
 But in some applications this rounding can introduce error if you save and restore the position.
