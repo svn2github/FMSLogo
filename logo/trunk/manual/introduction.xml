@@ -217,8 +217,8 @@ Do you want to learn more?
 Almost every command in this help file has a simple example that shows how to use it.
 Also check out the examples that come with &PRODUCTNAME; (see the Help Menu).  These examples show how to combine several procedures to perform a simple task.
 You can search for some tutorials on the Web, like <ulink url="http://fmslogo.sourceforge.net/workshop/">The Logo Workshop</ulink>.
-Jim Muller's Great Logo Adventure Book is primarily based on MSWLogo, but should be applicable to &PRODUCTNAME;
-For more advanced topics, see Brian Harvey's MIT Press Books.
+Jim Muller's book "The Great Logo Adventure" is based on MSWLogo, but should be applicable to &PRODUCTNAME;.
+For more advanced topics, see Brian Harvey's three volume <ulink url="https://people.eecs.berkeley.edu/~bh/v1-toc2.html">Computer Science Logo Style</ulink> from the MIT Press.
 </para>
 
 <para>
