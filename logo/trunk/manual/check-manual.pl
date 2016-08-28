@@ -638,6 +638,7 @@ $Exceptions{'introduction.xml'}{'allcaps'}{'SHAPES.LGO'}  = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'SQUARE'}      = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'TRIANGLE'}    = 1;
 $Exceptions{'introduction.xml'}{'logo'}                   = 1;
+$Exceptions{'introduction.xml'}{'bannedword'}{'elements'} = 1;
 
 $Exceptions{'logohelp.xml'}{'allcaps'}{'ACTION'}          = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'ALL'}             = 1;
