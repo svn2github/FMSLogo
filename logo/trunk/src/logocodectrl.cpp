@@ -320,7 +320,7 @@ void CLogoCodeCtrl::AutoComplete()
 
     // Determine what the programmer has typed so far that should be completed.
     int caretPosition     = GetCurrentPos();
-    int wordStart         = WordStartPosition(caretPosition, true);
+    int wordStart         = WordStartPosition(caretPosition, false);
     const wxString & word = GetTextRange(wordStart, caretPosition);
     int prefixLength      = word.length();
 
