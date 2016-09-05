@@ -187,13 +187,27 @@ void CCommanderInput::OnKeyDown(wxKeyEvent& Event)
 
     case WXK_UP:
     case WXK_NUMPAD_UP:
-        if (GetCurrentLine() == 0)
+        if (AutoCompActive())
         {
-            static_cast<CCommander*>(GetParent())->GiveControlToHistoryBox();
+            // Send the Up arrow to the autocomplete popup.
+            Event.Skip();
         }
         else
         {
-            LineUp();
+            if (GetCurrentLine() == 0)
+            {
+                // The caret is already at the first line of the input control,
+                // so move up into the history box.
+                static_cast<CCommander*>(GetParent())->GiveControlToHistoryBox();
+            }
+            else
+            {
+                // Move the caret one line within the input control.
+                // Normally, you cannot have more than one line of text
+                // within this control, but you can if you paste multiple
+                // lines.
+                LineUp();
+            }
         }
         break;
 
@@ -214,6 +228,7 @@ void CCommanderInput::OnKeyDown(wxKeyEvent& Event)
     case WXK_NUMPAD_ENTER:
         if (AutoCompActive())
         {
+            // Send the Enter to the autocomplete popup.
             Event.Skip();
         }
         else
