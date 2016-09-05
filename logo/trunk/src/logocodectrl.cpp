@@ -267,6 +267,48 @@ void CLogoCodeCtrl::OnUpdateUi(wxStyledTextEvent& Event)
     }
 }
 
+static
+wxString ToLower(const wxString & String)
+{
+#ifdef WX_PURE
+    return String.Lower();
+#else
+    size_t length = String.length();
+    wxCharBuffer convertedBuffer(length);
+
+    LCMapString(
+        MAKELCID(LANG_USER_DEFAULT, SORT_DEFAULT),
+        LCMAP_LOWERCASE,
+        String.c_str(),
+        String.length(),
+        convertedBuffer.data(),
+        convertedBuffer.length());
+
+    return wxString(convertedBuffer);
+#endif
+}
+
+static
+wxString ToUpper(const wxString & String)
+{
+#ifdef WX_PURE
+    return String.Lower();
+#else
+    size_t length = String.length();
+    wxCharBuffer convertedBuffer(length);
+
+    LCMapString(
+        MAKELCID(LANG_USER_DEFAULT, SORT_DEFAULT),
+        LCMAP_UPPERCASE,
+        String.c_str(),
+        String.length(),
+        convertedBuffer.data(),
+        convertedBuffer.length());
+
+    return wxString(convertedBuffer);
+#endif
+}
+
 void CLogoCodeCtrl::AutoComplete()
 {
     enum CasePreference
@@ -312,20 +354,20 @@ void CLogoCodeCtrl::AutoComplete()
         allProcedureNames = NIL;
     }
 
-    // Because FMSLogo is case-insensitive, a programmer an use whatever
-    // casing scheme they prefer (upper case, lower case, initial caps).
+    // Because FMSLogo is case-insensitive, a programmer can use whatever
+    // casing scheme they prefer (upper case, lower case, initial caps, etc.).
     // If the auto-completion suggested completions in a different
     // casing scheme than the programmer wants, it would be so frustrating
-    // that it would be unusable.
-    // To mitigate this, we try to infer the casing scheme to the main
-    // preferences.
+    // that the suggestions would be unusable.
+    // To mitigate this, we try to infer the casing scheme from the
+    // portion which the programmer has typed so far.
     CasePreference casePreference;
-    if (word.Upper() == word)
+    if (ToUpper(word) == word)
     {
         // Default to ALLCAPS on empty word
         casePreference = ALLCAPS;
     }
-    else if (word.Lower() == word)
+    else if (ToLower(word) == word)
     {
         casePreference = LOWERCASE;
     }
@@ -358,11 +400,11 @@ void CLogoCodeCtrl::AutoComplete()
         const wxString & rest = procedureName.Mid(prefixLength);
         if (casePreference == ALLCAPS)
         {
-            caseCorrectCompletion += rest.Upper();
+            caseCorrectCompletion += ToUpper(rest);
         }
         else
         {
-            caseCorrectCompletion += rest.Lower();
+            caseCorrectCompletion += ToLower(rest);
         }
 
         // Append this procedure name to the list of completions.
