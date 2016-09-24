@@ -39,16 +39,21 @@ CLocalizedNode::CLocalizedNode() :
 {
 }
 
+// Initializes this localized node.
+//
+// PrimaryName   - The English name of this node.
+// AlternateName - The alternate (localized) name of this node.
+//                 This may be NULL if this node has not been localized.
 void
 CLocalizedNode::Initialize(
     const char    * PrimaryName,
     const char    * AlternateName
     )
 {
-    // the Primary name always exists
+    // The Primary name always exists.
     m_Primary = intern(make_static_strnode(PrimaryName));
 
-    // the Alternate name may not exist
+    // The Alternate name may not exist.
     if (AlternateName != NULL)
     {
         if (strcmp(PrimaryName, AlternateName) != 0)
@@ -59,11 +64,14 @@ CLocalizedNode::Initialize(
     }
 }
 
+// Returns an interned CASEOBJ for this node, preferring the
+// alternate (localized) node to the primary (English) one,
+// if it exists.
 NODE *
 CLocalizedNode::GetNode() const
 {
     // prefer to use the alternate node, if it exists
-    if (m_Alternate != NULL)
+    if (m_Alternate != NIL)
     {
         return m_Alternate;
     }
@@ -76,18 +84,12 @@ CLocalizedNode::GetNode() const
 const char * 
 CLocalizedNode::GetName() const
 {
-    // prefer to use the alternate name, if it exists
+    // Use GetNode() so that we return the alternate name, if it exists.
 
-    // Because these nodes were created with make_static_strnode()
-    // We can directly return the node's string.
-    if (m_Alternate != NIL)
-    {
-        return getstrptr(strnode__caseobj(m_Alternate));
-    }
-    else
-    {
-        return getstrptr(strnode__caseobj(m_Primary));
-    }
+    // Because the nodes were created with make_static_strnode()
+    // We can directly return the node's string knowing that it
+    // is NUL-terminated and will not be freed.
+    return getstrptr(strnode__caseobj(GetNode()));
 }
 
 bool
