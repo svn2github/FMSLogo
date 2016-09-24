@@ -319,39 +319,84 @@ void CLogoCodeCtrl::AutoComplete()
     };
 
     // Determine what the programmer has typed so far that should be completed.
-    int caretPosition     = GetCurrentPos();
-    int wordStart         = WordStartPosition(caretPosition, false);
-    const wxString & word = GetTextRange(wordStart, caretPosition);
-    int prefixLength      = word.length();
+    int caretPosition   = GetCurrentPos();
+    int tokenStart      = WordStartPosition(caretPosition, false);
+
+    // Extract from the word start to the current caret position.
+    wxString token(GetTextRange(tokenStart, caretPosition));
+
+    // If the caret is in a whitespace run, then "token" will be all
+    // of the whitespace from the previous word's ending to the caret.
+    // In this case, we want to suggest completions as if token were empty,
+    // so we Trim() to convert the whitespace to the empty string.
+    // Note that Trim() removes whitespace from the right, but this is equivalent
+    // to removing it from the left when token is entirely whitespace.
+    token.Trim();
+
+    // If the caret is after a ":" that is not followed by any word characters,
+    // then token will be ":".  In this case, we want to complete as variables,
+    // but not include the ":" in our search, so we clear the token and handle
+    // it the same as if the caret were after a colon in ":var".
+    if (token.IsSameAs(':'))
+    {
+        token.Clear();
+    }
+
+    int tokenLength = token.length();
 
     int caretStyle;
-    if (caretPosition == 0 || prefixLength == 0)
+    if (tokenLength == 0)
     {
-        // At the begining of the file or within whitespace
-        // all procedure calls are legal.
-        caretStyle = SCE_FMS_DEFAULT;
+        if (caretPosition != 0 &&
+            GetTextRange(caretPosition - 1, caretPosition).IsSameAs(':'))
+        {
+            // For ":var", when the caret is immediately after a ":" token is
+            // empty.  We would auto-complete as procedure if we interrogated the
+            // caret style in this context, so we handle it as a special case.
+            caretStyle = SCE_FMS_VARIABLE;
+        }
+        else
+        {
+            // At the begining of the file or within whitespace
+            // all procedure calls are legal.
+            caretStyle = SCE_FMS_DEFAULT;
+        }
     }
     else
     {
         // Get the style that is determined by the lexer.
         // We must use one character before the current one
-        // because the variable and text styles end as the word
+        // because the variable and text styles end at the word
         // break, but if another character were typed, it would
         // be included in that style.
-        // BUG: :var with caret after : auto-completes as procedure
+        assert(caretPosition != 0);
         caretStyle = GetStyleAt(caretPosition - 1);
     }
 
-    NODE * allProcedureNames;
+    // Collect all possible completions based on the context.
+    NODE   * allNames;
+    wxString completionPrefix;
+    size_t   completionPrefixLength;
     if (caretStyle == SCE_FMS_DEFAULT || caretStyle == SCE_FMS_IDENTIFIER)
     {
-        // We are completing in a context that accepts procedure names
-        allProcedureNames = get_all_proc_names();
+        // We are completing in a context that accepts procedure names.
+        allNames               = get_all_proc_names();
+        completionPrefix       = token;
+        completionPrefixLength = tokenLength;
+    }
+    else if (caretStyle == SCE_FMS_VARIABLE)
+    {
+        // We are completion in a context that accepts variable names.
+        allNames               = get_all_variable_names();
+        completionPrefix       = wxString(":") + token; // prefix suggestions with ":"
+        completionPrefixLength = tokenLength + 1;
     }
     else
     {
-        // TODO: complete variable names using global and special variables
-        allProcedureNames = NIL;
+        // No completions are possible.
+        allNames               = NIL;
+        completionPrefix       = wxEmptyString;
+        completionPrefixLength = 0;
     }
 
     // Because FMSLogo is case-insensitive, a programmer can use whatever
@@ -362,12 +407,12 @@ void CLogoCodeCtrl::AutoComplete()
     // To mitigate this, we try to infer the casing scheme from the
     // portion which the programmer has typed so far.
     CasePreference casePreference;
-    if (ToUpper(word) == word)
+    if (ToUpper(completionPrefix) == completionPrefix)
     {
         // Default to ALLCAPS on empty word
         casePreference = ALLCAPS;
     }
-    else if (ToLower(word) == word)
+    else if (ToLower(completionPrefix) == completionPrefix)
     {
         casePreference = LOWERCASE;
     }
@@ -377,27 +422,28 @@ void CLogoCodeCtrl::AutoComplete()
         casePreference = INITIALCAPS;
     }
 
+    // Look through all of the collected symbols for ones
+    // that begin with the completionPrefix.
     wxString completions;
-    for (NODE * nd = allProcedureNames; nd != NIL; nd = cdr(nd))
+    for (NODE * nd = allNames; nd != NIL; nd = cdr(nd))
     {
-        NODE * procedureNameNode = car(nd);
-        wxString procedureName(
-            getstrptr(procedureNameNode),
-            getstrlen(procedureNameNode));
+        NODE * nameNode = car(nd);
+        wxString currentName(getstrptr(nameNode), getstrlen(nameNode));
 
         // Because FMSLogo is case-insensitive, the auto-completion
         // cannot use strict case comparision.
-        const wxString & prefix = procedureName.Left(prefixLength);
-        if (word.CmpNoCase(prefix) != 0)
+        const wxString & namePrefix = currentName.Left(tokenLength);
+        if (token.CmpNoCase(namePrefix) != 0)
         {
-            // This procedure does not begin with the prefix.
+            // This name does not begin with the prefix, so it is
+            // not appropriate to show as a completion.
             continue;
         }
 
         // Use this completion following the casing preference
-        // that was inferred from the prefix.
-        wxString caseCorrectCompletion(word);
-        const wxString & rest = procedureName.Mid(prefixLength);
+        // that was inferred from the completion prefix.
+        wxString caseCorrectCompletion(completionPrefix);
+        const wxString & rest = currentName.Mid(tokenLength);
         if (casePreference == ALLCAPS)
         {
             caseCorrectCompletion += ToUpper(rest);
@@ -407,14 +453,14 @@ void CLogoCodeCtrl::AutoComplete()
             caseCorrectCompletion += ToLower(rest);
         }
 
-        // Append this procedure name to the list of completions.
+        // Append this name to the list of completions.
         completions += caseCorrectCompletion + " ";
     }
-    gcref(allProcedureNames);
+    gcref(allNames);
 
     if (!completions.IsEmpty())
     {
-        AutoCompShow(prefixLength, completions);
+        AutoCompShow(completionPrefixLength, completions);
     }
 }
 

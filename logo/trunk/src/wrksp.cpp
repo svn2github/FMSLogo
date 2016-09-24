@@ -31,6 +31,7 @@
     #include "wrksp.h"
     #include "logodata.h"
     #include "appendablelist.h"
+    #include "localizednode.h"
     #include "intern.h"
     #include "init.h"
     #include "mem.h"
@@ -1945,4 +1946,56 @@ NODE* get_all_proc_names()
     }
 
     return mergesort(allProcedureNames.GetList(), true);
+}
+
+// Gets the names of all unburied non-local variables, including special variables.
+NODE* get_all_variable_names()
+{
+    CAppendableList allVariableNames;
+
+    // Start by collecting the names of all variables which have
+    // special meaning, whether they are defined or not.
+    static const CLocalizedNode * const specialVariables[] =
+    {
+        &Redefp,
+        &Caseignoredp,
+        &Erract,
+        &Printdepthlimit,
+        &Printwidthlimit,
+        &Startup,
+    };
+    for (size_t i = 0; i < ARRAYSIZE(specialVariables); i++)
+    {
+        NODE * caseNode = specialVariables[i]->GetNode();
+        allVariableNames.AppendElement(strnode__caseobj(caseNode));
+    }
+
+
+    // Next, collect all variables that are included in
+    // the global symbol table.
+    for (int i = 0; i < HASH_LEN; i++)
+    {
+        for (NODE * nd = hash_table[i]; nd != NIL; nd = cdr(nd))
+        {
+            NODE * object = car(nd);
+
+            // If this symbol has no associated procedure, then skip it.
+            if (valnode__object(object) == Unbound)
+            {
+                continue;
+            }
+
+            // If this symbol is buried, then skip it.
+            if (flag__object(object, VAL_BURIED))
+            {
+                continue;
+            }
+
+            // TODO: skip the special variables we added above.
+
+            allVariableNames.AppendElement(canonical__object(object));
+        }
+    }
+
+    return mergesort(allVariableNames.GetList(), true);
 }
