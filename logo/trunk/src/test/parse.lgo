@@ -215,7 +215,7 @@ END
 
 TO PARSETEST.SYMBOLSOFINCLUSION
 
-   ; bug #1583317 
+   ; bug #225
    SIMPLEREPORTTEST [ ITEM 1 [ \{ ] ]  "\{
    SIMPLEREPORTTEST [ ITEM 1 [ \} ] ]  "\}
    SIMPLEREPORTTEST [ ITEM 1 [ \] ] ]  "\]
@@ -224,7 +224,7 @@ TO PARSETEST.SYMBOLSOFINCLUSION
 
    SIMPLEREPORTTEST [    [||]     ]  []
 
-   ; bug #1583317 
+   ; bug #225
    SIMPLEREPORTTEST [ITEM 1 { \[ }]  "\[
    SIMPLEREPORTTEST [ITEM 1 { \] }]  "\]
    SIMPLEREPORTTEST [ITEM 1 { \{ }]  "\{
@@ -238,11 +238,11 @@ END
 
 TO PARSETEST.EXPRESSION
 
-   RUNNOTENOUGHINPUTSTEST [ 5**5 ] ; bug #1395740
+   RUNNOTENOUGHINPUTSTEST [ 5**5 ] ; bug #72
    RUNNOTENOUGHINPUTSTEST [ *5   ]
-   RUNNOTENOUGHINPUTSTEST [ 5*   ] ; bug #1518558 
+   RUNNOTENOUGHINPUTSTEST [ 5*   ] ; bug #173
 
-   RUNNOTENOUGHINPUTSTEST [ -    ] ; bug #1443731 
+   RUNNOTENOUGHINPUTSTEST [ -    ] ; bug #109
 
    RUNNOTENOUGHINPUTSTEST [ MODULO 100 * 100 ] ; argument gathering halts at an infix operation
 END
@@ -329,23 +329,23 @@ END
 
 TO PARSETEST.MANYINPUTS
 
-   ; bug #1539716 (this used to crash)
+   ; bug #194 (this used to crash)
    LOCALMAKE "longsequence (SENTENCE "\( "SUM ISEQ 1 100000 "\))
    LOCALMAKE "sum RUN :longsequence 
 
    SIMPLEREPORTTEST [ :sum ] 5000050000
-   REPORTTESTPASSED [|Bug #1539716 is fixed; running an expression with a long list of inputs didn't crash.|]
+   REPORTTESTPASSED [|Bug #194 is fixed; running an expression with a long list of inputs didn't crash.|]
 END
 
 TO PARSETEST.MANYNESTEDCALLS
 
-   ; bug #1552426 (this crashes)
+   ; Bug #202 (this crashes)
    LOCALMAKE "longsequence [0]
    REPEAT 100000 [ MAKE "longsequence FPUT "SUM FPUT 1 :longsequence ]
    LOCALMAKE "sum RUN :longsequence
 
    SIMPLEREPORTTEST :sum 100000
-   REPORTTESTPASSED [|Bug #1552426 is fixed; running a long list of deeply nested expressions didn't crash.|]
+   REPORTTESTPASSED [|Bug #202 is fixed; running a long list of deeply nested expressions didn't crash.|]
 END
 
 TO PARSETEST.LONGINSTRUCTIONLINEWITHCATCH
@@ -362,7 +362,7 @@ TO PARSETEST.LONGINSTRUCTIONLINEWITHCATCH
 
    ; test that the the instructions actually ran
    SIMPLEREPORTTEST :value 100000
-   REPORTTESTPASSED [|Bug #1565788 is fixed; running a long list of expressions didn't crash.|]
+   REPORTTESTPASSED [|Bug #205 is fixed; running a long list of expressions didn't crash.|]
 END
 
 TO PARSETEST.LONGINSTRUCTIONLINE
@@ -379,12 +379,12 @@ TO PARSETEST.LONGINSTRUCTIONLINE
 
    ; test that the the instructions actually ran
    SIMPLEREPORTTEST :value 100000
-   REPORTTESTPASSED [|Bug #1565788 is fixed; running a long list of expressions didn't crash.|]
+   REPORTTESTPASSED [|Bug #205 is fixed; running a long list of expressions didn't crash.|]
 END
 
 TO PARSETEST.DEEPLYNESTEDINFIXEXPRESSION
 
-   ; bug #1566166 (this crashes)
+   ; Bug #206 (this crashes)
 
    ; Create and RUN an instruction list of the form
    ;   1 + 1 + 1 ... + 1 + 0
@@ -394,13 +394,13 @@ TO PARSETEST.DEEPLYNESTEDINFIXEXPRESSION
    LOCALMAKE "sum RUN :instructions
 
    SIMPLEREPORTTEST :sum 100000
-   REPORTTESTPASSED [|Bug #1566166 is fixed; running a long list of infix expressions didn't crash.|]
+   REPORTTESTPASSED [|Bug #206 is fixed; running a long list of infix expressions didn't crash.|]
 END
 
 
 TO PARSETEST.DEEPLYPARENTHESIZEDEXPRESSION
 
-   ; bug #1568610 (this crashes)
+   ; Bug #209 (this crashes)
 
    ; Create and RUN an instruction list of the form
    ;   ((( ... 0 ... )))
@@ -412,12 +412,12 @@ TO PARSETEST.DEEPLYPARENTHESIZEDEXPRESSION
    LOCALMAKE "sum RUN :instructions
 
    SIMPLEREPORTTEST :sum 123
-   REPORTTESTPASSED [|Bug #1568610 is fixed; running a deeply parenthesized expression didn't crash.|]
+   REPORTTESTPASSED [|Bug #209 is fixed; running a deeply parenthesized expression didn't crash.|]
 END
 
 TO PARSETEST.LOTSOFNEGATIONOPERATORS
 
-   ; bug #1568615 (this crashes)
+   ; Bug #201 (this crashes)
 
    ; Create and RUN an instruction list of the form
    ;   ------ ... -1
@@ -427,11 +427,11 @@ TO PARSETEST.LOTSOFNEGATIONOPERATORS
    LOCALMAKE "value RUN :instructions
 
    SIMPLEREPORTTEST :value 1
-   REPORTTESTPASSED [|Bug #1568615  is fixed; running a long chain of minus expressions didn't crash.|]
+   REPORTTESTPASSED [|Bug #201  is fixed; running a long chain of minus expressions didn't crash.|]
 END
 
 TO PARSETEST.PARSECHAR255
-   ; this is a regression test for bug #1824438 
+   ; This is a regression test for bug #302.
    localmake "myvalue "ÿ
    SIMPLEREPORTTEST [:myvalue] CHAR 255
 END
