@@ -669,17 +669,6 @@ HWND GetCommanderWindow()
     assert(mainFrame != NULL);
     return reinterpret_cast<HWND>(mainFrame->GetTopLevelWindowForCommander()->GetHandle());
 }
-
-HWND GetEditorWindow()
-{
-    CWorkspaceEditor * editor = CFmsLogo::GetMainFrame()->GetWorkspaceEditor();
-    if (editor == NULL)
-    {
-        return NULL;
-    }
-
-    return reinterpret_cast<HWND>(editor->GetHandle());
-}
 #endif // WX_PURE
 
 wxWindow * GetMainWxWindow() {
@@ -688,6 +677,11 @@ wxWindow * GetMainWxWindow() {
 
 wxWindow * GetScreenWxWindow() {
     return CFmsLogo::GetMainFrame()->GetScreen();
+}
+
+wxWindow * GetEditorWxWindow()
+{
+    return CFmsLogo::GetMainFrame()->GetWorkspaceEditor();
 }
 
 int GetScreenHorizontalScrollPosition()

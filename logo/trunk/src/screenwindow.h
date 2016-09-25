@@ -34,12 +34,12 @@
 #ifndef WX_PURE
 HWND GetScreenWindow();
 HWND GetMainWindow();
-HWND GetEditorWindow();
 HWND GetCommanderWindow();
 #endif
 
 class wxWindow * GetMainWxWindow();
 class wxWindow * GetScreenWxWindow();
+class wxWindow * GetEditorWxWindow();
 class wxWindow * GetParentWindowForDialog();
 
 int GetScreenHorizontalScrollPosition();

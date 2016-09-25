@@ -793,7 +793,7 @@ wxWindow * GetParentWindowForDialog()
     return g_WxScreenWindow;
 }
 
-HWND GetEditorWindow()
+wxWindow * GetEditorWxWindow()
 {
     return NULL;
 }

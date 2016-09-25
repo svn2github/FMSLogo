@@ -27,6 +27,7 @@
     #include <wx/arrstr.h>
     #include <wx/dir.h>
     #include <wx/filename.h>
+    #include <wx/window.h>
 
     #include "wrksp.h"
     #include "logodata.h"
@@ -1463,22 +1464,17 @@ NODE *ledit(NODE *args)
 {
     if (!bExpert)
     {
-#ifndef WX_PURE
         // non-experts shouldn't have to understand the complexities of 
         // having multiple editors open.  So if an editor is open, give
         // it focus instead of opening a new one.
-        if (GetMainWindow() != NULL)
+        wxWindow * editor = GetEditorWxWindow();
+        if (editor != NULL)
         {
-            HWND editor = GetEditorWindow();
-            if (editor != NULL)
-            {
-                ShowWindow(editor, SW_SHOWNORMAL);
-                SetWindowPos(editor, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-                SetFocus(editor);
-                return Unbound;
-            }
+            editor->Show();
+            editor->Raise();
+            editor->SetFocus();
+            return Unbound;
         }
-#endif
     }
 
     bool save_yield_flag = yield_flag;
