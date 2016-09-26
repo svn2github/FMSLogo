@@ -126,7 +126,7 @@ CLocalizedNode::GetValue() const
         return value;
     }
 
-    if (m_Alternate)
+    if (m_Alternate != NIL)
     {
         // this localized node has an alternate name.
         return valnode__caseobj(m_Alternate);
