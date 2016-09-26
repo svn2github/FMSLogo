@@ -1987,9 +1987,24 @@ NODE* get_all_variable_names()
                 continue;
             }
 
-            // TODO: skip the special variables we added above.
+            // Skip the special variables we added above.
+            bool isSpecialVariable = false;
+            NODE * canonicalName = canonical__object(object);
+            for (size_t i = 0; i < ARRAYSIZE(specialVariables); i++)
+            {
+                NODE * specialVariableName = specialVariables[i]->GetNode();
+                if (compare_node(canonicalName, specialVariableName, true) == 0)
+                {
+                    isSpecialVariable = true;
+                    break;
+                }
+            }
+            if (isSpecialVariable)
+            {
+                continue;
+            }
 
-            allVariableNames.AppendElement(canonical__object(object));
+            allVariableNames.AppendElement(canonicalName);
         }
     }
 
