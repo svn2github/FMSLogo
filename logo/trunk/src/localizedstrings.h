@@ -61,6 +61,12 @@
   #define  CHARSETID 1252
   #define  MANUAL_HAS_TRANSLATION_TABLES 1
 
+#elif LOCALE == 1045
+
+  #include "localizedstrings-pl.h"  // Polish
+  #define  CHARSETID 1250
+  #define  MANUAL_HAS_TRANSLATION_TABLES 1
+
 #elif LOCALE == 1049
 
   #include "localizedstrings-ru.h"  // Russian

@@ -29,6 +29,7 @@
 				<ul>
 					 <li>Alexandre Soares</li>
 					 <li>Andreas Micheler</li>
+					 <li>Andrzej Pruszynski</li>
 					 <li>Andy Owen</li>
 					 <li>Anthony Barnett</li>
 					 <li>Ayurzanaeva Aryuna</li>

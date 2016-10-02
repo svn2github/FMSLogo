@@ -122,6 +122,7 @@ VIII. Acknowledgements
   Thanks to:
     Alexandre Soares
     Andreas Micheler
+    Andrzej Pruszynski
     Andy Owen
     Anthony Barnett
     Ayurzanaeva Aryuna

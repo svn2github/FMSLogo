@@ -103,6 +103,7 @@ var previousinstalldir ; full path to the uninstaller
 !insertmacro MUI_LANGUAGE "Portuguese"
 !insertmacro MUI_LANGUAGE "Russian"
 !insertmacro MUI_LANGUAGE "Croatian"
+!insertmacro MUI_LANGUAGE "Polish"
 !define MUI_LANGDLL_ALLLANGUAGES ; don't filter language to system code page
 
 ; The description of the main installation component
@@ -115,6 +116,7 @@ LangString FMSLogoDescription ${LANG_FRENCH}     "Install the FMSLogo programmin
 LangString FMSLogoDescription ${LANG_GREEK}      "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
 LangString FMSLogoDescription ${LANG_RUSSIAN}    "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
 LangString FMSLogoDescription ${LANG_CROATIAN}   "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
+LangString FMSLogoDescription ${LANG_POLISH}     "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
 
 ; The label for the "desktop shortcut" checkbox.
 LangString DesktopShortcut ${LANG_ENGLISH}    "Desktop Shortcut"
@@ -126,6 +128,7 @@ LangString DesktopShortcut ${LANG_FRENCH}     "Raccourci Bureau"
 LangString DesktopShortcut ${LANG_GREEK}      "”хнфьмехуз ≈рйц№нейбт ≈сгбуябт"
 LangString DesktopShortcut ${LANG_RUSSIAN}    "ярлык рабочего стола" 
 LangString DesktopShortcut ${LANG_CROATIAN}   "Preиac na Radnu povrЪinu"
+LangString DesktopShortcut ${LANG_POLISH}     "Desktop Shortcut" ; NOT_YET_LOCALIZED
 
 ; The description of the desktop shortcut to FMSLogo
 LangString DesktopShortcutDescription ${LANG_ENGLISH}    "Put a shortcut to FMSLogo on the desktop."
@@ -137,6 +140,7 @@ LangString DesktopShortcutDescription ${LANG_FRENCH}     "Put a shortcut to FMSL
 LangString DesktopShortcutDescription ${LANG_GREEK}      "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
 LangString DesktopShortcutDescription ${LANG_RUSSIAN}    "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
 LangString DesktopShortcutDescription ${LANG_CROATIAN}   "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
+LangString DesktopShortcutDescription ${LANG_POLISH}     "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
 
 ; The label for the "screen saver" checkbox.
 LangString ScreenSaver ${LANG_ENGLISH}    "Screen Saver"
@@ -148,6 +152,7 @@ LangString ScreenSaver ${LANG_FRENCH}     "Screen Saver" ; NOT_YET_LOCALIZED
 LangString ScreenSaver ${LANG_GREEK}      "Screen Saver" ; NOT_YET_LOCALIZED 
 LangString ScreenSaver ${LANG_RUSSIAN}    "Screen Saver" ; NOT_YET_LOCALIZED 
 LangString ScreenSaver ${LANG_CROATIAN}   "Screen Saver" ; NOT_YET_LOCALIZED 
+LangString ScreenSaver ${LANG_POLISH}     "Screen Saver" ; NOT_YET_LOCALIZED 
 
 ; The description of the screensaver component.
 LangString ScreenSaverDescription ${LANG_ENGLISH}    "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this."
@@ -159,6 +164,7 @@ LangString ScreenSaverDescription ${LANG_FRENCH}     "Install a screensaver that
 LangString ScreenSaverDescription ${LANG_GREEK}      "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
 LangString ScreenSaverDescription ${LANG_RUSSIAN}    "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
 LangString ScreenSaverDescription ${LANG_CROATIAN}   "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
+LangString ScreenSaverDescription ${LANG_POLISH}     "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
 
 ; An error message to show when attempting to install FMSLogo when it is already running.
 LangString AlreadyRunningCannotInstallMessage ${LANG_ENGLISH}     "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
@@ -170,6 +176,7 @@ LangString AlreadyRunningCannotInstallMessage ${LANG_FRENCH}      "L'installateu
 LangString AlreadyRunningCannotInstallMessage ${LANG_GREEK}       "ѕ егкбфбуф№фзт ё з FMSLogo екфелеяфбй ёдз.$\nЅхфё з егкбф№уфбуз де мрпсея нб ухнечйуфея."
 LangString AlreadyRunningCannotInstallMessage ${LANG_RUSSIAN}     "»ли инсталл€тор или FMSLogo в насто€щее врем€ запущены.$\n”становка не может быть продолжена." 
 LangString AlreadyRunningCannotInstallMessage ${LANG_CROATIAN}    "Trenutno je pokrenut ili instalacijski program ili FMSLogo.$\nOva se instalacija ne moЮe nastaviti."
+LangString AlreadyRunningCannotInstallMessage ${LANG_POLISH}      "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED     
 
 ; A notification message when installing FMSLogo when another version is already installed.
 ; This tells the user that the old installation will be uninstalled.
@@ -182,6 +189,7 @@ LangString MustUninstallBeforeInstallingMessage ${LANG_FRENCH}      "La version 
 LangString MustUninstallBeforeInstallingMessage ${LANG_GREEK}       "‘п хр№счпн бнфягсбцп фзт FMSLogo рсЁрей нб брегкбфбуфбиея рсйн ухнечйуфея бхфё з егкбф№уфбуз.$\n»Ёлефе нб фп егкбфбуфёуефе;$\n$\n(≈рйлЁгпнфбт Љчй з егкбф№уфбуз иб клеяуей.)"
 LangString MustUninstallBeforeInstallingMessage ${LANG_RUSSIAN}     "—уществующа€ копи€ FMSLogo должна быть удалена, чтобы продолжить.$\n¬ы хотите удалить ее?$\n$\n(¬ыбор Ќет прервет установку)"
 LangString MustUninstallBeforeInstallingMessage ${LANG_CROATIAN}    "Postojeжa se verzija programa FMSLogo mora deinstalirati ako ЮeliЪ nastaviti.$\nОeliЪ li je deinstalirati?$\n$\n(Ako odabereЪ $\"Ne$\", instalacija жe se prekinuti)"
+LangString MustUninstallBeforeInstallingMessage ${LANG_POLISH}      "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" ; NOT_YET_LOCALIZED
 
 ; An error message to show when attempting to *uninstall* FMSLogo when it is running.
 LangString AlreadyRunningCannotUninstallMessage ${LANG_ENGLISH}     "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue."
@@ -193,6 +201,7 @@ LangString AlreadyRunningCannotUninstallMessage ${LANG_FRENCH}      "L'installat
 LangString AlreadyRunningCannotUninstallMessage ${LANG_GREEK}       "ѕ егкбфбуф№фзт ё з FMSLogo екфелеяфбй ёдз.$\nЅхфё з брегкбф№уфбуз де мрпсея нб ухнечйуфея."
 LangString AlreadyRunningCannotUninstallMessage ${LANG_RUSSIAN}     "»ли инсталл€тор или FMSLogo в насто€щее врем€ запущены.$\nн”даление не может быть продолжено."
 LangString AlreadyRunningCannotUninstallMessage ${LANG_CROATIAN}    "Trenutno je pokrenut ili instalacijski program ili FMSLogo.$\nOva se deinstalacija ne moЮe nastaviti."
+LangString AlreadyRunningCannotUninstallMessage ${LANG_POLISH}      "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
 
 ; An error message to show when the uninstaller cannot find the installation.
 LangString CannotFindInstallationMessage ${LANG_ENGLISH}     "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue."
@@ -204,6 +213,7 @@ LangString CannotFindInstallationMessage ${LANG_FRENCH}      "FMSLogo a dйjа йtй
 LangString CannotFindInstallationMessage ${LANG_GREEK}       "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
 LangString CannotFindInstallationMessage ${LANG_RUSSIAN}     "»ли FMSLogo был уже удален, или ¬ы не имеете прав удал€ть ее.$\n¬ любом случае, удаление не может быть продолжено." 
 LangString CannotFindInstallationMessage ${LANG_CROATIAN}    "Ili je FMSLogo veж izbrisan ili nemaЪ dopuЪtenje da ga deinstaliraЪ.$\nU svakom sluиaju, ova se deinstalacija ne moЮe nastaviti."
+LangString CannotFindInstallationMessage ${LANG_POLISH}      "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
 
 
 !include FileFunc.nsh
@@ -246,6 +256,7 @@ LangString CannotFindInstallationMessage ${LANG_CROATIAN}    "Ili je FMSLogo veж
   !insertmacro InstallLanguageFile.PerLanguage ${LANG_GREEK}      ${build_path} ${filename_stem} ${filename_extension}
   !insertmacro InstallLanguageFile.PerLanguage ${LANG_RUSSIAN}    ${build_path} ${filename_stem} ${filename_extension}
   !insertmacro InstallLanguageFile.PerLanguage ${LANG_CROATIAN}   ${build_path} ${filename_stem} ${filename_extension}
+  !insertmacro InstallLanguageFile.PerLanguage ${LANG_POLISH}     ${build_path} ${filename_stem} ${filename_extension}
 !macroend
 
 
@@ -349,6 +360,7 @@ Function .onInit
     ${Case} ${LANG_GREEK}
     ${Case} ${LANG_RUSSIAN}
     ${Case} ${LANG_CROATIAN}
+    ${Case} ${LANG_POLISH}
         goto SetupUser
   ${EndSwitch}
 
@@ -461,6 +473,7 @@ uninstall:
   Delete $previousinstalldir\fmslogo-${LANG_FRENCH}.exe
   Delete $previousinstalldir\fmslogo-${LANG_RUSSIAN}.exe
   Delete $previousinstalldir\fmslogo-${LANG_CROATIAN}.exe
+  Delete $previousinstalldir\fmslogo-${LANG_POLISH}.exe
 
   Delete $previousinstalldir\startup.logoscript
   Delete $previousinstalldir\startup-${LANG_ENGLISH}.logoscript
@@ -472,6 +485,7 @@ uninstall:
   Delete $previousinstalldir\startup-${LANG_FRENCH}.logoscript
   Delete $previousinstalldir\startup-${LANG_RUSSIAN}.logoscript
   Delete $previousinstalldir\startup-${LANG_CROATIAN}.logoscript
+  Delete $previousinstalldir\startup-${LANG_POLISH}.logoscript
 
   Delete $previousinstalldir\logohelp.chm
   Delete $previousinstalldir\logohelp-${LANG_ENGLISH}.chm
@@ -483,6 +497,7 @@ uninstall:
   Delete $previousinstalldir\logohelp-${LANG_FRENCH}.chm
   Delete $previousinstalldir\logohelp-${LANG_RUSSIAN}.chm
   Delete $previousinstalldir\logohelp-${LANG_CROATIAN}.chm
+  Delete $previousinstalldir\logohelp-${LANG_POLISH}.chm
 
   Delete $SYSDIR\fmslogo.scr
   Delete $previousinstalldir\fmslogo-${LANG_ENGLISH}.scr
@@ -494,6 +509,7 @@ uninstall:
   Delete $previousinstalldir\fmslogo-${LANG_FRENCH}.scr
   Delete $previousinstalldir\fmslogo-${LANG_RUSSIAN}.scr
   Delete $previousinstalldir\fmslogo-${LANG_CROATIAN}.scr
+  Delete $previousinstalldir\fmslogo-${LANG_POLISH}.scr
 
   ; For FMSLogo 6.27.0, Windows applied a compatibility shim that disabled
   ; file system redirection, resulting in FMSLogo.scr, the screen saver
