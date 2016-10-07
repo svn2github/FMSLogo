@@ -627,7 +627,7 @@
 #define LOCALIZED_FILE_NEW              "Nowy\t(czyœci obszar roboczy)" // &New\t(erase workspace)
 #define LOCALIZED_FILE_LOAD             "Za³aduj...\t(do³¹cza do obszaru roboczego)" // &Load...\t(merge into workspace)
 #define LOCALIZED_FILE_OPEN             "Otwórz...\t(zastêpuje obszar roboczy)" //&Open...\t(replace workspace)
-#define LOCALIZED_FILE_SAVE             "Zapisz" // &Save"
+#define LOCALIZED_FILE_SAVE             "Zapisz" // &Save
 #define LOCALIZED_FILE_SAVEAS           "Zapisz jako..." // Save &As...
 #define LOCALIZED_FILE_SETASSCREENSAVER "Ustaw jako wygaszacz ekranu" // Se&t As Screen Saver
 #define LOCALIZED_FILE_EDIT             "Edycja..." // &Edit...
@@ -635,7 +635,7 @@
 #define LOCALIZED_FILE_EXIT             "Koniec" // E&xit
 
 #define LOCALIZED_BITMAP               "Bitmapa" // &Bitmap
-#define LOCALIZED_BITMAP_NEW           "Nowa // &New
+#define LOCALIZED_BITMAP_NEW           "Nowa" // &New
 #define LOCALIZED_BITMAP_LOAD          "Za³aduj..." // &Load...
 #define LOCALIZED_BITMAP_SAVE          "Zapisz" // &Save
 #define LOCALIZED_BITMAP_SAVEAS        "Zapisz jako..." // Save &As...
@@ -657,9 +657,9 @@
 #define LOCALIZED_ZOOM_NORMAL          "&Normal"
 
 #define LOCALIZED_HELP                 "Pomoc" // &Help
-#define LOCALIZED_HELP_INDEX           "Indeks // &Index
+#define LOCALIZED_HELP_INDEX           "Indeks" // &Index
 #define LOCALIZED_HELP_TUTORIAL        "Podrêcznik" // &Tutorial
-#define LOCALIZED_HELP_DEMO            "Demo" // &Demo"
+#define LOCALIZED_HELP_DEMO            "Demo" // &Demo
 #define LOCALIZED_HELP_EXAMPLE         "Przyk³ady" // &Examples
 #define LOCALIZED_HELP_RELEASENOTES    "Uwagi do wydania" // &Release Notes
 #define LOCALIZED_HELP_ABOUTFMSLOGO    "O "LOCALIZED_GENERAL_PRODUCTNAME"..." // &About LOCALIZED_GENERAL_PRODUCTNAME...
@@ -686,7 +686,7 @@
 #define LOCALIZED_SCREENSAVER_NAME              LOCALIZED_GENERAL_PRODUCTNAME
 #define LOCALIZED_SCREENSAVER_DESCRIPTION       "Wygaszacz ekranu FMSLogo" // FMSLogo Screensaver
 #define LOCALIZED_SCREENSAVER_SETTINGS_TITLE    "W³aœciwoœci wygaszacza ekranu FMSLogo" // FMSLogo Screensaver Settings
-#define LOCALIZED_SCREENSAVER_LOCATE            "Lokalizacja..." // &Locate ..."
+#define LOCALIZED_SCREENSAVER_LOCATE            "Lokalizacja..." // &Locate ...
 #define LOCALIZED_SCREENSAVER_FILE              "Plik w Logo:" // Logo &File:
 #define LOCALIZED_SCREENSAVER_OK                LOCALIZED_GENERAL_OKBUTTON
 #define LOCALIZED_SCREENSAVER_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON
@@ -732,7 +732,7 @@
 #define LOCALIZED_EDITOR_EDIT_CUT                "Wytnij\tCtrl+X" // &Cut\tCtrl+X
 #define LOCALIZED_EDITOR_EDIT_COPY               "Kopiuj\tCtrl+C" // C&opy\tCtrl+C
 #define LOCALIZED_EDITOR_EDIT_PASTE              "Wklej\tCtrl+V" // &Paste\tCtrl+V
-#define LOCALIZED_EDITOR_EDIT_DELETE             "Usuñ\tDel" &Delete\tDel
+#define LOCALIZED_EDITOR_EDIT_DELETE             "Usuñ\tDel" // &Delete\tDel
 #define LOCALIZED_EDITOR_EDIT_CLEARALL           "Usuñ wszystko\tCtrl+Del" // C&lear All\tCtrl+Del
 #define LOCALIZED_EDITOR_EDIT_SELECTALL          "Zaznacz wszystko\tCtrl+A" // S&elect All\tCtrl+A
 
