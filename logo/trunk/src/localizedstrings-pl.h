@@ -106,9 +106,9 @@
 //
 // Localized "alternate" spellings of Logo reserved words
 //
-#define LOCALIZED_ALTERNATE_TRUE     "true"
-#define LOCALIZED_ALTERNATE_FALSE    "false"
-#define LOCALIZED_ALTERNATE_END      "end"
+#define LOCALIZED_ALTERNATE_TRUE     "prawda" // true
+#define LOCALIZED_ALTERNATE_FALSE    "fa³sz" // false
+#define LOCALIZED_ALTERNATE_END      "ju¿" // end
 #define LOCALIZED_ALTERNATE_TOPLEVEL "toplevel"
 #define LOCALIZED_ALTERNATE_SYSTEM   "system"
 
@@ -162,7 +162,7 @@
 #define LOCALIZED_ALTERNATE_ARRAY_                 "array?"
 #define LOCALIZED_ALTERNATE_ASCII                  "ascii"
 #define LOCALIZED_ALTERNATE_ASHIFT                 "ashift"
-#define LOCALIZED_ALTERNATE_BACK                   "back"
+#define LOCALIZED_ALTERNATE_BACK                   "wstecz" // back
 #define LOCALIZED_ALTERNATE_BACKSLASHEDP           "backslashedp"
 #define LOCALIZED_ALTERNATE_BACKSLASHED_           "backslashed?"
 #define LOCALIZED_ALTERNATE_BEFOREP                "beforep"
@@ -186,7 +186,7 @@
 #define LOCALIZED_ALTERNATE_BITPASTETOINDEX        "bitpastetoindex"
 #define LOCALIZED_ALTERNATE_BITSAVE                "bitsave"
 #define LOCALIZED_ALTERNATE_BITXOR                 "bitxor"
-#define LOCALIZED_ALTERNATE_BK                     "bk"
+#define LOCALIZED_ALTERNATE_BK                     "ws" // bk
 #define LOCALIZED_ALTERNATE_BL                     "bl"
 #define LOCALIZED_ALTERNATE_BURIED                 "buried"
 #define LOCALIZED_ALTERNATE_BURY                   "bury"
@@ -264,7 +264,7 @@
 #define LOCALIZED_ALTERNATE_ERROR                  "error"
 #define LOCALIZED_ALTERNATE_EVENTCHECK             "eventcheck"
 #define LOCALIZED_ALTERNATE_EXP                    "exp"
-#define LOCALIZED_ALTERNATE_FD                     "fd"
+#define LOCALIZED_ALTERNATE_FD                     "np" // fd
 #define LOCALIZED_ALTERNATE_FENCE                  "fence"
 #define LOCALIZED_ALTERNATE_FILL                   "fill"
 #define LOCALIZED_ALTERNATE_FILES                  "files"
@@ -274,7 +274,7 @@
 #define LOCALIZED_ALTERNATE_FONTFACENAMES          "fontfacenames"
 #define LOCALIZED_ALTERNATE_FOREVER                "forever"
 #define LOCALIZED_ALTERNATE_FORM                   "form"
-#define LOCALIZED_ALTERNATE_FORWARD                "forward"
+#define LOCALIZED_ALTERNATE_FORWARD                "naprzód" // forward
 #define LOCALIZED_ALTERNATE_FPUT                   "fput"
 #define LOCALIZED_ALTERNATE_FS                     "fs"
 #define LOCALIZED_ALTERNATE_FULLSCREEN             "fullscreen"
@@ -319,7 +319,7 @@
 #define LOCALIZED_ALTERNATE_LABELFONT              "labelfont"
 #define LOCALIZED_ALTERNATE_LABELSIZE              "labelsize"
 #define LOCALIZED_ALTERNATE_LAST                   "last"
-#define LOCALIZED_ALTERNATE_LEFT                   "left"
+#define LOCALIZED_ALTERNATE_LEFT                   "lewo" // left
 #define LOCALIZED_ALTERNATE_LEFTROLL               "leftroll"
 #define LOCALIZED_ALTERNATE_LESSEQUALP             "lessequalp"
 #define LOCALIZED_ALTERNATE_LESSEQUAL_             "lessequal?"
@@ -344,7 +344,7 @@
 #define LOCALIZED_ALTERNATE_LPUT                   "lput"
 #define LOCALIZED_ALTERNATE_LR                     "lr"
 #define LOCALIZED_ALTERNATE_LSHIFT                 "lshift"
-#define LOCALIZED_ALTERNATE_LT                     "lt"
+#define LOCALIZED_ALTERNATE_LT                     "lw" // lt
 #define LOCALIZED_ALTERNATE_MACHINE                "machine"
 #define LOCALIZED_ALTERNATE_MACROP                 "macrop"
 #define LOCALIZED_ALTERNATE_MACRO_                 "macro?"
@@ -477,14 +477,14 @@
 #define LOCALIZED_ALTERNATE_REPCOUNT               "repcount"
 #define LOCALIZED_ALTERNATE_REPEAT                 "repeat"
 #define LOCALIZED_ALTERNATE_RERANDOM               "rerandom"
-#define LOCALIZED_ALTERNATE_RIGHT                  "right"
+#define LOCALIZED_ALTERNATE_RIGHT                  "prawo" // right
 #define LOCALIZED_ALTERNATE_RIGHTROLL              "rightroll"
 #define LOCALIZED_ALTERNATE_RL                     "rl"
 #define LOCALIZED_ALTERNATE_RMDIR                  "rmdir"
 #define LOCALIZED_ALTERNATE_ROLL                   "roll"
 #define LOCALIZED_ALTERNATE_ROUND                  "round"
 #define LOCALIZED_ALTERNATE_RR                     "rr"
-#define LOCALIZED_ALTERNATE_RT                     "rt"
+#define LOCALIZED_ALTERNATE_RT                     "pw" // rt
 #define LOCALIZED_ALTERNATE_RUN                    "run"
 #define LOCALIZED_ALTERNATE_RUNPARSE               "runparse"
 #define LOCALIZED_ALTERNATE_RUNRESULT              "runresult"
@@ -573,7 +573,7 @@
 #define LOCALIZED_ALTERNATE_THROW                  "throw"
 #define LOCALIZED_ALTERNATE_TIME                   "time"
 #define LOCALIZED_ALTERNATE_TIMEMILLI              "timemilli"
-#define LOCALIZED_ALTERNATE_TO                     "to"
+#define LOCALIZED_ALTERNATE_TO                     "oto" // to
 #define LOCALIZED_ALTERNATE_TONE                   "tone"
 #define LOCALIZED_ALTERNATE_TOWARDS                "towards"
 #define LOCALIZED_ALTERNATE_TOWARDSXYZ             "towardsxyz"
@@ -612,36 +612,36 @@
 // General localized strings
 //
 #define LOCALIZED_GENERAL_OKBUTTON      "OK"
-#define LOCALIZED_GENERAL_CANCELBUTTON  "Cancel"
-#define LOCALIZED_GENERAL_APPLYBUTTON   "&Apply"
+#define LOCALIZED_GENERAL_CANCELBUTTON  "Anuluj" // Cancel
+#define LOCALIZED_GENERAL_APPLYBUTTON   "Zastosuj" // &Apply
 
 #define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo"
 
 // Embedded description of fmslogo.exe
-#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "The FMSLogo programming environment"
+#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "Œrodowisko programistyczne FMSLogo"
 
 //
 // The menu options on the main window 
 //
-#define LOCALIZED_FILE                  "&File"
-#define LOCALIZED_FILE_NEW              "&New\t(erase workspace)"
-#define LOCALIZED_FILE_LOAD             "&Load...\t(merge into workspace)"
-#define LOCALIZED_FILE_OPEN             "&Open...\t(replace workspace)" 
-#define LOCALIZED_FILE_SAVE             "&Save" 
-#define LOCALIZED_FILE_SAVEAS           "Save &As..."
-#define LOCALIZED_FILE_SETASSCREENSAVER "Se&t As Screen Saver"
-#define LOCALIZED_FILE_EDIT             "&Edit..."
-#define LOCALIZED_FILE_ERASE            "E&rase..."
-#define LOCALIZED_FILE_EXIT             "E&xit"
+#define LOCALIZED_FILE                  "Plik" // &File
+#define LOCALIZED_FILE_NEW              "Nowy\t(czyœci obszar roboczy)" // &New\t(erase workspace)
+#define LOCALIZED_FILE_LOAD             "Za³aduj...\t(do³¹cza do obszaru roboczego)" // &Load...\t(merge into workspace)
+#define LOCALIZED_FILE_OPEN             "Otwórz...\t(zastêpuje obszar roboczy)" //&Open...\t(replace workspace)
+#define LOCALIZED_FILE_SAVE             "Zapisz" // &Save"
+#define LOCALIZED_FILE_SAVEAS           "Zapisz jako..." // Save &As...
+#define LOCALIZED_FILE_SETASSCREENSAVER "Ustaw jako wygaszacz ekranu" // Se&t As Screen Saver
+#define LOCALIZED_FILE_EDIT             "Edycja..." // &Edit...
+#define LOCALIZED_FILE_ERASE            "Usuwanie..." // E&rase...
+#define LOCALIZED_FILE_EXIT             "Koniec" // E&xit
 
-#define LOCALIZED_BITMAP               "&Bitmap"
-#define LOCALIZED_BITMAP_NEW           "&New"
-#define LOCALIZED_BITMAP_LOAD          "&Load..."
-#define LOCALIZED_BITMAP_SAVE          "&Save"
-#define LOCALIZED_BITMAP_SAVEAS        "Save &As..."
-#define LOCALIZED_BITMAP_PRINT         "&Print..."
-#define LOCALIZED_BITMAP_PRINTERSETUP  "P&rinter Setup..."
-#define LOCALIZED_BITMAP_ACTIVEAREA    "A&ctive Area..."
+#define LOCALIZED_BITMAP               "Bitmapa" // &Bitmap
+#define LOCALIZED_BITMAP_NEW           "Nowa // &New
+#define LOCALIZED_BITMAP_LOAD          "Za³aduj..." // &Load...
+#define LOCALIZED_BITMAP_SAVE          "Zapisz" // &Save
+#define LOCALIZED_BITMAP_SAVEAS        "Zapisz jako..." // Save &As...
+#define LOCALIZED_BITMAP_PRINT         "Wydrukuj..." // &Print...
+#define LOCALIZED_BITMAP_PRINTERSETUP  "Ustawienia drukarki..." // P&rinter Setup...
+#define LOCALIZED_BITMAP_ACTIVEAREA    "Obszar czynny..." // A&ctive Area...
 
 #define LOCALIZED_SET                  "&Set"
 #define LOCALIZED_SET_PENSIZE          "Pen Si&ze..."
@@ -656,38 +656,38 @@
 #define LOCALIZED_ZOOM_OUT             "&Out"
 #define LOCALIZED_ZOOM_NORMAL          "&Normal"
 
-#define LOCALIZED_HELP                 "&Help" 
-#define LOCALIZED_HELP_INDEX           "&Index"
-#define LOCALIZED_HELP_TUTORIAL        "&Tutorial"
-#define LOCALIZED_HELP_DEMO            "&Demo" 
-#define LOCALIZED_HELP_EXAMPLE         "&Examples"
-#define LOCALIZED_HELP_RELEASENOTES    "&Release Notes"
-#define LOCALIZED_HELP_ABOUTFMSLOGO    "&About "LOCALIZED_GENERAL_PRODUCTNAME"..."
-#define LOCALIZED_HELP_MS              "&About MS..."
+#define LOCALIZED_HELP                 "Pomoc" // &Help
+#define LOCALIZED_HELP_INDEX           "Indeks // &Index
+#define LOCALIZED_HELP_TUTORIAL        "Podrêcznik" // &Tutorial
+#define LOCALIZED_HELP_DEMO            "Demo" // &Demo"
+#define LOCALIZED_HELP_EXAMPLE         "Przyk³ady" // &Examples
+#define LOCALIZED_HELP_RELEASENOTES    "Uwagi do wydania" // &Release Notes
+#define LOCALIZED_HELP_ABOUTFMSLOGO    "O "LOCALIZED_GENERAL_PRODUCTNAME"..." // &About LOCALIZED_GENERAL_PRODUCTNAME...
+#define LOCALIZED_HELP_MS              "O MS..." // &About MS...
 // The following two help options display tables for translating to/from English
 // These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
 // and startup-xxxx.logoscript file.
-#define LOCALIZED_HELP_LANGTOENGLISH   "LANGUAGE to English"
-#define LOCALIZED_HELP_ENGLISHTOLANG   "English to LANGUAGE"
+#define LOCALIZED_HELP_LANGTOENGLISH   "Polski - English"
+#define LOCALIZED_HELP_ENGLISHTOLANG   "English - Polski"
 
 // The "Set Active Area" dialog box
-#define LOCALIZED_SELECTACTIVEAREA              "Select Active Area"
-#define LOCALIZED_SELECTACTIVEAREA_EFFECT       "These affect Printing and Saving Bitmaps"
-#define LOCALIZED_SELECTACTIVEAREA_YHIGH        "Y-High"
-#define LOCALIZED_SELECTACTIVEAREA_YLOW         "Y-Low" 
-#define LOCALIZED_SELECTACTIVEAREA_XHIGH        "X-High"
-#define LOCALIZED_SELECTACTIVEAREA_XLOW         "X-Low"
-#define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "Turtle steps per inch printed:"
-#define LOCALIZED_SELECTACTIVEAREA_RESET        "&Reset" 
+#define LOCALIZED_SELECTACTIVEAREA              "Wybór obszaru czynnego" // Select Active Area
+#define LOCALIZED_SELECTACTIVEAREA_EFFECT       "Wp³ywaj¹ na wydruk i zapis bitmap" // These affect Printing and Saving Bitmaps
+#define LOCALIZED_SELECTACTIVEAREA_YHIGH        "Y góra" // Y-High
+#define LOCALIZED_SELECTACTIVEAREA_YLOW         "Y dó³" // Y-Low
+#define LOCALIZED_SELECTACTIVEAREA_XHIGH        "X prawa" // X-High
+#define LOCALIZED_SELECTACTIVEAREA_XLOW         "X lewa" // X-Low
+#define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "Kroki ¿ó³wia na cal wydruku" // Turtle steps per inch printed: //?
+#define LOCALIZED_SELECTACTIVEAREA_RESET        "Domyœlny" // &Reset
 #define LOCALIZED_SELECTACTIVEAREA_OK           LOCALIZED_GENERAL_OKBUTTON
 #define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON
 
 // The screensaver strings
 #define LOCALIZED_SCREENSAVER_NAME              LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_SCREENSAVER_DESCRIPTION       "FMSLogo Screensaver"
-#define LOCALIZED_SCREENSAVER_SETTINGS_TITLE    "FMSLogo Screensaver Settings"
-#define LOCALIZED_SCREENSAVER_LOCATE            "&Locate ..." 
-#define LOCALIZED_SCREENSAVER_FILE              "Logo &File:" 
+#define LOCALIZED_SCREENSAVER_DESCRIPTION       "Wygaszacz ekranu FMSLogo" // FMSLogo Screensaver
+#define LOCALIZED_SCREENSAVER_SETTINGS_TITLE    "W³aœciwoœci wygaszacza ekranu FMSLogo" // FMSLogo Screensaver Settings
+#define LOCALIZED_SCREENSAVER_LOCATE            "Lokalizacja..." // &Locate ..."
+#define LOCALIZED_SCREENSAVER_FILE              "Plik w Logo:" // Logo &File:
 #define LOCALIZED_SCREENSAVER_OK                LOCALIZED_GENERAL_OKBUTTON
 #define LOCALIZED_SCREENSAVER_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON
 
@@ -705,63 +705,63 @@
 //
 // Menu options in the popup menu
 //
-#define LOCALIZED_POPUP_COPY                     "Copy"
-#define LOCALIZED_POPUP_CUT                      "Cut"
-#define LOCALIZED_POPUP_PASTE                    "Paste"
-#define LOCALIZED_POPUP_DELETE                   "Delete"
-#define LOCALIZED_POPUP_UNDO                     "Undo"
-#define LOCALIZED_POPUP_REDO                     "Redo"
-#define LOCALIZED_POPUP_SELECTALL                "Select All"
-#define LOCALIZED_POPUP_HELP                     "Topic Search"
-#define LOCALIZED_POPUP_REMOVELINES              "Remove Selected Lines"
+#define LOCALIZED_POPUP_COPY                     "Kopiuj" // Copy
+#define LOCALIZED_POPUP_CUT                      "Wytnij" // Cut
+#define LOCALIZED_POPUP_PASTE                    "Wklej" // Paste
+#define LOCALIZED_POPUP_DELETE                   "Usuñ" // Delete
+#define LOCALIZED_POPUP_UNDO                     "Cofnij" // Undo
+#define LOCALIZED_POPUP_REDO                     "Przywróæ" // Redo
+#define LOCALIZED_POPUP_SELECTALL                "Zaznacz wszystko" // Select All
+#define LOCALIZED_POPUP_HELP                     "ZnajdŸ temat" // Topic Search
+#define LOCALIZED_POPUP_REMOVELINES              "Usuñ zaznaczone linie" // Remove Selected Lines
 
 //
 // The menu options on the editor
 //
-#define LOCALIZED_EDITOR_TITLE                   "Editor"
+#define LOCALIZED_EDITOR_TITLE                   "Edytor" // Editor
 
-#define LOCALIZED_EDITOR_FILE                    "&File"
-#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "&Save and Exit\tCtrl+D"
-#define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "Save to &Workspace"
-#define LOCALIZED_EDITOR_FILE_PRINT              "&Print..." 
-#define LOCALIZED_EDITOR_FILE_EXIT               "E&xit" 
+#define LOCALIZED_EDITOR_FILE                    "Plik" // &File
+#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "Zapisz i wyjdŸ\tCtrl+D // &Save and Exit\tCtrl+D
+#define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "Zapisz do obszaru roboczego" // Save to &Workspace
+#define LOCALIZED_EDITOR_FILE_PRINT              "Wydrukuj..." // &Print..."
+#define LOCALIZED_EDITOR_FILE_EXIT               "WyjdŸ" // E&xit
 
-#define LOCALIZED_EDITOR_EDIT                    "&Edit"
-#define LOCALIZED_EDITOR_EDIT_UNDO               "&Undo\tCtrl+Z"
-#define LOCALIZED_EDITOR_EDIT_REDO               "&Redo\tCtrl+Y"
-#define LOCALIZED_EDITOR_EDIT_CUT                "&Cut\tCtrl+X"
-#define LOCALIZED_EDITOR_EDIT_COPY               "C&opy\tCtrl+C"
-#define LOCALIZED_EDITOR_EDIT_PASTE              "&Paste\tCtrl+V"
-#define LOCALIZED_EDITOR_EDIT_DELETE             "&Delete\tDel"
-#define LOCALIZED_EDITOR_EDIT_CLEARALL           "C&lear All\tCtrl+Del"
-#define LOCALIZED_EDITOR_EDIT_SELECTALL          "S&elect All\tCtrl+A"
+#define LOCALIZED_EDITOR_EDIT                    "Edycja" // &Edit
+#define LOCALIZED_EDITOR_EDIT_UNDO               "Cofnij\tCtrl+Z" // &Undo\tCtrl+Z
+#define LOCALIZED_EDITOR_EDIT_REDO               "Przywróæ\tCtrl+Y" // &Redo\tCtrl+Y
+#define LOCALIZED_EDITOR_EDIT_CUT                "Wytnij\tCtrl+X" // &Cut\tCtrl+X
+#define LOCALIZED_EDITOR_EDIT_COPY               "Kopiuj\tCtrl+C" // C&opy\tCtrl+C
+#define LOCALIZED_EDITOR_EDIT_PASTE              "Wklej\tCtrl+V" // &Paste\tCtrl+V
+#define LOCALIZED_EDITOR_EDIT_DELETE             "Usuñ\tDel" &Delete\tDel
+#define LOCALIZED_EDITOR_EDIT_CLEARALL           "Usuñ wszystko\tCtrl+Del" // C&lear All\tCtrl+Del
+#define LOCALIZED_EDITOR_EDIT_SELECTALL          "Zaznacz wszystko\tCtrl+A" // S&elect All\tCtrl+A
 
-#define LOCALIZED_EDITOR_SEARCH                  "&Search"
-#define LOCALIZED_EDITOR_SEARCH_FIND             "&Find...\tCtrl+F"
-#define LOCALIZED_EDITOR_SEARCH_REPLACE          "&Replace...\tCtrl+H" 
-#define LOCALIZED_EDITOR_SEARCH_NEXT             "&Next\tF3" 
+#define LOCALIZED_EDITOR_SEARCH                  "Wyszukiwanie" // &Search
+#define LOCALIZED_EDITOR_SEARCH_FIND             "ZnajdŸ...\tCtrl+F" // &Find...\tCtrl+F
+#define LOCALIZED_EDITOR_SEARCH_REPLACE          "Zamieñ...\tCtrl+H" // &Replace...\tCtrl+H
+#define LOCALIZED_EDITOR_SEARCH_NEXT             "ZnajdŸ nastêpny\tF3" // &Next\tF3
 
-#define LOCALIZED_EDITOR_SET                     "Se&t" 
-#define LOCALIZED_EDITOR_SET_FONT                "&Font..." 
+#define LOCALIZED_EDITOR_SET                     "Ustawienia" // Se&t
+#define LOCALIZED_EDITOR_SET_FONT                "Czcionka..." // &Font...
 
-#define LOCALIZED_EDITOR_TEST                    "Test"
-#define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "&Run Selection\tCtrl+R"
+#define LOCALIZED_EDITOR_TEST                    "Testowanie"
+#define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "Uruchom zaznaczone\tCtrl+R" // &Run Selection\tCtrl+R
 
-#define LOCALIZED_EDITOR_HELP                    "&Help" 
-#define LOCALIZED_EDITOR_HELP_INDEX              "&Index"
-#define LOCALIZED_EDITOR_HELP_EDITOR             "&Editor"
-#define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "&Topic Search\tF1"
+#define LOCALIZED_EDITOR_HELP                    "Pomoc" // &Help
+#define LOCALIZED_EDITOR_HELP_INDEX              "Indeks" // &Index
+#define LOCALIZED_EDITOR_HELP_EDITOR             "Edytor" // &Editor
+#define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "ZnajdŸ temat\tF1" // &Topic Search\tF1
 
 
 //
 // The strings in the "You have unsaved changes" dialog
 //
 #define LOCALIZED_UNSAVEDCHANGES                LOCALIZED_YOUHAVEUNSAVEDCHANGES
-#define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "&Save and Exit"
-#define LOCALIZED_UNSAVEDCHANGES_DONTSAVE       "&Don't Save"
+#define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "Zapisz i wyjdŸ" // &Save and Exit
+#define LOCALIZED_UNSAVEDCHANGES_DONTSAVE       "Nie zapisuj" // &Don't Save
 #define LOCALIZED_UNSAVEDCHANGES_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON
-#define LOCALIZED_UNSAVEDCHANGES_MESSAGE1       "There are unsaved changes in the workspace.  If you exit without saving, these changes will be lost.  "
-#define LOCALIZED_UNSAVEDCHANGES_MESSAGE2       "Would you like to save your changes before exiting?" 
+#define LOCALIZED_UNSAVEDCHANGES_MESSAGE1       "Obszar roboczy zawiera niezapisane zmiany. Jeœli wyjdziesz bez zapisu, to zmiany te zostan¹ utracone." // There are unsaved changes in the workspace. If you exit without saving, these changes will be lost.
+#define LOCALIZED_UNSAVEDCHANGES_MESSAGE2       "Czy chcesz zapisaæ zmiany przed wyjœciem?" // Would you like to save your changes before exiting?
 
 
 //
@@ -830,12 +830,12 @@
 // Strings on the Color Picker Dialog box
 //
 #define LOCALIZED_SETCOLOR                     "Set Color"
-#define LOCALIZED_SETCOLOR_PENCOLOR            "Pen Color"
-#define LOCALIZED_SETCOLOR_FLOODCOLOR          "Flood Color"
-#define LOCALIZED_SETCOLOR_SCREENCOLOR         "Screen Color"
-#define LOCALIZED_SETCOLOR_RED                 "Red"
-#define LOCALIZED_SETCOLOR_GREEN               "Green"
-#define LOCALIZED_SETCOLOR_BLUE                "Blue"
+#define LOCALIZED_SETCOLOR_PENCOLOR            "Kolor pisaka" // Pen Color
+#define LOCALIZED_SETCOLOR_FLOODCOLOR          "Kolor wype³niania" // Flood Color
+#define LOCALIZED_SETCOLOR_SCREENCOLOR         "Kolor ekranu" // Screen Color
+#define LOCALIZED_SETCOLOR_RED                 "Czerwony" // Red
+#define LOCALIZED_SETCOLOR_GREEN               "Zielony" // Green
+#define LOCALIZED_SETCOLOR_BLUE                "Niebieski" // Blue
 #define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON
 #define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON
 #define LOCALIZED_SETCOLOR_APPLY               LOCALIZED_GENERAL_APPLYBUTTON
@@ -843,8 +843,8 @@
 //
 // Strings on the Pen Size Picker Dialog box
 //
-#define LOCALIZED_SETPENSIZE                   "Pen Size"
-#define LOCALIZED_SETPENSIZE_SIZE              "Thickness"
+#define LOCALIZED_SETPENSIZE                   "Rozmiar pisaka" // Pen Size
+#define LOCALIZED_SETPENSIZE_SIZE              "Gruboœæ" // Thickness
 #define LOCALIZED_SETPENSIZE_OK                LOCALIZED_GENERAL_OKBUTTON
 #define LOCALIZED_SETPENSIZE_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON
 #define LOCALIZED_SETPENSIZE_APPLY             LOCALIZED_GENERAL_APPLYBUTTON
@@ -941,9 +941,9 @@
 #define LOCALIZED_BITMAP_SAVE_DIALOG_TITLE  "Select the file to which the active area will be saved"
 
 #define LOCALIZED_LOGO_FILE_EXTENSION "lgo"
-#define LOCALIZED_FILEFILTER_ALLFILES "All Files (*.*)|*.*"
-#define LOCALIZED_FILEFILTER_LOGO     "Logo Files (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES
-#define LOCALIZED_FILEFILTER_IMAGE    "Bitmap Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_ALLFILES "Wszystkie pliki (*.*)|*.*" // All Files
+#define LOCALIZED_FILEFILTER_LOGO     "Pliki Logo (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES // Logo Files
+#define LOCALIZED_FILEFILTER_IMAGE    "Bitmapy (*.bmp)|*.bmp|Grafiki GIF (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES // Bitmap Files|GIF Files
 
 
 
@@ -1186,7 +1186,7 @@
 //
 // Other strings
 //
-#define LOCALIZED_ACTIVEAREA    "Active Area"
+#define LOCALIZED_ACTIVEAREA    "Obszar czynny" // Active Area
 #define LOCALIZED_INFORMATION   "Information"
 #define LOCALIZED_WARNING       "Warning"
 #define LOCALIZED_UNTITLED      "Untitled"
@@ -1197,13 +1197,13 @@
 #define LOCALIZED_UNBOUND       "nothing"
 
 // The title of the Editor's Find/Replace dialog box
-#define LOCALIZED_EDITOR_TITLE_FIND     "Find"
-#define LOCALIZED_EDITOR_TITLE_REPLACE  "Replace" 
+#define LOCALIZED_EDITOR_TITLE_FIND     "ZnajdŸ" // Find
+#define LOCALIZED_EDITOR_TITLE_REPLACE  "Zamieñ" // Replace
 
 //
 // The text that's displayed when the Editor's Search->Find fails.
 //
-#define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "Cannot find %s"
+#define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "Nie znaleziono: %s" // Cannot find %s
 
 
 //
@@ -1218,9 +1218,9 @@
 #define LOCALIZED_COLOR_AZURE                 "Azure"
 #define LOCALIZED_COLOR_BEIGE                 "Beige"
 #define LOCALIZED_COLOR_BISQUE                "Bisque"
-#define LOCALIZED_COLOR_BLACK                 "Black"
+#define LOCALIZED_COLOR_BLACK                 "czarny" // Black
 #define LOCALIZED_COLOR_BLANCHEDALMOND        "BlanchedAlmond"
-#define LOCALIZED_COLOR_BLUE                  "Blue"
+#define LOCALIZED_COLOR_BLUE                  "niebieski" // Blue
 #define LOCALIZED_COLOR_BLUEVIOLET            "BlueViolet"
 #define LOCALIZED_COLOR_BROWN                 "Brown"
 #define LOCALIZED_COLOR_BURLYWOOD             "BurlyWood"
@@ -1265,9 +1265,9 @@
 #define LOCALIZED_COLOR_GOLD                  "Gold"
 #define LOCALIZED_COLOR_GOLDENROD             "GoldenRod"
 #define LOCALIZED_COLOR_GRAY                  "Gray"
-#define LOCALIZED_COLOR_GREEN                 "Green"
+#define LOCALIZED_COLOR_GREEN                 "zielony" // Green
 #define LOCALIZED_COLOR_GREENYELLOW           "GreenYellow"
-#define LOCALIZED_COLOR_GREY                  "Grey"
+#define LOCALIZED_COLOR_GREY                  "szary" // Grey
 #define LOCALIZED_COLOR_HONEYDEW              "HoneyDew"
 #define LOCALIZED_COLOR_HOTPINK               "HotPink"
 #define LOCALIZED_COLOR_INDIANRED             "IndianRed"
@@ -1282,7 +1282,7 @@
 #define LOCALIZED_COLOR_LIGHTCORAL            "LightCoral"
 #define LOCALIZED_COLOR_LIGHTCYAN             "LightCyan"
 #define LOCALIZED_COLOR_LIGHTGOLDENRODYELLOW  "LightGoldenRodYellow"
-#define LOCALIZED_COLOR_LIGHTGRAY             "LightGray"
+#define LOCALIZED_COLOR_LIGHTGRAY             "jasnoszary" // LightGray
 #define LOCALIZED_COLOR_LIGHTGREEN            "LightGreen"
 #define LOCALIZED_COLOR_LIGHTGREY             "LightGrey"
 #define LOCALIZED_COLOR_LIGHTPINK             "LightPink"
@@ -1326,7 +1326,7 @@
 #define LOCALIZED_COLOR_PAPAYAWHIP            "PapayaWhip"
 #define LOCALIZED_COLOR_PEACHPUFF             "PeachPuff"
 #define LOCALIZED_COLOR_PERU                  "Peru"
-#define LOCALIZED_COLOR_PINK                  "Pink"
+#define LOCALIZED_COLOR_PINK                  "ró¿owy" // Pink
 #define LOCALIZED_COLOR_PLUM                  "Plum"
 #define LOCALIZED_COLOR_POWDERBLUE            "PowderBlue"
 #define LOCALIZED_COLOR_PURPLE                "Purple"
@@ -1354,9 +1354,9 @@
 #define LOCALIZED_COLOR_TURQUOISE             "Turquoise"
 #define LOCALIZED_COLOR_VIOLET                "Violet"
 #define LOCALIZED_COLOR_WHEAT                 "Wheat"
-#define LOCALIZED_COLOR_WHITE                 "White"
+#define LOCALIZED_COLOR_WHITE                 "bia³y" // White
 #define LOCALIZED_COLOR_WHITESMOKE            "WhiteSmoke"
-#define LOCALIZED_COLOR_YELLOW                "Yellow"
+#define LOCALIZED_COLOR_YELLOW                "¿ó³ty" // Yellow
 #define LOCALIZED_COLOR_YELLOWGREEN           "YellowGreen"
 
 //
