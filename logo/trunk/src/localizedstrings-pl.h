@@ -721,9 +721,9 @@
 #define LOCALIZED_EDITOR_TITLE                   "Edytor" // Editor
 
 #define LOCALIZED_EDITOR_FILE                    "Plik" // &File
-#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "Zapisz i wyjdü\tCtrl+D // &Save and Exit\tCtrl+D
+#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "Zapisz i wyjdü\tCtrl+D" // &Save and Exit\tCtrl+D
 #define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "Zapisz do obszaru roboczego" // Save to &Workspace
-#define LOCALIZED_EDITOR_FILE_PRINT              "Wydrukuj..." // &Print..."
+#define LOCALIZED_EDITOR_FILE_PRINT              "Wydrukuj..." // &Print...
 #define LOCALIZED_EDITOR_FILE_EXIT               "Wyjdü" // E&xit
 
 #define LOCALIZED_EDITOR_EDIT                    "Edycja" // &Edit
