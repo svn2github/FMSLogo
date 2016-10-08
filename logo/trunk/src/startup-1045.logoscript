@@ -1,6 +1,1 @@
-catch "error [ copydef "setpencolour    "setpencolor    ]
-catch "error [ copydef "pencolour       "pencolor       ]
-catch "error [ copydef "setscreencolour "setscreencolor ]
-catch "error [ copydef "screencolour    "screencolor    ]
-catch "error [ copydef "setfloodcolour  "setfloodcolor  ]
-catch "error [ copydef "floodcolour     "floodcolor     ]
+catch "error [ copydef "zam    "fill ]
