@@ -365,12 +365,7 @@ CNetworkConnection::Enable(
     strcpy(m_OnSendReady, OnSendReady);
 
     // get sockets
-#ifdef USE_UDP
-    m_Socket = socket(AF_INET, SOCK_DGRAM, 0);
-#else
     m_Socket = socket(AF_INET, SOCK_STREAM, 0);
-#endif
-
     if (m_Socket == INVALID_SOCKET)
     {
         ShowMessageAndStop("socket()", WSAGetLastErrorString(0));
@@ -709,11 +704,6 @@ CClientNetworkConnection::OnConnectSendFinish(
         }
     }
 
-#ifdef UDP
-    // fake an FD_CONNECT for UDP, these would of been called by winsock if TCP
-    OnConnectSendAck(WindowHandle, MAKELONG(FD_CONNECT, FD_CONNECT));
-#endif
-
     // fire event that connection is made
     PostOnSendReadyEvent(WindowHandle);
     return 0;
@@ -749,13 +739,11 @@ CServerNetworkConnection::Enable(
         }
 
         // listen for connect
-#ifndef USE_UDP
         if (listen(m_Socket, MAX_PENDING_CONNECTS) == SOCKET_ERROR)
         {
             ShowMessageAndStop("listen(receivesock)", WSAGetLastErrorString(0));
             return;
         }
-#endif
 
         // watch for when connect happens
         m_IsEnabled = true;
@@ -772,11 +760,6 @@ CServerNetworkConnection::Enable(
                 WSAGetLastErrorString(0));
             return;
         }
-
-        // fake an FD_ACCEPT for UDP, this automatically happens on TCP
-#ifdef USE_UDP
-        OnListenReceiveAck(GetMainWindow(), MAKELONG(FD_ACCEPT, FD_ACCEPT));
-#endif
 
         // queue this event
         PostOnSendReadyEvent(GetMainWindow());
@@ -820,8 +803,6 @@ CServerNetworkConnection::OnListenReceiveAck(
         return 0;
 
     case FD_ACCEPT:
-        // disabled for UDP
-#ifndef USE_UDP
         acc_sin_len = sizeof acc_sin;
 
         m_Socket = accept(m_Socket, (struct sockaddr *) &acc_sin, &acc_sin_len);
@@ -835,7 +816,6 @@ CServerNetworkConnection::OnListenReceiveAck(
             // err_logo(STOP_ERROR,NIL);
             return 0;
         }
-#endif
         m_IsConnected = true;
         break;
 
