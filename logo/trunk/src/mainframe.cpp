@@ -2475,12 +2475,6 @@ CMainFrame::MSWWindowProc(
             static_cast<HWND>(GetHandle()),
             LParam);
         break;
-
-    case WM_NETWORK_LISTENRECEIVEFINISH:
-        g_ServerConnection.OnListenReceiveFinish(
-            static_cast<HWND>(GetHandle()),
-            LParam);
-        break;
     }
 
     return wxFrame::MSWWindowProc(Message, WParam, LParam);

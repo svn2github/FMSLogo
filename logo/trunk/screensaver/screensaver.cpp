@@ -487,10 +487,6 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         g_ServerConnection.OnListenReceiveAck(hwnd, lParam);
         break;
 
-    case WM_NETWORK_LISTENRECEIVEFINISH:
-        g_ServerConnection.OnListenReceiveFinish(hwnd, lParam);
-        break;
-
     case WM_DESTROY:
 
         if (is_executing())

@@ -26,7 +26,6 @@ If you don't, then the data will be discarded the next time <parameter>receivere
 <para>
 The following example sets up both a client and server.
 The server (accepter) sends data to the client (connector).
-To make this example run properly, you must replace "MyComputerName" with the name of your computer.
 
 <programlisting><userinput>NETSTARTUP ; Start up the network
 
@@ -36,8 +35,9 @@ true
 Ok to Send Again
 
 <userinput>; Connect to local machine on port 5124
-; TODO: replace MyComputerName with the name of your computer.
-SHOW NETCONNECTON "MyComputerName 5124 [] [PRINT NETCONNECTRECEIVEVALUE]</userinput>
+; If you want to run this portion on a different computer, then replace
+; the "localhost with the name of the other computer.
+SHOW NETCONNECTON "localhost 5124 [] [PRINT NETCONNECTRECEIVEVALUE]</userinput>
 true
 
 <userinput>WAIT 100 ; Wait a little to establish the connection</userinput>

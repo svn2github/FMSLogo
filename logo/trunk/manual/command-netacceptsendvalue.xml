@@ -34,7 +34,6 @@ The <parameter>data</parameter> input is a list.  It contains the data you wish 
 <para>
 This example sets up a client and server on the same machine.
 The server (accepter) sends data to whomever connected.
-To make this example run properly, you must replace "MyComputerName" with the name of your computer.
 
 <programlisting><userinput>NETSTARTUP ; Start up the network
 
@@ -44,8 +43,9 @@ true
 Ok to Send Again
 
 <userinput>; Connect to the local machine on port 5124.
-; TODO: replace MyComputerName with the name of your computer.
-SHOW NETCONNECTON "MyComputerName 5124 [] [PRINT NETCONNECTRECEIVEVALUE]</userinput>
+; If you want to run this portion on a different computer, then replace
+; the "localhost with the name of the other computer.
+SHOW NETCONNECTON "localhost 5124 [] [PRINT NETCONNECTRECEIVEVALUE]</userinput>
 true
 
 <userinput>WAIT 100 ; Wait little for connection to establish</userinput>

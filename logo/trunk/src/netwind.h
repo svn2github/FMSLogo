@@ -30,17 +30,6 @@ struct NODE;
 class CNetworkConnection 
 {
 public:
-    CNetworkConnection();
-
-    void
-    Enable(
-        const char *    OnSendReady,
-        const char *    OnReceiveReady,
-        unsigned int    ServerPort,
-        const char *    HostName,
-        DWORD           ResolvedHostNameMessage
-        );
-
     bool IsEnabled() const;
     void Disable();
 
@@ -55,7 +44,13 @@ public:
         );
 
 protected:
-    ~CNetworkConnection() {} // enforce abstract class
+    CNetworkConnection(); // enforce abstract class
+
+    void
+    Enable(
+        const char *    OnSendReady,
+        const char *    OnReceiveReady
+        );
 
     // private helper functions
     void
@@ -75,18 +70,10 @@ protected:
         );
 
     // private member variables
-    SOCKET       m_Socket;     // socket for the connection
-    unsigned int m_Port;       // server's listen port
-
-    bool         m_IsConnected;  // socket is connected
-    bool         m_IsBusy;       // socket is too busy to send
-    bool         m_IsEnabled;    // if message processing is enabled for this socket
-
-    union _union_host_entry_buffer
-    {
-        HOSTENT  Entry;                    // The host entry
-        char     Buffer[MAXGETHOSTSTRUCT]; // enough space for host entry
-    } m_HostEntry;
+    SOCKET m_Socket;       // socket for the connection
+    bool   m_IsConnected;  // socket is connected
+    bool   m_IsBusy;       // socket is too busy to send
+    bool   m_IsEnabled;    // if message processing is enabled for this socket
 
     char * m_OnReceiveReady;  // Buffer for receive callback
     char * m_OnSendReady;     // Buffer for send    callback
@@ -117,7 +104,26 @@ protected:
 // Class for client network connections
 class CClientNetworkConnection : public CNetworkConnection
 {
+private:
+    union _union_host_entry_buffer
+    {
+        HOSTENT  Entry;                    // The host entry
+        char     Buffer[MAXGETHOSTSTRUCT]; // enough space for host entry
+    } m_RemoteHostEntry;
+
+    unsigned int m_RemotePort;
+
 public:
+    CClientNetworkConnection();
+
+    void
+    Enable(
+        const char *    OnSendReady,
+        const char *    OnReceiveReady,
+        unsigned int    RemotePort,
+        const char *    RemoteHostName
+        );
+
     int
     OnConnectSendAck(
         HWND        WindowHandle,
@@ -136,14 +142,15 @@ public:
 class CServerNetworkConnection : public CNetworkConnection
 {
 public:
-    int
-    OnListenReceiveAck(
-        HWND        WindowHandle,
-        LONG        LParam
+    void
+    Enable(
+        const char *    OnSendReady,
+        const char *    OnReceiveReady,
+        unsigned int    ServerPort
         );
 
     int
-    OnListenReceiveFinish(
+    OnListenReceiveAck(
         HWND        WindowHandle,
         LONG        LParam
         );

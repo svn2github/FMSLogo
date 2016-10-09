@@ -7,29 +7,23 @@ to aaa
 ; To run:
 ;
 ; load "netlocal.lgo
-; Call NETLOCAL MyMachineName
+; Call NETLOCAL
 ;
 ; Example:
 ;
-NETLOCAL "Logo
-;
-; System requirements:
-;
-; You must know your machine name.
-;
+  NETLOCAL
 end
 
-to netlocal :machine
-netstartup
-show netaccepton 5124 [] [run netacceptreceivevalue]
-show netconnecton :machine 5124 [print "aok] []
-wait 100 ; Wait for net to start
-repeat 360 [make "foo netconnectsendvalue [fd 1 rt 1]]
+to netlocal
+  netstartup
+  show netaccepton 5124 [] [run netacceptreceivevalue]
+  show netconnecton "localhost 5124 [print "aok] []
+  wait 100 ; Wait for net to start
+  repeat 360 [make "foo netconnectsendvalue [fd 1 rt 1]]
 end
 
 to zzz
-MessageBox [Welcome] [Study it now.]
-edall
+  ifelse YesNoBox [Welcome] [Choose YES to run example now, Choose NO Study it now.] [aaa] [edall]
 end
 
 Make "startup [zzz]

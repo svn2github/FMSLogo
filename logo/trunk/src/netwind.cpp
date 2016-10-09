@@ -228,25 +228,6 @@ safe_free(
     buffer = NULL;
 }
 
-static
-void
-InitializeSocketAddress(
-    SOCKADDR_IN & SocketAddress,
-    PHOSTENT      HostEntry,
-    unsigned int  Port
-    )
-{
-    // always start clean
-    memset(&SocketAddress, 0, sizeof(SOCKADDR_IN));
-
-    // what else is there
-    SocketAddress.sin_family = AF_INET;
-
-    memcpy(&SocketAddress.sin_addr, HostEntry->h_addr, HostEntry->h_length);
-
-    SocketAddress.sin_port = htons(Port); // Convert to network ordering
-}
-
 /////////////////////////////////////////////////////////////////////////////////////
 // private class CNetworkConnection::CCarryOverBuffer
 
@@ -308,7 +289,6 @@ CNetworkConnection::CCarryOverBuffer::ShiftLeft(
 
 CNetworkConnection::CNetworkConnection() :
     m_Socket(INVALID_SOCKET),
-    m_Port(0),
     m_IsConnected(false),
     m_IsBusy(false),
     m_IsEnabled(false),
@@ -316,7 +296,6 @@ CNetworkConnection::CNetworkConnection() :
     m_OnSendReady(NULL),
     m_ReceiveValue(NULL)
 {
-    memset(m_HostEntry.Buffer, 0x00, sizeof(m_HostEntry.Buffer));
 }
 
 void
@@ -368,10 +347,7 @@ CNetworkConnection::Disable()
 void
 CNetworkConnection::Enable(
     const char *    OnSendReady,
-    const char *    OnReceiveReady,
-    unsigned int    ServerPort,
-    const char *    HostName,
-    DWORD           ResolvedHostNameMessage
+    const char *    OnReceiveReady
     )
 {
     // copy the receive ready callback
@@ -388,9 +364,6 @@ CNetworkConnection::Enable(
     }
     strcpy(m_OnSendReady, OnSendReady);
 
-    // copy the server port
-    m_Port = ServerPort;
-
     // get sockets
 #ifdef USE_UDP
     m_Socket = socket(AF_INET, SOCK_DGRAM, 0);
@@ -401,52 +374,6 @@ CNetworkConnection::Enable(
     if (m_Socket == INVALID_SOCKET)
     {
         ShowMessageAndStop("socket()", WSAGetLastErrorString(0));
-        return;
-    }
-
-    if (network_dns_sync == 1)
-    {
-        PHOSTENT hostEntry = gethostbyname(HostName);
-        if (hostEntry == NULL)
-        {
-            ShowMessageAndStop("gethostbyname(host)", WSAGetLastErrorString(0));
-            return;
-        }
-
-        // This HOSTENTRY structure is owned by WinSock and
-        // could be changed.  Therefore, we copy the information
-        // that we need before any other WinSock calls can be made.
-        // Note that this may result in some dangling pointers, but
-        // this is okay, since the pointers will be valid long enough
-        // to initialize the SOCKADDR_IN struct, which is all we use
-        // it for.
-        m_HostEntry.Entry = *hostEntry;
-
-        m_IsEnabled = true;
-
-        // Set up the rest of the connection by invoking the logic that
-        // should be invoked once m_HostEntry is filled in.
-        SendMessage(GetMainWindow(), ResolvedHostNameMessage, 0, 0);
-    }
-    else
-    {
-        // get address of remote machine
-        HANDLE getHostByNameHandle = WSAAsyncGetHostByName(
-            GetMainWindow(),
-            ResolvedHostNameMessage,
-            HostName,
-            m_HostEntry.Buffer,
-            sizeof(m_HostEntry.Buffer));
-        if (getHostByNameHandle == NULL)
-        {
-            ShowMessageAndStop("WSAAsyncGetHostByName()", WSAGetLastErrorString(0));
-            return;
-        }
-
-        m_IsEnabled = true;
-
-        // The rest of the connection will be set up when the GetHostByName
-        // callback is invoked, after m_HostEntry is filled in.
     }
 }
 
@@ -585,6 +512,74 @@ CNetworkConnection::PostOnSendReadyEvent(
     PostMessage(WindowHandle, WM_CHECKQUEUE, 0, 0);
 }
 
+CClientNetworkConnection::CClientNetworkConnection()
+{
+    memset(m_RemoteHostEntry.Buffer, 0x00, sizeof(m_RemoteHostEntry.Buffer));
+}
+
+void
+CClientNetworkConnection::Enable(
+    const char *    OnSendReady,
+    const char *    OnReceiveReady,
+    unsigned int    RemotePort,
+    const char *    RemoteHostName
+    )
+{
+    CNetworkConnection::Enable(OnSendReady, OnReceiveReady);
+    if (NOT_THROWING)
+    {
+        if (network_dns_sync == 1)
+        {
+            PHOSTENT hostEntry = gethostbyname(RemoteHostName);
+            if (hostEntry == NULL)
+            {
+                ShowMessageAndStop(
+                    "gethostbyname(host)",
+                    WSAGetLastErrorString(0));
+                return;
+            }
+
+            // This HOSTENTRY structure is owned by WinSock and
+            // could be changed.  Therefore, we copy the information
+            // that we need before any other WinSock calls can be made.
+            // Note that this may result in some dangling pointers, but
+            // this is okay, since the pointers will be valid long enough
+            // to initialize the SOCKADDR_IN struct, which is all we use
+            // it for.
+            m_RemoteHostEntry.Entry = *hostEntry;
+            m_RemotePort            = RemotePort;
+            m_IsEnabled             = true;
+
+            // Set up the rest of the connection by invoking the logic that
+            // should be invoked once m_HostEntry is filled in.
+            SendMessage(GetMainWindow(), WM_NETWORK_CONNECTSENDFINISH, 0, 0);
+        }
+        else
+        {
+            // get address of remote machine
+            HANDLE getHostByNameHandle = WSAAsyncGetHostByName(
+                GetMainWindow(),
+                WM_NETWORK_CONNECTSENDFINISH,
+                RemoteHostName,
+                m_RemoteHostEntry.Buffer,
+                sizeof(m_RemoteHostEntry.Buffer));
+            if (getHostByNameHandle == NULL)
+            {
+                ShowMessageAndStop(
+                    "WSAAsyncGetHostByName()",
+                    WSAGetLastErrorString(0));
+                return;
+            }
+
+            m_RemotePort = RemotePort;
+            m_IsEnabled  = true;
+
+            // The rest of the connection will be set up when the GetHostByName
+            // callback is invoked, after m_HostEntry is filled in.
+        }
+    }
+}
+
 // Call this to handle a WM_NETWORK_CONNECTSENDACK message.
 int
 CClientNetworkConnection::OnConnectSendAck(
@@ -672,8 +667,13 @@ CClientNetworkConnection::OnConnectSendFinish(
         return 0;
     }
 
-    SOCKADDR_IN send_dest_sin;
-    InitializeSocketAddress(send_dest_sin, &m_HostEntry.Entry, m_Port);
+    SOCKADDR_IN send_dest_sin = {0};
+    send_dest_sin.sin_family = AF_INET;
+    memcpy(
+        &send_dest_sin.sin_addr,
+        m_RemoteHostEntry.Entry.h_addr,
+        m_RemoteHostEntry.Entry.h_length);
+    send_dest_sin.sin_port = htons(m_RemotePort); // Convert to network ordering
 
     // watch for connect
     if (WSAAsyncSelect(
@@ -690,8 +690,11 @@ CClientNetworkConnection::OnConnectSendFinish(
         // err_logo(STOP_ERROR,NIL);
     }
 
-    // lets try now
-    int rval = connect(m_Socket, (PSOCKADDR) &send_dest_sin, sizeof(send_dest_sin));
+    // let's try now
+    int rval = connect(
+        m_Socket,
+        (PSOCKADDR) &send_dest_sin,
+        sizeof send_dest_sin);
     if (rval == SOCKET_ERROR)
     {
         if (WSAGetLastError() != WSAEWOULDBLOCK)
@@ -718,6 +721,67 @@ CClientNetworkConnection::OnConnectSendFinish(
 
 /////////////////////////////////////////////////////////////////////////////////////
 // CServerNetworkConnection class
+
+void
+CServerNetworkConnection::Enable(
+    const char *    OnSendReady,
+    const char *    OnReceiveReady,
+    unsigned int    ServerPort
+    )
+{
+    CNetworkConnection::Enable(OnSendReady, OnReceiveReady);
+    if (NOT_THROWING)
+    {
+        // Associate an address with the socket. (bind)
+        SOCKADDR_IN socket_address = {0};
+        socket_address.sin_family      = AF_INET;
+        socket_address.sin_addr.s_addr = INADDR_ANY;
+        socket_address.sin_port        = htons(ServerPort);
+
+        int rval = bind(
+            m_Socket,
+            (struct sockaddr *) &socket_address,
+            sizeof socket_address);
+        if (rval == SOCKET_ERROR)
+        {
+            ShowMessageAndStop("bind(receivesock)", WSAGetLastErrorString(0));
+            return;
+        }
+
+        // listen for connect
+#ifndef USE_UDP
+        if (listen(m_Socket, MAX_PENDING_CONNECTS) == SOCKET_ERROR)
+        {
+            ShowMessageAndStop("listen(receivesock)", WSAGetLastErrorString(0));
+            return;
+        }
+#endif
+
+        // watch for when connect happens
+        m_IsEnabled = true;
+
+        rval = WSAAsyncSelect(
+            m_Socket,
+            GetMainWindow(),
+            WM_NETWORK_LISTENRECEIVEACK,
+            FD_ACCEPT | FD_READ | FD_WRITE | FD_CLOSE);
+        if (rval == SOCKET_ERROR)
+        {
+            ShowMessageAndStop(
+                "WSAAsyncSelect(receivesock) FD_ACCEPT",
+                WSAGetLastErrorString(0));
+            return;
+        }
+
+        // fake an FD_ACCEPT for UDP, this automatically happens on TCP
+#ifdef USE_UDP
+        OnListenReceiveAck(GetMainWindow(), MAKELONG(FD_ACCEPT, FD_ACCEPT));
+#endif
+
+        // queue this event
+        PostOnSendReadyEvent(GetMainWindow());
+    }
+}
 
 // Call this to handle a WM_NETWORK_LISTENRECEIVEACK message.
 int
@@ -758,7 +822,7 @@ CServerNetworkConnection::OnListenReceiveAck(
     case FD_ACCEPT:
         // disabled for UDP
 #ifndef USE_UDP
-        acc_sin_len = sizeof(acc_sin);
+        acc_sin_len = sizeof acc_sin;
 
         m_Socket = accept(m_Socket, (struct sockaddr *) &acc_sin, &acc_sin_len);
         if (m_Socket == INVALID_SOCKET)
@@ -786,89 +850,6 @@ CServerNetworkConnection::OnListenReceiveAck(
     }
 
     // all other events just queue the event
-    PostOnSendReadyEvent(WindowHandle);
-    return 0;
-}
-
-// Call this to handle a WM_NETWORK_LISTENRECEIVEFINISH message.
-int
-CServerNetworkConnection::OnListenReceiveFinish(
-    HWND        WindowHandle,
-    LONG        LParam
-    )
-{
-    if (WSAGETASYNCERROR(LParam) != 0)
-    {
-        ::MessageBox(
-            WindowHandle,
-            WSAGetLastErrorString(WSAGETASYNCERROR(LParam)),
-            "WSAAsyncGetHostByNameCallBack()",
-            MB_OK);
-        // err_logo(STOP_ERROR,NIL);
-        return 0;
-    }
-
-    if (!IsEnabled())
-    {
-        // TODO: print an error about the network being shutdown
-        return 0;
-    }
-
-    SOCKADDR_IN receive_local_sin;
-    InitializeSocketAddress(receive_local_sin, &m_HostEntry.Entry, m_Port);
-
-    // Associate an address with a socket. (bind)
-    int rval = bind(
-        m_Socket, 
-        (struct sockaddr *) &receive_local_sin, 
-        sizeof(receive_local_sin));
-    if (rval == SOCKET_ERROR)
-    {
-        ::MessageBox(
-            WindowHandle,
-            WSAGetLastErrorString(0),
-            "bind(receivesock)",
-            MB_OK);
-        // err_logo(STOP_ERROR,NIL);
-        return 0;
-    }
-
-    // listen for connect
-#ifndef USE_UDP
-    if (listen(m_Socket, MAX_PENDING_CONNECTS) == SOCKET_ERROR)
-    {
-        ::MessageBox(
-            WindowHandle,
-            WSAGetLastErrorString(0),
-            "listen(receivesock)",
-            MB_OK);
-        // err_logo(STOP_ERROR,NIL);
-        return 0;
-    }
-#endif
-
-    // watch for when connect happens
-    rval = WSAAsyncSelect(
-        m_Socket,
-        WindowHandle,
-        WM_NETWORK_LISTENRECEIVEACK,
-        FD_ACCEPT | FD_READ | FD_WRITE | FD_CLOSE);
-    if (rval == SOCKET_ERROR)
-    {
-        ::MessageBox(
-            WindowHandle,
-            WSAGetLastErrorString(0),
-            "WSAAsyncSelect(receivesock) FD_ACCEPT",
-            MB_OK);
-        // err_logo(STOP_ERROR,NIL);
-    }
-
-    // fake an FD_ACCEPT for UDP, this automatically happens on TCP
-#ifdef USE_UDP
-    OnListenReceiveAck(WindowHandle, MAKELONG(FD_ACCEPT, FD_ACCEPT));
-#endif
-
-    // queue this event
     PostOnSendReadyEvent(WindowHandle);
     return 0;
 }
@@ -963,16 +944,7 @@ NODE *lnetaccepton(NODE *args)
 
     if (NOT_THROWING)
     {
-        // get who we are
-        char szThisHost[80];
-        gethostname(szThisHost, sizeof(szThisHost));
-
-        g_ServerConnection.Enable(
-            networksend,
-            networkreceive,
-            port,
-            szThisHost,
-            WM_NETWORK_LISTENRECEIVEFINISH);
+        g_ServerConnection.Enable(networksend, networkreceive, port);
     }
 
     if (NOT_THROWING)
@@ -1058,8 +1030,7 @@ NODE *lnetconnecton(NODE *args)
             networksend,
             networkreceive,
             remote_port,
-            remotehostname,
-            WM_NETWORK_CONNECTSENDFINISH);
+            remotehostname);
     }
 
     if (NOT_THROWING)

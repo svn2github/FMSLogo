@@ -50,6 +50,10 @@ II. New features/bugs fixed:
     when it is done.
   o Implement feature #59; use a new icon that doesn't look like a mismash of
     red, white, and black.  The icon was provided by Jan Grabe.
+  o Implement feature #105; NETACCEPTON now listens on all network adapters,
+    including the loopback adapter.  This makes it possible to connect to
+    a local FMSLogo server using "localhost", instead of having to use the
+    computer's name.
   o Change the working directory in the screensaver to be the directory which
     holds the screen saver program.  This makes LOAD with a relative path work.
   o Add syntax coloring and matching paren highlights to the minieditor.

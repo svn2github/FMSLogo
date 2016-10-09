@@ -35,7 +35,6 @@ It contains the data you wish to send over the network.
 <para>
 The following example sets up both a client and a server.
 The client (connector) sends data to the server (accepter).
-To make this example run properly, you must replace "MyComputerName" with the name of your computer.
 
 <programlisting><userinput>NETSTARTUP ; Start up the network
 
@@ -44,8 +43,9 @@ SHOW NETACCEPTON 5124 [] [PRINT NETACCEPTRECEIVEVALUE]</userinput>
 true
 
 <userinput>; Connect to local machine on port 5124
-; TODO: replace MyComputerName with the name of your computer.
-SHOW NETCONNECTON "MyComputerName 5124 [PRINT [Ok to Send Again]] []</userinput>
+; If you want to run this portion on a different computer, then replace
+; the "localhost with the name of the other computer.
+SHOW NETCONNECTON "localhost 5124 [PRINT [Ok to Send Again]] []</userinput>
 true
 
 <userinput>WAIT 100 ; Wait a little to establish the connection</userinput>
