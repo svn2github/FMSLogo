@@ -106,9 +106,9 @@
 //
 // Localized "alternate" spellings of Logo reserved words
 //
-#define LOCALIZED_ALTERNATE_TRUE     "prawda" // true
-#define LOCALIZED_ALTERNATE_FALSE    "fa³sz" // false
-#define LOCALIZED_ALTERNATE_END      "ju¿" // end
+#define LOCALIZED_ALTERNATE_TRUE     "prawda" // true ___
+#define LOCALIZED_ALTERNATE_FALSE    "fa³sz" // false ___
+#define LOCALIZED_ALTERNATE_END      "ju¿" // end ___
 #define LOCALIZED_ALTERNATE_TOPLEVEL "toplevel" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SYSTEM   "system" // NOT_YET_LOCALIZED
 
@@ -266,8 +266,7 @@
 #define LOCALIZED_ALTERNATE_EXP                    "exp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_FD                     "np" // fd ___
 #define LOCALIZED_ALTERNATE_FENCE                  "fence" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FILL                   "zamaluj" // fill xxx ___
-//#define LOCALIZED_ALTERNATE_FILL2                  "zam" // - NO ENGLISH SHORT COMMAND for FILL, but NEEDED in Polish xxx ___
+#define LOCALIZED_ALTERNATE_FILL                   "zamaluj" // fill ___
 #define LOCALIZED_ALTERNATE_FILES                  "files" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_FIRST                  "first" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_FIRSTS                 "firsts" // NOT_YET_LOCALIZED
@@ -297,15 +296,15 @@
 #define LOCALIZED_ALTERNATE_HASOWNPEN_             "hasownpen?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HEADING                "heading" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HELP                   "help" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_HIDETURTLE             "hideturtle" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HIDETURTLE             "schowajmnie" // hideturtle ___
 #define LOCALIZED_ALTERNATE_HOME                   "home" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_HT                     "ht" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IF                     "if" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HT                     "s¿" // ht ___
+#define LOCALIZED_ALTERNATE_IF                     "jeœli" // if ___
 #define LOCALIZED_ALTERNATE_IFELSE                 "ifelse" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_IFF                    "iff" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IFFALSE                "iffalse" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_IFFALSE                "jesliNie" // iffalse ___
 #define LOCALIZED_ALTERNATE_IFT                    "ift" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IFTRUE                 "iftrue" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_IFTRUE                 "jeœliTak" // iftrue ___
 #define LOCALIZED_ALTERNATE_INGAMEPORT             "ingameport" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_INPORT                 "inport" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_INPORTB                "inportb" // NOT_YET_LOCALIZED
@@ -522,7 +521,7 @@
 #define LOCALIZED_ALTERNATE_SETPC                  "ukp" // setpc ___
 #define LOCALIZED_ALTERNATE_SETPENCOLOR            "ustalKolPis" // setpencolor ___
 #define LOCALIZED_ALTERNATE_SETPENPATTERN          "setpenpattern" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETPENSIZE             "setpensize" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETPENSIZE             "ustalGruboœæ" // setpensize ___
 #define LOCALIZED_ALTERNATE_SETPITCH               "setpitch" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETPIXEL               "setpixel" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETPOS                 "setpos" // NOT_YET_LOCALIZED
@@ -531,7 +530,7 @@
 #define LOCALIZED_ALTERNATE_SETREADPOS             "setreadpos" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETROLL                "setroll" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETSC                  "setsc" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETSCREENCOLOR         "setscreencolor" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETSCREENCOLOR         "ustalKolorT³a" // setscreencolor ___
 #define LOCALIZED_ALTERNATE_SETSCRUNCH             "setscrunch" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETTIMER               "settimer" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETTURTLE              "setturtle" // NOT_YET_LOCALIZED
@@ -547,13 +546,13 @@
 #define LOCALIZED_ALTERNATE_SHOW                   "show" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SHOWNP                 "shownp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SHOWN_                 "shown?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SHOWTURTLE             "showturtle" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SHOWTURTLE             "poka¿mnie" // showturtle ___
 #define LOCALIZED_ALTERNATE_SIN                    "sin" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SOUND                  "sound" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SPLITSCREEN            "splitscreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SQRT                   "sqrt" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SQRT                   "pwk" // sqrt ___
 #define LOCALIZED_ALTERNATE_SS                     "ss" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ST                     "st" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ST                     "p¿" // st ___
 #define LOCALIZED_ALTERNATE_STANDOUT               "standout" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_STATICCREATE           "staticcreate" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_STATICDELETE           "staticdelete" // NOT_YET_LOCALIZED
@@ -649,12 +648,12 @@
 #define LOCALIZED_SET_LABELFONT        "Czcionka napisów..." // &Label Font...
 #define LOCALIZED_SET_COMMANDERFONT    "Czcionka linii komend..." // &Commander Font...
 #define LOCALIZED_SET_PENCOLOR         "Kolor pisaka..." // &Pen Color...
-#define LOCALIZED_SET_FLOODCOLOR       "Kolor wype³nienia..." // F&lood Color...
+#define LOCALIZED_SET_FLOODCOLOR       "Kolor malowania..." // F&lood Color...
 #define LOCALIZED_SET_SCREENCOLOR      "Kolor t³a..." // &Screen Color...
 
 #define LOCALIZED_ZOOM                 "Po&wiêkszenie" // &Zoom
-#define LOCALIZED_ZOOM_IN              "Po&mniejsz" // &In
-#define LOCALIZED_ZOOM_OUT             "Po&wiêksz" // &Out
+#define LOCALIZED_ZOOM_IN              "Po&wiêksz" // &In
+#define LOCALIZED_ZOOM_OUT             "Po&mniejsz" // &Out
 #define LOCALIZED_ZOOM_NORMAL          "Rozmiar &pocz¹tkowy" // &Normal
 
 #define LOCALIZED_HELP                 "Po&moc" // &Help
@@ -833,10 +832,10 @@
 #define LOCALIZED_SETCOLOR                     "Ustal kolor" // Set Color
 #define LOCALIZED_SETCOLOR_PENCOLOR            "Kolor pisaka" // Pen Color
 #define LOCALIZED_SETCOLOR_FLOODCOLOR          "Kolor malowania" // Flood Color
-#define LOCALIZED_SETCOLOR_SCREENCOLOR         "Kolor ekranu" // Screen Color
-#define LOCALIZED_SETCOLOR_RED                 "Czerwony" // Red
-#define LOCALIZED_SETCOLOR_GREEN               "Zielony" // Green
-#define LOCALIZED_SETCOLOR_BLUE                "Niebieski" // Blue
+#define LOCALIZED_SETCOLOR_SCREENCOLOR         "Kolor t³a" // Screen Color
+#define LOCALIZED_SETCOLOR_RED                 "R (czerwony)" // Red
+#define LOCALIZED_SETCOLOR_GREEN               "G (zielony)" // Green
+#define LOCALIZED_SETCOLOR_BLUE                "B (niebieski)" // Blue
 #define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON
 #define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON
 #define LOCALIZED_SETCOLOR_APPLY               LOCALIZED_GENERAL_APPLYBUTTON
