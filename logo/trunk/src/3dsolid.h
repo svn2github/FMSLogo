@@ -60,11 +60,6 @@ struct BSPNode
 // This class supports solid three-dimensional objects
 class TThreeDSolid : public TThreeD
 {
- private:
-#ifndef WX_PURE
-    HDC m_MemDC;
-#endif
-
  public: // HACK: should be private
     long m_iPolyCount;
 
@@ -121,10 +116,10 @@ class TThreeDSolid : public TThreeD
     double CalcSign(Point& p, POLYGON* Poly);
     void Intersect(POLYGON* Poly, Point& v1, Point& v2, Point& bc);
     void AddToBSPTree(POLYGON* T, BSPNode** Root);
-    bool WorldToDisplay(double x, double y, double z, POINT& disp);
+    bool WorldToDisplay(double x, double y, double z, class wxPoint & disp);
     RGBCOLOR ComputeColor(Point& p, VECTOR& normal, RGBCOLOR colorNdx);
-    void DisplayPolygon(POLYGON* Poly);
-    void TraverseTree(BSPNode* tree);
+    void DisplayPolygon(POLYGON* Poly, class wxDC * DeviceContext);
+    void TraverseTree(BSPNode* Tree, class wxDC * DeviceContext);
 };
 
 // global variables

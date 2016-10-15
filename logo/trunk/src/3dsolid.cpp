@@ -5,13 +5,18 @@
 
 // 3DSOLID.CPP: Displays a solid representation of a three-dimensional
 // object. Implements the BSP algorithm described in Chapter 17 in order
-// to display the surfaces of objects correctly. Compile with VECTOR.CPP,
-// 3DSOLID.RC, and THREED.CPP.
+// to display the surfaces of objects correctly.
 #include "pch.h"
 
 #ifndef USE_PRECOMPILED_HEADER
    #include "3dsolid.h"
    #include <stdio.h>
+
+   #include <wx/gdicmn.h> // wxPoint
+   #include <wx/dc.h>
+   #include <wx/brush.h>
+   #include <wx/pen.h>
+   #include <wx/window.h>
 
    #ifdef WX_PURE
      #define GetRValue(rgb) (((rgb) >> 0)  & 0xFF)
@@ -664,7 +669,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
 // it in disp.
 // Returns true on success.
 // Returns false, otherwise (in which case disp is not modified).
-bool TThreeDSolid::WorldToDisplay(double x, double y, double z, POINT& disp)
+bool TThreeDSolid::WorldToDisplay(double x, double y, double z, wxPoint & disp)
 {
     double xc = (x * A1.x + A1.y * y + A1.z * z + Offset.x) * DVal;
     double yc = (x * A2.x + A2.y * y + A2.z * z + Offset.y) * DVal;
@@ -696,7 +701,7 @@ RGBCOLOR TThreeDSolid::ComputeColor(Point& p, VECTOR& normal, RGBCOLOR colorNdx)
     Normalize(l);
     double lDotN = Dot(l, normal);
     // Calculate diffuse lighting contribution to object's color
-    if (lDotN <= 0) 
+    if (lDotN <= 0)
     {
         lDotN *= -m_Diffuse * NUM_SHADES;
     }
@@ -717,9 +722,9 @@ RGBCOLOR TThreeDSolid::ComputeColor(Point& p, VECTOR& normal, RGBCOLOR colorNdx)
 
 
 // Display the POLYGON
-void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
+void TThreeDSolid::DisplayPolygon(POLYGON* Poly, wxDC * DeviceContext)
 {
-    POINT t[4096]; // holds screen coordinates of Poly
+    wxPoint t[4096]; // holds screen coordinates of Poly
 
     // PrecomputeCentroid(Poly);
 
@@ -748,70 +753,70 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
     if (i > 2)
     {
         // We have at least two points, which defines an area.
-        // Render the polygon onto the screen.
+        // Render the polygon onto the device context.
+        const wxBrush & oldBrush = DeviceContext->GetBrush();
+
         RGBCOLOR color = ComputeColor(Poly->Centroid, Poly->Normal, Poly->ColorNdx);
-#ifndef WX_PURE
-        HBRUSH hBrush = CreateSolidBrush(color);
-        HBRUSH oldBrush = (HBRUSH) SelectObject(m_MemDC, hBrush);
+        wxBrush polygonBrush = wxBrush(wxColor(color));
+        DeviceContext->SetBrush(polygonBrush);
 
-        Polygon(m_MemDC, t, i); 
+        DeviceContext->DrawPolygon(i, t); 
 
-        SelectObject(m_MemDC, oldBrush);
-        DeleteObject(hBrush);
-#endif
+        DeviceContext->SetBrush(oldBrush);
     }
 }
 
 // Display the figure stored in the BSP tree
 void TThreeDSolid::View()
 {
-#ifndef WX_PURE
     erase_screen();
 
-    // memory
-    m_MemDC = GetMemoryDeviceContext();
+    wxDC * memoryDeviceContext = GetWxMemoryDeviceContext();
 
-    // Create the correct brush and display the POLYGON
-    HPEN hOldpen = HPEN(SelectObject(m_MemDC, GetStockObject(NULL_PEN)));
+    // Make the pen transparent so that the polygons don't have an outline.
+    const wxPen & oldPen = memoryDeviceContext->GetPen();
+    memoryDeviceContext->SetPen(*wxTRANSPARENT_PEN);
 
-    // int OldFillMode = SetPolyFillMode(m_MemDC, WINDING);
+    TraverseTree(m_Tree, memoryDeviceContext);
 
-    TraverseTree(m_Tree);
+    memoryDeviceContext->SetPen(oldPen);
 
-    SelectObject(m_MemDC, hOldpen);
-
-    ::InvalidateRect(GetScreenWindow(), NULL, FALSE);
-#endif
+    // Refresh the screen window so that it will repainted
+    // to match the memory device context.
+    GetScreenWxWindow()->Refresh(false);
 }
 
 // Traverse a BSP tree, rendering a three-dimensional scene
-void TThreeDSolid::TraverseTree(BSPNode* tree)
+void TThreeDSolid::TraverseTree(BSPNode* Tree, wxDC * DeviceContext)
 {
-    if (tree)
+    if (Tree)
     {
         VECTOR vector;
-        vector.x = From.x - tree->Poly->Vertices->Vertex.x;
-        vector.y = From.y - tree->Poly->Vertices->Vertex.y;
-        vector.z = From.z - tree->Poly->Vertices->Vertex.z;
+        vector.x = From.x - Tree->Poly->Vertices->Vertex.x;
+        vector.y = From.y - Tree->Poly->Vertices->Vertex.y;
+        vector.z = From.z - Tree->Poly->Vertices->Vertex.z;
         Normalize(vector);
-        double d = Dot(vector, tree->Poly->Normal);
+        double d = Dot(vector, Tree->Poly->Normal);
 
         if (d > 0.0 /* epsilon3 */)
-        { // The eye is in front
-            TraverseTree(tree->Inside);	// of the polygon
-            DisplayPolygon(tree->Poly);
-            TraverseTree(tree->Outside);
+        {
+            // The eye is in front of the polygon
+            TraverseTree(Tree->Inside, DeviceContext); 
+            DisplayPolygon(Tree->Poly, DeviceContext);
+            TraverseTree(Tree->Outside, DeviceContext);
         }
         else /* if (d < -epsilon3) */
-        { // The eye is in back
-            TraverseTree(tree->Outside); // of the polygon
-            DisplayPolygon(tree->Poly);
-            TraverseTree(tree->Inside);
+        {
+            // The eye is in back of the polygon
+            TraverseTree(Tree->Outside, DeviceContext);
+            DisplayPolygon(Tree->Poly, DeviceContext);
+            TraverseTree(Tree->Inside, DeviceContext);
         }
 //      else
-//      { // The eye is in on
-//          TraverseTree(tree->Outside); // of the polygon
-//          TraverseTree(tree->Inside);
+//      {
+//          // The eye is in on the polygon
+//          TraverseTree(Tree->Outside);
+//          TraverseTree(Tree->Inside);
 //      }
     }
 }
