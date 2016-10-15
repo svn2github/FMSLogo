@@ -149,10 +149,6 @@ void TThreeDSolid::DisposeBSP(BSPNode* tree)
 BSPNode* TThreeDSolid::MakeBSPNode(POLYGON* Poly)
 {
     BSPNode *node = new BSPNode;
-    if (!node)
-    {
-        return NULL;
-    }
     node->Poly = Poly;    // Point to the POLYGON's data
     node->Outside = 0;
     node->Inside = 0;
@@ -166,17 +162,6 @@ void TThreeDSolid::AddList(PLIST** tlist, POLYGON* Poly)
     PLIST *back = *tlist;
 
     PLIST *nuL = new PLIST;
-    if (!nuL)
-    {
-#ifndef WX_PURE
-        MessageBox(
-            GetActiveWindow(), 
-            LOCALIZED_ERROR_OUTOFMEMORY,
-            LOCALIZED_GENERAL_PRODUCTNAME, 
-            MB_OK | MB_ICONEXCLAMATION);
-#endif
-        return;
-    }
     nuL->T = Poly;
     nuL->Next = 0;
     if (l)
@@ -190,7 +175,7 @@ void TThreeDSolid::AddList(PLIST** tlist, POLYGON* Poly)
     }
     else
     {
-	// List is empty. This is the first node.
+        // List is empty. This is the first node.
         *tlist = nuL;
     }
 }
@@ -644,7 +629,6 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
           AddToBSPTree(m_PolyA, &(*Root)->Inside);
 
           m_PolyB = new POLYGON;
-
           *m_PolyB = *Poly;
 
           m_PolyB->Vertices=VerticesOut;
