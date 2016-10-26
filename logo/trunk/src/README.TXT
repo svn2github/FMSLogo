@@ -22,6 +22,8 @@ II. New features/bugs fixed:
   o Drop support for the Win 9X versions of Windows.
   o Drop support for the original Pentium processor.
   o Drop support for display depths less than 16-bit true color.
+  o Add a Polish translation.
+  o Improve the Croatian translation.
   o Fix bug #212 up/down arrow is no longer sluggish when the commander history
     has a very long line.
   o Fix bug #319; SETACTIVEAREA now throws a recoverable error when given points
