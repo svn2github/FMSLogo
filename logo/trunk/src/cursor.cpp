@@ -20,49 +20,29 @@
 */
 #include "pch.h"
 #ifndef USE_PRECOMPILED_HEADER
+   #include <wx/cursor.h>
+   #include <wx/window.h>
+
    #include "cursor.h"
    #include "init.h"
+   #include "screenwindow.h"
    #include "logocore.h"
    #include "debugheap.h"
 #endif
 
-#ifndef WX_PURE
-HCURSOR hCursorWait;               // handle for hourglass cursor
-HCURSOR hCursorArrow;              // handle for normal cursor
-
-static HICON hCursorSave = 0; // handle for saved cursor
-#endif
 
 NODE *lsetcursorwait(NODE *)
 {
-#ifndef WX_PURE
-    hCursorSave = ::SetCursor(hCursorWait);
-#endif
+    GetMainWxWindow()->SetCursor(*wxHOURGLASS_CURSOR);
     return Unbound;
 }
 
 NODE *lsetcursorarrow(NODE *)
 {
-#ifndef WX_PURE
-    if (hCursorSave)
-    {
-        ::SetCursor(hCursorSave);
-        hCursorSave = 0;
-    }
-    else
-    {
-        ::SetCursor(hCursorArrow);
-    }
-#endif
-
+    GetMainWxWindow()->SetCursor(wxNullCursor);
     return Unbound;
 }
 
 void init_cursors()
 {
-#ifndef WX_PURE
-    // get an hourglass cursor
-    hCursorWait  = LoadCursor(NULL, IDC_WAIT);
-    hCursorArrow = LoadCursor(NULL, IDC_ARROW);
-#endif
 }

@@ -2055,11 +2055,11 @@ NODE *lbitcopy(NODE *arg)
 NODE *lbitfit(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
-#ifndef WX_PURE
 
     FIXNUM newWidth  = getint(nonnegative_int_arg(arg));
     FIXNUM newHeight = getint(nonnegative_int_arg(cdr(arg)));
 
+#ifndef WX_PURE
     if (NOT_THROWING)
     {
         // If clipboard check with clipboard only
@@ -2087,7 +2087,7 @@ NODE *lbitfit(NODE *arg)
                 SetStretchBltMode(tempMemDC, HALFTONE);
 
                 // Load hour-glass cursor.
-                HCURSOR oldCursor = ::SetCursor(hCursorWait);
+                lsetcursorwait(NIL);
 
                 StretchBlt(
                     tempMemDC,
@@ -2102,8 +2102,8 @@ NODE *lbitfit(NODE *arg)
                     g_SelectedBitmap->Height,
                     SRCCOPY);
 
-                // Restore the arrow cursor.
-                ::SetCursor(oldCursor);
+                // Restore the arrow cursor
+                lsetcursorarrow(NIL);
 
                 SelectObject(tempMemDC, savedTempMemoryBitmap);
                 DeleteDC(tempMemDC);

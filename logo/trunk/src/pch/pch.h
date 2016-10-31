@@ -70,6 +70,7 @@
 #include <wx/app.h>
 #include <wx/button.h>
 #include <wx/checkbox.h>
+#include <wx/cursor.h>
 #include <wx/clipbrd.h>
 #include <wx/combobox.h>
 #include <wx/dc.h>

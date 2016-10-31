@@ -160,8 +160,8 @@ private:
     void OnAboutMultipleSclerosis(wxCommandEvent& Event);
 
     void OnResize(wxSizeEvent& Event);
-
     void OnClose(wxCloseEvent& Event);
+    void OnSetCursor(wxSetCursorEvent& Event);
 
 #ifndef WX_PURE
     virtual WXLRESULT MSWWindowProc(

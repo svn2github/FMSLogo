@@ -27,7 +27,6 @@
 #include "localizedstrings.h"
 #include "logoeventqueue.h"
 #include "mainwind.h"
-#include "cursor.h"
 #include "devwind.h"
 #include "eval.h"
 #include "logorc.h"
@@ -88,16 +87,6 @@ static
 void
 UninitializeLogoEngine()
 {
-    if (hCursorWait)
-    {
-        DestroyCursor(hCursorWait);
-    }
-
-    if (hCursorArrow)
-    {
-        DestroyCursor(hCursorArrow);
-    }
-
     // cleanup all subsystems
     uninit();
 

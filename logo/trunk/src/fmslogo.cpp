@@ -493,18 +493,6 @@ bool CFmsLogo::OnInit()
 
 int CFmsLogo::OnExit()
 {
-#ifndef WX_PURE
-    if (hCursorWait)
-    {
-        DestroyCursor(hCursorWait);
-    }
-
-    if (hCursorArrow)
-    {
-        DestroyCursor(hCursorArrow);
-    }
-#endif // WX_PURE
-
     // cleanup all subsystems
     uninit();
 

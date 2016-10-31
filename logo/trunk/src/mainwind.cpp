@@ -47,8 +47,6 @@
    #endif
 #endif
 
-#ifndef WX_PURE
-
 // Writes the contents of the screen window that is
 // within the ACTIVEAREA window to the screen to the given
 // file stream as a Windows Bitmap.
@@ -64,6 +62,9 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitmapBitDepth)
 {
     ERR_TYPES status = SUCCESS;
 
+#ifdef WX_PURE
+    status = FILE_ERROR;
+#else
     // grab a DC
     HDC dc = GetMemoryDeviceContext();
 
@@ -313,17 +314,13 @@ ERR_TYPES WriteDIB(FILE* File, int MaxBitmapBitDepth)
     }
 
     delete [] bitmapInfoBuffer;
+#endif // WX_PURE
 
     return status;
 }
 
-#endif // WX_PURE
-
 ERR_TYPES DumpBitmapFile(const char * Filename, int MaxBitCount)
 {
-#ifdef WX_PURE
-    return FILE_ERROR;
-#else
     // open and check if ok
     FILE* file = fopen(Filename, "wb");
     if (file == NULL)
@@ -332,14 +329,14 @@ ERR_TYPES DumpBitmapFile(const char * Filename, int MaxBitCount)
     }
 
     // Load hour-glass cursor.
-    HCURSOR oldCursor = ::SetCursor(hCursorWait);
+    lsetcursorwait(NIL);
 
     // do it and if error then let user know 
     ERR_TYPES status = WriteDIB(file, MaxBitCount);
 
     // Restore the arrow cursor
-    ::SetCursor(oldCursor);
-
+    lsetcursorarrow(NIL);
+    
     int rval = fclose(file);
     if (rval != 0)
     {
@@ -355,7 +352,6 @@ ERR_TYPES DumpBitmapFile(const char * Filename, int MaxBitCount)
     }
 
     return status;
-#endif // WX_PURE
 }
 
 #ifndef WX_PURE
@@ -510,9 +506,6 @@ LoadBitmapFile(
     unsigned int & dwPixelHeight
     )
 {
-#ifdef WX_PURE
-    return FILE_ERROR;
-#else
     // Test if Filename is a Windows 3.0 DIB bitmap and if so read it
 
     // open then check if open 
@@ -531,8 +524,11 @@ LoadBitmapFile(
     if (TestWin30Bitmap == 40)
     {
         // Load hour-glass cursor.
-        HCURSOR oldCursor = ::SetCursor(hCursorWait);
+        lsetcursorwait(NIL);
 
+#ifdef WX_PURE
+        status = FILE_ERROR;
+#else
         // if loaded ok then invalidate to display 
         if (OpenDIB(file, dwPixelWidth, dwPixelHeight))
         {
@@ -542,9 +538,10 @@ LoadBitmapFile(
         {
             status = IMAGE_BMP_CREATE_FAILED;
         }
+#endif // WX_PURE
 
-        // Restore the arrow cursor.
-        ::SetCursor(oldCursor);
+        // Restore the arrow cursor
+        lsetcursorarrow(NIL);
     }
     else
     {
@@ -554,7 +551,6 @@ LoadBitmapFile(
     fclose(file);
 
     return status;
-#endif // WX_PURE
 }
 
 void

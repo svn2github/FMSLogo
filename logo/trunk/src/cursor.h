@@ -21,16 +21,6 @@
 
 struct NODE;
 
-#ifndef WX_PURE
-
-#include <windows.h>
-
-// global variable declarations
-extern HCURSOR hCursorWait;
-extern HCURSOR hCursorArrow;
-
-#endif // WX_PURE
-
 // function declarations
 extern void init_cursors();
 extern NODE *lsetcursorwait(NODE *);

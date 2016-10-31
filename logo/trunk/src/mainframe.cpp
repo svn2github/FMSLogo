@@ -372,6 +372,7 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(wxID_ZOOM_100,                CMainFrame::OnZoomNormal)
     EVT_SIZE(CMainFrame::OnResize)
     EVT_CLOSE(CMainFrame::OnClose)
+    EVT_SET_CURSOR(CMainFrame::OnSetCursor)
 END_EVENT_TABLE()
 
 // ScreenWidth    - the size of the screen window.
@@ -1361,6 +1362,19 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
 
     // Invoke the default handler, which is to destroy
     // the window and shut down.
+    Event.Skip();
+}
+
+void CMainFrame::OnSetCursor(wxSetCursorEvent& Event)
+{
+    // For compatability with MSWLogo, when FMSLogo is able to process
+    // messages, any call to SETCURSORWAIT which may have set the cursor
+    // to an hourglass is implicitly cleared.
+    // This happened as a side-effect of the win32 ::SetCursor() function,
+    // which restores the cursor when the mouse is moved.
+    lsetcursorarrow(NIL);
+
+    // Invoke the default handler.
     Event.Skip();
 }
 
