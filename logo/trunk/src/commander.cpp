@@ -258,11 +258,6 @@ CCommanderInput * CCommander::GetInput()
     return m_NextInstruction;
 }
 
-wxButton * CCommander::GetEdallButton()
-{
-    return m_EdallButton;
-}
-
 void CCommander::UpdateTraceButtonState()
 {
     m_TraceButton->SetPressedState(traceflag);

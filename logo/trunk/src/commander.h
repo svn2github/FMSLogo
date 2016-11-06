@@ -52,7 +52,6 @@ public:
 
     CCommanderHistory * GetHistory();
     CCommanderInput   * GetInput();
-    wxButton          * GetEdallButton();
 
     const wxSize GetRecommendedMinimumSize() const;
 
