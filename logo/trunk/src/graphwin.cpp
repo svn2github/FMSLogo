@@ -25,7 +25,10 @@
    #include <string.h>
    #include <algorithm>
 
+   #include <wx/window.h>
    #include <wx/dc.h>
+   #include <wx/pen.h>
+   #include <wx/brush.h>
    #include <wx/help.h>
    #include <wx/msgdlg.h> 
 
@@ -129,8 +132,6 @@ HPEN   g_NormalPen;                    // Handle to "Normal" Pen
 
 LOGPEN g_LogicalErasePen;              // Handle to "Erase" logical Pen
 HPEN   g_ErasePen;                     // Handle to "Erase" Pen
-
-LOGBRUSH FloodBrush;                   // Handle to the "floodfill" brush
 
 #endif  // WX_PURE
 
@@ -814,6 +815,15 @@ InvalidateRectangleOnScreen(
     InvalidateRectangleOnScreen(screenRectangle);
 }
 
+static void InvalidateRectangleOnScreen(const wxRect & MemoryRectangle)
+{
+    InvalidateRectangleOnScreen(
+        MemoryRectangle.GetLeft(),
+        MemoryRectangle.GetTop(),
+        MemoryRectangle.GetRight(),
+        MemoryRectangle.GetBottom());
+}
+
 static
 void
 InvalidateTopBottomWrappingMemoryRectangle(
@@ -1255,9 +1265,7 @@ NODE *lpixel(NODE *)
 #endif
 }
 
-#ifndef WX_PURE
-
-void logofill(bool bOld)
+void logofill(bool fillUntilPenColor)
 {
     POINT dest;
     if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
@@ -1265,42 +1273,44 @@ void logofill(bool bOld)
         return;
     }
 
-    HBRUSH JunkBrush = CreateBrushIndirect(&FloodBrush);
-
     // memory
-    HDC MemDC = GetMemoryDeviceContext();
+    wxDC * memoryDeviceContext = GetWxMemoryDeviceContext();
 
-    SetTextColor(MemDC, pcolor);
+    // REVISIT: why do we do this?
+    memoryDeviceContext->SetTextForeground(wxColor(pcolor));
 
-    HBRUSH oldBrush = (HBRUSH) SelectObject(MemDC, JunkBrush);
+    // Select the fill brush, saving the old one.
+    wxColor fillColor(fcolor);
+    wxBrush fillBrush(fillColor);
+    const wxBrush oldBrush = memoryDeviceContext->GetBrush();
+    memoryDeviceContext->SetBrush(fillBrush);
 
-    if (bOld)
+    if (fillUntilPenColor)
     {
-        ExtFloodFill(
-            MemDC,
+        memoryDeviceContext->FloodFill(
             +dest.x + xoffset,
             -dest.y + yoffset,
-            pcolor,
-            FLOODFILLBORDER);
+            wxColor(pcolor),
+            wxFLOOD_BORDER);
     }
     else
     {
-        RGBCOLOR tcolor = GetPixel(MemDC, dest.x + xoffset, -dest.y + yoffset);
-
-        ExtFloodFill(
-            MemDC,
+        wxColor colorUnderTurtle;
+        memoryDeviceContext->GetPixel(
             +dest.x + xoffset,
             -dest.y + yoffset,
-            tcolor,
-            FLOODFILLSURFACE);
+            &colorUnderTurtle);
+
+        memoryDeviceContext->FloodFill(
+            +dest.x + xoffset,
+            -dest.y + yoffset,
+            colorUnderTurtle,
+            wxFLOOD_SURFACE);
     }
 
-    SelectObject(MemDC, oldBrush);
-
-    DeleteObject(JunkBrush);
+    // Restore the previous brush
+    memoryDeviceContext->SetBrush(oldBrush);
 }
-
-#endif // WX_PURE
 
 
 static NODE* color_helper(const Color & col)
@@ -1364,12 +1374,6 @@ void ChangeActiveFloodColor(int Red, int Green, int Blue)
     dfld.blue  = Blue;
 
     fcolor = MAKERGB(dfld.red, dfld.green, dfld.blue);
-
-#ifndef WX_PURE
-    FloodBrush.lbStyle = BS_SOLID;
-    FloodBrush.lbColor = fcolor;
-    FloodBrush.lbHatch = HS_VERTICAL;
-#endif
 
     update_status_floodcolor();
 }
@@ -1513,7 +1517,7 @@ NODE *lzoom(NODE *arg)
 NODE *lbitblock(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
-#ifndef WX_PURE
+
     POINT turtleLocation;
     if (!WorldCoordinateToScreenCoordinate(
             g_SelectedTurtle->Position, 
@@ -1532,23 +1536,32 @@ NODE *lbitblock(NODE *arg)
         // only do the blit if a non-zero area was specified
         if (cutWidth != 0 && cutHeight != 0)
         {
-            HBRUSH fillBrush = CreateBrushIndirect(&FloodBrush);
-            HDC    memDC     = GetMemoryDeviceContext();
+            // Select the fill brush, saving the old one.
+            wxColor fillColor(fcolor);
+            wxBrush fillBrush(fillColor);
+            wxDC * memoryDeviceContext = GetWxMemoryDeviceContext();
+            const wxBrush & oldBrush = memoryDeviceContext->GetBrush();
+            memoryDeviceContext->SetBrush(fillBrush);
 
-            RECT memoryRect;
-            memoryRect.left   = +turtleLocation.x + xoffset;
-            memoryRect.right  = memoryRect.left + cutWidth;
-            memoryRect.bottom = -turtleLocation.y + yoffset + LL;
-            memoryRect.top    = memoryRect.bottom - cutHeight;
+            // Also change the pen to be transparent, or else
+            // an outline will be drawn around the filled region.
+            const wxPen & oldPen = memoryDeviceContext->GetPen();
+            memoryDeviceContext->SetPen(*wxTRANSPARENT_PEN);
 
-            FillRect(memDC, &memoryRect, fillBrush);
+            wxRect memoryRect(
+                +turtleLocation.x + xoffset,                  // left
+                -turtleLocation.y + yoffset - cutHeight + LL, // top
+                cutWidth,                                     // width
+                cutHeight);                                   // height
+
+            memoryDeviceContext->DrawRectangle(memoryRect);
 
             //screen
             if (zoom_flag)
             {
                 // It's easier to invalidate the screen and force a 
                 // repaint from the image memory.
-                InvalidateRect(GetScreenWindow(), NULL, FALSE);
+                GetScreenWxWindow()->Refresh(false);
             }
             else
             {
@@ -1559,13 +1572,19 @@ NODE *lbitblock(NODE *arg)
                 // screen causes repainting problems.
                 // I suspect that calling ReleaseDC() implicitly invalidated
                 // the screen, which may be why it was so much slower.
-                InvalidateRectangleOnScreen(memoryRect);
+                InvalidateRectangleOnScreen(
+                    memoryRect.GetLeft(),
+                    memoryRect.GetTop(),
+                    memoryRect.GetRight(),
+                    memoryRect.GetBottom());
             }
 
-            DeleteObject(fillBrush);
+            // Restore the brush/pen
+            memoryDeviceContext->SetBrush(oldBrush);
+            memoryDeviceContext->SetPen(oldPen);
         }
     }
-#endif
+
     return Unbound;
 }
 

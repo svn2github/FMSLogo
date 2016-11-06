@@ -28,6 +28,8 @@
    #include <float.h>
    #include <limits.h>
 
+   #include <wx/window.h>
+
    #ifdef WX_PURE
 
       #include <wx/dc.h>
@@ -2560,25 +2562,30 @@ NODE *lperspective(NODE *)
 
 NODE *lfill(NODE *arg)
 {
-    bool bOld;
+    bool fillUntilPenColor;
     if (arg != NIL)
     {
-        bOld = boolean_arg(arg);
+        fillUntilPenColor = boolean_arg(arg);
     }
     else
     {
-        bOld = false;
+        fillUntilPenColor = false;
     }
 
     draw_turtles(false);
-#ifndef WX_PURE
-    HWND screen = GetScreenWindow();
-    ::UpdateWindow(screen);
 
-    logofill(bOld);
-    ::InvalidateRect(screen, NULL, FALSE);
-    ::UpdateWindow(screen);
-#endif
+    // REVISIT: why do this twice?
+    wxWindow * screen = GetScreenWxWindow();
+    screen->Update();
+
+    logofill(fillUntilPenColor);
+    screen->Refresh(false);
+
+    // Update the screen immediately so that FILL within
+    // a timer event will take place (otherwise the repainting
+    // events will wait until FMSLogo is idle).
+    screen->Update();
+
     draw_turtles(true);
 
     return Unbound;

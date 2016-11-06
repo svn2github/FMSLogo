@@ -105,7 +105,6 @@ void init_graphics()
     dscn.green = 0xFF;
     dscn.blue  = 0xFF;
 
-    // initialize the global pen state
 #ifndef WX_PURE
     // init the font structure
     FontRec.lfHeight         = 24;
@@ -121,10 +120,6 @@ void init_graphics()
     FontRec.lfQuality        = DEFAULT_QUALITY;
     FontRec.lfPitchAndFamily = DEFAULT_PITCH;
     strcpy(FontRec.lfFaceName, "Arial");
-
-    FloodBrush.lbStyle = BS_SOLID;
-    FloodBrush.lbColor = fcolor;
-    FloodBrush.lbHatch = HS_VERTICAL;
 #endif
 
     // Set handy rectangle of full bitmap

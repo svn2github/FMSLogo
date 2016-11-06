@@ -7,20 +7,25 @@ TO BITBLOCKTEST.SMOKETEST
   ; clear the screen to white
   SETSCREENCOLOR 7
 
+  ; draw a horizontal rectangle in black
   SETFLOODCOLOR 0
   BITBLOCK 100 50
 
+  ; draw a vertical rectangle in blue
   SETFLOODCOLOR 1
   BITBLOCK 50  100
 
+  ; plot a single pixel in green
   SETFLOODCOLOR 2
   BITBLOCK 1 1
 
   ; zero is legal, but nothing is drawn
   SETFLOODCOLOR 3
-  BITBLOCK 0   50
-  BITBLOCK 50  0
-  BITBLOCK 0   0
+  BITBLOCK 0    200
+  BITBLOCK 200  0
+  BITBLOCK 0    0
+
+  CHECKSCREEN "bitblocktest
 
   SETFLOODCOLOR :oldfloodcolor
 END

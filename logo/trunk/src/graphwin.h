@@ -55,8 +55,6 @@ extern FLONUM the_zoom;
   extern LOGPEN g_LogicalErasePen;
   extern HPEN   g_ErasePen;
 
-  extern LOGBRUSH FloodBrush;
-
   extern HBITMAP MemoryBitMap;
 
 #endif // WX_PURE
@@ -79,7 +77,7 @@ extern NODE *llabelfont(NODE *arg);
 extern NODE *lsetfocus(NODE *args);
 extern NODE *lgetfocus(NODE *arg);
 extern NODE *lwindowset(NODE *args);
-extern void logofill(bool bOld);
+extern void logofill(bool fillUntilPenColor);
 #ifndef WX_PURE // for SIZE
 extern SIZE labelsize(const char *s);
 #endif
