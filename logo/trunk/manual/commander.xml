@@ -72,9 +72,12 @@ See also the <link linkend="command-trace">TRACE</link> and <link linkend="comma
    <section id="commander-halt">
       <title>Halt Button</title>
 <para>
-Pressing the Halt button stops &PRODUCTNAME; from processing any further instructions.
+Pressing the Halt button stops &PRODUCTNAME; from running any further instructions.
 It works by throwing a "Stopping..." error.
 Pressing the Halt button will leave &PRODUCTNAME; waiting for your next instruction, assuming that the "Stopping..." error isn't caught.
+</para>
+<para>
+The Halt button is disabled when &PRODUCTNAME; is not running instructions.
 </para>
 <para>
 See also the <link linkend="command-halt">HALT</link> command.
@@ -108,9 +111,12 @@ See also the <link linkend="command-step">STEP</link> and <link linkend="command
    <section id="commander-pause">
       <title>Pause Button</title>
 <para>
-Pressing the Pause button stops &PRODUCTNAME; so that you can examine variables, make changes, or whatever else you want to do.
+Pressing the Pause button temporarily suspends &PRODUCTNAME; from running further instructions so that you can examine variables, make changes, or whatever else you want to do.
 To continue you can run the <link linkend="command-continue">CONTINUE</link> command or press the Cancel button.
 You can also run the <link linkend="command-pause">PAUSE</link> command from your programs to act as a "Break Point".
+</para>
+<para>
+The Pause button is disabled when &PRODUCTNAME; is not running instructions.
 </para>
    </section>
 

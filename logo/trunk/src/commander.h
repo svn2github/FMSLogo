@@ -35,6 +35,8 @@ public:
     void UpdateTraceButtonState();
     void UpdateStepButtonState();
     void UpdateStatusButtonState();
+    void UpdateHaltButtonState();
+    void UpdatePauseButtonState();
 
     void ToggleStep();
     void Halt();

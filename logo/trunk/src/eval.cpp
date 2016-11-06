@@ -50,6 +50,7 @@
    #include "lists.h"
    #include "startup.h"
    #include "stringadapter.h"
+   #include "screenwindow.h"
    #include "debugheap.h"
 #endif
 
@@ -100,7 +101,9 @@ static NODE *var_stack = NIL;    // The stack of local variables and their
                                  //   obj is the variable's value.
                                  //   cdr is the next variable in the stack.
 
-static int halt_flag = 0;        // Flag to signal it's OK to halt
+static int halt_flag = 0;        // Flag to signal it's OK to halt.
+                                 // This is the number of nested evaluations
+                                 // that are happening.
 
 
 // Load the definition of ProcNode if the definition of ProcNode
@@ -2477,6 +2480,9 @@ void start_execution()
     {
         halt_flag = 1;
     }
+
+    // Enable the Halt/Pause buttons since FMSLogo is running.
+    UpdateUiExecutionState();
 }
 
 void stop_execution()
@@ -2489,6 +2495,9 @@ void stop_execution()
     {
         halt_flag = 0;
     }
+
+    // Disable the Halt/Pause buttons since FMSLogo is not running.
+    UpdateUiExecutionState();
 }
 
 bool is_executing()

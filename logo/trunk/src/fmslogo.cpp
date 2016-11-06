@@ -735,6 +735,13 @@ void OpenStatusWindow()
     mainFrame->GetCommander()->UpdateStatusButtonState();
 }
 
+void UpdateUiExecutionState()
+{
+    // Enable/Disable the Halt/Pause buttons according to the execution state.
+    CFmsLogo::GetMainFrame()->GetCommander()->UpdateHaltButtonState();
+    CFmsLogo::GetMainFrame()->GetCommander()->UpdatePauseButtonState();
+}
+
 CStatusDialog * GetStatusDialog()
 {
     CStatusDialog * statusDialog = CFmsLogo::GetMainFrame()->GetStatusDialog();

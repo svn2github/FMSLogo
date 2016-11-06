@@ -184,10 +184,14 @@ CCommander::CCommander(wxWindow *Parent)
     m_ButtonWidth  = largestWidth  + 20;
     m_ButtonHeight = largestHeight + 8;
 
-    // now, update the state of all the toggle buttons
+    // Update the state of all the toggle buttons.
     UpdateStepButtonState();
     UpdateStatusButtonState();
     UpdateTraceButtonState();
+
+    // Disable/Enable the Halt+Pause buttons depending on execution.
+    UpdateHaltButtonState();
+    UpdatePauseButtonState();
 
     // Configure the keyboard shortcuts
     wxAcceleratorEntry acceleratorEntries[1];
@@ -268,6 +272,16 @@ void CCommander::UpdateStatusButtonState()
 {
     bool isShowing = CFmsLogo::GetMainFrame()->StatusDialogIsShowing();
     m_StatusButton->SetPressedState(isShowing);
+}
+
+void CCommander::UpdateHaltButtonState()
+{
+    m_HaltButton->Enable(is_executing());
+}
+
+void CCommander::UpdatePauseButtonState()
+{
+    m_PauseButton->Enable(is_executing());
 }
 
 void CCommander::Halt()

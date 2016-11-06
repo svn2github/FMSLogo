@@ -839,6 +839,10 @@ wxDC * GetBackBufferDeviceContext()
     return g_WxBackBufferDeviceContext;
 }
 
+void UpdateUiExecutionState()
+{
+}
+
 void OpenStatusWindow()
 {
     // create a new status dialog, if necessary

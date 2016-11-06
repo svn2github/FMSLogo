@@ -48,6 +48,8 @@ II. New features/bugs fixed:
     (same as if the polygon has one vertex).
   o Fix bug #482; TIME now returns the time in the local time zone when run
     from a cygwin bash shell.
+  o Implement feature #11; the Halt and Pause buttons are now disabled when
+    FMSLogo is not running instructions.
   o Implement feature #32; the "X" close button on the undocked commander's
     title bar is now disabled.
   o Implement feature #37; the installer now shows a clear "completed" page
