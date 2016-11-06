@@ -108,6 +108,7 @@
 #include <wx/statusbr.h>
 #include <wx/stdpaths.h>
 #include <wx/string.h>
+#include <wx/utils.h>
 
 #ifdef __WXMSW__
   #include <wx/msw/private.h>

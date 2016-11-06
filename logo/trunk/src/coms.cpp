@@ -24,6 +24,8 @@
   #include <time.h>
   #include <string.h>
 
+  #include <wx/utils.h>
+
   #include "coms.h"
   #include "logocore.h"
   #include "logodata.h"
@@ -36,6 +38,7 @@
   #include "graphwin.h"
   #include "graphics.h"
   #include "stringprintednode.h"
+  #include "stringadapter.h"
   #include "debugheap.h"
 #endif
 
@@ -425,12 +428,52 @@ NODE *lbye(NODE *)
 /* LOGO time */
 NODE *ltime(NODE *)
 {
+    // Get the current time.
     time_t tvec;
     time(&tvec);
-    const char * Xtim = ctime(&tvec);
 
-    NODE * arg = make_strnode(Xtim, strlen(Xtim) - 1, STRING, strnzcpy);
+    // There is a mutual incompatibility in Microsoft's C runtime
+    // and GNU's libc in the behavior of ctime.  Specifically, they
+    // both read the timezone from the "TZ" environment variable before
+    // checking the system localtime.  The problem is that they interpret
+    // the value differently and if you give a GNU variable to Microsoft's
+    // C runtime, it acts as if the time zone were GMT.  As a result, if
+    // you invoke FMSLogo from a GNU environment, like cygwin's bash, TIME
+    // returns the wrong time.
+    //
+    // To work around this, we unset the TZ so that ctime() only reads the
+    // time zone from the operating system.  We are careful to reset TZ
+    // afterwards so that any invocations of SHELL will include all of the
+    // inherited environment variables.
+    const wxString tz(WXSTRING("TZ"));
+    wxString tzEnvironmentVariable;
+    bool mustResetEnvironmentVariable = wxGetEnv(tz, &tzEnvironmentVariable);
+    if (mustResetEnvironmentVariable)
+    {
+        wxUnsetEnv(tz);
+    }
+
+    // Convert the time to the local timezone and render it as a
+    // string.  ctime() formats a string contains that exactly 26
+    // characters and has the form:
+    //    Sat Nov 05 20:46:46 2016\n\0
+    const char * formattedTime = ctime(&tvec);
+
+    // Remove the trailing newline.
+    NODE * arg = make_strnode(
+        formattedTime,
+        strlen(formattedTime) - 1,
+        STRING,
+        strnzcpy);
+
+    // Put the string into a list.
     NODE * val = parser(arg, false);
+
+    if (mustResetEnvironmentVariable)
+    {
+        wxSetEnv(tz, tzEnvironmentVariable);
+    }
+
     return val;
 }
 
