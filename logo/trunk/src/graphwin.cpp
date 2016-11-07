@@ -1546,12 +1546,12 @@ NODE *lbitblock(NODE *arg)
             wxColor fillColor(fcolor);
             wxBrush fillBrush(fillColor);
             wxDC * memoryDeviceContext = GetWxMemoryDeviceContext();
-            const wxBrush & oldBrush = memoryDeviceContext->GetBrush();
+            const wxBrush oldBrush(memoryDeviceContext->GetBrush());
             memoryDeviceContext->SetBrush(fillBrush);
 
             // Also change the pen to be transparent, or else
             // an outline will be drawn around the filled region.
-            const wxPen & oldPen = memoryDeviceContext->GetPen();
+            const wxPen oldPen(memoryDeviceContext->GetPen());
             memoryDeviceContext->SetPen(*wxTRANSPARENT_PEN);
 
             wxRect memoryRect(
@@ -1561,6 +1561,10 @@ NODE *lbitblock(NODE *arg)
                 cutHeight);                                   // height
 
             memoryDeviceContext->DrawRectangle(memoryRect);
+
+            // Restore the brush/pen
+            memoryDeviceContext->SetBrush(oldBrush);
+            memoryDeviceContext->SetPen(oldPen);
 
             //screen
             if (zoom_flag)
@@ -1580,10 +1584,6 @@ NODE *lbitblock(NODE *arg)
                 // the screen, which may be why it was so much slower.
                 InvalidateRectangleOnScreen(memoryRect);
             }
-
-            // Restore the brush/pen
-            memoryDeviceContext->SetBrush(oldBrush);
-            memoryDeviceContext->SetPen(oldPen);
         }
     }
 
