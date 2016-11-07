@@ -1310,6 +1310,17 @@ void logofill(bool fillUntilPenColor)
 
     // Restore the previous brush
     memoryDeviceContext->SetBrush(oldBrush);
+
+    // Since we don't have a way to cacluate how much of the
+    // memory region was filled, we mark the entire screen as
+    // invalid.
+    wxWindow * screen = GetScreenWxWindow();
+    screen->Refresh(false);
+
+    // Update the screen immediately so that FILL within
+    // a timer event will take place (otherwise the repainting
+    // events will wait until FMSLogo is idle).
+    screen->Update();
 }
 
 

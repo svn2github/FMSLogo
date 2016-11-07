@@ -28,8 +28,6 @@
    #include <float.h>
    #include <limits.h>
 
-   #include <wx/window.h>
-
    #ifdef WX_PURE
 
       #include <wx/dc.h>
@@ -2574,17 +2572,7 @@ NODE *lfill(NODE *arg)
 
     draw_turtles(false);
 
-    // REVISIT: why do this twice?
-    wxWindow * screen = GetScreenWxWindow();
-    screen->Update();
-
     logofill(fillUntilPenColor);
-    screen->Refresh(false);
-
-    // Update the screen immediately so that FILL within
-    // a timer event will take place (otherwise the repainting
-    // events will wait until FMSLogo is idle).
-    screen->Update();
 
     draw_turtles(true);
 
