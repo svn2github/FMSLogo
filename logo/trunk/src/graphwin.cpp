@@ -1276,9 +1276,6 @@ void logofill(bool fillUntilPenColor)
     // memory
     wxDC * memoryDeviceContext = GetWxMemoryDeviceContext();
 
-    // REVISIT: why do we do this?
-    memoryDeviceContext->SetTextForeground(wxColor(pcolor));
-
     // Select the fill brush, saving the old one.
     wxColor fillColor(fcolor);
     wxBrush fillBrush(fillColor);
