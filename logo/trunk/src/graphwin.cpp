@@ -1404,11 +1404,9 @@ void ChangeActiveScreenColor(int Red, int Green, int Blue)
 
     scolor = MAKERGB(dscn.red, dscn.green, dscn.blue);
 
-#ifndef WX_PURE
     // When the screen changes we change the erase pen which basically
     // writes the screen color
     UpdateErasePen(GetPenStateForSelectedTurtle().Width, scolor);
-#endif
 
     // Clear the screen using the new color
     ibm_clear_screen();
