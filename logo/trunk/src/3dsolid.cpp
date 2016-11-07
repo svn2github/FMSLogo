@@ -758,7 +758,7 @@ void TThreeDSolid::View()
     wxDC * memoryDeviceContext = GetWxMemoryDeviceContext();
 
     // Make the pen transparent so that the polygons don't have an outline.
-    const wxPen & oldPen = memoryDeviceContext->GetPen();
+    const wxPen oldPen(memoryDeviceContext->GetPen());
     memoryDeviceContext->SetPen(*wxTRANSPARENT_PEN);
 
     TraverseTree(m_Tree, memoryDeviceContext);
