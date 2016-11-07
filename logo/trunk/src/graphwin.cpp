@@ -1583,11 +1583,7 @@ NODE *lbitblock(NODE *arg)
                 // screen causes repainting problems.
                 // I suspect that calling ReleaseDC() implicitly invalidated
                 // the screen, which may be why it was so much slower.
-                InvalidateRectangleOnScreen(
-                    memoryRect.GetLeft(),
-                    memoryRect.GetTop(),
-                    memoryRect.GetRight(),
-                    memoryRect.GetBottom());
+                InvalidateRectangleOnScreen(memoryRect);
             }
 
             // Restore the brush/pen
