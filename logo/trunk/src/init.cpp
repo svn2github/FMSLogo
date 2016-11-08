@@ -168,25 +168,21 @@ static const PRIMTYPE prims[] =
     { "butfirst", 1, 1, 1, PREFIX_PRIORITY, lbutfirst, LOCALIZED_ALTERNATE_BUTFIRST },
     { "butfirsts", 1, 1, 1, PREFIX_PRIORITY, lbfs, LOCALIZED_ALTERNATE_BUTFIRSTS },
     { "butlast", 1, 1, 1, PREFIX_PRIORITY, lbutlast, LOCALIZED_ALTERNATE_BUTLAST },
-#if !defined WX_PURE
     { "buttoncreate", 8, 8, 8, PREFIX_PRIORITY, lbuttoncreate, LOCALIZED_ALTERNATE_BUTTONCREATE },
     { "buttondelete", 1, 1, 1, PREFIX_PRIORITY, lbuttondelete, LOCALIZED_ALTERNATE_BUTTONDELETE },
     { "buttonenable", 2, 2, 2, PREFIX_PRIORITY, lbuttonenable, LOCALIZED_ALTERNATE_BUTTONENABLE },
     { "buttonupdate", 2, 2, 2, PREFIX_PRIORITY, lbuttonupdate, LOCALIZED_ALTERNATE_BUTTONUPDATE },
-#endif
     { "buttonp", 0, 0, 0, PREFIX_PRIORITY, lbuttonp, LOCALIZED_ALTERNATE_BUTTONP },
     { "button?", 0, 0, 0, PREFIX_PRIORITY, lbuttonp, LOCALIZED_ALTERNATE_BUTTON_ },
     { "bye", 0, 0, 0, PREFIX_PRIORITY, lbye, LOCALIZED_ALTERNATE_BYE },
     { "catch", 2, 2, 2, MACRO_PRIORITY, lcatch, LOCALIZED_ALTERNATE_CATCH },
     { "char", 1, 1, 1, PREFIX_PRIORITY, lchar, LOCALIZED_ALTERNATE_CHAR },
     { "chdir", 1, 1, 1, PREFIX_PRIORITY, lchdir, LOCALIZED_ALTERNATE_CHDIR },
-#if !defined WX_PURE
     { "checkboxcreate", 8, 8, 8, PREFIX_PRIORITY, lcheckboxcreate, LOCALIZED_ALTERNATE_CHECKBOXCREATE },
     { "checkboxdelete", 1, 1, 1, PREFIX_PRIORITY, lcheckboxdelete, LOCALIZED_ALTERNATE_CHECKBOXDELETE },
     { "checkboxenable", 2, 2, 2, PREFIX_PRIORITY, lcheckboxenable, LOCALIZED_ALTERNATE_CHECKBOXENABLE },
     { "checkboxget", 1, 1, 1, PREFIX_PRIORITY, lcheckboxget, LOCALIZED_ALTERNATE_CHECKBOXGET },
     { "checkboxset", 2, 2, 2, PREFIX_PRIORITY, lcheckboxset, LOCALIZED_ALTERNATE_CHECKBOXSET },
-#endif
     { "clean", 0, 0, 0, PREFIX_PRIORITY, lclean, LOCALIZED_ALTERNATE_CLEAN },
     { "clearpalette", 0, 0, 0, PREFIX_PRIORITY, lclearpalette, LOCALIZED_ALTERNATE_CLEARPALETTE },
     { "clearscreen", 0, 0, 0, PREFIX_PRIORITY, lclearscreen, LOCALIZED_ALTERNATE_CLEARSCREEN },
@@ -197,7 +193,6 @@ static const PRIMTYPE prims[] =
     { "close", 1, 1, 1, PREFIX_PRIORITY, lclose, LOCALIZED_ALTERNATE_CLOSE },
     { "closeall", 0, 0, 0, PREFIX_PRIORITY, lcloseall, LOCALIZED_ALTERNATE_CLOSEALL },
     { "co", OK_NO_ARG, 1, 1, PREFIX_PRIORITY, lcontinue, LOCALIZED_ALTERNATE_CO },
-#if !defined WX_PURE
     { "comboboxaddstring", 2, 2, 2, PREFIX_PRIORITY, lcomboboxaddstring, LOCALIZED_ALTERNATE_COMBOBOXADDSTRING },
     { "comboboxcreate", 6, 6, 6, PREFIX_PRIORITY, lcomboboxcreate, LOCALIZED_ALTERNATE_COMBOBOXCREATE },
     { "comboboxdelete", 1, 1, 1, PREFIX_PRIORITY, lcomboboxdelete, LOCALIZED_ALTERNATE_COMBOBOXDELETE },
@@ -205,7 +200,6 @@ static const PRIMTYPE prims[] =
     { "comboboxdeletestring", 2, 2, 2, PREFIX_PRIORITY, lcomboboxdeletestring, LOCALIZED_ALTERNATE_COMBOBOXDELETESTRING },
     { "comboboxgettext", 1, 1, 1, PREFIX_PRIORITY, lcomboboxgettext, LOCALIZED_ALTERNATE_COMBOBOXGETTEXT },
     { "comboboxsettext", 2, 2, 2, PREFIX_PRIORITY, lcomboboxsettext, LOCALIZED_ALTERNATE_COMBOBOXSETTEXT },
-#endif
     { "contents", 0, 0, 0, PREFIX_PRIORITY, lcontents, LOCALIZED_ALTERNATE_CONTENTS },
     { "continue", OK_NO_ARG, 1, 1, PREFIX_PRIORITY, lcontinue, LOCALIZED_ALTERNATE_CONTINUE },
     { "copydef", 2, 2, 2, PREFIX_PRIORITY, lcopydef, LOCALIZED_ALTERNATE_COPYDEF },
@@ -214,21 +208,15 @@ static const PRIMTYPE prims[] =
     { "cs", 0, 0, 0, PREFIX_PRIORITY, lclearscreen, LOCALIZED_ALTERNATE_CS },
     { "ct", 0, 0, 0, PREFIX_PRIORITY, lcleartext, LOCALIZED_ALTERNATE_CT },
     { "cursor", 0, 0, 0, PREFIX_PRIORITY, lcursor, LOCALIZED_ALTERNATE_CURSOR },
-#if !defined WX_PURE
     { "debugwindows", 0, 0, 1, PREFIX_PRIORITY, ldebugwindows, LOCALIZED_ALTERNATE_DEBUGWINDOWS },
-#endif
     { "define", 2, 2, 2, PREFIX_PRIORITY, ldefine, LOCALIZED_ALTERNATE_DEFINE },
     { "definedp", 1, 1, 1, PREFIX_PRIORITY, ldefinedp, LOCALIZED_ALTERNATE_DEFINEDP },
     { "defined?", 1, 1, 1, PREFIX_PRIORITY, ldefinedp, LOCALIZED_ALTERNATE_DEFINED_ },
-#if !defined WX_PURE
     { "dialogcreate", 8, 8, 8, PREFIX_PRIORITY, ldialogcreate, LOCALIZED_ALTERNATE_DIALOGCREATE },
     { "dialogenable", 2, 2, 2, PREFIX_PRIORITY, ldialogenable, LOCALIZED_ALTERNATE_DIALOGENABLE },
     { "dialogdelete", 1, 1, 1, PREFIX_PRIORITY, ldialogdelete, LOCALIZED_ALTERNATE_DIALOGDELETE },
-#endif
-#if !defined WX_PURE
     { "dialogfileopen", 1, 1, 1, PREFIX_PRIORITY, ldialogfileopen, LOCALIZED_ALTERNATE_DIALOGFILEOPEN },
     { "dialogfilesave", 1, 1, 1, PREFIX_PRIORITY, ldialogfilesave, LOCALIZED_ALTERNATE_DIALOGFILESAVE },
-#endif
     { "difference", 2, 2, 2, PREFIX_PRIORITY, lsub, LOCALIZED_ALTERNATE_DIFFERENCE },
     { "directories", 0, 0, 0, PREFIX_PRIORITY, ldirectories, LOCALIZED_ALTERNATE_DIRECTORIES },
 #if !defined WX_PURE
@@ -280,10 +268,8 @@ static const PRIMTYPE prims[] =
     { "greaterequal?", 2, 2, 2, PREFIX_PRIORITY, lgreaterequalp, LOCALIZED_ALTERNATE_GREATEREQUAL_ },
     { "greaterequalp", 2, 2, 2, PREFIX_PRIORITY, lgreaterequalp, LOCALIZED_ALTERNATE_GREATEREQUALP },
     { "greaterp", 2, 2, 2, PREFIX_PRIORITY, lgreaterp, LOCALIZED_ALTERNATE_GREATERP },
-#if !defined WX_PURE
     { "groupboxcreate", 6, 6, 6, PREFIX_PRIORITY, lgroupboxcreate, LOCALIZED_ALTERNATE_GROUPBOXCREATE },
     { "groupboxdelete", 1, 1, 1, PREFIX_PRIORITY, lgroupboxdelete, LOCALIZED_ALTERNATE_GROUPBOXDELETE },
-#endif
     { "halt", 0, 0, 0, PREFIX_PRIORITY, lhalt, LOCALIZED_ALTERNATE_HALT },
     { "hasownpen?", 0, 0, 0, PREFIX_PRIORITY, lhasownpenp, LOCALIZED_ALTERNATE_HASOWNPEN_ },
     { "hasownpenp", 0, 0, 0, PREFIX_PRIORITY, lhasownpenp, LOCALIZED_ALTERNATE_HASOWNPENP },
@@ -350,8 +336,8 @@ static const PRIMTYPE prims[] =
     { "member", 2, 2, 2, PREFIX_PRIORITY, lmember, LOCALIZED_ALTERNATE_MEMBER },
     { "memberp", 2, 2, 2, PREFIX_PRIORITY, lmemberp, LOCALIZED_ALTERNATE_MEMBERP },
     { "member?", 2, 2, 2, PREFIX_PRIORITY, lmemberp, LOCALIZED_ALTERNATE_MEMBER_ },
-#if !defined WX_PURE
     { "messagebox", 2, 2, 2, PREFIX_PRIORITY, lmessagebox, LOCALIZED_ALTERNATE_MESSAGEBOX },
+#if !defined WX_PURE
     { "midiclose", 0, 0, 0, PREFIX_PRIORITY, lmidiclose, LOCALIZED_ALTERNATE_MIDICLOSE },
     { "midimessage", 1, 1, 1, PREFIX_PRIORITY, lmidimessage, LOCALIZED_ALTERNATE_MIDIMESSAGE },
     { "midiopen", 0, 0, 1, PREFIX_PRIORITY, lmidiopen, LOCALIZED_ALTERNATE_MIDIOPEN },
@@ -451,21 +437,17 @@ static const PRIMTYPE prims[] =
     { "product", 0, 2, -1, PREFIX_PRIORITY, lmul, LOCALIZED_ALTERNATE_PRODUCT },
     { "pu", 0, 0, 0, PREFIX_PRIORITY, lpenup, LOCALIZED_ALTERNATE_PU },
     { "px", 0, 0, 0, PREFIX_PRIORITY, lpenreverse, LOCALIZED_ALTERNATE_PX },
-#if !defined WX_PURE
     { "questionbox", 2, 2, 2, PREFIX_PRIORITY, lquestionbox, LOCALIZED_ALTERNATE_QUESTIONBOX },
-#endif
     { "quotient", 1, 2, 2, PREFIX_PRIORITY, ldivide, LOCALIZED_ALTERNATE_QUOTIENT },
     { "radarccos", 1, 1, 1, PREFIX_PRIORITY, lradacos, LOCALIZED_ALTERNATE_RADARCCOS },
     { "radarcsin", 1, 1, 1, PREFIX_PRIORITY, lradasin, LOCALIZED_ALTERNATE_RADARCSIN },
     { "radarctan", 1, 1, 2, PREFIX_PRIORITY, lradatan, LOCALIZED_ALTERNATE_RADARCTAN },
     { "radcos", 1, 1, 1, PREFIX_PRIORITY, lradcos, LOCALIZED_ALTERNATE_RADCOS },
-#if !defined WX_PURE
     { "radiobuttoncreate", 8, 8, 8, PREFIX_PRIORITY, lradiobuttoncreate, LOCALIZED_ALTERNATE_RADIOBUTTONCREATE },
     { "radiobuttonenable", 2, 2, 2, PREFIX_PRIORITY, lradiobuttonenable, LOCALIZED_ALTERNATE_RADIOBUTTONENABLE },
     { "radiobuttondelete", 1, 1, 1, PREFIX_PRIORITY, lradiobuttondelete, LOCALIZED_ALTERNATE_RADIOBUTTONDELETE },
     { "radiobuttonget", 1, 1, 1, PREFIX_PRIORITY, lradiobuttonget, LOCALIZED_ALTERNATE_RADIOBUTTONGET },
     { "radiobuttonset", 2, 2, 2, PREFIX_PRIORITY, lradiobuttonset, LOCALIZED_ALTERNATE_RADIOBUTTONSET },
-#endif
     { "radsin", 1, 1, 1, PREFIX_PRIORITY, lradsin, LOCALIZED_ALTERNATE_RADSIN },
     { "radtan", 1, 1, 1, PREFIX_PRIORITY, lradtan, LOCALIZED_ALTERNATE_RADTAN },
     { "random", 1, 1, 1, PREFIX_PRIORITY, lrandom, LOCALIZED_ALTERNATE_RANDOM },
@@ -498,20 +480,16 @@ static const PRIMTYPE prims[] =
     { "rw", 0, 0, 0, PREFIX_PRIORITY, lreadword, LOCALIZED_ALTERNATE_RW },
     { "save", 1, 1, 1, PREFIX_PRIORITY, lsave, LOCALIZED_ALTERNATE_SAVE },
     { "screencolor", 0, 0, 0, PREFIX_PRIORITY, lscreencolor, LOCALIZED_ALTERNATE_SCREENCOLOR },
-#if !defined WX_PURE
     { "scrollbarcreate", 7, 7, 7, PREFIX_PRIORITY, lscrollbarcreate, LOCALIZED_ALTERNATE_SCROLLBARCREATE },
     { "scrollbarenable", 2, 2, 2, PREFIX_PRIORITY, lscrollbarenable, LOCALIZED_ALTERNATE_SCROLLBARENABLE },
     { "scrollbardelete", 1, 1, 1, PREFIX_PRIORITY, lscrollbardelete, LOCALIZED_ALTERNATE_SCROLLBARDELETE },
     { "scrollbarget", 1, 1, 1, PREFIX_PRIORITY, lscrollbarget, LOCALIZED_ALTERNATE_SCROLLBARGET },
     { "scrollbarset", 4, 4, 4, PREFIX_PRIORITY, lscrollbarset, LOCALIZED_ALTERNATE_SCROLLBARSET },
-#endif
     { "scrollx", 1, 1, 1, PREFIX_PRIORITY, lscrollx, LOCALIZED_ALTERNATE_SCROLLX },
     { "scrolly", 1, 1, 1, PREFIX_PRIORITY, lscrolly, LOCALIZED_ALTERNATE_SCROLLY },
     { "scrunch", 0, 0, 0, PREFIX_PRIORITY, lscrunch, LOCALIZED_ALTERNATE_SCRUNCH },
     { "se", 0, 2, -1, PREFIX_PRIORITY, lsentence, LOCALIZED_ALTERNATE_SE },
-#if !defined WX_PURE
     { "selectbox", 2, 2, 2, PREFIX_PRIORITY, lselectbox, LOCALIZED_ALTERNATE_SELECTBOX },
-#endif
     { "sentence", 0, 2, -1, PREFIX_PRIORITY, lsentence, LOCALIZED_ALTERNATE_SENTENCE },
     { "setactivearea", 1, 1, 1, PREFIX_PRIORITY, lsetactivearea, LOCALIZED_ALTERNATE_SETACTIVEAREA },
     { "setbitindex", 1, 1, 1, PREFIX_PRIORITY, lsetbitindex, LOCALIZED_ALTERNATE_SETBITINDEX },
@@ -569,11 +547,9 @@ static const PRIMTYPE prims[] =
     { "ss", 0, 0, 0, PREFIX_PRIORITY, lsplitscreen, LOCALIZED_ALTERNATE_SS },
     { "st", 0, 0, 0, PREFIX_PRIORITY, lshowturtle, LOCALIZED_ALTERNATE_ST },
     { "standout", 1, 1, 1, PREFIX_PRIORITY, lstandout, LOCALIZED_ALTERNATE_STANDOUT },
-#if !defined WX_PURE
     { "staticcreate", 7, 7, 7, PREFIX_PRIORITY, lstaticcreate, LOCALIZED_ALTERNATE_STATICCREATE },
     { "staticdelete", 1, 1, 1, PREFIX_PRIORITY, lstaticdelete, LOCALIZED_ALTERNATE_STATICDELETE },
     { "staticupdate", 2, 2, 2, PREFIX_PRIORITY, lstaticupdate, LOCALIZED_ALTERNATE_STATICUPDATE },
-#endif
     { "status", 0, 0, 0, PREFIX_PRIORITY, lstatus, LOCALIZED_ALTERNATE_STATUS },
     { "step", 1, 1, 1, PREFIX_PRIORITY, lstep, LOCALIZED_ALTERNATE_STEP },
     { "stepped", 0, 0, 0, PREFIX_PRIORITY, lstepped, LOCALIZED_ALTERNATE_STEPPED },
@@ -609,14 +585,10 @@ static const PRIMTYPE prims[] =
     { "uppitch", 1, 1, 1, PREFIX_PRIORITY, luppitch, LOCALIZED_ALTERNATE_UPPITCH },
     { "wait", 1, 1, 1, PREFIX_PRIORITY, lwait, LOCALIZED_ALTERNATE_WAIT },
     { "window", 0, 0, 0, PREFIX_PRIORITY, lwindow, LOCALIZED_ALTERNATE_WINDOW },
-#if !defined WX_PURE
     { "windowcreate", 8, 8, 8, PREFIX_PRIORITY, lwindowcreate, LOCALIZED_ALTERNATE_WINDOWCREATE },
     { "windowenable", 2, 2, 2, PREFIX_PRIORITY, lwindowenable, LOCALIZED_ALTERNATE_WINDOWENABLE },
     { "windowdelete", 1, 1, 1, PREFIX_PRIORITY, lwindowdelete, LOCALIZED_ALTERNATE_WINDOWDELETE },
-#endif
-#if !defined WX_PURE
     { "windowfileedit", 2, 2, 2, PREFIX_PRIORITY, lwindowfileedit, LOCALIZED_ALTERNATE_WINDOWFILEEDIT },
-#endif
     { "windowset", 2, 2, 2, PREFIX_PRIORITY, lwindowset, LOCALIZED_ALTERNATE_WINDOWSET },
     { "winhelp", 1, 1, 2, PREFIX_PRIORITY, lwinhelp, LOCALIZED_ALTERNATE_WINHELP },
     { "word", 0, 2, -1, PREFIX_PRIORITY, lword, LOCALIZED_ALTERNATE_WORD },
@@ -625,9 +597,7 @@ static const PRIMTYPE prims[] =
     { "wrap", 0, 0, 0, PREFIX_PRIORITY, lwrap, LOCALIZED_ALTERNATE_WRAP },
     { "writepos", 0, 0, 0, PREFIX_PRIORITY, lwritepos, LOCALIZED_ALTERNATE_WRITEPOS },
     { "writer", 0, 0, 0, PREFIX_PRIORITY, lwriter, LOCALIZED_ALTERNATE_WRITER },
-#if !defined WX_PURE
     { "yesnobox", 2, 2, 2, PREFIX_PRIORITY, lyesnobox, LOCALIZED_ALTERNATE_YESNOBOX },
-#endif
     { "yield", 0, 0, 0, PREFIX_PRIORITY, lyield, LOCALIZED_ALTERNATE_YIELD },
     { "zoom", 1, 1, 1, PREFIX_PRIORITY, lzoom, LOCALIZED_ALTERNATE_ZOOM },
 };

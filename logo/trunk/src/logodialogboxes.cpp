@@ -176,6 +176,7 @@ public:
         const CClientRectangle & ClientRectangle
         )
     {
+#ifdef __WXMSW__
         HWND hwnd = ::CreateWindowEx(
             WS_EX_CLIENTEDGE | WS_EX_LEFT, // extended style
             WC_LISTBOX,                    // window class
@@ -206,6 +207,7 @@ public:
         SetHWND(hwnd);
         SubclassWin(hwnd);
         AdoptAttributesFromHWND();
+#endif
     }
 
 private:
@@ -229,6 +231,7 @@ public:
         const CClientRectangle & ClientRectangle
         )
     {
+#ifdef __WXMSW__
         HWND hwnd = CreateWindow(
             WC_COMBOBOX, // window class
             "",           // caption
@@ -300,10 +303,12 @@ public:
                 SetSize(x, y);
             }
         }
+#endif // __WXMSW__
     }
 
     const wxString GetValue() const
     {
+#ifdef __WXMSW__
         // Determine how long the value is.
         int valueLength = ComboBox_GetTextLength(static_cast<HWND>(GetHandle()));
 
@@ -322,10 +327,15 @@ public:
 
         // Return the value
         return value;
+#else
+	return wxString("TODO");
+#endif
+	
     }
 
     void SetValue(const wxString & NewValue)
     {
+#ifdef __WXMSW__
         // For compatibility with MSWLogo, make a best
         // effort to change the selected item to match the
         // new text.
@@ -341,10 +351,12 @@ public:
         {
             // TODO: raise a wxWidgets error
         }
+#endif
     }
 
     void Delete(int IndexToDelete)
     {
+#ifdef __WXMSW__
         int totalItems = ComboBox_DeleteString(
             static_cast<HWND>(GetHandle()),
             IndexToDelete);
@@ -352,10 +364,12 @@ public:
         {
             // TODO: raise a wxWidgets error
         }
+#endif
     }
 
     void Append(const wxString & NewValue)
     {
+#ifdef __WXMSW__
         int newIndex = ComboBox_AddString(
             static_cast<HWND>(GetHandle()),
             NewValue.c_str());
@@ -363,10 +377,12 @@ public:
         {
             // TODO: raise a wxWidgets error
         }
+#endif
     }
 
     void SetSelection(int IndexToSelect)
     {
+#ifdef __WXMSW__
         int status = ComboBox_SetCurSel(
             static_cast<HWND>(GetHandle()),
             IndexToSelect);
@@ -374,6 +390,7 @@ public:
         {
             // TODO: raise a wxWidgets error
         }
+#endif
     }
 
 private:
@@ -392,6 +409,7 @@ public:
         const CClientRectangle & ClientRectangle
         )
     {
+#ifdef __WXMSW__
         HWND hwnd = CreateWindow(
             WC_STATIC, // window class
             Text,       // caption
@@ -416,6 +434,7 @@ public:
         SetHWND(hwnd);
         SubclassWin(hwnd);
         AdoptAttributesFromHWND();
+#endif
     }
 
 private:
@@ -425,13 +444,6 @@ private:
 class CLogoButton : public wxButton
 {
 public:
-
-    // Initializing the native window using the wxButton ctor
-    // caused some painting prbolems.  The problems seemed
-    // related to changing the font to the MSWLogo-compatible
-    // one.  Since this is not necessary when using the raw
-    // win32 BUTTON class, we create the child window using
-    // CreateWindow.
     CLogoButton(
         wxWindow               * Parent,
         const char             * Caption,
@@ -439,6 +451,13 @@ public:
         const char             * Callback
         )
     {
+#ifdef __WXMSW__     
+      // Initializing the native window using the wxButton ctor
+      // caused some painting problems.  The problems seemed
+      // related to changing the font to the MSWLogo-compatible
+      // one.  Since this is not necessary when using the raw
+      // win32 BUTTON class, we create the child window using
+      // CreateWindow.
         HWND hwnd = CreateWindow(
             WC_BUTTON, // window class
             Caption,    // caption
@@ -467,6 +486,7 @@ public:
         AdoptAttributesFromHWND();
 
         strcpy(m_Callback, Callback);
+#endif
     }
 
 private:
@@ -545,6 +565,7 @@ private:
 
 int CLogoScrollBar::GetSystemMetric(int MetricId, int DefaultValue)
 {
+#ifdef __WXMSW__
     int value = GetSystemMetrics(MetricId);
     if (value == 0)
     {
@@ -553,26 +574,46 @@ int CLogoScrollBar::GetSystemMetric(int MetricId, int DefaultValue)
     }
 
     return value;
+#else
+    return DefaultValue;
+#endif
 }
 
 int CLogoScrollBar::GetSystemScrollBarHeight()
 {
+#ifdef __WXMSW__
     return GetSystemMetric(SM_CYVSCROLL, 16);
+#else
+    return 16;
+#endif
 }
 
 int CLogoScrollBar::GetSystemScrollBarWidth()
 {
+#ifdef __WXMSW__
     return GetSystemMetric(SM_CYHSCROLL, 16);
+#else
+    return 16;
+#endif   
 }
 
 int CLogoScrollBar::GetSystemScrollThumbHeight()
 {
+#ifdef __WXMSW__
     return GetSystemMetric(SM_CYVTHUMB, 16);
+#else
+    return 16;
+#endif   
+    
 }
 
 int CLogoScrollBar::GetSystemScrollThumbWidth()
 {
+#ifdef __WXMSW__
     return GetSystemMetric(SM_CXHTHUMB, 16);
+#else
+    return 16;
+#endif   
 }
 
 void CLogoScrollBar::RunCallback()
@@ -2490,6 +2531,7 @@ NODE *lmessagebox(NODE *args)
 
     if (NOT_THROWING)
     {
+#ifdef __WXMSW__
         if (::MessageBox(
                 reinterpret_cast<HWND>(GetParentWindowForDialog()->GetHWND()),
                 body,
@@ -2498,6 +2540,7 @@ NODE *lmessagebox(NODE *args)
         {
             err_logo(STOP_ERROR, NIL);
         }
+#endif	
     }
 
     return Unbound;

@@ -112,7 +112,6 @@ MSW_OBJECTS =                  \
     dllwind.o                  \
     fmslogo_rc.o               \
     netwind.o                  \
-    logodialogboxes.o          \
     mmwind.o                   \
 
 GTK_OBJECTS =                  \
@@ -159,6 +158,7 @@ WX_OBJECTS =                   \
     localizednode.o            \
     logocodectrl.o             \
     logodata.o                 \
+    logodialogboxes.o          \
     logoeventqueue.o           \
     logomath.o                 \
     mainframe.o                \

@@ -22,15 +22,6 @@ void halt_all_timers()
 {
 }
 
-bool CheckOnScreenControls()
-{
-    return true;
-}
-
-void uninitialize_windows()
-{
-}
-
 void uninitialize_dlls()
 {
 }
