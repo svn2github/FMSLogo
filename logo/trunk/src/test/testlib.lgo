@@ -888,6 +888,20 @@ TO MAKEDEEPARRAY :depth
 END
 BURY [MAKEDEEPARRAY]
 
+TO RUNLOGOPROGRAM :program
+   ; Writes a Logo program to disk and runs in it a child instance
+   ; of FMSLogo, waiting for it to finish before returning.
+
+   WRITEBINARYDATA "testlib-program.lgo :program
+
+   ; Run the program in a separate FMSLogo instance.
+   IGNORE (SHELL [ fmslogo -L testlib-program.lgo ] "TRUE)
+
+   ; Cleanup
+   ERASEFILE "testlib-program.lgo
+END
+BURY [RUNLOGOPROGRAM]
+
 
 TO PTEST [:procedures PROCEDURES]
   ; Prints out all top-level tests (ones that take no arguments).

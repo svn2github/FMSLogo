@@ -1,3 +1,0 @@
-BYE
-; control flow should never reach here
-TONE 1000 10000
