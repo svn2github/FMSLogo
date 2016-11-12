@@ -2441,7 +2441,7 @@ bool process_special_conditions()
 #ifndef WX_PURE
             PostQuitMessage(1); // set the exit code to 1
 #endif
-            prepare_to_exit(true);
+            exit_program();
         }
         else if (!Toplevel.Equals(throw_node))
         {

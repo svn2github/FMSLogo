@@ -206,14 +206,12 @@ err_logo(
     switch (ErrorType)
     {
     case FATAL:
-        prepare_to_exit(FALSE);
         printfx(LOCALIZED_ERROR_FATALINTERNAL);
-        exit(1);
+        exit(EXIT_FAILURE);
 
     case OUT_OF_MEM_UNREC:
-        prepare_to_exit(FALSE);
         printfx(LOCALIZED_ERROR_OUTOFMEMORY);
-        exit(1);
+        exit(EXIT_FAILURE);
 
     case OUT_OF_MEM:
         use_reserve_tank();
@@ -494,9 +492,8 @@ err_logo(
 
     default:
         assert(!"Unexpected error code in err_logo()");
-        prepare_to_exit(FALSE);
         printfx(LOCALIZED_ERROR_UNKNOWN);
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     deref(didnt_output_name);

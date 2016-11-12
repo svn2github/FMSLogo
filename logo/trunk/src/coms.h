@@ -21,7 +21,6 @@
 #include "logocore.h"
 
 // function variables
-extern void prepare_to_exit(bool okay);
 extern NODE *make_cont(enum labels cont, NODE *val);
 extern NODE *loutput(NODE *arg);
 extern NODE *lstop(NODE *arg);

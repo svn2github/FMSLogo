@@ -410,18 +410,10 @@ NODE *liffalse(NODE *args)
     }
 }
 
-void prepare_to_exit(bool /* okay */)
-{
-    exit_program();
-}
 
 NODE *lbye(NODE *)
 {
-    prepare_to_exit(TRUE);
-    //    if (ufun != NIL || loadstream != stdin) exit(0);
-    //    if (isatty(0) && isatty(1)) lcleartext();
-    //    printf("Thank you for using Logo.\n");
-    //    printf("Have a nice day.\n");
+    exit_program();
     return Unbound;
 }
 

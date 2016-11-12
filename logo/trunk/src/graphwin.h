@@ -103,7 +103,7 @@ extern void set_pen_height(int h);
 extern void GetWorkingAreaDimensions(int & workingAreaWidth, int & workingAreaHeight);
 extern struct PENSTATE & GetPenStateForSelectedTurtle();
 extern void paste_all_turtles(class wxDC & DeviceContext, FLONUM zoom);
-extern void exit_program(void);
+extern void exit_program();
 extern void MyMessageScan(void);
 extern void checkwindow(int *x, int *y, int *w, int *h);
 

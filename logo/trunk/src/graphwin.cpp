@@ -3801,7 +3801,7 @@ void uninit_turtles()
     free(g_Turtles);
 }
 
-void exit_program(void)
+void exit_program()
 {
     if (is_executing())
     {
