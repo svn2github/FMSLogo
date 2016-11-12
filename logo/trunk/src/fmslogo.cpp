@@ -556,13 +556,6 @@ CMainFrame * CFmsLogo::GetMainFrame()
 
 void CFmsLogo::OnIdle(wxIdleEvent & IdleEvent)
 {
-    // this is the time to exit, when things are settled down
-    if (IsTimeToExit)
-    {
-        IsTimeToExit = false;
-        wxTheApp->GetTopWindow()->Close();
-    }
-
     // If -P was specified on the command line, enter perspective mode.
     if (g_EnterPerspectiveMode)
     {

@@ -895,10 +895,6 @@
 #define LOCALIZED_CHANGESINEDITORMAYBELOST  "Des modifications dans l'éditeur peuvent être perdues.\n\nVoulez-vous vraiment quitter "LOCALIZED_GENERAL_PRODUCTNAME"?" // 
 #define LOCALIZED_EDITSESSIONISRUNNING      "L'éditeur est déjà ouvert" // 
 
-#define LOCALIZED_NOTHALTEDREALLYEXIT        LOCALIZED_GENERAL_PRODUCTNAME" n'aime pas fermer tant qu'il n'est pas arrêté.\n\nVoulez-vous vraiment quitter "LOCALIZED_GENERAL_PRODUCTNAME"?" // 
-#define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" n'aime pas fermer tant qu'il n'est pas arrêté.\n\nVoulez-vous vraiment arrêter "LOCALIZED_GENERAL_PRODUCTNAME"?" // 
-#define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" n'est pas arrêté" // 
-
 #define LOCALIZED_COULDNOTWRITEBMP            "Impossible d'écrire .bmp" //
 #define LOCALIZED_COULDNOTOPENBMP             "Impossible d'ouvrir .bmp" // 
 #define LOCALIZED_COULDNOTCREATEBMP           "Ne peut pas créer un bitmap Windows 3.0" // 

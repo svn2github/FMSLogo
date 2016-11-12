@@ -895,10 +895,6 @@
 #define LOCALIZED_CHANGESINEDITORMAYBELOST  "pseudo.Changes in this edit session may be lost.\n\nDo you really want to exit "LOCALIZED_GENERAL_PRODUCTNAME"?"
 #define LOCALIZED_EDITSESSIONISRUNNING      "pseudo.An Edit session is running"
 
-#define LOCALIZED_NOTHALTEDREALLYEXIT        LOCALIZED_GENERAL_PRODUCTNAME" does not like exiting while not halted.\n\nDo you really want to exit "LOCALIZED_GENERAL_PRODUCTNAME"?"
-#define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" does not like exiting while not halted.\n\nDo you really want to Halt "LOCALIZED_GENERAL_PRODUCTNAME"?"
-#define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" is not Halted"
-
 #define LOCALIZED_COULDNOTWRITEBMP            "pseudo.Could not write .bmp"
 #define LOCALIZED_COULDNOTOPENBMP             "pseudo.Could not open .bmp"
 #define LOCALIZED_COULDNOTCREATEBMP           "pseudo.Unable to create Windows 3.0 bitmap"

@@ -895,10 +895,6 @@
 #define LOCALIZED_CHANGESINEDITORMAYBELOST  "Изменения в этом сеансе редактирования могут быть утеряны.\n\nВы действительно хотите выйти из "LOCALIZED_GENERAL_PRODUCTNAME"?" 
 #define LOCALIZED_EDITSESSIONISRUNNING      "Сеанс редактирования запущен" 
 
-#define LOCALIZED_NOTHALTEDREALLYEXIT        LOCALIZED_GENERAL_PRODUCTNAME" не рекомендуется выходить из программы пока нет останова.\n\nВы действительно хотите выйти  "LOCALIZED_GENERAL_PRODUCTNAME"?" 
-#define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" не рекомендуется выходить из программы пока нет останова.\n\nВы действительно хотите Останов "LOCALIZED_GENERAL_PRODUCTNAME"?" 
-#define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" не остановлен" 
-
 #define LOCALIZED_COULDNOTWRITEBMP            "Не могу записать .bmp" 
 #define LOCALIZED_COULDNOTOPENBMP             "Не могу открыть .bmp" 
 #define LOCALIZED_COULDNOTCREATEBMP           "Невозможно создать Windows 3.0 рисунок" 

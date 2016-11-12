@@ -2498,6 +2498,16 @@ void stop_execution()
 
     // Disable the Halt/Pause buttons since FMSLogo is not running.
     UpdateUiExecutionState();
+
+    if (halt_flag == 0 && IsTimeToExit)
+    {
+        // We have finished unwinding the Logo stack after a BYE or
+        // equivalent instruction.  It is now safe to destroy the window.
+        // We call Close() to give the user a chance to veto (for example,
+        // if there were unsaved changes).  If the user vetos the close
+        // then IsTimeToExit flag is cleared.
+        IsTimeToExit = wxTheApp->GetTopWindow()->Close();
+    }
 }
 
 bool is_executing()

@@ -895,10 +895,6 @@
 #define LOCALIZED_CHANGESINEDITORMAYBELOST  "Le modifiche effettuate in questa sessione possono essere perse.\n\nSei sicuro di voler uscire da "LOCALIZED_GENERAL_PRODUCTNAME"?"
 #define LOCALIZED_EDITSESSIONISRUNNING      "L'Editor è giù in esecuzione"
 
-#define LOCALIZED_NOTHALTEDREALLYEXIT        LOCALIZED_GENERAL_PRODUCTNAME" non gradisce essere chiuso mentre è in esecuzione.\n\nSei sicuro di voler uscire da  "LOCALIZED_GENERAL_PRODUCTNAME"?"
-#define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" non può terminare prima che sia stato fermato.\n\nVuoi veramente uscire da "LOCALIZED_GENERAL_PRODUCTNAME"?"
-#define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" non è stato fermato"
-
 #define LOCALIZED_COULDNOTWRITEBMP            "Impossibile scrivere il file .bmp"
 #define LOCALIZED_COULDNOTOPENBMP             "Impossibile aprire il file .bmp"
 #define LOCALIZED_COULDNOTCREATEBMP           "Impossibile creare una bitmap Windows 3.0"

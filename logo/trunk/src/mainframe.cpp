@@ -1174,6 +1174,18 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
 {
     if (Event.CanVeto())
     {
+        if (is_executing())
+        {
+            // The logo evaluation engine is still executing instructions.
+            // We cannot safely close the application until it has finished.
+            // Instead, we notify the evaluator that it should halt.
+            // Once the evaluation stack has been unwound, it will post a new
+            // close event which we will handle.
+            exit_program();            
+            Event.Veto();
+            return;
+        }
+
         // If an editor is running we could lose unsaved changes.
         CWorkspaceEditor * editor = GetWorkspaceEditor();
         if (editor != NULL)
@@ -1213,45 +1225,11 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
             }
         }
 
-
-        if (is_executing())
-        {
-            // The language engine is not halted.
-            // Warn user and give chance to abort shutdown.
-            if (IsTimeToHalt)
-            {
-                // we already tried warn user of doom
-                if (wxMessageBox(
-                        WXSTRING(LOCALIZED_NOTHALTEDREALLYEXIT),
-                        WXSTRING(LOCALIZED_LOGOISNOTHALTED),
-                        wxOK | wxCANCEL | wxICON_QUESTION) != wxOK)
-                {
-                    // The user doesn't want to shutdown.
-                    Event.Veto();
-                    return;
-                }
-            }
-            else
-            {
-                // let the user optionally halt first
-                if (wxMessageBox(
-                        WXSTRING(LOCALIZED_NOTHALTEDREALLYHALT),
-                        WXSTRING(LOCALIZED_LOGOISNOTHALTED),
-                        wxOK | wxCANCEL | wxICON_QUESTION) == wxOK)
-                {
-                    m_RealCommander->Halt();
-                }
-                Event.Veto();
-                return;
-            }
-        }
-
         // If the workspace has unsaved changes, then give the
         // user a chance to abort shutdown.
         if (IsDirty)
         {
             CSaveBeforeExitDialog saveChangesDialog(this);
-
             int exitCode = saveChangesDialog.ShowModal();
             switch (exitCode)
             {

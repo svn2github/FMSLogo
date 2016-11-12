@@ -895,10 +895,6 @@
 #define LOCALIZED_CHANGESINEDITORMAYBELOST  "Αλλαγές σε αυτή την περίοδο λειτουργίας ίσως χαθούν.\n\nΘέλετε πραγματικά να κλείσετε την "LOCALIZED_GENERAL_PRODUCTNAME";" // 
 #define LOCALIZED_EDITSESSIONISRUNNING      "Ο επεξεργαστής κώδικα είναι ήδη ανοιχτός" // 
 
-#define LOCALIZED_NOTHALTEDREALLYEXIT        "Στην "LOCALIZED_GENERAL_PRODUCTNAME" δεν αρέσει να κλείνει πριν σταματήσει.\n\nΘέλετε πραγματικά να κλείσει η "LOCALIZED_GENERAL_PRODUCTNAME"?" // 
-#define LOCALIZED_NOTHALTEDREALLYHALT        "Στην "LOCALIZED_GENERAL_PRODUCTNAME" δεν αρέσει να κλέινει πριν σταματήσει.\n\nΘέλετε πραγματικά να σταματήσει η "LOCALIZED_GENERAL_PRODUCTNAME"?" // 
-#define LOCALIZED_LOGOISNOTHALTED            "Η "LOCALIZED_GENERAL_PRODUCTNAME" δε σταματάει" // 
-
 #define LOCALIZED_COULDNOTWRITEBMP            "Αδύνατη η εγγραφή στο .bmp" // 
 #define LOCALIZED_COULDNOTOPENBMP             "Αδύνατη η ανάγνωση από το .bmp" // 
 #define LOCALIZED_COULDNOTCREATEBMP           "Αδύνατο να δημιουργηθεί η εικόνα Windows 3.0 bitmap" // 

@@ -895,10 +895,6 @@
 #define LOCALIZED_CHANGESINEDITORMAYBELOST  "Los cambios de la edición pueden perderse.\n\n¿Realmente quieres salir de "LOCALIZED_GENERAL_PRODUCTNAME"?"
 #define LOCALIZED_EDITSESSIONISRUNNING      "Una sesión de edición está activa"
 
-#define LOCALIZED_NOTHALTEDREALLYEXIT        LOCALIZED_GENERAL_PRODUCTNAME" no puede salir hasta estar parado.\n\n¿Realmente quieres salir de "LOCALIZED_GENERAL_PRODUCTNAME"?"
-#define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" no puede salir hasta estar parado.\n\nDo you really want to Halt "LOCALIZED_GENERAL_PRODUCTNAME"?"
-#define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" no está parado"
-
 #define LOCALIZED_COULDNOTWRITEBMP            "No puedo guardar .bmp"
 #define LOCALIZED_COULDNOTOPENBMP             "No puedo abrir .bmp"
 #define LOCALIZED_COULDNOTCREATEBMP           "No puedo crear bitmap tipo Windows 3.0"

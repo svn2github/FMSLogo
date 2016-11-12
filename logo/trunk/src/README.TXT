@@ -50,6 +50,8 @@ II. New features/bugs fixed:
     from a cygwin bash shell.
   o Implement feature #11; the Halt and Pause buttons are now disabled when
     FMSLogo is not running instructions.
+  o Implement feature #33; Make it so that FMSLogo doesn't mind exiting while
+    running and remove the "Logo doesn't like to exit while running" dialogs.
   o Implement feature #32; the "X" close button on the undocked commander's
     title bar is now disabled.
   o Implement feature #37; the installer now shows a clear "completed" page
