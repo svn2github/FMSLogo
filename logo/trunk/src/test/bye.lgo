@@ -1,10 +1,33 @@
 LOAD "testlib.lgo
 
+TO BYETEST.SMOKETEST
+   ; We cannot run BYE in this instance without halting the test pass.
+   ; Instead, we start a child instance of FMSLogo and run BYE in it.
+   WRITEBINARYDATA "byetest-smoketest.lgo (WORD
+       "|LOAD "testlib.lgo\n|
+       "|\n|
+       "|TO RUNTEST\n|
+       "|  PRINT [This instance was started by BYETEST.SMOKETEST]\n|
+       "|  PRINT [It should be closed automatically]\n|
+       "|  BYE\n|
+       "|  ; Control flow should not reach here.\n|
+       "|  TONE 1000 10000\n|
+       "|END\n|
+       "|MAKE "startup [RUNTEST]\n|
+   )
+
+   ; Run the FMSLogo program that runs bye.
+   IGNORE (SHELL [ fmslogo byetest-smoketest.lgo ] "TRUE)
+
+   ; Cleanup
+   ERASEFILE "byetest-smoketest.lgo
+END
+
 TO BYETEST.BADINPUT
    RUNTOOMANYINPUTSTEST [(BYE "toomany)]
 END
 
 TO BYETEST
+   BYETEST.SMOKETEST
    BYETEST.BADINPUT
 END
-
