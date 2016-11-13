@@ -2531,16 +2531,14 @@ NODE *lmessagebox(NODE *args)
 
     if (NOT_THROWING)
     {
-#ifdef __WXMSW__
-        if (::MessageBox(
-                reinterpret_cast<HWND>(GetParentWindowForDialog()->GetHWND()),
-                body,
-                banner,
-                MB_OKCANCEL) == IDCANCEL)
+        if (wxMessageBox(
+                WXSTRING(body),
+                WXSTRING(banner),
+                wxOK | wxCANCEL | wxCENTER,
+                GetParentWindowForDialog()) == wxCANCEL)
         {
             err_logo(STOP_ERROR, NIL);
         }
-#endif	
     }
 
     return Unbound;
