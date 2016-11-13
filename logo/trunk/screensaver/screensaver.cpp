@@ -329,7 +329,7 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
             HDC deviceContext = BeginPaint(hwnd, &repaintInfo);
             if (deviceContext)
             {
-                wxDCTemp wxDeviceContext(deviceContext);
+                wxDCTemp wxDeviceContext(deviceContext, g_FullRect.GetSize());
                 PaintToScreen(
                     wxDeviceContext,
                     wxRegion(g_FullRect),
@@ -434,14 +434,16 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
                         wxSetWorkingDirectory(fileToLoad.GetPath());
 
                         g_IsLoadingFile = true;
+
                         silent_load(NIL, g_FileToLoad);
                         g_TickCountOfMostRecentLoad = GetTickCount();
+
                         g_IsLoadingFile = false;
+
                         if (IsTimeToExit)
                         {
-                            // The window has already been destroyed,
-                            // so we should quit Logo.
-                            UninitializeLogoEngine();
+                            // In case BYE was run by the screensaver file.
+                            DestroyWindow(hwnd);
                         }
                     }
                 }
@@ -476,14 +478,21 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         g_ServerConnection.OnListenReceiveAck(hwnd, lParam);
         break;
 
-    case WM_DESTROY:
-
+    case WM_CLOSE:
         if (is_executing())
         {
-            IsTimeToHalt = true;
+            // The language engine is still running, so we wait for it to stop.
+            // Once it stops, it will resend a WM_CLOSE.
+            exit_program();
         }
-        IsTimeToExit = true;
+        else
+        {
+            // Let the window be destroyed.
+            DestroyWindow(hwnd);
+        }
+        break;
 
+    case WM_DESTROY:
         if (g_Timer != 0)
         {
             KillTimer(g_ScreenWindow, g_Timer);
@@ -526,38 +535,30 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 
         g_ScreenWindow = NULL;
  
-        if (g_IsLoadingFile)
-        {
-            // Something prevents the screensaver process
-            // from terminating if WM_DESTROY is sent while 
-            // the logo engine is running from a WM_TIMER.
-            exit(EXIT_SUCCESS);
-        }
-        else
-        {
-            // We are not in the Logo evaluator, so we can cleanup here.
-            UninitializeLogoEngine();
+        // Cleanup the language engine.
+        UninitializeLogoEngine();
 
-            // Note that we cannot delete the wxWindow while the Logo
-            // engine is running because it could be calling a modal
-            // wxWidgets routine, like a CQuestionBox, which, although
-            // it's created as a child of g_WxScreenWindow, is cleaned
-            // up by the Logo engine on proper shutdown.  Destroying
-            // g_WxScreenWindow while such a CQuestionBox exists would
-            // cause a double-free.
-            if (g_WxScreenWindow != NULL)
-            {
-                DeleteWrapperWindow(g_WxScreenWindow);
-                g_WxScreenWindow = NULL;
-            }
-
-            if (g_DummyApp != NULL)
-            {
-                g_DummyApp->CleanUp();
-                delete g_DummyApp;
-                g_DummyApp = NULL;
-            }
+        // Note that we cannot delete the wxWindow while the Logo
+        // engine is running because it could be calling a modal
+        // wxWidgets routine, like a CQuestionBox, which, although
+        // it's created as a child of g_WxScreenWindow, is cleaned
+        // up by the Logo engine on proper shutdown.  Destroying
+        // g_WxScreenWindow while such a CQuestionBox exists would
+        // cause a double-free.
+        if (g_WxScreenWindow != NULL)
+        {
+            DeleteWrapperWindow(g_WxScreenWindow);
+            g_WxScreenWindow = NULL;
         }
+
+        if (g_DummyApp != NULL)
+        {
+            g_DummyApp->CleanUp();
+            delete g_DummyApp;
+            g_DummyApp = NULL;
+        }
+
+        PostQuitMessage(0);
         break;
 
     default: 
