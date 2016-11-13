@@ -51,6 +51,7 @@
     #include "stringadapter.h"
     #include "localizedstrings.h"
     #include "cursor.h"
+    #include "graphwin.h"
     #include "screenwindow.h"
     #include "debugheap.h"
 #endif
@@ -1529,48 +1530,60 @@ NODE *ledit(NODE *args)
     return Unbound;
 }
 
+// Loads the contents of the temp file (which was presumably saved by the
+// workspace editor) and sets a flag if an error was encountered.
+//
+// Returns true if the file was loaded (with or witout errors)
+// Returns false if the file was not loaded.
 bool endedit(void)
 {
     bool realsave = false;
 
-    FILE * holdstrm = loadstream;
-    NODE * tmp_line = vref(current_line);
-    bool save_yield_flag = yield_flag;
-    yield_flag = false;
-    lsetcursorwait(NIL);
-
     g_CharactersSuccessfullyParsedInEditor = 0;
 
-    loadstream = fopen(TempPathName, "r");
-    if (loadstream != NULL)
+    if (!IsTimeToExit)
     {
-        FIXNUM saved_value_status = g_ValueStatus;
+        FILE * holdstrm = loadstream;
+        NODE * tmp_line = vref(current_line);
+        bool save_yield_flag = yield_flag;
+        yield_flag = false;
+        lsetcursorwait(NIL);
 
-        realsave = true;
-        while (!feof(loadstream) && NOT_THROWING)
+        start_execution();
+
+        loadstream = fopen(TempPathName, "r");
+        if (loadstream != NULL)
         {
-            g_CharactersSuccessfullyParsedInEditor = ftell(loadstream);
-            assign(current_line, reader(loadstream, ""));
+            FIXNUM saved_value_status = g_ValueStatus;
 
-            NODE * exec_list = parser(current_line, true);
+            realsave = true;
+            while (!feof(loadstream) && NOT_THROWING)
+            {
+                g_CharactersSuccessfullyParsedInEditor = ftell(loadstream);
+                assign(current_line, reader(loadstream, ""));
 
-            g_ValueStatus = VALUE_STATUS_NotOk;
-            eval_driver(exec_list);
+                NODE * exec_list = parser(current_line, true);
+
+                g_ValueStatus = VALUE_STATUS_NotOk;
+                eval_driver(exec_list);
+            }
+            fclose(loadstream);
+            g_ValueStatus = saved_value_status;
         }
-        fclose(loadstream);
-        g_ValueStatus = saved_value_status;
-    }
-    else
-    {
-        // err_logo(
-        //    FILE_ERROR,
-        //    make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTREADEDITOR));
-    }
+        else
+        {
+            // err_logo(
+            //    FILE_ERROR,
+            //    make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTREADEDITOR));
+        }
 
-    lsetcursorarrow(NIL);
-    yield_flag = save_yield_flag;
-    loadstream = holdstrm;
-    assign(current_line, tmp_line);
+        stop_execution();
+
+        lsetcursorarrow(NIL);
+        yield_flag = save_yield_flag;
+        loadstream = holdstrm;
+        assign(current_line, tmp_line);
+    }
 
     return realsave;
 }

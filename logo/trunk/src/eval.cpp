@@ -27,6 +27,8 @@
    #include <stdlib.h> // abort()
    #include <string.h>
 
+   #include <wx/window.h>
+
    #include "eval.h"
    #include "fmslogo.h"
    #include "init.h"
@@ -1158,13 +1160,10 @@ NODE *evaluator(NODE *list, enum labels where)
     }
 
     /* primitive_apply */
-    if (NOT_THROWING)
+    if (NOT_THROWING && !IsTimeToExit)
     {
         // REVISIT: Trace primitives like UCBLogo does?
-        if (!IsTimeToExit)
-        {
-            assign(val, ((logofunc) * getprimfun(proc)) (argl));
-        }
+        assign(val, ((logofunc) * getprimfun(proc)) (argl));
     }
     else
     {
@@ -2506,7 +2505,11 @@ void stop_execution()
         // We call Close() to give the user a chance to veto (for example,
         // if there were unsaved changes).  If the user vetos the close
         // then IsTimeToExit flag is cleared.
-        IsTimeToExit = wxTheApp->GetTopWindow()->Close();
+        IsTimeToExit = GetMainWxWindow()->Close();
+
+        // Don't let any errors that were thrown stop FMSLogo from exiting.
+        stopping_flag = RUN;
+        assign(throw_node, NIL);
     }
 }
 

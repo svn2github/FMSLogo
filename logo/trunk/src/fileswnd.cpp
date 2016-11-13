@@ -79,6 +79,8 @@ bool fileload(const char *Filename)
         yield_flag = false;
         lsetcursorwait(NIL);
 
+        start_execution();
+
         while (!feof(loadstream) && NOT_THROWING)
         {
             assign(current_line, reader(loadstream, ""));
@@ -97,11 +99,6 @@ bool fileload(const char *Filename)
         // into reading more data from the current (closed) file stream.
         loadstream = savedLoadStream;
 
-        // Restore the "dirty workspace" flag so that if FMSLogo is closed
-        // while running :startup, it won't consider any workspace changes
-        // made by loading the file as reason to consider the workspace dirty.
-        IsDirty    = savedIsDirty;
-
         // Run the any startup instruction list that may have been defined
         // when the file was loaded.  (The parameter "previous_startup" is
         // not what is run, but rather is used to detect if anything new
@@ -110,8 +107,11 @@ bool fileload(const char *Filename)
 
         // Restore the rest of the global state.
         g_ValueStatus = savedValueStatus;
+        IsDirty       = savedIsDirty;
         deref(current_line);
         current_line = savedCurrentLine;
+
+        stop_execution();
 
         isOk = true;
     }

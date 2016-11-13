@@ -48,6 +48,8 @@ II. New features/bugs fixed:
     (same as if the polygon has one vertex).
   o Fix bug #482; TIME now returns the time in the local time zone when run
     from a cygwin bash shell.
+  o Fix bug #484; BYE now immediately exits when run at the top-level of a file
+    that is loaded from the command-line.
   o Implement feature #11; the Halt and Pause buttons are now disabled when
     FMSLogo is not running instructions.
   o Implement feature #33; Make it so that FMSLogo doesn't mind exiting while

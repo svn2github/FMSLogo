@@ -629,15 +629,11 @@ void runstartup(NODE *oldst)
     NODE* st = Startup.GetValue();
     if (st != oldst && st != NIL && is_list(st))
     {
-        start_execution();
-
         g_ValueStatus = VALUE_STATUS_NotOk;
         eval_driver(st);
 
         // process special conditions
         process_special_conditions();
-
-        stop_execution();
     }
 }
 
@@ -775,6 +771,8 @@ NODE *lload(NODE *arg)
         yield_flag = false;
         lsetcursorwait(NIL);
 
+        start_execution();
+
         while (!feof(loadstream) && NOT_THROWING)
         {
             assign(current_line, reader(loadstream, ""));
@@ -789,6 +787,8 @@ NODE *lload(NODE *arg)
 
         runstartup(st);
         g_ValueStatus = saved_value_status;
+
+        stop_execution();
     }
     else
     {
