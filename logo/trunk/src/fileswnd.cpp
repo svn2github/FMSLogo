@@ -88,19 +88,28 @@ bool fileload(const char *Filename)
         }
         fclose(loadstream);
 
+        // Restore some of the global state before running the startup
+        // instruction list.
         lsetcursorarrow(NIL);
         yield_flag = savedYieldFlag;
 
+        // Restore loadstream so that we don't confuse to_helper
+        // into reading more data from the current (closed) file stream.
         loadstream = savedLoadStream;
 
-        // run startup after restoring loadstream so
-        // that we don't confuse to_helper into reading
-        // more data from the current (closed) file stream.
+        // Restore the "dirty workspace" flag so that if FMSLogo is closed
+        // while running :startup, it won't consider any workspace changes
+        // made by loading the file as reason to consider the workspace dirty.
+        IsDirty    = savedIsDirty;
+
+        // Run the any startup instruction list that may have been defined
+        // when the file was loaded.  (The parameter "previous_startup" is
+        // not what is run, but rather is used to detect if anything new
+        // has been defined.
         runstartup(previous_startup);
 
-        // restore the global state
+        // Restore the rest of the global state.
         g_ValueStatus = savedValueStatus;
-        IsDirty       = savedIsDirty;
         deref(current_line);
         current_line = savedCurrentLine;
 
