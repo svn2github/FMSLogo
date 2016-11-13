@@ -37,7 +37,7 @@ CSaveBeforeExitDialog::CSaveBeforeExitDialog(wxWindow *Parent)
         this,
         wxID_ANY,
         WXSTRING(LOCALIZED_UNSAVEDCHANGES_MESSAGE2));
-    message1->Wrap(400);
+    message2->Wrap(400);
     topLevelSizer->Add(message2, 0, wxALIGN_LEFT | wxALL, 10);
 
 
