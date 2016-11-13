@@ -1244,11 +1244,11 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
             case CSaveBeforeExitDialog::SAVEBEFOREEXIT_SaveAndExit:
                 // save and then exit
 
-                // HACK: Set TimeToExit and TimeToHalt to false
+                // HACK: Set IsTimeToExit and IsTimeToHalt to false
                 // so that writing the file to disk doesn't abort.
                 // This is hack because the code should not modify
                 // global variables--there should be a way to tell 
-                // CMFileSave to ignore errors.
+                // FileSave() to ignore errors.
                 bool savedIsTimeToExit = IsTimeToExit;
                 bool savedIsTimeToHalt = IsTimeToHalt;
 
