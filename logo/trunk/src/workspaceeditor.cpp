@@ -929,7 +929,9 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
     {
         CCommander * commander = CFmsLogo::GetMainFrame()->GetCommander();
 
-        int realsave = EndEdit();
+        // Attempt to load the contents of the editor into the workspace,
+        // just to see if there are any errors.
+        bool realsave = EndEdit();
         if (m_ErrorDetected)
         {
             // Notify the user that:
@@ -978,13 +980,19 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
             // no errors happened
             if (m_EditArguments != NIL)
             {
-                // check for quit before erasing
+                // Now that we know we can load the contents without error,
+                // we can erase the parts of the workspace that were removed
+                // from the editor (for example, if the editor was opened
+                // with the definition of "TO SQUARE" and this definition
+                // was removed before the editor was saved, then SQUARE should
+                // be erased from the workspace.)
                 if (realsave)
                 {
                     lerase(m_EditArguments);
 
-                    // Since we erased part of the workspace,
-                    // we must load again, but no errors
+                    // Since we erased part of the workspace, we must load
+                    // again, but we don't need to do any error checking,
+                    // since we know the file loads without error.
                     endedit();
                 }
 
