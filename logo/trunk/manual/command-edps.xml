@@ -25,11 +25,11 @@ EDPS abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linke
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO "MYPROGRAM1
+<programlisting><userinput>TO MYPROGRAM1
   PRINT "Hrllo
 END
 
-TO "MYPROGRAM2
+TO MYPROGRAM2
   PRINT "Byr
 END
 

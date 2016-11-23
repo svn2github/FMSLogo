@@ -26,7 +26,7 @@ EDN abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linken
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO "MYPROGRAM
+<programlisting><userinput>TO MYPROGRAM
   PRINT :myvariable
 END
 

@@ -26,7 +26,7 @@ It is equivalent to pressing the <link linkend="commander-edall">Edall button</l
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO "MYPROGRAM
+<programlisting><userinput>TO MYPROGRAM
   PRINT :myvariable
 END
 

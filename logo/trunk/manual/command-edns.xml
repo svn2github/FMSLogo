@@ -25,7 +25,7 @@ EDNS abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linke
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO "MYPROGRAM
+<programlisting><userinput>TO MYPROGRAM
   PRINT :myvariable
 END
 
