@@ -72,7 +72,7 @@ Names of individual properties are case-sensitive or case-insensitive depending 
 
 <para>
 Most workspace query procedures output a "contents list", which can be used as input to many <link linkend="workspace-inspection">Workspace Inspection</link> and <link linkend="workspace-control">Workspace Control</link> procedures.
-All procedures whose input is indicated as "contentslist" will accept any of the following:
+All procedures whose input is indicated as "contentslist" accept any of the following:
 
 <itemizedlist>
 <listitem><para>A single word (taken as a procedure name)</para></listitem>
