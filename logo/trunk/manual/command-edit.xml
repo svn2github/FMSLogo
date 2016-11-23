@@ -8,9 +8,7 @@
 <varlistentry><term>Synopsis</term>
 <listitem>
 <synopsis><command>EDIT</command> <parameter>contentslist</parameter>
-<command>ED</command> <parameter>contentslist</parameter>
-(<command>EDIT</command>)
-(<command>ED</command>)</synopsis>
+<command>ED</command> <parameter>contentslist</parameter></synopsis>
 </listitem>
 </varlistentry>
 
