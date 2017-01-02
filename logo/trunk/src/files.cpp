@@ -653,7 +653,7 @@ void silent_load(NODE *arg, const char *prefix)
 
     // construct the filename
 #ifdef WX_PURE
-    #define MAX_PATH 260
+#define MAX_PATH (260)
 #endif
     char   filename[MAX_PATH];
     char * filenamePtr   = filename;
