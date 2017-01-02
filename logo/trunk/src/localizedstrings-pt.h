@@ -662,7 +662,7 @@
 #define LOCALIZED_HELP_DEMO            "&Demo"
 #define LOCALIZED_HELP_EXAMPLE         "&Exemplos"
 #define LOCALIZED_HELP_RELEASENOTES    "&Notas da versão"
-#define LOCALIZED_HELP_ABOUTFMSLOGO    "&Sobre o "LOCALIZED_GENERAL_PRODUCTNAME"..."
+#define LOCALIZED_HELP_ABOUTFMSLOGO    "&Sobre o " LOCALIZED_GENERAL_PRODUCTNAME "..."
 #define LOCALIZED_HELP_MS              "Sobre o &FMS..."
 // The following two help options display tables for translating to/from English
 // These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
@@ -693,9 +693,9 @@
 
 // The dialog box for selecting a Startup procedure
 #define LOCALIZED_SELECTSTARTUP_CAPTION               "Selecione uma instrução de " LOCALIZED_ALTERNATE_STARTUP
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "O espaço de trabalho não possui uma lista de instrução de "LOCALIZED_ALTERNATE_STARTUP" definida, nada vai\nacontecer quando o protetor de tela é carregado.\nPor favor, selecione um procedimento para executar quando o programa é carregado."
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "A variável "LOCALIZED_ALTERNATE_STARTUP" não é uma lista, nada vai\nacontecer quando o protetor de tela é carregado.\nPor favor, selecione um procedimento para executar quando o programa é carregado."
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Seu espaço de trabalho tem uma lista de instrução de vazio "LOCALIZED_ALTERNATE_STARTUP" definida, nada vai\nacontecer quando o protetor de tela é carregado.\nPor favor, selecione um procedimento para executar quando o programa é carregado."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "O espaço de trabalho não possui uma lista de instrução de " LOCALIZED_ALTERNATE_STARTUP " definida, nada vai\nacontecer quando o protetor de tela é carregado.\nPor favor, selecione um procedimento para executar quando o programa é carregado."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "A variável " LOCALIZED_ALTERNATE_STARTUP " não é uma lista, nada vai\nacontecer quando o protetor de tela é carregado.\nPor favor, selecione um procedimento para executar quando o programa é carregado."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Seu espaço de trabalho tem uma lista de instrução de vazio " LOCALIZED_ALTERNATE_STARTUP " definida, nada vai\nacontecer quando o protetor de tela é carregado.\nPor favor, selecione um procedimento para executar quando o programa é carregado."
 #define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "Não há procedimentos definidos"
 
 // The warning dialog box when the user saves an empty workspace
@@ -853,14 +853,14 @@
 //
 // Strings on the "About FMSLogo" Dialog box
 //
-#define LOCALIZED_ABOUTFMS                     "Sobre o "LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_ABOUTFMS                     "Sobre o " LOCALIZED_GENERAL_PRODUCTNAME
 #define LOCALIZED_ABOUTFMS_VERSION             "Versão"
 #define LOCALIZED_ABOUTFMS_GUI                 "GUI por George Mills\nSoftronics, Inc.\nhttp://www.softronix.com/"
 #define LOCALIZED_ABOUTFMS_CORE                "Núcleo por Brian Harvey\nUniversity of California Berkeley"
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Instalador baseado no Nullsoft Scriptable Install System\nhttp://nsis.sourceforge.net/"
 #define LOCALIZED_ABOUTFMS_ADVENTURE           "Recursos para Logo em Português\nDisponíveis em http://mondragon.angeltowns.net/paradiso/"
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Agradecimento a Yehuda Katz e a Erich Neuwirth"
-#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" é software livre\nVer a Licença Pública GNU"
+#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME " é software livre\nVer a Licença Pública GNU"
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Perguntas, comentários, sugestões?\nParticipe da lista Logo em Espanhol\nhttp://mondragon.angeltowns.net/paradiso/ListaLogo.html"
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Tradução feita por Alexandre R. Soares"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON
@@ -892,7 +892,7 @@
 // Strings in various other dialog boxes
 // 
 
-#define LOCALIZED_CHANGESINEDITORMAYBELOST  "As mudanças da edição podem ser perdidas.\n\nRealmente quer sair do "LOCALIZED_GENERAL_PRODUCTNAME"?"
+#define LOCALIZED_CHANGESINEDITORMAYBELOST  "As mudanças da edição podem ser perdidas.\n\nRealmente quer sair do " LOCALIZED_GENERAL_PRODUCTNAME "?"
 #define LOCALIZED_EDITSESSIONISRUNNING      "Uma sessão de edição está ativa"
 
 #define LOCALIZED_COULDNOTWRITEBMP            "Não pude guardar .bmp"
@@ -938,8 +938,8 @@
 
 #define LOCALIZED_LOGO_FILE_EXTENSION "lgo"
 #define LOCALIZED_FILEFILTER_ALLFILES "Todos os Arquivos (*.*)|*.*"
-#define LOCALIZED_FILEFILTER_LOGO     "Arquivos do Logo (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES
-#define LOCALIZED_FILEFILTER_IMAGE    "Arquivos Bitmap (*.bmp)|*.bmp|Arquivos GIF (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_LOGO     "Arquivos do Logo (*.lgo)|*.lgo|" LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_IMAGE    "Arquivos Bitmap (*.bmp)|*.bmp|Arquivos GIF (*.gif)|*.gif|" LOCALIZED_FILEFILTER_ALLFILES
 
 
 
@@ -1131,7 +1131,7 @@
 
 #define LOCALIZED_ERROR_BADCOMMANDLINE        "Linha de comandos incorreta"
 
-#define LOCALIZED_ERROR_TMPNOTDEFINED         "A variável de ambiente TMP não está definida ou é incorreta.\n"LOCALIZED_GENERAL_PRODUCTNAME" tentará usar C:\\ para guardar arquivos temporários"
+#define LOCALIZED_ERROR_TMPNOTDEFINED         "A variável de ambiente TMP não está definida ou é incorreta.\n" LOCALIZED_GENERAL_PRODUCTNAME " tentará usar C:\\ para guardar arquivos temporários"
 
 #define LOCALIZED_ERROR_GIFSAVEFAILED         "Problema ao criar GIF, revise quantidade de memória ou espaço em disco"
 #define LOCALIZED_ERROR_GIFREADFAILED         "Problema ao ler GIF, revise quantidade de memória ou espaço em disco"

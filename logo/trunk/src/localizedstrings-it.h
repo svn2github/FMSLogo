@@ -662,7 +662,7 @@
 #define LOCALIZED_HELP_DEMO            "&Dimostrazione"
 #define LOCALIZED_HELP_EXAMPLE         "&Esempi"
 #define LOCALIZED_HELP_RELEASENOTES    "Note di &rilascio"
-#define LOCALIZED_HELP_ABOUTFMSLOGO    "Informazioni su &"LOCALIZED_GENERAL_PRODUCTNAME"..."
+#define LOCALIZED_HELP_ABOUTFMSLOGO    "Informazioni su &" LOCALIZED_GENERAL_PRODUCTNAME "..."
 #define LOCALIZED_HELP_MS              "Informazioni su &MS..."
 // The following two help options display tables for translating to/from English
 // These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
@@ -693,9 +693,9 @@
 
 // The dialog box for selecting a Startup procedure
 #define LOCALIZED_SELECTSTARTUP_CAPTION               "Selezionare un'istruzione " LOCALIZED_ALTERNATE_STARTUP
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "L'area di lavoro non ha una lista di istruzioni "LOCALIZED_ALTERNATE_STARTUP" definita,\nquindi non succeder‡ nulla quando viene caricato il salvaschermo.\nSi prega di selezionare una procedura da eseguire quando viene caricato il programma."
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "La variabile "LOCALIZED_ALTERNATE_STARTUP" non Ë un elenco,\nquindi non succeder‡ nulla quando viene caricato il salvaschermo.\nSi prega di selezionare una procedura da eseguire quando viene caricato il programma."
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Area di lavoro ha definita in lista istruzioni una vuoto "LOCALIZED_ALTERNATE_STARTUP", quindi non succederÅ‡ nulla quando viene caricato il salvaschermo.\nSi prega di selezionare una procedura da eseguire quando viene caricato il programma."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "L'area di lavoro non ha una lista di istruzioni " LOCALIZED_ALTERNATE_STARTUP " definita,\nquindi non succeder‡ nulla quando viene caricato il salvaschermo.\nSi prega di selezionare una procedura da eseguire quando viene caricato il programma."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "La variabile " LOCALIZED_ALTERNATE_STARTUP " non Ë un elenco,\nquindi non succeder‡ nulla quando viene caricato il salvaschermo.\nSi prega di selezionare una procedura da eseguire quando viene caricato il programma."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Area di lavoro ha definita in lista istruzioni una vuoto " LOCALIZED_ALTERNATE_STARTUP ", quindi non succederÅ‡ nulla quando viene caricato il salvaschermo.\nSi prega di selezionare una procedura da eseguire quando viene caricato il programma."
 #define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "Nessuna procedura Ë definita"
 
 // The warning dialog box when the user saves an empty workspace
@@ -853,14 +853,14 @@
 //
 // Strings on the "About FMSLogo" Dialog box
 //
-#define LOCALIZED_ABOUTFMS                     "Informazioni su "LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_ABOUTFMS                     "Informazioni su " LOCALIZED_GENERAL_PRODUCTNAME
 #define LOCALIZED_ABOUTFMS_VERSION             "Versione"
 #define LOCALIZED_ABOUTFMS_GUI                 "GUI di George Mills\nSoftronics, Inc.\nhttp://www.softronix.com/"
 #define LOCALIZED_ABOUTFMS_CORE                "Core di Brian Harvey\nUniversity of California Berkeley"
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Installatore basato su Nullsoft Scriptable Install System\nhttp://nsis.sourceforge.net/"
 #define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nScritto e donato da Jim Muller\nDisponibile a http://www.softronix.com/"
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Ringrazimenti a Yehuda Katz e Erich Neuwirth"
-#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" Ë free software\nVedere la Licenza Pubblica GNU"
+#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME " Ë free software\nVedere la Licenza Pubblica GNU"
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisita il Forum Logo a\nhttp://groups.yahoo.com/group/LogoForum/"
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Traduzione italiana di Stefano Federici"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON
@@ -892,7 +892,7 @@
 // Strings in various other dialog boxes
 // 
 
-#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Le modifiche effettuate in questa sessione possono essere perse.\n\nSei sicuro di voler uscire da "LOCALIZED_GENERAL_PRODUCTNAME"?"
+#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Le modifiche effettuate in questa sessione possono essere perse.\n\nSei sicuro di voler uscire da " LOCALIZED_GENERAL_PRODUCTNAME "?"
 #define LOCALIZED_EDITSESSIONISRUNNING      "L'Editor Ë gi˘ in esecuzione"
 
 #define LOCALIZED_COULDNOTWRITEBMP            "Impossibile scrivere il file .bmp"
@@ -938,8 +938,8 @@
 
 #define LOCALIZED_LOGO_FILE_EXTENSION "lgo"
 #define LOCALIZED_FILEFILTER_ALLFILES "Tutti i File (*.*)|*.*"
-#define LOCALIZED_FILEFILTER_LOGO     "File Logo (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES
-#define LOCALIZED_FILEFILTER_IMAGE    "File Bitmap (*.bmp)|*.bmp|File GIF (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_LOGO     "File Logo (*.lgo)|*.lgo|" LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_IMAGE    "File Bitmap (*.bmp)|*.bmp|File GIF (*.gif)|*.gif|" LOCALIZED_FILEFILTER_ALLFILES
 
 
 
@@ -1131,7 +1131,7 @@
 
 #define LOCALIZED_ERROR_BADCOMMANDLINE        "Linea di comando non valida"
 
-#define LOCALIZED_ERROR_TMPNOTDEFINED         "La variabile di ambiente TMP non Ë definita oppure Ë non valida.\n"LOCALIZED_GENERAL_PRODUCTNAME" tenter‡ di usare C:\\ per memorizzare i file temporanei"
+#define LOCALIZED_ERROR_TMPNOTDEFINED         "La variabile di ambiente TMP non Ë definita oppure Ë non valida.\n" LOCALIZED_GENERAL_PRODUCTNAME " tenter‡ di usare C:\\ per memorizzare i file temporanei"
 
 #define LOCALIZED_ERROR_GIFSAVEFAILED         "Si Ë verificato un problema nella generazione del file GIF, controlla la memoria e lo spazio disponibile sul disco"
 #define LOCALIZED_ERROR_GIFREADFAILED         "Si Ë verificato un problema nella lettura del file GIF, controlla la memoria e lo spazio disponibile sul disco"

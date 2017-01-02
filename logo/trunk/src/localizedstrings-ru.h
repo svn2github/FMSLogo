@@ -662,7 +662,7 @@
 #define LOCALIZED_HELP_DEMO            "&Демо"  
 #define LOCALIZED_HELP_EXAMPLE         "&Примеры" 
 #define LOCALIZED_HELP_RELEASENOTES    "П&римечания к выпуску" 
-#define LOCALIZED_HELP_ABOUTFMSLOGO    "&О "LOCALIZED_GENERAL_PRODUCTNAME"..."
+#define LOCALIZED_HELP_ABOUTFMSLOGO    "&О " LOCALIZED_GENERAL_PRODUCTNAME "..."
 #define LOCALIZED_HELP_MS              "&О MS..." 
 // The following two help options display tables for translating to/from English
 // These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
@@ -853,14 +853,14 @@
 //
 // Strings on the "About FMSLogo" Dialog box
 //
-#define LOCALIZED_ABOUTFMS                     "О "LOCALIZED_GENERAL_PRODUCTNAME 
+#define LOCALIZED_ABOUTFMS                     "О " LOCALIZED_GENERAL_PRODUCTNAME 
 #define LOCALIZED_ABOUTFMS_VERSION             "Версия"
 #define LOCALIZED_ABOUTFMS_GUI                 "ГИП Джорджа Миллза\nSoftronics, Inc.\nhttp://www.softronix.com/" 
 #define LOCALIZED_ABOUTFMS_CORE                "Ядро Брайена Харви\nКалифорнийский университет Беркли" 
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Инсталляция базируется на Nullsoft Scriptable Install \nhttp://nsis.sourceforge.net/" 
 #define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nнаписанная и переданная Джимом Мюллером\nдоступна на http://www.softronix.com/" 
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Благодарим Йегуду Катца и Эриха Нейвиртза" 
-#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" распространяется свободно\nСм. лицензию ГНУ"
+#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME " распространяется свободно\nСм. лицензию ГНУ"
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Группа новостей в Интернете: comp.lang.logo\nпосетите форум на\nhttp://groups.yahoo.com/group/LogoForum/" 
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Для Изучение внутренних свойств компьютера,\nиспользуйте  MultiMedia Logic от Softronics, Inc.\nАдаптация и локализация на русский язык Баглаева Игоря\nБурятский государственный университет, Улан-Удэ, bii@bsu.ru"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON 
@@ -892,7 +892,7 @@
 // Strings in various other dialog boxes
 // 
 
-#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Изменения в этом сеансе редактирования могут быть утеряны.\n\nВы действительно хотите выйти из "LOCALIZED_GENERAL_PRODUCTNAME"?" 
+#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Изменения в этом сеансе редактирования могут быть утеряны.\n\nВы действительно хотите выйти из " LOCALIZED_GENERAL_PRODUCTNAME "?"
 #define LOCALIZED_EDITSESSIONISRUNNING      "Сеанс редактирования запущен" 
 
 #define LOCALIZED_COULDNOTWRITEBMP            "Не могу записать .bmp" 
@@ -938,8 +938,8 @@
 
 #define LOCALIZED_LOGO_FILE_EXTENSION "lgo"
 #define LOCALIZED_FILEFILTER_ALLFILES "Все файлы (*.*)|*.*" 
-#define LOCALIZED_FILEFILTER_LOGO     "Лого-файлы (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES 
-#define LOCALIZED_FILEFILTER_IMAGE    "Растровые файлы (*.bmp)|*.bmp|GIF-файлы (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES 
+#define LOCALIZED_FILEFILTER_LOGO     "Лого-файлы (*.lgo)|*.lgo|" LOCALIZED_FILEFILTER_ALLFILES 
+#define LOCALIZED_FILEFILTER_IMAGE    "Растровые файлы (*.bmp)|*.bmp|GIF-файлы (*.gif)|*.gif|" LOCALIZED_FILEFILTER_ALLFILES
 
 
 
@@ -1131,7 +1131,7 @@
 
 #define LOCALIZED_ERROR_BADCOMMANDLINE        "Ошибка командной строки"  
 
-#define LOCALIZED_ERROR_TMPNOTDEFINED         "Переменная среды TMP не определена или не допустима.\n"LOCALIZED_GENERAL_PRODUCTNAME" будет использовать C: \\для хранения временных файлов" 
+#define LOCALIZED_ERROR_TMPNOTDEFINED         "Переменная среды TMP не определена или не допустима.\n" LOCALIZED_GENERAL_PRODUCTNAME " будет использовать C: \\для хранения временных файлов"
 
 #define LOCALIZED_ERROR_GIFSAVEFAILED         "Проблема создания GIF, проверьте память и дисковое пространство" 
 #define LOCALIZED_ERROR_GIFREADFAILED         "Проблема чтения GIF, проверьте память и дисковое пространство" 

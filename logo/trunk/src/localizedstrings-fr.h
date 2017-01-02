@@ -662,7 +662,7 @@
 #define LOCALIZED_HELP_DEMO            "&Démo"
 #define LOCALIZED_HELP_EXAMPLE         "&Exemples"
 #define LOCALIZED_HELP_RELEASENOTES    "&Notes MàJ"
-#define LOCALIZED_HELP_ABOUTFMSLOGO    "&A propos de "LOCALIZED_GENERAL_PRODUCTNAME"..."
+#define LOCALIZED_HELP_ABOUTFMSLOGO    "&A propos de " LOCALIZED_GENERAL_PRODUCTNAME "..."
 #define LOCALIZED_HELP_MS              "A &propos de MS..."
 // The following two help options display tables for translating to/from English
 // These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
@@ -853,14 +853,14 @@
 //
 // Strings on the "About FMSLogo" Dialog box
 //
-#define LOCALIZED_ABOUTFMS                     "A propos de "LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_ABOUTFMS                     "A propos de " LOCALIZED_GENERAL_PRODUCTNAME
 #define LOCALIZED_ABOUTFMS_VERSION             "Version" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills\nSoftronics, Inc.\nhttp://www.softronix.com/" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_CORE                "Core by Brian Harvey\nUniversity of California Berkeley" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Installer based on Nullsoft Scriptable Install System\nhttp://nsis.sourceforge.net/" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http://www.softronix.com/" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Special thanks to Yehuda Katz and Erich Neuwirth" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" is free software\nSee GNU Public License" // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME " is free software\nSee GNU Public License" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp://groups.yahoo.com/group/LogoForum/" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Adaptation française partielle de Bertrand Carette" // 
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
@@ -892,7 +892,7 @@
 // Strings in various other dialog boxes
 // 
 
-#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Des modifications dans l'éditeur peuvent être perdues.\n\nVoulez-vous vraiment quitter "LOCALIZED_GENERAL_PRODUCTNAME"?" // 
+#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Des modifications dans l'éditeur peuvent être perdues.\n\nVoulez-vous vraiment quitter " LOCALIZED_GENERAL_PRODUCTNAME "?" // 
 #define LOCALIZED_EDITSESSIONISRUNNING      "L'éditeur est déjà ouvert" // 
 
 #define LOCALIZED_COULDNOTWRITEBMP            "Impossible d'écrire .bmp" //
@@ -938,8 +938,8 @@
 
 #define LOCALIZED_LOGO_FILE_EXTENSION "lgo"
 #define LOCALIZED_FILEFILTER_ALLFILES "Tous les fichiers (*.*)|*.*"
-#define LOCALIZED_FILEFILTER_LOGO     "Fichiers Logo (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES
-#define LOCALIZED_FILEFILTER_IMAGE    "Fichiers Bitmap (*.bmp)|*.bmp|Fichiers GIF (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_LOGO     "Fichiers Logo (*.lgo)|*.lgo|" LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_IMAGE    "Fichiers Bitmap (*.bmp)|*.bmp|Fichiers GIF (*.gif)|*.gif|" LOCALIZED_FILEFILTER_ALLFILES
 
 
 
@@ -1131,7 +1131,7 @@
 
 #define LOCALIZED_ERROR_BADCOMMANDLINE        "Ligne de commande non valide"  // 
 
-#define LOCALIZED_ERROR_TMPNOTDEFINED         "La variable d'environnement TMP est non définie ou non valide.\n"LOCALIZED_GENERAL_PRODUCTNAME" va essayer d'utiliser C:\\ pour stocker les fichiers temporaires" // 
+#define LOCALIZED_ERROR_TMPNOTDEFINED         "La variable d'environnement TMP est non définie ou non valide.\n" LOCALIZED_GENERAL_PRODUCTNAME " va essayer d'utiliser C:\\ pour stocker les fichiers temporaires" // 
 
 #define LOCALIZED_ERROR_GIFSAVEFAILED         "Problème pour créer un GIF, vérifier la mémoire et l'espace disque" // 
 #define LOCALIZED_ERROR_GIFREADFAILED         "Problem Reading GIF, check memory and diskspace" // NOT_YET_LOCALIZED

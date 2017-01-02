@@ -662,7 +662,7 @@
 #define LOCALIZED_HELP_DEMO            "&Demo" 
 #define LOCALIZED_HELP_EXAMPLE         "&Beispiele"
 #define LOCALIZED_HELP_RELEASENOTES    "&Anmerkungen"
-#define LOCALIZED_HELP_ABOUTFMSLOGO    "&‹ber "LOCALIZED_GENERAL_PRODUCTNAME"..."
+#define LOCALIZED_HELP_ABOUTFMSLOGO    "&‹ber " LOCALIZED_GENERAL_PRODUCTNAME "..."
 #define LOCALIZED_HELP_MS              "‹ber &MS..."
 // The following two help options display tables for translating to/from English
 // These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
@@ -692,10 +692,10 @@
 #define LOCALIZED_SCREENSAVER_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON
 
 // The dialog box for selecting a Startup procedure
-#define LOCALIZED_SELECTSTARTUP_CAPTION               "W‰hlen Sie eine "LOCALIZED_ALTERNATE_STARTUP"-Anweisung"
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "Der Arbeitsbereich hat keine Anweisungsliste "LOCALIZED_ALTERNATE_STARTUP" definiert, so dass nichts passieren wird,\nwenn der Bildschirmschoner geladen wird. Bitte w‰hlen Sie eine Prozedur aus, wenn das Programm geladen wird."
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "Die Variable "LOCALIZED_ALTERNATE_STARTUP" ist keine Liste, so dass nichts passieren wird,\nwenn der Bildschirmschoner geladen wird. Bitte w‰hlen Sie eine Prozedur aus, wenn das Programm geladen wird."
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Arbeitsbereich hat eine leere "LOCALIZED_ALTERNATE_STARTUP"-Anweisungsliste definiert,\nwenn der Bildschirmschoner geladen wird. Bitte wÅ‰hlen Sie eine Prozedur aus, wenn das Programm geladen wird."
+#define LOCALIZED_SELECTSTARTUP_CAPTION               "W‰hlen Sie eine " LOCALIZED_ALTERNATE_STARTUP "-Anweisung"
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "Der Arbeitsbereich hat keine Anweisungsliste " LOCALIZED_ALTERNATE_STARTUP " definiert, so dass nichts passieren wird,\nwenn der Bildschirmschoner geladen wird. Bitte w‰hlen Sie eine Prozedur aus, wenn das Programm geladen wird."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "Die Variable " LOCALIZED_ALTERNATE_STARTUP " ist keine Liste, so dass nichts passieren wird,\nwenn der Bildschirmschoner geladen wird. Bitte w‰hlen Sie eine Prozedur aus, wenn das Programm geladen wird."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Arbeitsbereich hat eine leere " LOCALIZED_ALTERNATE_STARTUP "-Anweisungsliste definiert,\nwenn der Bildschirmschoner geladen wird. Bitte wÅ‰hlen Sie eine Prozedur aus, wenn das Programm geladen wird."
 #define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "Keine Prozeduren sind definiert"
 
 // The warning dialog box when the user saves an empty workspace
@@ -853,14 +853,14 @@
 //
 // Strings on the "About FMSLogo" Dialog box
 //
-#define LOCALIZED_ABOUTFMS                     "‹ber "LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_ABOUTFMS                     "‹ber " LOCALIZED_GENERAL_PRODUCTNAME
 #define LOCALIZED_ABOUTFMS_VERSION             "Version"
 #define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills\nSoftronics, Inc.\nhttp://www.softronix.com/"
 #define LOCALIZED_ABOUTFMS_CORE                "Core by Brian Harvey\nUniversity of California Berkeley"
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Installer based on Nullsoft Scriptable Install System\nhttp://nsis.sourceforge.net/"
 #define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http://www.softronix.com/\nPapert, Seymour: Gedankenblitze 8126 rororo"
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Special Thanks to Yehuda Katz and Erich Neuwirth"
-#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" is free software\nSee GNU Public License"
+#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME " is free software\nSee GNU Public License"
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp://groups.yahoo.com/group/LogoForum/"
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "To learn the internals of computers,\ntry MultiMedia Logic from Softronics, Inc.\nVer‰ndert/¸bersetzt von Stephan Vogel\nAugust-Ruf-Bildungszentrum Ettenheim/S¸dbaden\nSeine Logo-Projekte: http://www.lehrer.uni-karlsruhe.de/~za1880/itg/index.htm"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON
@@ -892,7 +892,7 @@
 // Strings in various other dialog boxes
 // 
 
-#define LOCALIZED_CHANGESINEDITORMAYBELOST  "ƒnderungen in dieser Edit-Sitzung kˆnnen verloren gehen.\n\nWollen Sie wirklich "LOCALIZED_GENERAL_PRODUCTNAME" verlassen?"
+#define LOCALIZED_CHANGESINEDITORMAYBELOST  "ƒnderungen in dieser Edit-Sitzung kˆnnen verloren gehen.\n\nWollen Sie wirklich " LOCALIZED_GENERAL_PRODUCTNAME " verlassen?"
 #define LOCALIZED_EDITSESSIONISRUNNING      "Eine Edit-Sitzung l‰uft gerade"
 
 #define LOCALIZED_COULDNOTWRITEBMP            "Konnte nicht .bmp schreiben"
@@ -938,8 +938,8 @@
 
 #define LOCALIZED_LOGO_FILE_EXTENSION "log"
 #define LOCALIZED_FILEFILTER_ALLFILES "Alle Dateien (*.*)|*.*"
-#define LOCALIZED_FILEFILTER_LOGO     "Logo Dateien (*.log)|*.log;*.lgo|"LOCALIZED_FILEFILTER_ALLFILES
-#define LOCALIZED_FILEFILTER_IMAGE    "Bitmap Dateien (*.bmp)|*.bmp|GIF Dateien (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_LOGO     "Logo Dateien (*.log)|*.log;*.lgo|" LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_IMAGE    "Bitmap Dateien (*.bmp)|*.bmp|GIF Dateien (*.gif)|*.gif|" LOCALIZED_FILEFILTER_ALLFILES
 
 
 
@@ -1131,7 +1131,7 @@
 
 #define LOCALIZED_ERROR_BADCOMMANDLINE        "Ung¸ltige Befehlszeile" 
 
-#define LOCALIZED_ERROR_TMPNOTDEFINED         "Die Umgebungsvariable TMP ist nicht definiert oder ung¸ltig.\n"LOCALIZED_GENERAL_PRODUCTNAME" wird versuchen C:\\ zu verwenden, um tempor‰re Dateien zu speichern"
+#define LOCALIZED_ERROR_TMPNOTDEFINED         "Die Umgebungsvariable TMP ist nicht definiert oder ung¸ltig.\n" LOCALIZED_GENERAL_PRODUCTNAME " wird versuchen C:\\ zu verwenden, um tempor‰re Dateien zu speichern"
 
 #define LOCALIZED_ERROR_GIFSAVEFAILED         "Generierungs-Problem GIF, ¸berpr¸fen Sie Speicher und Diskkapazit‰t"
 #define LOCALIZED_ERROR_GIFREADFAILED         "Lese-Problem GIF, ¸berpr¸fen Sie Speicher und Datentr‰gerkapazit‰t"

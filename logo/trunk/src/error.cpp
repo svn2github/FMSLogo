@@ -465,15 +465,15 @@ err_logo(
         break;
 
     case MIDI_DEVICE_ALREADY_OPEN:
-        g_ErrorFormatString = LOCALIZED_ERROR_MIDI": "LOCALIZED_ERROR_MIDIALREADYOPEN;
+        g_ErrorFormatString = LOCALIZED_ERROR_MIDI ": " LOCALIZED_ERROR_MIDIALREADYOPEN;
         break;
 
     case MIDI_INVALID_DEVICE:
-        g_ErrorFormatString = LOCALIZED_ERROR_MIDI": "LOCALIZED_ERROR_MIDIINVALIDDEVICE;
+        g_ErrorFormatString = LOCALIZED_ERROR_MIDI ": " LOCALIZED_ERROR_MIDIINVALIDDEVICE;
         break;
 
     case MIDI_NOT_OPEN:
-        g_ErrorFormatString = LOCALIZED_ERROR_MIDI": "LOCALIZED_ERROR_MIDINOTOPEN;
+        g_ErrorFormatString = LOCALIZED_ERROR_MIDI ": " LOCALIZED_ERROR_MIDINOTOPEN;
         break;
 
     case TIMER_NOT_FOUND:

@@ -368,7 +368,7 @@ void CWorkspaceEditor::SetFileName(const wxString & NewFileName)
     m_FileName = NewFileName;
 
     const wxString newTitle = m_FileName.IsEmpty() ?
-        WXSTRING("("LOCALIZED_UNTITLED")") :
+        WXSTRING("(" LOCALIZED_UNTITLED ")") :
         m_FileName;
 
     const wxString & currentTitle = GetName();

@@ -662,7 +662,7 @@
 #define LOCALIZED_HELP_DEMO            "&Επίδειξη"  // 
 #define LOCALIZED_HELP_EXAMPLE         "&Παραδείγματα" // 
 #define LOCALIZED_HELP_RELEASENOTES    "&Σημειώσεις έκδοσης" // 
-#define LOCALIZED_HELP_ABOUTFMSLOGO    "&Πληροφορίες για την "LOCALIZED_GENERAL_PRODUCTNAME"..." 
+#define LOCALIZED_HELP_ABOUTFMSLOGO    "&Πληροφορίες για την " LOCALIZED_GENERAL_PRODUCTNAME "..." 
 #define LOCALIZED_HELP_MS              "&Πληροφορίες για την MS..." // 
 // The following two help options display tables for translating to/from English
 // These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
@@ -853,14 +853,14 @@
 //
 // Strings on the "About FMSLogo" Dialog box
 //
-#define LOCALIZED_ABOUTFMS                     "Πληροφορίες για την "LOCALIZED_GENERAL_PRODUCTNAME 
+#define LOCALIZED_ABOUTFMS                     "Πληροφορίες για την " LOCALIZED_GENERAL_PRODUCTNAME 
 #define LOCALIZED_ABOUTFMS_VERSION             "έκδοση"
 #define LOCALIZED_ABOUTFMS_GUI                 "GUI από τον George Mills\nSoftronics, Inc.\nhttp://www.softronix.com/"
 #define LOCALIZED_ABOUTFMS_CORE                "Πυρήνας από τον Brian Harvey\nUniversity of California Berkeley"
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Εγκαταστάτης βασισμένος στο Nullsoft Scriptable Install System\nhttp://nsis.sourceforge.net"
 #define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nΓράφτηκε και δωρίστηκε από τον Jim Muller\nΔιαθέσιμο στο http://www.softronix.com/"
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Ευχαριστούμε τους Yehuda Katz και Erich Neuwirth"
-#define LOCALIZED_ABOUTFMS_GPL                 "Η "LOCALIZED_GENERAL_PRODUCTNAME" είναι ελεύθερο λογισμικό\nΔείτε τη GNU Public License"
+#define LOCALIZED_ABOUTFMS_GPL                 "Η " LOCALIZED_GENERAL_PRODUCTNAME " είναι ελεύθερο λογισμικό\nΔείτε τη GNU Public License"
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "News Group στο Διαδίκτυο: comp.lang.logo\nΕπισκεφθείτε το Logo-Forum στο\nhttp://groups.yahoo.com/group/LogoForum/"
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Μετάφραση στα Ελληνικά:\nΘοδωρής Χατζηγιαννάκης (teo64x@yahoo.gr)"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON
@@ -892,7 +892,7 @@
 // Strings in various other dialog boxes
 // 
 
-#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Αλλαγές σε αυτή την περίοδο λειτουργίας ίσως χαθούν.\n\nΘέλετε πραγματικά να κλείσετε την "LOCALIZED_GENERAL_PRODUCTNAME";" // 
+#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Αλλαγές σε αυτή την περίοδο λειτουργίας ίσως χαθούν.\n\nΘέλετε πραγματικά να κλείσετε την " LOCALIZED_GENERAL_PRODUCTNAME ";" //
 #define LOCALIZED_EDITSESSIONISRUNNING      "Ο επεξεργαστής κώδικα είναι ήδη ανοιχτός" // 
 
 #define LOCALIZED_COULDNOTWRITEBMP            "Αδύνατη η εγγραφή στο .bmp" // 
@@ -938,8 +938,8 @@
 
 #define LOCALIZED_LOGO_FILE_EXTENSION "lgo"
 #define LOCALIZED_FILEFILTER_ALLFILES "Όλα τα αρχεία (*.*)|*.*"
-#define LOCALIZED_FILEFILTER_LOGO     "Αρχεία Logo (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES
-#define LOCALIZED_FILEFILTER_IMAGE    "Αρχεία εικόνας Bitmap (*.bmp)|*.bmp|Αρχεία εικόνας GIF (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_LOGO     "Αρχεία Logo (*.lgo)|*.lgo|" LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_IMAGE    "Αρχεία εικόνας Bitmap (*.bmp)|*.bmp|Αρχεία εικόνας GIF (*.gif)|*.gif|" LOCALIZED_FILEFILTER_ALLFILES
 
 
 
@@ -1131,7 +1131,7 @@
 
 #define LOCALIZED_ERROR_BADCOMMANDLINE        "Λάθος εντολή γραμμής εντολών"  // 
 
-#define LOCALIZED_ERROR_TMPNOTDEFINED         "Η μεταβλητή περιβάλλοντος TMP δεν έχει οριστεί ή είναι άκυρη.\nΗ "LOCALIZED_GENERAL_PRODUCTNAME" θα προσπαθήσει να χρησιμοποιήσει το C:\\ για την αποθήκευση προσωρινών αρχείων" // 
+#define LOCALIZED_ERROR_TMPNOTDEFINED         "Η μεταβλητή περιβάλλοντος TMP δεν έχει οριστεί ή είναι άκυρη.\nΗ " LOCALIZED_GENERAL_PRODUCTNAME " θα προσπαθήσει να χρησιμοποιήσει το C:\\ για την αποθήκευση προσωρινών αρχείων" //
 
 #define LOCALIZED_ERROR_GIFSAVEFAILED         "Αδύνατη η δημιουργία του GIF, ελέγξτε τη μνήμη και το χώρο στο δίσκο" // 
 #define LOCALIZED_ERROR_GIFREADFAILED         "Αδύνατη η ανάγνωση του GIF, ελέγξτε τη μνήμη και το χώρο στο δίσκο" // 

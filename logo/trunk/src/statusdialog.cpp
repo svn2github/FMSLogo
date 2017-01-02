@@ -373,7 +373,7 @@ void CStatusDialog::SetCalls(int TotalCalls)
 void CStatusDialog::SetPeakMemory(int TotalNodes)
 {
     wxString peakMemoryString;
-    peakMemoryString.Printf(WXSTRING("%d "LOCALIZED_STATUS_NODES), TotalNodes);
+    peakMemoryString.Printf(WXSTRING("%d " LOCALIZED_STATUS_NODES), TotalNodes);
 
     m_PeakMemory->SetLabel(peakMemoryString);
 }
