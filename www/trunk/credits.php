@@ -53,6 +53,7 @@
 					 <li>Mike Sandy</li>
 					 <li>Narayanan Chitoor</li>
 					 <li>Pavel Boytchev</li>
+					 <li>Peter De Wachter</li>
 					 <li>Ralf Kurth</li>
 					 <li>Relja Medic</li>
 					 <li>Stefano Federici</li>

@@ -160,6 +160,7 @@ VIII. Acknowledgements
     Mike Sandy
     Narayanan Chitoor
     Pavel Boytchev
+    Peter De Wachter
     Ralf Kurth
     Relja Medic
     Stefano Federici
