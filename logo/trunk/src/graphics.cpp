@@ -715,8 +715,8 @@ transline3d(
         }
     }
 
-    POINT from2d;
-    POINT to2d;
+    wxPoint from2d;
+    wxPoint to2d;
     if (!ThreeD.TransformSegment(from3d, to3d, from2d, to2d))
     {
         return;

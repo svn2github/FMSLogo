@@ -450,7 +450,7 @@ OpenDIB(
         else
         {
             /* else put at turtle */
-            POINT dest;
+            wxPoint dest;
 
             if (current_mode == perspectivemode)
             {

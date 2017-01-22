@@ -18,6 +18,14 @@
 #ifndef __GRAPHICS_H_
 #define __GRAPHICS_H_
 
+#ifdef WX_PURE
+   typedef unsigned int DWORD;
+#else
+   #include <windows.h>
+#endif
+
+#include <wx/gdicmn.h> // wxPoint
+
 #include "logocore.h"
 #include "vector.h"
 #include "3dsolid.h"
@@ -41,22 +49,11 @@ struct PENSTATE
 };
 
 
-#ifdef WX_PURE
-
-typedef unsigned int DWORD;
-
-struct POINT
-{
-    int x;
-    int y;
-};
-#endif
-
 struct LINEX
 {
-    POINT from;
-    POINT to;
-    bool  bValid;
+    wxPoint from;
+    wxPoint to;
+    bool    bValid;
 };
 
 struct Turtle

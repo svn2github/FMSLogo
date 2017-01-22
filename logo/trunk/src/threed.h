@@ -4,12 +4,6 @@
 #ifndef __THREED_H_
 #define __THREED_H_
 
-#ifdef WX_PURE
-struct POINT;
-#else
-#include <windows.h> // for POINT
-#endif
-
 #include "vector.h"
 
 // manifest constants
@@ -17,11 +11,12 @@ const int WorldWidth = 1000;       // Current World size in X
 const int WorldHeight = 1000;      // Current World size in Y
 const int WorldDepth = 1000;       // Current World size in Z
 
+class wxPoint;
+
 // Three dimensional viewing class
 class TThreeD
 {
 public:
-
     TThreeD();
     void SetAt();
     void SetUp();
@@ -30,13 +25,13 @@ public:
     void SetEye();
     void SetVolume();
     void SetLight();
-    bool TransformSegment(VECTOR & from3d, VECTOR & to3d, POINT & from2d, POINT & to2d);
-    bool TransformPoint(VECTOR & from3d, POINT & from2d);
+    bool TransformSegment(VECTOR & from3d, VECTOR & to3d, wxPoint & from2d, wxPoint & to2d);
+    bool TransformPoint(VECTOR & from3d, wxPoint & from2d);
 
 private:
-    void WORLDtoPC(double xw, double yw, POINT& pc);
-    bool Clip3DSegment(VECTOR & p1, VECTOR & p2, POINT & from2d, POINT & to2d);
-    bool Clip3DPoint(VECTOR & p1, POINT & from2d);
+    void WORLDtoPC(double xw, double yw, wxPoint& pc);
+    bool Clip3DSegment(VECTOR & p1, VECTOR & p2, wxPoint & from2d, wxPoint & to2d);
+    bool Clip3DPoint(VECTOR & p1, wxPoint & from2d);
     unsigned int Code(const VECTOR & p) const;
 
 public:

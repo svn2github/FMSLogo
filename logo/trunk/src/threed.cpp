@@ -25,6 +25,8 @@
     #include <math.h>
     #include <algorithm>
 
+    #include <wx/gdicmn.h> // wxPoint
+
     #include "graphics.h"
     #include "graphwin.h"
     #include "const.h"
@@ -55,7 +57,7 @@ TThreeD::TThreeD()
 }
 
 // Convert Clipped coordinates to window coordinates
-void TThreeD::WORLDtoPC(double xw, double yw, POINT &pc)
+void TThreeD::WORLDtoPC(double xw, double yw, wxPoint &pc)
 {
     pc.x = g_round((A * xw + B));
     pc.y = g_round((C * yw + D));
@@ -169,7 +171,7 @@ unsigned int TThreeD::Code(const VECTOR & p) const
 }
 
 // Clip the line in 3d coordinates
-bool TThreeD::Clip3DSegment(VECTOR &p1, VECTOR &p2, POINT &from2d, POINT &to2d)
+bool TThreeD::Clip3DSegment(VECTOR &p1, VECTOR &p2, wxPoint &from2d, wxPoint &to2d)
 {
     double t;
     VECTOR p;
@@ -320,7 +322,7 @@ bool TThreeD::Clip3DSegment(VECTOR &p1, VECTOR &p2, POINT &from2d, POINT &to2d)
 }
 
 // Clip the line in 3d coordinates
-bool TThreeD::Clip3DPoint(VECTOR &p1, POINT &from2d)
+bool TThreeD::Clip3DPoint(VECTOR &p1, wxPoint &from2d)
 {
     unsigned int c1 = Code(p1);
 
@@ -342,7 +344,7 @@ bool TThreeD::Clip3DPoint(VECTOR &p1, POINT &from2d)
 }
 
 // Transform 3d line to screen coordinates
-bool TThreeD::TransformSegment(VECTOR &from3d, VECTOR &to3d, POINT &from2d, POINT &to2d)
+bool TThreeD::TransformSegment(VECTOR &from3d, VECTOR &to3d, wxPoint &from2d, wxPoint &to2d)
 {
     VECTOR p1;
     VECTOR p2;
@@ -359,7 +361,7 @@ bool TThreeD::TransformSegment(VECTOR &from3d, VECTOR &to3d, POINT &from2d, POIN
 }
 
 // Transform 3d line to screen coordinates
-bool TThreeD::TransformPoint(VECTOR &from3d, POINT &from2d)
+bool TThreeD::TransformPoint(VECTOR &from3d, wxPoint &from2d)
 {
     VECTOR p1;
 

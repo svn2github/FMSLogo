@@ -732,7 +732,7 @@ static
 bool
 WorldCoordinateToScreenCoordinate(
     const VECTOR &  TurtleWorldPosition,
-    POINT &         TurtleScreenPosition
+    wxPoint &       TurtleScreenPosition
     )
 {
     if (current_mode == perspectivemode)
@@ -968,8 +968,8 @@ void ibmturt(bool draw)
                 to3d.y = (g_SelectedTurtle->Position.y + rp.y) / BitMapWidth;
                 to3d.z = (g_SelectedTurtle->Position.z + rp.z) / BitMapWidth;
 
-                POINT from2d;
-                POINT to2d;
+                wxPoint from2d;
+                wxPoint to2d;
                 if (ThreeD.TransformSegment(from3d, to3d, from2d, to2d))
                 {
                     long iFromx =  from2d.x + xoffset;
@@ -1036,7 +1036,7 @@ void ibmturt(bool draw)
     if (g_SelectedTurtle->BitmapRasterMode != 0)
     {
         // The turtle is bitmapped, we need to invalidate the bounding box of the bitmap.
-        POINT dest;
+        wxPoint dest;
         bool needsInvalidation = WorldCoordinateToScreenCoordinate(
             g_SelectedTurtle->Position,
             dest);
@@ -1152,8 +1152,7 @@ NODE *lsetpixel(NODE *args)
 {
     ASSERT_TURTLE_INVARIANT;
 
-#ifndef WX_PURE
-    POINT dest;
+    wxPoint dest;
     if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
         return Unbound;
@@ -1164,6 +1163,7 @@ NODE *lsetpixel(NODE *args)
 
     if (NOT_THROWING)
     {
+#ifndef WX_PURE
         // memory
         HDC MemDC = GetMemoryDeviceContext();
 
@@ -1207,8 +1207,9 @@ NODE *lsetpixel(NODE *args)
         }
 
         draw_turtle(true);
-    }
 #endif // WX_PURE
+    }
+
     return Unbound;
 }
 
@@ -1232,10 +1233,8 @@ getindexcolor(
 NODE *lpixel(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
-#ifdef WX_PURE
-    return NIL;
-#else
-    POINT dest;
+
+    wxPoint dest;
     if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
         return cons_list(
@@ -1243,7 +1242,9 @@ NODE *lpixel(NODE *)
             make_intnode((FIXNUM) - 1),
             make_intnode((FIXNUM) - 1));
     }
-
+#ifdef WX_PURE
+    return NIL;
+#else
     // memory
     HDC MemDC = GetMemoryDeviceContext();
 
@@ -1267,7 +1268,7 @@ NODE *lpixel(NODE *)
 
 void logofill(bool fillUntilPenColor)
 {
-    POINT dest;
+    wxPoint dest;
     if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
         return;
@@ -1524,9 +1525,9 @@ NODE *lbitblock(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    POINT turtleLocation;
+    wxPoint turtleLocation;
     if (!WorldCoordinateToScreenCoordinate(
-            g_SelectedTurtle->Position, 
+            g_SelectedTurtle->Position,
             turtleLocation))
     {
         // the turtle is not on the screen
@@ -1906,18 +1907,18 @@ static
 NODE *
 BitCopyOrCut(NODE *arg, bool IsCut)
 {
-#ifndef WX_PURE
-    POINT dest;
+    wxPoint dest;
     if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
         return Unbound;
     }
 
-    int tempWidth = getint(nonnegative_int_arg(arg));
+    int tempWidth  = getint(nonnegative_int_arg(arg));
     int tempHeight = getint(nonnegative_int_arg(cdr(arg)));
 
     if (NOT_THROWING)
     {
+#ifndef WX_PURE
         bool havebitmap = false;
 
         // if we had a old cut get rid of it, we won't go in for clipboard
@@ -2054,9 +2055,9 @@ BitCopyOrCut(NODE *arg, bool IsCut)
                 CopyFromBitmapArrayToClipboard();
             }
         }
+#endif
     }
 
-#endif
     return Unbound;
 }
 
@@ -2080,9 +2081,9 @@ NODE *lbitfit(NODE *arg)
     FIXNUM newWidth  = getint(nonnegative_int_arg(arg));
     FIXNUM newHeight = getint(nonnegative_int_arg(cdr(arg)));
 
-#ifndef WX_PURE
     if (NOT_THROWING)
     {
+#ifndef WX_PURE
         // If clipboard check with clipboard only
         if (ClipboardIsSelectedBitmap())
         {
@@ -2148,16 +2149,17 @@ NODE *lbitfit(NODE *arg)
                 CopyFromBitmapArrayToClipboard();
             }
         }
-    }
 #endif
+    }
+
     return Unbound;
 }
 
 NODE *lbitpaste(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
-#ifndef WX_PURE
-    POINT dest;
+
+    wxPoint dest;
     if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
         return Unbound;
@@ -2165,6 +2167,7 @@ NODE *lbitpaste(NODE *)
 
     if (NOT_THROWING)
     {
+#ifndef WX_PURE
         // If clipboard check with clipboard only
         if (ClipboardIsSelectedBitmap())
         {
@@ -2243,8 +2246,9 @@ NODE *lbitpaste(NODE *)
             // notify the user that the clipboard is empty
             ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE);
         }
-    }
 #endif
+    }
+
     return Unbound;
 }
 
@@ -2262,7 +2266,6 @@ NODE *lbitpastetoindex(NODE *arg)
         return Unbound;
     }
 
-#ifndef WX_PURE
     if (g_BitmapsLimit <= i)
     {
         // notify the user that the bitmap index is out of range
@@ -2277,6 +2280,7 @@ NODE *lbitpastetoindex(NODE *arg)
         return Unbound;
     }
 
+#ifndef WX_PURE
     // If ClipBoard check with ClipBoard only
     if (ClipboardIsSelectedBitmap())
     {
@@ -2581,14 +2585,13 @@ static void turtlepaste(HDC PaintDeviceContext, int TurtleToPaste, FLONUM zoom)
     Turtle * const turtle = &g_Turtles[TurtleToPaste];
     CUTMAP * const bitmap = &g_Bitmaps[TurtleToPaste];
 
-#ifndef WX_PURE
-
-    POINT dest;
+    wxPoint dest;
     if (!WorldCoordinateToScreenCoordinate(turtle->Position, dest))
     {
         return;
     }
 
+#ifndef WX_PURE
     // If clipboard check with clipboard only
     if (TurtleToPaste == 0)
     {
@@ -3585,7 +3588,7 @@ void label(const char *s)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    POINT dest;
+    wxPoint dest;
     if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
         return;
