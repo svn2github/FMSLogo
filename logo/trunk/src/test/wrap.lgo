@@ -21,6 +21,28 @@ TO WRAPTEST.SMOKETEST
    WRAP
 END
 
+TO WRAPTEST.NOWRAPLIMIT
+
+  ; This is a regression test for a specific bug that cuts off
+  ; turtle movement after 32 wraps.
+
+  ; Enter WRAP mode
+  WRAP
+
+  ; Start at the center, facing up
+  CLEARSCREEN
+
+  ; Move forward 2,000,000 steps (wrapping 1000 times)
+  TRACEINSTRUCTION [ FORWARD 2000 * ITEM 4 MACHINE ]
+
+  ; By wrapping, we should remain where we started.
+  ; The bug is that we end up at the border when the wrap
+  ; limit is exceeded.
+  SIMPLEREPORTTEST [ POS ] [0 0]
+
+END
+
+
 TO WRAPTEST.BADINPUT
 
    FENCE
@@ -40,6 +62,7 @@ END
 TO WRAPTEST
 
    WRAPTEST.SMOKETEST
+   WRAPTEST.NOWRAPLIMIT
    WRAPTEST.BADINPUT
 
 END
