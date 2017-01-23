@@ -1,6 +1,6 @@
 LOAD "testlib.lgo
 
-TO FENCETEST.BUG1573061
+TO FENCETEST.BUG213
 
    ; move outside the boundries
    WINDOW 
@@ -13,7 +13,7 @@ TO FENCETEST.BUG1573061
    ; move paralell to the boundry that the turtle is outside
    FD 1
 
-   REPORTTESTPASSED [|Bug #1573061 is fixed; Running FENCE while outside the boundries doesn't crash.|]
+   REPORTTESTPASSED [|Bug #213 is fixed; Running FENCE while outside the boundries doesn't crash.|]
 END
 
 TO FENCETEST.SMOKETEST
@@ -70,7 +70,7 @@ END
 TO FENCETEST
 
    FENCETEST.SMOKETEST
-   ; FENCETEST.BUG1573061
+   ; FENCETEST.BUG213
    FENCETEST.BADINPUT
 
 END
