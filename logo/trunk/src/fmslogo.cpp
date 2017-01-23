@@ -716,6 +716,11 @@ wxDC * GetWxMemoryDeviceContext()
     return &CFmsLogo::GetMainFrame()->GetScreen()->GetMemoryDeviceContext();
 }
 
+wxDC * GetWxScreenDeviceContext()
+{
+    return &CFmsLogo::GetMainFrame()->GetScreen()->GetScreenDeviceContext();
+}
+
 wxDC * GetBackBufferDeviceContext()
 {
     return &CFmsLogo::GetMainFrame()->GetScreen()->GetBackBufferDeviceContext();

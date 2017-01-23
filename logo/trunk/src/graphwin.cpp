@@ -1159,55 +1159,57 @@ NODE *lsetpixel(NODE *args)
     }
 
     // get args
-    RGBCOLOR color = GetColorArgument(args);
+    wxUint32 color = GetColorArgument(args);
 
     if (NOT_THROWING)
     {
-#ifndef WX_PURE
-        // memory
-        HDC MemDC = GetMemoryDeviceContext();
+        // Draw the pixel on the memory bitmap.
+        wxDC * memoryDeviceContext = GetWxMemoryDeviceContext();
 
         // Set the foreground mix mode in case a previous call had set it
         // to something that would modify the pixel.
-        SetROP2(MemDC, R2_COPYPEN);
+        memoryDeviceContext->SetLogicalFunction(wxCOPY);
 
-        SetPixel(
-            MemDC,
+        const wxPen oldPen(memoryDeviceContext->GetPen());
+        memoryDeviceContext->SetPen(wxColor(color));
+
+        memoryDeviceContext->DrawPoint(
             +dest.x + xoffset,
-            -dest.y + yoffset,
-            color);
+            -dest.y + yoffset);
+
+        memoryDeviceContext->SetPen(oldPen);
 
         //screen
-        HDC ScreenDC = GetScreenDeviceContext();
-
-        // Set the foreground mix mode in case a previous call had set it
-        // to something that would modify the pixel.
-        SetROP2(ScreenDC, R2_COPYPEN);
-
         draw_turtle(false);
 
         if (zoom_flag)
         {
-            RECT temprect;
-
-            temprect.left   = +dest.x + xoffset;
-            temprect.top    = -dest.y + yoffset;
-            temprect.right  = +dest.x + xoffset;
-            temprect.bottom = -dest.y + yoffset;
-
-            InvalidateRectangleOnScreen(temprect);
+            // Refresh the pixel on the screen so that pixel on the memory
+            // bitmap is immediatly drawn to the screen.
+            wxRect pixelRect(+dest.x + xoffset, -dest.y + yoffset, 1, 1);
+            InvalidateRectangleOnScreen(pixelRect);
         }
         else
         {
-            SetPixel(
-                ScreenDC,
+            // We are not zoomed, so the screen is 1:1 with the memory bitmap.
+            // This makes it easy to update the screen without an expensive repaint.
+            wxDC * screenDeviceContext = GetWxScreenDeviceContext();
+
+            const wxPen oldScreenPen(screenDeviceContext->GetPen());
+            screenDeviceContext->SetPen(wxColour(color));
+
+            // Set the foreground mix mode in case a previous call had set it
+            // to something that would modify the pixel.
+            screenDeviceContext->SetLogicalFunction(wxCOPY);
+        
+            screenDeviceContext->DrawPoint(
                 +dest.x - GetScreenHorizontalScrollPosition() + xoffset,
-                -dest.y - GetScreenVerticalScrollPosition()   + yoffset,
-                color);
+                -dest.y - GetScreenVerticalScrollPosition()   + yoffset);
+
+            screenDeviceContext->SetPen(oldScreenPen);
         }
 
         draw_turtle(true);
-#endif // WX_PURE
     }
 
     return Unbound;
@@ -1216,7 +1218,7 @@ NODE *lsetpixel(NODE *args)
 static
 int
 getindexcolor(
-    RGBCOLOR Color
+    wxUint32 Color
     )
 {
     for (size_t i = 0; i < COLORTABLESIZE; i++)
@@ -1229,6 +1231,44 @@ getindexcolor(
     return -1;
 }
 
+static NODE* color_helper(const wxColour & Color)
+{
+    if (bIndexMode)
+    {
+        // We're in "index mode", so colors are returned as
+        // an index, if possible.
+        int colorIndex = getindexcolor(Color.GetRGB());
+        if (colorIndex >= 0)
+        {
+            return make_intnode(colorIndex);
+        }
+    }
+
+    return cons_list(
+        make_intnode((FIXNUM) Color.Red()),
+        make_intnode((FIXNUM) Color.Green()),
+        make_intnode((FIXNUM) Color.Blue()));
+}
+
+static NODE* color_helper(const Color & col)
+{
+    if (bIndexMode)
+    {
+        int icolor = getindexcolor(MAKERGB(col.red, col.green, col.blue));
+        if (icolor >= 0)
+        {
+            return make_intnode(icolor);
+        }
+    }
+
+    return cons_list(
+        make_intnode((FIXNUM) col.red),
+        make_intnode((FIXNUM) col.green),
+        make_intnode((FIXNUM) col.blue));
+}
+
+
+
 // function that returns the RGB vector of the pixel the turtle is on top of
 NODE *lpixel(NODE *)
 {
@@ -1238,32 +1278,22 @@ NODE *lpixel(NODE *)
     if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
         return cons_list(
-            make_intnode((FIXNUM) - 1),
-            make_intnode((FIXNUM) - 1),
-            make_intnode((FIXNUM) - 1));
-    }
-#ifdef WX_PURE
-    return NIL;
-#else
-    // memory
-    HDC MemDC = GetMemoryDeviceContext();
-
-    RGBCOLOR the_color = GetPixel(MemDC, dest.x + xoffset, -dest.y + yoffset);
-
-    if (bIndexMode)
-    {
-        int icolor = getindexcolor(the_color);
-        if (icolor >= 0) 
-        {
-            return(make_intnode(icolor));
-        }
+            make_intnode((FIXNUM) -1),
+            make_intnode((FIXNUM) -1),
+            make_intnode((FIXNUM) -1));
     }
 
-    return cons_list(
-        make_intnode((FIXNUM) GetRValue(the_color)),
-        make_intnode((FIXNUM) GetGValue(the_color)),
-        make_intnode((FIXNUM) GetBValue(the_color)));
-#endif
+    // Read the pixel from the memory bitmap.
+    wxDC * memoryDeviceContext = GetWxMemoryDeviceContext();
+
+    wxColour pixelColor;
+    memoryDeviceContext->GetPixel(
+        dest.x + xoffset,
+        -dest.y + yoffset,
+        &pixelColor);
+
+    // Return the pixel as a NODE
+    return color_helper(pixelColor);
 }
 
 void logofill(bool fillUntilPenColor)
@@ -1319,24 +1349,6 @@ void logofill(bool fillUntilPenColor)
     // a timer event will take place (otherwise the repainting
     // events will wait until FMSLogo is idle).
     screen->Update();
-}
-
-
-static NODE* color_helper(const Color & col)
-{
-    if (bIndexMode)
-    {
-        int icolor = getindexcolor(MAKERGB(col.red, col.green, col.blue));
-        if (icolor >= 0)
-        {
-            return make_intnode(icolor);
-        }
-    }
-
-    return cons_list(
-        make_intnode((FIXNUM) col.red),
-        make_intnode((FIXNUM) col.green),
-        make_intnode((FIXNUM) col.blue));
 }
 
 NODE *lpencolor(NODE *)

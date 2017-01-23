@@ -24,6 +24,7 @@
    #include <windows.h>
 #endif
 
+#include <wx/defs.h>   // wxUint32
 #include <wx/gdicmn.h> // wxPoint
 
 #include "logocore.h"
@@ -79,7 +80,7 @@ struct Turtle
 extern long vector_count;
 
 // function declarations
-extern RGBCOLOR GetColorArgument(NODE* args);
+extern wxUint32 GetColorArgument(NODE* args);
 
 extern FIXNUM g_round(FLONUM n);
 extern FLONUM numeric_node_to_flonum(const NODE* numeric_node);
@@ -206,7 +207,7 @@ extern void mouse_uninit(void);
 extern mode_type   current_mode;
 
 const int COLORTABLESIZE = 16;
-extern const RGBCOLOR colortable[];
+extern const wxUint32 colortable[];
 
 extern Turtle * g_Turtles;
 extern int      g_MaxTurtle;        // the index of the largest real turtle

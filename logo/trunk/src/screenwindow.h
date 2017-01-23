@@ -82,6 +82,9 @@ class wxDC * GetBackBufferDeviceContext();
 // Returns a device context of the main bitmap.
 class wxDC * GetWxMemoryDeviceContext();
 
+// Returns a device context of the main bitmap.
+class wxDC * GetWxScreenDeviceContext();
+
 // Instructs the UI to update its state to reflect that FMSLogo has either
 // begin or stopped executing Logo instructions.
 void UpdateUiExecutionState();

@@ -69,6 +69,7 @@ static HBITMAP    g_BackBuffer = NULL;
 
 static wxWindow      * g_WxScreenWindow = NULL;
 static wxMemoryDC    * g_WxMemoryDeviceContext = NULL;
+static wxDC          * g_WxScreenDeviceContext = NULL;
 static wxBitmap      * g_WxMemoryBitmap = NULL;
 static wxApp         * g_DummyApp = NULL;
 static CStatusDialog * g_StatusDialog = NULL;
@@ -191,7 +192,8 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         BitMapWidth  = g_FullRect.GetWidth();
 
         // Create a device context to write to the screen.
-        g_ScreenDeviceContext = GetDC(g_ScreenWindow);
+        g_ScreenDeviceContext   = GetDC(g_ScreenWindow);
+        g_WxScreenDeviceContext = new wxDCTemp(g_ScreenDeviceContext);
 
         // Create the in-memory image of the bitmap
         g_WxMemoryBitmap        = new wxBitmap(BitMapWidth, BitMapHeight);
@@ -527,6 +529,9 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         delete g_WxBackBufferDeviceContext;
         g_WxBackBufferDeviceContext = NULL;
 
+        delete g_WxScreenDeviceContext;
+        g_WxScreenDeviceContext = NULL;
+
         if (g_ScreenDeviceContext != NULL)
         {
             ReleaseDC(g_ScreenWindow, g_ScreenDeviceContext);
@@ -810,7 +815,7 @@ void OpenEditorToLocationOfFirstError(const char *FileName)
 
 HDC GetScreenDeviceContext()
 {
-    return g_ScreenDeviceContext;
+    return static_cast<HDC>(g_WxScreenDeviceContext->GetHDC());
 }
 
 HDC GetMemoryDeviceContext()
@@ -821,6 +826,11 @@ HDC GetMemoryDeviceContext()
 wxDC * GetWxMemoryDeviceContext()
 {
     return g_WxMemoryDeviceContext;
+}
+
+wxDC * GetWxScreenDeviceContext()
+{
+    return g_WxScreenDeviceContext;
 }
 
 wxDC * GetBackBufferDeviceContext()

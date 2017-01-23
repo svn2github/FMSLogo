@@ -28,6 +28,8 @@
    #include <float.h>
    #include <limits.h>
 
+   #include <wx/defs.h> // wxUint32
+
    #ifdef WX_PURE
 
       #include <wx/dc.h>
@@ -88,7 +90,7 @@
 #define turtle_bottom_max (-BitMapHeight/2)
 #define turtle_top_max    ( BitMapHeight/2)
 
-const RGBCOLOR colortable[] =
+const wxUint32 colortable[] =
 {
     0x00000000, // black
     0x00FF0000, // blue
@@ -141,7 +143,7 @@ struct NAMEDCOLOR
 {
     const    char * EnglishName;
     const    char * LocalizedName;
-    RGBCOLOR        Color;
+    wxUint32        Color;
 };
 
 static const NAMEDCOLOR g_NamedColors[] =
@@ -2763,7 +2765,7 @@ GetColorComponent(
     return colorComponent;
 }
 
-RGBCOLOR
+wxUint32
 GetColorArgument(
     NODE* args
     )
