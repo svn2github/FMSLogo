@@ -1172,11 +1172,21 @@ NODE *lsetpixel(NODE *args)
 
         const wxPen oldPen(memoryDeviceContext->GetPen());
         memoryDeviceContext->SetPen(wxColor(color));
-
+#ifdef __WXMSW_
         memoryDeviceContext->DrawPoint(
             +dest.x + xoffset,
             -dest.y + yoffset);
-
+#else
+        // On non-MSW implementations of wxWidgets, wxDC::DrawPoint
+        // draws a line from (x,y) to (x+1,y+1).  To work around
+        // this, we set the pixel by drawing a single point.
+        // See http://trac.wxwidgets.org/ticket/9674
+        memoryDeviceContext->DrawLine(
+            +dest.x + xoffset,
+            -dest.y + yoffset,
+            +dest.x + xoffset,
+            -dest.y + yoffset);
+#endif
         memoryDeviceContext->SetPen(oldPen);
 
         //screen
@@ -1201,10 +1211,18 @@ NODE *lsetpixel(NODE *args)
             // Set the foreground mix mode in case a previous call had set it
             // to something that would modify the pixel.
             screenDeviceContext->SetLogicalFunction(wxCOPY);
-        
-            screenDeviceContext->DrawPoint(
-                +dest.x - GetScreenHorizontalScrollPosition() + xoffset,
-                -dest.y - GetScreenVerticalScrollPosition()   + yoffset);
+
+#ifdef __WXMSW__        
+        screenDeviceContext->DrawPoint(
+            +dest.x - GetScreenHorizontalScrollPosition() + xoffset,
+            -dest.y - GetScreenVerticalScrollPosition()   + yoffset);
+#else
+        screenDeviceContext->DrawLine(
+            +dest.x - GetScreenHorizontalScrollPosition() + xoffset,
+            -dest.y - GetScreenVerticalScrollPosition()   + yoffset,
+            +dest.x - GetScreenHorizontalScrollPosition() + xoffset,
+            -dest.y - GetScreenVerticalScrollPosition()   + yoffset);
+#endif
 
             screenDeviceContext->SetPen(oldScreenPen);
         }
