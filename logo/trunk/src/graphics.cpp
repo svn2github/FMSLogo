@@ -1442,11 +1442,17 @@ NODE *lellipsearc(NODE *arg)
 static
 bool wrap_right(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 {
-    if (x2 > screen_right)
+    if (screen_right < x2)
     {
+        // The turtle position moves past the right of the right-most pixel.
+        // We need to wrap around to the left.
+        
+        // Compute the Y position where the line intersects the right border.
         FLONUM yi = ((y2 - y1) / (x2 - x1)) * (screen_right - x1) + y1;
-        if (yi >= screen_bottom && yi <= screen_top)
+        if (screen_bottom <= yi && yi <= screen_top)
         {
+            // The Y intersection position is within the boundaries so we can draw
+            // the line and continue forward movement from the bottom of the screen.
             line_to(screen_right, yi);
             update_status_turtleposition();
             g_SelectedTurtle->Position.x = turtle_left_max;
@@ -1456,6 +1462,7 @@ bool wrap_right(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
                 forward_helper(d * ((x2 - screen_right) / (x2 - x1)));
                 return true;
             }
+            // We are in fence mode
             g_SelectedTurtle->Position.x = turtle_right_max;
             err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
         }
@@ -1466,11 +1473,17 @@ bool wrap_right(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 static
 bool wrap_up(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 {
-    if (y2 > screen_top)
+    if (screen_top < y2)
     {
+        // The turtle position moves past the top of the top-most pixel.
+        // We need to wrap around to the bottom.
+        
+        // Compute the X position where the line intersects the top border.
         FLONUM xi = ((x2 - x1) / (y2 - y1)) * (screen_top - y1) + x1;
-        if (xi >= screen_left && xi <= screen_right)
+        if (screen_left <= xi && xi <= screen_right)
         {
+            // The X intersection position is within the boundaries so we can draw
+            // the line and continue forward movement from the bottom of the screen.
             line_to(xi, screen_top);
             update_status_turtleposition();
             g_SelectedTurtle->Position.x = xi;
@@ -1480,6 +1493,7 @@ bool wrap_up(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
                 forward_helper(d * ((y2 - screen_top) / (y2 - y1)));
                 return true;
             }
+            // We are in fence mode
             g_SelectedTurtle->Position.y = turtle_top_max;
             err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
         }
@@ -1492,9 +1506,15 @@ bool wrap_left(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 {
     if (x2 < screen_left)
     {
+        // The turtle position moves past the left of the left-most pixel.
+        // We need to wrap around to the right.
+
+        // Compute the Y position where the line intersects the left border.
         FLONUM yi = ((y2 - y1) / (x1 - x2)) * (x1 - screen_left) + y1;
-        if (yi >= screen_bottom && yi <= screen_top)
+        if (screen_bottom <= yi && yi <= screen_top)
         {
+            // The Y intersection position is within the boundaries so we can draw
+            // the line and continue forward movement from the right of the screen.
             line_to(screen_left, yi);
             update_status_turtleposition();
             g_SelectedTurtle->Position.x = turtle_right_max;
@@ -1504,6 +1524,7 @@ bool wrap_left(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
                 forward_helper(d * ((screen_left - x2) / (x1 - x2)));
                 return true;
             }
+            // We are in fence mode
             g_SelectedTurtle->Position.x = turtle_left_max;
             err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
         }
@@ -1516,9 +1537,15 @@ bool wrap_down(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 {
     if (y2 < screen_bottom)
     {
+        // The turtle position moves past the bottom of the bottom-most pixel.
+        // We need to wrap around to the top.
+
+        // Compute the X position where the line intersects the bottom.
         FLONUM xi = ((x2 - x1) / (y1 - y2)) * (y1 - screen_bottom) + x1;
-        if (xi >= screen_left && xi <= screen_right)
+        if (screen_left <= xi && xi <= screen_right)
         {
+            // The X intersection position is within the boundaries so we can draw
+            // the line and continue forward movement from the top of the screen.
             line_to(xi, screen_bottom);
             update_status_turtleposition();
             g_SelectedTurtle->Position.x = xi;
@@ -1528,6 +1555,7 @@ bool wrap_down(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
                 forward_helper(d * ((screen_bottom - y2) / (y1 - y2)));
                 return true;
             }
+            // We are in fence mode.
             g_SelectedTurtle->Position.y = turtle_bottom_max;
             err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
         }
