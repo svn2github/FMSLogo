@@ -50,6 +50,8 @@ II. New features/bugs fixed:
     from a cygwin bash shell.
   o Fix bug #484; BYE now immediately exits when run at the top-level of a file
     that is loaded from the command-line.
+  o Fix bug #486; The turtle can now walk along the screen extents in FENCE
+    mode.
   o Implement feature #11; the Halt and Pause buttons are now disabled when
     FMSLogo is not running instructions.
   o Implement feature #33; Make it so that FMSLogo doesn't mind exiting while

@@ -316,6 +316,10 @@ double positive_fmod(double x, double y)
     return temp;
 }
 
+// In non-expert mode, rounds a floating point to the nearest 1/1000000 of a whole number.
+// This is used to snap a turtle's position into a more discrete number space in order to
+// hide rounding errors caused by the impercision of FLONUM.
+// For example, "FORWARD 500" shouldn't appear to make the turtle move 500.000000000001 steps.
 static
 FLONUM cut_error(FLONUM n)
 {
@@ -1442,17 +1446,17 @@ NODE *lellipsearc(NODE *arg)
 static
 bool wrap_right(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 {
-    if (screen_right < x2)
+    if (screen_right < cut_error(x2))
     {
         // The turtle position moves past the right of the right-most pixel.
         // We need to wrap around to the left.
-        
+
         // Compute the Y position where the line intersects the right border.
         FLONUM yi = ((y2 - y1) / (x2 - x1)) * (screen_right - x1) + y1;
         if (screen_bottom <= yi && yi <= screen_top)
         {
             // The Y intersection position is within the boundaries so we can draw
-            // the line and continue forward movement from the bottom of the screen.
+            // the line and continue forward movement from the left of the screen.
             line_to(screen_right, yi);
             update_status_turtleposition();
             g_SelectedTurtle->Position.x = turtle_left_max;
@@ -1473,7 +1477,7 @@ bool wrap_right(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 static
 bool wrap_up(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 {
-    if (screen_top < y2)
+    if (screen_top < cut_error(y2))
     {
         // The turtle position moves past the top of the top-most pixel.
         // We need to wrap around to the bottom.
@@ -1504,7 +1508,7 @@ bool wrap_up(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 static
 bool wrap_left(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 {
-    if (x2 < screen_left)
+    if (cut_error(x2) < screen_left)
     {
         // The turtle position moves past the left of the left-most pixel.
         // We need to wrap around to the right.
@@ -1535,7 +1539,7 @@ bool wrap_left(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 static
 bool wrap_down(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 {
-    if (y2 < screen_bottom)
+    if (cut_error(y2) < screen_bottom)
     {
         // The turtle position moves past the bottom of the bottom-most pixel.
         // We need to wrap around to the top.
@@ -1592,13 +1596,10 @@ void forward_helper(FLONUM d)
     // if (stopping_flag == THROWING) return;
 
     if (current_mode == windowmode ||
-        (
-            x2 >= screen_left &&
-            x2 <= screen_right &&
-            y2 >= screen_bottom &&
-            y2 <= screen_top
-            ))
+        (screen_left   <= cut_error(x2) && cut_error(x2) <= screen_right &&
+         screen_bottom <= cut_error(y2) && cut_error(y2) <= screen_top))
     {
+        // no wrapping/fencing needed
         g_SelectedTurtle->Position.x = x2;
         g_SelectedTurtle->Position.y = y2;
         line_to(x2, y2);
@@ -1606,6 +1607,7 @@ void forward_helper(FLONUM d)
     }
     else
     {
+        // wrapping/fencing is needed
         if (!wrap_right(d, x1, y1, x2, y2))
             if (!wrap_left(d, x1, y1, x2, y2))
                 if (!wrap_up(d, x1, y1, x2, y2))
