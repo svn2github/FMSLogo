@@ -1172,7 +1172,7 @@ NODE *lsetpixel(NODE *args)
 
         const wxPen oldPen(memoryDeviceContext->GetPen());
         memoryDeviceContext->SetPen(wxColor(color));
-#ifdef __WXMSW_
+#ifdef __WXMSW__
         memoryDeviceContext->DrawPoint(
             +dest.x + xoffset,
             -dest.y + yoffset);
