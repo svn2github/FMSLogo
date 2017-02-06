@@ -617,7 +617,7 @@ void CWorkspaceEditor::OnUndo(wxCommandEvent& Event)
 
 void CWorkspaceEditor::OnUpdateUndo(wxUpdateUIEvent& Event)
 {
-    m_LogoCodeControl->OnUpdateUndo(Event);
+    Event.Enable(m_LogoCodeControl->CanUndo());
 }
 
 void CWorkspaceEditor::OnRedo(wxCommandEvent& Event)
@@ -627,7 +627,7 @@ void CWorkspaceEditor::OnRedo(wxCommandEvent& Event)
 
 void CWorkspaceEditor::OnUpdateRedo(wxUpdateUIEvent& Event)
 {
-    m_LogoCodeControl->OnUpdateRedo(Event);
+    Event.Enable(m_LogoCodeControl->CanRedo());
 }
 
 void CWorkspaceEditor::OnCut(wxCommandEvent& Event)
@@ -637,7 +637,7 @@ void CWorkspaceEditor::OnCut(wxCommandEvent& Event)
 
 void CWorkspaceEditor::OnUpdateCut(wxUpdateUIEvent& Event)
 {
-    m_LogoCodeControl->OnUpdateCut(Event);
+    Event.Enable(m_LogoCodeControl->CanCut());
 }
 
 void CWorkspaceEditor::OnCopy(wxCommandEvent& Event)
@@ -647,7 +647,7 @@ void CWorkspaceEditor::OnCopy(wxCommandEvent& Event)
 
 void CWorkspaceEditor::OnUpdateCopy(wxUpdateUIEvent& Event)
 {
-    m_LogoCodeControl->OnUpdateCopy(Event);
+    Event.Enable(m_LogoCodeControl->CanCopy());
 }
 
 void CWorkspaceEditor::OnPaste(wxCommandEvent& Event)
@@ -657,7 +657,7 @@ void CWorkspaceEditor::OnPaste(wxCommandEvent& Event)
 
 void CWorkspaceEditor::OnUpdatePaste(wxUpdateUIEvent& Event)
 {
-    m_LogoCodeControl->OnUpdatePaste(Event);
+    Event.Enable(m_LogoCodeControl->CanPaste());
 }
 
 void CWorkspaceEditor::OnDelete(wxCommandEvent& Event)
@@ -667,7 +667,7 @@ void CWorkspaceEditor::OnDelete(wxCommandEvent& Event)
 
 void CWorkspaceEditor::OnUpdateDelete(wxUpdateUIEvent& Event)
 {
-    m_LogoCodeControl->OnUpdateDelete(Event);
+    Event.Enable(m_LogoCodeControl->CanDelete());
 }
 
 void CWorkspaceEditor::OnClear(wxCommandEvent& WXUNUSED(Event))
@@ -679,8 +679,7 @@ void CWorkspaceEditor::OnClear(wxCommandEvent& WXUNUSED(Event))
 
 void CWorkspaceEditor::OnUpdateClear(wxUpdateUIEvent& Event)
 {
-    // Enable if text exists
-    Event.Enable(m_LogoCodeControl->GetLength() != 0);
+    Event.Enable(m_LogoCodeControl->CanSelectAll());
 }
 
 void CWorkspaceEditor::OnSelectAll(wxCommandEvent& Event)
@@ -690,7 +689,7 @@ void CWorkspaceEditor::OnSelectAll(wxCommandEvent& Event)
 
 void CWorkspaceEditor::OnUpdateSelectAll(wxUpdateUIEvent& Event)
 {
-    m_LogoCodeControl->OnUpdateSelectAll(Event);
+    Event.Enable(m_LogoCodeControl->CanSelectAll());
 }
 
 void CWorkspaceEditor::OnFind(wxCommandEvent& WXUNUSED(Event))

@@ -910,6 +910,17 @@ void CLogoCodeCtrl::OnContextMenu(wxContextMenuEvent& Event)
     wxMenu menu;
     FillMenu(&menu, contextMenuItems, ARRAYSIZE(contextMenuItems));
 
+    // When the parent window is a wxDialog (not a wxFrame) then the
+    // wxUpdateUIEvent don't get sent when PopupMenu() is called.
+    // Therefore, we must enable/disable the popups manually.
+    menu.Enable(wxID_UNDO,      CanUndo());
+    menu.Enable(wxID_REDO,      CanRedo());
+    menu.Enable(wxID_CUT,       CanCut());
+    menu.Enable(wxID_COPY,      CanCopy());
+    menu.Enable(wxID_PASTE,     CanPaste());
+    menu.Enable(wxID_DELETE,    CanDelete());
+    menu.Enable(wxID_SELECTALL, CanSelectAll());
+
     PopupMenu(&menu);
 }
 
@@ -918,19 +929,9 @@ void CLogoCodeCtrl::OnUndo(wxCommandEvent& WXUNUSED(Event))
     Undo();
 }
 
-void CLogoCodeCtrl::OnUpdateUndo(wxUpdateUIEvent& Event)
-{
-    Event.Enable(CanUndo());
-}
-
 void CLogoCodeCtrl::OnRedo(wxCommandEvent& WXUNUSED(Event))
 {
     Redo();
-}
-
-void CLogoCodeCtrl::OnUpdateRedo(wxUpdateUIEvent& Event)
-{
-    Event.Enable(CanRedo());
 }
 
 void CLogoCodeCtrl::OnCut(wxCommandEvent& WXUNUSED(Event))
@@ -938,9 +939,9 @@ void CLogoCodeCtrl::OnCut(wxCommandEvent& WXUNUSED(Event))
     Cut();
 }
 
-void CLogoCodeCtrl::OnUpdateCut(wxUpdateUIEvent& Event)
+bool CLogoCodeCtrl::CanCut()
 {
-    Event.Enable(IsTextSelected());
+    return IsTextSelected();
 }
 
 void CLogoCodeCtrl::OnCopy(wxCommandEvent& WXUNUSED(Event))
@@ -948,9 +949,9 @@ void CLogoCodeCtrl::OnCopy(wxCommandEvent& WXUNUSED(Event))
     Copy();
 }
 
-void CLogoCodeCtrl::OnUpdateCopy(wxUpdateUIEvent& Event)
+bool CLogoCodeCtrl::CanCopy()
 {
-    Event.Enable(IsTextSelected());
+    return IsTextSelected();
 }
 
 void CLogoCodeCtrl::OnPaste(wxCommandEvent& WXUNUSED(Event))
@@ -958,21 +959,16 @@ void CLogoCodeCtrl::OnPaste(wxCommandEvent& WXUNUSED(Event))
     Paste();
 }
 
-void CLogoCodeCtrl::OnUpdatePaste(wxUpdateUIEvent& Event)
-{
-    Event.Enable(CanPaste());
-}
-
 void CLogoCodeCtrl::OnDelete(wxCommandEvent& WXUNUSED(Event))
 {
     Clear();
 }
 
-void CLogoCodeCtrl::OnUpdateDelete(wxUpdateUIEvent& Event)
+bool CLogoCodeCtrl::CanDelete()
 {
     // "Delete" is enabled if there is anything selected,
     // or if a character appears after the cursor.
-    Event.Enable(IsTextSelected() || GetCurrentPos() != GetLength());
+    IsTextSelected() || GetCurrentPos() != GetLength();
 }
 
 void CLogoCodeCtrl::OnSelectAll(wxCommandEvent& WXUNUSED(Event))
@@ -980,10 +976,9 @@ void CLogoCodeCtrl::OnSelectAll(wxCommandEvent& WXUNUSED(Event))
     SelectAll();
 }
 
-void CLogoCodeCtrl::OnUpdateSelectAll(wxUpdateUIEvent& Event)
+bool CLogoCodeCtrl::CanSelectAll()
 {
-    // Enable if text exists
-    Event.Enable(GetLength() != 0);
+    return GetLength() != 0; // true, iff text exists
 }
 
 void CLogoCodeCtrl::OnHelpTopicSearch(wxCommandEvent& WXUNUSED(Event))
@@ -997,18 +992,11 @@ BEGIN_EVENT_TABLE(CLogoCodeCtrl, wxStyledTextCtrl)
     EVT_STC_SAVEPOINTLEFT(wxID_ANY,    CLogoCodeCtrl::OnSavePointLeft)
     EVT_CONTEXT_MENU(CLogoCodeCtrl::OnContextMenu)
     EVT_MENU(wxID_UNDO,                CLogoCodeCtrl::OnUndo)
-    EVT_UPDATE_UI(wxID_UNDO,           CLogoCodeCtrl::OnUpdateUndo)
     EVT_MENU(wxID_REDO,                CLogoCodeCtrl::OnRedo)
-    EVT_UPDATE_UI(wxID_REDO,           CLogoCodeCtrl::OnUpdateRedo)
     EVT_MENU(wxID_CUT,                 CLogoCodeCtrl::OnCut)
-    EVT_UPDATE_UI(wxID_CUT,            CLogoCodeCtrl::OnUpdateCut)
     EVT_MENU(wxID_COPY,                CLogoCodeCtrl::OnCopy)
-    EVT_UPDATE_UI(wxID_COPY,           CLogoCodeCtrl::OnUpdateCopy)
     EVT_MENU(wxID_PASTE,               CLogoCodeCtrl::OnPaste)
-    EVT_UPDATE_UI(wxID_PASTE,          CLogoCodeCtrl::OnUpdatePaste)
     EVT_MENU(wxID_DELETE,              CLogoCodeCtrl::OnDelete)
-    EVT_UPDATE_UI(wxID_DELETE,         CLogoCodeCtrl::OnUpdateDelete)
     EVT_MENU(wxID_SELECTALL,           CLogoCodeCtrl::OnSelectAll)
-    EVT_UPDATE_UI(wxID_SELECTALL,      CLogoCodeCtrl::OnUpdateSelectAll)
     EVT_MENU(wxID_HELP_INDEX,          CLogoCodeCtrl::OnHelpTopicSearch)
 END_EVENT_TABLE()

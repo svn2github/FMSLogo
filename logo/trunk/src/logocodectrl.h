@@ -48,23 +48,21 @@ public:
 
     // Event handlers that a caller might delegate to.
     void OnUndo(wxCommandEvent& Event);
-    void OnUpdateUndo(wxUpdateUIEvent& Event);
     void OnRedo(wxCommandEvent& Event);
-    void OnUpdateRedo(wxUpdateUIEvent& Event);
     void OnCut(wxCommandEvent& Event);
-    void OnUpdateCut(wxUpdateUIEvent& Event);
     void OnCopy(wxCommandEvent& Event);
-    void OnUpdateCopy(wxUpdateUIEvent& Event);
     void OnPaste(wxCommandEvent& Event);
-    void OnUpdatePaste(wxUpdateUIEvent& Event);
     void OnDelete(wxCommandEvent& Event);
-    void OnUpdateDelete(wxUpdateUIEvent& Event);
     void OnSelectAll(wxCommandEvent& Event);
-    void OnUpdateSelectAll(wxUpdateUIEvent& Event);
     void OnHelpTopicSearch(wxCommandEvent& Event);
 
-private:
+    // Functions to determine if menu items should be enabled.
+    bool CanCut();
+    bool CanCopy();
+    bool CanDelete();
+    bool CanSelectAll();
 
+private:
     // A private helper class for printing
     class CLogoCodePrintout : public wxPrintout
     {
