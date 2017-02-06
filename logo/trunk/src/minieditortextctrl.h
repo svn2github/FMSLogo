@@ -13,9 +13,13 @@ public:
     CMiniEditorTextCtrl(wxWindow *Parent, wxWindowID Id);
     ~CMiniEditorTextCtrl();
 
+private:
     void OnKeyDown(wxKeyEvent& Event);
 
-private:
+    void OnFindMatchingParen(wxCommandEvent& Event);
+    void OnSelectMatchingParen(wxCommandEvent& Event);
+    void OnAutoComplete(wxCommandEvent& Event);
+
     DECLARE_NO_COPY_CLASS(CMiniEditorTextCtrl);
     DECLARE_EVENT_TABLE();
 };

@@ -113,32 +113,6 @@ CMiniEditor::CMiniEditor(
     // Ensure that the user doesn't resize the window so small
     // that the buttons overlap or are off-screen.
     SetMinSize(GetSize());
-
-    // Configure the keyboard shortcuts
-    wxAcceleratorEntry acceleratorEntries[3];
-
-    // Ctrl+] moves to matching paren
-    acceleratorEntries[0].Set(
-        wxACCEL_CTRL,
-        ']',
-        ID_FINDMATCHINGPAREN);
-
-    // Ctrl+Shift+] selects to matching paren
-    acceleratorEntries[1].Set(
-        wxACCEL_CTRL | wxACCEL_SHIFT,
-        ']',
-        ID_SELECTMATCHINGPAREN);
-
-    // Ctrl+Enter starts auto-complete
-    acceleratorEntries[2].Set(
-        wxACCEL_CTRL,
-        WXK_SPACE,
-        ID_AUTOCOMPLETE);
-
-    wxAcceleratorTable acceleratorTable(
-        ARRAYSIZE(acceleratorEntries),
-        acceleratorEntries);
-    SetAcceleratorTable(acceleratorTable);
 }
 
 CMiniEditor::~CMiniEditor()
@@ -150,24 +124,3 @@ CMiniEditor::GetProcedureBody() const
 {
     return m_TextField->GetText();
 }
-
-void CMiniEditor::OnFindMatchingParen(wxCommandEvent& WXUNUSED(Event))
-{
-    m_TextField->FindMatchingParen();
-}
-
-void CMiniEditor::OnSelectMatchingParen(wxCommandEvent& WXUNUSED(Event))
-{
-    m_TextField->SelectMatchingParen();
-}
-
-void CMiniEditor::OnAutoComplete(wxCommandEvent& WXUNUSED(Event))
-{
-    m_TextField->AutoComplete();
-}
-
-BEGIN_EVENT_TABLE(CMiniEditor, wxDialog)
-    EVT_MENU(ID_FINDMATCHINGPAREN,   CMiniEditor::OnFindMatchingParen)
-    EVT_MENU(ID_SELECTMATCHINGPAREN, CMiniEditor::OnSelectMatchingParen)
-    EVT_MENU(ID_AUTOCOMPLETE,        CMiniEditor::OnAutoComplete)
-END_EVENT_TABLE()
