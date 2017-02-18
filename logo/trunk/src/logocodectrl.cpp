@@ -968,7 +968,7 @@ bool CLogoCodeCtrl::CanDelete()
 {
     // "Delete" is enabled if there is anything selected,
     // or if a character appears after the cursor.
-    IsTextSelected() || GetCurrentPos() != GetLength();
+    return IsTextSelected() || GetCurrentPos() != GetLength();
 }
 
 void CLogoCodeCtrl::OnSelectAll(wxCommandEvent& WXUNUSED(Event))
