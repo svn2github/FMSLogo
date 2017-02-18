@@ -1,5 +1,60 @@
 This file contains the changes that were made in each version of FMSLogo.
 
+Changed in 7.0.0
+o Drop support for the Win 9X versions of Windows.
+o Drop support for the original Pentium processor.
+o Drop support for display depths less than 16-bit true color.
+o Add a Polish translation.
+o Improve the Croatian translation.
+o Fix bug #212 up/down arrow is no longer sluggish when the commander history
+  has a very long line.
+o Fix bug #319; SETACTIVEAREA now throws a recoverable error when given points
+  that define a zero or negative area rectangle.  Before, the error was not
+  recoverable.
+o Fix bug #338; SETACTIVEAREA now throws errors when given non-integer values.
+o Fix bug #373; the screen saver now supports all commands that the main
+  environment supports, although some commands which have no meaning in
+  this environment do nothing (for example CLEARTEXT does nothing because
+  there's no commander).
+o Fix bug #401; the commander history no longer hides very long lines
+  (>65535 characters).
+o Fix bug #437; FMSLogo no longer crashes if BITMAPTURTLE has no bitmap
+  (it now behaves as if it had a zero-sized bitmap).
+o Fix bug #471; the uninstaller now removes the preferences that are stored
+  in the registry.
+o Fix bug #472; SETPIXEL now behaves correctly in PENREVERSE mode.
+o Fix bug #473; KEYBOARDVALUE once again returns values for a handful of
+  characters on a US keyboard (;/`[]\=) that are consistent with previous
+  versions of FMSLogo.
+o Fix bug #477; POLYEND now throws an error if the polygon has two vertices
+  (same as if the polygon has one vertex).
+o Fix bug #482; TIME now returns the time in the local time zone when run
+  from a cygwin bash shell.
+o Fix bug #484; BYE now immediately exits when run at the top-level of a file
+  that is loaded from the command-line.
+o Fix bug #486; The turtle can now walk along the screen extents in FENCE
+  mode.
+o Implement feature #11; the Halt and Pause buttons are now disabled when
+  FMSLogo is not running instructions.
+o Implement feature #33; Make it so that FMSLogo doesn't mind exiting while
+  running and remove the "Logo doesn't like to exit while running" dialogs.
+o Implement feature #32; the "X" close button on the undocked commander's
+  title bar is now disabled.
+o Implement feature #37; the installer now shows a clear "completed" page
+  when it is done.
+o Implement feature #59; use a new icon that doesn't look like a mismash of
+  red, white, and black.  The icon was provided by Jan Grabe.
+o Implement feature #105; NETACCEPTON now listens on all network adapters,
+  including the loopback adapter.  This makes it possible to connect to
+  a local FMSLogo server using "localhost", instead of having to use the
+  computer's name.
+o Change the working directory in the screensaver to be the directory which
+  holds the screen saver program.  This makes LOAD with a relative path work.
+o Add syntax coloring and matching paren highlights to the minieditor.
+o Various improvements to the installer, including a configurable start menu
+  folder and faster start time.
+o Minor improvements to the manual.
+
 Changed in 6.35.0
 o Implement feature #89; Make -F (with no -W or -H) start FMSLogo maximized
   with size of the drawable surface equal to the screen window's size.
