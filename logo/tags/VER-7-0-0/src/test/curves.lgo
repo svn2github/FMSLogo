@@ -1,0 +1,75 @@
+LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
+
+TO BUG1388325TEST
+   REPORTTESTINFO [executing regression test for bug #1388325]
+   ELLIPSEARC 1e20 50 50 0
+   REPORTTESTPASSED ["|bug #1388325 is fixed; 'ELLIPSEARC 1e20 50 50 0' did not crash.| ]
+END
+
+
+TO BUG1377856TEST
+   ; Tests that CIRCLE with a large number can be halted.
+
+   TEXTSCREEN
+   UIAUTOMATION.INITIALIZE
+
+   ; Schedule a timer that simulates pressing the Halt button after two seconds.
+   ; This should halt CIRCLE command, not the test pass.
+   SETTIMER 1 2000 [
+     CLEARTIMER 1
+     (UIAUTOMATION.PUSHCOMMANDERBUTTON "Halt "False)
+   ]
+
+   RUNSTOPPINGTEST [ CIRCLE 1e50 ]
+
+   ; cleanup
+   UIAUTOMATION.UNINITIALIZE
+   SPLITSCREEN
+
+   REPORTTESTPASSED ["|bug #1377856 is fixed; 'CIRCLE 1e50' halted.| ]
+END
+
+TO ARCSMOKETEST
+
+  ; draw partial arcs
+  CLEARSCREEN
+  REPEAT 10 [ ARC  45  repcount*10.5 ]
+  REPEAT 10 [ ARC  45 -repcount*10.5 ]
+  REPEAT 10 [ ARC -45  repcount*10.5 ]
+  REPEAT 10 [ ARC -45 -repcount*10.5 ]
+
+  ; draw a full circle with arc
+  ARC   360   120
+  ARC   360  -130
+  ARC  -360   140
+  ARC  -360  -150
+  ARC  1e50   160
+  ARC  1e50  -170
+  ARC -1e50   180
+  ARC -1e50  -190
+
+END
+
+TO ARCBADINPUTTEST
+
+  RUNNOTENOUGHINPUTSTEST [(ARC)]
+  RUNNOTENOUGHINPUTSTEST [(ARC 10)]
+  RUNTOOMANYINPUTSTEST   [(ARC 10 10 10)]
+
+  RUNDOESNTLIKEINPUTTEST [ARC [10] 10  ]
+  RUNDOESNTLIKEINPUTTEST [ARC {10} 10  ]
+  RUNDOESNTLIKEINPUTTEST [ARC 10   [10]]
+  RUNDOESNTLIKEINPUTTEST [ARC 10   {10}]
+
+END
+
+TO ARCTEST
+
+   ARCSMOKETEST
+   ARCBADINPUTTEST
+
+   BUG1388325TEST
+   BUG1377856TEST
+
+END
