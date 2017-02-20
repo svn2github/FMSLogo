@@ -33,27 +33,27 @@ TO TIMETEST.TZ.ENVIRONMENT
    ; This is a regression test for Bug #482.
    ;
    ; The setup for this is somewhat cryptic.
-   ; The current instance of FMSLogo runs a Perl script.
-   ; The Perl script sets the TZ environment, then runs FMSLogo.
-   ; FMSLogo writes the output of TIME to a file, then runs another Perl script.
-   ; The last perl script writes the TZ environment variable to a file.
+   ; The current instance of FMSLogo runs another FMSLogo program to perform setup.
+   ; The setup program sets the TZ environment, then runs a test FMSLogo program.
+   ; The test FMSLogo writes the output of TIME to a file, then runs a Perl script.
+   ; The Perl script writes the TZ environment variable to a file.
    ;
-   ; The correct behavior is for the TIME in the intermediate FMSLogo to
-   ; print the local hour and for the final Perl script to print the same
-   ; TZ environment as was set in the first Perl script.  That is, it should
+   ; The correct behavior is for the TIME in the test FMSLogo to
+   ; print the local hour and for the Perl script to print the same
+   ; TZ environment as was set in the setup FMSLogo program.  That is, it should
    ; appear as if TIME ignores the TZ environment variable (even though it's
    ; really clearing and resetting it.
 
    ; Write a Perl script which appends the TZ environment variable to a file.
-   WRITEBINARYDATA "timetest-write-tzscript.pl (WORD
+   WRITEBINARYDATA "timetest-write-tz.pl (WORD
        "|open  FILE, ">>timetest-time.txt";\n|
        "|print FILE "$ENV{'TZ'}\\n";\n|
        "|close FILE;\n|
    )
 
-   ; Write an FMSLogo program which writes the output of TIME to a file,
+   ; Write the "test" FMSLogo program which writes the output of TIME to a file,
    ; then runs the above Perl script
-   WRITEBINARYDATA "timetest-tzscript.lgo (WORD
+   WRITEBINARYDATA "timetest-write-time.lgo (WORD
        "|LOAD "testlib.lgo\n|
        "|\n|
        "|TO RUNTEST\n|
@@ -62,20 +62,39 @@ TO TIMETEST.TZ.ENVIRONMENT
        "|\n|
        "|  ; Run a program that will write out the "TZ" environment variable.\n|
        "|  ; This is done to confirm that running TIME didn't clear it.\n|
-       "|  IGNORE (SHELL [perl.exe timetest-write-tzscript.pl] "TRUE)\n|
+       "|  IGNORE (SHELL [perl.exe timetest-write-tz.pl] "TRUE)\n|
        "|END\n|
        "|MAKE "startup [RUNTEST BYE]\n|
    )
 
-   ; Write a Perl script which sets the TZ environment variable, then
-   ; runs the above program.
-   WRITEBINARYDATA "timetest-run-tzscript.pl (WORD
-       "|$ENV{'TZ'} = 'corrupt-value';\n|
-       "|system '../fmslogo -L timetest-tzscript.lgo';\n|
+   ; Write the "setup" FMSLogo program which sets the TZ environment variable,
+   ; then runs the above program.  This is done in a separate instance so that
+   ; we can test what happens if the environment variable exists before
+   ; FMSLogo starts (the scenario reported in the bug) and so that we don't
+   ; corrupt any state in the current instance.
+   ;
+   ; This would be simpler as a Perl script, but I couldn't find a good way to
+   ; make the Perl script the path run the same fmslogo.exe that is current
+   ; running.
+   WRITEBINARYDATA "timetest-set-tz.lgo (WORD
+       "|LOAD "testlib.lgo\n|
+       "|\n|
+       "|TO SETUPTEST\n|
+       "|  ; Corrupt the TZ environment variable by calling\n|
+       "|  ;   SetEnvironmentVariable("TZ", "corrupt-value");\n|
+       "|  DLLLOAD "kernel32.dll\n|
+       "|  IGNORE DLLCALL [L SetEnvironmentVariableA S corrupt-value S TZ]\n|
+       "|  DLLFREE\n|
+       "|\n|
+       "|  ; Run a program that will write out the value that TIME output.\n|
+       "|  IGNORE (SHELL [fmslogo.exe timetest-write-time.lgo] "TRUE)\n|
+       "|END\n|
+       "|MAKE "startup [SETUPTEST BYE]\n|
    )
 
-   ; Run the perl script that runs FMSLogo program that runs the Perl script.
-   IGNORE (SHELL [perl.exe timetest-run-tzscript.pl] "TRUE)
+   ; Run the "setup" FMSLogo program that runs "test" FMSLogo program that
+   ; runs the Perl script.
+   IGNORE (SHELL [fmslogo.exe timetest-set-tz.lgo] "TRUE)
 
    SIMPLEREPORTTEST [ FILEEXISTS "timetest-time.txt ] LOCALETRUE
    IF FILEEXISTS "timetest-time.txt [
@@ -100,9 +119,9 @@ TO TIMETEST.TZ.ENVIRONMENT
    ]
 
    ; cleanup
-   ERASEFILE "timetest-tzscript.lgo
-   ERASEFILE "timetest-run-tzscript.pl
-   ERASEFILE "timetest-write-tzscript.pl
+   ERASEFILE "timetest-set-tz.lgo
+   ERASEFILE "timetest-write-time.lgo
+   ERASEFILE "timetest-write-tz.pl
    ERASEFILE "timetest-time.txt
 
 END
