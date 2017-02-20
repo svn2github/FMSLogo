@@ -1,6 +1,0 @@
-to erall [:warning "true]
-if :warning [if not yesnobox [Warning] [Are you sure you wish to ERASE ALL?] [stop]]
-erase contents
-end
-
-bury "erall

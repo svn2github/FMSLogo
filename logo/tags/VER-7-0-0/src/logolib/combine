@@ -1,6 +1,0 @@
-to combine :this :those
-if wordp :those [output word :this :those]
-output fput :this :those
-end
-
-bury "combine

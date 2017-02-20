@@ -1,2 +1,0 @@
-; "localize" some logolib routines for testing
-catch "error [ copydef "pseudo.for    "for ]

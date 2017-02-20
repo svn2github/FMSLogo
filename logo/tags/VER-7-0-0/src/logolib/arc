@@ -1,5 +1,0 @@
-to arc :ang :rad
-ellipsearc :ang :rad :rad 0
-end
-
-bury "arc

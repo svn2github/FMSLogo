@@ -1,6 +1,0 @@
-to abs :arg
-if :arg > 0 [output :arg]
-output -:arg
-end
-
-bury "abs

@@ -1,5 +1,0 @@
-to push :push.stack.name :item
-make :push.stack.name fput :item thing :push.stack.name
-end
-
-bury "push

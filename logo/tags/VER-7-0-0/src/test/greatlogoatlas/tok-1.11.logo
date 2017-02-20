@@ -1,3 +1,0 @@
-make "a {one two three four}@3
-print item 3 :a
-ern "a
