@@ -51,7 +51,6 @@ char edit_editexit[MAX_BUFFER_SIZE];     // editor callback instruction list
 int  BitMapWidth  = 1000;
 int  BitMapHeight = 1000;
 bool bFixed       = false;
-int *TopOfStack   = NULL;
 
 #ifndef WX_PURE
 static HANDLE g_SingleInstanceMutex = NULL;
@@ -305,10 +304,6 @@ bool CFmsLogo::OnInit()
         WXSTRING_TO_STRING(fmslogoPath),
         ARRAYSIZE(g_FmslogoBaseDirectory));
     g_FmslogoBaseDirectory[ARRAYSIZE(g_FmslogoBaseDirectory) - 1] = '\0';
-
-    //_control87(EM_OVERFLOW,  EM_OVERFLOW);
-    //_control87(EM_UNDERFLOW, EM_UNDERFLOW);
-    TopOfStack = (int*) &rval;
 
     ProcessCommandLine();
 

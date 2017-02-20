@@ -37,7 +37,6 @@
 
 #include "resource.h"
 
-int *TopOfStack  = NULL;
 int BitMapWidth  = 0;
 int BitMapHeight = 0;
 
@@ -265,10 +264,6 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         {
             TraceOutput("Unable to locate FMSLogo installation directory\n");
         }
-
-        //_control87(EM_OVERFLOW,  EM_OVERFLOW);
-        //_control87(EM_UNDERFLOW, EM_UNDERFLOW);
-        TopOfStack = (int*) &rval;
 
         // Grab the single instance lock.
         // We don't want to fail if Logo is running, since we are a screen saver.

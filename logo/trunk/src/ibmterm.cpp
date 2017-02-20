@@ -35,21 +35,6 @@
 
 bool check_stop(bool scan_for_messages)
 {
-    // int key;
-
-    //#define MAXREALSTACK 0x00080000
-
-    // if ((TopOfStack - &key) > MAXREALSTACK)
-    //    {
-    //    err_logo(STACK_OVERFLOW, NIL);
-    //    return 1;
-    //    }
-
-    // long base, top;
-
-    // IsTimeToPause = false;
-    // IsTimeToHalt = false;
-
     if (scan_for_messages)
     {
         MyMessageScan();
