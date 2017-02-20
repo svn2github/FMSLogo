@@ -740,7 +740,7 @@ to boink.initvars
 	; text characteristics and content
 	make "text.title       [The Game of BOINK!]
 	make "text.titlecolour ngx.purple
-	make "text.titlefont   [Playbill]
+	make "text.titlefont   [Arial]
 	if :game.screenwidth = 640  [ make "text.titleheight 48 ]
 	if :game.screenwidth = 800  [ make "text.titleheight 60 ]
 	if :game.screenwidth = 1024 [ make "text.titleheight 72 ]
@@ -750,7 +750,7 @@ to boink.initvars
 	make "text.copyright    [Copyright (C) 2000 Nick Rozanski]
 	make "text.colour       ngx.blue
 	make "text.colour2      ngx.red
-	make "text.font         [Garamond]
+	make "text.font         [Tahoma]
 	if :game.screenwidth = 640  [ make "text.height 16 ]
 	if :game.screenwidth = 800  [ make "text.height 20 ]
 	if :game.screenwidth = 1024 [ make "text.height 24 ]
@@ -786,9 +786,7 @@ to boink.initvars
 
 	; ball characteristics
 	make "ball.radius    round :room.corridorwidth / 4
-	ifelse :game.screenwidth = 640 ~
-		[ make "ball.pensize 1 ] ~
-		[ make "ball.pensize 2 ]
+	make "ball.pensize   2
 	make "ball.row       0
 	make "ball.column    0
 	make "ball.direction 90

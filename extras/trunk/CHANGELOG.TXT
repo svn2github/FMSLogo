@@ -1,3 +1,8 @@
+FMSLogo Extras 1.11
+o boink
+  * Change to use standard font.
+  * Make the ball thicker (easier to see).
+
 FMSLogo Extras 1.10
 o asteroidminer
   * Fix misspelling in directory name.
