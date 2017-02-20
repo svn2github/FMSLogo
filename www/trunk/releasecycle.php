@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<title>Release Cycle - FMSLogo</title>
-		<meta name="description" content="Release Cycle of FMSLogo, a  programming environment for Microsoft Windows">
+		<meta name="description" content="Release Cycle of FMSLogo, a programming environment for Microsoft Windows">
 		<?php include 'header.php' ?>
 	</head>
 	<body>
@@ -11,7 +11,7 @@
 			<article>
 				<h1>Release Cycle</h1>
 				<p>
-					The most fundamental aspect to understanding the release cycle is  understanding how FMSLogo version numbers work.
+					The most fundamental aspect to understanding the release cycle is understanding how FMSLogo version numbers work.
 					FMSLogo uses three numbers for its version number, separated by dots, as in:
 				</p>
 				<p style="margin-left:20px">FMSLogo <i>major</i>.<i>minor</i>.<i>bugfix</i></p>
@@ -38,11 +38,17 @@
 					<li>Incompatibilities in Logo programs that require significant rework to get the program to run properly again</li>
 				</ul>
 				<p>
-					Before I release any new version of FMSLogo, I run it through a regression test suite, on both Windows XP and Windows 95.
+					Before I release any new version of FMSLogo, I run it through a regression test suite on Windows XP.
 					This includes automated tests, manual tests, and testing that the "extras" still work correctly.
 				</p>
 				<p>
-					I release a new minor version of FMSLogo about every three months, somewhere near the middle of the month.
+					I don't follow a release schedule for major or minor versions of FMSLogo.
+					Development is done on an ad-hoc basis when I have time and inclination.
+					I generally release a new version when I judge that it has been too long since the previous one and there are enough changes that justify a new version.
+					I also release a new version when someone states a specific need for a bugfix or feature.
+					So if there is an unreleased change that you want, be sure to speak up.
+				</p>
+				<p>
 					I release a new bugfix version only when necessary.
 					Due to the amount of time required to test each version of FMSLogo, I only release a bugfix version to address problems that can't wait until the next minor revision.
 					In other words, if I release a bugfix version, it's because I did something very bad in the previous release.
