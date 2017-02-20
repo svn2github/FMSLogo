@@ -37,12 +37,6 @@
 					  Translating the manual is not necessary (but would be appreciated).
 					  If you would like to translate FMSLogo to a new language, please post a comment to the <a href="https://sourceforge.net/p/fmslogo/discussion/500407">Public Forum</a> and I will send you further instructions.</li>
 
-				  <li>Create a new icon for FMSLogo.
-					  The current icon is not recognizable and looks like a mismash of red, white, and blue.
-					  The current icon has many symbolic elements, but the symbolism is not apparent to the primary audience.
-					  I'd like something a little more recognizable, like a turtle whose shell has the letters "FMS", or something.
-				  </li>
-
 				  <li>I need real-world feedback on where FMSLogo should be improved. 
 					  If you know where FMSLogo is lacking, please <a href="https://sourceforge.net/p/fmslogo/feature-requests/">post a feature request</a> or 
 					  post a message in <a href="http://sourceforge.net/forum/forum.php?forum_id=500407">the discussion forum</a>.
