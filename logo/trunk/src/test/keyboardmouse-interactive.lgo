@@ -122,6 +122,13 @@ To VirtualKeyCodeToKey :KeyCode
   Output "Unknown
 End
 
+To OnKeyDownOnly :KeyboardValue
+   StaticUpdate "KeyDownStatic (
+      Word "KeyDown= :KeyboardValue "|, Char=|  CHAR :KeyboardValue
+   )
+   SetFocus  "FMSLogo
+End
+
 To OnKeyDown :KeyboardValue
    StaticUpdate "KeyDownStatic (
       Word "KeyDown= :KeyboardValue "|, Key=|  VirtualKeyCodeToKey :KeyboardValue
@@ -165,7 +172,7 @@ To StartKeyDownTest
    OnKeyDown "||
    OnKeyUp   "||
 
-   KeyboardOn [OnKeyDown KeyboardValue]
+   KeyboardOn [OnKeyDownOnly KeyboardValue]
    SetFocus  "FMSLogo
 End
 

@@ -762,13 +762,10 @@ void CScreen::OnChar(wxKeyEvent& Event)
     {
         if (IsLogoCharCode(wxKeyCode))
         {
-            // Map WX keycodes to Windows key codes
-            int windowsKeyCode = WxKeyCodeToVirtualKeyCode(wxKeyCode);
-
             // Forward the event to Logo
             callthing * callevent = callthing::CreateKeyboardEvent(
                 keyboard_keyup,
-                windowsKeyCode);
+                wxKeyCode);
 
             calllists.insert(callevent);
             checkqueue();
