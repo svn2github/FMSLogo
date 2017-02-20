@@ -19,27 +19,14 @@
 				Likewise, I'm willing to accept contributions from other developers that don't follow this development plan.
 				</p>
 				<ol>
-					<li><b>Port FMSLogo to a supported UI tooolkit.</b><br>
-					<p>
-					FMSLogo was written in Borland OWL, which was great at the time, but is no longer even sold, much less supported.
-					This not only discourages new development, but makes any changes very difficult, because all changes need to work with an old compiler and be implemented with a nearly obsolete set of UI controls.
-					I have ported FMSLogo to wxWidgets, which is both free and under active development, but until the FMSLogo community has adopted this version, I won't delete the OWL-based version.
-					In the meantime, making UI changes is difficult, because I need to make them twice, once in the OWL version and once in the wxWidgets version.
-					</p>
-
-					<p>
-					Once the OWL-based version has been deleted, the source code will be completely free and people will be able to make enhancements more easily.
-					</p>
-					</li>
-
-					<li><b>Support Unicode.</b><br>
+					<li><b>Support Unicode</b><br>
 					<p>
 					FMSLogo is an ANSI program, which means it cannot easily support multiple languages.
 					Furthermore, internally it has needed to reserve some characters for its own purpose, making it difficult to manipulate binary data.
 					Once FMSLogo uses wxWidgets, it will be possible to port the internals to Unicode, which will make FMSLogo more compatible with modern operating systems and with non-English languages.
 					</p>
 
-					</li><li><b>Support 64-bit.</b><br>
+					</li><li><b>Support 64-bit</b><br>
 					<p>
 					FMSLogo is a 32-bit program and making it run natively on modern hardware without an emulation layer is important for future-proofing it.
 					</p>
@@ -57,9 +44,9 @@
 					</p>
 
 
-					</li><li><b>New API sets</b><br>
+					</li><li><b>Add new API sets</b><br>
 					<p>
-					The overall things that FMSLogo has direct support for manpulating has been fixed for 20 years.
+					The overall set of things that FMSLogo has direct support for manpulating has been constant for 20 years.
 					FMSLogo would benefit from new commands or language constructs that give access to regular expressions, text-to-speech, vector graphics, or animation.
 					This is a long way off and I don't have anything specific in mind.
 					</p>
