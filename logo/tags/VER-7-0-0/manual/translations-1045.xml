@@ -1,0 +1,321 @@
+<appendix id='translations'>
+<title>Commands: English to Polish</title>
+<indexterm><primary>From English</primary></indexterm>
+<informaltable>
+  <tgroup cols='2'>
+    <thead>
+      <row>
+        <entry>English Command</entry>
+        <entry>Polish Command</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry><link linkend='command-back'>back</link></entry>
+        <entry>wstecz</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-back'>bk</link></entry>
+        <entry>ws</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-clearscreen'>clearscreen</link></entry>
+        <entry>czyæ</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-end'>end</link></entry>
+        <entry>ju¿</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-false'>false</link></entry>
+        <entry>fa³sz</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-forward'>fd</link></entry>
+        <entry>np</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-fill'>fill</link></entry>
+        <entry>zamaluj</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-fill'>fill</link></entry>
+        <entry>zam</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-forward'>forward</link></entry>
+        <entry>naprzód</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
+        <entry>schowajmnie</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-hideturtle'>ht</link></entry>
+        <entry>s¿</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-if'>if</link></entry>
+        <entry>jeli</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-iffalse'>iffalse</link></entry>
+        <entry>jesliNie</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-iftrue'>iftrue</link></entry>
+        <entry>jeliTak</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-label'>label</link></entry>
+        <entry>wpisztekst</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-left'>left</link></entry>
+        <entry>lewo</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-left'>lt</link></entry>
+        <entry>lw</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-pendown'>pd</link></entry>
+        <entry>opu</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-pendown'>pendown</link></entry>
+        <entry>opuæ</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-penup'>penup</link></entry>
+        <entry>podnie</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-penup'>pu</link></entry>
+        <entry>pod</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-repeat'>repeat</link></entry>
+        <entry>powtórz</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-right'>right</link></entry>
+        <entry>prawo</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-right'>rt</link></entry>
+        <entry>pw</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-setfloodcolor'>setfc</link></entry>
+        <entry>ukm</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
+        <entry>ustalKolMal</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
+        <entry>ustalkolzam</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-setpencolor'>setpc</link></entry>
+        <entry>ukp</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
+        <entry>ustalKolPis</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-setpensize'>setpensize</link></entry>
+        <entry>ustalGruboæ</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
+        <entry>ustalKolorT³a</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-showturtle'>showturtle</link></entry>
+        <entry>poka¿mnie</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-sqrt'>sqrt</link></entry>
+        <entry>pwk</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-showturtle'>st</link></entry>
+        <entry>p¿</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-to'>to</link></entry>
+        <entry>oto</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-true'>true</link></entry>
+        <entry>prawda</entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</appendix>
+
+<appendix>
+<title>Commands: Polish to English</title>
+<indexterm><primary>To English</primary></indexterm>
+<informaltable>
+  <tgroup cols='2'>
+    <thead>
+      <row>
+        <entry>Polish Command</entry>
+        <entry>English Command</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>czyæ</entry>
+        <entry><link linkend='command-clearscreen'>clearscreen</link></entry>
+      </row>
+      <row>
+        <entry>fa³sz</entry>
+        <entry><link linkend='command-false'>false</link></entry>
+      </row>
+      <row>
+        <entry>jeli</entry>
+        <entry><link linkend='command-if'>if</link></entry>
+      </row>
+      <row>
+        <entry>jeliTak</entry>
+        <entry><link linkend='command-iftrue'>iftrue</link></entry>
+      </row>
+      <row>
+        <entry>jesliNie</entry>
+        <entry><link linkend='command-iffalse'>iffalse</link></entry>
+      </row>
+      <row>
+        <entry>ju¿</entry>
+        <entry><link linkend='command-end'>end</link></entry>
+      </row>
+      <row>
+        <entry>lewo</entry>
+        <entry><link linkend='command-left'>left</link></entry>
+      </row>
+      <row>
+        <entry>lw</entry>
+        <entry><link linkend='command-left'>lt</link></entry>
+      </row>
+      <row>
+        <entry>naprzód</entry>
+        <entry><link linkend='command-forward'>forward</link></entry>
+      </row>
+      <row>
+        <entry>np</entry>
+        <entry><link linkend='command-forward'>fd</link></entry>
+      </row>
+      <row>
+        <entry>opu</entry>
+        <entry><link linkend='command-pendown'>pd</link></entry>
+      </row>
+      <row>
+        <entry>opuæ</entry>
+        <entry><link linkend='command-pendown'>pendown</link></entry>
+      </row>
+      <row>
+        <entry>oto</entry>
+        <entry><link linkend='command-to'>to</link></entry>
+      </row>
+      <row>
+        <entry>p¿</entry>
+        <entry><link linkend='command-showturtle'>st</link></entry>
+      </row>
+      <row>
+        <entry>pod</entry>
+        <entry><link linkend='command-penup'>pu</link></entry>
+      </row>
+      <row>
+        <entry>podnie</entry>
+        <entry><link linkend='command-penup'>penup</link></entry>
+      </row>
+      <row>
+        <entry>poka¿mnie</entry>
+        <entry><link linkend='command-showturtle'>showturtle</link></entry>
+      </row>
+      <row>
+        <entry>powtórz</entry>
+        <entry><link linkend='command-repeat'>repeat</link></entry>
+      </row>
+      <row>
+        <entry>prawda</entry>
+        <entry><link linkend='command-true'>true</link></entry>
+      </row>
+      <row>
+        <entry>prawo</entry>
+        <entry><link linkend='command-right'>right</link></entry>
+      </row>
+      <row>
+        <entry>pw</entry>
+        <entry><link linkend='command-right'>rt</link></entry>
+      </row>
+      <row>
+        <entry>pwk</entry>
+        <entry><link linkend='command-sqrt'>sqrt</link></entry>
+      </row>
+      <row>
+        <entry>s¿</entry>
+        <entry><link linkend='command-hideturtle'>ht</link></entry>
+      </row>
+      <row>
+        <entry>schowajmnie</entry>
+        <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
+      </row>
+      <row>
+        <entry>ukm</entry>
+        <entry><link linkend='command-setfloodcolor'>setfc</link></entry>
+      </row>
+      <row>
+        <entry>ukp</entry>
+        <entry><link linkend='command-setpencolor'>setpc</link></entry>
+      </row>
+      <row>
+        <entry>ustalGruboæ</entry>
+        <entry><link linkend='command-setpensize'>setpensize</link></entry>
+      </row>
+      <row>
+        <entry>ustalKolMal</entry>
+        <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
+      </row>
+      <row>
+        <entry>ustalKolorT³a</entry>
+        <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
+      </row>
+      <row>
+        <entry>ustalKolPis</entry>
+        <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
+      </row>
+      <row>
+        <entry>ustalkolzam</entry>
+        <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
+      </row>
+      <row>
+        <entry>wpisztekst</entry>
+        <entry><link linkend='command-label'>label</link></entry>
+      </row>
+      <row>
+        <entry>ws</entry>
+        <entry><link linkend='command-back'>bk</link></entry>
+      </row>
+      <row>
+        <entry>wstecz</entry>
+        <entry><link linkend='command-back'>back</link></entry>
+      </row>
+      <row>
+        <entry>zam</entry>
+        <entry><link linkend='command-fill'>fill</link></entry>
+      </row>
+      <row>
+        <entry>zamaluj</entry>
+        <entry><link linkend='command-fill'>fill</link></entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</appendix>
