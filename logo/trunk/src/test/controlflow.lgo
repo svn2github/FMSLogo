@@ -1,18 +1,17 @@
 LOAD "testlib.lgo
 
+TO BUG55TEST
 
-TO BUG1383281TEST
-
-  REPORTTESTINFO [executing regression test for bug #1383281]
+  REPORTTESTINFO [executing regression test for bug #55]
   CATCH "ERROR [FOREACH [1] [[][]]]
-  REPORTTESTPASSED [Bug #1382181 is fixed. 'FOREACH [1] [[][]]' did not crash.]
+  REPORTTESTPASSED [Bug #55 is fixed. 'FOREACH [1] [[][]]' did not crash.]
 
 END
 
-TO BUG1448155TEST
+TO BUG119TEST
 
   IF "TRUE [IGNORE "TRUE] [IGNORE "FALSE]
-  REPORTTESTPASSED [Bug #1448155 is fixed.  'IF' used the IF->IFELSE mapping.]
+  REPORTTESTPASSED [Bug #119 is fixed.  'IF' used the IF->IFELSE mapping.]
 
 END
 
@@ -224,6 +223,6 @@ TO CONTROLFLOWTEST
 
   TESTTEST
 
-  BUG1383281TEST
-  BUG1448155TEST
+  BUG55TEST
+  BUG119TEST
 END
