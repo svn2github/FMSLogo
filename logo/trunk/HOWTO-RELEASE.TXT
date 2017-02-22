@@ -41,17 +41,17 @@ Release the files
 1.a) Commit any changes to the tests.
    Tag the tree VER-X-Y-Z
    cd ..
-   svn cp trunk tags\VER-X-Y-Z
-   svn commit
+   svn cp trunk tags/VER-X-Y-Z
+   svn commit tags/VER-X-Y-Z
 
 2) Release the files on sourceforge.net
-2.a) Create a new folder on sourceforge and call it FMSLogo X-Y-Z
+2.a) Create a new folder on sourceforge and call it FMSLogo X.Y.Z
 2.b) Upload the following files:
        README.TXT 
        fmslogo-x-y-z.exe
        fmslogo-x-y-z.zip
 2.c) Exclude README.TXT from download statistics
-2.d) Set fmslogo-x-y-z.exe as the default file for Windows and Linux
+2.d) Set fmslogo-x.y.z.exe as the default file for Windows and Linux
 
 3) Update the manual on the Web site
 3.a) Build an updated manual ("gmake website" within "manual")
