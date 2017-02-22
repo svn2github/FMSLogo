@@ -1,5 +1,0 @@
-to queue :queue :item
-make :queue lput :item thing :queue
-end
-
-bury "queue

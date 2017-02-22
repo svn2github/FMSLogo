@@ -1,5 +1,0 @@
-to circle2 :rad
-arc2 360 :rad
-end
-
-bury "circle2

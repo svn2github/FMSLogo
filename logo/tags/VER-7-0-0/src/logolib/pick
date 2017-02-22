@@ -1,5 +1,0 @@
-to pick :list
-output item (1+random count :list) :list
-end
-
-bury "pick

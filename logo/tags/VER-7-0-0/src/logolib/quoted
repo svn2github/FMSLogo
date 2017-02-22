@@ -1,6 +1,0 @@
-to quoted :stuff
-if wordp :stuff [op word "" :stuff]
-op :stuff
-end
-
-bury "quoted

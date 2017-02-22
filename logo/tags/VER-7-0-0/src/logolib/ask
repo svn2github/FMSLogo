@@ -1,9 +1,0 @@
-to ask :turtle :command
-localmake "saveturtle turtle
-setturtle :turtle
-localmake "maybeoutput runresult :command
-setturtle :saveturtle
-if emptyp :maybeoutput [stop]
-output first :maybeoutput
-end
-bury "ask

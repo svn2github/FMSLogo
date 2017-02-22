@@ -1,5 +1,0 @@
-to orientation
-output (list roll pitch heading)
-end
-
-bury "orientation

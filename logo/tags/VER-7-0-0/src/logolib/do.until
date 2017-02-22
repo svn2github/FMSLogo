@@ -1,5 +1,0 @@
-.macro do.until :until.instr :until.cond
-op sentence :until.instr (list "until :until.cond :until.instr)
-end
-
-bury "do.until

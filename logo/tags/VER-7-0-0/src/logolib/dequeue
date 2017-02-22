@@ -1,8 +1,0 @@
-to dequeue :queue
-local "result
-make "result first thing :queue
-make :queue butfirst thing :queue
-output :result
-end
-
-bury "dequeue

@@ -1,5 +1,0 @@
-to buryname :names
-bury namelist :names
-end
-
-bury "buryname

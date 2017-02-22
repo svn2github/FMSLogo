@@ -1,2 +1,0 @@
-catch "error [ copydef "zam         "fill ]
-catch "error [ copydef "ustalKolZam "setfloodcolor ]

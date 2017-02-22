@@ -1,6 +1,0 @@
-#! /usr/bin/fmslogo
-
-TO SHELLSCRIPTTEST
-  ; nothing to do, except ignore the #! comment
-END
-

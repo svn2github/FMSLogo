@@ -1,3 +1,0 @@
-; This is a helper program for commandline.lgo
-; It should not be invoked directly.
-load "commandline-createfile.lgo
