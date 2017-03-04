@@ -24,7 +24,7 @@ The directory names are sorted alphabetically, except that the special entries "
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>SHOW DIRECTORIES</userinput>
-[. .. Examples Logolib]
+[. .. Examples logolib]
 </programlisting>
 </listitem>
 </varlistentry>
