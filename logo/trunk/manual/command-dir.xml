@@ -22,18 +22,17 @@ It prints out the <link linkend="command-files">FILES</link> list and <link link
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>DIR</userinput>
-File uninstall.exe
-File turtle.bmp
-File startup.logoscript
-File README.TXT
-File logohelp.chm
-File LICENSE.TXT
 File fmslogo.exe
-Directory Logolib
-Directory Examples
-Directory ..
+File LICENSE.TXT
+File logohelp.chm
+File README.TXT
+File startup.logoscript
+File turtle.bmp
+File uninstall.exe
 Directory .
-</programlisting>
+Directory ..
+Directory Examples
+Directory logolib</programlisting>
 </listitem>
 </varlistentry>
 
