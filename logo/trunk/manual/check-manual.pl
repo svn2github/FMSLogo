@@ -245,12 +245,13 @@ $Exceptions{'command-dllcall.xml'}{'bannedword'}{'functions'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'bannedword'}{'parameter'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'bannedword'}{'parameters'} = 1;
 $Exceptions{'command-dllcall.xml'}{'bannedword'}{'argument'}   = 1;
+$Exceptions{'command-dllcall.xml'}{'bannedword'}{'arguments'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'bannedword'}{'return'}     = 1;
 
 $Exceptions{'command-dllfree.xml'}{'allcaps'}{'DLL'}  = 1;
 
-$Exceptions{'command-dllload.xml'}{'allcaps'}{'DLL'}           = 1;
-$Exceptions{'command-dllload.xml'}{'bannedword'}{'functions'}  = 1;
+$Exceptions{'command-dllload.xml'}{'allcaps'}{'DLL'}          = 1;
+$Exceptions{'command-dllload.xml'}{'bannedword'}{'functions'} = 1;
 
 $Exceptions{'command-edall.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
 

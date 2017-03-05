@@ -14,7 +14,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Calls a native Windows function with the given parameters and outputs the return value.
+Calls a native Windows function with the given arguments and outputs the function's return value.
 The function must be exported by a DLL which was loaded with <link linkend="command-dllload">DLLLOAD</link>.
 </para>
 
@@ -48,13 +48,9 @@ The "type" parameters are interpreted according to the table:
 
 
 <para>
-DLLCALL interprets (and outputs) the function's return value as being of the type specified by typef.
-It will pass in arg1 as a type1, arg2 as a type2, and so on.
-</para>
-
-<para>
-<parameter>function_parameter_list</parameter> must contain at least 4 items (typef function type1 arg1) even if arg1 is not used.
-If the formal argument list is "void" then use <userinput>[funcname v 0]</userinput>.
+DLLCALL interprets (and outputs) the function's return value as being of the type specified by <parameter>typef</parameter>, then parses it into a list, as with <link linkend="command-parse">PARSE</link>.
+It passes <parameter>arg1</parameter> as a <parameter>type1</parameter>, <parameter>arg2</parameter> as a <parameter>type2</parameter>, and so on.
+Keep in mind that the win32 "stdcall" convention pass arguments from right to left, so arg1 is really the last parameter.
 </para>
 
 <para>
@@ -62,13 +58,13 @@ If the optional <parameter>dllname</parameter> input is given, then DLLCALL will
 </para>
 
 <para>
-DLLCALL is meant for experienced users who are familiar with the native Windows calling conventions.
-If you do not properly match the argument list the results will be unpredictable (including crashing Windows).
+DLLCALL is meant for experienced programmers who are familiar with the native Windows calling conventions.
+If you do not properly match the argument list the results will be unpredictable and likely crash &PRODUCTNAME;.
 DLLCALL can handle a wide variety of function calls but certainly not all.
 </para>
 
 <para>
-DLLCALL allows you to get outside of &PRODUCTNAME;.
+DLLCALL allows to extend the reach of &PRODUCTNAME; when its existing commands are insufficient.
 You can write your own DLL with a compatible call interface to call more complex interfaces.
 </para>
 
@@ -79,10 +75,10 @@ You can write your own DLL with a compatible call interface to call more complex
 <listitem>
 <para>
 <programlisting><userinput>; Equivalent to the C call
-;   MessageBox(NULL, "MyMessage", "Hello How are you", MB_OK);
+;   MessageBox(NULL, "Do you like &PRODUCTNAME;?", "Question", MB_YESNO);
 
 DLLLOAD "user32.dll
-IGNORE DLLCALL [w MessageBoxA w 0 s MyMessage s [Hello How are you] w 0]</userinput>
+IGNORE DLLCALL [L MessageBoxA L 4 S [Question] S [Do you like &PRODUCTNAME;?] L 0]</userinput>
 
 <replaceable>See a message box pop up.</replaceable>
 
