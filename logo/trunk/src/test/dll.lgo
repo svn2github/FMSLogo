@@ -27,10 +27,14 @@ TO DLLCALL.VARIATIONS
   ; Load the test library
   TRACEINSTRUCTION [ DLLLOAD "testfunction.dll ]
 
-  SIMPLEREPORTTEST [ DLLCALL [F MakeSquare@8  F 2.2    ] ] [4.840000]
-  SIMPLEREPORTTEST [ DLLCALL [S FormatFloat@8 F 2.2    ] ] [2.200000]
-  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4  W 123    ] ] [123]
-  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4  W 65537  ] ] [1] ; WORD overflow
+  SIMPLEREPORTTEST [ DLLCALL [F MakeSquare@8  F 2.2      ] ] [4.840000]
+  SIMPLEREPORTTEST [ DLLCALL [S FormatFloat@8 F 2.2      ] ] [2.200000]
+  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4  W 123      ] ] [123]
+  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4  W 65537    ] ] [1] ; WORD overflow
+  SIMPLEREPORTTEST [ DLLCALL [S Rot13@4       S MyString ] ] [ZlFgevat]
+
+  ; A returned string that has spaces
+  SIMPLEREPORTTEST [ DLLCALL (LIST "S "Rot13@4 "S "|Word1 Word2  Word3 |) ] [Jbeq1 Jbeq2 Jbeq3]
 
   ; Call FormatFloat@8 by ordinal
   SIMPLEREPORTTEST [ DLLCALL [S 1 F 2.2] ] [2.200000]
