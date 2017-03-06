@@ -111,3 +111,17 @@ Rot13(PCSTR String)
     // Return the string
     return rot13String;
 }
+
+// A function that takes no parameters and always returns 123
+//
+// It can be called like
+//   DLLCALL [S Word123@0 ]
+//
+extern "C"
+__declspec(dllexport)
+WORD
+WINAPI
+Word123()
+{
+    return 123;
+}

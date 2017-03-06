@@ -39,6 +39,36 @@ TO DLLCALL.VARIATIONS
   ; Call FormatFloat@8 by ordinal
   SIMPLEREPORTTEST [ DLLCALL [S 1 F 2.2] ] [2.200000]
 
+  ; When a function is declared with a void return type, DLLCALL outputs nothing.
+  TRACEINSTRUCTION [ DLLCALL [V MakeSquare@8  F 2.2 ] ]
+
+  ; When a function takes no parameters
+  SIMPLEREPORTTEST [ DLLCALL [W Word123@0 ] ] [123]
+
+  ; Cleanup
+  TRACEINSTRUCTION [ DLLFREE ]
+END
+
+
+TO DLLCALL.COMPATIBILITYTEST
+  ; Tests that all of the strange behavior of DLLCALL that it shouldn't be supported
+  ; but existed in MSWLogo, continues to be supported.
+  TRACEINSTRUCTION [ DLLLOAD "testfunction.dll ]
+
+  ; Only the first letter of argument types is honored
+  SIMPLEREPORTTEST [ DLLCALL [S Rot13@4 VACANT 123 S MyString] ] [ZlFgevat]
+  SIMPLEREPORTTEST [ DLLCALL [F MakeSquare@8  FLOWER 2.2 ]     ] [4.840000]
+  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4  Water 123  ]     ] [123]
+  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4  Lilly 123  ]     ] [123]
+  SIMPLEREPORTTEST [ DLLCALL [S Rot13@4       SALTY MyString ] ] [ZlFgevat]
+
+  ; Only the first letter of function types is honored
+  SIMPLEREPORTTEST [ DLLCALL [SOOT   Rot13@4       S MyString ] ] [ZlFgevat]
+  SIMPLEREPORTTEST [ DLLCALL [FOOL   MakeSquare@8  F 2.2 ]      ] [4.840000]
+  SIMPLEREPORTTEST [ DLLCALL [WONDER Word123@0 ]                ] [123]
+  SIMPLEREPORTTEST [ DLLCALL [LIST   Word123@0 ]                ] [123]
+  TRACEINSTRUCTION [ DLLCALL [Vowel  Word123@0 ] ]
+
   ; Cleanup
   TRACEINSTRUCTION [ DLLFREE ]
 END
@@ -75,6 +105,9 @@ TO DLLCALLTEST.BADINPUT
 
   ; unknown parameter type
   RUNDLLINVALIDDATATYPETEST [DLLCALL [L GetTickCount E Unknown]]
+
+  ; Error after string inputs (DLLCALL should clean up allocated string)
+  RUNDLLINVALIDDATATYPETEST [DLLCALL [L GetTickCount S SomeStringParameter ERROR ERROR ]]
 
   ; wrong number of inputs (DLLCALL may crash on this)
   ; RUNBADINPUTTEST [DLLCALL [L GetTickCount L 0]]
@@ -173,6 +206,7 @@ TO DLLTEST
 
    DLL.SMOKETEST
    DLLCALL.VARIATIONS
+   DLLCALL.COMPATIBILITYTEST
 
    DLLLOADTEST.BADINPUT
    DLLCALLTEST.BADINPUT
