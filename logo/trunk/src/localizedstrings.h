@@ -79,6 +79,12 @@
   #define  CHARSETID 1250
   #define  MANUAL_HAS_TRANSLATION_TABLES 1
 
+#elif LOCALE == 2052
+
+  #include "localizedstrings-zh-cn.h"  // Simplified Chinese
+  #define  CHARSETID 936
+  #define  MANUAL_HAS_TRANSLATION_TABLES 1
+
 #elif LOCALE == 2070
 
   #include "localizedstrings-pt.h"  // Portuguese
