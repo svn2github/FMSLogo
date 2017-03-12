@@ -6,7 +6,7 @@ o Drop support for the original Pentium processor.
 o Drop support for display depths less than 16-bit true color.
 o Add a Polish translation.
 o Improve the Croatian translation.
-o Fix bug #212 up/down arrow is no longer sluggish when the commander history
+o Fix bug #212; up/down arrow is no longer sluggish when the commander history
   has a very long line.
 o Fix bug #319; SETACTIVEAREA now throws a recoverable error when given points
   that define a zero or negative area rectangle.  Before, the error was not
