@@ -140,7 +140,7 @@ END
 ;; bad input tests for TO must be run at the top-level.
 ;;
 
-;; bug #1457745 
+;; bug #131
 IGNORE ERROR
 CATCH "ERROR [TO]
 CHECKERROR "|TO with no inputs| 6 "|not enough inputs to TO| [] []
@@ -153,13 +153,13 @@ IGNORE ERROR
 CATCH "ERROR [TO {1}]
 CHECKERROR "|TO {1}| 4 "|TO doesn't like {1} as input| [] []
 
-;; bug #1457755
+;; bug #132
 IGNORE ERROR
 CATCH "ERROR [TO 1]
 CHECKERROR "|TO 1| 4 "|TO doesn't like 1 as input| [] []
 
 
-; bug #1457745 
+; bug #131
 ;IGNORE ERROR
 ;CATCH "ERROR [(TO)]
 ;CHECKERROR "|(TO)| 6 "|not enough inputs to TO| [] []
@@ -199,7 +199,7 @@ IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADINPUT :A [:B] [:C 123]]
 CHECKERROR "|TO TOTEST.BADINPUT :A [:B] [:C 123]| 4  "|TO doesn't like [:C 123] as input| [] []
 
-; bug #1533541 
+; bug #191
 ;IGNORE ERROR
 ;CATCH "ERROR [TO TOTEST.BADINPUT [:A "foo "toomany]]
 ;CHECKERROR "|TO TOTEST.BADINPUT [:A "foo "toomany]| 4 "|TO doesn't like "toomany as input| [] []

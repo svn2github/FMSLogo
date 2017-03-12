@@ -1,13 +1,13 @@
 LOAD "testlib.lgo
 
-TO BUG1384267TEST
+TO BUG56TEST
 
    ; switch to perspective mode
    PERSPECTIVE
 
    ; these statements used to crash
 
-   REPORTTESTINFO [executing regression test for bug #1384267]
+   REPORTTESTINFO [executing regression test for bug #56]
    RIGHT     1e30
    LEFT      1e30
    UPPITCH   1e30
@@ -15,7 +15,7 @@ TO BUG1384267TEST
    RIGHTROLL 1e30
    LEFTROLL  1e30
 
-   REPORTTESTPASSED ["|bug #1384267 is fixed; turning by a large number in perspective mode did not crash.| ]
+   REPORTTESTPASSED ["|Bug #56 is fixed; turning by a large number in perspective mode did not crash.| ]
 
    ; go back to the default mode
    CLEARSCREEN
@@ -74,8 +74,7 @@ TO PERSPECTIVETEST
 
    PERSPECTIVETEST.SMOKETEST
 
-   BUG1384267TEST
+   BUG56TEST
    PERSPECTIVETEST.BADINPUT
 
 END
-

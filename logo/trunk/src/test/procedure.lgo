@@ -27,16 +27,16 @@ TO LOCALVARTEST :varname :value
   OUTPUT RUN (WORD ": :varname)
 END
 
-TO BUG1438863TEST
-   ; bug #1438863 is that if you erase a procedure while in the middle
+TO BUG104TEST
+   ; Bug #104 is that if you erase a procedure while in the middle
    ; of calling it and you have a call to a non-primitive afterwards,
    ; then FMSLogo crashes.
-   ERASE [BUG1438863TEST]
+   ERASE [BUG104TEST]
 
-   ; catch the "I don't know how to BUG1438863TEST.NONEXISTINGPROC" error
-   CATCH "ERROR [BUG1438863TEST.NONEXISTINGPROC]
+   ; catch the "I don't know how to BUG104TEST.NONEXISTINGPROC" error
+   CATCH "ERROR [BUG104TEST.NONEXISTINGPROC]
 
-   REPORTTESTPASSED ["|Bug #1438863 is fixed; erasing a procedure in the middle of running it does not crash|]
+   REPORTTESTPASSED ["|Bug #104 is fixed; erasing a procedure in the middle of running it does not crash|]
 END
 
 TO DEFINETEST.REDEFINEPROCINERASEDPROC
@@ -95,15 +95,15 @@ TO DEFINETEST.BADINPUT
    ; make sure that none of the above defined a procedure
    FAILIFNOTFALSE [DEFINED? "BADPROCEDURE]
 
-   ; Regression test for bug #1520950 (this used to crash)
-   RUNBADINPUTTEST [DEFINE "BUG1520950 [[] APPLY [OUTPUT ?] [3]] BUG1520950 ]
-   FAILIFNOTFALSE  [DEFINED? "BUG1520950]
+   ; Regression test for bug #178 (this used to crash)
+   RUNBADINPUTTEST [DEFINE "BUG178 [[] APPLY [OUTPUT ?] [3]] BUG178 ]
+   FAILIFNOTFALSE  [DEFINED? "BUG178]
 
 END
 
 TO DEFINETEST.BODYHASEMPTYLINES
 
-   ; this is a regression test for bug #1395737 
+   ; this is a regression test for bug #70
    LOCAL [linewascalled]
 
    TRACEINSTRUCTION [ MAKE "linewascalled 0 ]
@@ -115,12 +115,12 @@ END
 
 TO DEFINETEST.BODYISALLEMPTYLINES
 
-   ; this is a regression test for bug #2790076 (a crash)
+   ; This is a regression test for bug #331 (a crash)
 
    TRACEINSTRUCTION [ DEFINE "BODYHASALLEMPTYLINES [[] [] [] []] ]
    TRACEINSTRUCTION [ BODYHASALLEMPTYLINES ]
    TRACEINSTRUCTION [ BODYHASALLEMPTYLINES ]
-   REPORTTESTPASSED [ Bug #2790076 is fixed (running template with all empty lines twice didn't crash) ]
+   REPORTTESTPASSED [ Bug #331 is fixed (running template with all empty lines twice didn't crash) ]
 END
 
 TO DEFINETEST
@@ -473,7 +473,7 @@ END
 
 TO POTEST.LONGINPUT
    ; Prints some long lines to the commander.
-   ; This is a regression test for bug #3146515.
+   ; This is a regression test for Bug #361.
 
    ; Create a variable with a long value.
    localmake "longvalue "A
@@ -659,7 +659,7 @@ TO PROCEDURETEST
 
    LOCAL []
    RUNNOTENOUGHINPUTSTEST [(LOCAL)]
-   RUNBADINPUTTEST        [LOCAL {a}] ; bug #1355761 
+   RUNBADINPUTTEST        [LOCAL {a}] ; bug #37
 
 
    ; test LOCALMAKE
@@ -700,6 +700,6 @@ TO PROCEDURETEST
    RUNTOOMANYINPUTSTEST   [(NAMELIST "a "b)]
 
    POTEST
-   BUG1438863TEST
+   BUG104TEST
 END
 

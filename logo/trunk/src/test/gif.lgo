@@ -125,7 +125,7 @@ TO GIFSAVE.BADINPUT
 END
 
 TO GIF.SMOKETEST
-    ; this is a regression test for bug #1813051.
+    ; This is a regression test for Bug #301.
 
     LOCALMAKE "savedActiveArea ACTIVEAREA
     LOCALMAKE "savedPenColor   PENCOLOR
@@ -146,7 +146,7 @@ TO GIF.SMOKETEST
     SETACTIVEAREA :savedActiveArea
     SETPENCOLOR   :savedPenColor
     ERASEFILE     "gifsave-withactivearea.gif
-   
+
 END
 
 TO GIFSAVE.OVERWRITESFILE

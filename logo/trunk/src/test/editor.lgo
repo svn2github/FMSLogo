@@ -33,7 +33,7 @@ END
 
 TO EDITTEST.MANYVARIABLES
   ; Opens a large amount of data in the editor.
-  ; This is a regression test for bug #1372735.
+  ; This is a regression test for bug #53.
 
   LOCAL [variables variablename testpassed totalvariables]
 

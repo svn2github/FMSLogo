@@ -1,4 +1,4 @@
-; This program is a manual regression test for bug #1479111, which is that
+; This program is a manual regression test for Bug #145, which is that
 ; FMSLogo sometimes prints out:
 ;
 ;    You must be in a procedure to use OUTPUT or STOP.

@@ -394,7 +394,7 @@ TO WINDOWSTEST.LISTBOX.BADINPUT
   RUNTOOMANYINPUTSTEST   [ (listboxdeletestring "goodlistbox 0 "toomany) ]
 
   ; Add a string to make sure we don't delete it.
-  ; (regression test for bug #1503862)
+  ; (regression test for bug #163)
   TRACEINSTRUCTION [ listboxaddstring "goodlistbox [selection] ]
 
   RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ listboxdeletestring "doesnotexist 0 ]
@@ -739,7 +739,7 @@ TO WINDOWSTEST.RADIOBUTTON.BADINPUT
 
   ; Set the radio button to false so we can detect if RADIOBUTTONSET 
   ; has side-effects on bad input.
-  ; (This is a regression test for bug #1504189)
+  ; (This is a regression test for bug #164)
   TRACEINSTRUCTION [ radiobuttonset "goodradiobutton "false ]
 
   RUNNOTENOUGHINPUTSTEST [ (radiobuttonset "goodradiobutton) ]
@@ -891,7 +891,7 @@ TO WINDOWSTEST.CHECKBOX.BADINPUT
 
   ; Set the checkbox to false so we can detect if CHECKBOXSET 
   ; has side-effects on bad input.
-  ; (This is a regression test for bug #1504189)
+  ; (This is a regression test for Bug #164)
   TRACEINSTRUCTION [ checkboxset "goodcheckbox "false ]
 
   RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ checkboxset "doesnotexist LOCALETRUE ]

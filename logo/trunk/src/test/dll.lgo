@@ -180,7 +180,7 @@ TO DLLLOADTEST.BADINPUT
   repeat 5000 [ make "longdllname word "A :longdllname ]
   RUNDLLLOADERRORTEST (list "DLLLOAD quoted :longdllname)
 
-  ; Regression test for bug #1438438 
+  ; Regression test for Bug #102.
   ; Call DLLLOAD with invalid input while a DLL is loaded.
   DLLLOAD "kernel32.dll
   RUNDLLLOADERRORTEST [DLLLOAD {0}]

@@ -85,14 +85,14 @@ TO SHELLTEST.WAITYIELDS
 END
 
 TO SHELLTEST.IGNORESPRINTLIMITS
-   ; verify that SHELL ignores print limits (bug #3571274)
+   ; verify that SHELL ignores print limits (bug #403)
 
    ; Set the print limits very low
    LOCAL [printwidthlimit printdepthlimit]
    MAKE "printwidthlimit 3
    MAKE "printdepthlimit 1
 
-   ; Run a shell command that create a specific file if ignores the print limits
+   ; Run a shell command that writes a specific file if it ignores the print limits
    ERASEFILE "shelltest.ignoresprintlimits.txt
    (RUNPRINTTEST
       [IGNORE (SHELL [CMD.EXE /C "ECHO [A [B C D] E] > shelltest.ignoresprintlimits.txt"] "True)]

@@ -75,7 +75,7 @@ TO EQUALPTEST.SMOKETEST
   FAILIFNOTTRUE [["a 1 "ab]    = ["a 1 "ab]    ]
   FAILIFNOTTRUE [[[1 2 3] [1]] = [[1 2 3] [1]] ]
 
-  ; very small floating point numbers are not equal to 0 (bug #1688926)
+  ; very small floating point numbers are not equal to 0 (bug #289)
   FAILIFNOTFALSE [ EQUALP   1e-16      0  ]
   FAILIFNOTFALSE [ EQUALP  -1e-16      0  ]
   FAILIFNOTFALSE [ EQUALP    0      1e-16 ]

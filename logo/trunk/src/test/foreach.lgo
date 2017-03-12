@@ -105,7 +105,7 @@ TO FOREACHTEST.OUTPUT.FROM.VARIABLE.WORKER :TestList
    ; in this test when I fixed FOREACH to throw a "not enough inputs" error
    ; when given fewer than two inputs.  I suspect that my fix was correct,
    ; but that it happened to hit a different bug.
-   ; See bug #1669735.
+   ; See bug #285.
 
    FOREACH :TestList [
      if #=1 [ output ? ]

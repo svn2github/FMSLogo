@@ -118,9 +118,9 @@ TO SETLABELFONTTEST
   SIMPLEREPORTTEST [ITEM 13 LABELFONT] 0
 
 
-  ; these result in a font-not-found behavior
+  ; These result in a font-not-found behavior
   SETLABELFONT [0]
-  SETLABELFONT []   ; bug #1438909 
+  SETLABELFONT []   ; Bug #105
   SETLABELFONT [[]]
   SETLABELFONT [[unknownfont]]
 

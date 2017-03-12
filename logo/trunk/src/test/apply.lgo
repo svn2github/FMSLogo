@@ -12,8 +12,8 @@ TO APPLYTEST.APPLYOUTPUT
   APPLY [OUTPUT ?] [3]
 END
 
-TO APPLYTEST.BUG1519088
-  ; bug #1519088 -- this used to leak memory 
+TO APPLYTEST.BUG174
+  ; Bug #174 -- this used to leak memory 
   SIMPLEREPORTTEST [ APPLYTEST.APPLYOUTPUT ] 3
 
   ; REVISIT: I can't figure out how to run this code without
@@ -77,7 +77,7 @@ TO APPLYTEST.BADINPUT
    ; questionmark template has bad inputs
    RUNBADINPUTTEST        [APPLY [IGNORE ?2] [1] ]
 
-   ; ?0 should return a bad input error (bug #2843375)
+   ; ?0 should return a bad input error (Bug #350)
    RUNDOESNTLIKEINPUTTEST [APPLY [SHOW ?0] [a b c]]
 
    ; fill the questionmark list
@@ -194,13 +194,13 @@ TO APPLYTEST.QUESTIONMARKTEMPLATE
    SIMPLEREPORTTEST  [APPLY [SUM 1 ?] [2] ] 3
 
    ; nested questionmark template (outer template list should be restored)
-   ; this is a regression test for bug #1545911
+   ; This is a regression test for bug #199.
    SIMPLEREPORTTEST [APPLY [ IGNORE APPLY [1] [BAD] ? ] [GOOD] ] "GOOD
 
 END
 
 TO APPLYTEST.NESTEDAPPLY
-  ; this is a regression test for bug #1630234 
+  ; this is a regression test for Bug #273
   SIMPLEREPORTTEST [ APPLY [ APPLY [IGNORE ?1] ? ? ] [[1 2 3]] ] [1 2 3]
 END
 
@@ -208,7 +208,7 @@ TO APPLYTEST
 
    APPLYTEST.SMOKETEST
    APPLYTEST.BADINPUT
-   APPLYTEST.BUG1519088
+   APPLYTEST.BUG174
 
    APPLYTEST.NESTEDAPPLY
 

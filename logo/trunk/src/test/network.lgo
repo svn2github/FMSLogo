@@ -50,7 +50,7 @@ TO NETWORKTEST.NETSHUTDOWNCRASH
   TRACEINSTRUCTION [(NETSTARTUP 1)] ; must be synchronous
   TRACEINSTRUCTION [ IGNORE NETCONNECTON "localhost 9999 [] [] ]
   TRACEINSTRUCTION [ NETSHUTDOWN ]
-  TRACEINSTRUCTION [ NETSHUTDOWN ] ; crashes (bug #1367352)
+  TRACEINSTRUCTION [ NETSHUTDOWN ] ; crashes (bug #48)
 END
 
 
@@ -74,7 +74,7 @@ TO NETWORKTEST.SERVER.RECEIVEUNFRAMEDPACKET
    TRACEINSTRUCTION [ WAIT 60 * 2 ]
 
    ; spawn a client to send some data such that the data do not end in NUL.
-   ; This is a regression test for bug #1367386, which sent FMSLogo into a tight loop
+   ; This is a regression test for Bug #49, which sent FMSLogo into a tight loop.
    MAKE "shellcommand (SENTENCE [perl.exe sendtologo.pl] "localhost :localport)
    FAILIFNOTTRUE (LIST "SHELL :shellcommand)
  
@@ -288,10 +288,10 @@ TO NETWORKTEST.SERVER.SHUTDOWNRACE
    ; Start a server.  This schedules an asynchronous callback.
    FAILIFNOTTRUE [ NETACCEPTON 12345 [] [] ]
 
-   ; immediately shutdown (before the server's sendready gets called)
-   ; this forces a race condition where the WSAAsyncGetHostByName message
+   ; Immediately shutdown (before the server's sendready gets called)
+   ; This forces a race condition where the WSAAsyncGetHostByName message
    ; comes in after the network subsystem has been shut down.
-   ; This is a regression test for bug #1522350, which is a crash.
+   ; This is a regression test for Bug #181, which is a crash.
    TRACEINSTRUCTION [ NETSHUTDOWN ]
 
 END
@@ -306,10 +306,10 @@ TO NETWORKTEST.CLIENT.SHUTDOWNRACE
    ; the call to connect() is made.
    FAILIFNOTTRUE [ NETCONNECTON "localhost 4444 [] [] ]
 
-   ; Immediately shutdown (before the client's sendready gets called)
-   ; this forces a race condition where the WSAAsyncGetHostByName message
+   ; Immediately shutdown (before the client's sendready gets called).
+   ; This forces a race condition where the WSAAsyncGetHostByName message
    ; comes in after the network subsystem has been shut down.
-   ; This is a regression test for bug #1522350, which is a crash.
+   ; This is a regression test for bug #181, which is a crash.
    TRACEINSTRUCTION [ NETSHUTDOWN ]
 END
 

@@ -75,7 +75,7 @@ TO IFTEST
 END
 
 TO #TEST
-  ; regression test for bug #1448159 
+  ; regression test for bug #120
   SIMPLEREPORTTEST [#] -1
   
   ; bad input test

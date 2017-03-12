@@ -21,7 +21,7 @@ TO BACKTICKTEST.SMOKETEST
    ; spliced numbers are treated literally
    SIMPLEREPORTTEST [`[1 ,@[2] ,@[3]]] [1 2 3]
 
-   ; multiple splices are supported (bug #3535265)
+   ; multiple splices are supported (Bug #377)
    LOCAL [name1 name2]
    TRACEINSTRUCTION [MAKE "name1 "x]
    TRACEINSTRUCTION [MAKE "name2 "y]

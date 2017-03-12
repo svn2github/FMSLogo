@@ -45,7 +45,7 @@ TO ERRORTEST.CALL.OUTPUT.RUN.5
   ERRORTEST.OUTPUT.RUN.5
 END
 
-TO ERRORTEST.BUG1577034
+TO ERRORTEST.BUG219
   IGNORE ERROR
   CATCH "ERROR [ ERRORTEST.CALL.OUTPUT.RUN.5 ]
   
@@ -127,7 +127,7 @@ TO ERRORTEST
    (RUNEXPECTERRORTEST [(THROW "ERROR 4)]                     21 4)
 
    (RUNEXPECTERRORTEST [DEFINE "forward [[]]]                 22 "|forward is a primitive|)
-   (RUNEXPECTERRORTEST [PROCEDURE.WITH.TO.INSIDE.IT]          23 "|Can't use TO inside a procedure|) ; bug 1455201
+   (RUNEXPECTERRORTEST [PROCEDURE.WITH.TO.INSIDE.IT]          23 "|Can't use TO inside a procedure|) ; bug #128
    (RUNEXPECTERRORTEST [TEXT "NO.SUCH.PROCEDURE.IS.DEFINED]   24 "|I don't know how to NO.SUCH.PROCEDURE.IS.DEFINED|)
    (RUNEXPECTERRORTEST [IFTRUE "x]                            25 "|IFTRUE without TEST|)
    (RUNEXPECTERRORTEST [LOAD "unexpectedclosebracket.lgo]     26 "|unexpected ']'|)
@@ -158,7 +158,7 @@ TO ERRORTEST
    ; DEFINE "ERRORTEST.ALREADYDEFINEDPROCEDURE [[]]
    ; CATCH "ERROR [TO ERRORTEST.ALREADYDEFINEDPROCEDURE]
 
-   ; ERRORTEST.BUG1577034
+   ; ERRORTEST.BUG219
 END
 
 ;; error 15: Try to define a primitive with TO
@@ -176,7 +176,7 @@ IGNORE ERROR
 CATCH "ERROR [OUTPUT 123]
 CHECKERROR "|OUTPUT at the toplevel| 31 "|Can only use OUTPUT inside a procedure| [] []
 
-;; bug #1519088 -- this used to leak memory
+;; bug #174 -- this used to leak memory
 IGNORE ERROR
 CATCH "ERROR [ APPLY [OP ?] [3] ]
 CHECKERROR "|OUTPUT at the toplevel| 31 "|Can only use OP inside a procedure| [] []

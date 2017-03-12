@@ -141,7 +141,7 @@ TO TRACETEST.PROCEDURE.RESTINPUT
    ; more than the default number of inputs and the excess inputs
    ; goes into a "rest" input.
    ;
-   ; This is a regression test for bug #1732803.
+   ; This is a regression test for bug #293.
    ;
 
    ; redirect all tracing to a file to that we can verify it

@@ -284,7 +284,7 @@ TO FILETEST.BADINPUT
    ; test CLOSE
    RUNFILESYSTEMERRORTEST [CLOSE :longfilename]
    RUNFILESYSTEMERRORTEST [CLOSE "nonexistent.txt]
-   RUNDOESNTLIKEINPUTTEST [CLOSE [] ] ; bug 1600159
+   RUNDOESNTLIKEINPUTTEST [CLOSE [] ] ; bug #240
    RUNDOESNTLIKEINPUTTEST [CLOSE [testfile.txt] ]
    RUNDOESNTLIKEINPUTTEST [CLOSE {testfile.txt} ]
    RUNNOTENOUGHINPUTSTEST [(CLOSE)]
@@ -402,7 +402,7 @@ END
 
 TO FILETEST.CLOSEREADER
    ; Closes the active reader and writer.
-   ; This is a regression test for bug #1600163.
+   ; This is a regression test for bug #241.
 
    LOCALMAKE "filename  "closereadertest.txt
    LOCALMAKE "oldreader READER

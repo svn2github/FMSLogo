@@ -174,7 +174,7 @@ TO TURTLETEST.BADINPUT
 
    ; Set the turtle to 1, so we can confirm that
    ; bad input doesn't inadvertantly select turtle 0.
-   ; See bug #1605816.
+   ; See bug #254.
    SETTURTLE 1
 
    RUNNOTENOUGHINPUTSTEST [(SETTURTLE)]

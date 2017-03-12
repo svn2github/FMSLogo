@@ -86,7 +86,7 @@ TO SORTTEST.REGRESSION
   SIMPLEREPORTTEST [SORT "Z]         "Z
   SIMPLEREPORTTEST [SORT "||]        "||
 
-  ; Goes into infinite loop (bug #1508400)
+  ; Goes into infinite loop (Bug #165)
   SIMPLEREPORTTEST [(SORT "hello "SORTTEST.AFTER?)] "ollhe
 
   ;

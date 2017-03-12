@@ -2,7 +2,7 @@ LOAD "testlib.lgo
 
 TO PRINTTEST.PERFORMANCE
 
-   ; bug #1543643: FMSLogo hangs when printing a long line.
+   ; Bug #197: FMSLogo hangs when printing a long line.
 
    ; ISEQ is not part of the repro, per-se.
    ; If there is a faster way to generate a long list, we can use that.
@@ -51,7 +51,7 @@ TO PRINTTEST.DEEPLYNESTEDLIST
    REPEAT 10000 [ MAKE "deeplist (LIST :deeplist) ]
    PRINT :deeplist
 
-   REPORTTESTPASSED [|Bug #1566775 is fixed; printing a deeply nested list didn't crash.|]
+   REPORTTESTPASSED [|Bug #207 is fixed; printing a deeply nested list didn't crash.|]
 END
 
 TO PRINTTEST.RUNPRINTDEPTHLIMITTEST :depthlimit :printfunction :whattoprint :expectedstring

@@ -1,7 +1,7 @@
 LOAD "testlib.lgo
 
 TO BITLOADSIZETEST :width :height :bitdepth
-  ; this is a regression test for bug #1324580
+  ; this is a regression test for Bug #1
   CLEARSCREEN
   HIDETURTLE
   REPEAT 500 [ FORWARD REPCOUNT RIGHT 91 ]
@@ -303,7 +303,7 @@ TO BITSAVE.32BPP
 END
 
 TO BITSAVE.WITHACTIVEAREA
-    ; This is a regression test for bug #1813051.
+    ; This is a regression test for bug #301.
 
     LOCALMAKE "savedActiveArea ACTIVEAREA
     LOCALMAKE "savedPenColor   PENCOLOR
