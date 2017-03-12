@@ -1232,8 +1232,7 @@ END
 TO WINDOWSTEST.DEBUGWINDOWS.STRESS
 
   ; create a window with a long caption
-  LOCALMAKE "longname "||
-  REPEAT 252 [ MAKE "longname word :longname "A ]
+  LOCALMAKE "longname REPEATWORD "A 252
 
   ; create several top-level windows that contain widgets with very long names
   repeat 20 [

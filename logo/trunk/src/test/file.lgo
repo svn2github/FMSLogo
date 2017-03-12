@@ -242,8 +242,7 @@ END
 TO FILETEST.BADINPUT
 
    ; a long file name used to overflow an internal buffer
-   LOCALMAKE "longfilename "||
-   REPEAT 5000 [ MAKE "longfilename word :longfilename "A ]
+   LOCALMAKE "longfilename REPEATWORD "A 5000
 
    ; bad value for "binary parameter"
    RUNBADINPUTTEST [(OPENREAD   "testfile.txt 1)]
@@ -341,8 +340,7 @@ TO FILETEST.ERASEFILE
    RMDIR     "mytestdir
 
    ; erase a long file name to overflow an internal buffer
-   LOCALMAKE "longfilename "||
-   REPEAT 5000 [ MAKE "longfilename word :longfilename "A ]
+   LOCALMAKE "longfilename REPEATWORD "A 5000
    ERASEFILE :longfilename
 END
 

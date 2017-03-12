@@ -476,8 +476,7 @@ TO POTEST.LONGINPUT
    ; This is a regression test for Bug #361.
 
    ; Create a variable with a long value.
-   localmake "longvalue "A
-   repeat 10 [ make "longvalue word :longvalue :longvalue ]
+   localmake "longvalue REPEATWORD "A 1024
 
    DEFINE "POTEST.LONGINPUT.DEFINEDPROCEDUREWITHLONGLINE (list 
      [] ; no inputs

@@ -4,8 +4,7 @@ TO RUNTEST
 
   ; Run a very long word as a command name.
   ; This is a regression test for bug #101 (which used to crash)
-  localmake "longword "||
-  repeat 5000 [ make "longword word "A :longword ]
+  localmake "longword REPEATWORD "A 5000
   RUNBADINPUTTEST (list :longword)
 
   RUNNOTENOUGHINPUTSTEST [(RUN)]

@@ -107,9 +107,7 @@ END
 TO SHELLTEST.LONGCOMMANDLINE
    ; verify that SHELL can run long command lines
 
-   localmake "longword "||
-   repeat 1000 [ make "longword word :longword "A ]
-
+   localmake "longword REPEATWORD "A 1000
    localmake "longcommand (list "CMD.EXE "/C ""ECHO :longword "> "shelltest.longcommandline.txt" )
 
    ; Run a shell command that create a specific file if ignores the print limits

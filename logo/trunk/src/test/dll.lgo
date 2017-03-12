@@ -176,8 +176,7 @@ TO DLLLOADTEST.BADINPUT
   RUNDLLLOADERRORTEST [DLLLOAD "c:\\]
 
   ; DLLLOAD a very long filename name
-  localmake "longdllname ".dll
-  repeat 5000 [ make "longdllname word "A :longdllname ]
+  localmake "longdllname WORD REPEATWORD "A 5000 ".dll
   RUNDLLLOADERRORTEST (list "DLLLOAD quoted :longdllname)
 
   ; Regression test for Bug #102.
