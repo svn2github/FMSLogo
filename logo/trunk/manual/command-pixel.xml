@@ -14,12 +14,13 @@
 <listitem>
 
 <para>
-Outputs a three item list of numbers that represent the red, green, and blue intensities of the pixel that is currently under the turtle.
+Outputs the color of the pixel that is currently under the turtle.
+Depending on how the color was last set, the output is either a three item list of numbers that represents the red, green, and blue intensities of the pixel, or an integer index of the pixel's color.
 For an explanation of a color vector see <link linkend="using-color">Using Color</link>.
 </para>
 
 <para>
-Pixel can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode but the pixel seen will be what ever is under the turtle in the 2D projection.
+PIXEL can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode but the pixel whose color is output is what ever is under the turtle in the 2D projection.
 </para>
 
 </listitem>
@@ -29,10 +30,10 @@ Pixel can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode
 <listitem>
 <programlisting><userinput>CLEARSCREEN
 SHOW PIXEL</userinput>
-<userinput>[255 255 255]
-FORWARD 1
-SHOW PIXEL</userinput>
 [255 255 255]
+<userinput>FORWARD 1
+SHOW PIXEL</userinput>
+[0 0 0]
 <userinput>BACK 1
 SHOW PIXEL</userinput>
 [0 0 0]</programlisting>
