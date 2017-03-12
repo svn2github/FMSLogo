@@ -1007,7 +1007,9 @@ FLONUM float_arg(NODE *args)
         if (is_number(val))
         {
             // got a number, just like we wanted
-            return numeric_node_to_flonum(val);
+            FLONUM value = numeric_node_to_flonum(val);
+            gcref(val);
+            return value;
         }
 
         // try to get a new value from ERRACT

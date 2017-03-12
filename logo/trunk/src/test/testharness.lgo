@@ -33,6 +33,7 @@ LOAD "math.lgo
 LOAD "bitwise.lgo
 LOAD "reduce.lgo
 LOAD "activearea.lgo
+LOAD "turtlemovement.lgo
 LOAD "bitmap.lgo
 LOAD "bitfit.lgo
 LOAD "bitmapturtle.lgo
@@ -213,6 +214,7 @@ TO TESTALL
   CONTROLFLOWTEST      ; from controlflow.lgo
   CASCADETEST          ; from cascade.lgo
   ACTIVEAREATEST       ; from activearea.lgo
+  TURTLEMOVEMENTTEST   ; from turtlemovement.lgo
   BITMAPTEST           ; from bitmap.lgo
   BITFITTEST           ; from bitfit.lgo
   GIFTEST              ; from gif.lgo
