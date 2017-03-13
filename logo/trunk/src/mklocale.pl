@@ -81,13 +81,14 @@ sub UpdateLocalizationFiles($$$) {
 }
 
 
-UpdateLocalizationFiles('fr', 'French',     'Bertrand CARETTE');
-UpdateLocalizationFiles('gr', 'Greek',      'Theodoros Chatzigiannakis');
-UpdateLocalizationFiles('es', 'Spanish',    'Daniel Ajoy');
-UpdateLocalizationFiles('it', 'Italian',    'Stefano Federici');
-UpdateLocalizationFiles('pt', 'Portuguese', 'Alexandre R Soares');
-UpdateLocalizationFiles('de', 'German',     'Stephan Vogel');
-UpdateLocalizationFiles('ru', 'Russian',    'Igor Baglaev');
-UpdateLocalizationFiles('hr', 'Croatian',   'Domagoj Kuna');
-UpdateLocalizationFiles('pl', 'Polish',     'Andrzej Pruszynski');
-UpdateLocalizationFiles('ps', 'Pseudoloc',  'David Costanzo');
+UpdateLocalizationFiles('zh-cn', 'Chinese',    'Test Down');
+UpdateLocalizationFiles('fr',    'French',     'Bertrand CARETTE');
+UpdateLocalizationFiles('gr',    'Greek',      'Theodoros Chatzigiannakis');
+UpdateLocalizationFiles('es',    'Spanish',    'Daniel Ajoy');
+UpdateLocalizationFiles('it',    'Italian',    'Stefano Federici');
+UpdateLocalizationFiles('pt',    'Portuguese', 'Alexandre R Soares');
+UpdateLocalizationFiles('de',    'German',     'Stephan Vogel');
+UpdateLocalizationFiles('ru',    'Russian',    'Igor Baglaev');
+UpdateLocalizationFiles('hr',    'Croatian',   'Domagoj Kuna');
+UpdateLocalizationFiles('pl',    'Polish',     'Andrzej Pruszynski');
+UpdateLocalizationFiles('ps',    'Pseudoloc',  'David Costanzo');
