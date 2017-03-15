@@ -25,10 +25,13 @@ Install the Nullsoft Scriptable Installation System (NSIS) to C:\Program Files\N
 You can download this from http://sourceforge.net/projects/nsis.
 This is needed to build the self-extracting installer executable.
 
-Install the MSW version of wxWidgets 3.1.0 to e:\wxWidgets-3.1.0-src (or install it
-wherever you like and update the paths in src\Makefile and screensaver\Makefile).
-Build it according to the instructions in src\configure-wxwidgets.sh.
-This is needed to build FMSLogo.
+Install the MSW version of wxWidgets 3.1.0 to e:\wxWidgets-3.1.0-src.
+Build a retail version in e:\wxWidgets-3.1.0-fmslogo\retail and a debug version
+in e:\wxWidgets-3.1.0-fmslogo\debug according to the instructions in
+src\configure-wxwidgets.sh.  Or you can install and build wxWidget wherever you
+like, provided that you update the wx_top_srcdir and wx_top_builddir variables
+in src\Makefile and screensaver\Makefile.
+wxWidgets is needed to build FMSLogo.
 
 Install a Subversion client.  TortioseSVN is a good client for Microsoft Windows.
 
@@ -37,4 +40,4 @@ Checkout the trunk of the "logo" project from FMSLogo's subversion repository.
   svn checkout svn://svn.code.sf.net/p/fmslogo/source/logo/trunk fmslogo-trunk
 
 Once these steps are complete, you can build the entire FMSLogo package by running
-"gmake binaryexe" in the fmslogo-trunk.
+"gmake binaryexe" in the fmslogo-trunk directory.
