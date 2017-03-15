@@ -325,13 +325,14 @@ sub MakeTranslationTables($$$) {
 }
 
 
-MakeTranslationTables('German',     'de', 1031);
-MakeTranslationTables('Greek',      'gr', 1032);
-MakeTranslationTables('Spanish',    'es', 1034);
-MakeTranslationTables('French',     'fr', 1036);
-MakeTranslationTables('Italian',    'it', 1040);
-MakeTranslationTables('Polish',     'pl', 1045);
-MakeTranslationTables('Russian',    'ru', 1049);
-MakeTranslationTables('Croatian',   'hr', 1050);
-MakeTranslationTables('Portuguese', 'pt', 2070);
-MakeTranslationTables('Pseudoloc',  'ps', 9999);
+MakeTranslationTables('German',             'de',    1031);
+MakeTranslationTables('Greek',              'gr',    1032);
+MakeTranslationTables('Spanish',            'es',    1034);
+MakeTranslationTables('French',             'fr',    1036);
+MakeTranslationTables('Italian',            'it',    1040);
+MakeTranslationTables('Polish',             'pl',    1045);
+MakeTranslationTables('Russian',            'ru',    1049);
+MakeTranslationTables('Croatian',           'hr',    1050);
+MakeTranslationTables('Simplified Chinese', 'zh-cn', 2052);
+MakeTranslationTables('Portuguese',         'pt',    2070);
+MakeTranslationTables('Pseudoloc',          'ps',    9999);

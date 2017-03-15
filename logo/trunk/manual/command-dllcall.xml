@@ -23,24 +23,104 @@ The <parameter>function_parameter_list</parameter> is of the form <userinput>[ty
 </para>
 
 <para>
-<parameter>function</parameter> must be a word that exactly matches symbol that is exported from the DLL.
+DLLCALL interprets <parameter>typef</parameter> as describing the function's return value.  The return value is parsed it into a list, as with <link linkend="command-parse">PARSE</link>.  Any buffers that were created for "out" parameters are appened to the list and it is the output of DLLCALL.  The semantics of each <parameter>typef</parameter> are given in the table below:
+
+<informaltable frame='all'>
+  <tgroup cols='3'>
+    <thead>
+      <row>
+        <entry>typef</entry>
+        <entry>Native Type</entry>
+        <entry>DLLCALL action</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry><userinput>V</userinput></entry>
+        <entry>void</entry>
+        <entry>Nothing is output</entry>
+      </row>
+      <row>
+        <entry><userinput>W</userinput></entry>
+        <entry>WORD, SHORT, or USHORT</entry>
+        <entry>Outputs lower 16 bits of the function's return value as a one member list.</entry>
+      </row>
+      <row>
+        <entry><userinput>L</userinput></entry>
+        <entry>DWORD, LONG, or ULONG</entry>
+        <entry>Outputs the function's return value, interpreted as a 32-bit integer, as a one member list.</entry>
+      </row>
+      <row>
+        <entry><userinput>F</userinput></entry>
+        <entry>DOUBLE</entry>
+        <entry>Outputs the function's return value as a one member list.</entry>
+      </row>
+      <row>
+        <entry><userinput>S</userinput></entry>
+        <entry>LPSTR</entry>
+        <entry>Copies the returned pointer as a NUL-terminated string of characters and calls GlobalFreePtr() on the returned pointer.
+               The string is then parsed as with PARSE and the resulting list is output.</entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</para>
+
+<para>
+<parameter>function</parameter> must be a word that exactly matches a symbol which is exported from the DLL.
 For Win32 functions that take a parameter of type TCHAR, the exported symbol probably ends in either W or A, even if you wouldn't call it like that from C.
 </para>
 
 <para>
-The "type" parameters are interpreted according to the table:
+DLLCALL passes <parameter>arg1</parameter> as a <parameter>type1</parameter>, <parameter>arg2</parameter> as a <parameter>type2</parameter>, and so on.
+Keep in mind that the win32 "stdcall" convention pass arguments from right to left, so arg1 is really the last parameter.
+The actions taken for each argument are given in the following table:
 
 <informaltable frame='all'>
-  <tgroup cols='2'>
+  <tgroup cols='3'>
     <thead>
-      <row><entry>Given Type</entry> <entry>Interpreted As Type</entry></row>
+      <row>
+        <entry>type#</entry>
+        <entry>Native Type</entry>
+        <entry>DLLCALL action</entry>
+      </row>
     </thead>
     <tbody>
-      <row><entry><userinput>V</userinput></entry><entry>void</entry></row>
-      <row><entry><userinput>W</userinput></entry><entry>WORD</entry></row>
-      <row><entry><userinput>L</userinput></entry><entry>DWORD</entry></row>
-      <row><entry><userinput>F</userinput></entry><entry>DOUBLE</entry></row>
-      <row><entry><userinput>S</userinput></entry><entry>LPSTR</entry></row>
+      <row>
+        <entry><userinput>V</userinput></entry>
+        <entry>void</entry>
+        <entry>None</entry>
+      </row>
+      <row>
+        <entry><userinput>W</userinput></entry>
+        <entry>WORD, SHORT, or USHORT</entry>
+        <entry>Pushes the lowest 16 bits of the argument onto the stack as a 32-bit value.</entry>
+      </row>
+      <row>
+        <entry><userinput>L</userinput></entry>
+        <entry>DWORD, LONG, or ULONG</entry>
+        <entry>Pushes the integral value of the argument onto the stack as a 32-bit value.</entry>
+      </row>
+      <row>
+        <entry><userinput>F</userinput></entry>
+        <entry>DOUBLE</entry>
+        <entry>Intereprets the argument as a DOUBLE and pushes the value as a 64-bit floating point onto the stack.</entry>
+      </row>
+      <row>
+        <entry><userinput>S</userinput></entry>
+        <entry>LPCSTR</entry>
+        <entry>Copies the argument into a NUL-terminated the buffer and pushes its pointer onto the stack.</entry>
+      </row>
+      <row>
+        <entry><userinput>B</userinput></entry>
+        <entry>PBYTE, PULONG, or LPSTR</entry>
+        <entry>Allocates a buffer that has as many bytes as the given argument, when interpreted as an integer.
+               Fills the buffer with zero bytes.
+               Marks it as a backslashed word so that it can hold binary bytes.
+               Pushes a pointer to this buffer onto the stack.
+               After the function returns, appends the buffer to the output list.
+               If the function returns void, then a list is created so that the buffer can be output to the caller.</entry>
+      </row>
     </tbody>
   </tgroup>
 </informaltable>
@@ -48,13 +128,17 @@ The "type" parameters are interpreted according to the table:
 
 
 <para>
-DLLCALL interprets (and outputs) the function's return value as being of the type specified by <parameter>typef</parameter>, then parses it into a list, as with <link linkend="command-parse">PARSE</link>.
-It passes <parameter>arg1</parameter> as a <parameter>type1</parameter>, <parameter>arg2</parameter> as a <parameter>type2</parameter>, and so on.
-Keep in mind that the win32 "stdcall" convention pass arguments from right to left, so arg1 is really the last parameter.
+If the optional <parameter>dllname</parameter> input is given, then DLLCALL will only look for the function within that DLL.
 </para>
 
 <para>
-If the optional <parameter>dllname</parameter> input is given, then DLLCALL will only look for the function within that DLL.
+The "B" input types are returned as buffers of the exact length they were given.
+Any byte that is overwritten by the function call remains NUL (zero byte).
+So if the function fills in a string of characters and only uses part of the buffer, the buffer will have a lot of zero bytes at the end.
+Such a word does not behave like a regular word.
+However, you can convert it to a regular word by removing the zero bytes with something like:
+<programlisting><userinput>MAKE "buffer FILTER [NOTEQUAL? CHAR 0 ? ] :buffer</userinput>
+</programlisting>
 </para>
 
 <para>

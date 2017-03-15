@@ -59,6 +59,11 @@ logohelp-1050.chm : htmlhelp-1050.hhp logohelp.css
 	perl -W clean-html.pl windows-1250
 	-$(HHC) htmlhelp-1050.hhp
 
+# Simplified Chinese builds require a different character set
+logohelp-1050.chm : htmlhelp-2052.hhp logohelp.css
+	perl -W clean-html.pl GBK
+	-$(HHC) htmlhelp-2052.hhp
+
 htmlhelp-%.hhp : translations-%.xml $(SOURCEFILES) $(HHP_STYLESHEET)
 	cp translations-$*.xml translations.xml
 	echo -n $* > locale.xml
