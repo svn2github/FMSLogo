@@ -14,8 +14,8 @@ Build the Release Files
 
 1.e) Open up a fresh command prompt and cleanly build everything with:
 
-     gmake clean
-     gmake binaryexe binaryzip
+     make clean
+     make binaryexe binaryzip
 
 1.f) Copy resulting fmslogo-X-Y-Z.exe, fmslogo-X-Y-Z.zip to e:\fmslogo
 
@@ -54,7 +54,7 @@ Release the files
 2.d) Set fmslogo-x.y.z.exe as the default file for Windows and Linux
 
 3) Update the manual on the Web site
-3.a) Build an updated manual ("gmake website" within "manual")
+3.a) Build an updated manual ("make website" within "manual")
 3.b) Open an SSH2/SFTP connection to web.sourceforge.net
 3.c) Browse to /home/project-web/fmslogo/htdocs/manual on the remote machine.
 3.d) Upload all of the HTML files in the www directory.

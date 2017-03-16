@@ -10,18 +10,17 @@
 #
 #   cd [wxwidgets_bin_dir]/retail
 #   [path_to_this_script]/configure-wxwidgets.sh [wxwidgets_src_dir]
-#   gmake clean all
+#   make clean all
 #
 #   export DEBUG=1
 #   cd [wxwidgets_bin_dir]/debug
 #   [path_to_this_script]/configure-wxwidgets.sh [wxwidgets_src_dir]
-#   gmake clean all
+#   make clean all
 #
 ###########################################################################
 CONFIGURE=$1/configure
 
 export PATH=/usr/bin:$PATH
-export MAKE=gmake
 
 if [ ! -f $CONFIGURE ];
 then

@@ -38,12 +38,12 @@ by the Perl script "check-manual.pl".  In short:
 = BUILDING =
 To convert the manual to HTML, you need the following command-line tools:
 
-* gmake    (the tool that runs the other tools, according to Makefile)
+* make     (the tool that runs the other tools, according to Makefile)
 * docbook  (the DocBook schema and basic transformation tools)
 * xsltproc (the XML processor that applies the transforms)
 
 Once the tools are in the correct place, open a command prompt,
-change to this directory, and run "gmake website".
+change to this directory, and run "make website".
 
 If you cannot move the tools, then you can change the file
 paths to the tools that are within the Makefile.  The only path
@@ -98,7 +98,7 @@ Do this by adding
 Finally, write the documentation according to DocBook schema,
 starting with a <section> tag.
 
-At this point, you should be able to run "gmake website", debug
+At this point, you should be able to run "make website", debug
 the errors, then wait to see how the manual looks.
 
 = SUPPORT =

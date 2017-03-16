@@ -205,7 +205,7 @@ CXXC = $(BK_DEPS) $(CXX)
 ### Targets: ###
 
 # Set the English version as the first target, which will get
-# built if no target is provided to gmake.
+# built if no target is provided to make.
 default : fmslogo$(EXEEXT) logohelp.chm
 
 fmslogo$(EXEEXT) : fmslogo-$(DEFAULT_LCID)$(EXEEXT)
