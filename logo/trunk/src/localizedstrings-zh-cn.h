@@ -611,21 +611,21 @@
 //
 // General localized strings
 //
-#define LOCALIZED_GENERAL_OKBUTTON      "OK" // NOT_YET_LOCALIZED
-#define LOCALIZED_GENERAL_CANCELBUTTON  "Cancel" // NOT_YET_LOCALIZED
-#define LOCALIZED_GENERAL_APPLYBUTTON   "&Apply" // NOT_YET_LOCALIZED
+#define LOCALIZED_GENERAL_OKBUTTON      "确定"
+#define LOCALIZED_GENERAL_CANCELBUTTON  "取消"
+#define LOCALIZED_GENERAL_APPLYBUTTON   "应用(&A)"
 
-#define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo" // NOT_YET_LOCALIZED
+#define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo"
 
 // Embedded description of fmslogo.exe
-#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "The FMSLogo programming environment" // NOT_YET_LOCALIZED
+#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "FMSLogo开发环境"
 
 //
 // The menu options on the main window 
 //
 #define LOCALIZED_FILE                  "文件(&F)"
 #define LOCALIZED_FILE_NEW              "新建(&N)\t(清除工作区)"
-#define LOCALIZED_FILE_LOAD             "加载(&L)...\t(合并至当前工作区)"
+#define LOCALIZED_FILE_LOAD             "载入(&L)...\t(合并至当前工作区)"
 #define LOCALIZED_FILE_OPEN             "打开(&O)...\t(替换当前工作区)" 
 #define LOCALIZED_FILE_SAVE             "保存(&S)" 
 #define LOCALIZED_FILE_SAVEAS           "另存为(&A)..."
@@ -634,312 +634,312 @@
 #define LOCALIZED_FILE_ERASE            "清除(&R)..."
 #define LOCALIZED_FILE_EXIT             "退出(&X)"
 
-#define LOCALIZED_BITMAP               "&Bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_NEW           "&New" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_LOAD          "&Load..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_SAVE          "&Save" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_SAVEAS        "Save &As..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_PRINT         "&Print..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_PRINTERSETUP  "P&rinter Setup..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_ACTIVEAREA    "A&ctive Area..." // NOT_YET_LOCALIZED
+#define LOCALIZED_BITMAP               "图片(&B)"
+#define LOCALIZED_BITMAP_NEW           "新建(&N)"
+#define LOCALIZED_BITMAP_LOAD          "载入(&L)..."
+#define LOCALIZED_BITMAP_SAVE          "保存(&S)"
+#define LOCALIZED_BITMAP_SAVEAS        "另存为(&A)..."
+#define LOCALIZED_BITMAP_PRINT         "打印(&P)..."
+#define LOCALIZED_BITMAP_PRINTERSETUP  "打印机设置(&R)..."
+#define LOCALIZED_BITMAP_ACTIVEAREA    "活动区域(&C)..."
 
-#define LOCALIZED_SET                  "&Set" // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_PENSIZE          "Pen Si&ze..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_LABELFONT        "&Label Font..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_COMMANDERFONT    "&Commander Font..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_PENCOLOR         "&Pen Color..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_FLOODCOLOR       "F&lood Color..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_SCREENCOLOR      "&Screen Color..." // NOT_YET_LOCALIZED
+#define LOCALIZED_SET                  "设置(&S)"
+#define LOCALIZED_SET_PENSIZE          "画笔大小(&Z)..."
+#define LOCALIZED_SET_LABELFONT        "标注字体(&L)..."
+#define LOCALIZED_SET_COMMANDERFONT    "命令窗口字体(&C)..."
+#define LOCALIZED_SET_PENCOLOR         "画笔颜色(&P)..."
+#define LOCALIZED_SET_FLOODCOLOR       "填充颜色(&L)..."
+#define LOCALIZED_SET_SCREENCOLOR      "画布颜色(&S)..."
 
-#define LOCALIZED_ZOOM                 "&Zoom"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_IN              "&In" // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_OUT             "&Out" // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_NORMAL          "&Normal" // NOT_YET_LOCALIZED
+#define LOCALIZED_ZOOM                 "缩放(&Z)" 
+#define LOCALIZED_ZOOM_IN              "放大(&I)"
+#define LOCALIZED_ZOOM_OUT             "缩小(&O)"
+#define LOCALIZED_ZOOM_NORMAL          "还原(&N)"
 
-#define LOCALIZED_HELP                 "&Help"  // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_INDEX           "&Index" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_TUTORIAL        "&Tutorial" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_DEMO            "&Demo"  // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_EXAMPLE         "&Examples" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_RELEASENOTES    "&Release Notes" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_ABOUTFMSLOGO    "&About " LOCALIZED_GENERAL_PRODUCTNAME "..." // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_MS              "&About MS..." // NOT_YET_LOCALIZED
+#define LOCALIZED_HELP                 "帮助(&H)" 
+#define LOCALIZED_HELP_INDEX           "索引(&I)"
+#define LOCALIZED_HELP_TUTORIAL        "教程(&T)"
+#define LOCALIZED_HELP_DEMO            "演示(&D)" 
+#define LOCALIZED_HELP_EXAMPLE         "示例(&E)"
+#define LOCALIZED_HELP_RELEASENOTES    "发布说明(&R)"
+#define LOCALIZED_HELP_ABOUTFMSLOGO    "关于" LOCALIZED_GENERAL_PRODUCTNAME "(&A)..."
+#define LOCALIZED_HELP_MS              "关于MS(&B)..."
 // The following two help options display tables for translating to/from English
 // These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
 // and startup-xxxx.logoscript file.
-#define LOCALIZED_HELP_LANGTOENGLISH   "LANGUAGE to English" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_ENGLISHTOLANG   "English to LANGUAGE" // NOT_YET_LOCALIZED
+#define LOCALIZED_HELP_LANGTOENGLISH   "中文转英文"
+#define LOCALIZED_HELP_ENGLISHTOLANG   "英文转中文"
 
 // The "Set Active Area" dialog box
-#define LOCALIZED_SELECTACTIVEAREA              "Select Active Area" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_EFFECT       "These affect Printing and Saving Bitmaps" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_YHIGH        "Y-High" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_YLOW         "Y-Low"  // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_XHIGH        "X-High" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_XLOW         "X-Low" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "Turtle steps per inch printed:" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_RESET        "&Reset"  // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_OK           LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SELECTACTIVEAREA              "选择活动区域"
+#define LOCALIZED_SELECTACTIVEAREA_EFFECT       "这些设置影响图片的打印和保存"
+#define LOCALIZED_SELECTACTIVEAREA_YHIGH        "Y-高"
+#define LOCALIZED_SELECTACTIVEAREA_YLOW         "Y-低"
+#define LOCALIZED_SELECTACTIVEAREA_XHIGH        "X-高"
+#define LOCALIZED_SELECTACTIVEAREA_XLOW         "X-低"
+#define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "打印的海龟像素/英寸:"
+#define LOCALIZED_SELECTACTIVEAREA_RESET        "&重置"
+#define LOCALIZED_SELECTACTIVEAREA_OK           LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON
 
 // The screensaver strings
-#define LOCALIZED_SCREENSAVER_NAME              LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_DESCRIPTION       "FMSLogo Screensaver" // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_SETTINGS_TITLE    "FMSLogo Screensaver Settings" // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_LOCATE            "&Locate ..."  // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_FILE              "Logo &File:"  // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_OK                LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SCREENSAVER_NAME              LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_SCREENSAVER_DESCRIPTION       "FMSLogo屏保"
+#define LOCALIZED_SCREENSAVER_SETTINGS_TITLE    "FMSLogo屏保设置"
+#define LOCALIZED_SCREENSAVER_LOCATE            "定位(&L)..." 
+#define LOCALIZED_SCREENSAVER_FILE              "Logo文件(&F):" 
+#define LOCALIZED_SCREENSAVER_OK                LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SCREENSAVER_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON
 
 // The dialog box for selecting a Startup procedure
-#define LOCALIZED_SELECTSTARTUP_CAPTION               "Select a " LOCALIZED_ALTERNATE_STARTUP " instruction" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "Your workspace does not have a " LOCALIZED_ALTERNATE_STARTUP " instruction list defined, so nothing\nwill happen when the screensaver is loaded.\nPlease select a procedure to run when the program is loaded." // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "The " LOCALIZED_ALTERNATE_STARTUP " variable is not a list, so nothing will happen when the screensaver\nis loaded.\nPlease select a procedure to run when the program is loaded." // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Your workspace has an empty " LOCALIZED_ALTERNATE_STARTUP " instruction list defined, so nothing will\nhappen when the screensaver is loaded.\nPlease select a procedure to run when the program is loaded." // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "No procedures are defined" // NOT_YET_LOCALIZED
+#define LOCALIZED_SELECTSTARTUP_CAPTION               "选择一个" LOCALIZED_ALTERNATE_STARTUP "指令"
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "您的工作区没有定义" LOCALIZED_ALTERNATE_STARTUP "指令列表, 因此载入屏保时\n什么也不会发生.\n请在程序载入时选择一个过程."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   LOCALIZED_ALTERNATE_STARTUP "变量不是列表, 因此载入屏保时\n什么也不会发生.\n请在程序载入时选择一个过程."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "您的工作区定义了一个空" LOCALIZED_ALTERNATE_STARTUP "指令列表, 因此载入屏保时\n什么也不会发生.\n请在程序载入时选择一个过程."
+#define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "过程未定义"
 
 // The warning dialog box when the user saves an empty workspace
-#define LOCALIZED_EMPTYWORKSPACE_TITLE                LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
-#define LOCALIZED_EMPTYWORKSPACE_MESSAGE              "There are no procedures, variables, or property lists defined,\nso the workspace will be saved as an empty file.\n\nDo you want to save the workspace anyway?" // NOT_YET_LOCALIZED
+#define LOCALIZED_EMPTYWORKSPACE_TITLE                LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_EMPTYWORKSPACE_MESSAGE              "还未定义过程、变量、属性列表,\n隐藏工作区将保存为空文件.\n\n您确定保存吗?"
 
 //
 // Menu options in the popup menu
 //
-#define LOCALIZED_POPUP_COPY                     "Copy" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_CUT                      "Cut" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_PASTE                    "Paste" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_DELETE                   "Delete" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_UNDO                     "Undo" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_REDO                     "Redo" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_SELECTALL                "Select All" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_HELP                     "Topic Search" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_REMOVELINES              "Remove Selected Lines" // NOT_YET_LOCALIZED
+#define LOCALIZED_POPUP_COPY                     "复制(&C)"
+#define LOCALIZED_POPUP_CUT                      "剪切(&X)"
+#define LOCALIZED_POPUP_PASTE                    "粘贴(&P)"
+#define LOCALIZED_POPUP_DELETE                   "删除(&D)"
+#define LOCALIZED_POPUP_UNDO                     "撤销(&U)"
+#define LOCALIZED_POPUP_REDO                     "恢复(&R)"
+#define LOCALIZED_POPUP_SELECTALL                "全选(&A)"
+#define LOCALIZED_POPUP_HELP                     "搜索主题(&T)"
+#define LOCALIZED_POPUP_REMOVELINES              "清除已选线条(&L)"
 
 //
 // The menu options on the editor
 //
-#define LOCALIZED_EDITOR_TITLE                   "Editor" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_TITLE                   "编辑器"
 
-#define LOCALIZED_EDITOR_FILE                    "&File" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "&Save and Exit\tCtrl+D" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "Save to &Workspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_PRINT              "&Print..."  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_EXIT               "E&xit"  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_FILE                    "文件(&F)"
+#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "保存后退出(&S)\tCtrl+D"
+#define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "保存到工作区(&W)"
+#define LOCALIZED_EDITOR_FILE_PRINT              "打印(&P)..." 
+#define LOCALIZED_EDITOR_FILE_EXIT               "退出(&X)" 
 
-#define LOCALIZED_EDITOR_EDIT                    "&Edit" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_UNDO               "&Undo\tCtrl+Z" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_REDO               "&Redo\tCtrl+Y" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_CUT                "&Cut\tCtrl+X" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_COPY               "C&opy\tCtrl+C" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_PASTE              "&Paste\tCtrl+V" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_DELETE             "&Delete\tDel" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_CLEARALL           "C&lear All\tCtrl+Del" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_SELECTALL          "S&elect All\tCtrl+A" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_EDIT                    "编辑(&E)"
+#define LOCALIZED_EDITOR_EDIT_UNDO               "撤销(&U)\tCtrl+Z"
+#define LOCALIZED_EDITOR_EDIT_REDO               "恢复(&R)\tCtrl+Y"
+#define LOCALIZED_EDITOR_EDIT_CUT                "剪切(&X)\tCtrl+X"
+#define LOCALIZED_EDITOR_EDIT_COPY               "复制(&C)\tCtrl+C"
+#define LOCALIZED_EDITOR_EDIT_PASTE              "粘贴(&P)\tCtrl+V"
+#define LOCALIZED_EDITOR_EDIT_DELETE             "删除(&D)\tDel"
+#define LOCALIZED_EDITOR_EDIT_CLEARALL           "全部清除(&L)\tCtrl+Del"
+#define LOCALIZED_EDITOR_EDIT_SELECTALL          "全选(&A)\tCtrl+A"
 
-#define LOCALIZED_EDITOR_SEARCH                  "&Search" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SEARCH_FIND             "&Find...\tCtrl+F" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SEARCH_REPLACE          "&Replace...\tCtrl+H"  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SEARCH_NEXT             "&Next\tF3"  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_SEARCH                  "搜索(&S)"
+#define LOCALIZED_EDITOR_SEARCH_FIND             "查找(&F)...\tCtrl+F"
+#define LOCALIZED_EDITOR_SEARCH_REPLACE          "替换(&R)...\tCtrl+H" 
+#define LOCALIZED_EDITOR_SEARCH_NEXT             "下一个(&N)\tF3"
 
-#define LOCALIZED_EDITOR_SET                     "Se&t"  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SET_FONT                "&Font..."  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_SET                     "设置(&T)"
+#define LOCALIZED_EDITOR_SET_FONT                "字体(&F)..." 
 
-#define LOCALIZED_EDITOR_TEST                    "Test" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "&Run Selection\tCtrl+R" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_TEST                    "测试"
+#define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "运行(&R)\tCtrl+R"
 
-#define LOCALIZED_EDITOR_HELP                    "&Help"  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_HELP_INDEX              "&Index" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_HELP_EDITOR             "&Editor" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "&Topic Search\tF1" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_HELP                    "帮助(&H)"
+#define LOCALIZED_EDITOR_HELP_INDEX              "索引(&I)"
+#define LOCALIZED_EDITOR_HELP_EDITOR             "编辑器(&E)"
+#define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "主题搜索(&T)\tF1"
 
 
 //
 // The strings in the "You have unsaved changes" dialog
 //
-#define LOCALIZED_UNSAVEDCHANGES                LOCALIZED_YOUHAVEUNSAVEDCHANGES // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "&Save and Exit" // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_DONTSAVE       "&Don't Save" // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_MESSAGE1       "There are unsaved changes in the workspace.  If you exit without saving, these changes will be lost.  " // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_MESSAGE2       "Would you like to save your changes before exiting?"  // NOT_YET_LOCALIZED
+#define LOCALIZED_UNSAVEDCHANGES                LOCALIZED_YOUHAVEUNSAVEDCHANGES
+#define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "保存后退出(&S)"
+#define LOCALIZED_UNSAVEDCHANGES_DONTSAVE       "不保存(&D)"
+#define LOCALIZED_UNSAVEDCHANGES_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON
+#define LOCALIZED_UNSAVEDCHANGES_MESSAGE1       "工作区已改变.  如果现在退出, 所做操作将丢失."
+#define LOCALIZED_UNSAVEDCHANGES_MESSAGE2       "退出前保存您的操作吗？"
 
 
 //
 // Strings on the Commander window
 //
-#define LOCALIZED_COMMANDER                     "Commander" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_HALT                "Halt" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_TRACE               "Trace" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_NOTRACE             "NoTrace" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_PAUSE               "Pause" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_STATUS              "Status" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_NOSTATUS            "NoStatus" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_STEP                "Step" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_UNSTEP              "UnStep" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_RESET               "Reset" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_EXECUTE             "Execute" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_EDALL               "Edall" // NOT_YET_LOCALIZED
+#define LOCALIZED_COMMANDER                     "命令窗口"
+#define LOCALIZED_COMMANDER_HALT                "终止"
+#define LOCALIZED_COMMANDER_TRACE               "跟踪"
+#define LOCALIZED_COMMANDER_NOTRACE             "不跟踪"
+#define LOCALIZED_COMMANDER_PAUSE               "暂停"
+#define LOCALIZED_COMMANDER_STATUS              "显示状态"
+#define LOCALIZED_COMMANDER_NOSTATUS            "隐藏状态"
+#define LOCALIZED_COMMANDER_STEP                "单步"
+#define LOCALIZED_COMMANDER_UNSTEP              "停止单步"
+#define LOCALIZED_COMMANDER_RESET               "重置"
+#define LOCALIZED_COMMANDER_EXECUTE             "执行"
+#define LOCALIZED_COMMANDER_EDALL               "代码编辑器"
 
 //
 // Strings on the Status window
 //
-#define LOCALIZED_STATUS                        "Status" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PEN                    "Pen" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_CONTACT                "Contact:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_WIDTH                  "Width:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_STYLE                  "Style:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_ORIENTATION            "Orientation" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PITCH                  "Pitch:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_HEADING                "Heading:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_ROLL                   "Roll:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_TURTLE                 "Turtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_POSITION               "Position(XYZ):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_WHICH                  "Which:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_VISIBILITY             "Visibility:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_COLOR                  "Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENCOLOR               "Pen(RGB):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_FLOODCOLOR             "Flood(RGB):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_SCREENCOLOR            "Screen(RGB):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_KERNEL                 "Kernel" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_CALLS                  "Calls:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PEAKMEMORY             "Peak Memory:" // NOT_YET_LOCALIZED
+#define LOCALIZED_STATUS                        "状态窗口"
+#define LOCALIZED_STATUS_PEN                    "画笔"
+#define LOCALIZED_STATUS_CONTACT                "触点:"
+#define LOCALIZED_STATUS_WIDTH                  "宽度:"
+#define LOCALIZED_STATUS_STYLE                  "风格:"
+#define LOCALIZED_STATUS_ORIENTATION            "方向"
+#define LOCALIZED_STATUS_PITCH                  "最高点:"
+#define LOCALIZED_STATUS_HEADING                "角度:"
+#define LOCALIZED_STATUS_ROLL                   "滚动:"
+#define LOCALIZED_STATUS_TURTLE                 "海龟"
+#define LOCALIZED_STATUS_POSITION               "位置(XYZ):"
+#define LOCALIZED_STATUS_WHICH                  "位置:"
+#define LOCALIZED_STATUS_VISIBILITY             "可见性:"
+#define LOCALIZED_STATUS_COLOR                  "颜色"
+#define LOCALIZED_STATUS_PENCOLOR               "画笔(RGB):"
+#define LOCALIZED_STATUS_FLOODCOLOR             "填充(RGB):"
+#define LOCALIZED_STATUS_SCREENCOLOR            "画布(RGB):"
+#define LOCALIZED_STATUS_KERNEL                 "内核"
+#define LOCALIZED_STATUS_CALLS                  "调用次数:"
+#define LOCALIZED_STATUS_PEAKMEMORY             "内存峰值:"
 
-#define LOCALIZED_STATUS_PENREVERSE     "Reverse" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENNORMAL      "Normal" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENERASE       "Erase" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENUP          "Up" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENDOWN        "Down" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENSHOWN       "Shown" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENHIDDEN      "Hidden" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_POLYGONS       "Polygons" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_VECTORS        "Vectors" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_NODES          "Nodes" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_NOT_APPLICABLE "N/A" // NOT_YET_LOCALIZED
+#define LOCALIZED_STATUS_PENREVERSE     "反向"
+#define LOCALIZED_STATUS_PENNORMAL      "正常"
+#define LOCALIZED_STATUS_PENERASE       "擦除"
+#define LOCALIZED_STATUS_PENUP          "向上"
+#define LOCALIZED_STATUS_PENDOWN        "向下"
+#define LOCALIZED_STATUS_PENSHOWN       "显示"
+#define LOCALIZED_STATUS_PENHIDDEN      "隐藏"
+#define LOCALIZED_STATUS_POLYGONS       "多边形"
+#define LOCALIZED_STATUS_VECTORS        "立体"
+#define LOCALIZED_STATUS_NODES          "节点"
+#define LOCALIZED_STATUS_NOT_APPLICABLE "不适用/适用"
 
 //
 // Strings on the Erase|Edit Procedure dialog box
 //
-#define LOCALIZED_SELECTPROCEDURE_OK            LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTPROCEDURE_CANCEL        LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTPROCEDURE_ALL           "&All" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERASEPROCEDURE                "Erase Procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITPROCEDURE                 "Edit Procedure" // NOT_YET_LOCALIZED
+#define LOCALIZED_SELECTPROCEDURE_OK            LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SELECTPROCEDURE_CANCEL        LOCALIZED_GENERAL_CANCELBUTTON
+#define LOCALIZED_SELECTPROCEDURE_ALL           "所有(&A)"
+#define LOCALIZED_ERASEPROCEDURE                "清除过程"
+#define LOCALIZED_EDITPROCEDURE                 "编辑过程"
 
 
 //
 // Strings on the Color Picker Dialog box
 //
-#define LOCALIZED_SETCOLOR                     "Set Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_PENCOLOR            "Pen Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_FLOODCOLOR          "Flood Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_SCREENCOLOR         "Screen Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_RED                 "Red" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_GREEN               "Green" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_BLUE                "Blue" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_APPLY               LOCALIZED_GENERAL_APPLYBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SETCOLOR                     "颜色设置"
+#define LOCALIZED_SETCOLOR_PENCOLOR            "画笔颜色"
+#define LOCALIZED_SETCOLOR_FLOODCOLOR          "填充颜色"
+#define LOCALIZED_SETCOLOR_SCREENCOLOR         "画布颜色"
+#define LOCALIZED_SETCOLOR_RED                 "红色"
+#define LOCALIZED_SETCOLOR_GREEN               "绿色"
+#define LOCALIZED_SETCOLOR_BLUE                "蓝色"
+#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON
+#define LOCALIZED_SETCOLOR_APPLY               LOCALIZED_GENERAL_APPLYBUTTON
 
 //
 // Strings on the Pen Size Picker Dialog box
 //
-#define LOCALIZED_SETPENSIZE                   "Pen Size" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETPENSIZE_SIZE              "Thickness" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETPENSIZE_OK                LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SETPENSIZE_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SETPENSIZE_APPLY             LOCALIZED_GENERAL_APPLYBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SETPENSIZE                   "画笔尺寸"
+#define LOCALIZED_SETPENSIZE_SIZE              "大小"
+#define LOCALIZED_SETPENSIZE_OK                LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SETPENSIZE_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON
+#define LOCALIZED_SETPENSIZE_APPLY             LOCALIZED_GENERAL_APPLYBUTTON
 
 
 //
 // Strings on the "About FMSLogo" Dialog box
 //
-#define LOCALIZED_ABOUTFMS                     "About " LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_VERSION             "Version" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills\nSoftronics, Inc.\nhttp://www.softronix.com/" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_CORE                "Core by Brian Harvey\nUniversity of California Berkeley" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_INSTALLER           "Installer based on Nullsoft Scriptable Install System\nhttp://nsis.sourceforge.net/" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http://www.softronix.com/" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Special thanks to Yehuda Katz and Erich Neuwirth" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME " is free software\nSee GNU Public License" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp://groups.yahoo.com/group/LogoForum/" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "To learn the internals of computers,\ntry MultiMedia Logic from Softronics, Inc." // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTFMS                     "关于" LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_ABOUTFMS_VERSION             "版本"
+#define LOCALIZED_ABOUTFMS_GUI                 "界面编写:  George Mills\nSoftronics, Inc.\nhttp://www.softronix.com/"
+#define LOCALIZED_ABOUTFMS_CORE                "内核编写: Brian Harvey\n加利福利亚大学，伯克利分校"
+#define LOCALIZED_ABOUTFMS_INSTALLER           "安装包采用Nullsoft Scriptable Install System制作\nhttp://nsis.sourceforge.net/"
+#define LOCALIZED_ABOUTFMS_ADVENTURE           "《The Great Logo Adventure》(ISBN 0-9651934-6-2)\n作者: Jim Muller\n请访问http://www.softronix.com/"
+#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "特别鸣谢Yehuda Katz和Neuwirth"
+#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME "是自由软件\n参见GNU Public License"
+#define LOCALIZED_ABOUTFMS_NEWSGROUP           "网络新闻组: comp.lang.logo\nLogo论坛\nhttp://groups.yahoo.com/group/LogoForum/"
+#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "如需学习计算机原理,\n请与Softronics, Inc.联系索取MultiMedia Logic"
+#define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON
 
 
 //
 // Strings on the "About FMS" Dialog box
 //
-#define LOCALIZED_ABOUTMS                      "About FMS" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTMS_FMS                  "FMS stands for Fight Multiple Sclerosis." // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Please consider donating to the\nNational Multiple Sclerosis Society.\nhttp://www.nmss.org\n1-800-FIGHT-MS" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTMS                      "关于FMS"
+#define LOCALIZED_ABOUTMS_FMS                  "FMS是Fight Multiple Sclerosis.是缩写"
+#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "请捐助\nNational Multiple Sclerosis Society.\nhttp://www.nmss.org\n1-800-FIGHT-MS"
+#define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON
 
 
 //
 // Strings on the SELECTBOX Dialog box
 //
-#define LOCALIZED_SELECTBOX_OK                 LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTBOX_CANCEL             LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SELECTBOX_OK                 LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SELECTBOX_CANCEL             LOCALIZED_GENERAL_CANCELBUTTON
 
 //
 // Strings on the QUESTIONBOX dialog box
 //
-#define LOCALIZED_QUESTIONBOX_OK               LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_QUESTIONBOX_CANCEL           LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_QUESTIONBOX_OK               LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_QUESTIONBOX_CANCEL           LOCALIZED_GENERAL_CANCELBUTTON
 
 
 // 
 // Strings in various other dialog boxes
 // 
 
-#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Changes in this edit session may be lost.\n\nDo you really want to exit " LOCALIZED_GENERAL_PRODUCTNAME "?" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITSESSIONISRUNNING      "An Edit session is running" // NOT_YET_LOCALIZED
+#define LOCALIZED_CHANGESINEDITORMAYBELOST  "所有操作将丢失.\n\n您确定退出吗？ " LOCALIZED_GENERAL_PRODUCTNAME "?"
+#define LOCALIZED_EDITSESSIONISRUNNING      "编辑对话正在运行"
 
-#define LOCALIZED_COULDNOTWRITEBMP            "Could not write .bmp" // NOT_YET_LOCALIZED
-#define LOCALIZED_COULDNOTOPENBMP             "Could not open .bmp" // NOT_YET_LOCALIZED
-#define LOCALIZED_COULDNOTCREATEBMP           "Unable to create Windows 3.0 bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_NOTVALIDBMP                 "Not a Windows 3.0 bitmap" // NOT_YET_LOCALIZED
+#define LOCALIZED_COULDNOTWRITEBMP            "保存图片失败"
+#define LOCALIZED_COULDNOTOPENBMP             "打开图片失败"
+#define LOCALIZED_COULDNOTCREATEBMP           "不能创建Windows 3.0位图"
+#define LOCALIZED_NOTVALIDBMP                 "不是Windows 3.0位图"
 
-#define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "You have not saved to disk" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILENEWWILLERASEWORKSPACE     "Executing a new will erase all definitions.\n\nContinue with New?" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "The file being loaded will be merged into your workspace\nand may overwrite your unsaved changes.\n\nContinue with Load?" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "This will erase all of your unsaved changes.\n\nContinue with Open?" // NOT_YET_LOCALIZED
+#define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "还未保存"
+#define LOCALIZED_FILENEWWILLERASEWORKSPACE     "如果新建将清空所有定义.\n\n确定新建吗?"
+#define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "载入的文件将合并当前工作区\n并覆盖您的修改.\n\n继续载入吗?"
+#define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "未保存的操作将丢失.\n\n确定打开吗?"
 
-#define LOCALIZED_EDITORISOPEN                  "Did you know you have an edit session running?\n\nAny changes in this edit session are not being saved." // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITORISOPEN                  "您正在执行一个编辑.\n\n所做操作还未保存."
 
-#define LOCALIZED_ERROR_CANTREADFILE            "Unable to read file \"%s\" from disk" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTWRITEFILE           "Unable to write file \"%s\" to disk" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_CANTREADFILE            "不能读取文件\"%s\""
+#define LOCALIZED_ERROR_CANTWRITEFILE           "不能写文件\"%s\""
 
-#define LOCALIZED_SAVETOWORKSPACE                "Save to Workspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_CONTENTSCHANGED                "Contents Changed" // NOT_YET_LOCALIZED
-#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "The contents have changed.\nWould you like to save the changes to the workspace?" // NOT_YET_LOCALIZED
+#define LOCALIZED_SAVETOWORKSPACE                "保存到工作区"
+#define LOCALIZED_CONTENTSCHANGED                "内容已更改"
+#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "内容已更改.\n您要保存更改吗?"
 
 
 
-#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "There was a problem saving the contents of the editor to the workspace.  The cursor will be positioned just after last successful definition.\n\nCheck the Commander for possible error message." // NOT_YET_LOCALIZED
-#define LOCALIZED_RETURNTOEDIT                  "Return to the editor?" // NOT_YET_LOCALIZED
+#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "保存编辑的内容出现错误.  光标将停在上次成功的定义.\n\n请检查命令窗口错误信息."
+#define LOCALIZED_RETURNTOEDIT                  "返回编辑器?"
 
-#define LOCALIZED_EDITFAILEDTOLOAD              LOCALIZED_SAVETOWORKSPACE // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITFAILEDTOLOAD              LOCALIZED_SAVETOWORKSPACE
 
-#define LOCALIZED_ERRORINFILETITLE              "Error in File" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERRORINFILEMESSAGE            "There was a problem loading the contents of the file \"%s\".\n\nCheck the Commander for possible error message.\n\nDo you want to open the file in the editor to see the error?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERRORINFILETITLE              "文件有错误"
+#define LOCALIZED_ERRORINFILEMESSAGE            "载入文件时出错 \"%s\".\n\n请检查命令窗口错误信息.\n\n您要在编辑器打开文件查看错误吗？"
 
-#define LOCALIZED_CANNOTALLOCATESCREEN          "Unable to allocate memory for the screen window.  You may have requested a width and height that exceeds the amount of available video RAM.\n\n" LOCALIZED_GENERAL_PRODUCTNAME " can't continue." // NOT_YET_LOCALIZED
+#define LOCALIZED_CANNOTALLOCATESCREEN          "分配画布窗口内存失败.  可能您申请的尺寸超过了可用的内存.\n\n" LOCALIZED_GENERAL_PRODUCTNAME
 
 
 // 
 //  Strings used in the File-Open filters
 //
-#define LOCALIZED_FILE_LOAD_DIALOG_TITLE    "Select the Logo program to load (merge into workspace)" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_OPEN_DIALOG_TITLE    "Select the Logo program to open (replace the workspace with)" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_SAVE_DIALOG_TITLE    "Select the file to which the workspace will be saved" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_OPEN_DIALOG_TITLE  "Select the image to load" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_SAVE_DIALOG_TITLE  "Select the file to which the active area will be saved" // NOT_YET_LOCALIZED
+#define LOCALIZED_FILE_LOAD_DIALOG_TITLE    "载入Logo程序(合并至当前工作区)"
+#define LOCALIZED_FILE_OPEN_DIALOG_TITLE    "打开Logo程序(替换当前工作区)"
+#define LOCALIZED_FILE_SAVE_DIALOG_TITLE    "选择工作区文件"
+#define LOCALIZED_BITMAP_OPEN_DIALOG_TITLE  "载入图片"
+#define LOCALIZED_BITMAP_SAVE_DIALOG_TITLE  "选择当前区域保存文件"
 
-#define LOCALIZED_LOGO_FILE_EXTENSION "lgo" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILEFILTER_ALLFILES "All Files (*.*)|*.*" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILEFILTER_LOGO     "Logo Files (*.lgo)|*.lgo|" LOCALIZED_FILEFILTER_ALLFILES // NOT_YET_LOCALIZED
-#define LOCALIZED_FILEFILTER_IMAGE    "Bitmap Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif|" LOCALIZED_FILEFILTER_ALLFILES // NOT_YET_LOCALIZED
+#define LOCALIZED_LOGO_FILE_EXTENSION "lgo"
+#define LOCALIZED_FILEFILTER_ALLFILES "所有文件(*.*)|*.*"
+#define LOCALIZED_FILEFILTER_LOGO     "Logo文件(*.lgo)|*.lgo|" LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_IMAGE    "图片文件(*.bmp)|*.bmp|GIF文件(*.gif)|*.gif|" LOCALIZED_FILEFILTER_ALLFILES
 
 
 
@@ -955,109 +955,109 @@
 //
 // strings seen when single-stepping execution
 //
-#define LOCALIZED_STEPPING                  "Single Step" // NOT_YET_LOCALIZED
+#define LOCALIZED_STEPPING                  "单步"
 
 //
 // Notification when defining a procedure with TO in the commander
 //
-#define LOCALIZED_PROCEDUREDEFINED  "%s defined\n" // NOT_YET_LOCALIZED
+#define LOCALIZED_PROCEDUREDEFINED  "%s已定义\n"
 
 
 //
 // Words that represent the pen's mode
 //
-#define LOCALIZED_PENMODE_ERASE    "erase" // NOT_YET_LOCALIZED
-#define LOCALIZED_PENMODE_REVERSE  "reverse" // NOT_YET_LOCALIZED
-#define LOCALIZED_PENMODE_PAINT    "paint" // NOT_YET_LOCALIZED
+#define LOCALIZED_PENMODE_ERASE    "擦除"
+#define LOCALIZED_PENMODE_REVERSE  "反向"
+#define LOCALIZED_PENMODE_PAINT    "画图"
 
 //
 // Error message thrown by Logo
 //
-#define LOCALIZED_ERROR_FATALINTERNAL          "Logo: Fatal Internal Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_OUTOFMEMORYUNREC       "Logo: Out of memory" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_OUTOFMEMORY            "Out of memory" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_STACKOVERFLOW          "stack overflow" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "turtle out of bounds" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADGRAPHINIT           "couldn't initialize graphics" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADDATA                "%p doesn't like %s as input" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DIDNTOUTPUT            "%p didn't output to %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOTENOUGHINPUTS        "not enough inputs to %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TOOMUCH                "too much inside ()'s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "You don't say what to do with %s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_PARENMISMATCH          "too many ('s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOVALUE                "%s has no value" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNEXPECTEDPAREN        "unexpected ')'" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNEXPECTEDBRACKET      "unexpected ']'" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNEXPECTEDBRACE        "unexpected '}'" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DONTKNOWHOWTO          "I don't know how to %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOCATCHTAG             "Can't find catch tag for %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ALREADYDEFINED         "%p is already defined" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_STOPPING               "Stopping..." // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ALREADYDRIBBLING       "Already dribbling" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM                   "File system error: %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN          "Could not open file" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN2         "Unable to open file: %t" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_ALREADYOPEN       "File already open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_NOTOPEN           "File not open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTCREATEEDITOR  "Could not create editor file" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTSTARTEDITOR   "Could not launch the editor"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTREADEDITOR    "Could not read editor file"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_IFWARNING              "Assuming you mean IFELSE, not IF" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_SHADOWWARNING          "%p shadowed by local in procedure call" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_USER                   "Throw \"Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ISPRIMITIVE            "%p is a primitive" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TONOTINSIDE            "Can't use TO inside a procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ATTOPLEVEL             "Can only use %p inside a procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ATTOPLEVEL2            "You must be in a procedure to use OUTPUT or STOP" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOTEST                 "%p without TEST" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADMACROOUTPUT         "Macro output %s instead of a list" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DEEPEND                "END inside multi-line instruction" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DEEPENDIN              "END inside multi-line instruction in %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNKNOWN                "Unknown error condition - internal error." // NOT_YET_LOCALIZED
-#define LOCALIZED_PAUSING                      "Pausing..." // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_FATALINTERNAL          "Logo: 致命内部错误"
+#define LOCALIZED_ERROR_OUTOFMEMORYUNREC       "Logo: 内存不足"
+#define LOCALIZED_ERROR_OUTOFMEMORY            "内存不足"
+#define LOCALIZED_ERROR_STACKOVERFLOW          "堆栈溢出"
+#define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "海龟超出范围"
+#define LOCALIZED_ERROR_BADGRAPHINIT           "图形初始化失败"
+#define LOCALIZED_ERROR_BADDATA                "%p 不喜欢 %s 作为输入"
+#define LOCALIZED_ERROR_DIDNTOUTPUT            "%p 未输出至%p"
+#define LOCALIZED_ERROR_NOTENOUGHINPUTS        "输入不足: %p"
+#define LOCALIZED_ERROR_TOOMUCH                "太多内部()'s"
+#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "您没有指定如何处理%s"
+#define LOCALIZED_ERROR_PARENMISMATCH          "太多('s"
+#define LOCALIZED_ERROR_NOVALUE                "%s未赋值"
+#define LOCALIZED_ERROR_UNEXPECTEDPAREN        "意外的')'"
+#define LOCALIZED_ERROR_UNEXPECTEDBRACKET      "意外的']'"
+#define LOCALIZED_ERROR_UNEXPECTEDBRACE        "意外的'}'"
+#define LOCALIZED_ERROR_DONTKNOWHOWTO          "我不知道如何%p"
+#define LOCALIZED_ERROR_NOCATCHTAG             "不能发现%p的捕获标记"
+#define LOCALIZED_ERROR_ALREADYDEFINED         "%p已定义"
+#define LOCALIZED_ERROR_STOPPING               "正在停止..."
+#define LOCALIZED_ERROR_ALREADYDRIBBLING       "已泄漏"
+#define LOCALIZED_ERROR_FILESYSTEM                   "文件系统错误: %p"
+#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN          "打开文件失败"
+#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN2         "不能打开文件: %t"
+#define LOCALIZED_ERROR_FILESYSTEM_ALREADYOPEN       "文件已打开"
+#define LOCALIZED_ERROR_FILESYSTEM_NOTOPEN           "文件未打开"
+#define LOCALIZED_ERROR_FILESYSTEM_CANTCREATEEDITOR  "创建编辑器文件失败"
+#define LOCALIZED_ERROR_FILESYSTEM_CANTSTARTEDITOR   "加载编辑器失败" 
+#define LOCALIZED_ERROR_FILESYSTEM_CANTREADEDITOR    "读取编辑器文件失败" 
+#define LOCALIZED_ERROR_IFWARNING              "假定你使用的是IFELSE, 不是IF"
+#define LOCALIZED_ERROR_SHADOWWARNING          "%p过程中内部变量屏蔽"
+#define LOCALIZED_ERROR_USER                   "抛出 \"错误"
+#define LOCALIZED_ERROR_ISPRIMITIVE            "%p是原语"
+#define LOCALIZED_ERROR_TONOTINSIDE            "过程内部不能使用TO"
+#define LOCALIZED_ERROR_ATTOPLEVEL             "%p只能在过程内部使用"
+#define LOCALIZED_ERROR_ATTOPLEVEL2            "OUTPUT和STOP只能在过程内使用"
+#define LOCALIZED_ERROR_NOTEST                 "%p未测试"
+#define LOCALIZED_ERROR_BADMACROOUTPUT         "宏输出%s代替列表"
+#define LOCALIZED_ERROR_DEEPEND                "多行指令中含有END"
+#define LOCALIZED_ERROR_DEEPENDIN              "多行指令%p中含有END"
+#define LOCALIZED_ERROR_UNKNOWN                "未知错误条件-内部错误."
+#define LOCALIZED_PAUSING                      "暂停..."
 
 
 // FMSLogo-specific error messages.
-#define LOCALIZED_ERROR_INVALIDSTATEFORINSTRUCTION "Invalid state for instruction: %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MODE_ON_SPRITE             "cannot set the mode of a turtle with a rotating bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "cannot make a special turtle use a rotating bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BITMAPCLIPBOARD            "cannot use the clipboard as a rotating bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_SPECIALFORM                "%p doesn't like %p as input because it has a special form" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_INVALIDSTATEFORINSTRUCTION "%p指令的状态无效"
+#define LOCALIZED_ERROR_MODE_ON_SPRITE             "当乌龟带有旋转的图片时，不能设置其模式"
+#define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "不能用旋转图片制作乌龟图片"
+#define LOCALIZED_ERROR_BITMAPCLIPBOARD            "不能用剪贴板作为旋转图片"
+#define LOCALIZED_ERROR_SPECIALFORM                "%p不能用%p作为输入, 因其有特殊格式"
 
 //
 // Error messages displayed in Message Boxes.
 //
-#define LOCALIZED_ERROR                      "Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADINPUT             "Bad input" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADINPUTNOTPAIRED    "Input is not paired" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR                      "错误"
+#define LOCALIZED_ERROR_BADINPUT             "无效输入"
+#define LOCALIZED_ERROR_BADINPUTNOTPAIRED    "输入不配对"
 
-#define LOCALIZED_ERROR_CANTOPENPORT         "Could not open port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTCLOSEPORT        "Could not close port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTFLUSHPORT        "Could not flush port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTDCBONPORT        "Could not build dcb on port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTSETPORT          "Could not set port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_PORTALREADYOPEN      "Port is already open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_PORTNOTOPEN          "Port is not open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "First input must be an array" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_CANTOPENPORT         "打开端口失败"
+#define LOCALIZED_ERROR_CANTCLOSEPORT        "关闭端口失败"
+#define LOCALIZED_ERROR_CANTFLUSHPORT        "刷新端口失败"
+#define LOCALIZED_ERROR_CANTDCBONPORT        "在端口建立dcb失败"
+#define LOCALIZED_ERROR_CANTSETPORT          "设置端口失败"
+#define LOCALIZED_ERROR_PORTALREADYOPEN      "端口已打开"
+#define LOCALIZED_ERROR_PORTNOTOPEN          "端口未打开"
+#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "初始输入必须是数组"
 
-#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s already exists" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s does not exist" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s已存在"
+#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s不存在"
 
-#define LOCALIZED_ERROR_DLLNOTLOADED          "DLL is not loaded" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLLOADFAILED         "DLL load failed" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "Invalid data type input" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE  "Invalid output type" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "Function not found" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "Not all Type/Data inputs are paired" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_DLLNOTLOADED          "DLL还未装入"
+#define LOCALIZED_ERROR_DLLLOADFAILED         "DLL装入失败"
+#define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "输入的数据类型无效"
+#define LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE  "输出的类型无效"
+#define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "函数未发现"
+#define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "有的类型/数据未配对"
 
-#define LOCALIZED_ERROR_NETWORK               "Network Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKRECEIVE        "Network Receive Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKSEND           "Network Send Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKSHUTDOWN       "Unexpected Error, Network may be shutdown" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKNOTSTARTED     "Not started" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKALREADYSTARTED "Already started" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKALREADYON      "Already on" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKALREADYOFF     "Already off" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_NETWORK               "网络错误"
+#define LOCALIZED_ERROR_NETWORKRECEIVE        "网络接收错误"
+#define LOCALIZED_ERROR_NETWORKSEND           "网络发生错误"
+#define LOCALIZED_ERROR_NETWORKSHUTDOWN       "未知错误, 网络可能已关闭"
+#define LOCALIZED_ERROR_NETWORKNOTSTARTED     "还未开始"
+#define LOCALIZED_ERROR_NETWORKALREADYSTARTED "已开始"
+#define LOCALIZED_ERROR_NETWORKALREADYON      "已打开"
+#define LOCALIZED_ERROR_NETWORKALREADYOFF     "已关闭"
 
 // The rest of the network errors shouldn't really be seen -- may be okay not to localize
 #define LOCALIZED_ERROR_NETWORKNAMETOOLONG         "Name too long" // NOT_YET_LOCALIZED
@@ -1107,71 +1107,71 @@
 #define LOCALIZED_ERROR_NETWORKUNREACHABLE         "No path to remote host was found" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_NETWORKTOOMANYREFS         "Too many references" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_ERROR_POLYSTART               "PolyStart Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_POLYSTARTALREADYSTARTED "You already have a Polygon started" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_POLYSTART               "多边形起始错误"
+#define LOCALIZED_ERROR_POLYSTARTALREADYSTARTED "已开始多边形绘制"
 
-#define LOCALIZED_ERROR_POLYEND                 "PolyEnd Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_POLYENDNOTSTARTED       "You have not started a Polygon" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "You must have at least 3 vectors to define a polygon" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_POLYEND                 "多边形结束错误"
+#define LOCALIZED_ERROR_POLYENDNOTSTARTED       "还没有开始绘制多边形"
+#define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "定义一个多边形至少要三条线段"
 
-#define LOCALIZED_ERROR_SOUND                 "Sound Error" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_SOUND                 "声音错误"
 
-#define LOCALIZED_ERROR_MIDI                  "MIDI Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MIDIINVALIDDEVICE     "Invalid MIDI device" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MIDIALREADYOPEN       "Already open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MIDINOTOPEN           "Not open" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_MIDI                  "MIDI错误"
+#define LOCALIZED_ERROR_MIDIINVALIDDEVICE     "无效的MIDI设备"
+#define LOCALIZED_ERROR_MIDIALREADYOPEN       "已打开"
+#define LOCALIZED_ERROR_MIDINOTOPEN           "未打开"
 
-#define LOCALIZED_ERROR_CLIPBOARDISEMPTY      "No Text in Clipboard" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_CLIPBOARDISEMPTY      "剪贴板没有文本"
 
-#define LOCALIZED_ERROR_MCI                   "MCI Error" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_MCI                   "MCI错误"
 
-#define LOCALIZED_ERROR_TIMERNOTFOUND         "Timer not found" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_TIMERNOTFOUND         "未发现定时器"
 
-#define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Online help is unavailable because hhctrl.ocx could not be loaded."  // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_HHCTRLNOTLOADED       "在线帮助无效, hhctrl.ocx加载失败"
 
-#define LOCALIZED_ERROR_BADCOMMANDLINE        "Invalid Command Line"  // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_BADCOMMANDLINE        "命令行无效" 
 
-#define LOCALIZED_ERROR_TMPNOTDEFINED         "The environment variable TMP is not defined or invalid.\n" LOCALIZED_GENERAL_PRODUCTNAME " will attempt to use C:\\ for storing temporary files" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_TMPNOTDEFINED         "环境变量TMP未定义或无效.\n" LOCALIZED_GENERAL_PRODUCTNAME " 尝试保存临时文件到C:\\"
 
-#define LOCALIZED_ERROR_GIFSAVEFAILED         "Problem Generating GIF, check memory and diskspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_GIFREADFAILED         "Problem Reading GIF, check memory and diskspace" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_GIFSAVEFAILED         "生成GIF失败, 请检查内存和硬盘"
+#define LOCALIZED_ERROR_GIFREADFAILED         "读取GIF失败, 请检查内存和硬盘"
 
-#define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "BitMap Index out of range" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BITMAPCUTFAILED        "Cut failed, Possibly not enough Memory" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "图片索引超出范围"
+#define LOCALIZED_ERROR_BITMAPCUTFAILED        "剪切失败, 可能内存不足"
 
-#define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Nothing to Paste"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "BitMap at Index must be initialized with a bitmap"  // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "剪贴板空" 
+#define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "索引中的图片必须用位图初始化" 
 
-#define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "Turtle %d has no picture, will Halt" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "海龟%d没有图片, 将终止"
 
-#define LOCALIZED_ERROR_FONTNOTFOUND            "Sorry, no font named %s was found.  Choose one of the following:\n" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_FONTNOTFOUND            "字体名%s未发现.  请选择:\n"
 
-#define LOCALIZED_ERROR_PRINTERCANTSCALE        "Print driver does not support this function"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTDRAWIMAGE           "Cannot draw image" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTEXTRACTIMAGE        "Cannot extract image" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_SUBCODE                 "Sub Code" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_PRINTERCANTSCALE        "打印机驱动不支持该功能" 
+#define LOCALIZED_ERROR_CANTDRAWIMAGE           "画图失败"
+#define LOCALIZED_ERROR_CANTEXTRACTIMAGE        "抽取图像失败"
+#define LOCALIZED_ERROR_SUBCODE                 "子过程"
 
 //
 // Strings in the dialog box for reading from "stdin"
 //
-#define LOCALIZED_INPUT         "Input:" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_TO     "To Mode (Cancel to End)" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_LIST   "List Mode (Cancel to Halt)" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_PAUSE  "Pause Mode (Cancel to Continue)" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_INPUT  "Input Mode (Cancel to Halt)" // NOT_YET_LOCALIZED
+#define LOCALIZED_INPUT         "输入:"
+#define LOCALIZED_PROMPT_TO     "To模式(Cancel to End)"
+#define LOCALIZED_PROMPT_LIST   "列表模式(Cancel to Halt)"
+#define LOCALIZED_PROMPT_PAUSE  "暂停模式(Cancel to Continue)"
+#define LOCALIZED_PROMPT_INPUT  "输入模式(Cancel to Halt)"
 
 //
 // Messages shown by the FILE API.
 //
-#define LOCALIZED_FILE_CHDIRSUCCEEDED      "Changed to \"%s\"" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_CHDIRFAILED         "Could not chdir to directory \"%s\"" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_POPPEDTO            "Popped to \"%s\"" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_MKDIRSUCCEEDED      "Now in newly created directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_MKDIRFAILED         "Failed to create directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRSUCCEEDED      "Removed directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRFAILED         "Failed to remove directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRFAILEDNOEXIST  "The directory does not exist." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRFAILEDNOTEMPTY "Make sure the directory is empty before trying to remove it." // NOT_YET_LOCALIZED
+#define LOCALIZED_FILE_CHDIRSUCCEEDED      "切换至\"%s\""
+#define LOCALIZED_FILE_CHDIRFAILED         "chdir\"%s\"失败"
+#define LOCALIZED_FILE_POPPEDTO            "弹出\"%s\""
+#define LOCALIZED_FILE_MKDIRSUCCEEDED      "位于新建文件夹\"%s\"" 
+#define LOCALIZED_FILE_MKDIRFAILED         "创建文件夹失败\"%s\"" 
+#define LOCALIZED_FILE_RMDIRSUCCEEDED      "文件夹已删除\"%s\"" 
+#define LOCALIZED_FILE_RMDIRFAILED         "删除文件夹失败\"%s\"" 
+#define LOCALIZED_FILE_RMDIRFAILEDNOEXIST  "文件夹不存在."
+#define LOCALIZED_FILE_RMDIRFAILEDNOTEMPTY "请文件夹为空"
 
 
 //
@@ -1182,24 +1182,24 @@
 //
 // Other strings
 //
-#define LOCALIZED_ACTIVEAREA    "Active Area" // NOT_YET_LOCALIZED
-#define LOCALIZED_INFORMATION   "Information" // NOT_YET_LOCALIZED
-#define LOCALIZED_WARNING       "Warning" // NOT_YET_LOCALIZED
-#define LOCALIZED_UNTITLED      "Untitled" // NOT_YET_LOCALIZED
-#define LOCALIZED_UNKNOWN       "Unknown" // NOT_YET_LOCALIZED
+#define LOCALIZED_ACTIVEAREA    "活动区域"
+#define LOCALIZED_INFORMATION   "提示"
+#define LOCALIZED_WARNING       "警告"
+#define LOCALIZED_UNTITLED      "无标题"
+#define LOCALIZED_UNKNOWN       "未知"
 
 // The text which is shown when the Unbound node is formatted.
 // This happens when a macro outputs nothing (instead of a list)
-#define LOCALIZED_UNBOUND       "nothing" // NOT_YET_LOCALIZED
+#define LOCALIZED_UNBOUND       "空"
 
 // The title of the Editor's Find/Replace dialog box
-#define LOCALIZED_EDITOR_TITLE_FIND     "Find" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_TITLE_REPLACE  "Replace"  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_TITLE_FIND     "查找"
+#define LOCALIZED_EDITOR_TITLE_REPLACE  "替换" 
 
 //
 // The text that's displayed when the Editor's Search->Find fails.
 //
-#define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "Cannot find %s" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "%s未找到"
 
 
 //
@@ -1360,13 +1360,13 @@
 // These should match the cooresponding terms that is used
 // in the  LOCALIZED_ALTERNATE_*CREATE procedures.
 //
-#define LOCALIZED_WINDOWCLASSNAME_WINDOW       "Window" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_STATIC       "Static" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_LISTBOX      "ListBox" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_COMBOBOX     "ComboBox" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_BUTTON       "Button" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_SCROLLBAR    "ScrollBar" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_GROUPBOX     "GroupBox" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_RADIOBUTTON  "RadioButton" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_CHECKBOX     "CheckBox" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_DIALOG       "Dialog" // NOT_YET_LOCALIZED
+#define LOCALIZED_WINDOWCLASSNAME_WINDOW       "窗体"
+#define LOCALIZED_WINDOWCLASSNAME_STATIC       "文本框"
+#define LOCALIZED_WINDOWCLASSNAME_LISTBOX      "列表框"
+#define LOCALIZED_WINDOWCLASSNAME_COMBOBOX     "组合框"
+#define LOCALIZED_WINDOWCLASSNAME_BUTTON       "按钮"
+#define LOCALIZED_WINDOWCLASSNAME_SCROLLBAR    "滚动条"
+#define LOCALIZED_WINDOWCLASSNAME_GROUPBOX     "群组框"
+#define LOCALIZED_WINDOWCLASSNAME_RADIOBUTTON  "单选按钮"
+#define LOCALIZED_WINDOWCLASSNAME_CHECKBOX     "复选框"
+#define LOCALIZED_WINDOWCLASSNAME_DIALOG       "对话框"

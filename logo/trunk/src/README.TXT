@@ -19,6 +19,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 7.1.0
+  o Add translation to Simplified Chinese (contributed by pachleng)
   o Fix Bug #488; Basic movement commands (FD, RT, etc) no longer leak memory
     when given numbers that were originally parsed as text.
   o Minor improvements to the manual.
