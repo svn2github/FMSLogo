@@ -253,14 +253,14 @@ endif
 
 
 #
-# Generate the rules to build the release version of the screensaver for each locale
+# Generate the rules to build the release version of the main environment for each locale
 #
 define FMSLOGO_template
 
 fmslogo-$(1)$$(EXEEXT) : $$(addprefix obj/$(1)/,$$(OBJECTS))
 	$(CXX) -o $$@ $$^ $(LDFLAGS) -L$(LIBDIRNAME) $(LIBS) $(EXTRALIBS)
 
-obj/$(1)/pch.h.gch : pch/pch.h *.h
+obj/$(1)/pch.h.gch : pch/pch.h version.h *.h
 	-mkdir $$(dir $$@)
 	$(CXX) -c -o $$@ -Iobj/$(1) $(CXXFLAGS) -DLOCALE=$1 $$<
 
