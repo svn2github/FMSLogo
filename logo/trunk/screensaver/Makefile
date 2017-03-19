@@ -3,9 +3,10 @@
 include ../version.mk
 include ../lcids.mk
 
-CC  = i686-w64-mingw32-gcc
-CXX = i686-w64-mingw32-g++
-RC  = i686-w64-mingw32-windres --preprocessor=$(CXX) --preprocessor-arg=-E --preprocessor-arg=-xc-header
+CC    = i686-w64-mingw32-gcc
+CXX   = i686-w64-mingw32-g++
+RC    = i686-w64-mingw32-windres --preprocessor=$(CXX) --preprocessor-arg=-E --preprocessor-arg=-xc-header
+STRIP = i686-w64-mingw32-strip
 
 wx_top_srcdir      = /cygdrive/e/wxWidgets-3.1.0-src
 wx_top_builddir    = /cygdrive/e/wxWidgets-3.1.0-fmslogo
@@ -135,7 +136,7 @@ obj/debug-%res.o : %.rc ../src/fmslogo.ico
 define FMSLOGO_SCREENSAVER_template
 $$(TARGET)-$(1).scr : $$(addprefix obj/$(1)-,$$(OBJECTS) scrnsave.o)
 	$(CXX) -o$$@ -def:screensaver.def $$^ $(LDFLAGS) $(RELEASE_LDFLAGS) $(addprefix -l,$(LIBS)) -static-libgcc -static-libstdc++
-	strip $$@
+	$(STRIP) $$@
 
 obj/$(1)-%.o: %.c
 	$(CC) -c -o$$@ $(RELEASE_CFLAGS) $(CPPFLAGS) -DLOCALE=$1 $$<
