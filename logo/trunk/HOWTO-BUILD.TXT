@@ -10,6 +10,9 @@ following packages (and their dependencies):
 - mingw64-i686-gcc-g++
 - patch
 
+When searching for packages in Cygwin's setup tool, you might find that clicking
+on "View" to get to the Full view makes it easier, because it hides the categories.
+
 Add c:\cygwin\bin to the PATH.
 
 Install Microsoft HTML Help Workshop to "C:\Program Files\HTML Help Workshop".
