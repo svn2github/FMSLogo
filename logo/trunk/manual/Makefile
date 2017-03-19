@@ -60,7 +60,7 @@ logohelp-1050.chm : htmlhelp-1050.hhp logohelp.css
 	-$(HHC) htmlhelp-1050.hhp
 
 # Simplified Chinese builds require a different character set
-logohelp-1050.chm : htmlhelp-2052.hhp logohelp.css
+logohelp-2052.chm : htmlhelp-2052.hhp logohelp.css
 	perl -W clean-html.pl GBK
 	-$(HHC) htmlhelp-2052.hhp
 
