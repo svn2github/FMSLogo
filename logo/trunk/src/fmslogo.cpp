@@ -296,8 +296,10 @@ bool CFmsLogo::OnInit()
 
     // Figure out the path that contains fmslogo.exe, which we
     // assume also holds Logolib.
-    const wxFileName fmslogoExecutable(wxStandardPaths::Get().GetExecutablePath());
-    const wxString & fmslogoPath = fmslogoExecutable.GetPath(wxPATH_GET_SEPARATOR);
+    const wxFileName fmslogoExecutable(
+        wxStandardPaths::Get().GetExecutablePath());
+    const wxString & fmslogoPath = fmslogoExecutable.GetPath(
+        wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
 
     strncpy(
         g_FmslogoBaseDirectory,

@@ -22,6 +22,8 @@ II. New features/bugs fixed:
   o Add translation to Simplified Chinese (contributed by pachleng)
   o Fix Bug #488; Basic movement commands (FD, RT, etc) no longer leak memory
     when given numbers that were originally parsed as text.
+  o Fix Bug #489; Running a Logolib procedure onces again works when the current
+    working directory is on a different drive than the FMSLogo executable.
   o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
