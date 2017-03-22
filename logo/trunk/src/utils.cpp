@@ -22,6 +22,7 @@
 #ifndef USE_PRECOMPILED_HEADER
     #include <windows.h>
     #include <stdio.h>
+    #include "localizedstrings.h"
     #include "debugheap.h"
 #endif
 
@@ -325,7 +326,7 @@ GetConfigurationFont(
         fullyQualifiedName, 
         LogFont.lfFaceName,
         LF_FACESIZE,
-        "Courier");
+        LOCALIZED_DEFAULT_FONT_FACE);
 
     strcpy(relativeName, FONTPROPERTY_Height);
     LogFont.lfHeight = GetConfigurationInt(fullyQualifiedName, -13);

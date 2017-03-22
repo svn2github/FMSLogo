@@ -1370,3 +1370,13 @@
 #define LOCALIZED_WINDOWCLASSNAME_RADIOBUTTON  "单选按钮"
 #define LOCALIZED_WINDOWCLASSNAME_CHECKBOX     "复选框"
 #define LOCALIZED_WINDOWCLASSNAME_DIALOG       "对话框"
+
+
+//
+// The name of the default font face name.
+// This should only be translated if the given font face doesn't include glyphs
+// for characters in your language.  The specified font face name must be part
+// of all Windows versions from Windows XP onward that would support your
+// language.
+//
+#define LOCALIZED_DEFAULT_FONT_FACE "黑体"

@@ -1370,3 +1370,13 @@
 #define LOCALIZED_WINDOWCLASSNAME_RADIOBUTTON  "RadioButton" // NOT_YET_LOCALIZED
 #define LOCALIZED_WINDOWCLASSNAME_CHECKBOX     "CheckBox" // NOT_YET_LOCALIZED
 #define LOCALIZED_WINDOWCLASSNAME_DIALOG       "Dialog" // NOT_YET_LOCALIZED
+
+
+//
+// The name of the default font face name.
+// This should only be translated if the given font face doesn't include glyphs
+// for characters in your language.  The specified font face name must be part
+// of all Windows versions from Windows XP onward that would support your
+// language.
+//
+#define LOCALIZED_DEFAULT_FONT_FACE "Courier" // NOT_YET_LOCALIZED
