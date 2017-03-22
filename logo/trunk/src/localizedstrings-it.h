@@ -1379,4 +1379,4 @@
 // of all Windows versions from Windows XP onward that would support your
 // language.
 //
-#define LOCALIZED_DEFAULT_FONT_FACE "Courier" // NOT_YET_LOCALIZED
+#define LOCALIZED_DEFAULT_FONT_FACE "Courier New" // NOT_YET_LOCALIZED
