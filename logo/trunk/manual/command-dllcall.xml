@@ -23,7 +23,10 @@ The <parameter>function_parameter_list</parameter> is of the form <userinput>[ty
 </para>
 
 <para>
-DLLCALL interprets <parameter>typef</parameter> as describing the function's return value.  The return value is parsed it into a list, as with <link linkend="command-parse">PARSE</link>.  Any buffers that were created for "out" parameters are appened to the list and it is the output of DLLCALL.  The semantics of each <parameter>typef</parameter> are given in the table below:
+DLLCALL interprets <parameter>typef</parameter> as describing the function's return value.
+The return value is parsed into a list, as with <link linkend="command-parse">PARSE</link>.
+Any buffers that were created for "out" parameters are appened to the list and it is the output of DLLCALL.
+The meaning of each supported <parameter>typef</parameter> is given in the table below:
 
 <informaltable frame='all'>
   <tgroup cols='3'>
@@ -31,19 +34,19 @@ DLLCALL interprets <parameter>typef</parameter> as describing the function's ret
       <row>
         <entry>typef</entry>
         <entry>Native Type</entry>
-        <entry>DLLCALL action</entry>
+        <entry>DLLCALL Output</entry>
       </row>
     </thead>
     <tbody>
       <row>
         <entry><userinput>V</userinput></entry>
         <entry>void</entry>
-        <entry>Nothing is output</entry>
+        <entry>Nothing</entry>
       </row>
       <row>
         <entry><userinput>W</userinput></entry>
         <entry>WORD, SHORT, or USHORT</entry>
-        <entry>Outputs lower 16 bits of the function's return value as a one member list.</entry>
+        <entry>Outputs the lower 16 bits of the function's return value as a one member list.</entry>
       </row>
       <row>
         <entry><userinput>L</userinput></entry>
@@ -89,7 +92,7 @@ The actions taken for each argument are given in the following table:
       <row>
         <entry><userinput>V</userinput></entry>
         <entry>void</entry>
-        <entry>None</entry>
+        <entry>Ignores the argument</entry>
       </row>
       <row>
         <entry><userinput>W</userinput></entry>
@@ -104,19 +107,19 @@ The actions taken for each argument are given in the following table:
       <row>
         <entry><userinput>F</userinput></entry>
         <entry>DOUBLE</entry>
-        <entry>Intereprets the argument as a DOUBLE and pushes the value as a 64-bit floating point onto the stack.</entry>
+        <entry>Intereprets the argument as a <code>double</code> and pushes the value as a 64-bit floating point onto the stack.</entry>
       </row>
       <row>
         <entry><userinput>S</userinput></entry>
         <entry>LPCSTR</entry>
-        <entry>Copies the argument into a NUL-terminated the buffer and pushes its pointer onto the stack.</entry>
+        <entry>Copies the argument into a buffer, adds a NUL terminator, and pushes its pointer onto the stack.</entry>
       </row>
       <row>
         <entry><userinput>B</userinput></entry>
         <entry>PBYTE, PULONG, or LPSTR</entry>
         <entry>Allocates a buffer that has as many bytes as the given argument, when interpreted as an integer.
                Fills the buffer with zero bytes.
-               Marks it as a backslashed word so that it can hold binary bytes.
+               Marks it as a "vertical barred" word so that it can hold non-printable bytes.
                Pushes a pointer to this buffer onto the stack.
                After the function returns, appends the buffer to the output list.
                If the function returns void, then a list is created so that the buffer can be output to the caller.</entry>
@@ -132,12 +135,12 @@ If the optional <parameter>dllname</parameter> input is given, then DLLCALL will
 </para>
 
 <para>
-The "B" input types are returned as buffers of the exact length they were given.
-Any byte that is overwritten by the function call remains NUL (zero byte).
+The "B" argument types are returned as buffers of the exact length they were given.
+Any byte that is not overwritten by the function call remains NUL (zero byte).
 So if the function fills in a string of characters and only uses part of the buffer, the buffer will have a lot of zero bytes at the end.
 Such a word does not behave like a regular word.
 However, you can convert it to a regular word by removing the zero bytes with something like:
-<programlisting><userinput>MAKE "buffer FILTER [NOTEQUAL? CHAR 0 ? ] :buffer</userinput>
+<programlisting><userinput>MAKE "buffer FILTER [NOTEQUALP CHAR 0 ? ] :buffer</userinput>
 </programlisting>
 </para>
 
