@@ -23,6 +23,7 @@ TO DLL.SMOKETEST
 END
 
 TO DLLCALL.VARIATIONS
+  LOCAL [rval]
 
   ; Load the test library
   TRACEINSTRUCTION [ DLLLOAD "testfunction.dll ]
@@ -33,17 +34,66 @@ TO DLLCALL.VARIATIONS
   SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4  W 65537    ] ] [1] ; WORD overflow
   SIMPLEREPORTTEST [ DLLCALL [S Rot13@4       S MyString ] ] [ZlFgevat]
 
+  ; The parameters are converted to words
+  SIMPLEREPORTTEST [ DLLCALL [S Rot13@4 S [MyString] ] ] [ZlFgevat]
+
   ; A returned string that has spaces
   SIMPLEREPORTTEST [ DLLCALL (LIST "S "Rot13@4 "S "|Word1 Word2  Word3 |) ] [Jbeq1 Jbeq2 Jbeq3]
 
-  ; Call FormatFloat@8 by ordinal
-  SIMPLEREPORTTEST [ DLLCALL [S 1 F 2.2] ] [2.200000]
-
-  ; When a function is declared with a void return type, DLLCALL outputs nothing.
-  TRACEINSTRUCTION [ DLLCALL [V MakeSquare@8  F 2.2 ] ]
+  ; Call FormatFloat@8 by ordinal.
+  ; Functions are assigned ordinals alphabetically.
+  ; Use "depends.exe testfunction.dll" to determine ordinal.
+  SIMPLEREPORTTEST [ DLLCALL [S 4 F 2.2] ] [2.200000]
 
   ; When a function takes no parameters
   SIMPLEREPORTTEST [ DLLCALL [W Word123@0 ] ] [123]
+
+  ; When a function is declared with a void return type, DLLCALL outputs nothing.
+  TRACEINSTRUCTION [ DLLCALL [V Word123@0 ] ]
+
+  ; When a function takes multiple out parameters
+  TRACEINSTRUCTION [ MAKE "rval DLLCALL [L FillBuffers@20 B 10 L 10 W 65 L 20 B 20 ] ]
+  SIMPLEREPORTTEST [ ITEM 1 :rval ] 30
+  SIMPLEREPORTTEST [ ITEM 2 :rval ] "ACEGIKMOQS
+  SIMPLEREPORTTEST [ ITEM 3 :rval ] "ABCDEFGHIJKLMNOPQRST
+  SIMPLEREPORTTEST [ COUNT  :rval ] 3
+
+  ; When a buffer has 0 bytes, the function still succeeds.
+  TRACEINSTRUCTION [ MAKE "rval DLLCALL [W FillBuffers@20 B 0 L 0 W 67 L 1 B 1 ] ]
+  SIMPLEREPORTTEST [ COUNT :rval  ] 3
+  SIMPLEREPORTTEST [ ITEM 1 :rval ] 1
+  SIMPLEREPORTTEST [ ITEM 2 :rval ] "||
+  SIMPLEREPORTTEST [ ITEM 3 :rval ] "C
+
+  ; When a function takes out parameters and returns void.
+  SIMPLEREPORTTEST [ DLLCALL [V FillBuffer@4 B 10 ] ] [0123456789]
+
+  ; Bytes which aren't written by the function are NUL
+  SIMPLEREPORTTEST [ DLLCALL [V FillBuffer@4 B 12 ] ] (LIST (WORD "0123456789 CHAR 0 CHAR 0))
+
+  ; For a little bit of safefy, FMSLogo always allocates the buffer one larger
+  ; than needed and NUL-terminates it.  So it should be possible to pass a buffer that
+  ; is too small (by one byte) without causing a crash.
+  SIMPLEREPORTTEST [ DLLCALL [V FillBuffer@4 B 9 ] ] [012345678]
+
+  ; When a function has an out parameters and returns PSTR
+  SIMPLEREPORTTEST [ DLLCALL [S EchoString@8 B 10 S ABCDEF ] ] [ABCDEF 0123456789]
+
+  ; When a function has an out parameter, returns a PSTR that is parsed into
+  ; a multi-member list.  The out parameter should be appened.
+  SIMPLEREPORTTEST [ DLLCALL [S EchoString@8 B 10 S [A B  C D] ] ] [A B C D 0123456789]
+
+  ; lower-case type specifiers
+  SIMPLEREPORTTEST [ DLLCALL [f MakeSquare@8 f 2.2    ] ] [4.840000]
+  SIMPLEREPORTTEST [ DLLCALL [s FormatWord@4 w 123    ] ] [123]
+  SIMPLEREPORTTEST [ DLLCALL [s FormatWord@4 l 234    ] ] [234]
+  SIMPLEREPORTTEST [ DLLCALL [s EchoString@8 b 10 s a ] ] [a 0123456789]
+  SIMPLEREPORTTEST [ DLLCALL [v FillBuffer@4 b 10     ] ] [0123456789]
+  SIMPLEREPORTTEST [ DLLCALL [w Word123@0    v 0      ] ] [123]
+
+  ; The inputs are converted to words
+  SIMPLEREPORTTEST [ DLLCALL [[f] [MakeSquare@8] [f] [2.2] ] ]      [4.840000]
+  SIMPLEREPORTTEST [ DLLCALL [[S] [EchoString@8] [B] [10] [S] A ] ] [A 0123456789]
 
   ; Cleanup
   TRACEINSTRUCTION [ DLLFREE ]
@@ -68,6 +118,22 @@ TO DLLCALL.COMPATIBILITYTEST
   SIMPLEREPORTTEST [ DLLCALL [WONDER Word123@0 ]                ] [123]
   SIMPLEREPORTTEST [ DLLCALL [LIST   Word123@0 ]                ] [123]
   TRACEINSTRUCTION [ DLLCALL [Vowel  Word123@0 ] ]
+
+  ; Numeric inputs that are not numbers.
+  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4 W NotANumber ]] [0]
+  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4 W {123}      ]] [0]
+  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4 W [123]      ]] [123]
+  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4 L NotANumber ]] [0]
+  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4 L {123}      ]] [0]
+  SIMPLEREPORTTEST [ DLLCALL [S FormatWord@4 L [123]      ]] [123]
+  SIMPLEREPORTTEST [ DLLCALL [F MakeSquare@8 F NotAFloat  ]] [0.000000]
+  SIMPLEREPORTTEST [ DLLCALL [F MakeSquare@8 F {2.2}      ]] [0.000000]
+  SIMPLEREPORTTEST [ DLLCALL [F MakeSquare@8 F [2.2]      ]] [4.840000]
+  SIMPLEREPORTTEST [ DLLCALL [S Rot13@4      S [MyString] ]] [ZlFgevat]
+  SIMPLEREPORTTEST [ ITEM 1 ITEM 1 DLLCALL [S Rot13@4 S {MyString} ]] "ZlFgevat
+
+  ; Output is parsed as a logo instruction
+  SIMPLEREPORTTEST [ ITEM 1 DLLCALL [S Rot13@4 S "\|A\ B\| ]] "|"N O|
 
   ; Cleanup
   TRACEINSTRUCTION [ DLLFREE ]
@@ -109,8 +175,34 @@ TO DLLCALLTEST.BADINPUT
   ; Error after string inputs (DLLCALL should clean up allocated string)
   RUNDLLINVALIDDATATYPETEST [DLLCALL [L GetTickCount S SomeStringParameter ERROR ERROR ]]
 
+  ; List components are arrays
+  RUNDLLINVALIDDATATYPETEST   [DLLCALL [ L GetTickCount {L} 100 ]]
+  RUNDLLINVALIDOUTPUTTYPETEST [DLLCALL [{L} GetTickCount ]]
+
   ; wrong number of inputs (DLLCALL may crash on this)
   ; RUNBADINPUTTEST [DLLCALL [L GetTickCount L 0]]
+
+  ; Input types added in FMSLogo 7.1.0 are checked strictly.
+  ; The first buffer input is well-formed to confirm that it is properly freed.
+  RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [DLLCALL [L GetTickCount B 256 BX 256 ]]
+
+  ; buffer size larger than LONG_MAX can hold
+  RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [DLLCALL [L GetTickCount B 256 B  1e25 ]]
+
+  ; buffer size between MAX_INT and LONG_MAX
+  RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [DLLCALL [L GetTickCount B 256 B 1e10 ]]
+
+  ; Buffer is smaller than MAX_INT, but larger than memory
+  RUNOUTOFMEMORYTEST [DLLCALL [L GetTickCount B 256 B 2147483640 ]]
+
+  ; Buffer size is negative
+  RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [DLLCALL [L GetTickCount B 256 B -1 ]]
+
+  ; Buffer is not an integer
+  RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [DLLCALL [L GetTickCount B 256 B 123.5 ]]
+
+  ; Buffer cannot be used as a return type
+  RUNDLLINVALIDOUTPUTTYPETEST [DLLCALL [B GetTickCount B 256 ]]
 
   ; DLL is not loaded
   RUNDLLNOTLOADEDTEST [(DLLCALL [L GetTickCount L 0] "dll-that-is-not-loaded.dll)]

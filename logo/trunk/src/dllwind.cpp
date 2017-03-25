@@ -26,6 +26,8 @@
    #include <stdio.h>
 
    #include "logocore.h"
+   #include "mem.h" // for newnode
+   #include "appendablelist.h"
    #include "stringprintednode.h"
    #include "eval.h"
    #include "init.h"
@@ -390,6 +392,33 @@ GetFunctionFromDll(
     return theFunc;
 }
 
+static
+NODE*
+make_buffer(
+    int  length
+    )
+{
+    char * strhead = (char *) calloc(1, sizeof(short) + length + 1);
+    if (strhead == NULL)
+    {
+        err_logo(OUT_OF_MEM, NIL);
+        return Unbound;
+    }
+
+    // set the "string pointer" to just after the header
+    char * strptr = strhead + sizeof(short);
+
+    // set the reference count to 1.
+    unsigned short *header = (unsigned short *) strhead;
+    setstrrefcnt(header, 1);
+
+    NODE * strnode = newnode(VBAR_STRING);
+    setstrlen(strnode, length);
+    setstrptr(strnode, strptr);
+    setstrhead(strnode, strhead);
+    return strnode;
+}
+
 NODE *ldllcall(NODE *args)
 {
     if (g_LoadedDlls.IsEmpty())
@@ -475,11 +504,13 @@ NODE *ldllcall(NODE *args)
 
     const char returnType = fkind.GetString()[0];
 
+    CAppendableList outParameters; // a list of "out" parameter lists to return
+
     // BUG: Both of these stacks, values and parameters, can be overflowed.
     // This should be fixed, but it's not a problem in practice because
     // any malformed call to DLLCALL can also corrupt memory and it's
     // unlikely that a user will exhaust either stack in proper usage.
-    
+
     char *values[1024];   // strings we must free
     int nextValue = 0;
 
@@ -487,24 +518,26 @@ NODE *ldllcall(NODE *args)
     int nextParameter = 0;
 
     // fill queue with type/data pairs
-    while (functionArg != NIL)
+    while (functionArg != NIL && stopping_flag != THROWING)
     {
-        CStringPrintedNode akind(car(functionArg));
+        NODE * kindNode = car(functionArg);
+        CStringPrintedNode kind(kindNode);
         functionArg = cdr(functionArg);
 
-        CStringPrintedNode avalue(car(functionArg));
+        NODE * valueNode = car(functionArg);
+        CStringPrintedNode value(valueNode);
         functionArg = cdr(functionArg);
 
-        switch (akind.GetString()[0])
+        switch (kind.GetString()[0])
         {
         case 'w':
         case 'W':
-            parameters[nextParameter++] = (int) (atoi(avalue) & 0xFFFF);
+            parameters[nextParameter++] = (int) (atoi(value) & 0xFFFF);
             break;
 
         case 'l':
         case 'L':
-            parameters[nextParameter++] = (int) atol(avalue);
+            parameters[nextParameter++] = (int) atol(value);
             break;
 
         case 'f':
@@ -512,18 +545,68 @@ NODE *ldllcall(NODE *args)
             {
                 // A double is 8 bytes, so we must push it
                 // as two four-byte parameters.
-                double number = atof(avalue);
+                double number = atof(value);
                 parameters[nextParameter++] = ((int*)(&number))[1];
                 parameters[nextParameter++] = ((int*)(&number))[0];
                 assert(sizeof(number) == 2 * sizeof(*parameters));
-                break;
             }
+            break;
 
         case 's':
         case 'S':
-            values[nextValue] = strdup(avalue);
+            values[nextValue] = strdup(value);
             parameters[nextParameter++] = (int) values[nextValue];
             nextValue++;
+            break;
+
+        case 'b':
+        case 'B':
+            {
+                // This is a buffer type.
+                // Unlike the other types which predate FMSLogo and are maintained
+                // as only checking the first character for backward-compatibility,
+                // we check the "B" type specifier for strict conformance.
+                if (kind.GetString()[1] != '\0')
+                {
+                    err_logo(BAD_DATA_UNREC, functionArgs);
+                    break;
+                }
+
+                // The "value" of the buffer type is its size.
+                // Unlike the other types, the buffer is not provided by
+                // the caller as a value.  Doing so would violate the
+                // immutability of strings, since the native function
+                // would overwrite it.
+                char * endPtr;
+                long int size = strtol(value, &endPtr, 10);
+                if (size == LONG_MAX || size < 0 || *endPtr != '\0')
+                {
+                    // value is a bad number for an allocation size
+                    // (negative, too large, or not a number all).
+                    err_logo(BAD_DATA_UNREC, functionArgs);
+                    break;
+                }
+                if (INT_MAX < size)
+                {
+                    // Prevent integer overflow from making us think we
+                    // allocated the correctly-sized buffer.
+                    err_logo(OUT_OF_MEM, NIL);
+                    break;
+                }
+
+                NODE * bufferNode = make_buffer(size);
+                if (bufferNode == Unbound) 
+                {
+                    // The buffer could not be allocated.
+                    break;
+                }
+
+                // Use the allocated buffer for the function parameter.
+                parameters[nextParameter++] = (int) getstrptr(bufferNode);
+
+                // After the call is complete, we return all of the buffers.
+                outParameters.AppendElement(bufferNode);
+            }
             break;
 
         case 'v':
@@ -533,73 +616,75 @@ NODE *ldllcall(NODE *args)
 
         default:
             err_logo(DLL_INVALID_DATA_TYPE, NIL);
-            return Unbound;
+            break;
         }
     }
-
-    // Now that we have all of the parameters, it's time to copy them
-    // them from the "parameters" stack variable to the real stack.
-    for (int j = 0; j < nextParameter; j++) 
-    {
-        pushl(parameters[j]);
-    }
-
-    // IMPORTANT: From here until we call theFunc, there cannot be any
-    // instructions that would change the stack pointer, such as calling
-    // a function.
 
     char areturn[MAX_BUFFER_SIZE];
-    switch (returnType)
+    if (stopping_flag != THROWING)
     {
-    case 'w':
-    case 'W':
+        // Now that we have all of the parameters, it's time to copy them
+        // them from the "parameters" stack variable to the real stack.
+        for (int i = 0; i < nextParameter; i++) 
         {
-            WORD w = (*(WORD(WINAPI *)()) theFunc)();
-            sprintf(areturn, "%d", w);
-            break;
+            pushl(parameters[i]);
         }
 
-    case 'l':
-    case 'L':
+        // IMPORTANT: From here until we call theFunc, there cannot be any
+        // instructions that would change the stack pointer, such as calling
+        // a function.
+
+        switch (returnType)
         {
-            DWORD dw = (*(DWORD(WINAPI *)()) theFunc)();
-            sprintf(areturn, "%ld", dw);
+        case 'w':
+        case 'W':
+            {
+                WORD w = (*(WORD(WINAPI *)()) theFunc)();
+                sprintf(areturn, "%d", w);
+            }
+            break;
+
+        case 'l':
+        case 'L':
+            {
+                DWORD dw = (*(DWORD(WINAPI *)()) theFunc)();
+                sprintf(areturn, "%ld", dw);
+            }
+            break;
+
+        case 'f':
+        case 'F':
+            {
+                double dw = (*(double (WINAPI *)()) theFunc)();
+                sprintf(areturn, "%f", dw);
+            }
+            break;
+
+        case 's':
+        case 'S':
+            {
+                LPSTR lp = (*(LPSTR(WINAPI *)()) theFunc)();
+
+                // This should not be like this because lp[]
+                // can be bigger than areturn[] but for now...
+                strncpy(areturn, lp, ARRAYSIZE(areturn));
+
+                // free global string mem.
+                GlobalFreePtr(lp);
+            }
+            break;
+
+        case 'v':
+        case 'V':
+            // "void" return type
+            (*(void (WINAPI *)()) theFunc)();
+            areturn[0] = '\0';
+            break;
+
+        default:
+            err_logo(DLL_INVALID_OUTPUT_TYPE, NIL);
             break;
         }
-
-    case 'f':
-    case 'F':
-        {
-            double dw = (*(double (WINAPI *)()) theFunc)();
-            sprintf(areturn, "%f", dw);
-            break;
-        }
-
-    case 's':
-    case 'S':
-        {
-            LPSTR lp = (*(LPSTR(WINAPI *)()) theFunc)();
-
-            // This should not be like this because lp[]
-            // can be bigger than areturn[] but for now...
-            strncpy(areturn, lp, ARRAYSIZE(areturn));
-
-            // free global string mem.
-            GlobalFreePtr(lp);
-            break;
-        }
-
-    case 'v':
-    case 'V':
-        // "void" return type
-        (*(void (WINAPI *)()) theFunc)();
-        areturn[0] = '\0';
-        break;
-                  
-    default:
-        err_logo(DLL_INVALID_OUTPUT_TYPE, NIL);
-        areturn[0] = '\0';
-        break;
     }
 
     // Free any string parameters which we allocated.
@@ -609,16 +694,46 @@ NODE *ldllcall(NODE *args)
         free(values[nextValue]);
     }
 
+    if (stopping_flag == THROWING)
+    {
+        gcref(outParameters.GetList());
+        return Unbound;
+    }
+
+    NODE * val;
     if (areturn[0] != '\0')
     {
         // something was returned
         NODE * targ = make_strnode(areturn);
-        NODE * val = parser(targ, false);
-        return val;
+        val = parser(targ, false);
+
+        // Append the "out" parameters to the end of the parsed list.
+        if (outParameters.GetList() != NIL)
+        {
+            NODE * listTail = val;
+            while (cdr(listTail) != NIL)
+            {
+                listTail = cdr(listTail);
+            }
+            setcdr(listTail, outParameters.GetList());
+        }
+    }
+    else
+    {
+        // The function returned void.
+        // If there were "out" parameters, return those.
+        // Otherwise return nothing.
+        if (outParameters.GetList() != NIL)
+        {
+            val = outParameters.GetList();
+        }
+        else
+        {
+            val = Unbound;
+        }
     }
 
-
-    return Unbound;
+    return val;
 }
 
 void uninitialize_dlls()

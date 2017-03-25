@@ -19,11 +19,13 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 7.1.0
-  o Add translation to Simplified Chinese (contributed by pachleng)
+  o Add Simplified Chinese translation (contributed by pachleng)
   o Fix Bug #488; Basic movement commands (FD, RT, etc) no longer leak memory
     when given numbers that were originally parsed as text.
   o Fix Bug #489; Running a Logolib procedure onces again works when the current
     working directory is on a different drive than the FMSLogo executable.
+  o Implement feature #119; DLLCALL now supports calling win32 functions that
+    have out parameters.
   o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
