@@ -1122,6 +1122,7 @@ void CLogoCodeCtrl::ClearAll()
 
 void CLogoCodeCtrl::EmptyUndoBuffer()
 {
+    SendMessage(reinterpret_cast<HWND>(GetHandle()), EM_EMPTYUNDOBUFFER, 0, 0);
 }
 
 int CLogoCodeCtrl::TextHeight(int line)
