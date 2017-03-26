@@ -199,6 +199,7 @@ public:
     void Cancel();
     void SetUndoCollection(bool collectUndo);
     void GotoPos(int caret);
+    void Clear();
 
     // CLogoCodeCtrl compatibility
     void FindMatchingParen();

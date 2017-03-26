@@ -1009,6 +1009,7 @@ END_EVENT_TABLE()
 // Implementation of the CLogoCodeCtrl that uses wxTextCtrl for languages which use
 // a multi-byte character set, such as Simplified Chinese.
 // This is stop-gap solution until FMSLogo is a pure-Unicode application.
+#include <richedit.h>
 
 CLogoCodeCtrl::CLogoCodeCtrl(
     wxWindow *      Parent,
@@ -1115,9 +1116,18 @@ wxString CLogoCodeCtrl::GetRange(long startPos, long endPos) const
     return range;
 }
 
+void CLogoCodeCtrl::Clear()
+{
+    SendMessage(
+        reinterpret_cast<HWND>(GetHandle()),
+        EM_REPLACESEL,
+        TRUE, // this action is undoable
+        reinterpret_cast<LPARAM>(L""));
+}
+
 void CLogoCodeCtrl::ClearAll()
 {
-    Clear();
+    SetValue(wxEmptyString);
 }
 
 void CLogoCodeCtrl::EmptyUndoBuffer()
