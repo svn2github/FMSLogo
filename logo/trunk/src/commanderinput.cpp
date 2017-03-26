@@ -294,6 +294,8 @@ void CCommanderInput::OnSetFocus(wxFocusEvent & Event)
     Event.Skip();
 }
 
+#ifndef USE_RICHTEXT_CODE_EDITOR
+
 void CCommanderInput::OnClipboardPaste(wxStyledTextEvent& Event)
 {
     // This overrides the default clipboard paste handler to
@@ -338,6 +340,9 @@ void CCommanderInput::OnClipboardPaste(wxStyledTextEvent& Event)
     Event.SetString(pastedText);
 }
 
+#endif // USE_RICHTEXT_CODE_EDITOR
+
+
 BEGIN_EVENT_TABLE(CCommanderInput, CLogoCodeCtrl)
     EVT_KEY_DOWN(CCommanderInput::OnKeyDown)
     EVT_CHAR(CCommanderInput::OnChar)
@@ -346,7 +351,9 @@ BEGIN_EVENT_TABLE(CCommanderInput, CLogoCodeCtrl)
     EVT_MENU(ID_FINDMATCHINGPAREN,   CCommanderInput::OnFindMatchingParen)
     EVT_MENU(ID_SELECTMATCHINGPAREN, CCommanderInput::OnSelectMatchingParen)
     EVT_MENU(ID_AUTOCOMPLETE,        CCommanderInput::OnAutoComplete)
+#ifndef USE_RICHTEXT_CODE_EDITOR
 #if wxCHECK_VERSION(3, 1, 0)
     EVT_STC_CLIPBOARD_PASTE(wxID_ANY, CCommanderInput::OnClipboardPaste)
+#endif
 #endif
 END_EVENT_TABLE()

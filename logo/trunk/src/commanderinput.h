@@ -20,7 +20,9 @@ private:
     void OnFindMatchingParen(wxCommandEvent& Event);
     void OnSelectMatchingParen(wxCommandEvent& Event);
     void OnAutoComplete(wxCommandEvent& Event);
+#ifndef USE_RICHTEXT_CODE_EDITOR
     void OnClipboardPaste(wxStyledTextEvent& Event);
+#endif
 
     DECLARE_NO_COPY_CLASS(CCommanderInput);
     DECLARE_EVENT_TABLE();

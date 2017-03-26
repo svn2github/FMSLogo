@@ -2,9 +2,19 @@
 #ifndef _LOGOCODECTRL_H_
 #define _LOGOCODECTRL_H_
 
+// When compiled in ANSI mode, neither wxStyledTextCtrl nor wxRichText
+// supports multi-byte character sets, such as Simplified Chinese.
+// As a stop-gap solution until FMSLogo is a pure-Unicode application,
+// we provide an alternate implementation that is based on the wxTextCtrl.
+#if LOCALE == 2052
+   #define USE_RICHTEXT_CODE_EDITOR
+#endif
+
 #include <wx/stc/stc.h>
 #include <wx/fdrepdlg.h>
 #include <wx/print.h>
+
+#ifndef USE_RICHTEXT_CODE_EDITOR
 
 class CLogoCodeCtrl : public wxStyledTextCtrl
 {
@@ -149,5 +159,88 @@ private:
     // since they were last synchronized with the file.
     bool m_IsDirty;
 };
+
+#else
+// When compiled in ANSI mode, neither wxStyledTextCtrl nor wxRichText
+// supports multi-byte character sets, such as Simplified Chinese.
+// As a stop-gap solution until FMSLogo is a pure-Unicode application, we
+// provide an alternate implementation that is based on the wxTextCtrl.
+
+#include <wx/fdrepdlg.h>
+#include <wx/textctrl.h>
+
+class CLogoCodeCtrl : public wxTextCtrl
+{
+public:
+    CLogoCodeCtrl(
+        wxWindow       * Parent,
+        wxWindowID       Id = wxID_ANY
+        );
+
+    // wxStyledTextCtrl compatibility
+    wxString GetText() const;
+    int GetTextLength() const;
+    wxString GetTextRange(int startPos, int endPos);
+    void ClearAll();
+    void EmptyUndoBuffer();
+    int  TextHeight(int line);
+    void SetCurrentPos(int caret);
+    void SetSelBackground(bool useSetting, const wxColour &back);
+    void SetSelForeground(bool useSetting, const wxColour &fore);
+    wxString GetSelectedText();
+    void AutoComplete();
+    void SetUseHorizontalScrollBar(bool visible);
+    void HideSelection(bool hide);
+    bool AutoCompActive();
+    int GetCurrentLine();
+    void SetText(const wxString &text);
+    void AddTextRaw (const char *text, int length=-1);
+    void SetSavePoint();
+    void Cancel();
+    void SetUndoCollection(bool collectUndo);
+    void GotoPos(int caret);
+
+    // CLogoCodeCtrl compatibility
+    void FindMatchingParen();
+    void SelectMatchingParen();
+    bool IsDirty() const;
+    void Print();
+    void ReopenAfterError();
+    void OnDelete(wxCommandEvent& Event);
+    void OnHelpTopicSearch(wxCommandEvent& Event);
+    bool CanSelectAll();
+    bool CanDelete();
+    bool IsTextSelected();
+
+    void
+    Find(
+        wxFindReplaceFlags WxSearchFlags,
+        const wxString &   StringToFind
+        );
+
+    void
+    Replace(
+        wxFindReplaceFlags WxSearchFlags,
+        const wxString &   StringToFind,
+        const wxString &   ReplacementString
+        );
+
+    void
+    ReplaceAll(
+        wxFindReplaceFlags WxSearchFlags,
+        const wxString &   StringToFind,
+        const wxString &   ReplacementString
+        );
+
+    // Override wxTextCtrl member functions behave incorrectly with multibyte character sets
+    virtual wxString GetRange(long startPos, long endPos) const;
+    virtual void SetValue(const wxString &text);
+
+private:
+    DECLARE_EVENT_TABLE();
+    DECLARE_NO_COPY_CLASS(CLogoCodeCtrl);
+};
+
+#endif // USE_RICHTEXT_CODE_EDITOR
 
 #endif // _LOGOCODECTRL_H_

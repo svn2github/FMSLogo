@@ -22,6 +22,9 @@
   #include "../src/stc/scintilla/include/Scintilla.h"
 #endif
 
+#ifndef USE_RICHTEXT_CODE_EDITOR
+
+
 CLogoCodeCtrl::CLogoCodeCtrl(
     wxWindow *      Parent,
     wxWindowID      Id
@@ -1000,3 +1003,298 @@ BEGIN_EVENT_TABLE(CLogoCodeCtrl, wxStyledTextCtrl)
     EVT_MENU(wxID_SELECTALL,           CLogoCodeCtrl::OnSelectAll)
     EVT_MENU(wxID_HELP_INDEX,          CLogoCodeCtrl::OnHelpTopicSearch)
 END_EVENT_TABLE()
+
+#else
+
+// Implementation of the CLogoCodeCtrl that uses wxTextCtrl for languages which use
+// a multi-byte character set, such as Simplified Chinese.
+// This is stop-gap solution until FMSLogo is a pure-Unicode application.
+
+CLogoCodeCtrl::CLogoCodeCtrl(
+    wxWindow *      Parent,
+    wxWindowID      Id
+    ) : 
+    wxTextCtrl(
+        Parent,
+        Id,
+        wxEmptyString,
+        wxDefaultPosition,
+        wxDefaultSize,
+        wxTE_MULTILINE | wxWANTS_CHARS | wxTE_RICH2)
+{
+}
+
+// Puts the editor into a dirty state and
+// moves the caret to the line that had the error.
+void CLogoCodeCtrl::ReopenAfterError()
+{
+    // Put the editor into a dirty state so that
+    // saving it without making any changes will cause the
+    // contents to be re-evaluated and generate another
+    // error, instead of ignoring the changes from the
+    // previous incarnation where the error was first
+    // introduced.
+    MarkDirty();
+
+    // Move the caret to the line that had the error.
+    SetInsertionPoint(g_CharactersSuccessfullyParsedInEditor);
+}
+
+wxString CLogoCodeCtrl::GetText() const
+{
+    int textLength = GetTextLength();
+
+    char * buffer = new char[(textLength + 1)*2];
+    GetWindowText(reinterpret_cast<HWND>(GetHandle()), buffer, textLength + 1);
+
+    wxString text(buffer, textLength);
+
+    delete [] buffer;
+
+    return text;
+}
+
+int CLogoCodeCtrl::GetTextLength() const
+{
+    return GetWindowTextLength(reinterpret_cast<HWND>(GetHandle()));
+}
+
+wxString CLogoCodeCtrl::GetTextRange(int startPos, int endPos)
+{
+    return GetRange(startPos, endPos);
+}
+
+wxString CLogoCodeCtrl::GetRange(long startPos, long endPos) const
+{
+    wxString entireBuffer(GetText());
+    if (startPos == 0 && endPos == -1)
+    {
+        return entireBuffer;
+    }
+
+    // startPos and endPos assume that newlines are just LF,
+    // but GetText() returns it with CRLF.
+    entireBuffer.Replace(WXSTRING("\r\n"), WXSTRING("\n"));
+
+    // startPos and endPos are in characters, but wxString::Mid()
+    // treats its arguments as being in bytes.  To get the correct substring,
+    // we must also treat it as characters.
+
+    // CONSIDER: this could be rewritten using _ismbblead
+
+    // Convert the mulitbyte string into Unicode wide characters.
+    int wideBufferLength = entireBuffer.Len() + 1;
+    wchar_t * wideBuffer = new wchar_t[wideBufferLength];
+    MultiByteToWideChar(
+        CP_ACP,                 // system ANSI code page
+        0,                      // flags: don't fail on error
+        WXSTRING(entireBuffer), // input string
+        -1,                     // its length (NUL-terminated)
+        wideBuffer,             // output string
+        wideBufferLength);      // size of output buffer (characters)
+
+    // Convert the unicode selection back to a multibyte string
+    int selectionLength = endPos - startPos;
+    char * buffer = new char[2 * selectionLength]; // worst case: every character is double-byte
+    int bufferLength = WideCharToMultiByte(
+        CP_ACP,                 // system ANSI code page
+        0,                      // use best-fit character and don't fail on error
+        wideBuffer + startPos,  // offset of first desired character
+        selectionLength,        // total desired characters
+        buffer,                 // multibyte buffer
+        2 * selectionLength,    // size of buffer in bytes
+        NULL,                   // use the system default for characters that have no coding
+        NULL);                  // we don't care what character was used.
+
+    // Wrap the multi-byte selection in a wxString
+    wxString range(buffer, bufferLength);
+
+    delete [] wideBuffer;
+    delete [] buffer;
+
+    return range;
+}
+
+void CLogoCodeCtrl::ClearAll()
+{
+    Clear();
+}
+
+void CLogoCodeCtrl::EmptyUndoBuffer()
+{
+}
+
+int CLogoCodeCtrl::TextHeight(int line)
+{
+    int x;
+    int y;
+    GetTextExtent("Tg", &x, &y); 
+    return y + 5; // Chinese characters are bigger than Roman characters
+}
+
+void CLogoCodeCtrl::SetCurrentPos(int caret)
+{
+    SetInsertionPoint(caret);
+}
+
+void CLogoCodeCtrl::SetSelBackground(bool useSetting, const wxColour &back)
+{
+}
+
+void CLogoCodeCtrl::SetSelForeground(bool useSetting, const wxColour &fore)
+{
+}
+
+wxString CLogoCodeCtrl::GetSelectedText()
+{
+    // For compatibility with wxStyledTextCtrl, turn newlines to be CRLF.
+    wxString selection(GetStringSelection());
+    selection.Replace(WXSTRING("\n"), WXSTRING("\r\n"));
+    return selection;
+}
+
+void CLogoCodeCtrl::AutoComplete()
+{
+    // Do nothing.  This editor does not support auto complete.
+}
+
+void CLogoCodeCtrl::SetUseHorizontalScrollBar(bool visible)
+{
+}
+
+void CLogoCodeCtrl::HideSelection(bool hide)
+{
+}
+
+bool CLogoCodeCtrl::AutoCompActive()
+{
+    return false;
+}
+
+int CLogoCodeCtrl::GetCurrentLine()
+{
+    return 0;
+}
+
+// wxTextCtrl::SetValue() doesn't set the value correctly when text contains
+// double-byte characters, so we override it.
+void CLogoCodeCtrl::SetValue(const wxString &text)
+{
+    SetWindowText(
+        reinterpret_cast<HWND>(GetHandle()),
+        WXSTRING_TO_STRING(text));
+
+    DiscardEdits(); // mark not dirty
+}
+
+void CLogoCodeCtrl::SetText(const wxString &text)
+{
+    SetValue(text);
+}
+
+void CLogoCodeCtrl::AddTextRaw(const char *text, int length)
+{
+    AppendText(wxString(text, length));
+}
+
+void CLogoCodeCtrl::SetSavePoint()
+{
+    // Mark as not dirty.
+    DiscardEdits();
+}
+
+void CLogoCodeCtrl::Cancel()
+{
+}
+
+void CLogoCodeCtrl::SetUndoCollection(bool collectUndo)
+{
+}
+
+void CLogoCodeCtrl::GotoPos(int caret)
+{
+    SetInsertionPoint(caret);
+}
+
+void CLogoCodeCtrl::FindMatchingParen()
+{
+}
+
+void CLogoCodeCtrl::SelectMatchingParen()
+{
+}
+
+bool CLogoCodeCtrl::IsDirty() const
+{
+    return IsModified();
+}
+
+void CLogoCodeCtrl::Print()
+{
+}
+
+void CLogoCodeCtrl::OnDelete(wxCommandEvent& Event)
+{
+}
+
+void CLogoCodeCtrl::OnHelpTopicSearch(wxCommandEvent& Event)
+{
+    ContextHelp(GetSelectedText());
+}
+
+bool CLogoCodeCtrl::CanSelectAll()
+{
+    return GetTextLength() != 0;
+}
+
+bool CLogoCodeCtrl::CanDelete()
+{
+    return IsTextSelected();
+}
+
+bool CLogoCodeCtrl::IsTextSelected()
+{
+    long from;
+    long to;
+    GetSelection(&from, &to);
+    return from != to;
+}
+
+void
+CLogoCodeCtrl::Find(
+    wxFindReplaceFlags WxSearchFlags,
+    const wxString &   StringToFind
+    )
+{
+}
+
+void
+CLogoCodeCtrl::Replace(
+    wxFindReplaceFlags WxSearchFlags,
+    const wxString &   StringToFind,
+    const wxString &   ReplacementString
+    )
+{
+}
+
+void
+CLogoCodeCtrl::ReplaceAll(
+    wxFindReplaceFlags WxSearchFlags,
+    const wxString &   StringToFind,
+    const wxString &   ReplacementString
+    )
+{
+}
+
+BEGIN_EVENT_TABLE(CLogoCodeCtrl, wxTextCtrl)
+    EVT_MENU(wxID_HELP_INDEX, CLogoCodeCtrl::OnHelpTopicSearch)
+END_EVENT_TABLE()
+
+// Even though this isn't used, without it, there's an unresolved external error
+// 
+// libwxscintilla-3.1-i686-w64-mingw32.a(wxscintilla_LexCoffeeScript.o): In function `FoldCoffeeScriptDoc':
+// src/stc/scintilla/lexers/LexCoffeeScript.cxx:361: undefined reference to `Platform::Maximum(int, int)'
+//
+static wxStyledTextCtrl ctrl;
+
+#endif
