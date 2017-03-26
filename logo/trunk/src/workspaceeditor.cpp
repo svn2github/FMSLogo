@@ -840,15 +840,17 @@ void CWorkspaceEditor::OnRunSelection(wxCommandEvent& WXUNUSED(Event))
     while (more)
     {
         char * ptr2 = strchr(ptr, '~');
-
         if (ptr2 != NULL)
         {
+            // We found a line continuation character.
+            // Effect the continuation by overwriting the continuation character
+            // with a space, as well as the following newline.
             *ptr2 = ' ';
             char * ptr3 = strchr(ptr2, '\n');
             if (ptr3 != NULL)
             {
-                *ptr3 = ' ';
-                *(ptr3 - 1) = ' ';
+                *ptr3 = ' ';       // \n
+                *(ptr3 - 1) = ' '; // \r
             }
         }
         else
@@ -861,20 +863,21 @@ void CWorkspaceEditor::OnRunSelection(wxCommandEvent& WXUNUSED(Event))
     more = true;
     while (more)
     {
+        // NUL-terminate the string at the newline.
         char * ptr2 = strchr(ptr, '\n');
-
         if (ptr2 != NULL)
         {
-            *ptr2 = '\0';
-            *(ptr2 - 1) = '\0';
+            *ptr2 = '\0';       // \n
+            *(ptr2 - 1) = '\0'; // \r
         }
 
+        // Execute the line
         putcombobox(ptr, MESSAGETYPE_Normal);
         do_execution(ptr);
 
         if (ptr2 != NULL)
         {
-            ptr = ptr2 + 1;
+            ptr = ptr2 + 1; // Advance past the now-NULed newline
         }
         else
         {
