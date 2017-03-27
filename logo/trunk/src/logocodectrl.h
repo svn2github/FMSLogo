@@ -233,7 +233,8 @@ public:
         const wxString &   ReplacementString
         );
 
-    // Override wxTextCtrl member functions behave incorrectly with multibyte character sets
+    // Override wxTextCtrl member functions behave incorrectly with
+    // multibyte character sets
     virtual wxString GetRange(long startPos, long endPos) const;
     virtual void SetValue(const wxString &text);
 
