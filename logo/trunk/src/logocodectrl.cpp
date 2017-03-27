@@ -1323,8 +1323,8 @@ CLogoCodeCtrl::Find(
     if (rval != -1)
     {
         // The text was found.
-        GotoPos(rval);
-        SetSelection(rval, rval + StringToFind.Len());
+        GotoPos(findTextEx.chrgText.cpMin);
+        SetSelection(findTextEx.chrgText.cpMin, findTextEx.chrgText.cpMax);
     }
     else
     {
