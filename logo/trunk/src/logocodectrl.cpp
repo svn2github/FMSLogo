@@ -1021,7 +1021,7 @@ CLogoCodeCtrl::CLogoCodeCtrl(
         wxEmptyString,
         wxDefaultPosition,
         wxDefaultSize,
-        wxTE_MULTILINE | wxWANTS_CHARS | wxTE_RICH2)
+        wxTE_MULTILINE | wxTE_NOHIDESEL | wxWANTS_CHARS | wxTE_RICH2)
 {
 }
 
@@ -1046,7 +1046,7 @@ wxString CLogoCodeCtrl::GetText() const
     int textLength = GetTextLength();
 
     char * buffer = new char[(textLength + 1)*2];
-    GetWindowText(reinterpret_cast<HWND>(GetHandle()), buffer, textLength + 1);
+    GetWindowText(GetHandle(), buffer, textLength + 1);
 
     wxString text(buffer, textLength);
 
@@ -1057,7 +1057,7 @@ wxString CLogoCodeCtrl::GetText() const
 
 int CLogoCodeCtrl::GetTextLength() const
 {
-    return GetWindowTextLength(reinterpret_cast<HWND>(GetHandle()));
+    return GetWindowTextLength(GetHandle());
 }
 
 wxString CLogoCodeCtrl::GetTextRange(int startPos, int endPos)
@@ -1119,7 +1119,7 @@ wxString CLogoCodeCtrl::GetRange(long startPos, long endPos) const
 void CLogoCodeCtrl::Clear()
 {
     SendMessage(
-        reinterpret_cast<HWND>(GetHandle()),
+        GetHandle(),
         EM_REPLACESEL,
         TRUE, // this action is undoable
         reinterpret_cast<LPARAM>(L""));
@@ -1132,7 +1132,7 @@ void CLogoCodeCtrl::ClearAll()
 
 void CLogoCodeCtrl::EmptyUndoBuffer()
 {
-    SendMessage(reinterpret_cast<HWND>(GetHandle()), EM_EMPTYUNDOBUFFER, 0, 0);
+    SendMessage(GetHandle(), EM_EMPTYUNDOBUFFER, 0, 0);
 }
 
 int CLogoCodeCtrl::TextHeight(int line)
@@ -1175,6 +1175,7 @@ void CLogoCodeCtrl::SetUseHorizontalScrollBar(bool visible)
 
 void CLogoCodeCtrl::HideSelection(bool hide)
 {
+    SendMessage(GetHandle(), EM_HIDESELECTION, hide ? 1 : 0, 0);
 }
 
 bool CLogoCodeCtrl::AutoCompActive()
@@ -1191,10 +1192,7 @@ int CLogoCodeCtrl::GetCurrentLine()
 // double-byte characters, so we override it.
 void CLogoCodeCtrl::SetValue(const wxString &text)
 {
-    SetWindowText(
-        reinterpret_cast<HWND>(GetHandle()),
-        WXSTRING_TO_STRING(text));
-
+    SetWindowText(GetHandle(), WXSTRING_TO_STRING(text));
     DiscardEdits(); // mark not dirty
 }
 
@@ -1277,6 +1275,72 @@ CLogoCodeCtrl::Find(
     const wxString &   StringToFind
     )
 {
+    SendMessage(GetHandle(), EM_HIDESELECTION, 0, 0);
+
+    long from;
+    long to;
+    GetSelection(&from, &to);
+
+    // For reasons I don't understand, the ANSI message for finding a
+    // string does not work.  So instead we convert the string to a
+    // multibyte string.
+    int wideBufferLength = StringToFind.Len() + 1;
+    wchar_t * wideBuffer = new wchar_t[wideBufferLength];
+    MultiByteToWideChar(
+        CP_ACP,                 // system ANSI code page
+        0,                      // flags: don't fail on error
+        WXSTRING(StringToFind), // input string
+        -1,                     // its length (NUL-terminated)
+        wideBuffer,             // output string
+        wideBufferLength);      // size of output buffer (characters)
+
+    FINDTEXTEXW findTextEx;
+    findTextEx.chrg.cpMin     = (WxSearchFlags & wxFR_DOWN) ? to : from;
+    findTextEx.chrg.cpMax     = -1;
+    findTextEx.lpstrText      = wideBuffer;
+    findTextEx.chrgText.cpMin = 0;
+    findTextEx.chrgText.cpMax = -1;
+
+    WPARAM wParam = 0;
+    if (WxSearchFlags & wxFR_DOWN)
+    {
+        wParam |= FR_DOWN;
+    }
+    if (WxSearchFlags & wxFR_MATCHCASE)
+    {
+        wParam |= FR_MATCHCASE;
+    }
+    if (WxSearchFlags & wxFR_WHOLEWORD)
+    {
+        wParam |= FR_WHOLEWORD;
+    }
+
+    LPARAM rval = SendMessage(
+        GetHandle(),
+        EM_FINDTEXTEXW,
+        wParam,
+        reinterpret_cast<LPARAM>(&findTextEx));
+    if (rval != -1)
+    {
+        // The text was found.
+        GotoPos(rval);
+        SetSelection(rval, rval + StringToFind.Len());
+    }
+    else
+    {
+        // Notify the user that we were unable to find it.
+        const wxString & notFoundMessage = wxString::Format(
+            WXSTRING(LOCALIZED_STRINGTABLE_CANNOTFINDSTRING),
+            StringToFind.c_str());
+
+        ::wxMessageBox(
+            notFoundMessage,
+            WXSTRING(LOCALIZED_GENERAL_PRODUCTNAME),
+            wxICON_WARNING | wxOK,
+            this);
+    }
+
+    delete [] wideBuffer;
 }
 
 void
