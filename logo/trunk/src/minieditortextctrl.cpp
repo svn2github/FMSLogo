@@ -4,6 +4,7 @@
 
    #include <wx/event.h>
 
+   #include "logocore.h" // for ARRAYSIZE
    #include "stringadapter.h"
    #include "helputils.h" // for ContextHelp()
 #endif

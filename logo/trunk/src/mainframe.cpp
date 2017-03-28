@@ -8,6 +8,7 @@
 
     #include <wx/app.h>
     #include <wx/frame.h>
+    #include <wx/sizer.h>
 
     #include <wx/scrolwin.h>
     #include <wx/menu.h>
@@ -78,6 +79,7 @@
     #include "fontutils.h"
     #include "netwind.h"
     #include "questionbox.h"
+    #include "cursor.h" // lsetcursorarrow
     #include "stringadapter.h"
     #include "debugheap.h"
 
