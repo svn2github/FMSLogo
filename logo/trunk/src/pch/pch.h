@@ -16,7 +16,7 @@
 // To avoid including unneeded header files for a translation unit when
 // precompiled header files are not used, we compile this pch.h to nothing
 // when not using precompiled headers.  This only leaves what's in the
-// #findef clause.
+// #ifndef clause.
 //
 
 #ifdef USE_PRECOMPILED_HEADER
