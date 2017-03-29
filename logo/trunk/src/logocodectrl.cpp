@@ -1350,6 +1350,39 @@ CLogoCodeCtrl::Replace(
     const wxString &   ReplacementString
     )
 {
+    // We are doing a replace&find operation.
+    // If the string to be replaced is currently selected, then replace it.
+    const wxString & selectedText = GetSelectedText();
+
+    // Now figure out what to do with it.
+    int cmp;
+    if (WxSearchFlags & wxFR_MATCHCASE)
+    {
+        // Do a case-sensitive comparison
+        cmp = selectedText.Cmp(StringToFind);
+    }
+    else
+    {
+        // Do a case-insensitive comparison
+        cmp = selectedText.CmpNoCase(StringToFind);
+    }
+
+    if (cmp == 0)
+    {
+        // This is a match.  Replace the string.
+        // We use EM_REPLACESEL instead of wxTextEntry::Replace
+        // so that the replacement is a single operation in the undo
+        // buffer (not a delete followed by an insert).
+        SendMessage(
+            GetHandle(),
+            EM_REPLACESEL,
+            TRUE,
+            reinterpret_cast<LPARAM>(WXSTRING_TO_STRING(ReplacementString)));
+    }
+
+    // Now that the replacement has been performed (or not), search for
+    // the next occurence.
+    Find(WxSearchFlags, StringToFind);
 }
 
 void
