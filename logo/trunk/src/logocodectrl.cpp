@@ -1269,21 +1269,24 @@ bool CLogoCodeCtrl::IsTextSelected()
     return from != to;
 }
 
-void
-CLogoCodeCtrl::Find(
+
+// Searches for StringToFind according to WxSearchFlags and the
+// position of the current selection.
+// Returns true if StringToFind is found and selects it.
+// Returns false, otherwise.
+bool
+CLogoCodeCtrl::SearchForString(
     wxFindReplaceFlags WxSearchFlags,
     const wxString &   StringToFind
     )
 {
-    SendMessage(GetHandle(), EM_HIDESELECTION, 0, 0);
-
     long from;
     long to;
     GetSelection(&from, &to);
 
     // For reasons I don't understand, the ANSI message for finding a
     // string does not work.  So instead we convert the string to a
-    // multibyte string.
+    // wide string.
     int wideBufferLength = StringToFind.Len() + 1;
     wchar_t * wideBuffer = new wchar_t[wideBufferLength];
     MultiByteToWideChar(
@@ -1315,18 +1318,45 @@ CLogoCodeCtrl::Find(
         wParam |= FR_WHOLEWORD;
     }
 
-    LPARAM rval = SendMessage(
+    int position = SendMessage(
         GetHandle(),
         EM_FINDTEXTEXW,
         wParam,
         reinterpret_cast<LPARAM>(&findTextEx));
-    if (rval != -1)
+
+    delete [] wideBuffer;
+
+    if (position != -1)
     {
-        // The text was found.
-        GotoPos(findTextEx.chrgText.cpMin);
         SetSelection(findTextEx.chrgText.cpMin, findTextEx.chrgText.cpMax);
     }
-    else
+
+    return position != -1;
+}
+
+void
+CLogoCodeCtrl::ReplaceSelectedText(
+    const wxString &   ReplacementString
+    )
+{
+    // We use EM_REPLACESEL instead of wxTextEntry::Replace
+    // so that the replacement is a single operation in the undo
+    // buffer (not a delete followed by an insert).
+    SendMessage(
+        GetHandle(),
+        EM_REPLACESEL,
+        TRUE,
+        reinterpret_cast<LPARAM>(WXSTRING_TO_STRING(ReplacementString)));
+}
+
+void
+CLogoCodeCtrl::Find(
+    wxFindReplaceFlags WxSearchFlags,
+    const wxString &   StringToFind
+    )
+{
+    bool isFound = SearchForString(WxSearchFlags, StringToFind);
+    if (!isFound)
     {
         // Notify the user that we were unable to find it.
         const wxString & notFoundMessage = wxString::Format(
@@ -1339,8 +1369,6 @@ CLogoCodeCtrl::Find(
             wxICON_WARNING | wxOK,
             this);
     }
-
-    delete [] wideBuffer;
 }
 
 void
@@ -1370,14 +1398,7 @@ CLogoCodeCtrl::Replace(
     if (cmp == 0)
     {
         // This is a match.  Replace the string.
-        // We use EM_REPLACESEL instead of wxTextEntry::Replace
-        // so that the replacement is a single operation in the undo
-        // buffer (not a delete followed by an insert).
-        SendMessage(
-            GetHandle(),
-            EM_REPLACESEL,
-            TRUE,
-            reinterpret_cast<LPARAM>(WXSTRING_TO_STRING(ReplacementString)));
+        ReplaceSelectedText(ReplacementString);
     }
 
     // Now that the replacement has been performed (or not), search for
@@ -1392,7 +1413,25 @@ CLogoCodeCtrl::ReplaceAll(
     const wxString &   ReplacementString
     )
 {
+    SetInsertionPoint(0);
+
+    bool isFound = SearchForString(WxSearchFlags, StringToFind);
+    while (isFound)
+    {
+        // Found it.  Replace the string.
+        ReplaceSelectedText(ReplacementString);
+
+        // Move the selection so that we can repeat the search
+        long from;
+        long to;
+        GetSelection(&from, &to);
+        SetInsertionPoint(to);
+
+        // Repeat the search
+        isFound = SearchForString(WxSearchFlags, StringToFind);
+    }
 }
+
 
 BEGIN_EVENT_TABLE(CLogoCodeCtrl, wxTextCtrl)
     EVT_MENU(wxID_HELP_INDEX, CLogoCodeCtrl::OnHelpTopicSearch)

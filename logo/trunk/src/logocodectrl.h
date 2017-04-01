@@ -239,6 +239,18 @@ public:
     virtual void SetValue(const wxString &text);
 
 private:
+
+    void
+    ReplaceSelectedText(
+        const wxString &   ReplacementString
+        );
+
+    bool
+    SearchForString(
+        wxFindReplaceFlags WxSearchFlags,
+        const wxString &   StringToFind
+        );
+
     DECLARE_EVENT_TABLE();
     DECLARE_NO_COPY_CLASS(CLogoCodeCtrl);
 };
