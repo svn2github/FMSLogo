@@ -1,4 +1,4 @@
-#! bash
+#!/usr/bin/bash
 ###########################################################################
 # This file is a reminder of how I built wxWidgets 3.1.0 on Windows.
 #
@@ -18,13 +18,17 @@
 #   make clean all
 #
 ###########################################################################
-CONFIGURE=$1/configure
+if [ -z ${1+x} ];
+then
+  echo "Usage: configure-wxwidgets.sh <path to wxwidgets src>"
+  exit 1
+fi
 
-export PATH=/usr/bin:$PATH
+CONFIGURE=$1/configure
 
 if [ ! -f $CONFIGURE ];
 then
-  echo The file $CONFIGURE does not exist
+  echo "The file $CONFIGURE does not exist"
   exit 1
 fi
 
@@ -58,6 +62,8 @@ fi
 # library for for FMSLogo and the linker is not involved in that.  However, this makes
 # it easier to run the wxWidgets sample applications.
 export LDFLAGS="-static-libgcc -static-libstdc++" $LDFLAGS
+
+export PATH=/usr/bin:$PATH
 
 $CONFIGURE                        \
     $ADDITIONAL_OPTIONS           \
