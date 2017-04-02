@@ -4,6 +4,8 @@
    #  include <windows.h>  // for keybd_event
    #endif
 
+   #include <wx/clipbrd.h>
+
    #include "commanderinput.h"
 
    #include "commander.h"
@@ -294,7 +296,69 @@ void CCommanderInput::OnSetFocus(wxFocusEvent & Event)
     Event.Skip();
 }
 
-#ifndef USE_RICHTEXT_CODE_EDITOR
+#if defined USE_RICHTEXT_CODE_EDITOR
+
+void CCommanderInput::Paste()
+{
+    // This overrides the default paste handler to strip out
+    // and trailing newlines, which are present when copying
+    // and pasting code snippets from the manual or the Web.
+    // Because the commander input is only one line tall, if we
+    // included the trailing newline, then the user would see a
+    // blank line after the pasting and it wouldn't be clear that
+    // the contents of the clipboard was pasted.
+
+    // A more comprehensive solution would be to increase the size
+    // of the commander input to show everything that was pasted,
+    // or at least up to four lines.
+    if (wxTheClipboard->Open())
+    {
+        // Only special processing for text.
+        if (wxTheClipboard->IsSupported(wxDF_TEXT))
+        {
+            // Get the text that is being pasted.
+            wxTextDataObject data;
+            wxTheClipboard->GetData(data);
+            wxString pastedText = data.GetText();
+
+            // Determine where trailing newlines (if any) start.
+            size_t pastedTextLength = pastedText.length();
+            int lastIndex;
+            for (lastIndex = pastedTextLength - 1;
+                 0 <= lastIndex;
+                 lastIndex--)
+            {
+                if (pastedText[lastIndex] == '\\')
+                {
+                    // We shouldn't remove a quoted newline,
+                    // so put it back.
+                    lastIndex++;
+                    break;
+                }
+                else if (pastedText[lastIndex] != '\n' &&
+                         pastedText[lastIndex] != '\r')
+                {
+                    // We have found a trailing character
+                    // that isn't a newline, so we're done.
+                    break;
+                }
+            }
+
+            // Strip the trailing newlines
+            pastedText = pastedText.Truncate(lastIndex + 1);
+
+            // Perform the paste.
+            ReplaceSelection(pastedText);
+        }
+
+        wxTheClipboard->Close();
+    }
+}
+
+#elif wxCHECK_VERSION(3, 1, 0)
+// wxStyledTextCtrl on wxWidgets 3.1.0 or greater has a special
+// hook for modifying pasted text.  If it exists, we use it instead
+// of override the entire paste.
 
 void CCommanderInput::OnClipboardPaste(wxStyledTextEvent& Event)
 {
@@ -340,8 +404,75 @@ void CCommanderInput::OnClipboardPaste(wxStyledTextEvent& Event)
     Event.SetString(pastedText);
 }
 
-#endif // USE_RICHTEXT_CODE_EDITOR
+#else
 
+void CCommanderInput::OnPaste(wxCommandEvent& Event)
+{
+    // This overrides the default paste handler to strip out
+    // and trailing newlines, which are present when copying
+    // and pasting code snippets from the manual or the Web.
+    // Because the commander input is only one line tall, if we
+    // included the trailing newline, then the user would see a
+    // blank line after the pasting and it wouldn't be clear that
+    // the contents of the clipboard was pasted.
+
+    // A more comprehensive solution would be to increase the size
+    // of the commander input to show everything that was pasted,
+    // or at least up to four lines.
+
+    bool handledEvent = false;
+    if (wxTheClipboard->Open())
+    {
+        // Only special processing for text.
+        if (wxTheClipboard->IsSupported(wxDF_TEXT))
+        {
+            // Get the text that is being pasted.
+            wxTextDataObject data;
+            wxTheClipboard->GetData(data);
+            wxString pastedText = data.GetText();
+
+            // Determine where trailing newlines (if any) start.
+            size_t pastedTextLength = pastedText.length();
+            int lastIndex;
+            for (lastIndex = pastedTextLength - 1;
+                 0 <= lastIndex;
+                 lastIndex--)
+            {
+                if (pastedText[lastIndex] == '\\')
+                {
+                    // We shouldn't remove a quoted newline,
+                    // so put it back.
+                    lastIndex++;
+                    break;
+                }
+                else if (pastedText[lastIndex] != '\n' &&
+                         pastedText[lastIndex] != '\r')
+                {
+                    // We have found a trailing character
+                    // that isn't a newline, so we're done.
+                    break;
+                }
+            }
+
+            // Strip the trailing newlines
+            pastedText = pastedText.Truncate(lastIndex + 1);
+
+            // Perform the paste.
+            ReplaceSelection(pastedText);
+            handledEvent = true;
+        }
+
+        wxTheClipboard->Close();
+    }
+   
+    if (!handledEvent)
+    {
+        // Standard processing.
+        Event.Skip();
+    }
+}
+
+#endif
 
 BEGIN_EVENT_TABLE(CCommanderInput, CLogoCodeCtrl)
     EVT_KEY_DOWN(CCommanderInput::OnKeyDown)
@@ -352,8 +483,10 @@ BEGIN_EVENT_TABLE(CCommanderInput, CLogoCodeCtrl)
     EVT_MENU(ID_SELECTMATCHINGPAREN, CCommanderInput::OnSelectMatchingParen)
     EVT_MENU(ID_AUTOCOMPLETE,        CCommanderInput::OnAutoComplete)
 #ifndef USE_RICHTEXT_CODE_EDITOR
-#if wxCHECK_VERSION(3, 1, 0)
+  #if wxCHECK_VERSION(3, 1, 0)
     EVT_STC_CLIPBOARD_PASTE(wxID_ANY, CCommanderInput::OnClipboardPaste)
-#endif
+  #else
+    EVT_MENU(wxID_PASTE,              CCommanderInput::OnPaste)
+  #endif
 #endif
 END_EVENT_TABLE()

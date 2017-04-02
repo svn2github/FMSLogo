@@ -1394,7 +1394,7 @@ CLogoCodeCtrl::SearchForString(
 }
 
 void
-CLogoCodeCtrl::ReplaceSelectedText(
+CLogoCodeCtrl::ReplaceSelection(
     const wxString &   ReplacementString
     )
 {
@@ -1457,7 +1457,7 @@ CLogoCodeCtrl::Replace(
     if (cmp == 0)
     {
         // This is a match.  Replace the string.
-        ReplaceSelectedText(ReplacementString);
+        ReplaceSelection(ReplacementString);
     }
 
     // Now that the replacement has been performed (or not), search for
@@ -1478,7 +1478,7 @@ CLogoCodeCtrl::ReplaceAll(
     while (isFound)
     {
         // Found it.  Replace the string.
-        ReplaceSelectedText(ReplacementString);
+        ReplaceSelection(ReplacementString);
 
         // Move the selection so that we can repeat the search
         long from;

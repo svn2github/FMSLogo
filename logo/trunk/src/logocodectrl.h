@@ -153,6 +153,7 @@ public:
     void SetUndoCollection(bool collectUndo);
     void GotoPos(int caret);
     void Clear();
+    void ReplaceSelection(const wxString &text);
     int
     FormatRange(
         bool    doDraw,
@@ -202,11 +203,6 @@ public:
     virtual void SetValue(const wxString &text);
 
 private:
-
-    void
-    ReplaceSelectedText(
-        const wxString &   ReplacementString
-        );
 
     bool
     SearchForString(

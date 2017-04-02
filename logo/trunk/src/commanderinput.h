@@ -20,8 +20,12 @@ private:
     void OnFindMatchingParen(wxCommandEvent& Event);
     void OnSelectMatchingParen(wxCommandEvent& Event);
     void OnAutoComplete(wxCommandEvent& Event);
-#ifndef USE_RICHTEXT_CODE_EDITOR
+#ifdef USE_RICHTEXT_CODE_EDITOR
+    void Paste();
+#elif wxCHECK_VERSION(3, 1, 0)
     void OnClipboardPaste(wxStyledTextEvent& Event);
+#else
+    void OnPaste(wxCommandEvent& Event);
 #endif
 
     DECLARE_NO_COPY_CLASS(CCommanderInput);
