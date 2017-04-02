@@ -122,6 +122,7 @@ VIII. Acknowledgements
     Peter De Wachter
     Ralf Kurth
     Relja Medic
+    Serio Adamo
     Stefano Federici
     Stephan Vogel
     Tankhasaev Ayur

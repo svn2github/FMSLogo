@@ -27,39 +27,40 @@
 				</p>
 				
 				<ul>
-					 <li>Alexandre Soares</li>
-					 <li>Andreas Micheler</li>
-					 <li>Andrzej Pruszynski</li>
-					 <li>Andy Owen</li>
-					 <li>Anthony Barnett</li>
-					 <li>Ayurzanaeva Aryuna</li>
-					 <li>Bertrand Carette</li>
-					 <li>Bob Gorman</li>
-					 <li>Bruce Mardle</li>
-					 <li>Carl Bogardus</li>
-					 <li>Clem Rutter</li>
-					 <li>Daniel Ajoy</li>
-					 <li>Domagoj Kuna</li>
-					 <li>Hensley Bass</li>
-					 <li>Igor Baglaev</li>
-					 <li>Jan-Niklas Grabe</li>
-					 <li>Jason Gervich</li>
-					 <li>Jim Foster</li>
-					 <li>Juan J. Paredes G.</li>
-					 <li>Kari Hoijarvi</li>
-					 <li>Lion Nik Kucev</li>
-					 <li>Lionel Laske</li>
-					 <li>Michael Malin</li>
-					 <li>Mike Sandy</li>
-					 <li>Narayanan Chitoor</li>
-					 <li>Pavel Boytchev</li>
-					 <li>Peter De Wachter</li>
-					 <li>Ralf Kurth</li>
-					 <li>Relja Medic</li>
-					 <li>Stefano Federici</li>
-					 <li>Stephan Vogel</li>
-					 <li>Tankhasaev Ayur</li>
-					 <li>Theodoros Chatzigiannakis</li>
+					<li>Alexandre Soares</li>
+					<li>Andreas Micheler</li>
+					<li>Andrzej Pruszynski</li>
+					<li>Andy Owen</li>
+					<li>Anthony Barnett</li>
+					<li>Ayurzanaeva Aryuna</li>
+					<li>Bertrand Carette</li>
+					<li>Bob Gorman</li>
+					<li>Bruce Mardle</li>
+					<li>Carl Bogardus</li>
+					<li>Clem Rutter</li>
+					<li>Daniel Ajoy</li>
+					<li>Domagoj Kuna</li>
+					<li>Hensley Bass</li>
+					<li>Igor Baglaev</li>
+					<li>Jan-Niklas Grabe</li>
+					<li>Jason Gervich</li>
+					<li>Jim Foster</li>
+					<li>Juan J. Paredes G.</li>
+					<li>Kari Hoijarvi</li>
+					<li>Lion Nik Kucev</li>
+					<li>Lionel Laske</li>
+					<li>Michael Malin</li>
+					<li>Mike Sandy</li>
+					<li>Narayanan Chitoor</li>
+					<li>Pavel Boytchev</li>
+					<li>Peter De Wachter</li>
+					<li>Ralf Kurth</li>
+					<li>Relja Medic</li>
+					<li>Serio Adamo</li>
+					<li>Stefano Federici</li>
+					<li>Stephan Vogel</li>
+					<li>Tankhasaev Ayur</li>
+					<li>Theodoros Chatzigiannakis</li>
 				</ul>
 
 				<p>
@@ -67,11 +68,11 @@
 				</p>
 
 				<ul>
-					 <li>George Mills</li>
-					 <li>Brian Harvey</li>
-					 <li>Jim Muller</li>
-					 <li>Erich Neuwirth</li>
-					 <li>Yehuda Katz</li>
+					<li>George Mills</li>
+					<li>Brian Harvey</li>
+					<li>Jim Muller</li>
+					<li>Erich Neuwirth</li>
+					<li>Yehuda Katz</li>
 				</ul>
 				<p>
 				It is my hope that FMSLogo's home on SourceForge will serve as a focal point for future community involvement.
