@@ -1227,9 +1227,28 @@ bool CLogoCodeCtrl::AutoCompActive()
     return false;
 }
 
+// Returns the current line of the caret (zero-indexed).
+// This is only used to determine if pressing up in the commander
+// input should give focus to the commander history.
 int CLogoCodeCtrl::GetCurrentLine()
 {
-    return 0;
+    int position = GetInsertionPoint();
+
+    int lineNumber = 0;
+
+    // Count the number of newlines before the current position
+    wxString textBeforePosition(GetRange(0, position));
+    for (wxString::const_iterator i = textBeforePosition.begin();
+         i != textBeforePosition.end();
+         ++i)
+    {
+        if (*i == '\n')
+        {
+            lineNumber++;
+        }
+    }
+
+    return lineNumber;
 }
 
 // wxTextCtrl::SetValue() doesn't set the value correctly when text contains
@@ -1567,7 +1586,7 @@ int CLogoCodeCtrl::FormatRange(
             // Neither wxDC::TextOut nor ::TextOutA handle multibyte
             // characters correctly.
             // If given the length in bytes, they append garbage.
-            // If given the length in characters, they cuts the text short,
+            // If given the length in characters, they cut the text short,
             // rendering only half of each double-byte character.
             // Instead, we convert the line to Unicode and use TextOutW.
             wchar_t * wideStringLine = new wchar_t[lineLength + 1];
