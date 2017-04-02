@@ -206,7 +206,7 @@ void CCommanderInput::OnKeyDown(wxKeyEvent& Event)
                 // Normally, you cannot have more than one line of text
                 // within this control, but you can if you paste multiple
                 // lines.
-                LineUp();
+                Event.Skip();
             }
         }
         break;
