@@ -24,6 +24,8 @@ II. New features/bugs fixed:
     when given numbers that were originally parsed as text.
   o Fix Bug #489; Running a Logolib procedure onces again works when the current
     working directory is on a different drive than the FMSLogo executable.
+  o Fix Bug #467; The editors no longer have strange "half-character" behavior
+    when manipulating Chinese characters in the Chinese translation of FMSLogo.
   o Implement feature #119; DLLCALL now supports calling win32 functions that
     have out parameters.
   o Minor improvements to the manual.
