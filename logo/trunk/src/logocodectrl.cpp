@@ -1,6 +1,7 @@
 #include "pch.h"
 #ifndef USE_PRECOMPILED_HEADER
-   #include <wx/gdicmn.h>      // for wxPoint
+   #include <windows.h>      // for MAKELCID and language functions
+   #include <wx/gdicmn.h>    // for wxPoint
    #include <wx/printdlg.h>
    #include <wx/msgdlg.h>
    #include <wx/menu.h>
@@ -22,8 +23,276 @@
   #include "../src/stc/scintilla/include/Scintilla.h"
 #endif
 
-#ifndef USE_RICHTEXT_CODE_EDITOR
+// A helper class for printing
+class CLogoCodePrintout : public wxPrintout
+{
+public:
+    CLogoCodePrintout(
+        const wxString        & Title,
+        CLogoCodeCtrl         & EditControl,
+        wxPageSetupDialogData & PageSetup
+        );
 
+    bool OnPrintPage(int Page);
+    bool HasPage(int Page);
+    bool OnBeginDocument(int StartPage, int EndPage);
+
+    void
+    GetPageInfo(
+        int *MinPage,
+        int *MaxPage,
+        int *SelPageFrom,
+        int *SelPageTo
+        );
+
+private:
+    void ScaleForPrinting(wxDC * DeviceContext);
+
+    CLogoCodeCtrl         & m_EditControl;
+    wxPageSetupDialogData & m_PageSetup;
+
+    int m_NextPrintStartPosition;
+
+    // Physical printers cannot print all the way to the edge
+    // of the paper and most programs want to leave a user-defined
+    // margin that is larger than the physical margin as defined
+    // by the printer.  FMSLogo always uses the physical margins.
+    //
+    // m_RenderRectangle is the region (relative to the physical
+    // margins of the printer) where FMSLogo prints its content.
+    //
+    // m_PageRectangle is the physical dimensions of the
+    // printable region on the paper.
+    wxRect m_RenderRectangle;
+    wxRect m_PageRectangle;
+};
+
+CLogoCodePrintout::CLogoCodePrintout(
+    const wxString        & Title,
+    CLogoCodeCtrl         & EditControl,
+    wxPageSetupDialogData & PageSetup
+    ) :
+    wxPrintout(Title),
+    m_EditControl(EditControl),
+    m_PageSetup(PageSetup),
+    m_NextPrintStartPosition(0)
+{
+}
+
+void CLogoCodePrintout::ScaleForPrinting(wxDC * DeviceContext)
+{
+    // get printer and screen sizing values
+    wxSize ppiScr;
+    GetPPIScreen(&ppiScr.x, &ppiScr.y);
+    if (ppiScr.x == 0)  // most possible guess 96 dpi
+    {	ppiScr.x = 96;
+        ppiScr.y = 96;
+    }
+
+    wxSize ppiPrt;
+    GetPPIPrinter (&ppiPrt.x, &ppiPrt.y);
+    if (ppiPrt.x == 0)  // scaling factor to 1
+    {	ppiPrt.x = ppiScr.x;
+        ppiPrt.y = ppiScr.y;
+    }
+    wxSize dcSize = DeviceContext->GetSize();
+    wxSize pageSize;
+    GetPageSizePixels(&pageSize.x, &pageSize.y);
+
+    // set user scale
+    float scale_x = 
+        (float)(ppiPrt.x * dcSize.x) /
+        (float)(ppiScr.x * pageSize.x);
+    float scale_y = 
+        (float)(ppiPrt.y * dcSize.y) /
+        (float)(ppiScr.y * pageSize.y);
+    DeviceContext->SetUserScale(scale_x, scale_y);
+}
+
+bool CLogoCodePrintout::OnPrintPage(int page)
+{
+    wxDC * dc = GetDC();
+    if (dc == NULL)
+    {
+        return false;
+    }
+
+    // Scale the DC
+    ScaleForPrinting(dc);
+
+    // If we're starting from page 1, then set the
+    // position back to the beginning.
+    // BUG: This assumes that the user always starts
+    // printing from page 1.
+    if (page == 1) 
+    {
+        m_NextPrintStartPosition = 0; // start at the beginning
+    }
+
+    int nextStartPosition = m_EditControl.FormatRange(
+        true,                          // print
+        m_NextPrintStartPosition,      // start position
+        m_EditControl.GetTextLength(), // end position
+        dc,
+        dc,
+        m_RenderRectangle,
+        m_PageRectangle);
+
+    if (nextStartPosition <= m_NextPrintStartPosition)
+    {
+        // There was no forward progress made when printing.
+        // Something is wrong.  This should not happen in
+        // practice, but if it does, we should return an error
+        // rather than risk going into an infinite loop.
+        assert(!"No progress made when printing.");
+        return false;
+    }
+
+    m_NextPrintStartPosition = nextStartPosition;
+    return true;
+}
+
+bool
+CLogoCodePrintout::OnBeginDocument(int startPage, int endPage)
+{
+    if (!wxPrintout::OnBeginDocument(startPage, endPage))
+    {
+        return false;
+    }
+
+    // TODO: Compute page-to-offset mapping so that we
+    // always know how to print each page, instead of
+    // assuming that all pages are printed.
+    // See the comment in CLogoCodeCtrl::Print().
+    return true;
+}
+
+void
+CLogoCodePrintout::GetPageInfo(
+    int *minPage,
+    int *maxPage,
+    int *selPageFrom,
+    int *selPageTo
+    )
+{
+    // initialize values
+    *minPage = 0;
+    *maxPage = 0;
+
+    *selPageFrom = 0;
+    *selPageTo   = 0;
+
+    wxDC *dc = GetDC();
+    if (dc == NULL) 
+    {
+        return;
+    }
+
+    // Scale DC if possible
+    ScaleForPrinting(dc);
+
+    // get printer and screen sizing values
+    m_RenderRectangle = GetLogicalPageRect();
+    m_PageRectangle   = GetLogicalPageMarginsRect(m_PageSetup);
+
+    // Now that the page and render rectangles are set to a single page,
+    // we can count all the pages by asking Scintilla to "print" all
+    // pages consecutively (without actually printing anything).
+    while (HasPage(*maxPage))
+    {
+        int nextStartPosition = m_EditControl.FormatRange(
+            false,                         // don't really print
+            m_NextPrintStartPosition,      // start position
+            m_EditControl.GetTextLength(), // end position
+            dc,
+            dc,
+            m_RenderRectangle,
+            m_PageRectangle);
+
+        if (nextStartPosition <= m_NextPrintStartPosition)
+        {
+            // There was no forward progress made when printing.
+            // Something is wrong.  This should not happen in
+            // practice, but if it does, we should return an error
+            // rather than risk going into an infinite loop.
+            assert(!"No progress made when printing.");
+            return;
+        }
+
+        m_NextPrintStartPosition = nextStartPosition;
+        *maxPage += 1;
+    }
+
+    // Reset the state that has been printed
+    m_NextPrintStartPosition = 0;
+    if (*maxPage > 0) 
+    {
+        *minPage = 1;
+    }
+    *selPageFrom = *minPage;
+    *selPageTo   = *maxPage;
+}
+
+bool CLogoCodePrintout::HasPage(int pageNum)
+{
+    return m_NextPrintStartPosition < m_EditControl.GetTextLength();
+}
+
+// Prints the contents of the editor.
+void CLogoCodeCtrl::Print()
+{
+    // Note: printData and pageSetupData are normally global variables
+    // that preserve printer preferences across printouts.  Since
+    // FMSLogo's editor doesn't support advanced printer options,
+    // we just create new variables each time.
+    wxPrintData       printData;
+    wxPrintDialogData printDialogData(printData);
+
+    // Disable the selection of page numbers to shield the user
+    // from a bug in CLogoCodePrintout where it assumes that
+    // the user always prints from page 1.  This could be fixed
+    // by creating a page-to-offset mapping in the OnBeginDocument
+    // handler, then using that instead of letting Scintilla do the
+    // calculation in iterative calls to FormatRange() in OnPrint().
+    printDialogData.EnablePageNumbers(false);
+
+    // Show the printer selection dialog box.
+    wxPrinter printer(&printDialogData);
+
+    // Read the default page settings.
+    // On Windows, even though we call ShowModal, no
+    // dialog box is displayed because we set the
+    // default info to true.
+    wxPageSetupDialogData pageSetupData;
+    pageSetupData.SetDefaultInfo(true);
+    wxPageSetupDialog pageSetup(this, &pageSetupData);
+    pageSetup.ShowModal();
+
+    CLogoCodePrintout printout(
+        WXSTRING(LOCALIZED_GENERAL_PRODUCTNAME),
+        *this,
+        pageSetupData);
+
+    if (!printer.Print(this, &printout, true))
+    {
+        // This can happen in two cases:
+        // 1) If there was an error while printing, in which
+        //    case the operating system will have communicated
+        //    the problem to the user, so we don't need to.
+        // 2) If the print job was cancelled by the user,
+        //    in which case we don't need to tell the user
+        //    that they cancelled the job.
+        //
+        // Therefore, all we need to do is exit.
+        return;
+    }
+
+    // If we preserved the global settings, we'd update the
+    // printing preferences here.
+    //printData = printer.GetPrintDialogData().GetPrintData();
+}
+
+#ifndef USE_RICHTEXT_CODE_EDITOR
 
 CLogoCodeCtrl::CLogoCodeCtrl(
     wxWindow *      Parent,
@@ -644,235 +913,6 @@ CLogoCodeCtrl::ReplaceAll(
     }
 }
 
-CLogoCodeCtrl::CLogoCodePrintout::CLogoCodePrintout(
-    const wxString        & Title,
-    wxStyledTextCtrl      & EditControl,
-    wxPageSetupDialogData & PageSetup
-    ) :
-    wxPrintout(Title),
-    m_EditControl(EditControl),
-    m_PageSetup(PageSetup),
-    m_NextPrintStartPosition(0)
-{
-}
-
-void CLogoCodeCtrl::CLogoCodePrintout::ScaleForPrinting(wxDC * DeviceContext)
-{
-    // get printer and screen sizing values
-    wxSize ppiScr;
-    GetPPIScreen(&ppiScr.x, &ppiScr.y);
-    if (ppiScr.x == 0)  // most possible guess 96 dpi
-    {	ppiScr.x = 96;
-        ppiScr.y = 96;
-    }
-
-    wxSize ppiPrt;
-    GetPPIPrinter (&ppiPrt.x, &ppiPrt.y);
-    if (ppiPrt.x == 0)  // scaling factor to 1
-    {	ppiPrt.x = ppiScr.x;
-        ppiPrt.y = ppiScr.y;
-    }
-    wxSize dcSize = DeviceContext->GetSize();
-    wxSize pageSize;
-    GetPageSizePixels(&pageSize.x, &pageSize.y);
-
-    // set user scale
-    float scale_x = 
-        (float)(ppiPrt.x * dcSize.x) /
-        (float)(ppiScr.x * pageSize.x);
-    float scale_y = 
-        (float)(ppiPrt.y * dcSize.y) /
-        (float)(ppiScr.y * pageSize.y);
-    DeviceContext->SetUserScale(scale_x, scale_y);
-}
-
-bool CLogoCodeCtrl::CLogoCodePrintout::OnPrintPage(int page)
-{
-    wxDC * dc = GetDC();
-    if (dc == NULL)
-    {
-        return false;
-    }
-
-    // Scale the DC
-    ScaleForPrinting(dc);
-
-    // If we're starting from page 1, then set the
-    // position back to the beginning.
-    // BUG: This assumes that the user always starts
-    // printing from page 1.
-    if (page == 1) 
-    {
-        m_NextPrintStartPosition = 0; // start at the beginning
-    }
-
-    int nextStartPosition = m_EditControl.FormatRange(
-        true,                          // print
-        m_NextPrintStartPosition,      // start position
-        m_EditControl.GetTextLength(), // end position
-        dc,
-        dc,
-        m_RenderRectangle,
-        m_PageRectangle);
-
-    if (nextStartPosition <= m_NextPrintStartPosition)
-    {
-        // There was no forward progress made when printing.
-        // Something is wrong.  This should not happen in
-        // practice, but if it does, we should return an error
-        // rather than risk going into an infinite loop.
-        assert(!"No progress made when printing.");
-        return false;
-    }
-
-    m_NextPrintStartPosition = nextStartPosition;
-    return true;
-}
-
-bool
-CLogoCodeCtrl::CLogoCodePrintout::OnBeginDocument(
-    int startPage,
-    int endPage
-    )
-{
-    if (!wxPrintout::OnBeginDocument(startPage, endPage))
-    {
-        return false;
-    }
-
-    // TODO: Compute page-to-offset mapping so that we
-    // always know how to print each page, instead of
-    // assuming that all pages are printed.
-    // See the comment in CLogoCodeCtrl::Print().
-    return true;
-}
-
-void
-CLogoCodeCtrl::CLogoCodePrintout::GetPageInfo(
-    int *minPage,
-    int *maxPage,
-    int *selPageFrom,
-    int *selPageTo
-    )
-{
-    // initialize values
-    *minPage = 0;
-    *maxPage = 0;
-
-    *selPageFrom = 0;
-    *selPageTo   = 0;
-
-    wxDC *dc = GetDC();
-    if (dc == NULL) 
-    {
-        return;
-    }
-
-    // Scale DC if possible
-    ScaleForPrinting(dc);
-
-    // get printer and screen sizing values
-    m_RenderRectangle = GetLogicalPageRect();
-    m_PageRectangle   = GetLogicalPageMarginsRect(m_PageSetup);
-
-    // Now that the page and render rectangles are set to a single page,
-    // we can count all the pages by asking Scintilla to "print" all
-    // pages consecutively (without actually printing anything).
-    while (HasPage(*maxPage))
-    {
-        int nextStartPosition = m_EditControl.FormatRange(
-            false,                         // don't really print
-            m_NextPrintStartPosition,      // start position
-            m_EditControl.GetTextLength(), // end position
-            dc,
-            dc,
-            m_RenderRectangle,
-            m_PageRectangle);
-
-        if (nextStartPosition <= m_NextPrintStartPosition)
-        {
-            // There was no forward progress made when printing.
-            // Something is wrong.  This should not happen in
-            // practice, but if it does, we should return an error
-            // rather than risk going into an infinite loop.
-            assert(!"No progress made when printing.");
-            return;
-        }
-
-        m_NextPrintStartPosition = nextStartPosition;
-        *maxPage += 1;
-    }
-
-    // Reset the state that has been printed
-    m_NextPrintStartPosition = 0;
-    if (*maxPage > 0) 
-    {
-        *minPage = 1;
-    }
-    *selPageFrom = *minPage;
-    *selPageTo   = *maxPage;
-}
-
-bool CLogoCodeCtrl::CLogoCodePrintout::HasPage(int pageNum)
-{
-    return m_NextPrintStartPosition < m_EditControl.GetTextLength();
-}
-
-
-// Prints the contents of the editor.
-void CLogoCodeCtrl::Print()
-{
-    // Note: printData and pageSetupData are normally global variables
-    // that preserve printer preferences across printouts.  Since
-    // FMSLogo's editor doesn't support advanced printer options,
-    // we just create new variables each time.
-    wxPrintData       printData;
-    wxPrintDialogData printDialogData(printData);
-
-    // Disable the selection of page numbers to shield the user
-    // from a bug in CLogoCodePrintout where it assumes that
-    // the user always prints from page 1.  This could be fixed
-    // by creating a page-to-offset mapping in the OnBeginDocument
-    // handler, then using that instead of letting Scintilla do the
-    // calculation in iterative calls to FormatRange() in OnPrint().
-    printDialogData.EnablePageNumbers(false);
-
-    // Show the printer selection dialog box.
-    wxPrinter printer(&printDialogData);
-
-    // Read the default page settings.
-    // On Windows, even though we call ShowModal, no
-    // dialog box is displayed because we set the
-    // default info to true.
-    wxPageSetupDialogData pageSetupData;
-    pageSetupData.SetDefaultInfo(true);
-    wxPageSetupDialog pageSetup(this, &pageSetupData);
-    pageSetup.ShowModal();
-
-    CLogoCodePrintout printout(
-        WXSTRING(LOCALIZED_GENERAL_PRODUCTNAME),
-        *this,
-        pageSetupData);
-
-    if (!printer.Print(this, &printout, true))
-    {
-        // This can happen in two cases:
-        // 1) If there was an error while printing, in which
-        //    case the operating system will have communicated
-        //    the problem to the user, so we don't need to.
-        // 2) If the print job was cancelled by the user,
-        //    in which case we don't need to tell the user
-        //    that they cancelled the job.
-        //
-        // Therefore, all we need to do is exit.
-        return;
-    }
-
-    // If we preserved the global settings, we'd update the
-    // printing preferences here.
-    //printData = printer.GetPrintDialogData().GetPrintData();
-}
-
 bool
 CLogoCodeCtrl::IsDirty() const
 {
@@ -1006,10 +1046,11 @@ END_EVENT_TABLE()
 
 #else
 
-// Implementation of the CLogoCodeCtrl that uses wxTextCtrl for languages which use
-// a multi-byte character set, such as Simplified Chinese.
+// Implementation of the CLogoCodeCtrl that uses wxTextCtrl for languages which
+// use a multi-byte character set, such as Simplified Chinese.
 // This is stop-gap solution until FMSLogo is a pure-Unicode application.
 #include <richedit.h>
+#include <mbstring.h>
 
 CLogoCodeCtrl::CLogoCodeCtrl(
     wxWindow *      Parent,
@@ -1055,6 +1096,9 @@ wxString CLogoCodeCtrl::GetText() const
     return text;
 }
 
+// BUG: this should return the number of characters, but it instead
+// returns the number of bytes.  However, for this is used, it does
+// not cause problems.
 int CLogoCodeCtrl::GetTextLength() const
 {
     return GetWindowTextLength(GetHandle());
@@ -1236,10 +1280,6 @@ void CLogoCodeCtrl::SelectMatchingParen()
 bool CLogoCodeCtrl::IsDirty() const
 {
     return IsModified();
-}
-
-void CLogoCodeCtrl::Print()
-{
 }
 
 void CLogoCodeCtrl::OnDelete(wxCommandEvent& Event)
@@ -1432,6 +1472,133 @@ CLogoCodeCtrl::ReplaceAll(
     }
 }
 
+int CLogoCodeCtrl::FormatRange(
+    bool    doDraw,
+    int     startPos,
+    int     endPos,
+    wxDC *  draw,
+    wxDC *  target,
+    wxRect  renderRect,
+    wxRect  pageRect 
+    )
+{
+    wxString entireBuffer(GetText());
+
+    // startPos and endPos are in characters, but wxString treats
+    // treats its arguments as being in bytes.
+    // To get the correct substring, we must also treat it as characters.
+
+    // CONSIDER: this could be rewritten using _ismbblead
+
+    // Convert the mulitbyte string into Unicode wide characters.
+    int wideBufferLength = entireBuffer.Len() + 1;
+    wchar_t * wideBuffer = new wchar_t[wideBufferLength];
+    MultiByteToWideChar(
+        CP_ACP,                 // system ANSI code page
+        0,                      // flags: don't fail on error
+        WXSTRING(entireBuffer), // input string
+        -1,                     // its length (NUL-terminated)
+        wideBuffer,             // output string
+        wideBufferLength);      // size of output buffer (characters)
+
+    // Convert the unicode selection back to a multibyte string
+    int selectionLength = endPos - startPos;
+    char * buffer = new char[2 * selectionLength]; // worst case: every character is double-byte
+    int bufferLength = WideCharToMultiByte(
+        CP_ACP,                 // system ANSI code page
+        0,                      // use best-fit character and don't fail on error
+        wideBuffer + startPos,  // offset of first desired character
+        selectionLength,        // total desired characters
+        buffer,                 // multibyte buffer
+        2 * selectionLength,    // size of buffer in bytes
+        NULL,                   // use the system default for characters that have no coding
+        NULL);                  // we don't care what character was used.
+
+    // Wrap the multi-byte selection in a wxString
+    wxString fullTextInRange(buffer, bufferLength);
+
+    delete [] wideBuffer;
+    delete [] buffer;
+
+    wxCoord pageX      = renderRect.GetLeft();
+    wxCoord nextY      = renderRect.GetTop();
+    wxCoord pageYLimit = renderRect.GetBottom();
+
+    // Draw the requested range, line by line.
+    wxString remainingText(fullTextInRange);
+    while (!remainingText.IsEmpty())
+    {
+        // Extract the next line from remainingText.
+        wxString line;
+        int lineEnd = remainingText.First('\n');
+        if (lineEnd != wxNOT_FOUND)
+        {
+            line          = remainingText.Left(lineEnd + 1);
+            remainingText = remainingText.Mid(lineEnd + 1);
+        }
+        else
+        {
+            line          = remainingText;
+            remainingText = wxEmptyString;
+        }
+
+        // Determine how much vertical space this line take up.
+        // Anything beyond the page extent is clipped (no line wrapping).
+        wxCoord lineWidth;
+        wxCoord lineHeight;
+        draw->GetTextExtent(line, &lineWidth, &lineHeight);
+
+        if (pageYLimit <= nextY + lineHeight)
+        {
+            // We have reached the end of the page before
+            // printing all of the text.  Return how much
+            // progress we made to the caller.
+            return startPos;
+        }
+
+        // Determine the number of characters in the line, since
+        // some wxWidgets functions do not correctly handle multibyte
+        // character sets.
+        const char * rawString = line.c_str();
+        int lineLength = _mbslen(reinterpret_cast<const unsigned char *>(rawString));
+
+        if (doDraw)
+        {
+            // Neither wxDC::TextOut nor ::TextOutA handle multibyte
+            // characters correctly.
+            // If given the length in bytes, they append garbage.
+            // If given the length in characters, they cuts the text short,
+            // rendering only half of each double-byte character.
+            // Instead, we convert the line to Unicode and use TextOutW.
+            wchar_t * wideStringLine = new wchar_t[lineLength + 1];
+            MultiByteToWideChar(
+                CP_ACP,                 // system ANSI code page
+                0,                      // flags: don't fail on error
+                rawString,              // input string
+                -1,                     // its length (NUL-terminated)
+                wideStringLine,         // output string
+                2 * (lineLength + 1));  // size of output buffer (characters)
+
+            TextOutW(draw->GetHDC(), pageX, nextY, wideStringLine, lineLength);
+
+            delete [] wideStringLine;
+        }
+
+        // Advance the Y to below the line.
+        nextY += lineHeight;
+
+        // Advance the start position to include the characters
+        // which were drawn above.  wxString.Len() assumes that all
+        // ANSI strings have single-byte characters, so to get the
+        // correct position, we must use the length determined in characters.
+        startPos += lineLength;
+    }
+
+    // We reached the end of the text.  Return the end of the requested
+    // range, instead of the calculated startPos.  This compensates for a
+    // problem that GetWindowTextLength returns bytes, instead of characters.
+    return endPos;
+}
 
 BEGIN_EVENT_TABLE(CLogoCodeCtrl, wxTextCtrl)
     EVT_MENU(wxID_HELP_INDEX, CLogoCodeCtrl::OnHelpTopicSearch)
