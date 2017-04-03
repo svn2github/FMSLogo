@@ -27,26 +27,27 @@ CCommanderInput::CCommanderInput(
     CLogoCodeCtrl(Parent, Id)
 {
     // Configure the keyboard shortcuts
-    wxAcceleratorEntry acceleratorEntries[9];
+    wxAcceleratorEntry acceleratorEntries[10];
 
-    acceleratorEntries[0].Set(wxACCEL_CTRL, 'A', wxID_SELECTALL);
-    acceleratorEntries[1].Set(wxACCEL_CTRL, 'Z', wxID_UNDO);
-    acceleratorEntries[2].Set(wxACCEL_CTRL, 'Y', wxID_REDO);
-    acceleratorEntries[3].Set(wxACCEL_CTRL, 'X', wxID_CUT);
-    acceleratorEntries[4].Set(wxACCEL_CTRL, 'C', wxID_COPY);
-    acceleratorEntries[5].Set(wxACCEL_CTRL, 'V', wxID_PASTE);
+    acceleratorEntries[0].Set(wxACCEL_CTRL,      'A', wxID_SELECTALL);
+    acceleratorEntries[1].Set(wxACCEL_CTRL,      'Z', wxID_UNDO);
+    acceleratorEntries[2].Set(wxACCEL_CTRL,      'Y', wxID_REDO);
+    acceleratorEntries[3].Set(wxACCEL_CTRL,      'X', wxID_CUT);
+    acceleratorEntries[4].Set(wxACCEL_CTRL,      'C', wxID_COPY);
+    acceleratorEntries[5].Set(wxACCEL_CTRL,      'V', wxID_PASTE);
+    acceleratorEntries[6].Set(wxACCEL_NORMAL, WXK_F1, wxID_HELP_INDEX);
 
     // Ctrl+] moves to matching paren
-    acceleratorEntries[6].Set(wxACCEL_CTRL, ']', ID_FINDMATCHINGPAREN);
+    acceleratorEntries[7].Set(wxACCEL_CTRL, ']', ID_FINDMATCHINGPAREN);
 
     // Ctrl+Shift+] selects to matching paren
-    acceleratorEntries[7].Set(
+    acceleratorEntries[8].Set(
         wxACCEL_CTRL | wxACCEL_SHIFT,
         ']',
         ID_SELECTMATCHINGPAREN);
 
     // Ctrl+Space does auto-complete
-    acceleratorEntries[8].Set(wxACCEL_CTRL, WXK_SPACE, ID_AUTOCOMPLETE);
+    acceleratorEntries[9].Set(wxACCEL_CTRL, WXK_SPACE, ID_AUTOCOMPLETE);
 
     wxAcceleratorTable acceleratorTable(
         ARRAYSIZE(acceleratorEntries),
@@ -183,10 +184,6 @@ void CCommanderInput::OnKeyDown(wxKeyEvent& Event)
 
     switch (keyCode)
     {
-    case WXK_F1:
-        ContextHelp(GetSelectedText());
-        break;
-
     case WXK_UP:
     case WXK_NUMPAD_UP:
         if (AutoCompActive())
