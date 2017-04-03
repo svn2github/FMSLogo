@@ -16,13 +16,6 @@
    #include "wrksp.h" // for g_CharactersSuccessfullyParsedInEditor
 #endif
 
-#include "scintilla/SciLexer.h"
-#ifdef WX_PURE
-  #include "scintilla/include/Scintilla.h"
-#else
-  #include "../src/stc/scintilla/include/Scintilla.h"
-#endif
-
 // A helper class for printing
 class CLogoCodePrintout : public wxPrintout
 {
@@ -293,6 +286,13 @@ void CLogoCodeCtrl::Print()
 }
 
 #ifndef USE_RICHTEXT_CODE_EDITOR
+
+#include "scintilla/SciLexer.h"
+#ifdef WX_PURE
+  #include "scintilla/include/Scintilla.h"
+#else
+  #include "../src/stc/scintilla/include/Scintilla.h"
+#endif
 
 CLogoCodeCtrl::CLogoCodeCtrl(
     wxWindow *      Parent,
@@ -1628,6 +1628,14 @@ END_EVENT_TABLE()
 // libwxscintilla-3.1-i686-w64-mingw32.a(wxscintilla_LexCoffeeScript.o): In function `FoldCoffeeScriptDoc':
 // src/stc/scintilla/lexers/LexCoffeeScript.cxx:361: undefined reference to `Platform::Maximum(int, int)'
 //
-static wxStyledTextCtrl ctrl;
+class Platform
+{
+    int Maximum(int a, int b);
+};
+
+int Platform::Maximum(int a, int b)
+{
+    return a > b ? a : b;
+}
 
 #endif
