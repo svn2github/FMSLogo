@@ -55,7 +55,7 @@ LDFLAGS  += -mwindows
 
 TOOLKIT = MSW
 
-EXTRALIBS = -static-libgcc -static-libstdc++ -lwxexpat-3.1-i686-w64-mingw32 -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lshlwapi -lcomctl32 -lcomdlg32 -ladvapi32 -lversion -lwsock32 -lgdi32
+EXTRALIBS = -static-libgcc -static-libstdc++ -static -lwxexpat-3.1-i686-w64-mingw32 -lpthread -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lshlwapi -lcomctl32 -lcomdlg32 -ladvapi32 -lversion -lwsock32 -lgdi32
 
 SCINTILLA_INCLUDES = $(wx_top_srcdir)/src/stc/scintilla/include $(wx_top_srcdir)/src/stc/scintilla/lexlib $(wx_top_srcdir)/src/stc/scintilla/src
 
