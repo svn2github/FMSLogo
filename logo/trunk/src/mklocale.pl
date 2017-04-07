@@ -81,7 +81,7 @@ sub UpdateLocalizationFiles($$$) {
 }
 
 
-UpdateLocalizationFiles('zh-cn', 'Chinese',    'Test Down');
+UpdateLocalizationFiles('zh-cn', 'Chinese',    'Pachleng');
 UpdateLocalizationFiles('fr',    'French',     'Bertrand CARETTE');
 UpdateLocalizationFiles('gr',    'Greek',      'Theodoros Chatzigiannakis');
 UpdateLocalizationFiles('es',    'Spanish',    'Daniel Ajoy');
