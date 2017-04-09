@@ -22,7 +22,7 @@ public:
     void SetPenColor(int Red, int Green, int Blue);
     void SetScreenColor(int Red, int Green, int Blue);
     void SetFloodColor(int Red, int Green, int Blue);
-    void SetCalls(int TotalCalls);
+    void SetCalls(long long TotalCalls);
     void SetPeakMemory(int TotalNodes);
     void SetVectors(int TotalVectors);
     void SetPolygons(int TotalPolygons);

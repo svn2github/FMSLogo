@@ -362,10 +362,14 @@ void CStatusDialog::SetFloodColor(int Red, int Green, int Blue)
     m_FloodColor->SetLabel(colorString);
 }
 
-void CStatusDialog::SetCalls(int TotalCalls)
+void CStatusDialog::SetCalls(long long TotalCalls)
 {
+    // Use operator<< instead of wxString::Printf() to format the
+    // "long long", as the C runtime on Windows XP does not support
+    // the ANSI C99 "%lld" format sequence and would treat TotalCalls
+    // as a 32-bit number.
     wxString totalCallsString;
-    totalCallsString.Printf(WXSTRING("%d"), TotalCalls);
+    totalCallsString << TotalCalls;
 
     m_TotalCalls->SetLabel(totalCallsString);
 }

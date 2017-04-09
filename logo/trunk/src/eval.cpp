@@ -85,7 +85,7 @@ FIXNUM g_ValueStatus;
 
 FIXNUM dont_fix_ift = 0;
 
-long eval_count = 0;             // current count of "evaluations" calls
+long long eval_count = 0;        // current count of "evaluations" calls
 
 int g_CatchErrorCount = 0;       // the number of nested blocks of CATCH "ERROR
                                  // This is used to disable "ERRACT processing.

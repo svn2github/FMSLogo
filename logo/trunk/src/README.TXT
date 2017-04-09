@@ -20,11 +20,13 @@ II. New features/bugs fixed:
 
   Changed in 7.1.0
   o Add Simplified Chinese translation (contributed by pachleng)
-  o Fix Bug #488; Basic movement commands (FD, RT, etc) no longer leak memory
+  o Fix Bug #490; the status dialog no longer shows negative numbers when the
+    number of calls > 2,147,483,648.
+  o Fix Bug #488; basic movement commands (FD, RT, etc) no longer leak memory
     when given numbers that were originally parsed as text.
-  o Fix Bug #489; Running a Logolib procedure onces again works when the current
+  o Fix Bug #489; running a Logolib procedure onces again works when the current
     working directory is on a different drive than the FMSLogo executable.
-  o Fix Bug #467; The editors no longer have strange "half-character" behavior
+  o Fix Bug #467; the editors no longer have strange "half-character" behavior
     when manipulating Chinese characters in the Chinese translation of FMSLogo.
   o Implement feature #119; DLLCALL now supports calling win32 functions that
     have out parameters.

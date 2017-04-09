@@ -42,7 +42,7 @@ extern void uninitialize_eval(void);
 
 // global variables
 extern FIXNUM repcountup;
-extern long eval_count;
+extern long long eval_count;
 extern bool stepflag;
 extern bool traceflag;
 
