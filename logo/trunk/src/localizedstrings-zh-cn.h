@@ -663,7 +663,7 @@
 #define LOCALIZED_HELP_EXAMPLE         "示例(&E)"
 #define LOCALIZED_HELP_RELEASENOTES    "发布说明(&R)"
 #define LOCALIZED_HELP_ABOUTFMSLOGO    "关于" LOCALIZED_GENERAL_PRODUCTNAME "(&A)..."
-#define LOCALIZED_HELP_MS              "关于MS(&B)..."
+#define LOCALIZED_HELP_MS              "关于FMS(&B)..."
 // The following two help options display tables for translating to/from English
 // These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
 // and startup-xxxx.logoscript file.
@@ -678,7 +678,7 @@
 #define LOCALIZED_SELECTACTIVEAREA_XHIGH        "X-高"
 #define LOCALIZED_SELECTACTIVEAREA_XLOW         "X-低"
 #define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "打印的海龟像素/英寸:"
-#define LOCALIZED_SELECTACTIVEAREA_RESET        "&重置"
+#define LOCALIZED_SELECTACTIVEAREA_RESET        "重置(&R)"
 #define LOCALIZED_SELECTACTIVEAREA_OK           LOCALIZED_GENERAL_OKBUTTON
 #define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON
 
@@ -700,7 +700,7 @@
 
 // The warning dialog box when the user saves an empty workspace
 #define LOCALIZED_EMPTYWORKSPACE_TITLE                LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_EMPTYWORKSPACE_MESSAGE              "还未定义过程、变量、属性列表,\n隐藏工作区将保存为空文件.\n\n您确定保存吗?"
+#define LOCALIZED_EMPTYWORKSPACE_MESSAGE              "过程、变量、属性列表还没有定义,\n隐藏工作区将保存为空文件.\n\n您确定保存吗?"
 
 //
 // Menu options in the popup menu
@@ -718,7 +718,7 @@
 //
 // The menu options on the editor
 //
-#define LOCALIZED_EDITOR_TITLE                   "编辑器"
+#define LOCALIZED_EDITOR_TITLE                   "代码编辑器"
 
 #define LOCALIZED_EDITOR_FILE                    "文件(&F)"
 #define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "保存后退出(&S)\tCtrl+D"
@@ -749,7 +749,7 @@
 
 #define LOCALIZED_EDITOR_HELP                    "帮助(&H)"
 #define LOCALIZED_EDITOR_HELP_INDEX              "索引(&I)"
-#define LOCALIZED_EDITOR_HELP_EDITOR             "编辑器(&E)"
+#define LOCALIZED_EDITOR_HELP_EDITOR             "代码编辑器(&E)"
 #define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "主题搜索(&T)\tF1"
 
 
@@ -843,7 +843,7 @@
 //
 // Strings on the Pen Size Picker Dialog box
 //
-#define LOCALIZED_SETPENSIZE                   "画笔尺寸"
+#define LOCALIZED_SETPENSIZE                   "画笔大小"
 #define LOCALIZED_SETPENSIZE_SIZE              "大小"
 #define LOCALIZED_SETPENSIZE_OK                LOCALIZED_GENERAL_OKBUTTON
 #define LOCALIZED_SETPENSIZE_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON
@@ -870,7 +870,7 @@
 // Strings on the "About FMS" Dialog box
 //
 #define LOCALIZED_ABOUTMS                      "关于FMS"
-#define LOCALIZED_ABOUTMS_FMS                  "FMS是Fight Multiple Sclerosis.是缩写"
+#define LOCALIZED_ABOUTMS_FMS                  "FMS是Fight Multiple Sclerosis的缩写"
 #define LOCALIZED_ABOUTMS_CONSIDERDONATING     "请捐助\nNational Multiple Sclerosis Society.\nhttp://www.nmss.org\n1-800-FIGHT-MS"
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON
 
@@ -892,11 +892,11 @@
 // Strings in various other dialog boxes
 // 
 
-#define LOCALIZED_CHANGESINEDITORMAYBELOST  "所有操作将丢失.\n\n您确定退出吗？ " LOCALIZED_GENERAL_PRODUCTNAME "?"
+#define LOCALIZED_CHANGESINEDITORMAYBELOST  "所有操作将丢失，\n\n您确定退出吗？ " LOCALIZED_GENERAL_PRODUCTNAME "?"
 #define LOCALIZED_EDITSESSIONISRUNNING      "编辑对话正在运行"
 
-#define LOCALIZED_COULDNOTWRITEBMP            "保存图片失败"
-#define LOCALIZED_COULDNOTOPENBMP             "打开图片失败"
+#define LOCALIZED_COULDNOTWRITEBMP            "图片保存失败"
+#define LOCALIZED_COULDNOTOPENBMP             "图片打开失败"
 #define LOCALIZED_COULDNOTCREATEBMP           "不能创建Windows 3.0位图"
 #define LOCALIZED_NOTVALIDBMP                 "不是Windows 3.0位图"
 
@@ -912,19 +912,19 @@
 
 #define LOCALIZED_SAVETOWORKSPACE                "保存到工作区"
 #define LOCALIZED_CONTENTSCHANGED                "内容已更改"
-#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "内容已更改.\n您要保存更改吗?"
+#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "内容已更改, \n您要保存更改吗?"
 
 
 
-#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "保存编辑的内容出现错误.  光标将停在上次成功的定义.\n\n请检查命令窗口错误信息."
+#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "保存出错, \n\n请查看命令窗口的错误提示。"
 #define LOCALIZED_RETURNTOEDIT                  "返回编辑器?"
 
 #define LOCALIZED_EDITFAILEDTOLOAD              LOCALIZED_SAVETOWORKSPACE
 
 #define LOCALIZED_ERRORINFILETITLE              "文件有错误"
-#define LOCALIZED_ERRORINFILEMESSAGE            "载入文件时出错 \"%s\".\n\n请检查命令窗口错误信息.\n\n您要在编辑器打开文件查看错误吗？"
+#define LOCALIZED_ERRORINFILEMESSAGE            "载入文件时出错 \"%s\".\n\n请查看命令窗口的错误提示.\n\n您要在编辑器打开文件查看错误吗？"
 
-#define LOCALIZED_CANNOTALLOCATESCREEN          "分配画布窗口内存失败.  可能您申请的尺寸超过了可用的内存.\n\n" LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_CANNOTALLOCATESCREEN          "分配画布窗口内存失败.  可能您申请的尺寸超过了可用内存.\n\n" LOCALIZED_GENERAL_PRODUCTNAME
 
 
 // 
@@ -1366,7 +1366,7 @@
 #define LOCALIZED_WINDOWCLASSNAME_COMBOBOX     "组合框"
 #define LOCALIZED_WINDOWCLASSNAME_BUTTON       "按钮"
 #define LOCALIZED_WINDOWCLASSNAME_SCROLLBAR    "滚动条"
-#define LOCALIZED_WINDOWCLASSNAME_GROUPBOX     "群组框"
+#define LOCALIZED_WINDOWCLASSNAME_GROUPBOX     "分组框"
 #define LOCALIZED_WINDOWCLASSNAME_RADIOBUTTON  "单选按钮"
 #define LOCALIZED_WINDOWCLASSNAME_CHECKBOX     "复选框"
 #define LOCALIZED_WINDOWCLASSNAME_DIALOG       "对话框"
@@ -1379,4 +1379,4 @@
 // of all Windows versions from Windows XP onward that would support your
 // language.
 //
-#define LOCALIZED_DEFAULT_FONT_FACE "黑体"
+#define LOCALIZED_DEFAULT_FONT_FACE "宋体"
