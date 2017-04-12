@@ -4,7 +4,7 @@ Build the Release Files
 ==================================================================================
 1) Build the Candidate Release Files
 1.a) Copy the latest changes from src\README.TXT to src\CHANGELOG.TXT
-1.b) Update version.mk and logoversion.lgo
+1.b) Update version.mk and src\test\logoversion.lgo
 1.c) Update the translation tables in the manual
    cd src
    perl make-translation-tables.pl
