@@ -32,7 +32,7 @@ $main::UndocumentedCommands{'textfont'}    = 1;
 $main::UndocumentedCommands{'toplevel'}    = 1;
 $main::UndocumentedCommands{'tutor'}       = 1;
 
-# Commands whose documentation are location in the documentation
+# Commands whose documentation is located in the documentation
 # for some other function.
 $main::EnglishAbbreviation{'bk'}    = 'back';
 $main::EnglishAbbreviation{'bf'}    = 'butfirst';
@@ -325,14 +325,13 @@ sub MakeTranslationTables($$$) {
 }
 
 
-MakeTranslationTables('German',             'de',    1031);
-MakeTranslationTables('Greek',              'gr',    1032);
-MakeTranslationTables('Spanish',            'es',    1034);
-MakeTranslationTables('French',             'fr',    1036);
-MakeTranslationTables('Italian',            'it',    1040);
-MakeTranslationTables('Polish',             'pl',    1045);
-MakeTranslationTables('Russian',            'ru',    1049);
-MakeTranslationTables('Croatian',           'hr',    1050);
-MakeTranslationTables('Simplified Chinese', 'zh-cn', 2052);
-MakeTranslationTables('Portuguese',         'pt',    2070);
-MakeTranslationTables('Pseudoloc',          'ps',    9999);
+MakeTranslationTables('German',     'de', 1031);
+MakeTranslationTables('Greek',      'gr', 1032);
+MakeTranslationTables('Spanish',    'es', 1034);
+MakeTranslationTables('French',     'fr', 1036);
+MakeTranslationTables('Italian',    'it', 1040);
+MakeTranslationTables('Polish',     'pl', 1045);
+MakeTranslationTables('Russian',    'ru', 1049);
+MakeTranslationTables('Croatian',   'hr', 1050);
+MakeTranslationTables('Portuguese', 'pt', 2070);
+MakeTranslationTables('Pseudoloc',  'ps', 9999);
