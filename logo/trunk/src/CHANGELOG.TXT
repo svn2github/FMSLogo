@@ -1,5 +1,19 @@
 This file contains the changes that were made in each version of FMSLogo.
 
+Changed in 7.1.0
+o Add Simplified Chinese translation (contributed by pachleng)
+o Fix Bug #490; the status dialog no longer shows negative numbers when the
+  number of calls > 2,147,483,648.
+o Fix Bug #488; basic movement commands (FD, RT, etc) no longer leak memory
+  when given numbers that were originally parsed as text.
+o Fix Bug #489; running a Logolib procedure onces again works when the current
+  working directory is on a different drive than the FMSLogo executable.
+o Fix Bug #467; the editors no longer have strange "half-character" behavior
+  when manipulating Chinese characters in the Chinese translation of FMSLogo.
+o Implement feature #119; DLLCALL now supports calling win32 functions that
+  have out parameters.
+o Minor improvements to the manual.
+
 Changed in 7.0.0
 o Drop support for the Win 9X versions of Windows.
 o Drop support for the original Pentium processor.
@@ -91,7 +105,6 @@ o Fix bug #458; Remove the unhonored strikeout, underline, and color options
 o Extend MACHINE to output the dimensions of the screen window's client area.
 o Remove the "UNSTABLE" mark from the wxWidgets version.
 o Minor improvements to the manual.
-
 
 Changed in 6.33.0
 o Fix bug #438; The wxWidgets version of FMSLogo no longer opens hundreds of
