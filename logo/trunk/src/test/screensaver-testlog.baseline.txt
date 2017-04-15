@@ -3,7 +3,35 @@ PASS: [DLLCALL [F MakeSquare@8 F 2.2]] output [4.840000] , as expected.
 PASS: [DLLCALL [S FormatFloat@8 F 2.2]] output [2.200000] , as expected.
 PASS: [DLLCALL [S FormatWord@4 W 123]] output [123] , as expected.
 PASS: [DLLCALL [S FormatWord@4 W 65537]] output [1] , as expected.
-PASS: [DLLCALL [S 1 F 2.2]] output [2.200000] , as expected.
+PASS: [DLLCALL [S Rot13@4 S MyString]] output [ZlFgevat] , as expected.
+PASS: [DLLCALL [S Rot13@4 S [MyString]]] output [ZlFgevat] , as expected.
+PASS: [DLLCALL (LIST "S "Rot13@4 "S "Word1 Word2  Word3 )] output [Jbeq1 Jbeq2 Jbeq3] , as expected.
+PASS: [DLLCALL [S 4 F 2.2]] output [2.200000] , as expected.
+PASS: [DLLCALL [W Word123@0]] output [123] , as expected.
+CALL: DLLCALL [V Word123@0]
+CALL: MAKE "rval DLLCALL [L FillBuffers@20 B 10 L 10 W 65 L 20 B 20]
+PASS: [ITEM 1 :rval] output 30 , as expected.
+PASS: [ITEM 2 :rval] output ACEGIKMOQS , as expected.
+PASS: [ITEM 3 :rval] output ABCDEFGHIJKLMNOPQRST , as expected.
+PASS: [COUNT :rval] output 3 , as expected.
+CALL: MAKE "rval DLLCALL [W FillBuffers@20 B 0 L 0 W 67 L 1 B 1]
+PASS: [COUNT :rval] output 3 , as expected.
+PASS: [ITEM 1 :rval] output 1 , as expected.
+PASS: [ITEM 2 :rval] output  , as expected.
+PASS: [ITEM 3 :rval] output C , as expected.
+PASS: [DLLCALL [V FillBuffer@4 B 10]] output [0123456789] , as expected.
+PASS: [DLLCALL [V FillBuffer@4 B 12]] output [0123456789] , as expected.
+PASS: [DLLCALL [V FillBuffer@4 B 9]] output [012345678] , as expected.
+PASS: [DLLCALL [S EchoString@8 B 10 S ABCDEF]] output [ABCDEF 0123456789] , as expected.
+PASS: [DLLCALL [S EchoString@8 B 10 S [A B C D]]] output [A B C D 0123456789] , as expected.
+PASS: [DLLCALL [f MakeSquare@8 f 2.2]] output [4.840000] , as expected.
+PASS: [DLLCALL [s FormatWord@4 w 123]] output [123] , as expected.
+PASS: [DLLCALL [s FormatWord@4 l 234]] output [234] , as expected.
+PASS: [DLLCALL [s EchoString@8 b 10 s a]] output [a 0123456789] , as expected.
+PASS: [DLLCALL [v FillBuffer@4 b 10]] output [0123456789] , as expected.
+PASS: [DLLCALL [w Word123@0 v 0]] output [123] , as expected.
+PASS: [DLLCALL [[f] [MakeSquare@8] [f] [2.2]]] output [4.840000] , as expected.
+PASS: [DLLCALL [[S] [EchoString@8] [B] [10] [S] A]] output [A 0123456789] , as expected.
 CALL: DLLFREE
 PASS: [MCI [open test.wav type waveaudio alias wa1]] output [1] , as expected.
 CALL: MCI [seek wa1 to start]
