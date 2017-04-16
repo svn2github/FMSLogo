@@ -1,0 +1,54 @@
+This file lists the steps for setting up a build environment for FMSLogo.
+
+Install cygwin (from http://cygnus.org/) to c:\cygwin.  Install all of the
+following packages (and their dependencies):
+- zip
+- make
+- docbook-xml45 
+- docbook-utils
+- libxslt
+- mingw64-i686-gcc-g++
+- patch
+
+When searching for packages in Cygwin's setup tool, you might find that clicking
+on "View" to get to the Full view makes it easier, because it hides the categories.
+
+Add c:\cygwin\bin to the PATH.
+
+Install Microsoft HTML Help Workshop to "C:\Program Files\HTML Help Workshop".
+You can download this from http://microsoft.com/.
+This is needed build the .CHM for the online manual (for hhc.exe).
+If you do not install HTML Help Workshop to the default location, then you 
+will have to modify manual\Makefile.
+
+Install Perl.  I use the Perl from http://activestate.com but any Perl
+distribution should suffice.  Add perl.exe to your PATH.  Perl is used in
+various parts of the build, as well as by some of the tests.
+
+Install the Nullsoft Scriptable Installation System (NSIS) to C:\Program Files\NSIS.
+You can download this from http://sourceforge.net/projects/nsis.
+This is needed to build the self-extracting installer executable.
+
+Install the MSW version of wxWidgets 3.1.0 to e:\wxWidgets-3.1.0-src.
+Build a retail version in e:\wxWidgets-3.1.0-fmslogo\retail and a debug version
+in e:\wxWidgets-3.1.0-fmslogo\debug according to the instructions in
+src\configure-wxwidgets.sh.  Or you can install and build wxWidgets wherever you
+like, provided that you update the wx_top_srcdir and wx_top_builddir variables
+in src\Makefile and screensaver\Makefile.
+wxWidgets can take a long time to build, so it's worthwhile to install and build
+it on an SSD if you have one.
+wxWidgets is needed to build FMSLogo.
+
+Install a Subversion client.  TortioseSVN is a good client for Microsoft Windows.
+
+Checkout the trunk of the "logo" project from FMSLogo's subversion repository.
+
+  svn checkout svn://svn.code.sf.net/p/fmslogo/source/logo/trunk fmslogo-trunk
+
+Once these steps are complete, you can build the entire FMSLogo package by running
+"make binaryexe" in the fmslogo-trunk directory.  This will take a long time
+as it builds FMSLogo many times over, one for each supported language.
+If you only want to build the English fmslogo.exe, you can "cd src" and run "make".
+(The default Makefile target builds the English version.)  Similarly, "make" in the
+"manual" directory only builds the English manual and "make" in the "screensaver"
+directory only builds the English screensaver.

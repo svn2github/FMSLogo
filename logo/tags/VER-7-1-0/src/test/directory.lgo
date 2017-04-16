@@ -1,0 +1,159 @@
+LOAD "testlib.lgo
+
+TO DIRECTORYSMOKETEST
+
+   MKDIR "mytestdir
+
+   ; Creating a directory that already exists fails silently.
+   POPDIR
+   MKDIR "mytestdir
+   CHDIR "mytestdir
+
+   ; the directory should be empty
+   SIMPLEREPORTTEST [FILES]       []
+   SIMPLEREPORTTEST [DIRECTORIES] [. ..]
+   DIR
+
+   ; Create a file
+   OPENWRITE "file1.txt
+   CLOSE     "file1.txt
+   SIMPLEREPORTTEST [FILES]       [file1.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. ..]
+
+   ; Create a file whose ASCII order is less than the first
+   ; file, but whose alphabetical order is greater.
+   OPENWRITE "File2.txt
+   CLOSE     "File2.txt
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. ..]
+
+   ; Create a directory
+   MKDIR "dir1
+   POPDIR
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. .. dir1]
+
+   ; Create a second directory whose ASCII order is less
+   ; than the first one but whose alphabetical order is greater.
+   MKDIR "Dir2
+   POPDIR
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. .. dir1 Dir2]
+
+   ; Create a third directory whose ASCII order is before "."
+   MKDIR "!FirstDirectory
+   POPDIR
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. .. !FirstDirectory dir1 Dir2]
+
+   ; Remove a directory
+   RMDIR "Dir2
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. .. !FirstDirectory dir1]
+
+   ; Remove another directory
+   RMDIR "dir1
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. .. !FirstDirectory]
+
+   ; Remove the last directory
+   RMDIR "!FirstDirectory
+   SIMPLEREPORTTEST [FILES]       [file1.txt File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. ..]
+
+   ; Remove a file
+   ERASEFILE "file1.txt
+   SIMPLEREPORTTEST [FILES]       [File2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [. ..]
+
+   ; Remove the other file
+   ERASEFILE "File2.txt
+   SIMPLEREPORTTEST [FILES]       []
+   SIMPLEREPORTTEST [DIRECTORIES] [. ..]
+
+   CHDIR     "..
+   RMDIR     "mytestdir
+
+   ; make sure it really got removed
+   FAILIFNOTFALSE [MEMBERP "mytestdir DIRECTORIES]
+END
+
+TO MKDIRTEST
+
+  ; bad input tests
+  RUNNOTENOUGHINPUTSTEST [(MKDIR)]
+  RUNTOOMANYINPUTSTEST   [(MKDIR "too "many)]
+
+  ; MKDIR a very long directory name (regression test for bug #26)
+  localmake "longdirname REPEATWORD "A 5000
+  MKDIR :longdirname
+
+END
+
+TO RMDIRTEST
+
+  RMDIR "doesnotexist
+
+  ; bad input tests
+  RUNNOTENOUGHINPUTSTEST [(RMDIR)]
+  RUNTOOMANYINPUTSTEST   [(RMDIR "too "many)]
+
+  ; RMDIR a very long directory name (regression test for bug #26)
+  localmake "longdirname REPEATWORD "A 5000
+  RMDIR :longdirname
+
+END
+
+TO CHDIRTEST
+
+  CHDIR "doesnotexist
+
+  ; bad input tests
+  RUNNOTENOUGHINPUTSTEST [(CHDIR)]
+  RUNTOOMANYINPUTSTEST   [(CHDIR "too "many)]
+
+  ; CHDIR a very long directory name (regression test for bug #26)
+  localmake "longdirname REPEATWORD "A 5000
+  CHDIR :longdirname
+
+END
+
+TO CURRENTWORKINGDIRECTORY
+   ; FMSLogo has no built-in "cwd" command, so it must be done with a Perl callout.
+   ; Use Perl to write out a file that contains the current working directory.  
+   IGNORE (SHELL "|perl.exe -e \"use Cwd\; open OUT, '>currentdirectory.txt'; print OUT cwd()"| LOCALETRUE)
+
+   ; Read the file into a variable
+   OPENREAD  "currentdirectory.txt
+   SETREAD   "currentdirectory.txt
+   LOCALMAKE "currentworkingdirectory READRAWLINE
+   CLOSE     "currentdirectory.txt
+
+   ERASEFILE "currentdirectory.txt
+
+   OUTPUT :currentworkingdirectory
+END
+
+TO DIRECTROYTEST.WITHOUTDOTS
+   LOCAL [cwd listing]
+
+   MAKE "cwd CURRENTWORKINGDIRECTORY
+
+   ; Confirm that DIRECTORIES in the device root does not output "." or ".."
+   TRACEINSTRUCTION [CHDIR "C:\\ ]
+   SIMPLEREPORTTEST [MEMBERP ".  DIRECTORIES] LOCALEFALSE
+   SIMPLEREPORTTEST [MEMBERP ".. DIRECTORIES] LOCALEFALSE
+
+   CHDIR :cwd
+
+END
+
+TO DIRECTORYTEST
+
+   DIRECTORYSMOKETEST
+   DIRECTROYTEST.WITHOUTDOTS
+
+   MKDIRTEST
+   RMDIRTEST
+   CHDIRTEST
+END

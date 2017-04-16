@@ -1,0 +1,49 @@
+fmslogo ICON "fmslogo.ico"
+
+#define wxUSE_NO_MANIFEST 0
+
+#include "wx/msw/wx.rc"
+#include "localizedstrings.h"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version Information
+//
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     FMSLOGO_MAJOR_VERSION, FMSLOGO_MINOR_VERSION, FMSLOGO_MICRO_VERSION, 0
+PRODUCTVERSION  FMSLOGO_MAJOR_VERSION, FMSLOGO_MINOR_VERSION, FMSLOGO_MICRO_VERSION, 0
+FILEFLAGSMASK   0x3fL
+
+#ifdef DEBUG
+FILEFLAGS VS_FF_DEBUG|VS_FF_PRIVATEBUILD
+#elif defined FMSLOGO_PRIVATE_BUILD
+FILEFLAGS VS_FF_PRIVATEBUILD|VS_FF_PRERELEASE
+#else
+FILEFLAGS 0
+#endif
+
+FILEOS VOS__WINDOWS32
+FILETYPE VFT_APP
+FILESUBTYPE VFT2_UNKNOWN
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904b0"
+    BEGIN
+      VALUE "CompanyName",      "David Costanzo"
+      VALUE "FileDescription",  LOCALIZED_FMSLOGO_FILE_DESCRIPTION
+      VALUE "FileVersion",      FMSLOGO_VERSION
+      VALUE "InternalName",     "fmslogo"
+      VALUE "LegalCopyright",   "Copyright 1995-2012 by Brian Harvey, George Mills, David Costanzo, and Niel Hodgeson"
+      VALUE "OriginalFilename", "fmslogo.exe"
+      VALUE "ProductName",      LOCALIZED_GENERAL_PRODUCTNAME
+      VALUE "ProductVersion",   FMSLOGO_VERSION
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", LOCALE, CHARSETID
+  END
+END
+
