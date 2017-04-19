@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 7.1.0 for Microsoft Windows
+FMSLogo Version 7.2.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -13,24 +13,13 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-7.1.0.exe   - Installer for the Logo environment
-  fmslogo-7.1.0.zip   - ZIP of the Logo environment
+  fmslogo-7.2.0.exe - Installer for the Logo environment
+  fmslogo-7.2.0.zip - ZIP of the Logo environment
 
 II. New features/bugs fixed:
 
-  Changed in 7.1.0
-  o Add Simplified Chinese translation (contributed by pachleng)
-  o Fix Bug #490; the status dialog no longer shows negative numbers when the
-    number of calls > 2,147,483,648.
-  o Fix Bug #488; basic movement commands (FD, RT, etc) no longer leak memory
-    when given numbers that were originally parsed as text.
-  o Fix Bug #489; running a Logolib procedure onces again works when the current
-    working directory is on a different drive than the FMSLogo executable.
-  o Fix Bug #467; the editors no longer have strange "half-character" behavior
-    when manipulating Chinese characters in the Chinese translation of FMSLogo.
-  o Implement feature #119; DLLCALL now supports calling win32 functions that
-    have out parameters.
-  o Minor improvements to the manual.
+  Changed in 7.2.0
+  o Improvements to the German translation.
 
   For a complete history of changes across all versions of FMSLogo, see
   https://sourceforge.net/p/fmslogo/source/HEAD/tree/trunk/logo/src/CHANGELOG.TXT
