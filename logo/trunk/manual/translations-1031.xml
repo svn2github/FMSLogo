@@ -1063,6 +1063,14 @@
         <entry>zgprn</entry>
       </row>
       <row>
+        <entry><link linkend='command-portclose'>portclose</link></entry>
+        <entry>portschließen</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-portflush'>portflush</link></entry>
+        <entry>portfluten</entry>
+      </row>
+      <row>
         <entry><link linkend='command-portinb'>portinb</link></entry>
         <entry>eing</entry>
       </row>
@@ -1071,12 +1079,36 @@
         <entry>eingang</entry>
       </row>
       <row>
+        <entry><link linkend='command-portmode'>portmode</link></entry>
+        <entry>portmodus</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-portopen'>portopen</link></entry>
+        <entry>portöffnen</entry>
+      </row>
+      <row>
         <entry><link linkend='command-portoutb'>portoutb</link></entry>
         <entry>ausg</entry>
       </row>
       <row>
         <entry><link linkend='command-portoutb'>portoutb</link></entry>
         <entry>ausgang</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-portreadarray'>portreadarray</link></entry>
+        <entry>portliesarray</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-portreadchar'>portreadchar</link></entry>
+        <entry>portlieszeichen</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-portwritearray'>portwritearray</link></entry>
+        <entry>portschreibearray</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-portwritechar'>portwritechar</link></entry>
+        <entry>portschreibezeichen</entry>
       </row>
       <row>
         <entry><link linkend='command-pos'>pos</link></entry>
@@ -1335,6 +1367,10 @@
         <entry>aufkurs</entry>
       </row>
       <row>
+        <entry><link linkend='command-setlabelfont'>setlabelfont</link></entry>
+        <entry>setKennungSchrift</entry>
+      </row>
+      <row>
         <entry><link linkend='command-setorientation'>setorientation</link></entry>
         <entry>fixiereorientierung</entry>
       </row>
@@ -1585,6 +1621,10 @@
       <row>
         <entry><link linkend='command-type'>type</link></entry>
         <entry>drucke</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-unbury'>unbury</link></entry>
+        <entry>grabeaus</entry>
       </row>
       <row>
         <entry><link linkend='command-unburyall'>unburyall</link></entry>
@@ -2156,6 +2196,10 @@
         <entry><link linkend='command-goldenratio'>goldenratio</link></entry>
       </row>
       <row>
+        <entry>grabeaus</entry>
+        <entry><link linkend='command-unbury'>unbury</link></entry>
+      </row>
+      <row>
         <entry>groß</entry>
         <entry><link linkend='command-uppercase'>uppercase</link></entry>
       </row>
@@ -2684,6 +2728,38 @@
         <entry><link linkend='command-polyview'>polyview</link></entry>
       </row>
       <row>
+        <entry>portfluten</entry>
+        <entry><link linkend='command-portflush'>portflush</link></entry>
+      </row>
+      <row>
+        <entry>portliesarray</entry>
+        <entry><link linkend='command-portreadarray'>portreadarray</link></entry>
+      </row>
+      <row>
+        <entry>portlieszeichen</entry>
+        <entry><link linkend='command-portreadchar'>portreadchar</link></entry>
+      </row>
+      <row>
+        <entry>portmodus</entry>
+        <entry><link linkend='command-portmode'>portmode</link></entry>
+      </row>
+      <row>
+        <entry>portöffnen</entry>
+        <entry><link linkend='command-portopen'>portopen</link></entry>
+      </row>
+      <row>
+        <entry>portschließen</entry>
+        <entry><link linkend='command-portclose'>portclose</link></entry>
+      </row>
+      <row>
+        <entry>portschreibearray</entry>
+        <entry><link linkend='command-portwritearray'>portwritearray</link></entry>
+      </row>
+      <row>
+        <entry>portschreibezeichen</entry>
+        <entry><link linkend='command-portwritechar'>portwritechar</link></entry>
+      </row>
+      <row>
         <entry>Potenz</entry>
         <entry><link linkend='command-power'>power</link></entry>
       </row>
@@ -2850,6 +2926,10 @@
       <row>
         <entry>schließealles</entry>
         <entry><link linkend='command-closeall'>closeall</link></entry>
+      </row>
+      <row>
+        <entry>setKennungSchrift</entry>
+        <entry><link linkend='command-setlabelfont'>setlabelfont</link></entry>
       </row>
       <row>
         <entry>setze</entry>
