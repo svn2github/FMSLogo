@@ -55,6 +55,10 @@
         <entry>arcsen</entry>
       </row>
       <row>
+        <entry><link linkend='command-arity'>arity</link></entry>
+        <entry>rango</entry>
+      </row>
+      <row>
         <entry><link linkend='command-array'>array</link></entry>
         <entry>vettore</entry>
       </row>
@@ -69,6 +73,14 @@
       <row>
         <entry><link linkend='command-arraytolist'>arraytolist</link></entry>
         <entry>vettorelista</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-arraytolist'>arraytolist</link></entry>
+        <entry>davettorealista</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-arraytolist'>arraytolist</link></entry>
+        <entry>vettorealista</entry>
       </row>
       <row>
         <entry><link linkend='command-ashift'>ashift</link></entry>
@@ -567,6 +579,10 @@
         <entry>pri</entry>
       </row>
       <row>
+        <entry><link linkend='command-first'>first</link></entry>
+        <entry>primo</entry>
+      </row>
+      <row>
         <entry><link linkend='command-firsts'>firsts</link></entry>
         <entry>primi</entry>
       </row>
@@ -655,6 +671,14 @@
         <entry>alt</entry>
       </row>
       <row>
+        <entry><link linkend='command-hasownpenp'>hasownpen?</link></entry>
+        <entry>possiedepenna?</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-hasownpenp'>hasownpenp</link></entry>
+        <entry>possiedepennap</entry>
+      </row>
+      <row>
         <entry><link linkend='command-heading'>heading</link></entry>
         <entry>direzione</entry>
       </row>
@@ -681,6 +705,10 @@
       <row>
         <entry><link linkend='command-ifelse'>ifelse</link></entry>
         <entry>seallora</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-ifelse'>ifelse</link></entry>
+        <entry>sealtrimenti</entry>
       </row>
       <row>
         <entry><link linkend='command-iffalse'>iff</link></entry>
@@ -825,6 +853,14 @@
       <row>
         <entry><link linkend='command-listtoarray'>listtoarray</link></entry>
         <entry>listavettore</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-listtoarray'>listtoarray</link></entry>
+        <entry>dalistaavettore</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-listtoarray'>listtoarray</link></entry>
+        <entry>listaavettore</entry>
       </row>
       <row>
         <entry><link linkend='command-load'>load</link></entry>
@@ -1383,6 +1419,10 @@
         <entry>acaso</entry>
       </row>
       <row>
+        <entry><link linkend='command-rawascii'>rawascii</link></entry>
+        <entry>asciigrezzo</entry>
+      </row>
+      <row>
         <entry><link linkend='command-readchar'>rc</link></entry>
         <entry>lc</entry>
       </row>
@@ -1409,6 +1449,10 @@
       <row>
         <entry><link linkend='command-readpos'>readpos</link></entry>
         <entry>poslettura</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-readrawline'>readrawline</link></entry>
+        <entry>leggirigagrezza</entry>
       </row>
       <row>
         <entry><link linkend='command-readword'>readword</link></entry>
@@ -2116,6 +2160,10 @@
         <entry><link linkend='command-setactivearea'>setactivearea</link></entry>
       </row>
       <row>
+        <entry>asciigrezzo</entry>
+        <entry><link linkend='command-rawascii'>rawascii</link></entry>
+      </row>
+      <row>
         <entry>ascoloreschermo</entry>
         <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
       </row>
@@ -2528,6 +2576,14 @@
         <entry><link linkend='command-reader'>reader</link></entry>
       </row>
       <row>
+        <entry>dalistaavettore</entry>
+        <entry><link linkend='command-listtoarray'>listtoarray</link></entry>
+      </row>
+      <row>
+        <entry>davettorealista</entry>
+        <entry><link linkend='command-arraytolist'>arraytolist</link></entry>
+      </row>
+      <row>
         <entry>definisci</entry>
         <entry><link linkend='command-define'>define</link></entry>
       </row>
@@ -2936,6 +2992,10 @@
         <entry><link linkend='command-setreadpos'>setreadpos</link></entry>
       </row>
       <row>
+        <entry>leggirigagrezza</entry>
+        <entry><link linkend='command-readrawline'>readrawline</link></entry>
+      </row>
+      <row>
         <entry>leggivettoredaporta</entry>
         <entry><link linkend='command-portreadarray'>portreadarray</link></entry>
       </row>
@@ -2950,6 +3010,10 @@
       <row>
         <entry>lista?</entry>
         <entry><link linkend='command-listp'>list?</link></entry>
+      </row>
+      <row>
+        <entry>listaavettore</entry>
+        <entry><link linkend='command-listtoarray'>listtoarray</link></entry>
       </row>
       <row>
         <entry>listanomi</entry>
@@ -3356,6 +3420,14 @@
         <entry><link linkend='command-writepos'>writepos</link></entry>
       </row>
       <row>
+        <entry>possiedepenna?</entry>
+        <entry><link linkend='command-hasownpenp'>hasownpen?</link></entry>
+      </row>
+      <row>
+        <entry>possiedepennap</entry>
+        <entry><link linkend='command-hasownpenp'>hasownpenp</link></entry>
+      </row>
+      <row>
         <entry>potenza</entry>
         <entry><link linkend='command-power'>power</link></entry>
       </row>
@@ -3382,6 +3454,10 @@
       <row>
         <entry>primitivap</entry>
         <entry><link linkend='command-primitivep'>primitivep</link></entry>
+      </row>
+      <row>
+        <entry>primo</entry>
+        <entry><link linkend='command-first'>first</link></entry>
       </row>
       <row>
         <entry>procedura?</entry>
@@ -3486,6 +3562,10 @@
       <row>
         <entry>rallenta</entry>
         <entry><link linkend='command-slowdraw'>slowdraw</link></entry>
+      </row>
+      <row>
+        <entry>rango</entry>
+        <entry><link linkend='command-arity'>arity</link></entry>
       </row>
       <row>
         <entry>rd</entry>
@@ -3724,6 +3804,10 @@
         <entry><link linkend='command-ifelse'>ifelse</link></entry>
       </row>
       <row>
+        <entry>sealtrimenti</entry>
+        <entry><link linkend='command-ifelse'>ifelse</link></entry>
+      </row>
+      <row>
         <entry>sef</entry>
         <entry><link linkend='command-iffalse'>iff</link></entry>
       </row>
@@ -3950,6 +4034,10 @@
       <row>
         <entry>vettore?</entry>
         <entry><link linkend='command-arrayp'>array?</link></entry>
+      </row>
+      <row>
+        <entry>vettorealista</entry>
+        <entry><link linkend='command-arraytolist'>arraytolist</link></entry>
       </row>
       <row>
         <entry>vettorelista</entry>

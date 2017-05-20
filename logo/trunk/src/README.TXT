@@ -19,6 +19,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 7.2.0
+  o Improvements to the Italian translation.
   o Improvements to the German translation.
 
   For a complete history of changes across all versions of FMSLogo, see
@@ -97,6 +98,7 @@ VIII. Acknowledgements
     Clem Rutter
     Daniel Ajoy
     Domagoj Kuna
+    Francesco Simone Carta
     Hensley Bass
     Igor Baglaev
     Jan Grabe

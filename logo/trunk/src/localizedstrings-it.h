@@ -156,7 +156,7 @@
 #define LOCALIZED_ALTERNATE_ARCCOS                 "arccos"
 #define LOCALIZED_ALTERNATE_ARCSIN                 "arcsen"
 #define LOCALIZED_ALTERNATE_ARCTAN                 "arctan"
-#define LOCALIZED_ALTERNATE_ARITY                  "arity" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ARITY                  "rango"
 #define LOCALIZED_ALTERNATE_ARRAY                  "vettore"
 #define LOCALIZED_ALTERNATE_ARRAYP                 "vettorep"
 #define LOCALIZED_ALTERNATE_ARRAY_                 "vettore?"
@@ -292,8 +292,8 @@
 #define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "gruppocrea"
 #define LOCALIZED_ALTERNATE_GROUPBOXDELETE         "gruppocancella"
 #define LOCALIZED_ALTERNATE_HALT                   "alt"
-#define LOCALIZED_ALTERNATE_HASOWNPENP             "hasownpenp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_HASOWNPEN_             "hasownpen?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HASOWNPENP             "possiedepennap"
+#define LOCALIZED_ALTERNATE_HASOWNPEN_             "possiedepenna?"
 #define LOCALIZED_ALTERNATE_HEADING                "direzione"
 #define LOCALIZED_ALTERNATE_HELP                   "aiuto"
 #define LOCALIZED_ALTERNATE_HIDETURTLE             "nastarta"
@@ -470,7 +470,7 @@
 #define LOCALIZED_ALTERNATE_READER                 "dacheleggi"
 #define LOCALIZED_ALTERNATE_READLIST               "leggilista"
 #define LOCALIZED_ALTERNATE_READPOS                "poslettura"
-#define LOCALIZED_ALTERNATE_READRAWLINE            "readrawline" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_READRAWLINE            "leggirigagrezza"
 #define LOCALIZED_ALTERNATE_READWORD               "leggiparola"
 #define LOCALIZED_ALTERNATE_REMAINDER              "resto"
 #define LOCALIZED_ALTERNATE_REMPROP                "togliprop"
@@ -713,7 +713,7 @@
 #define LOCALIZED_POPUP_REDO                     "Ripristina"
 #define LOCALIZED_POPUP_SELECTALL                "Seleziona Tutto"
 #define LOCALIZED_POPUP_HELP                     "Cerca Argomento"
-#define LOCALIZED_POPUP_REMOVELINES              "Remove Selected Lines" // NOT_YET_LOCALIZED
+#define LOCALIZED_POPUP_REMOVELINES              "Rimuovi Righe Selezionate"
 
 //
 // The menu options on the editor
@@ -745,7 +745,7 @@
 #define LOCALIZED_EDITOR_SET_FONT                "&Carattere..."
 
 #define LOCALIZED_EDITOR_TEST                    "Prova"
-#define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "&Run Selection\tCtrl+R" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "P&rova Selezione\tCtrl+R"
 
 #define LOCALIZED_EDITOR_HELP                    "&Aiuto"
 #define LOCALIZED_EDITOR_HELP_INDEX              "&Indice"
@@ -814,7 +814,7 @@
 #define LOCALIZED_STATUS_POLYGONS       "Poligoni"
 #define LOCALIZED_STATUS_VECTORS        "Vettori"
 #define LOCALIZED_STATUS_NODES          "Nodi"
-#define LOCALIZED_STATUS_NOT_APPLICABLE "N/A" // NOT_YET_LOCALIZED
+#define LOCALIZED_STATUS_NOT_APPLICABLE "N/D"
 
 //
 // Strings on the Erase|Edit Procedure dialog box
@@ -884,8 +884,8 @@
 //
 // Strings on the QUESTIONBOX dialog box
 //
-#define LOCALIZED_QUESTIONBOX_OK               LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_QUESTIONBOX_CANCEL           LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_QUESTIONBOX_OK               LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_QUESTIONBOX_CANCEL           LOCALIZED_GENERAL_CANCELBUTTON
 
 
 // 
@@ -921,20 +921,20 @@
 
 #define LOCALIZED_EDITFAILEDTOLOAD              LOCALIZED_SAVETOWORKSPACE
 
-#define LOCALIZED_ERRORINFILETITLE              "Error in File" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERRORINFILEMESSAGE            "There was a problem loading the contents of the file \"%s\".\n\nCheck the Commander for possible error message.\n\nDo you want to open the file in the editor to see the error?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERRORINFILETITLE              "Errore nel file"
+#define LOCALIZED_ERRORINFILEMESSAGE            "C'è stato un problema durante il caricamento del file \"%s\".\n\nControlla l'elenco Comandi per possibili messaggi di errore.\n\nVuoi aprire l'Editor e vedere l'errore?"
 
-#define LOCALIZED_CANNOTALLOCATESCREEN          "Unable to allocate memory for the screen window.  You may have requested a width and height that exceeds the amount of available video RAM.\n\n" LOCALIZED_GENERAL_PRODUCTNAME " can't continue." // NOT_YET_LOCALIZED
+#define LOCALIZED_CANNOTALLOCATESCREEN          "Impossibile allocare la memoria per la finestra. Potresti avere richiesto altezza e larghezza che eccedono la quantità di memoria video disponibile.\n\n" LOCALIZED_GENERAL_PRODUCTNAME " impossibile continuare."
 
 
 // 
 //  Strings used in the File-Open filters
 //
-#define LOCALIZED_FILE_LOAD_DIALOG_TITLE    "Select the Logo program to load (merge into workspace)" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_OPEN_DIALOG_TITLE    "Select the Logo program to open (replace the workspace with)" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_SAVE_DIALOG_TITLE    "Select the file to which the workspace will be saved" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_OPEN_DIALOG_TITLE  "Select the image to load" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_SAVE_DIALOG_TITLE  "Select the file to which the active area will be saved" // NOT_YET_LOCALIZED
+#define LOCALIZED_FILE_LOAD_DIALOG_TITLE    "Scegli il programma Logo da caricare (aggiunge al workspace)"
+#define LOCALIZED_FILE_OPEN_DIALOG_TITLE    "Scegli il programma Logo da aprire (sostituisce il workspace)"
+#define LOCALIZED_FILE_SAVE_DIALOG_TITLE    "Scegli il file in cui salvare il workspace"
+#define LOCALIZED_BITMAP_OPEN_DIALOG_TITLE  "Scegli l'immagine da caricare"
+#define LOCALIZED_BITMAP_SAVE_DIALOG_TITLE  "Scegli il file in cui salvare l'area attiva"
 
 #define LOCALIZED_LOGO_FILE_EXTENSION "lgo"
 #define LOCALIZED_FILEFILTER_ALLFILES "Tutti i File (*.*)|*.*"
@@ -1018,11 +1018,11 @@
 
 
 // FMSLogo-specific error messages.
-#define LOCALIZED_ERROR_INVALIDSTATEFORINSTRUCTION "Invalid state for instruction: %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MODE_ON_SPRITE             "cannot set the mode of a turtle with a rotating bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "cannot make a special turtle use a rotating bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BITMAPCLIPBOARD            "cannot use the clipboard as a rotating bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_SPECIALFORM                "%p doesn't like %p as input because it has a special form" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_INVALIDSTATEFORINSTRUCTION "Stato non valido per l'istruzione: %p"
+#define LOCALIZED_ERROR_MODE_ON_SPRITE             "impossibile impostare il modo per una tartaruga con bitmap rotante"
+#define LOCALIZED_ERROR_BITMAPSPECIALTUTRLE        "impossibile creare una tartaruga speciale con una bitmap rotante"
+#define LOCALIZED_ERROR_BITMAPCLIPBOARD            "non posso usare gli appunti come bitmap rotante"
+#define LOCALIZED_ERROR_SPECIALFORM                "a %p non piace %p come argomento perché ha una forma speciale"
 
 //
 // Error messages displayed in Message Boxes.
@@ -1207,169 +1207,169 @@
 // These words were selected from a de facto HTML standard, so you may
 // be able to find translations for the entire set on the Web.
 //
-#define LOCALIZED_COLOR_ALICEBLUE             "AliceBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ANTIQUEWHITE          "AntiqueWhite" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_AQUA                  "Aqua" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_AQUAMARINE            "Aquamarine" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_AZURE                 "Azure" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BEIGE                 "Beige" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BISQUE                "Bisque" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BLACK                 "Black" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BLANCHEDALMOND        "BlanchedAlmond" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BLUE                  "Blue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BLUEVIOLET            "BlueViolet" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BROWN                 "Brown" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BURLYWOOD             "BurlyWood" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CADETBLUE             "CadetBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CHARTREUSE            "Chartreuse" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CHOCOLATE             "Chocolate" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CORAL                 "Coral" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CORNFLOWERBLUE        "CornflowerBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CORNSILK              "Cornsilk" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CRIMSON               "Crimson" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CYAN                  "Cyan" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKBLUE              "DarkBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKCYAN              "DarkCyan" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKGOLDENROD         "DarkGoldenRod" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKGRAY              "DarkGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKGREEN             "DarkGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKGREY              "DarkGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKKHAKI             "DarkKhaki" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKMAGENTA           "DarkMagenta" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKOLIVEGREEN        "DarkOliveGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKORANGE            "DarkOrange" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKORCHID            "DarkOrchid" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKRED               "DarkRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSALMON            "DarkSalmon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSEAGREEN          "DarkSeaGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSLATEBLUE         "DarkSlateBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSLATEGRAY         "DarkSlateGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSLATEGREY         "DarkSlateGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKTURQUOISE         "DarkTurquoise" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKVIOLET            "DarkViolet" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DEEPPINK              "DeepPink" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DEEPSKYBLUE           "DeepSkyBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DIMGRAY               "DimGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DIMGREY               "DimGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DODGERBLUE            "DodgerBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_FIREBRICK             "FireBrick" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_FLORALWHITE           "FloralWhite" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_FORESTGREEN           "ForestGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_FUCHSIA               "Fuchsia" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GAINSBORO             "Gainsboro" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GHOSTWHITE            "GhostWhite" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GOLD                  "Gold" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GOLDENROD             "GoldenRod" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GRAY                  "Gray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GREEN                 "Green" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GREENYELLOW           "GreenYellow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GREY                  "Grey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_HONEYDEW              "HoneyDew" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_HOTPINK               "HotPink" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_INDIANRED             "IndianRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_INDIGO                "Indigo" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_IVORY                 "Ivory" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_KHAKI                 "Khaki" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LAVENDER              "Lavender" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LAVENDERBLUSH         "LavenderBlush" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LAWNGREEN             "LawnGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LEMONCHIFFON          "LemonChiffon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTBLUE             "LightBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTCORAL            "LightCoral" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTCYAN             "LightCyan" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTGOLDENRODYELLOW  "LightGoldenRodYellow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTGRAY             "LightGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTGREEN            "LightGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTGREY             "LightGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTPINK             "LightPink" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSALMON           "LightSalmon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSEAGREEN         "LightSeaGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSKYBLUE          "LightSkyBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSLATEGRAY        "LightSlateGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSLATEGREY        "LightSlateGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSTEELBLUE        "LightSteelBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTYELLOW           "LightYellow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIME                  "Lime" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIMEGREEN             "LimeGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LINEN                 "Linen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MAGENTA               "Magenta" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MAROON                "Maroon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMAQUAMARINE      "MediumAquaMarine" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMBLUE            "MediumBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMORCHID          "MediumOrchid" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMPURPLE          "MediumPurple" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMSEAGREEN        "MediumSeaGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMSLATEBLUE       "MediumSlateBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMSPRINGGREEN     "MediumSpringGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMTURQUOISE       "MediumTurquoise" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMVIOLETRED       "MediumVioletRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MIDNIGHTBLUE          "MidnightBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MINTCREAM             "MintCream" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MISTYROSE             "MistyRose" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MOCCASIN              "Moccasin" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_NAVAJOWHITE           "NavajoWhite" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_NAVY                  "Navy" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_OLDLACE               "OldLace" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_OLIVE                 "Olive" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_OLIVEDRAB             "OliveDrab" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ORANGE                "Orange" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ORANGERED             "OrangeRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ORCHID                "Orchid" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PALEGOLDENROD         "PaleGoldenRod" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PALEGREEN             "PaleGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PALETURQUOISE         "PaleTurquoise" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PALEVIOLETRED         "PaleVioletRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PAPAYAWHIP            "PapayaWhip" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PEACHPUFF             "PeachPuff" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PERU                  "Peru" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PINK                  "Pink" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PLUM                  "Plum" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_POWDERBLUE            "PowderBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PURPLE                "Purple" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_RED                   "Red" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ROSYBROWN             "RosyBrown" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ROYALBLUE             "RoyalBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SADDLEBROWN           "SaddleBrown" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SALMON                "Salmon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SANDYBROWN            "SandyBrown" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SEAGREEN              "SeaGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SEASHELL              "SeaShell" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SIENNA                "Sienna" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SILVER                "Silver" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SKYBLUE               "SkyBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SLATEBLUE             "SlateBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SLATEGRAY             "SlateGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SLATEGREY             "SlateGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SNOW                  "Snow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SPRINGGREEN           "SpringGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_STEELBLUE             "SteelBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_TAN                   "Tan" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_TEAL                  "Teal" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_THISTLE               "Thistle" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_TOMATO                "Tomato" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_TURQUOISE             "Turquoise" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_VIOLET                "Violet" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_WHEAT                 "Wheat" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_WHITE                 "White" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_WHITESMOKE            "WhiteSmoke" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_YELLOW                "Yellow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_YELLOWGREEN           "YellowGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_ALICEBLUE             "BluAlice"
+#define LOCALIZED_COLOR_ANTIQUEWHITE          "BiancoDiTitanio"
+#define LOCALIZED_COLOR_AQUA                  "Acqua"
+#define LOCALIZED_COLOR_AQUAMARINE            "Acquamarina"
+#define LOCALIZED_COLOR_AZURE                 "Azzurro"
+#define LOCALIZED_COLOR_BEIGE                 "Beige"
+#define LOCALIZED_COLOR_BISQUE                "Biscotto"
+#define LOCALIZED_COLOR_BLACK                 "Nero"
+#define LOCALIZED_COLOR_BLANCHEDALMOND        "MandorlaBollita"
+#define LOCALIZED_COLOR_BLUE                  "Blu"
+#define LOCALIZED_COLOR_BLUEVIOLET            "IndacoScuro"
+#define LOCALIZED_COLOR_BROWN                 "Marrone"
+#define LOCALIZED_COLOR_BURLYWOOD             "Radica"
+#define LOCALIZED_COLOR_CADETBLUE             "BluCadetto"
+#define LOCALIZED_COLOR_CHARTREUSE            "Chartreuse"
+#define LOCALIZED_COLOR_CHOCOLATE             "Cioccolato"
+#define LOCALIZED_COLOR_CORAL                 "Corallo"
+#define LOCALIZED_COLOR_CORNFLOWERBLUE        "BluFiordaliso"
+#define LOCALIZED_COLOR_CORNSILK              "SetaMais"
+#define LOCALIZED_COLOR_CRIMSON               "Cremisi"
+#define LOCALIZED_COLOR_CYAN                  "Ciano"
+#define LOCALIZED_COLOR_DARKBLUE              "BluScuro"
+#define LOCALIZED_COLOR_DARKCYAN              "CianoScuro"
+#define LOCALIZED_COLOR_DARKGOLDENROD         "SolidagoScuro"
+#define LOCALIZED_COLOR_DARKGRAY              "GrigioScuro"
+#define LOCALIZED_COLOR_DARKGREEN             "VerdeScuro"
+#define LOCALIZED_COLOR_DARKGREY              "GrigioScuro"
+#define LOCALIZED_COLOR_DARKKHAKI             "KakiScuro"
+#define LOCALIZED_COLOR_DARKMAGENTA           "MagentaScuro"
+#define LOCALIZED_COLOR_DARKOLIVEGREEN        "VerdeOlivaScuro"
+#define LOCALIZED_COLOR_DARKORANGE            "ArancioneScuro"
+#define LOCALIZED_COLOR_DARKORCHID            "OrchideaScuro"
+#define LOCALIZED_COLOR_DARKRED               "RossoScuro"
+#define LOCALIZED_COLOR_DARKSALMON            "SalmoneScuro"
+#define LOCALIZED_COLOR_DARKSEAGREEN          "VerdeMarinoScuro"
+#define LOCALIZED_COLOR_DARKSLATEBLUE         "BluArdesiaScuro"
+#define LOCALIZED_COLOR_DARKSLATEGRAY         "GrigioArdesiaScuro"
+#define LOCALIZED_COLOR_DARKSLATEGREY         "GrigioArdesiaScuro"
+#define LOCALIZED_COLOR_DARKTURQUOISE         "TurcheseScuro"
+#define LOCALIZED_COLOR_DARKVIOLET            "ViolettaScuro"
+#define LOCALIZED_COLOR_DEEPPINK              "RosaProfondo"
+#define LOCALIZED_COLOR_DEEPSKYBLUE           "CelesteProfondo"
+#define LOCALIZED_COLOR_DIMGRAY               "GrigioTenue"
+#define LOCALIZED_COLOR_DIMGREY               "GrigioTenue"
+#define LOCALIZED_COLOR_DODGERBLUE            "BluDodger"
+#define LOCALIZED_COLOR_FIREBRICK             "RossoMattone"
+#define LOCALIZED_COLOR_FLORALWHITE           "BiancoFloreale"
+#define LOCALIZED_COLOR_FORESTGREEN           "VerdeForesta"
+#define LOCALIZED_COLOR_FUCHSIA               "Fucsia"
+#define LOCALIZED_COLOR_GAINSBORO             "Gainsboro"
+#define LOCALIZED_COLOR_GHOSTWHITE            "BiancoFantasma"
+#define LOCALIZED_COLOR_GOLD                  "Oro"
+#define LOCALIZED_COLOR_GOLDENROD             "Solidago"
+#define LOCALIZED_COLOR_GRAY                  "Grigio"
+#define LOCALIZED_COLOR_GREEN                 "Verde"
+#define LOCALIZED_COLOR_GREENYELLOW           "VerdeGiallo"
+#define LOCALIZED_COLOR_GREY                  "Grigio"
+#define LOCALIZED_COLOR_HONEYDEW              "MeloneVerde"
+#define LOCALIZED_COLOR_HOTPINK               "RosaCaldo"
+#define LOCALIZED_COLOR_INDIANRED             "Castagno"
+#define LOCALIZED_COLOR_INDIGO                "Indaco"
+#define LOCALIZED_COLOR_IVORY                 "Avorio"
+#define LOCALIZED_COLOR_KHAKI                 "Kaki"
+#define LOCALIZED_COLOR_LAVENDER              "Lavanda"
+#define LOCALIZED_COLOR_LAVENDERBLUSH         "LavandaRosata"
+#define LOCALIZED_COLOR_LAWNGREEN             "VerdePrato"
+#define LOCALIZED_COLOR_LEMONCHIFFON          "LimoneCrema"
+#define LOCALIZED_COLOR_LIGHTBLUE             "BluChiaro"
+#define LOCALIZED_COLOR_LIGHTCORAL            "CoralloChiaro"
+#define LOCALIZED_COLOR_LIGHTCYAN             "CianoChiaro"
+#define LOCALIZED_COLOR_LIGHTGOLDENRODYELLOW  "SolidagoChiaro"
+#define LOCALIZED_COLOR_LIGHTGRAY             "GrigioChiaro"
+#define LOCALIZED_COLOR_LIGHTGREEN            "VerdeChiaro"
+#define LOCALIZED_COLOR_LIGHTGREY             "GrigioChiaro"
+#define LOCALIZED_COLOR_LIGHTPINK             "RosaChiaro"
+#define LOCALIZED_COLOR_LIGHTSALMON           "SalmoneChiaro"
+#define LOCALIZED_COLOR_LIGHTSEAGREEN         "VerdemareChiaro"
+#define LOCALIZED_COLOR_LIGHTSKYBLUE          "CelesteChiaro"
+#define LOCALIZED_COLOR_LIGHTSLATEGRAY        "GrigioArdesiaChiaro"
+#define LOCALIZED_COLOR_LIGHTSLATEGREY        "GrigioArdesiaChiaro"
+#define LOCALIZED_COLOR_LIGHTSTEELBLUE        "BluAcciaioChiaro"
+#define LOCALIZED_COLOR_LIGHTYELLOW           "GialloChiaro"
+#define LOCALIZED_COLOR_LIME                  "Lime"
+#define LOCALIZED_COLOR_LIMEGREEN             "LimeVerde"
+#define LOCALIZED_COLOR_LINEN                 "Lino"
+#define LOCALIZED_COLOR_MAGENTA               "Magenta"
+#define LOCALIZED_COLOR_MAROON                "Bordò"
+#define LOCALIZED_COLOR_MEDIUMAQUAMARINE      "AcquamarinaMedio"
+#define LOCALIZED_COLOR_MEDIUMBLUE            "BluMedio"
+#define LOCALIZED_COLOR_MEDIUMORCHID          "OrchideaMedio"
+#define LOCALIZED_COLOR_MEDIUMPURPLE          "ViolaMedio"
+#define LOCALIZED_COLOR_MEDIUMSEAGREEN        "VerdemareMedio"
+#define LOCALIZED_COLOR_MEDIUMSLATEBLUE       "BluArdesiaMedio"
+#define LOCALIZED_COLOR_MEDIUMSPRINGGREEN     "VerdePrimaveraMedio"
+#define LOCALIZED_COLOR_MEDIUMTURQUOISE       "TurcheseMedio"
+#define LOCALIZED_COLOR_MEDIUMVIOLETRED       "RossoViolaceoMedio"
+#define LOCALIZED_COLOR_MIDNIGHTBLUE          "BluNotte"
+#define LOCALIZED_COLOR_MINTCREAM             "CremaMenta"
+#define LOCALIZED_COLOR_MISTYROSE             "RosaRugiada"
+#define LOCALIZED_COLOR_MOCCASIN              "Mocassino"
+#define LOCALIZED_COLOR_NAVAJOWHITE           "BiancoNavajo"
+#define LOCALIZED_COLOR_NAVY                  "BluMarino"
+#define LOCALIZED_COLOR_OLDLACE               "VecchioPizzo"
+#define LOCALIZED_COLOR_OLIVE                 "VerdeOliva"
+#define LOCALIZED_COLOR_OLIVEDRAB             "VerdeOlivastro"
+#define LOCALIZED_COLOR_ORANGE                "Arancione"
+#define LOCALIZED_COLOR_ORANGERED             "Vermiglione"
+#define LOCALIZED_COLOR_ORCHID                "Orchidea"
+#define LOCALIZED_COLOR_PALEGOLDENROD         "SolidagoPallido"
+#define LOCALIZED_COLOR_PALEGREEN             "VerdePallido"
+#define LOCALIZED_COLOR_PALETURQUOISE         "TurchesePallido"
+#define LOCALIZED_COLOR_PALEVIOLETRED         "RossoViolaceoPallido"
+#define LOCALIZED_COLOR_PAPAYAWHIP            "Papaia"
+#define LOCALIZED_COLOR_PEACHPUFF             "PescaScuro"
+#define LOCALIZED_COLOR_PERU                  "MarroneChiaro"
+#define LOCALIZED_COLOR_PINK                  "Rosa"
+#define LOCALIZED_COLOR_PLUM                  "Prugna"
+#define LOCALIZED_COLOR_POWDERBLUE            "BluPolvere"
+#define LOCALIZED_COLOR_PURPLE                "Viola"
+#define LOCALIZED_COLOR_RED                   "Rosso"
+#define LOCALIZED_COLOR_ROSYBROWN             "MarroneRosato"
+#define LOCALIZED_COLOR_ROYALBLUE             "BluReale"
+#define LOCALIZED_COLOR_SADDLEBROWN           "MarroneSella"
+#define LOCALIZED_COLOR_SALMON                "Salmone"
+#define LOCALIZED_COLOR_SANDYBROWN            "Sabbia"
+#define LOCALIZED_COLOR_SEAGREEN              "VerdeMarino"
+#define LOCALIZED_COLOR_SEASHELL              "Conchiglia"
+#define LOCALIZED_COLOR_SIENNA                "TerraDiSiena"
+#define LOCALIZED_COLOR_SILVER                "Argento"
+#define LOCALIZED_COLOR_SKYBLUE               "Celeste"
+#define LOCALIZED_COLOR_SLATEBLUE             "BluArdesia"
+#define LOCALIZED_COLOR_SLATEGRAY             "GrigioArdesia"
+#define LOCALIZED_COLOR_SLATEGREY             "GrigioArdesia"
+#define LOCALIZED_COLOR_SNOW                  "Neve"
+#define LOCALIZED_COLOR_SPRINGGREEN           "VerdePrimavera"
+#define LOCALIZED_COLOR_STEELBLUE             "BluAcciaio"
+#define LOCALIZED_COLOR_TAN                   "Catrame"
+#define LOCALIZED_COLOR_TEAL                  "BluTè"
+#define LOCALIZED_COLOR_THISTLE               "Cardo"
+#define LOCALIZED_COLOR_TOMATO                "RossoPomodoro"
+#define LOCALIZED_COLOR_TURQUOISE             "Turchese"
+#define LOCALIZED_COLOR_VIOLET                "Violetta"
+#define LOCALIZED_COLOR_WHEAT                 "Grano"
+#define LOCALIZED_COLOR_WHITE                 "Bianco"
+#define LOCALIZED_COLOR_WHITESMOKE            "BiancoFumo"
+#define LOCALIZED_COLOR_YELLOW                "Giallo"
+#define LOCALIZED_COLOR_YELLOWGREEN           "GialloVerde"
 
 //
 // The name of each "window class" that DEBUGWINDOWS prints.
-// These should match the cooresponding terms that is used
-// in the  LOCALIZED_ALTERNATE_*CREATE procedures.
+// These should match the corresponding terms that is used
+// in the LOCALIZED_ALTERNATE_*CREATE procedures.
 //
-#define LOCALIZED_WINDOWCLASSNAME_WINDOW       "Window" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_STATIC       "Static" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_LISTBOX      "ListBox" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_COMBOBOX     "ComboBox" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_BUTTON       "Button" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_SCROLLBAR    "ScrollBar" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_GROUPBOX     "GroupBox" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_RADIOBUTTON  "RadioButton" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_CHECKBOX     "CheckBox" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_DIALOG       "Dialog" // NOT_YET_LOCALIZED
+#define LOCALIZED_WINDOWCLASSNAME_WINDOW       "Finestra"
+#define LOCALIZED_WINDOWCLASSNAME_STATIC       "Etichetta"
+#define LOCALIZED_WINDOWCLASSNAME_LISTBOX      "ListaScelta"
+#define LOCALIZED_WINDOWCLASSNAME_COMBOBOX     "Combo"
+#define LOCALIZED_WINDOWCLASSNAME_BUTTON       "Pulsante"
+#define LOCALIZED_WINDOWCLASSNAME_SCROLLBAR    "BarraScorrimento"
+#define LOCALIZED_WINDOWCLASSNAME_GROUPBOX     "Gruppo"
+#define LOCALIZED_WINDOWCLASSNAME_RADIOBUTTON  "PulsanteRadio"
+#define LOCALIZED_WINDOWCLASSNAME_CHECKBOX     "Casella"
+#define LOCALIZED_WINDOWCLASSNAME_DIALOG       "Dialogo"
 
 
 //
