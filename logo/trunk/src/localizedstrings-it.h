@@ -1358,7 +1358,7 @@
 //
 // The name of each "window class" that DEBUGWINDOWS prints.
 // These should match the corresponding terms that is used
-// in the LOCALIZED_ALTERNATE_*CREATE procedures.
+// in the  LOCALIZED_ALTERNATE_*CREATE procedures.
 //
 #define LOCALIZED_WINDOWCLASSNAME_WINDOW       "Finestra"
 #define LOCALIZED_WINDOWCLASSNAME_STATIC       "Etichetta"
