@@ -40,6 +40,7 @@
 					<li>Clem Rutter</li>
 					<li>Daniel Ajoy</li>
 					<li>Domagoj Kuna</li>
+					<li>Francesco Simone Carta</li>
 					<li>Hensley Bass</li>
 					<li>Igor Baglaev</li>
 					<li>Jan-Niklas Grabe</li>
