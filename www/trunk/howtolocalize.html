@@ -8,7 +8,6 @@
   <body style="background-color: white;">
     <h1>HOWTO Localize FMSLogo</h1>
 
-
     <p>
       Thank you for your interest in localizing FMSLogo.
       Each new translation of FMSLogo expands its potential audience and brings Logo to more people.
@@ -121,6 +120,14 @@
       They are only supported in the English version for backward-compatibility of old English programs, so they are unnecessary in the translated vesions.
     </p>
 
+    <p>
+      The <code>SLOWDRAW</code> procedure cannot be translated with <code>COPYDEF</code> alone, because
+      this would slow down only the English movements commands (<code>FORWARD</code>, <code>BACK</code>,
+      <code>FD</code>, and <code>BK</code>) and not the translated ones.
+      To translate <code>SLOWDRAW</code>, you can copy the implementation from <code>logolib/slowdraw</code>
+      into <code>startup-<i>XXXX</i>.logoscript</code> and modify it accordingly.
+      Then add <code>COPYDEF</code> to translate its name.
+    </p>
 
     <h2>Who's Doing What</h2>
 
@@ -166,7 +173,7 @@
 
         <tr>
           <td>Italian</td>
-          <td>Stefano Federici</td>
+          <td>Stefano Federici and Francesco Simone Carta</td>
         </tr>
 
         <tr>
