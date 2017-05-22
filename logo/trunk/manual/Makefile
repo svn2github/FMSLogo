@@ -78,10 +78,12 @@ logohelp.pdf : logohelp.fo
 logohelp.rtf : $(SOURCEFILES)
 	docbook2rtf $(ROOTFILE)
 
-website : index.html
+website : index.html media/*.png
 	-mkdir www
 	cp $(shell /usr/bin/find -maxdepth 1 -name '*.html') www
 	cp logohelp.css www
+	-mkdir www/media
+	cp media/*.png www/media
 
 # Generate an XML file that contains the version
 # We use the UNIX version of echo to make sure there is no newline
