@@ -85,7 +85,7 @@ UpdateLocalizationFiles('zh-cn', 'Chinese',    'Pachleng');
 UpdateLocalizationFiles('fr',    'French',     'Bertrand CARETTE');
 UpdateLocalizationFiles('gr',    'Greek',      'Theodoros Chatzigiannakis');
 UpdateLocalizationFiles('es',    'Spanish',    'Daniel Ajoy');
-UpdateLocalizationFiles('it',    'Italian',    'Stefano Federici');
+UpdateLocalizationFiles('it',    'Italian',    'Stefano Federici and Francesco Simone Carta');
 UpdateLocalizationFiles('pt',    'Portuguese', 'Alexandre R Soares');
 UpdateLocalizationFiles('de',    'German',     'Stephan Vogel');
 UpdateLocalizationFiles('ru',    'Russian',    'Igor Baglaev');

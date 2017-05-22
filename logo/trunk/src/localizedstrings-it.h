@@ -17,7 +17,7 @@
 //
 
 /////////////////////////////////////////////////////////////////////////////
-// This file contains localized strings for Italian by Stefano Federici
+// This file contains localized strings for Italian by Stefano Federici and Francesco Simone Carta
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
@@ -624,12 +624,12 @@
 // The menu options on the main window 
 //
 #define LOCALIZED_FILE                  "&File"
-#define LOCALIZED_FILE_NEW              "&Nuovo\t(cancella workspace)"
-#define LOCALIZED_FILE_LOAD             "&Carica...\t(aggiunge al workspace)"
-#define LOCALIZED_FILE_OPEN             "&Apri...\t(sostituisce workspace)"
+#define LOCALIZED_FILE_NEW              "&Nuovo\t(cancella Spazio di Lavoro)"
+#define LOCALIZED_FILE_LOAD             "&Carica...\t(aggiunge allo Spazio di Lavoro)"
+#define LOCALIZED_FILE_OPEN             "&Apri...\t(sostituisce Spazio di Lavoro)"
 #define LOCALIZED_FILE_SAVE             "&Salva"
 #define LOCALIZED_FILE_SAVEAS           "Salva con &nome..."
-#define LOCALIZED_FILE_SETASSCREENSAVER "Impostare come Screen Saver"
+#define LOCALIZED_FILE_SETASSCREENSAVER "Impostare come Salvaschermo"
 #define LOCALIZED_FILE_EDIT             "&Modifica..."
 #define LOCALIZED_FILE_ERASE            "&Cancella..."
 #define LOCALIZED_FILE_EXIT             "&Esci"
@@ -647,9 +647,9 @@
 #define LOCALIZED_SET_PENSIZE          "Dimensione &Penna..."
 #define LOCALIZED_SET_LABELFONT        "Carattere &etichette..."
 #define LOCALIZED_SET_COMMANDERFONT    "Carattere finestra &Comandi..."
-#define LOCALIZED_SET_PENCOLOR         "Co&lore penna..."
+#define LOCALIZED_SET_PENCOLOR         "Co&lore Penna..."
 #define LOCALIZED_SET_FLOODCOLOR       "Colore &Riempimento..."
-#define LOCALIZED_SET_SCREENCOLOR      "Colonre &Schermo..."
+#define LOCALIZED_SET_SCREENCOLOR      "Colore &Schermo..."
 
 #define LOCALIZED_ZOOM                 "&Zoom"
 #define LOCALIZED_ZOOM_IN              "&Ingrandisci"
@@ -862,7 +862,7 @@
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Ringrazimenti a Yehuda Katz e Erich Neuwirth"
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME " è free software\nVedere la Licenza Pubblica GNU"
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisita il Forum Logo a\nhttp://groups.yahoo.com/group/LogoForum/"
-#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Traduzione italiana di Stefano Federici"
+#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Traduzione italiana di Stefano Federici, aggiunte e correzioni di Francesco Simone Carta"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON
 
 
@@ -870,7 +870,7 @@
 // Strings on the "About FMS" Dialog box
 //
 #define LOCALIZED_ABOUTMS                      "Informazioni su FMS"
-#define LOCALIZED_ABOUTMS_FMS                  "FMS sta per Fight Multiple Sclerosis."
+#define LOCALIZED_ABOUTMS_FMS                  "FMS sta per Fight Multiple Sclerosis (Combatti la Sclerosi Multipla)"
 #define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Ti preghiamo di considerare una donazione a\nNational Multiple Sclerosis Society.\nhttp://www.nmss.org\n1-800-FIGHT-MS"
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON
 
@@ -902,7 +902,7 @@
 
 #define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "Le modifiche non sono state salvate sul disco"
 #define LOCALIZED_FILENEWWILLERASEWORKSPACE     "L'esecuzione di questo comando cancellerà tutte le procedure definite.\n\nConfermi l'esecuzione del comando Nuovo?"
-#define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "Le definizioni delle procedure definire nel file di cui si è richiesto il caricamento verranno mescolate alle definizioni già presenti nello spaziolavoro\ne potrebbero sovrascrivere eventuali modifiche non ancora salvate.\n\nConfermi l'esecuzione del comando Carica?"
+#define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "Le definizioni delle procedure definire nel file di cui si è richiesto il caricamento verranno mescolate alle definizioni già presenti nello Spazio di Lavoro\ne potrebbero sovrascrivere eventuali modifiche non ancora salvate.\n\nConfermi l'esecuzione del comando Carica?"
 #define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "Questa operazioni causerà la perdita di tutte le modifiche non salvate.\n\nConfermi l'esecuzione del comando Apri?"
 
 #define LOCALIZED_EDITORISOPEN                  "Sapevi di avere un'altra sessione di Editor già in esecuzione?\n\nQualunque modifica in questa sessione di Editor non verrà salvata."
@@ -910,13 +910,13 @@
 #define LOCALIZED_ERROR_CANTREADFILE            "Impossibile leggere il file \"%s\" dal disco"
 #define LOCALIZED_ERROR_CANTWRITEFILE           "Impossibile scrivere il file \"%s\" sul disco"
 
-#define LOCALIZED_SAVETOWORKSPACE                "Salva nello spaziolavoro"
+#define LOCALIZED_SAVETOWORKSPACE                "Salva nello Spazio di Lavoro"
 #define LOCALIZED_CONTENTSCHANGED                "Il contenuto è stato modificato"
-#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "Il contenuto è stato modificato.\nVuoi salvare le modifiche nello spaziolavoro?"
+#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "Il contenuto è stato modificato.\nVuoi salvare le modifiche nello Spazio di Lavoro?"
 
 
 
-#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "Il salvataggio del contenuto dell'Editor nello spaziolavoro non è riuscito.  Il cursose verrà posto subito dopo l'ultima definizione salvata con successo.\n\nControlla l'area Comandi per eventuali messaggi d'errore."
+#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "Il salvataggio del contenuto dell'Editor nello Spazio di Lavoro non è riuscito.  Il cursose verrà posto subito dopo l'ultima definizione salvata con successo.\n\nControlla l'area Comandi per eventuali messaggi d'errore."
 #define LOCALIZED_RETURNTOEDIT                  "Vuoi tornare all'Editor?"
 
 #define LOCALIZED_EDITFAILEDTOLOAD              LOCALIZED_SAVETOWORKSPACE
@@ -930,9 +930,9 @@
 // 
 //  Strings used in the File-Open filters
 //
-#define LOCALIZED_FILE_LOAD_DIALOG_TITLE    "Scegli il programma Logo da caricare (aggiunge al workspace)"
-#define LOCALIZED_FILE_OPEN_DIALOG_TITLE    "Scegli il programma Logo da aprire (sostituisce il workspace)"
-#define LOCALIZED_FILE_SAVE_DIALOG_TITLE    "Scegli il file in cui salvare il workspace"
+#define LOCALIZED_FILE_LOAD_DIALOG_TITLE    "Scegli il programma Logo da caricare (aggiunge allo Spazio di Lavoro)"
+#define LOCALIZED_FILE_OPEN_DIALOG_TITLE    "Scegli il programma Logo da aprire (sostituisce lo Spazio di Lavoro)"
+#define LOCALIZED_FILE_SAVE_DIALOG_TITLE    "Scegli il file in cui salvare lo Spazio di Lavoro"
 #define LOCALIZED_BITMAP_OPEN_DIALOG_TITLE  "Scegli l'immagine da caricare"
 #define LOCALIZED_BITMAP_SAVE_DIALOG_TITLE  "Scegli il file in cui salvare l'area attiva"
 
