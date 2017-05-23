@@ -95,6 +95,14 @@
         <entry>indietro</entry>
       </row>
       <row>
+        <entry><link linkend='command-back'>back</link></entry>
+        <entry>indietro</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-back'>back</link></entry>
+        <entry>i</entry>
+      </row>
+      <row>
         <entry><link linkend='command-backslashedp'>backslashed?</link></entry>
         <entry>barrarovesciata?</entry>
       </row>
@@ -467,8 +475,20 @@
         <entry>edlps</entry>
       </row>
       <row>
+        <entry><link linkend='command-ellipse'>ellipse</link></entry>
+        <entry>ellisse</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-ellipse2'>ellipse2</link></entry>
+        <entry>ellisse2</entry>
+      </row>
+      <row>
         <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
         <entry>arcoellisse</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-ellipsearc2'>ellipsearc2</link></entry>
+        <entry>arcoellisse2</entry>
       </row>
       <row>
         <entry><link linkend='command-emptyp'>empty?</link></entry>
@@ -613,6 +633,14 @@
       <row>
         <entry><link linkend='command-forward'>forward</link></entry>
         <entry>avanti</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-forward'>forward</link></entry>
+        <entry>avanti</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-forward'>forward</link></entry>
+        <entry>a</entry>
       </row>
       <row>
         <entry><link linkend='command-fput'>fput</link></entry>
@@ -2073,7 +2101,7 @@
       </row>
       <row>
         <entry>a</entry>
-        <entry><link linkend='command-forward'>fd</link></entry>
+        <entry><link linkend='command-forward'>forward</link></entry>
       </row>
       <row>
         <entry>acaso</entry>
@@ -2142,6 +2170,10 @@
       <row>
         <entry>arcoellisse</entry>
         <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
+      </row>
+      <row>
+        <entry>arcoellisse2</entry>
+        <entry><link linkend='command-ellipsearc2'>ellipsearc2</link></entry>
       </row>
       <row>
         <entry>arcsen</entry>
@@ -2696,6 +2728,14 @@
         <entry><link linkend='command-rmdir'>rmdir</link></entry>
       </row>
       <row>
+        <entry>ellisse</entry>
+        <entry><link linkend='command-ellipse'>ellipse</link></entry>
+      </row>
+      <row>
+        <entry>ellisse2</entry>
+        <entry><link linkend='command-ellipse2'>ellipse2</link></entry>
+      </row>
+      <row>
         <entry>errore</entry>
         <entry><link linkend='command-error'>error</link></entry>
       </row>
@@ -2877,7 +2917,7 @@
       </row>
       <row>
         <entry>i</entry>
-        <entry><link linkend='command-back'>bk</link></entry>
+        <entry><link linkend='command-back'>back</link></entry>
       </row>
       <row>
         <entry>icona</entry>

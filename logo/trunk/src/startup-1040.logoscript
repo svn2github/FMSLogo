@@ -98,6 +98,9 @@ catch "error [ copydef "davettorealista  "arraytolist    ]
 catch "error [ copydef "listaavettore    "listtoarray    ]
 catch "error [ copydef "vettorealista    "arraytolist    ]
 catch "error [ copydef "asciigrezzo      "rawascii       ]
+catch "error [ copydef "ellisse          "ellipse        ]
+catch "error [ copydef "ellisse2         "ellipse2       ]
+catch "error [ copydef "arcoellisse2     "ellipsearc2    ]
 
 ;copydef "rallenta "slowdraw
 
