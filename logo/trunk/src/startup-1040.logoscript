@@ -76,7 +76,6 @@ catch "error [ copydef "salvalista       "savel          ]
 catch "error [ copydef "asorient         "setorientation ]
 catch "error [ copydef "aspen            "setpen         ]
 catch "error [ copydef "segno            "sign           ]
-catch "error [ copydef "rallenta         "slowdraw       ]
 catch "error [ copydef "ordina           "sort           ]
 catch "error [ copydef "suonono          "soundoff       ]
 catch "error [ copydef "suonosi          "soundon        ]
@@ -99,4 +98,19 @@ catch "error [ copydef "davettorealista  "arraytolist    ]
 catch "error [ copydef "listaavettore    "listtoarray    ]
 catch "error [ copydef "vettorealista    "arraytolist    ]
 catch "error [ copydef "asciigrezzo      "rawascii       ]
-  
+
+;copydef "rallenta "slowdraw
+
+to rallenta :slowness
+	if not number? :slowness              [(throw "error 4 :slowness)]
+	if not equal? :slowness int :slowness [(throw "error 4 :slowness)]
+	if less? :slowness 0                  [(throw "error 4 :slowness)]
+	slowdraw :slowness
+	localmake "redefp "true
+	copydef "avanti "forward
+	copydef "a "forward
+	copydef "indietro "back
+	copydef "i "back
+end
+
+bury "rallenta

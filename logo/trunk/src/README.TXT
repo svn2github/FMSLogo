@@ -19,6 +19,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 7.2.0
+  o Fix Bug #493; the Italian translation of SLOWDRAW now affects the behavior
+    of the Italian translations of FORWARD, FD, BACK, and BK.
   o Improvements to the Italian translation.
   o Improvements to the German translation.
 
