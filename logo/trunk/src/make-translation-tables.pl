@@ -7,7 +7,7 @@
 # "English-to-LANG" tables that are built into the online
 # documentation.
 ############################################################
-use locale;
+use locale; # case-insensitive sorting
 use utf8;
 use IO::File;
 use strict;
@@ -75,6 +75,26 @@ $main::EnglishAbbreviation{'st'}    = 'showturtle';
 $main::EnglishAbbreviation{'ss'}    = 'splitscreen';
 $main::EnglishAbbreviation{'ts'}    = 'textscreen';
 $main::EnglishAbbreviation{'up'}    = 'uppitch';
+
+# Populates the colors and their RGB codes
+%main::EnglishColorToRgbCode = ();
+
+sub InitializeColorTable() {
+  # Parse the colors from the source code.
+  # This is an additional check to make sure that the documented color
+  # matches the implemented color.
+  my $colorSourceCode = new IO::File "graphics.cpp" or die $!;
+  while (<$colorSourceCode>) {
+    # The rows that we're looking for look something like
+    # """      
+    # {"AliceBlue", LOCALIZED_COLOR_ALICEBLUE, 0x00FFF8F0},
+    # """
+    if (m/^\s+{"(\w+)",\s+LOCALIZED_COLOR_\w+,\s+0x00(\w\w)(\w\w)(\w\w)}.*$/) {
+      $main::EnglishColorToRgbCode{$1} = uc "$4$3$2"; # convert 0x00GGBBRR -> RRGGBB
+    }
+  }
+  $colorSourceCode->close();
+}
 
 sub PrintShadowedProcedures($$$) {
   my $LocaleName         = shift or die "not enough arguments";
@@ -151,17 +171,19 @@ sub GetLinkend($) {
   return $linkend
 }
 
-sub PrintTranslationsAsDocBook($$$$) {
+sub PrintTranslationsAsDocBook($$$$$$) {
 
-  my $LocaleName         = shift or die "not enough arguments";
-  my $LocaleId           = shift or die "not enough arguments";
-  my $EnglishToLocalized = shift or die "not enough arguments";
-  my $LocalizedToEnglish = shift or die "not enough arguments";
+  my $LocaleName                  = shift or die "not enough arguments";
+  my $LocaleId                    = shift or die "not enough arguments";
+  my $EnglishToLocalizedProcedure = shift or die "not enough arguments";
+  my $LocalizedToEnglishProcedure = shift or die "not enough arguments";
+  my $EnglishToLocalizedColor     = shift or die "not enough arguments";
+  my $LocalizedToEnglishColor     = shift or die "not enough arguments";
 
 
   my $docbook = '';
 
-  $docbook .= "<appendix id='translations'>\n";
+  $docbook .= "<appendix>\n";
   $docbook .= "<title>Commands: English to $LocaleName</title>\n";
   $docbook .= "<indexterm><primary>From English</primary></indexterm>\n";
 
@@ -176,11 +198,11 @@ sub PrintTranslationsAsDocBook($$$$) {
   $docbook .= "    <tbody>\n";
 
   # add a row for each english to localized translation
-  foreach my $english (sort keys %{$EnglishToLocalized}) {
+  foreach my $english (sort keys %{$EnglishToLocalizedProcedure}) {
 
     my $englishLinkend = GetLinkend($english);
 
-    foreach my $translation (@{$$EnglishToLocalized{$english}}) {
+    foreach my $translation (@{$$EnglishToLocalizedProcedure{$english}}) {
       utf8::encode($translation);
       $docbook .= "      <row>\n";
       $docbook .= "        <entry><link linkend='$englishLinkend'>$english</link></entry>\n";
@@ -193,6 +215,44 @@ sub PrintTranslationsAsDocBook($$$$) {
   $docbook .= "  </tgroup>\n";
   $docbook .= "</informaltable>\n";
   $docbook .= "</appendix>\n";
+  
+  # If the color names have been translated, include a table for those.  
+  if (%{$EnglishToLocalizedColor}) {
+    $docbook .= "<appendix>\n";
+    $docbook .= "<title>Color Names: English to $LocaleName</title>\n";
+    $docbook .= "<indexterm><primary>From English (color names)</primary></indexterm>\n";
+    $docbook .= "<informaltable>\n";
+    
+    $docbook .= "  <tgroup cols='3'>\n";
+    $docbook .= "    <thead>\n";
+    $docbook .= "      <row>\n";
+    $docbook .= "        <entry>English Color</entry>\n";
+    $docbook .= "        <entry>$LocaleName Color</entry>\n";
+    $docbook .= "        <entry>Sample</entry>\n";
+    $docbook .= "      </row>\n";
+    $docbook .= "    </thead>\n";
+    $docbook .= "    <tbody>\n";
+
+    # add a row for each english to localized translation
+    foreach my $english (sort keys %{$EnglishToLocalizedColor}) {
+      foreach my $translation (@{$$EnglishToLocalizedColor{$english}}) {
+          my $rgbCode = $main::EnglishColorToRgbCode{$english};
+          die "Could not find RGB code for $english" if not $rgbCode;
+          die "No RGB color image found for $english (../manual/media/rgb$rgbCode.png)" if not -e "../manual/media/rgb$rgbCode.png";
+        utf8::encode($translation);
+        $docbook .= "      <row>\n";
+        $docbook .= "        <entry>$english</entry>\n";
+        $docbook .= "        <entry>$translation</entry>\n";
+        $docbook .= "        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb$rgbCode.png'/></imageobject></mediaobject></entry>\n";
+        $docbook .= "      </row>\n";
+      }
+    }
+
+    $docbook .= "    </tbody>\n";
+    $docbook .= "  </tgroup>\n";
+    $docbook .= "</informaltable>\n";
+    $docbook .= "</appendix>\n";
+  }
 
   $docbook .= "\n";
 
@@ -203,16 +263,16 @@ sub PrintTranslationsAsDocBook($$$$) {
   $docbook .= "  <tgroup cols='2'>\n";
   $docbook .= "    <thead>\n";
   $docbook .= "      <row>\n";
-  $docbook .= "        <entry>$LocaleName Command</entry>\n";
+  $docbook .= "        <entry>$LocaleName Color</entry>\n";
   $docbook .= "        <entry>English Command</entry>\n";
   $docbook .= "      </row>\n";
   $docbook .= "    </thead>\n";
   $docbook .= "    <tbody>\n";
 
   # add a row for each localized to English translation
-  foreach my $translation (sort keys %{$LocalizedToEnglish}) {
+  foreach my $translation (sort keys %{$LocalizedToEnglishProcedure}) {
 
-    my $english        = $$LocalizedToEnglish{$translation};
+    my $english        = $$LocalizedToEnglishProcedure{$translation};
     my $englishLinkend = GetLinkend($english);
 
     utf8::encode($translation);
@@ -225,12 +285,69 @@ sub PrintTranslationsAsDocBook($$$$) {
 
   $docbook .= "    </tbody>\n";
   $docbook .= "  </tgroup>\n";
-  $docbook .= "</informaltable>\n";
+  $docbook .= "</informaltable>\n";                                       
   $docbook .= "</appendix>\n";
+
+    
+  # If the color names have been translated, include a table for those.  
+  if (%{$LocalizedToEnglishColor}) {
+    $docbook .= "<appendix>\n";
+    $docbook .= "<title>Color Names: $LocaleName to English</title>\n";
+    $docbook .= "<indexterm><primary>To English (color names)</primary></indexterm>\n";
+    $docbook .= "<informaltable>\n";
+    
+    $docbook .= "  <tgroup cols='3'>\n";
+    $docbook .= "    <thead>\n";
+    $docbook .= "      <row>\n";
+    $docbook .= "        <entry>$LocaleName Color</entry>\n";
+    $docbook .= "        <entry>English Color</entry>\n";
+    $docbook .= "        <entry>Sample</entry>\n";
+    $docbook .= "      </row>\n";
+    $docbook .= "    </thead>\n";
+    $docbook .= "    <tbody>\n";
+
+    # add a row for each english to localized translation    
+    foreach my $translation (sort keys %{$LocalizedToEnglishColor}) {
+      my $english = $$LocalizedToEnglishColor{$translation};
+      utf8::encode($translation);
+
+      my $rgbCode = $main::EnglishColorToRgbCode{$english};
+      die "Could not find RGB code for $english" if not $rgbCode;
+      die "No RGB color image found for $english (../manual/media/rgb$rgbCode.png)" if not -e "../manual/media/rgb$rgbCode.png";
+
+      $docbook .= "      <row>\n";
+      $docbook .= "        <entry>$translation</entry>\n";
+      $docbook .= "        <entry>$english</entry>\n";
+      $docbook .= "        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb$rgbCode.png'/></imageobject></mediaobject></entry>\n";
+      $docbook .= "      </row>\n";
+    }
+
+    $docbook .= "    </tbody>\n";
+    $docbook .= "  </tgroup>\n";
+    $docbook .= "</informaltable>\n";
+    $docbook .= "</appendix>\n";
+  }
 
   my $translations = new IO::File "> translations-$LocaleId.xml" or die $!;
   $translations->print($docbook);
   $translations->close();
+}
+
+# Adds English <-> Locale mappings to the given hashes
+sub AddTranslation($$$$) {
+  my $EnglishWord        = shift or die "not enough arguments";
+  my $TranslatedWord     = shift or die "not enough arguments";
+  my $EnglishToLocalized = shift or die "not enough arguments";
+  my $LocalizedToEnglish = shift or die "not enough arguments";
+
+  # English -> Localized is a list, since the same English word may
+  # have multiple translations.
+  if (not $$EnglishToLocalized{$EnglishWord}) {
+    @$EnglishToLocalized{$EnglishWord} = \();
+  }
+  push @{$$EnglishToLocalized{$EnglishWord}}, $TranslatedWord;
+
+  $$LocalizedToEnglish{$TranslatedWord} = $EnglishWord;
 }
 
 sub MakeTranslationTables($$$) {
@@ -239,9 +356,13 @@ sub MakeTranslationTables($$$) {
   my $CountryCode = shift or die "not enough arguments";
   my $LocaleId    = shift or die "not enough arguments";
 
-  my %english            = ();
-  my %englishtolocalized = ();
-  my %localizedtoenglish = ();
+  my %symbolToEnglishProcedure    = ();
+  my %englishToLocalizedProcedure = ();
+  my %localizedToEnglishProcedure = ();
+
+  my %symbolToEnglishColor        = ();  
+  my %localizedToEnglishColor     = ();
+  my %englishToLocalizedColor     = ();
 
   #
   # Build a table of everything that can be translated
@@ -250,32 +371,52 @@ sub MakeTranslationTables($$$) {
   while (<$englishfile>) {
     chomp;
     if (m/^\#define\s+LOCALIZED_ALTERNATE_(\w+)\s*"([^"]+)"/) {
-      $english{$1} = $2;
+      $symbolToEnglishProcedure{$1} = $2;
+    } elsif (m/^\#define\s+LOCALIZED_COLOR_(\w+)\s*"([^"]+)"/) {
+      $symbolToEnglishColor{$1}     = $2;
     }
   }
   $englishfile->close();
 
   #
-  # extract the primitives that were translated
+  # extract the primitives and colors that were translated
   #
   my $localizedfile = new IO::File "localizedstrings-$CountryCode.h" or die $!;
   while (<$localizedfile>) {
-    if (m/^\#define\s+LOCALIZED_ALTERNATE_(\w+)\s*"([^"]+)"/) {
-      my $symbolicname  = $1;
-      my $localizedname = $2;
-      my $englishword   = $english{$symbolicname};
+    if (m/^\#define\s+LOCALIZED_(ALTERNATE|COLOR)_(\w+)\s*"([^"]+)"/) {
+      my $symbolType    = $1;
+      my $symbolicName  = $2;
+      my $localizedName = $3;
 
-      $englishword or die "Found a localization for $symbolicname that is not present in the English localization";
+      my $englishWord;
+      if ($symbolType eq 'ALTERNATE') {
+          $englishWord = $symbolToEnglishProcedure{$symbolicName};
+      } else {
+          $englishWord = $symbolToEnglishColor{$symbolicName};
+      }
 
-      # only add documented procedures to the translation tables.
-      if (not $main::UndocumentedCommands{lc $englishword}) {
+      $englishWord or die "Found a localization for $symbolicName that is not present in the English localization";
 
-        unless (m/NOT_YET_LOCALIZED/) {
-          if (lc $englishword ne lc $localizedname) {
-            $englishtolocalized{$englishword} = () if not $englishtolocalized{$englishword};
-            push @{$englishtolocalized{$englishword}}, $localizedname;
-
-            $localizedtoenglish{$localizedname} = $englishword;
+      unless (m/NOT_YET_LOCALIZED/) {
+        # This is translated
+        if (lc $englishWord ne lc $localizedName) {
+          # The translation is different from the English name
+          if ($symbolType eq 'ALTERNATE') {                
+            # only add documented procedures to the translation tables.
+            if (not $main::UndocumentedCommands{lc $englishWord}) {
+              AddTranslation(
+                $englishWord,
+                $localizedName,
+                \%englishToLocalizedProcedure,
+                \%localizedToEnglishProcedure);
+            }
+          } else {
+            # This is a color name
+            AddTranslation(
+              $englishWord,
+              $localizedName,
+              \%englishToLocalizedColor,
+              \%localizedToEnglishColor);
           }
         }
       }
@@ -293,38 +434,49 @@ sub MakeTranslationTables($$$) {
       my $newname  = lc $1;
       my $original = lc $2;
 
-      # they probably copydef'd the localized version
-      while ($localizedtoenglish{$original} &&
-             $localizedtoenglish{$original} ne $original) {
-        $original = $localizedtoenglish{$original};
+      # They probably copydef'd the localized version, so keep looking
+      # until we find the original.
+      while ($localizedToEnglishProcedure{$original} &&
+             $localizedToEnglishProcedure{$original} ne $original) {
+        $original = $localizedToEnglishProcedure{$original};
       }
 
       if (lc $original ne lc $newname) {
 
         # only add documented procedures to the translation tables.
-        if (not $main::UndocumentedCommands{lc $original}) {
-          $englishtolocalized{$original} = () if not $englishtolocalized{$original};
-          push @{$englishtolocalized{$original}}, $newname;
-
-          $localizedtoenglish{$newname} = $original;
+        if (not $main::UndocumentedCommands{lc $original}) {              
+          AddTranslation(
+            $original,
+            $newname,
+            \%englishToLocalizedProcedure,
+            \%localizedToEnglishProcedure);
         }
       }
     }
   }
   $localizedfile->close();
 
-  PrintTranslationsAsText($LocaleId, \%englishtolocalized, \%localizedtoenglish);
+  PrintTranslationsAsText(
+    $LocaleId,
+    \%englishToLocalizedProcedure,
+    \%localizedToEnglishProcedure);
 
   PrintTranslationsAsDocBook(
     $LocaleName,
     $LocaleId,
-    \%englishtolocalized,
-    \%localizedtoenglish);
+    \%englishToLocalizedProcedure,
+    \%localizedToEnglishProcedure,
+    \%englishToLocalizedColor,
+    \%localizedToEnglishColor);
 
-  PrintShadowedProcedures($LocaleName, \%english, \%localizedtoenglish);
+  PrintShadowedProcedures(
+    $LocaleName,
+    \%symbolToEnglishProcedure,
+    \%localizedToEnglishProcedure);
 }
 
 
+InitializeColorTable();
 MakeTranslationTables('German',     'de', 1031);
 MakeTranslationTables('Greek',      'gr', 1032);
 MakeTranslationTables('Spanish',    'es', 1034);
