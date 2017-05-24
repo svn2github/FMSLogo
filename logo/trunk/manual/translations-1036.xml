@@ -1,4 +1,4 @@
-<appendix id='translations'>
+<appendix>
 <title>Commands: English to French</title>
 <indexterm><primary>From English</primary></indexterm>
 <informaltable>
@@ -2618,6 +2618,693 @@
   </tgroup>
 </informaltable>
 </appendix>
+<appendix>
+<title>Color Names: English to French</title>
+<indexterm><primary>From English (color names)</primary></indexterm>
+<informaltable>
+  <tgroup cols='3'>
+    <thead>
+      <row>
+        <entry>English Color</entry>
+        <entry>French Color</entry>
+        <entry>Sample</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>AliceBlue</entry>
+        <entry>Bleu Alice</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0F8FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>AntiqueWhite</entry>
+        <entry>Blanc antique</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAEBD7.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Aqua</entry>
+        <entry>Vert d'eau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Aquamarine</entry>
+        <entry>Bleu vert</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7FFFD4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Azure</entry>
+        <entry>Azur</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Black</entry>
+        <entry>Noir</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb000000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BlanchedAlmond</entry>
+        <entry>Amande blanchie</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFEBCD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Blue</entry>
+        <entry>Bleu</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb0000FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BlueViolet</entry>
+        <entry>Bleu violet</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8A2BE2.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Brown</entry>
+        <entry>Brun</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA52A2A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BurlyWood</entry>
+        <entry>Bois brut</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDEB887.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>CadetBlue</entry>
+        <entry>Blue cadet</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb5F9EA0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Chocolate</entry>
+        <entry>Chocolat</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD2691E.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Coral</entry>
+        <entry>Corail</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF7F50.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>CornflowerBlue</entry>
+        <entry>Bleu barbeau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6495ED.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Cornsilk</entry>
+        <entry>Barbe de maïs</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF8DC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Crimson</entry>
+        <entry>Cramoisi</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDC143C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkBlue</entry>
+        <entry>Bleu foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00008B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkCyan</entry>
+        <entry>Cyan foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008B8B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkGoldenRod</entry>
+        <entry>Verge d'or foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB8860B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkGray</entry>
+        <entry>Gris foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA9A9A9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkGreen</entry>
+        <entry>Vert foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb006400.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkGrey</entry>
+        <entry>Gris foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA9A9A9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkKhaki</entry>
+        <entry>Kaki foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBDB76B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkMagenta</entry>
+        <entry>Magenta foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B008B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkOliveGreen</entry>
+        <entry>Olive foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb556B2F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkOrange</entry>
+        <entry>Orange foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF8C00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkOrchid</entry>
+        <entry>Orchidée foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9932CC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkRed</entry>
+        <entry>Rouge foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B0000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSalmon</entry>
+        <entry>Saumon foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE9967A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSeaGreen</entry>
+        <entry>Vert marin foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8FBC8F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSlateBlue</entry>
+        <entry>Bleu ardoise foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb483D8B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSlateGray</entry>
+        <entry>Gris ardoise foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2F4F4F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSlateGrey</entry>
+        <entry>Gris ardoise foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2F4F4F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkTurquoise</entry>
+        <entry>Turquoise foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00CED1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkViolet</entry>
+        <entry>Violet foncé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9400D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DeepPink</entry>
+        <entry>Rose soutenu</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF1493.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DeepSkyBlue</entry>
+        <entry>Bleu ciel intense</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00BFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DimGray</entry>
+        <entry>Gris pâle</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb696969.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DimGrey</entry>
+        <entry>Gris pâle</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb696969.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DodgerBlue</entry>
+        <entry>Bleuté</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb1E90FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>FireBrick</entry>
+        <entry>Brique feu</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB22222.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>FloralWhite</entry>
+        <entry>Blanc floral</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFAF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ForestGreen</entry>
+        <entry>Vert forêt</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb228B22.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gainsboro</entry>
+        <entry>Gainsborough</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDCDCDC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>GhostWhite</entry>
+        <entry>Blanc fantôme</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF8F8FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gold</entry>
+        <entry>Or</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFD700.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>GoldenRod</entry>
+        <entry>Verge d'or</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDAA520.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gray</entry>
+        <entry>Gris</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb808080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Green</entry>
+        <entry>Vert</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>GreenYellow</entry>
+        <entry>Vert jaune</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbADFF2F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Grey</entry>
+        <entry>Gris</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb808080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HoneyDew</entry>
+        <entry>Miellé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0FFF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HotPink</entry>
+        <entry>Cuisse de nymphe émue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF69B4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>IndianRed</entry>
+        <entry>Rouge indien</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbCD5C5C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Ivory</entry>
+        <entry>Ivoire</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Khaki</entry>
+        <entry>Kaki</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0E68C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Lavender</entry>
+        <entry>Lavande</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE6E6FA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LavenderBlush</entry>
+        <entry>Bleu lavande</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF0F5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LawnGreen</entry>
+        <entry>Vert herbe</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7CFC00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LemonChiffon</entry>
+        <entry>Mousseline citron</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFACD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightBlue</entry>
+        <entry>Bleu clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbADD8E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightCoral</entry>
+        <entry>Corail clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF08080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightCyan</entry>
+        <entry>Cyan clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE0FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightGoldenRodYellow</entry>
+        <entry>Verge d'or jaunâtre</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAFAD2.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightGray</entry>
+        <entry>Gris clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD3D3D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightGreen</entry>
+        <entry>Vert clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb90EE90.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightGrey</entry>
+        <entry>Gris clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD3D3D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightPink</entry>
+        <entry>Rose clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFB6C1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSalmon</entry>
+        <entry>Saumon clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFA07A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSeaGreen</entry>
+        <entry>Vert marin clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb20B2AA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSkyBlue</entry>
+        <entry>Bleu ciel clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb87CEFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSlateGray</entry>
+        <entry>Gris ardoise clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb778899.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSlateGrey</entry>
+        <entry>Gris ardoise clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb778899.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSteelBlue</entry>
+        <entry>Bleu acier clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB0C4DE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightYellow</entry>
+        <entry>Jaune clair</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFE0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Lime</entry>
+        <entry>Tilleul</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LimeGreen</entry>
+        <entry>Citrone vert</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb32CD32.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Linen</entry>
+        <entry>Linon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAF0E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Maroon</entry>
+        <entry>Marron</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb800000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumAquaMarine</entry>
+        <entry>Bleu vert moyen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb66CDAA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumBlue</entry>
+        <entry>Bleu moyen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb0000CD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumOrchid</entry>
+        <entry>Orchidée moyen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBA55D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumPurple</entry>
+        <entry>Pourpre moyen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9370D8.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumSeaGreen</entry>
+        <entry>Vert marin moyen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb3CB371.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumSlateBlue</entry>
+        <entry>Bleu ardoise moyen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7B68EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumSpringGreen</entry>
+        <entry>Vert printemps moyen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FA9A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumTurquoise</entry>
+        <entry>Turquoise moyen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb48D1CC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumVioletRed</entry>
+        <entry>Rouge violet moyen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbC71585.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MidnightBlue</entry>
+        <entry>Bleu nuit moyen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb191970.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MintCream</entry>
+        <entry>Creme de menthe</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5FFFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MistyRose</entry>
+        <entry>Rose fané</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFE4E1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>NavajoWhite</entry>
+        <entry>Blanc navajo</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFDEAD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Navy</entry>
+        <entry>Marine</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb000080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>OldLace</entry>
+        <entry>Vieille dentelle</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFDF5E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>OliveDrab</entry>
+        <entry>Olive terne</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6B8E23.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>OrangeRed</entry>
+        <entry>Rouge orangé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF4500.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Orchid</entry>
+        <entry>Orchidée</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDA70D6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PaleGoldenRod</entry>
+        <entry>Verge d'or pâle</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbEEE8AA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PaleGreen</entry>
+        <entry>Vert pâle</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb98FB98.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PaleTurquoise</entry>
+        <entry>Turquoise pâle</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbAFEEEE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PaleVioletRed</entry>
+        <entry>Rouge violet pâle</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD87093.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PapayaWhip</entry>
+        <entry>Mousse a la papaye</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFEFD5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PeachPuff</entry>
+        <entry>Fleur de pêcher</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFDAB9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Peru</entry>
+        <entry>Pérou</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbCD853F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Pink</entry>
+        <entry>Rose</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFC0CB.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Plum</entry>
+        <entry>Prune</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDDA0DD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PowderBlue</entry>
+        <entry>Bleu léger</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB0E0E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Purple</entry>
+        <entry>Pourpre</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb800080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Red</entry>
+        <entry>Rouge</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF0000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>RosyBrown</entry>
+        <entry>Brun rosé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBC8F8F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>RoyalBlue</entry>
+        <entry>Bleu roi</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4169E1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SaddleBrown</entry>
+        <entry>Brun selle</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B4513.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Salmon</entry>
+        <entry>Saumon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFA8072.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SandyBrown</entry>
+        <entry>Brun sable</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF4A460.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SeaGreen</entry>
+        <entry>Vert marin</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2E8B57.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SeaShell</entry>
+        <entry>Coquillage</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF5EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Sienna</entry>
+        <entry>Terre de Sienne</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA0522D.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Silver</entry>
+        <entry>Argent</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbC0C0C0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SkyBlue</entry>
+        <entry>Bleu ciel</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb87CEEB.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SlateBlue</entry>
+        <entry>Bleu ardoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6A5ACD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SlateGray</entry>
+        <entry>Gris ardoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb708090.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SlateGrey</entry>
+        <entry>Gris ardoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb708090.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Snow</entry>
+        <entry>Neige</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFAFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SpringGreen</entry>
+        <entry>Vert printemps</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FF7F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SteelBlue</entry>
+        <entry>Bleu acier</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4682B4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Teal</entry>
+        <entry>Sarcelle</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Thistle</entry>
+        <entry>Chardon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD8BFD8.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Tomato</entry>
+        <entry>Tomate</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF6347.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Wheat</entry>
+        <entry>Froment</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5DEB3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>White</entry>
+        <entry>Blanc</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>WhiteSmoke</entry>
+        <entry>Fumée blanche</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5F5F5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Yellow</entry>
+        <entry>Jaune</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>YellowGreen</entry>
+        <entry>Jaune vert</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9ACD32.png'/></imageobject></mediaobject></entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</appendix>
 
 <appendix>
 <title>Commands: French to English</title>
@@ -5214,6 +5901,658 @@
       <row>
         <entry>zoneactive</entry>
         <entry><link linkend='command-activearea'>activearea</link></entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</appendix>
+<appendix>
+<title>Color Names: French to English</title>
+<indexterm><primary>To English (color names)</primary></indexterm>
+<informaltable>
+  <tgroup cols='3'>
+    <thead>
+      <row>
+        <entry>French Color</entry>
+        <entry>English Color</entry>
+        <entry>Sample</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>Amande blanchie</entry>
+        <entry>BlanchedAlmond</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFEBCD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Argent</entry>
+        <entry>Silver</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbC0C0C0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Azur</entry>
+        <entry>Azure</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Barbe de maïs</entry>
+        <entry>Cornsilk</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF8DC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Blanc</entry>
+        <entry>White</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Blanc antique</entry>
+        <entry>AntiqueWhite</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAEBD7.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Blanc fantôme</entry>
+        <entry>GhostWhite</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF8F8FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Blanc floral</entry>
+        <entry>FloralWhite</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFAF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Blanc navajo</entry>
+        <entry>NavajoWhite</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFDEAD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu</entry>
+        <entry>Blue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb0000FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu acier</entry>
+        <entry>SteelBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4682B4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu acier clair</entry>
+        <entry>LightSteelBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB0C4DE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu Alice</entry>
+        <entry>AliceBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0F8FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu ardoise</entry>
+        <entry>SlateBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6A5ACD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu ardoise foncé</entry>
+        <entry>DarkSlateBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb483D8B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu ardoise moyen</entry>
+        <entry>MediumSlateBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7B68EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu barbeau</entry>
+        <entry>CornflowerBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6495ED.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu ciel</entry>
+        <entry>SkyBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb87CEEB.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu ciel clair</entry>
+        <entry>LightSkyBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb87CEFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu ciel intense</entry>
+        <entry>DeepSkyBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00BFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu clair</entry>
+        <entry>LightBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbADD8E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu foncé</entry>
+        <entry>DarkBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00008B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu lavande</entry>
+        <entry>LavenderBlush</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF0F5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu léger</entry>
+        <entry>PowderBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB0E0E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu moyen</entry>
+        <entry>MediumBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb0000CD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu nuit moyen</entry>
+        <entry>MidnightBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb191970.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu roi</entry>
+        <entry>RoyalBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4169E1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu vert</entry>
+        <entry>Aquamarine</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7FFFD4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu vert moyen</entry>
+        <entry>MediumAquaMarine</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb66CDAA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleu violet</entry>
+        <entry>BlueViolet</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8A2BE2.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bleuté</entry>
+        <entry>DodgerBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb1E90FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Blue cadet</entry>
+        <entry>CadetBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb5F9EA0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bois brut</entry>
+        <entry>BurlyWood</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDEB887.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Brique feu</entry>
+        <entry>FireBrick</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB22222.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Brun</entry>
+        <entry>Brown</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA52A2A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Brun rosé</entry>
+        <entry>RosyBrown</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBC8F8F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Brun sable</entry>
+        <entry>SandyBrown</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF4A460.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Brun selle</entry>
+        <entry>SaddleBrown</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B4513.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Chardon</entry>
+        <entry>Thistle</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD8BFD8.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Chocolat</entry>
+        <entry>Chocolate</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD2691E.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Citrone vert</entry>
+        <entry>LimeGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb32CD32.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Coquillage</entry>
+        <entry>SeaShell</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF5EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Corail</entry>
+        <entry>Coral</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF7F50.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Corail clair</entry>
+        <entry>LightCoral</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF08080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Cramoisi</entry>
+        <entry>Crimson</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDC143C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Creme de menthe</entry>
+        <entry>MintCream</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5FFFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Cuisse de nymphe émue</entry>
+        <entry>HotPink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF69B4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Cyan clair</entry>
+        <entry>LightCyan</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE0FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Cyan foncé</entry>
+        <entry>DarkCyan</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008B8B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Fleur de pêcher</entry>
+        <entry>PeachPuff</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFDAB9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Froment</entry>
+        <entry>Wheat</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5DEB3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Fumée blanche</entry>
+        <entry>WhiteSmoke</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5F5F5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gainsborough</entry>
+        <entry>Gainsboro</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDCDCDC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gris</entry>
+        <entry>Grey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb808080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gris ardoise</entry>
+        <entry>SlateGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb708090.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gris ardoise clair</entry>
+        <entry>LightSlateGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb778899.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gris ardoise foncé</entry>
+        <entry>DarkSlateGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2F4F4F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gris clair</entry>
+        <entry>LightGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD3D3D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gris foncé</entry>
+        <entry>DarkGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA9A9A9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gris pâle</entry>
+        <entry>DimGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb696969.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Ivoire</entry>
+        <entry>Ivory</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Jaune</entry>
+        <entry>Yellow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Jaune clair</entry>
+        <entry>LightYellow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFE0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Jaune vert</entry>
+        <entry>YellowGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9ACD32.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Kaki</entry>
+        <entry>Khaki</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0E68C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Kaki foncé</entry>
+        <entry>DarkKhaki</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBDB76B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Lavande</entry>
+        <entry>Lavender</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE6E6FA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Linon</entry>
+        <entry>Linen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAF0E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Magenta foncé</entry>
+        <entry>DarkMagenta</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B008B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Marine</entry>
+        <entry>Navy</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb000080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Marron</entry>
+        <entry>Maroon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb800000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Miellé</entry>
+        <entry>HoneyDew</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0FFF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Mousse a la papaye</entry>
+        <entry>PapayaWhip</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFEFD5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Mousseline citron</entry>
+        <entry>LemonChiffon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFACD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Neige</entry>
+        <entry>Snow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFAFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Noir</entry>
+        <entry>Black</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb000000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Olive foncé</entry>
+        <entry>DarkOliveGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb556B2F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Olive terne</entry>
+        <entry>OliveDrab</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6B8E23.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Or</entry>
+        <entry>Gold</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFD700.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Orange foncé</entry>
+        <entry>DarkOrange</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF8C00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Orchidée</entry>
+        <entry>Orchid</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDA70D6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Orchidée foncé</entry>
+        <entry>DarkOrchid</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9932CC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Orchidée moyen</entry>
+        <entry>MediumOrchid</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBA55D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Pérou</entry>
+        <entry>Peru</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbCD853F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Pourpre</entry>
+        <entry>Purple</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb800080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Pourpre moyen</entry>
+        <entry>MediumPurple</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9370D8.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Prune</entry>
+        <entry>Plum</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDDA0DD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Rose</entry>
+        <entry>Pink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFC0CB.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Rose clair</entry>
+        <entry>LightPink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFB6C1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Rose fané</entry>
+        <entry>MistyRose</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFE4E1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Rose soutenu</entry>
+        <entry>DeepPink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF1493.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Rouge</entry>
+        <entry>Red</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF0000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Rouge foncé</entry>
+        <entry>DarkRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B0000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Rouge indien</entry>
+        <entry>IndianRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbCD5C5C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Rouge orangé</entry>
+        <entry>OrangeRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF4500.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Rouge violet moyen</entry>
+        <entry>MediumVioletRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbC71585.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Rouge violet pâle</entry>
+        <entry>PaleVioletRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD87093.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Sarcelle</entry>
+        <entry>Teal</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Saumon</entry>
+        <entry>Salmon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFA8072.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Saumon clair</entry>
+        <entry>LightSalmon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFA07A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Saumon foncé</entry>
+        <entry>DarkSalmon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE9967A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Terre de Sienne</entry>
+        <entry>Sienna</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA0522D.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Tilleul</entry>
+        <entry>Lime</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Tomate</entry>
+        <entry>Tomato</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF6347.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Turquoise foncé</entry>
+        <entry>DarkTurquoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00CED1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Turquoise moyen</entry>
+        <entry>MediumTurquoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb48D1CC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Turquoise pâle</entry>
+        <entry>PaleTurquoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbAFEEEE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Verge d'or</entry>
+        <entry>GoldenRod</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDAA520.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Verge d'or foncé</entry>
+        <entry>DarkGoldenRod</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB8860B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Verge d'or jaunâtre</entry>
+        <entry>LightGoldenRodYellow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAFAD2.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Verge d'or pâle</entry>
+        <entry>PaleGoldenRod</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbEEE8AA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert</entry>
+        <entry>Green</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert clair</entry>
+        <entry>LightGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb90EE90.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert d'eau</entry>
+        <entry>Aqua</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert foncé</entry>
+        <entry>DarkGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb006400.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert forêt</entry>
+        <entry>ForestGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb228B22.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert herbe</entry>
+        <entry>LawnGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7CFC00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert jaune</entry>
+        <entry>GreenYellow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbADFF2F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert marin</entry>
+        <entry>SeaGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2E8B57.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert marin clair</entry>
+        <entry>LightSeaGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb20B2AA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert marin foncé</entry>
+        <entry>DarkSeaGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8FBC8F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert marin moyen</entry>
+        <entry>MediumSeaGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb3CB371.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert pâle</entry>
+        <entry>PaleGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb98FB98.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert printemps</entry>
+        <entry>SpringGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FF7F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vert printemps moyen</entry>
+        <entry>MediumSpringGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FA9A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Vieille dentelle</entry>
+        <entry>OldLace</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFDF5E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Violet foncé</entry>
+        <entry>DarkViolet</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9400D3.png'/></imageobject></mediaobject></entry>
       </row>
     </tbody>
   </tgroup>

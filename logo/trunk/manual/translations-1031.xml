@@ -1,4 +1,4 @@
-<appendix id='translations'>
+<appendix>
 <title>Commands: English to German</title>
 <indexterm><primary>From English</primary></indexterm>
 <informaltable>
@@ -1714,6 +1714,688 @@
   </tgroup>
 </informaltable>
 </appendix>
+<appendix>
+<title>Color Names: English to German</title>
+<indexterm><primary>From English (color names)</primary></indexterm>
+<informaltable>
+  <tgroup cols='3'>
+    <thead>
+      <row>
+        <entry>English Color</entry>
+        <entry>German Color</entry>
+        <entry>Sample</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>AliceBlue</entry>
+        <entry>AliceBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0F8FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>AntiqueWhite</entry>
+        <entry>AntikWeiß</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAEBD7.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Aqua</entry>
+        <entry>WasserBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Aquamarine</entry>
+        <entry>Aquamarin</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7FFFD4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Azure</entry>
+        <entry>Azur</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bisque</entry>
+        <entry>Krebs</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFE4C4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Black</entry>
+        <entry>Schwarz</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb000000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BlanchedAlmond</entry>
+        <entry>gebleichteMandel</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFEBCD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Blue</entry>
+        <entry>Blau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb0000FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BlueViolet</entry>
+        <entry>BlauViolett</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8A2BE2.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Brown</entry>
+        <entry>Braun</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA52A2A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BurlyWood</entry>
+        <entry>StammHolz</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDEB887.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>CadetBlue</entry>
+        <entry>KadettBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb5F9EA0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Chocolate</entry>
+        <entry>Schokolade</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD2691E.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Coral</entry>
+        <entry>Korallen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF7F50.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>CornflowerBlue</entry>
+        <entry>KornblumenBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6495ED.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Cornsilk</entry>
+        <entry>KornBraun</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF8DC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Crimson</entry>
+        <entry>Karmesin</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDC143C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Cyan</entry>
+        <entry>Zyan</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkBlue</entry>
+        <entry>DunkelBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00008B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkCyan</entry>
+        <entry>DunkelZyan</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008B8B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkGray</entry>
+        <entry>DunkelGrau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA9A9A9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkGreen</entry>
+        <entry>DunkelGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb006400.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkGrey</entry>
+        <entry>DunkelGrau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA9A9A9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkKhaki</entry>
+        <entry>Khakirot</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBDB76B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkMagenta</entry>
+        <entry>DunkelMagenta</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B008B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkOliveGreen</entry>
+        <entry>DunkelOlivGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb556B2F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkOrange</entry>
+        <entry>DunkelOrange</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF8C00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkOrchid</entry>
+        <entry>DunkelOrchidee</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9932CC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkRed</entry>
+        <entry>DunkelRot</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B0000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSalmon</entry>
+        <entry>DunkelLachs</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE9967A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSeaGreen</entry>
+        <entry>DunkelSeeGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8FBC8F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSlateBlue</entry>
+        <entry>DunkelSchieferBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb483D8B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSlateGray</entry>
+        <entry>DunkelSchieferGrau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2F4F4F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSlateGrey</entry>
+        <entry>DunkelSchieferGrau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2F4F4F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkTurquoise</entry>
+        <entry>DunkelTürkis</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00CED1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkViolet</entry>
+        <entry>DunkelViolett</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9400D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DeepPink</entry>
+        <entry>TiefPink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF1493.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DeepSkyBlue</entry>
+        <entry>TiefHimmelBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00BFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DimGray</entry>
+        <entry>MattGrau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb696969.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DimGrey</entry>
+        <entry>MattGrau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb696969.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DodgerBlue</entry>
+        <entry>DodgerBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb1E90FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>FireBrick</entry>
+        <entry>FeuerZiegel</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB22222.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>FloralWhite</entry>
+        <entry>BlütenWeiß</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFAF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ForestGreen</entry>
+        <entry>WaldGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb228B22.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Fuchsia</entry>
+        <entry>Helllila</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF00FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>GhostWhite</entry>
+        <entry>GeistWeiß</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF8F8FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>GoldenRod</entry>
+        <entry>Goldrute</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDAA520.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gray</entry>
+        <entry>Grau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb808080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Green</entry>
+        <entry>Grün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>GreenYellow</entry>
+        <entry>Grüngelb</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbADFF2F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Grey</entry>
+        <entry>Grau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb808080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HoneyDew</entry>
+        <entry>Tau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0FFF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HotPink</entry>
+        <entry>Knallpink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF69B4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>IndianRed</entry>
+        <entry>Indischrot</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbCD5C5C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Ivory</entry>
+        <entry>Elfenbein</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Lavender</entry>
+        <entry>Lavendel</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE6E6FA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LavenderBlush</entry>
+        <entry>LavendelRöte</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF0F5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LawnGreen</entry>
+        <entry>RasenGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7CFC00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LemonChiffon</entry>
+        <entry>Zitronengelb</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFACD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightBlue</entry>
+        <entry>HellBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbADD8E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightCoral</entry>
+        <entry>HellKorallen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF08080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightCyan</entry>
+        <entry>HellZyan</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE0FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightGoldenRodYellow</entry>
+        <entry>SchwimmbadBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAFAD2.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightGray</entry>
+        <entry>HellGrau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD3D3D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightGreen</entry>
+        <entry>HellGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb90EE90.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightGrey</entry>
+        <entry>HellGrau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD3D3D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightPink</entry>
+        <entry>HellPink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFB6C1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSalmon</entry>
+        <entry>HellLachs</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFA07A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSeaGreen</entry>
+        <entry>HellSeeGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb20B2AA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSkyBlue</entry>
+        <entry>HellHimmelBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb87CEFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSlateGray</entry>
+        <entry>HellSchieferGrau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb778899.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSlateGrey</entry>
+        <entry>HellSchieferGrau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb778899.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSteelBlue</entry>
+        <entry>HellStahlBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB0C4DE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightYellow</entry>
+        <entry>HellGelb</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFE0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Lime</entry>
+        <entry>HellGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LimeGreen</entry>
+        <entry>KalkGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb32CD32.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Linen</entry>
+        <entry>Leinen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAF0E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Maroon</entry>
+        <entry>Dunkelrot</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb800000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumAquaMarine</entry>
+        <entry>MittelAquaMarin</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb66CDAA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumBlue</entry>
+        <entry>MittelBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb0000CD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumOrchid</entry>
+        <entry>MittelOrchidee</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBA55D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumPurple</entry>
+        <entry>MittelPurpurn</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9370D8.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumSeaGreen</entry>
+        <entry>MittelSeeGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb3CB371.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumSlateBlue</entry>
+        <entry>MittelSchieferBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7B68EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumSpringGreen</entry>
+        <entry>MittelFrühlingGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FA9A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumTurquoise</entry>
+        <entry>MittelTürkis</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb48D1CC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumVioletRed</entry>
+        <entry>MittelViolettRot</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbC71585.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MidnightBlue</entry>
+        <entry>MitternachtsBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb191970.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MintCream</entry>
+        <entry>MintCreme</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5FFFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Moccasin</entry>
+        <entry>Mokassin</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFE4B5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>NavajoWhite</entry>
+        <entry>Navajoweiß</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFDEAD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Navy</entry>
+        <entry>DunkelBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb000080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>OldLace</entry>
+        <entry>Altespitze</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFDF5E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Olive</entry>
+        <entry>Oliv</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb808000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>OliveDrab</entry>
+        <entry>OlivDRAB</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6B8E23.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>OrangeRed</entry>
+        <entry>OrangeRot</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF4500.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Orchid</entry>
+        <entry>Orchidee</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDA70D6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PaleGreen</entry>
+        <entry>BlassGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb98FB98.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PaleTurquoise</entry>
+        <entry>BlassTürkis</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbAFEEEE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PaleVioletRed</entry>
+        <entry>BlassViolettRot</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD87093.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PeachPuff</entry>
+        <entry>ApfelGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFDAB9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Plum</entry>
+        <entry>Pflaume</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDDA0DD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PowderBlue</entry>
+        <entry>PuderBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB0E0E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Purple</entry>
+        <entry>Purpurn</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb800080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Red</entry>
+        <entry>Rot</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF0000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>RosyBrown</entry>
+        <entry>PastellBraun</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBC8F8F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>RoyalBlue</entry>
+        <entry>KönigsBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4169E1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SaddleBrown</entry>
+        <entry>SattelBraun</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B4513.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Salmon</entry>
+        <entry>Lachs</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFA8072.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SandyBrown</entry>
+        <entry>SandBraun</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF4A460.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SeaGreen</entry>
+        <entry>SeeGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2E8B57.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SeaShell</entry>
+        <entry>MeerMuschel</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF5EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Sienna</entry>
+        <entry>Siena</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA0522D.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Silver</entry>
+        <entry>Silber</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbC0C0C0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SkyBlue</entry>
+        <entry>HimmelBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb87CEEB.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SlateBlue</entry>
+        <entry>SchieferBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6A5ACD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SlateGray</entry>
+        <entry>SchieferGrau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb708090.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SlateGrey</entry>
+        <entry>SchieferGrau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb708090.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Snow</entry>
+        <entry>Schnee</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFAFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SpringGreen</entry>
+        <entry>FrühlingsGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FF7F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SteelBlue</entry>
+        <entry>StahlBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4682B4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Tan</entry>
+        <entry>Lohe</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD2B48C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Teal</entry>
+        <entry>GrünBlau</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Thistle</entry>
+        <entry>Distel</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD8BFD8.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Tomato</entry>
+        <entry>TomatenRot</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF6347.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Turquoise</entry>
+        <entry>Türkis</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb40E0D0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Violet</entry>
+        <entry>Violett</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbEE82EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Wheat</entry>
+        <entry>Weizen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5DEB3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>White</entry>
+        <entry>Weiß</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>WhiteSmoke</entry>
+        <entry>RauchWeiß</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5F5F5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Yellow</entry>
+        <entry>Gelb</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>YellowGreen</entry>
+        <entry>GelbGrün</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9ACD32.png'/></imageobject></mediaobject></entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</appendix>
 
 <appendix>
 <title>Commands: German to English</title>
@@ -3422,6 +4104,643 @@
       <row>
         <entry>zz</entry>
         <entry><link linkend='command-random'>random</link></entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</appendix>
+<appendix>
+<title>Color Names: German to English</title>
+<indexterm><primary>To English (color names)</primary></indexterm>
+<informaltable>
+  <tgroup cols='3'>
+    <thead>
+      <row>
+        <entry>German Color</entry>
+        <entry>English Color</entry>
+        <entry>Sample</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>AliceBlau</entry>
+        <entry>AliceBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0F8FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Altespitze</entry>
+        <entry>OldLace</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFDF5E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>AntikWeiß</entry>
+        <entry>AntiqueWhite</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAEBD7.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ApfelGrün</entry>
+        <entry>PeachPuff</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFDAB9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Aquamarin</entry>
+        <entry>Aquamarine</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7FFFD4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Azur</entry>
+        <entry>Azure</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BlassGrün</entry>
+        <entry>PaleGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb98FB98.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BlassTürkis</entry>
+        <entry>PaleTurquoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbAFEEEE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BlassViolettRot</entry>
+        <entry>PaleVioletRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD87093.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Blau</entry>
+        <entry>Blue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb0000FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BlauViolett</entry>
+        <entry>BlueViolet</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8A2BE2.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BlütenWeiß</entry>
+        <entry>FloralWhite</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFAF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Braun</entry>
+        <entry>Brown</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA52A2A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Distel</entry>
+        <entry>Thistle</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD8BFD8.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DodgerBlau</entry>
+        <entry>DodgerBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb1E90FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelBlau</entry>
+        <entry>Navy</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb000080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelGrau</entry>
+        <entry>DarkGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA9A9A9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelGrün</entry>
+        <entry>DarkGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb006400.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelLachs</entry>
+        <entry>DarkSalmon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE9967A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelMagenta</entry>
+        <entry>DarkMagenta</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B008B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelOlivGrün</entry>
+        <entry>DarkOliveGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb556B2F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelOrange</entry>
+        <entry>DarkOrange</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF8C00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelOrchidee</entry>
+        <entry>DarkOrchid</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9932CC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Dunkelrot</entry>
+        <entry>Maroon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb800000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelRot</entry>
+        <entry>DarkRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B0000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelSchieferBlau</entry>
+        <entry>DarkSlateBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb483D8B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelSchieferGrau</entry>
+        <entry>DarkSlateGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2F4F4F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelSeeGrün</entry>
+        <entry>DarkSeaGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8FBC8F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelTürkis</entry>
+        <entry>DarkTurquoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00CED1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelViolett</entry>
+        <entry>DarkViolet</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9400D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DunkelZyan</entry>
+        <entry>DarkCyan</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008B8B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Elfenbein</entry>
+        <entry>Ivory</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>FeuerZiegel</entry>
+        <entry>FireBrick</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB22222.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>FrühlingsGrün</entry>
+        <entry>SpringGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FF7F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>gebleichteMandel</entry>
+        <entry>BlanchedAlmond</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFEBCD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>GeistWeiß</entry>
+        <entry>GhostWhite</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF8F8FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gelb</entry>
+        <entry>Yellow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>GelbGrün</entry>
+        <entry>YellowGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9ACD32.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Goldrute</entry>
+        <entry>GoldenRod</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDAA520.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Grau</entry>
+        <entry>Grey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb808080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Grün</entry>
+        <entry>Green</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>GrünBlau</entry>
+        <entry>Teal</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Grüngelb</entry>
+        <entry>GreenYellow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbADFF2F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HellBlau</entry>
+        <entry>LightBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbADD8E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HellGelb</entry>
+        <entry>LightYellow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFE0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HellGrau</entry>
+        <entry>LightGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD3D3D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HellGrün</entry>
+        <entry>Lime</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HellHimmelBlau</entry>
+        <entry>LightSkyBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb87CEFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HellKorallen</entry>
+        <entry>LightCoral</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF08080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HellLachs</entry>
+        <entry>LightSalmon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFA07A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Helllila</entry>
+        <entry>Fuchsia</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF00FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HellPink</entry>
+        <entry>LightPink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFB6C1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HellSchieferGrau</entry>
+        <entry>LightSlateGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb778899.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HellSeeGrün</entry>
+        <entry>LightSeaGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb20B2AA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HellStahlBlau</entry>
+        <entry>LightSteelBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB0C4DE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HellZyan</entry>
+        <entry>LightCyan</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE0FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HimmelBlau</entry>
+        <entry>SkyBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb87CEEB.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Indischrot</entry>
+        <entry>IndianRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbCD5C5C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>KadettBlau</entry>
+        <entry>CadetBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb5F9EA0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>KalkGrün</entry>
+        <entry>LimeGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb32CD32.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Karmesin</entry>
+        <entry>Crimson</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDC143C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Khakirot</entry>
+        <entry>DarkKhaki</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBDB76B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Knallpink</entry>
+        <entry>HotPink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF69B4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>KönigsBlau</entry>
+        <entry>RoyalBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4169E1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Korallen</entry>
+        <entry>Coral</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF7F50.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>KornblumenBlau</entry>
+        <entry>CornflowerBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6495ED.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>KornBraun</entry>
+        <entry>Cornsilk</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF8DC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Krebs</entry>
+        <entry>Bisque</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFE4C4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Lachs</entry>
+        <entry>Salmon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFA8072.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Lavendel</entry>
+        <entry>Lavender</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE6E6FA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LavendelRöte</entry>
+        <entry>LavenderBlush</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF0F5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Leinen</entry>
+        <entry>Linen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAF0E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Lohe</entry>
+        <entry>Tan</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD2B48C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MattGrau</entry>
+        <entry>DimGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb696969.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MeerMuschel</entry>
+        <entry>SeaShell</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF5EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MintCreme</entry>
+        <entry>MintCream</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5FFFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MittelAquaMarin</entry>
+        <entry>MediumAquaMarine</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb66CDAA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MittelBlau</entry>
+        <entry>MediumBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb0000CD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MittelFrühlingGrün</entry>
+        <entry>MediumSpringGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FA9A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MittelOrchidee</entry>
+        <entry>MediumOrchid</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBA55D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MittelPurpurn</entry>
+        <entry>MediumPurple</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9370D8.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MittelSchieferBlau</entry>
+        <entry>MediumSlateBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7B68EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MittelSeeGrün</entry>
+        <entry>MediumSeaGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb3CB371.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MittelTürkis</entry>
+        <entry>MediumTurquoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb48D1CC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MittelViolettRot</entry>
+        <entry>MediumVioletRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbC71585.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MitternachtsBlau</entry>
+        <entry>MidnightBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb191970.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Mokassin</entry>
+        <entry>Moccasin</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFE4B5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Navajoweiß</entry>
+        <entry>NavajoWhite</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFDEAD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Oliv</entry>
+        <entry>Olive</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb808000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>OlivDRAB</entry>
+        <entry>OliveDrab</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6B8E23.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>OrangeRot</entry>
+        <entry>OrangeRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF4500.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Orchidee</entry>
+        <entry>Orchid</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDA70D6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PastellBraun</entry>
+        <entry>RosyBrown</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBC8F8F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Pflaume</entry>
+        <entry>Plum</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDDA0DD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PuderBlau</entry>
+        <entry>PowderBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB0E0E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Purpurn</entry>
+        <entry>Purple</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb800080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>RasenGrün</entry>
+        <entry>LawnGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7CFC00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>RauchWeiß</entry>
+        <entry>WhiteSmoke</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5F5F5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Rot</entry>
+        <entry>Red</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF0000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SandBraun</entry>
+        <entry>SandyBrown</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF4A460.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SattelBraun</entry>
+        <entry>SaddleBrown</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B4513.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SchieferBlau</entry>
+        <entry>SlateBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6A5ACD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SchieferGrau</entry>
+        <entry>SlateGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb708090.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Schnee</entry>
+        <entry>Snow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFAFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Schokolade</entry>
+        <entry>Chocolate</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD2691E.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Schwarz</entry>
+        <entry>Black</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb000000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SchwimmbadBlau</entry>
+        <entry>LightGoldenRodYellow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAFAD2.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SeeGrün</entry>
+        <entry>SeaGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2E8B57.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Siena</entry>
+        <entry>Sienna</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA0522D.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Silber</entry>
+        <entry>Silver</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbC0C0C0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>StahlBlau</entry>
+        <entry>SteelBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4682B4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>StammHolz</entry>
+        <entry>BurlyWood</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDEB887.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Tau</entry>
+        <entry>HoneyDew</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0FFF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>TiefHimmelBlau</entry>
+        <entry>DeepSkyBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00BFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>TiefPink</entry>
+        <entry>DeepPink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF1493.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>TomatenRot</entry>
+        <entry>Tomato</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF6347.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Türkis</entry>
+        <entry>Turquoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb40E0D0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Violett</entry>
+        <entry>Violet</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbEE82EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>WaldGrün</entry>
+        <entry>ForestGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb228B22.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>WasserBlau</entry>
+        <entry>Aqua</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Weiß</entry>
+        <entry>White</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Weizen</entry>
+        <entry>Wheat</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5DEB3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Zitronengelb</entry>
+        <entry>LemonChiffon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFACD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Zyan</entry>
+        <entry>Cyan</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FFFF.png'/></imageobject></mediaobject></entry>
       </row>
     </tbody>
   </tgroup>

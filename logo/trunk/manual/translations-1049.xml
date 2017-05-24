@@ -1,4 +1,4 @@
-<appendix id='translations'>
+<appendix>
 <title>Commands: English to Russian</title>
 <indexterm><primary>From English</primary></indexterm>
 <informaltable>
@@ -2218,6 +2218,758 @@
   </tgroup>
 </informaltable>
 </appendix>
+<appendix>
+<title>Color Names: English to Russian</title>
+<indexterm><primary>From English (color names)</primary></indexterm>
+<informaltable>
+  <tgroup cols='3'>
+    <thead>
+      <row>
+        <entry>English Color</entry>
+        <entry>Russian Color</entry>
+        <entry>Sample</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>AliceBlue</entry>
+        <entry>ñåðåáðèñòî-ãîëóáîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0F8FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>AntiqueWhite</entry>
+        <entry>áåëûé_àíòèê</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAEBD7.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Aqua</entry>
+        <entry>àêâà</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Aquamarine</entry>
+        <entry>àêâàìàðèí</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7FFFD4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Azure</entry>
+        <entry>ëàçóðíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Beige</entry>
+        <entry>áåæåâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5F5DC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Bisque</entry>
+        <entry>êðåìîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFE4C4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Black</entry>
+        <entry>×åðíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb000000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BlanchedAlmond</entry>
+        <entry>áëàíøìèíäàëüíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFEBCD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Blue</entry>
+        <entry>ñèíèé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb0000FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BlueViolet</entry>
+        <entry>ôèîëåòîâî-ãîëóáîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8A2BE2.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Brown</entry>
+        <entry>êîðè÷íåâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA52A2A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>BurlyWood</entry>
+        <entry>æåëòûé_ëåãêèé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDEB887.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>CadetBlue</entry>
+        <entry>ãîëóáîé_êàäåò</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb5F9EA0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Chartreuse</entry>
+        <entry>øàðòðåç</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7FFF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Chocolate</entry>
+        <entry>øîêîëàäíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD2691E.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Coral</entry>
+        <entry>êîðàëë</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF7F50.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>CornflowerBlue</entry>
+        <entry>âàñèëåê</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6495ED.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Cornsilk</entry>
+        <entry>øåëêîâèñòûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF8DC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Crimson</entry>
+        <entry>ìàëèíîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDC143C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Cyan</entry>
+        <entry>ãîëóáîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkBlue</entry>
+        <entry>òåìíî-ñèíèé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00008B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkCyan</entry>
+        <entry>òåìíî-ãîëóáîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008B8B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkGoldenRod</entry>
+        <entry>òåìíî-çîëîòèñòîêðàñíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB8860B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkGray</entry>
+        <entry>òåìíî-ñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA9A9A9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkGreen</entry>
+        <entry>òåìíî-çåëåíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb006400.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkGrey</entry>
+        <entry>òåìíî-ñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA9A9A9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkKhaki</entry>
+        <entry>õàêè_òåìíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBDB76B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkMagenta</entry>
+        <entry>òåìíî-ñèðåíåâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B008B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkOliveGreen</entry>
+        <entry>òåìíî-îëèâêîãîçåëåíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb556B2F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkOrange</entry>
+        <entry>òåìíî-îðàíæåâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF8C00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkOrchid</entry>
+        <entry>òåìíî-ëèëîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9932CC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkRed</entry>
+        <entry>òåìíî-êðàñíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B0000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSalmon</entry>
+        <entry>òåìíî-îðàíæåâîðîçîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE9967A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSeaGreen</entry>
+        <entry>ìîðñêîé_âîëíû_òåìíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8FBC8F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSlateBlue</entry>
+        <entry>òåìíî-ãîëóáîâàòîñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb483D8B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSlateGray</entry>
+        <entry>òåìíî-ñèíåâàòîâàòîñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2F4F4F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkSlateGrey</entry>
+        <entry>òåìíî-ñèíåâàòîâàòîñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2F4F4F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkTurquoise</entry>
+        <entry>òåìíî-áèðþçîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00CED1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DarkViolet</entry>
+        <entry>òåìíî-ôèîëåòîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9400D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DeepPink</entry>
+        <entry>òåìíî-ðîçîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF1493.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DeepSkyBlue</entry>
+        <entry>òåìíî-íåáåñíîñèíèé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00BFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DimGray</entry>
+        <entry>òóñêëî-ñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb696969.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DimGrey</entry>
+        <entry>òóñêëî-ñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb696969.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>DodgerBlue</entry>
+        <entry>òóñêëî-âàñèëüêîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb1E90FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>FireBrick</entry>
+        <entry>êèðïè÷íûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB22222.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>FloralWhite</entry>
+        <entry>öâåòî÷íî-áåëûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFAF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ForestGreen</entry>
+        <entry>ëåñíîé_çåëåíè</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb228B22.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Fuchsia</entry>
+        <entry>ôóêñèÿ</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF00FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gainsboro</entry>
+        <entry>ãåéíñáîðî</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDCDCDC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>GhostWhite</entry>
+        <entry>òóìàííî-áåëûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF8F8FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gold</entry>
+        <entry>çîëîòîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFD700.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>GoldenRod</entry>
+        <entry>êðàñíî-çîëîòîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDAA520.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Gray</entry>
+        <entry>ñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb808080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Green</entry>
+        <entry>Çåë¸íûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>GreenYellow</entry>
+        <entry>æåëòî-çåëåíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbADFF2F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Grey</entry>
+        <entry>ñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb808080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HoneyDew</entry>
+        <entry>æåëòî-îðàíæåâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0FFF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>HotPink</entry>
+        <entry>ÿðêî-ðîçîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF69B4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>IndianRed</entry>
+        <entry>ÿðêî-êðàñíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbCD5C5C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Indigo</entry>
+        <entry>èíäèãî</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4B0082.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Ivory</entry>
+        <entry>ñëîíîâîé_êîñòè</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Khaki</entry>
+        <entry>õàêè</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0E68C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Lavender</entry>
+        <entry>ëàâàíäîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE6E6FA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LavenderBlush</entry>
+        <entry>êðàñíîâàòî-ëàâàíäîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF0F5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LawnGreen</entry>
+        <entry>çåëåíîé_ëóæàéêè</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7CFC00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LemonChiffon</entry>
+        <entry>ëèìîííûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFACD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightBlue</entry>
+        <entry>ñâåòëî-ñèíèé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbADD8E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightCoral</entry>
+        <entry>ñâåòëî-êîðàëëîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF08080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightCyan</entry>
+        <entry>ñâåòëî-ãîëóáîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE0FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightGoldenRodYellow</entry>
+        <entry>ñâåòëî-æåòëòîêðàñíîçîëîòîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAFAD2.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightGray</entry>
+        <entry>ñâåòëî-ñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD3D3D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightGreen</entry>
+        <entry>ñâåòëî-çåëåíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb90EE90.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightGrey</entry>
+        <entry>ñâåòëî-ñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD3D3D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightPink</entry>
+        <entry>ñâåòëî-ðîçîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFB6C1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSalmon</entry>
+        <entry>ñâåòëî-îðàíæåâîðîçîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFA07A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSeaGreen</entry>
+        <entry>ìîðñêîé_âîëíû_ñâåòëûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb20B2AA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSkyBlue</entry>
+        <entry>ñâåòëî-íåáåñíîñèíèé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb87CEFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSlateGray</entry>
+        <entry>ñâåòëî-ñèíåâàòîâàòîñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb778899.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSlateGrey</entry>
+        <entry>ñâåòëî-ñèíåâàòîâàòîñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb778899.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightSteelBlue</entry>
+        <entry>ñâåòëî-ñòàëüíîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB0C4DE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LightYellow</entry>
+        <entry>ñâåòëî-æåëòûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFE0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Lime</entry>
+        <entry>ëèïîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>LimeGreen</entry>
+        <entry>çåëåíàÿ_ëèïà</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb32CD32.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Linen</entry>
+        <entry>ëüíÿíîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAF0E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Magenta</entry>
+        <entry>ñèðåíåâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF00FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Maroon</entry>
+        <entry>êàøòàíîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb800000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumAquaMarine</entry>
+        <entry>óìåðåííî-àêâàìàðèíîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb66CDAA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumBlue</entry>
+        <entry>óìåðåííî-ñèíèé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb0000CD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumOrchid</entry>
+        <entry>óìåðåííî-òåìíîëèëîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBA55D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumPurple</entry>
+        <entry>óìåðåííî-ïóðïóðíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9370D8.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumSeaGreen</entry>
+        <entry>ìîðñêîé_âîëíû_óìåðåííûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb3CB371.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumSlateBlue</entry>
+        <entry>óìåðåííî-ãîëóáîâàòîñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7B68EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumSpringGreen</entry>
+        <entry>âåñåííåé_çåëåíè_óìåðåííûé </entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FA9A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumTurquoise</entry>
+        <entry>óìåðåííî-áèðþçîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb48D1CC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MediumVioletRed</entry>
+        <entry>óìåðåííî-ôèîëåòîâîêðàñíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbC71585.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MidnightBlue</entry>
+        <entry>÷åðíî-ñèíèé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb191970.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MintCream</entry>
+        <entry>ìÿòíî-êðåìîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5FFFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>MistyRose</entry>
+        <entry>òóìàííî-ðîçîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFE4E1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Moccasin</entry>
+        <entry>áîëîòíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFE4B5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>NavajoWhite</entry>
+        <entry>ãðÿçíî-áåëûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFDEAD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Navy</entry>
+        <entry>ìîðñêîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb000080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>OldLace</entry>
+        <entry>ñòàðîå_êðóæåâî</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFDF5E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Olive</entry>
+        <entry>îëèâêîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb808000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>OliveDrab</entry>
+        <entry>òóñêëî-îëèâêîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6B8E23.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Orange</entry>
+        <entry>îðàíæåâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFA500.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>OrangeRed</entry>
+        <entry>êðàñíî-îðàíæåâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF4500.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Orchid</entry>
+        <entry>ëèëîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDA70D6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PaleGoldenRod</entry>
+        <entry>áëåäíî-çîëîòîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbEEE8AA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PaleGreen</entry>
+        <entry>áëåäíî-çåëåíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb98FB98.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PaleTurquoise</entry>
+        <entry>áëåäíî-áèðþçîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbAFEEEE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PaleVioletRed</entry>
+        <entry>áëåäíî-ôèîëåòîâîêðàñíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD87093.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PapayaWhip</entry>
+        <entry>ïîáåã_ïàïàéè</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFEFD5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PeachPuff</entry>
+        <entry>ïåðñèêîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFDAB9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Peru</entry>
+        <entry>ñâåòëî-êîðè÷íåâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbCD853F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Pink</entry>
+        <entry>Ðîçîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFC0CB.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Plum</entry>
+        <entry>ñëèâîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDDA0DD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>PowderBlue</entry>
+        <entry>òóìàííî-ñèíèé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB0E0E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Purple</entry>
+        <entry>ïóðïóðíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb800080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Red</entry>
+        <entry>Êðàñíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF0000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>RosyBrown</entry>
+        <entry>ðîçîâî-êîðè÷íåâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBC8F8F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>RoyalBlue</entry>
+        <entry>êîðîëåâñêèé_ñèíèé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4169E1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SaddleBrown</entry>
+        <entry>êîæàíîãî_ñåäëà</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B4513.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Salmon</entry>
+        <entry>îðàíæåâî-ðîçîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFA8072.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SandyBrown</entry>
+        <entry>ðûæåâàòûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF4A460.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SeaGreen</entry>
+        <entry>ìîðñêîé_âîëíû</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2E8B57.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SeaShell</entry>
+        <entry>ìîðñêîé_ðàêîâèíû</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF5EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Sienna</entry>
+        <entry>îõðà</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA0522D.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Silver</entry>
+        <entry>ñåðåáðèñòûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbC0C0C0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SkyBlue</entry>
+        <entry>íåáåñíî-ñèíèé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb87CEEB.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SlateBlue</entry>
+        <entry>ãîëóáîâàòî-ñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6A5ACD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SlateGray</entry>
+        <entry>ñèíåâàòî-ñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb708090.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SlateGrey</entry>
+        <entry>ñèíåâàòî-ñåðûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb708090.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Snow</entry>
+        <entry>ñíåæíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFAFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SpringGreen</entry>
+        <entry>âåñåííåé_çåëåíè </entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FF7F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>SteelBlue</entry>
+        <entry>ñèíåâàòî-ñòàëüíîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4682B4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Tan</entry>
+        <entry>çàãàð</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD2B48C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Teal</entry>
+        <entry>çåëåíîâàòî-ãîëóáîé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Thistle</entry>
+        <entry>÷åðòîïîëîõà</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD8BFD8.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Tomato</entry>
+        <entry>òîìàòíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF6347.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Turquoise</entry>
+        <entry>áèðþçîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb40E0D0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Violet</entry>
+        <entry>ôèîëåòîâûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbEE82EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Wheat</entry>
+        <entry>ïøåíè÷íûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5DEB3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>White</entry>
+        <entry>áåëûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>WhiteSmoke</entry>
+        <entry>äûì÷àòî-áåëûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5F5F5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Yellow</entry>
+        <entry>æåëòûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>YellowGreen</entry>
+        <entry>æåëòî-çåëåíûé</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9ACD32.png'/></imageobject></mediaobject></entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</appendix>
 
 <appendix>
 <title>Commands: Russian to English</title>
@@ -4406,6 +5158,718 @@
       <row>
         <entry>z_êîîð</entry>
         <entry><link linkend='command-zcor'>zcor</link></entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</appendix>
+<appendix>
+<title>Color Names: Russian to English</title>
+<indexterm><primary>To English (color names)</primary></indexterm>
+<informaltable>
+  <tgroup cols='3'>
+    <thead>
+      <row>
+        <entry>Russian Color</entry>
+        <entry>English Color</entry>
+        <entry>Sample</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>×åðíûé</entry>
+        <entry>Black</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb000000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>÷åðíî-ñèíèé</entry>
+        <entry>MidnightBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb191970.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>÷åðòîïîëîõà</entry>
+        <entry>Thistle</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD8BFD8.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>áåæåâûé</entry>
+        <entry>Beige</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5F5DC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ãåéíñáîðî</entry>
+        <entry>Gainsboro</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDCDCDC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>áåëûé</entry>
+        <entry>White</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>áåëûé_àíòèê</entry>
+        <entry>AntiqueWhite</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAEBD7.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>âåñåííåé_çåëåíè </entry>
+        <entry>SpringGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FF7F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>âåñåííåé_çåëåíè_óìåðåííûé </entry>
+        <entry>MediumSpringGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FA9A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>âàñèëåê</entry>
+        <entry>CornflowerBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6495ED.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ãðÿçíî-áåëûé</entry>
+        <entry>NavajoWhite</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFDEAD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>àêâà</entry>
+        <entry>Aqua</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>àêâàìàðèí</entry>
+        <entry>Aquamarine</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7FFFD4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>áëåäíî-áèðþçîâûé</entry>
+        <entry>PaleTurquoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbAFEEEE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>áëåäíî-çåëåíûé</entry>
+        <entry>PaleGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb98FB98.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>áëåäíî-çîëîòîé</entry>
+        <entry>PaleGoldenRod</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbEEE8AA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>áëåäíî-ôèîëåòîâîêðàñíûé</entry>
+        <entry>PaleVioletRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD87093.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>æåëòî-çåëåíûé</entry>
+        <entry>YellowGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9ACD32.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>æåëòî-îðàíæåâûé</entry>
+        <entry>HoneyDew</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0FFF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>æåëòûé</entry>
+        <entry>Yellow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>æåëòûé_ëåãêèé</entry>
+        <entry>BurlyWood</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDEB887.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>áëàíøìèíäàëüíûé</entry>
+        <entry>BlanchedAlmond</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFEBCD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>áèðþçîâûé</entry>
+        <entry>Turquoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb40E0D0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>áîëîòíûé</entry>
+        <entry>Moccasin</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFE4B5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ãîëóáîâàòî-ñåðûé</entry>
+        <entry>SlateBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6A5ACD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ãîëóáîé</entry>
+        <entry>Cyan</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ãîëóáîé_êàäåò</entry>
+        <entry>CadetBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb5F9EA0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>äûì÷àòî-áåëûé</entry>
+        <entry>WhiteSmoke</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5F5F5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>çàãàð</entry>
+        <entry>Tan</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD2B48C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Çåë¸íûé</entry>
+        <entry>Green</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>çåëåíàÿ_ëèïà</entry>
+        <entry>LimeGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb32CD32.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>çåëåíîâàòî-ãîëóáîé</entry>
+        <entry>Teal</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>çåëåíîé_ëóæàéêè</entry>
+        <entry>LawnGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7CFC00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>çîëîòîé</entry>
+        <entry>Gold</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFD700.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ðîçîâî-êîðè÷íåâûé</entry>
+        <entry>RosyBrown</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBC8F8F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Ðîçîâûé</entry>
+        <entry>Pink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFC0CB.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ðûæåâàòûé</entry>
+        <entry>SandyBrown</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF4A460.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ëàâàíäîâûé</entry>
+        <entry>Lavender</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE6E6FA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ëàçóðíûé</entry>
+        <entry>Azure</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ëåñíîé_çåëåíè</entry>
+        <entry>ForestGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb228B22.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>êàøòàíîâûé</entry>
+        <entry>Maroon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb800000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>êðåìîâûé</entry>
+        <entry>Bisque</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFE4C4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>êðàñíîâàòî-ëàâàíäîâûé</entry>
+        <entry>LavenderBlush</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF0F5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>êðàñíî-çîëîòîé</entry>
+        <entry>GoldenRod</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDAA520.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>êðàñíî-îðàíæåâûé</entry>
+        <entry>OrangeRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF4500.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>Êðàñíûé</entry>
+        <entry>Red</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF0000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>êèðïè÷íûé</entry>
+        <entry>FireBrick</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB22222.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ëèëîâûé</entry>
+        <entry>Orchid</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDA70D6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ëèïîâûé</entry>
+        <entry>Lime</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00FF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ëèìîííûé</entry>
+        <entry>LemonChiffon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFACD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>èíäèãî</entry>
+        <entry>Indigo</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4B0082.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>êîæàíîãî_ñåäëà</entry>
+        <entry>SaddleBrown</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B4513.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>êîðàëë</entry>
+        <entry>Coral</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF7F50.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>êîðè÷íåâûé</entry>
+        <entry>Brown</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA52A2A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>êîðîëåâñêèé_ñèíèé</entry>
+        <entry>RoyalBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4169E1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ëüíÿíîé</entry>
+        <entry>Linen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAF0E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>íåáåñíî-ñèíèé</entry>
+        <entry>SkyBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb87CEEB.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ïåðñèêîâûé</entry>
+        <entry>PeachPuff</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFDAB9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ìàëèíîâûé</entry>
+        <entry>Crimson</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDC143C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>îðàíæåâî-ðîçîâûé</entry>
+        <entry>Salmon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFA8072.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>îðàíæåâûé</entry>
+        <entry>Orange</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFA500.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>îëèâêîâûé</entry>
+        <entry>Olive</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb808000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ïîáåã_ïàïàéè</entry>
+        <entry>PapayaWhip</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFEFD5.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ìîðñêîé</entry>
+        <entry>Navy</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb000080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ìîðñêîé_âîëíû</entry>
+        <entry>SeaGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2E8B57.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ìîðñêîé_âîëíû_ñâåòëûé</entry>
+        <entry>LightSeaGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb20B2AA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ìîðñêîé_âîëíû_òåìíûé</entry>
+        <entry>DarkSeaGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8FBC8F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ìîðñêîé_âîëíû_óìåðåííûé</entry>
+        <entry>MediumSeaGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb3CB371.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ìîðñêîé_ðàêîâèíû</entry>
+        <entry>SeaShell</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF5EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ïøåíè÷íûé</entry>
+        <entry>Wheat</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5DEB3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>îõðà</entry>
+        <entry>Sienna</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA0522D.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ïóðïóðíûé</entry>
+        <entry>Purple</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb800080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ìÿòíî-êðåìîâûé</entry>
+        <entry>MintCream</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF5FFFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñâåòëî-æåëòûé</entry>
+        <entry>LightYellow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFE0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñâåòëî-æåòëòîêðàñíîçîëîòîé</entry>
+        <entry>LightGoldenRodYellow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFAFAD2.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñâåòëî-ãîëóáîé</entry>
+        <entry>LightCyan</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE0FFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñâåòëî-çåëåíûé</entry>
+        <entry>LightGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb90EE90.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñâåòëî-ðîçîâûé</entry>
+        <entry>LightPink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFB6C1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñâåòëî-êîðàëëîâûé</entry>
+        <entry>LightCoral</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF08080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñâåòëî-êîðè÷íåâûé</entry>
+        <entry>Peru</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbCD853F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñâåòëî-íåáåñíîñèíèé</entry>
+        <entry>LightSkyBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb87CEFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñâåòëî-îðàíæåâîðîçîâûé</entry>
+        <entry>LightSalmon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFA07A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñâåòëî-ñåðûé</entry>
+        <entry>LightGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD3D3D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñâåòëî-ñèíåâàòîâàòîñåðûé</entry>
+        <entry>LightSlateGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb778899.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñâåòëî-ñèíèé</entry>
+        <entry>LightBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbADD8E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñâåòëî-ñòàëüíîé</entry>
+        <entry>LightSteelBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB0C4DE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñåðåáðèñòî-ãîëóáîé</entry>
+        <entry>AliceBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0F8FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñåðåáðèñòûé</entry>
+        <entry>Silver</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbC0C0C0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñåðûé</entry>
+        <entry>Grey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb808080.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñèðåíåâûé</entry>
+        <entry>Magenta</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF00FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñëèâîâûé</entry>
+        <entry>Plum</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbDDA0DD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñèíåâàòî-ñåðûé</entry>
+        <entry>SlateGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb708090.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñèíåâàòî-ñòàëüíîé</entry>
+        <entry>SteelBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb4682B4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñèíèé</entry>
+        <entry>Blue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb0000FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñëîíîâîé_êîñòè</entry>
+        <entry>Ivory</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFFF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñíåæíûé</entry>
+        <entry>Snow</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFAFA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ñòàðîå_êðóæåâî</entry>
+        <entry>OldLace</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFDF5E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>öâåòî÷íî-áåëûé</entry>
+        <entry>FloralWhite</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFFAF0.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>øàðòðåç</entry>
+        <entry>Chartreuse</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7FFF00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>õàêè</entry>
+        <entry>Khaki</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF0E68C.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>õàêè_òåìíûé</entry>
+        <entry>DarkKhaki</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBDB76B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>øåëêîâèñòûé</entry>
+        <entry>Cornsilk</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFF8DC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-áèðþçîâûé</entry>
+        <entry>DarkTurquoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00CED1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-ãîëóáîâàòîñåðûé</entry>
+        <entry>DarkSlateBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb483D8B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-ãîëóáîé</entry>
+        <entry>DarkCyan</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb008B8B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-çåëåíûé</entry>
+        <entry>DarkGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb006400.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-çîëîòèñòîêðàñíûé</entry>
+        <entry>DarkGoldenRod</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB8860B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-ðîçîâûé</entry>
+        <entry>DeepPink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF1493.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-êðàñíûé</entry>
+        <entry>DarkRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B0000.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-ëèëîâûé</entry>
+        <entry>DarkOrchid</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9932CC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-íåáåñíîñèíèé</entry>
+        <entry>DeepSkyBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00BFFF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-îðàíæåâîðîçîâûé</entry>
+        <entry>DarkSalmon</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbE9967A.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-îðàíæåâûé</entry>
+        <entry>DarkOrange</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF8C00.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-îëèâêîãîçåëåíûé</entry>
+        <entry>DarkOliveGreen</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb556B2F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-ñåðûé</entry>
+        <entry>DarkGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbA9A9A9.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-ñèðåíåâûé</entry>
+        <entry>DarkMagenta</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8B008B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-ñèíåâàòîâàòîñåðûé</entry>
+        <entry>DarkSlateGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb2F4F4F.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-ñèíèé</entry>
+        <entry>DarkBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb00008B.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òåìíî-ôèîëåòîâûé</entry>
+        <entry>DarkViolet</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9400D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ôèîëåòîâî-ãîëóáîé</entry>
+        <entry>BlueViolet</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb8A2BE2.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ôèîëåòîâûé</entry>
+        <entry>Violet</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbEE82EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>óìåðåííî-àêâàìàðèíîâûé</entry>
+        <entry>MediumAquaMarine</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb66CDAA.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>óìåðåííî-áèðþçîâûé</entry>
+        <entry>MediumTurquoise</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb48D1CC.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>óìåðåííî-ãîëóáîâàòîñåðûé</entry>
+        <entry>MediumSlateBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb7B68EE.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>óìåðåííî-ïóðïóðíûé</entry>
+        <entry>MediumPurple</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb9370D8.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>óìåðåííî-ñèíèé</entry>
+        <entry>MediumBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb0000CD.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>óìåðåííî-òåìíîëèëîâûé</entry>
+        <entry>MediumOrchid</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbBA55D3.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>óìåðåííî-ôèîëåòîâîêðàñíûé</entry>
+        <entry>MediumVioletRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbC71585.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>øîêîëàäíûé</entry>
+        <entry>Chocolate</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbD2691E.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òîìàòíûé</entry>
+        <entry>Tomato</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF6347.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ôóêñèÿ</entry>
+        <entry>Fuchsia</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF00FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òóìàííî-áåëûé</entry>
+        <entry>GhostWhite</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbF8F8FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òóìàííî-ðîçîâûé</entry>
+        <entry>MistyRose</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFFE4E1.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òóìàííî-ñèíèé</entry>
+        <entry>PowderBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbB0E0E6.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òóñêëî-âàñèëüêîâûé</entry>
+        <entry>DodgerBlue</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb1E90FF.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òóñêëî-îëèâêîâûé</entry>
+        <entry>OliveDrab</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb6B8E23.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>òóñêëî-ñåðûé</entry>
+        <entry>DimGrey</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb696969.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ÿðêî-ðîçîâûé</entry>
+        <entry>HotPink</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbFF69B4.png'/></imageobject></mediaobject></entry>
+      </row>
+      <row>
+        <entry>ÿðêî-êðàñíûé</entry>
+        <entry>IndianRed</entry>
+        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgbCD5C5C.png'/></imageobject></mediaobject></entry>
       </row>
     </tbody>
   </tgroup>
