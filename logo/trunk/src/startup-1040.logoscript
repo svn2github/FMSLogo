@@ -102,18 +102,59 @@ catch "error [ copydef "ellisse          "ellipse        ]
 catch "error [ copydef "ellisse2         "ellipse2       ]
 catch "error [ copydef "arcoellisse2     "ellipsearc2    ]
 
-;copydef "rallenta "slowdraw
+to slowdraw :slowness
+    ; reimplement SLOWDRAW to operate on both the English and Italian versions
+    ; the "logolib/slowdraw" file should get ignored because of this
 
-to rallenta :slowness
-	if not number? :slowness              [(throw "error 4 :slowness)]
-	if not equal? :slowness int :slowness [(throw "error 4 :slowness)]
-	if less? :slowness 0                  [(throw "error 4 :slowness)]
-	slowdraw :slowness
-	localmake "redefp "true
-	copydef "avanti "forward
-	copydef "a "forward
-	copydef "indietro "back
-	copydef "i "back
+    if not number? :slowness              [(throw "error 4 :slowness)]
+    if not equal? :slowness int :slowness [(throw "error 4 :slowness)]
+    if less? :slowness 0                  [(throw "error 4 :slowness)]
+
+    ; don't change the caller's redefp setting
+    localmake "redefp "true 
+
+    ; Restore things if already slow
+    if primitivep "origforward  [
+        copydef "forward "origforward
+        copydef "fd      "origforward
+        copydef "avanti  "origforward
+        copydef "a       "origforward
+        erase "origforward
+    ]
+    if primitivep "origback [
+        copydef "back     "origback
+        copydef "bk       "origback
+        copydef "indietro "origback
+        copydef "i        "origback
+        erase "origback
+    ]
+
+    ; if a delay was specified, define new slow draw routines
+    if :slowness <> 0 [
+        copydef "origforward "forward
+        erase "fd
+        define "fd (list [d] 
+            (list "repeat :slowness
+                (list "origforward (word ": "d) "/ :slowness "wait 1)
+            )
+        )
+        copydef "forward "fd
+        copydef "avanti  "fd
+        copydef "a       "fd
+        bury "fd
+
+        copydef "origback    "back
+        erase "bk
+        define "bk (list [d]
+            (list "repeat :slowness
+                (list "origback (word ": "d) "/ :slowness "wait 1)
+            )
+        )
+        copydef "back     "bk
+        copydef "indietro "bk
+        copydef "i        "bk
+        bury "bk
+    ]
 end
-
-bury "rallenta
+bury "slowdraw
+catch "error [ copydef "rallenta     "slowdraw    ]
