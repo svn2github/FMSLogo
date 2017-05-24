@@ -1,6 +1,6 @@
 This file lists the steps for setting up a build environment for FMSLogo.
 
-Install cygwin (from http://cygnus.org/) to c:\cygwin.  Install all of the
+Install cygwin (from https://www.cygwin.com/) to c:\cygwin.  Install all of the
 following packages (and their dependencies):
 - zip
 - make
