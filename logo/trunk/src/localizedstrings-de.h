@@ -1207,6 +1207,19 @@
 // These words were selected from a de facto HTML standard, so you may
 // be able to find translations for the entire set on the Web.
 //
+// As with the procedure names, these are part of the programming language,
+// so once they are translated, they cannot be changed without breaking
+// compatibility with older programs that may use the old name.
+//
+// Note that the colors have no spaces in their names.  This makes them
+// easier to use, as the programmer doesn't have to escape the space
+// when providing them as a literal word, as in:
+//
+//  SETPENCOLOR "AliceBlue
+//
+// In absense of the space, The PascalCase makes it easier to see the word
+// separation in the documentation.
+//
 #define LOCALIZED_COLOR_ALICEBLUE             "AliceBlau"
 #define LOCALIZED_COLOR_ANTIQUEWHITE          "AntikWeiﬂ"
 #define LOCALIZED_COLOR_AQUA                  "WasserBlau"
