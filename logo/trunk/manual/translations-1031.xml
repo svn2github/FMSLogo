@@ -663,8 +663,16 @@
         <entry>keyboardaus</entry>
       </row>
       <row>
+        <entry><link linkend='command-keyboardoff'>keyboardoff</link></entry>
+        <entry>tastaturaus</entry>
+      </row>
+      <row>
         <entry><link linkend='command-keyboardon'>keyboardon</link></entry>
         <entry>keyboardein</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-keyboardon'>keyboardon</link></entry>
+        <entry>tastaturein</entry>
       </row>
       <row>
         <entry><link linkend='command-keyboardvalue'>keyboardvalue</link></entry>
@@ -3656,6 +3664,14 @@
       <row>
         <entry>sZ</entry>
         <entry><link linkend='command-rerandom'>rerandom</link></entry>
+      </row>
+      <row>
+        <entry>tastaturaus</entry>
+        <entry><link linkend='command-keyboardoff'>keyboardoff</link></entry>
+      </row>
+      <row>
+        <entry>tastaturein</entry>
+        <entry><link linkend='command-keyboardon'>keyboardon</link></entry>
       </row>
       <row>
         <entry>Taste?</entry>

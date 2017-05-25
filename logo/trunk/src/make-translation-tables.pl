@@ -427,7 +427,7 @@ sub MakeTranslationTables($$$) {
   #
   $localizedfile = new IO::File "startup-$LocaleId.logoscript" or die $!;
   while (<$localizedfile>) {
-    if (m/copydef\s+"([\S]+)\s+"([\S_]+)/i) {
+    if (m/copydef\s+"([\S]+)\s+"([^]\s]+)/i) {
       my $newname  = lc $1;
       my $original = lc $2;
 
