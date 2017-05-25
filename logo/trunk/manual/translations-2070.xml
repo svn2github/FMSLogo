@@ -471,10 +471,6 @@
         <entry>edlps</entry>
       </row>
       <row>
-        <entry><link linkend='command-ellipsarc2'>ellipsarc2</link></entry>
-        <entry>arcoelipse2</entry>
-      </row>
-      <row>
         <entry><link linkend='command-ellipse'>ellipse</link></entry>
         <entry>elipse</entry>
       </row>
@@ -3046,10 +3042,6 @@
       <row>
         <entry>arcoElipse</entry>
         <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
-      </row>
-      <row>
-        <entry>arcoelipse2</entry>
-        <entry><link linkend='command-ellipsarc2'>ellipsarc2</link></entry>
       </row>
       <row>
         <entry>arcsen</entry>

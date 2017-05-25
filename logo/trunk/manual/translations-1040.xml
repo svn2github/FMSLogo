@@ -96,11 +96,7 @@
       </row>
       <row>
         <entry><link linkend='command-back'>back</link></entry>
-        <entry>indietro</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-back'>back</link></entry>
-        <entry>i</entry>
+        <entry>origback</entry>
       </row>
       <row>
         <entry><link linkend='command-backslashedp'>backslashed?</link></entry>
@@ -177,6 +173,18 @@
       <row>
         <entry><link linkend='command-bitsize'>bitsize</link></entry>
         <entry>dimdis</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-back'>bk</link></entry>
+        <entry>i</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-back'>bk</link></entry>
+        <entry>back</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-back'>bk</link></entry>
+        <entry>indietro</entry>
       </row>
       <row>
         <entry><link linkend='command-back'>bk</link></entry>
@@ -575,6 +583,18 @@
         <entry>a</entry>
       </row>
       <row>
+        <entry><link linkend='command-forward'>fd</link></entry>
+        <entry>forward</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-forward'>fd</link></entry>
+        <entry>avanti</entry>
+      </row>
+      <row>
+        <entry><link linkend='command-forward'>fd</link></entry>
+        <entry>a</entry>
+      </row>
+      <row>
         <entry><link linkend='command-fence'>fence</link></entry>
         <entry>muro</entry>
       </row>
@@ -636,11 +656,7 @@
       </row>
       <row>
         <entry><link linkend='command-forward'>forward</link></entry>
-        <entry>avanti</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-forward'>forward</link></entry>
-        <entry>a</entry>
+        <entry>origforward</entry>
       </row>
       <row>
         <entry><link linkend='command-fput'>fput</link></entry>
@@ -2828,7 +2844,7 @@
       </row>
       <row>
         <entry>a</entry>
-        <entry><link linkend='command-forward'>forward</link></entry>
+        <entry><link linkend='command-forward'>fd</link></entry>
       </row>
       <row>
         <entry>acaso</entry>
@@ -3064,7 +3080,11 @@
       </row>
       <row>
         <entry>avanti</entry>
-        <entry><link linkend='command-forward'>forward</link></entry>
+        <entry><link linkend='command-forward'>fd</link></entry>
+      </row>
+      <row>
+        <entry>back</entry>
+        <entry><link linkend='command-back'>bk</link></entry>
       </row>
       <row>
         <entry>barrarovesciata?</entry>
@@ -3607,6 +3627,10 @@
         <entry><link linkend='command-form'>form</link></entry>
       </row>
       <row>
+        <entry>forward</entry>
+        <entry><link linkend='command-forward'>fd</link></entry>
+      </row>
+      <row>
         <entry>fr</entry>
         <entry><link linkend='command-sentence'>se</link></entry>
       </row>
@@ -3644,7 +3668,7 @@
       </row>
       <row>
         <entry>i</entry>
-        <entry><link linkend='command-back'>back</link></entry>
+        <entry><link linkend='command-back'>bk</link></entry>
       </row>
       <row>
         <entry>icona</entry>
@@ -3664,7 +3688,7 @@
       </row>
       <row>
         <entry>indietro</entry>
-        <entry><link linkend='command-back'>back</link></entry>
+        <entry><link linkend='command-back'>bk</link></entry>
       </row>
       <row>
         <entry>infila</entry>
@@ -4097,6 +4121,14 @@
       <row>
         <entry>ordina</entry>
         <entry><link linkend='command-sort'>sort</link></entry>
+      </row>
+      <row>
+        <entry>origback</entry>
+        <entry><link linkend='command-back'>back</link></entry>
+      </row>
+      <row>
+        <entry>origforward</entry>
+        <entry><link linkend='command-forward'>forward</link></entry>
       </row>
       <row>
         <entry>parola</entry>

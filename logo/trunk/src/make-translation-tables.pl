@@ -12,26 +12,6 @@ use utf8;
 use IO::File;
 use strict;
 
-# Commands that are undocumented and cannot be put into
-# the translation tables because they don't link to anything.
-# Any translation of these will be omitted from the final documentation.
-$main::UndocumentedCommands{'buttonp'}     = 1;
-$main::UndocumentedCommands{'button?'}     = 1;
-$main::UndocumentedCommands{'demo'}        = 1;
-$main::UndocumentedCommands{'ellipsa2'}    = 1;
-$main::UndocumentedCommands{'filep'}       = 1;
-$main::UndocumentedCommands{'goto'}        = 1;
-$main::UndocumentedCommands{'maketurtle'}  = 1;
-$main::UndocumentedCommands{'mousecopy'}   = 1;
-$main::UndocumentedCommands{'rest'}        = 1;
-$main::UndocumentedCommands{'setclip'}     = 1;
-$main::UndocumentedCommands{'settextfont'} = 1;
-$main::UndocumentedCommands{'system'}      = 1;
-$main::UndocumentedCommands{'tag'}         = 1;
-$main::UndocumentedCommands{'textfont'}    = 1;
-$main::UndocumentedCommands{'toplevel'}    = 1;
-$main::UndocumentedCommands{'tutor'}       = 1;
-
 # Commands whose documentation is located in the documentation
 # for some other function.
 $main::EnglishAbbreviation{'bk'}    = 'back';
@@ -78,6 +58,23 @@ $main::EnglishAbbreviation{'up'}    = 'uppitch';
 
 # Populates the colors and their RGB codes
 %main::EnglishColorToRgbCode = ();
+
+# Procedures which are undocumented cannot be put into
+# the translation tables because they don't link to anything.
+sub IsDocumentedEnglishProcedure($) {
+  my $EnglishProcedureName = shift or die "not enough arguments";
+
+  # filenames and abbreviations are lowercase
+  $EnglishProcedureName = lc $EnglishProcedureName;
+
+  # predicates are documented by their 'P' suffix.
+  $EnglishProcedureName =~ s/\?$/p/;
+
+  # The documentation files for goto/tag exist, but are omitted from the manual.
+  return
+    $main::EnglishAbbreviation{$EnglishProcedureName} ||
+    (-f "../manual/command-$EnglishProcedureName.xml" && $EnglishProcedureName ne 'goto' && $EnglishProcedureName ne 'tag');
+}
 
 sub InitializeColorTable() {
   # Parse the colors from the source code.
@@ -403,7 +400,7 @@ sub MakeTranslationTables($$$) {
           # The translation is different from the English name
           if ($symbolType eq 'ALTERNATE') {
             # only add documented procedures to the translation tables.
-            if (not $main::UndocumentedCommands{lc $englishWord}) {
+            if (IsDocumentedEnglishProcedure($englishWord)) {
               AddTranslation(
                 $englishWord,
                 $localizedName,
@@ -443,8 +440,8 @@ sub MakeTranslationTables($$$) {
 
       if (lc $original ne lc $newname) {
 
-        # only add documented procedures to the translation tables.
-        if (not $main::UndocumentedCommands{lc $original}) {
+        # Only add procedures to the translation tables which are documented.
+        if (IsDocumentedEnglishProcedure($original)) {
           AddTranslation(
             $original,
             $newname,

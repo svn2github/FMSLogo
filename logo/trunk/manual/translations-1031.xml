@@ -427,10 +427,6 @@
         <entry>edprn</entry>
       </row>
       <row>
-        <entry><link linkend='command-element'>element</link></entry>
-        <entry>el</entry>
-      </row>
-      <row>
         <entry><link linkend='command-emptyp'>empty?</link></entry>
         <entry>leer?</entry>
       </row>
@@ -579,10 +575,6 @@
         <entry>Prtext</entry>
       </row>
       <row>
-        <entry><link linkend='command-gibeg'>gibeg</link></entry>
-        <entry>werteg</entry>
-      </row>
-      <row>
         <entry><link linkend='command-goldenratio'>goldenratio</link></entry>
         <entry>goldenerschnitt</entry>
       </row>
@@ -647,10 +639,6 @@
         <entry>wennwahr</entry>
       </row>
       <row>
-        <entry><link linkend='command-igeltext'>igeltext</link></entry>
-        <entry>it</entry>
-      </row>
-      <row>
         <entry><link linkend='command-ignore'>ignore</link></entry>
         <entry>ignoriere</entry>
       </row>
@@ -669,14 +657,6 @@
       <row>
         <entry><link linkend='command-keyp'>key?</link></entry>
         <entry>Taste?</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-keyboardaus]'>keyboardaus]</link></entry>
-        <entry>tastaturaus</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-keyboardein]'>keyboardein]</link></entry>
-        <entry>tastaturein</entry>
       </row>
       <row>
         <entry><link linkend='command-keyboardoff'>keyboardoff</link></entry>
@@ -1071,28 +1051,12 @@
         <entry>portfluten</entry>
       </row>
       <row>
-        <entry><link linkend='command-portinb'>portinb</link></entry>
-        <entry>eing</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-portinb'>portinb</link></entry>
-        <entry>eingang</entry>
-      </row>
-      <row>
         <entry><link linkend='command-portmode'>portmode</link></entry>
         <entry>portmodus</entry>
       </row>
       <row>
         <entry><link linkend='command-portopen'>portopen</link></entry>
         <entry>portöffnen</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-portoutb'>portoutb</link></entry>
-        <entry>ausg</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-portoutb'>portoutb</link></entry>
-        <entry>ausgang</entry>
       </row>
       <row>
         <entry><link linkend='command-portreadarray'>portreadarray</link></entry>
@@ -1121,10 +1085,6 @@
       <row>
         <entry><link linkend='command-pot'>pot</link></entry>
         <entry>zt</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-potenz'>potenz</link></entry>
-        <entry>^</entry>
       </row>
       <row>
         <entry><link linkend='command-pots'>pots</link></entry>
@@ -1479,10 +1439,6 @@
         <entry>langsammalen</entry>
       </row>
       <row>
-        <entry><link linkend='command-smale'>smale</link></entry>
-        <entry>szeichne</entry>
-      </row>
-      <row>
         <entry><link linkend='command-sort'>sort</link></entry>
         <entry>sortieren</entry>
       </row>
@@ -1543,10 +1499,6 @@
         <entry>Summe</entry>
       </row>
       <row>
-        <entry><link linkend='command-tasteg'>tasteg</link></entry>
-        <entry>tastenwert</entry>
-      </row>
-      <row>
         <entry><link linkend='command-test'>test</link></entry>
         <entry>prüfe</entry>
       </row>
@@ -1573,10 +1525,6 @@
       <row>
         <entry><link linkend='command-timemilli'>timemilli</link></entry>
         <entry>ZeitMilli</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-titelliste'>titelliste</link></entry>
-        <entry>ztl</entry>
       </row>
       <row>
         <entry><link linkend='command-to'>to</link></entry>
@@ -1649,10 +1597,6 @@
       <row>
         <entry><link linkend='command-uppercase'>uppercase</link></entry>
         <entry>groß</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-vgeg'>vgeg</link></entry>
-        <entry>nimmeg</entry>
       </row>
       <row>
         <entry><link linkend='command-wait'>wait</link></entry>
@@ -2418,10 +2362,6 @@
         <entry><link linkend='command-.macro'>.macro</link></entry>
       </row>
       <row>
-        <entry>^</entry>
-        <entry><link linkend='command-potenz'>potenz</link></entry>
-      </row>
-      <row>
         <entry>ade</entry>
         <entry><link linkend='command-bye'>bye</link></entry>
       </row>
@@ -2504,14 +2444,6 @@
       <row>
         <entry>aufz</entry>
         <entry><link linkend='command-setz'>setz</link></entry>
-      </row>
-      <row>
-        <entry>ausg</entry>
-        <entry><link linkend='command-portoutb'>portoutb</link></entry>
-      </row>
-      <row>
-        <entry>ausgang</entry>
-        <entry><link linkend='command-portoutb'>portoutb</link></entry>
       </row>
       <row>
         <entry>auswahlbox</entry>
@@ -2712,18 +2644,6 @@
       <row>
         <entry>eines?</entry>
         <entry><link linkend='command-or'>or</link></entry>
-      </row>
-      <row>
-        <entry>eing</entry>
-        <entry><link linkend='command-portinb'>portinb</link></entry>
-      </row>
-      <row>
-        <entry>eingang</entry>
-        <entry><link linkend='command-portinb'>portinb</link></entry>
-      </row>
-      <row>
-        <entry>el</entry>
-        <entry><link linkend='command-element'>element</link></entry>
       </row>
       <row>
         <entry>El?</entry>
@@ -2948,10 +2868,6 @@
       <row>
         <entry>invers</entry>
         <entry><link linkend='command-reverse'>reverse</link></entry>
-      </row>
-      <row>
-        <entry>it</entry>
-        <entry><link linkend='command-igeltext'>igeltext</link></entry>
       </row>
       <row>
         <entry>JaNeinBox</entry>
@@ -3340,10 +3256,6 @@
       <row>
         <entry>nichtgleich?</entry>
         <entry><link linkend='command-notequalp'>notequal?</link></entry>
-      </row>
-      <row>
-        <entry>nimmeg</entry>
-        <entry><link linkend='command-vgeg'>vgeg</link></entry>
       </row>
       <row>
         <entry>normalstift</entry>
@@ -3746,28 +3658,12 @@
         <entry><link linkend='command-rerandom'>rerandom</link></entry>
       </row>
       <row>
-        <entry>szeichne</entry>
-        <entry><link linkend='command-smale'>smale</link></entry>
-      </row>
-      <row>
-        <entry>tastaturaus</entry>
-        <entry><link linkend='command-keyboardaus]'>keyboardaus]</link></entry>
-      </row>
-      <row>
-        <entry>tastaturein</entry>
-        <entry><link linkend='command-keyboardein]'>keyboardein]</link></entry>
-      </row>
-      <row>
         <entry>Taste?</entry>
         <entry><link linkend='command-keyp'>key?</link></entry>
       </row>
       <row>
         <entry>TastEG</entry>
         <entry><link linkend='command-keyboardvalue'>keyboardvalue</link></entry>
-      </row>
-      <row>
-        <entry>tastenwert</entry>
-        <entry><link linkend='command-tasteg'>tasteg</link></entry>
       </row>
       <row>
         <entry>Teilbild</entry>
@@ -3954,10 +3850,6 @@
         <entry><link linkend='command-thing'>thing</link></entry>
       </row>
       <row>
-        <entry>werteg</entry>
-        <entry><link linkend='command-gibeg'>gibeg</link></entry>
-      </row>
-      <row>
         <entry>wf</entry>
         <entry><link linkend='command-iffalse'>iff</link></entry>
       </row>
@@ -4092,10 +3984,6 @@
       <row>
         <entry>zt</entry>
         <entry><link linkend='command-pot'>pot</link></entry>
-      </row>
-      <row>
-        <entry>ztl</entry>
-        <entry><link linkend='command-titelliste'>titelliste</link></entry>
       </row>
       <row>
         <entry>zufallswahl</entry>
