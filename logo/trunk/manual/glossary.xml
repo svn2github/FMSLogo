@@ -128,6 +128,15 @@ Members are usually called <link linkend="glossary-item">items</link> when their
       </glossdef>
     </glossentry>
 
+    <glossentry id="glossary-operation">
+      <glossterm>Operation</glossterm>
+      <glossdef>
+        <para>
+A <link linkend="glossary-procedure">procedure</link> that outputs a value.
+        </para>
+      </glossdef>
+    </glossentry>
+
     <glossentry id="glossary-procedure">
       <glossterm>Procedure</glossterm>
       <glossdef>
@@ -154,15 +163,6 @@ The process of evaluating one or more instructions or expressions and performing
         <para>
 A series of tokens that is syntactically correct for evaluation in &GENERICNAME;, but whose meaning is determined by a special rule rather than
 by the default rule of running it as an instruction or expression.
-        </para>
-      </glossdef>
-    </glossentry>
-
-    <glossentry id="glossary-operation">
-      <glossterm>Operation</glossterm>
-      <glossdef>
-        <para>
-A <link linkend="glossary-procedure">procedure</link> that outputs a value.
         </para>
       </glossdef>
     </glossentry>
