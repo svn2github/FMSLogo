@@ -2328,12 +2328,12 @@ void CMainFrame::OnHelp(wxCommandEvent& WXUNUSED(Event))
 
 void CMainFrame::OnHelpLanguageToEnglish(wxCommandEvent& WXUNUSED(Event))
 {
-    do_help("To English");
+    do_help("To English (procedure names)");
 }
 
 void CMainFrame::OnHelpEnglishToLanguage(wxCommandEvent& WXUNUSED(Event))
 {
-    do_help("From English");
+    do_help("From English (procedure names)");
 }
 
 #endif // MANUAL_HAS_TRANSLATION_TABLES

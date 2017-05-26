@@ -1,12 +1,12 @@
 <appendix>
-<title>Commands: English to Croatian</title>
-<indexterm><primary>From English</primary></indexterm>
+<title>Procedure Names: English to Croatian</title>
+<indexterm><primary>From English (procedure names)</primary></indexterm>
 <informaltable>
   <tgroup cols='2'>
     <thead>
       <row>
-        <entry>English Command</entry>
-        <entry>Croatian Command</entry>
+        <entry>English Procedure</entry>
+        <entry>Croatian Procedure</entry>
       </row>
     </thead>
     <tbody>
@@ -40,14 +40,14 @@
 </appendix>
 
 <appendix>
-<title>Commands: Croatian to English</title>
-<indexterm><primary>To English</primary></indexterm>
+<title>Procedure Names: Croatian to English</title>
+<indexterm><primary>To English (procedure names)</primary></indexterm>
 <informaltable>
   <tgroup cols='2'>
     <thead>
       <row>
-        <entry>Croatian Command</entry>
-        <entry>English Command</entry>
+        <entry>Croatian Procedure</entry>
+        <entry>English Procedure</entry>
       </row>
     </thead>
     <tbody>

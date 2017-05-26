@@ -1,12 +1,12 @@
 <appendix>
-<title>Commands: English to Pseudoloc</title>
-<indexterm><primary>From English</primary></indexterm>
+<title>Procedure Names: English to Pseudoloc</title>
+<indexterm><primary>From English (procedure names)</primary></indexterm>
 <informaltable>
   <tgroup cols='2'>
     <thead>
       <row>
-        <entry>English Command</entry>
-        <entry>Pseudoloc Command</entry>
+        <entry>English Procedure</entry>
+        <entry>Pseudoloc Procedure</entry>
       </row>
     </thead>
     <tbody>
@@ -2648,14 +2648,14 @@
 </appendix>
 
 <appendix>
-<title>Commands: Pseudoloc to English</title>
-<indexterm><primary>To English</primary></indexterm>
+<title>Procedure Names: Pseudoloc to English</title>
+<indexterm><primary>To English (procedure names)</primary></indexterm>
 <informaltable>
   <tgroup cols='2'>
     <thead>
       <row>
-        <entry>Pseudoloc Command</entry>
-        <entry>English Command</entry>
+        <entry>Pseudoloc Procedure</entry>
+        <entry>English Procedure</entry>
       </row>
     </thead>
     <tbody>

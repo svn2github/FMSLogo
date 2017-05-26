@@ -12,7 +12,7 @@ use utf8;
 use IO::File;
 use strict;
 
-# Commands whose documentation is located in the documentation
+# Procedures whose documentation is located in the documentation
 # for some other function.
 $main::EnglishAbbreviation{'bk'}    = 'back';
 $main::EnglishAbbreviation{'bf'}    = 'butfirst';
@@ -98,22 +98,22 @@ sub PrintShadowedProcedures($$$) {
   my $English            = shift or die "not enough arguments";
   my $LocalizedToEnglish = shift or die "not enough arguments";
 
-  # foreach localized command check to see if:
-  # 1) It's also the name of an English command
-  # 2) It's not a localization of that English command
-  foreach my $localizedCommand (keys %{$LocalizedToEnglish}) {
-    foreach my $englishCommand (values %{$English}) {
+  # foreach localized procedure check to see if:
+  # 1) It's also the name of an English procedure
+  # 2) It's not a localization of that English procedure
+  foreach my $localizedProcedure (keys %{$LocalizedToEnglish}) {
+    foreach my $englishProcedure (values %{$English}) {
 
       # It's okay if predicates that end in "?" shadow the "p"
       # form of the English predicate.
       # The Spanish translation does this because "p" has no meaning.
-      if ($localizedCommand =~ m/^(.*)\?$/ and $$LocalizedToEnglish{$localizedCommand} eq "$1p") {
+      if ($localizedProcedure =~ m/^(.*)\?$/ and $$LocalizedToEnglish{$localizedProcedure} eq "$1p") {
         next;
       }
 
-      if ($englishCommand eq $localizedCommand and
-          $$LocalizedToEnglish{$localizedCommand} ne $englishCommand) {
-        print "WARNING: $LocaleName shadows the English command `$localizedCommand' as a translations for `$$LocalizedToEnglish{$localizedCommand}'\n";
+      if ($englishProcedure eq $localizedProcedure and
+          $$LocalizedToEnglish{$localizedProcedure} ne $englishProcedure) {
+        print "WARNING: $LocaleName shadows the English procedure `$localizedProcedure' as a translations for `$$LocalizedToEnglish{$localizedProcedure}'\n";
       }
     }
   }
@@ -153,15 +153,15 @@ sub PrintTranslationsAsText($$$) {
 
 sub GetLinkend($) {
 
-  my $EnglishCommand = shift or die "not enough arguments";
+  my $EnglishProcedure = shift or die "not enough arguments";
 
-  if ($main::EnglishAbbreviation{lc $EnglishCommand}) {
-    # This command has an abbreviation, we should link to the
+  if ($main::EnglishAbbreviation{lc $EnglishProcedure}) {
+    # This procedure has an abbreviation, we should link to the
     # documentation for what it abbreviates.
-    $EnglishCommand = $main::EnglishAbbreviation{lc $EnglishCommand};
+    $EnglishProcedure = $main::EnglishAbbreviation{lc $EnglishProcedure};
   }
 
-  my $linkend = lc "command-$EnglishCommand";
+  my $linkend = lc "command-$EnglishProcedure";
 
   $linkend =~ s/\?$/p/; # predicates are indexed by their 'P' suffix.
 
@@ -181,15 +181,15 @@ sub PrintTranslationsAsDocBook($$$$$$) {
   my $docbook = '';
 
   $docbook .= "<appendix>\n";
-  $docbook .= "<title>Commands: English to $LocaleName</title>\n";
-  $docbook .= "<indexterm><primary>From English</primary></indexterm>\n";
+  $docbook .= "<title>Procedure Names: English to $LocaleName</title>\n";
+  $docbook .= "<indexterm><primary>From English (procedure names)</primary></indexterm>\n";
 
   $docbook .= "<informaltable>\n";
   $docbook .= "  <tgroup cols='2'>\n";
   $docbook .= "    <thead>\n";
   $docbook .= "      <row>\n";
-  $docbook .= "        <entry>English Command</entry>\n";
-  $docbook .= "        <entry>$LocaleName Command</entry>\n";
+  $docbook .= "        <entry>English Procedure</entry>\n";
+  $docbook .= "        <entry>$LocaleName Procedure</entry>\n";
   $docbook .= "      </row>\n";
   $docbook .= "    </thead>\n";
   $docbook .= "    <tbody>\n";
@@ -213,7 +213,7 @@ sub PrintTranslationsAsDocBook($$$$$$) {
   $docbook .= "</informaltable>\n";
   $docbook .= "</appendix>\n";
 
-  # If the color names have been translated, include a table for those.  
+  # If the color names have been translated, include a table for those.
   if (%{$EnglishToLocalizedColor}) {
     $docbook .= "<appendix>\n";
     $docbook .= "<title>Color Names: English to $LocaleName</title>\n";
@@ -254,14 +254,14 @@ sub PrintTranslationsAsDocBook($$$$$$) {
   $docbook .= "\n";
 
   $docbook .= "<appendix>\n";
-  $docbook .= "<title>Commands: $LocaleName to English</title>\n";
-  $docbook .= "<indexterm><primary>To English</primary></indexterm>\n";
+  $docbook .= "<title>Procedure Names: $LocaleName to English</title>\n";
+  $docbook .= "<indexterm><primary>To English (procedure names)</primary></indexterm>\n";
   $docbook .= "<informaltable>\n";
   $docbook .= "  <tgroup cols='2'>\n";
   $docbook .= "    <thead>\n";
   $docbook .= "      <row>\n";
-  $docbook .= "        <entry>$LocaleName Command</entry>\n";
-  $docbook .= "        <entry>English Command</entry>\n";
+  $docbook .= "        <entry>$LocaleName Procedure</entry>\n";
+  $docbook .= "        <entry>English Procedure</entry>\n";
   $docbook .= "      </row>\n";
   $docbook .= "    </thead>\n";
   $docbook .= "    <tbody>\n";

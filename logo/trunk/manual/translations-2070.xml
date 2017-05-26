@@ -1,12 +1,12 @@
 <appendix>
-<title>Commands: English to Portuguese</title>
-<indexterm><primary>From English</primary></indexterm>
+<title>Procedure Names: English to Portuguese</title>
+<indexterm><primary>From English (procedure names)</primary></indexterm>
 <informaltable>
   <tgroup cols='2'>
     <thead>
       <row>
-        <entry>English Command</entry>
-        <entry>Portuguese Command</entry>
+        <entry>English Procedure</entry>
+        <entry>Portuguese Procedure</entry>
       </row>
     </thead>
     <tbody>
@@ -2880,14 +2880,14 @@
 </appendix>
 
 <appendix>
-<title>Commands: Portuguese to English</title>
-<indexterm><primary>To English</primary></indexterm>
+<title>Procedure Names: Portuguese to English</title>
+<indexterm><primary>To English (procedure names)</primary></indexterm>
 <informaltable>
   <tgroup cols='2'>
     <thead>
       <row>
-        <entry>Portuguese Command</entry>
-        <entry>English Command</entry>
+        <entry>Portuguese Procedure</entry>
+        <entry>English Procedure</entry>
       </row>
     </thead>
     <tbody>
