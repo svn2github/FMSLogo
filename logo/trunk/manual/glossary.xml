@@ -57,11 +57,20 @@ For example, in the array <userinput>{a b c}@0</userinput>, <userinput>b</userin
       </glossdef>
     </glossentry>
 
+    <glossentry id="glossary-form">
+      <glossterm>Form</glossterm>
+      <glossdef>
+        <para>
+A series of tokens that is syntactically correct for evaluation in &GENERICNAME;.
+        </para>
+      </glossdef>
+    </glossentry>
+
     <glossentry id="glossary-expression">
       <glossterm>Expression</glossterm>
       <glossdef>
         <para>
-A chunk of &GENERICNAME; code that, when RUN, produces a value.
+A series of tokens that, when RUN, produces a value.
 This include operations with all of its inputs, as well constant expressions like 3 or <userinput>"foo</userinput>.
         </para>
       </glossdef>
@@ -71,7 +80,7 @@ This include operations with all of its inputs, as well constant expressions lik
       <glossterm>Instruction</glossterm>
       <glossdef>
         <para>
-A chunk of &GENERICNAME; code that, when RUN, produces no value.
+A series of tokens that that, when RUN, produces no value.
 Generally, this is a command with all of its inputs.
         </para>
       </glossdef>
@@ -135,6 +144,16 @@ Procedures that don't output a value are called commands.
       <glossdef>
         <para>
 The process of evaluating one or more instructions or expressions and performing all of the side-effects associated with them.
+        </para>
+      </glossdef>
+    </glossentry>
+
+    <glossentry id="glossary-specialform">
+      <glossterm>Special Form</glossterm>
+      <glossdef>
+        <para>
+A series of tokens that is syntactically correct for evaluation in &GENERICNAME;, but whose meaning is determined by a special rule rather than
+by the default rule of running it as an instruction or expression.
         </para>
       </glossdef>
     </glossentry>
