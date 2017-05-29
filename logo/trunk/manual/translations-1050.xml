@@ -1,5 +1,5 @@
-<appendix>
-<title>Procedure Names: English to Croatian</title>
+<appendix id='from-english-procedure-names'>
+<title>English to Croatian: Procedure Names</title>
 <indexterm><primary>From English (procedure names)</primary></indexterm>
 <informaltable>
   <tgroup cols='2'>
@@ -39,8 +39,8 @@
 </informaltable>
 </appendix>
 
-<appendix>
-<title>Procedure Names: Croatian to English</title>
+<appendix id='to-english-procedure-names'>
+<title>Croatian to English: Procedure Names</title>
 <indexterm><primary>To English (procedure names)</primary></indexterm>
 <informaltable>
   <tgroup cols='2'>

@@ -1,6 +1,7 @@
-<appendix>
-<title>Procedure Names: English to Italian</title>
+<appendix id='from-english-procedure-names'>
+<title>English to Italian: Procedure Names</title>
 <indexterm><primary>From English (procedure names)</primary></indexterm>
+<para>See Also: English to Italian (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and Italian to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='2'>
     <thead>
@@ -180,15 +181,7 @@
       </row>
       <row>
         <entry><link linkend='command-back'>bk</link></entry>
-        <entry>back</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-back'>bk</link></entry>
         <entry>indietro</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-back'>bk</link></entry>
-        <entry>i</entry>
       </row>
       <row>
         <entry><link linkend='command-butlast'>bl</link></entry>
@@ -584,15 +577,7 @@
       </row>
       <row>
         <entry><link linkend='command-forward'>fd</link></entry>
-        <entry>forward</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-forward'>fd</link></entry>
         <entry>avanti</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-forward'>fd</link></entry>
-        <entry>a</entry>
       </row>
       <row>
         <entry><link linkend='command-fence'>fence</link></entry>
@@ -2082,9 +2067,10 @@
   </tgroup>
 </informaltable>
 </appendix>
-<appendix>
-<title>Color Names: English to Italian</title>
+<appendix id='from-english-color-names'>
+<title>English to Italian: Color Names</title>
 <indexterm><primary>From English (color names)</primary></indexterm>
+<para>See Also: English to Italian (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and Italian to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='3'>
     <thead>
@@ -2810,9 +2796,10 @@
 </informaltable>
 </appendix>
 
-<appendix>
-<title>Procedure Names: Italian to English</title>
+<appendix id='to-english-procedure-names'>
+<title>Italian to English: Procedure Names</title>
 <indexterm><primary>To English (procedure names)</primary></indexterm>
+<para>See Also: English to Italian (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and Italian to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='2'>
     <thead>
@@ -3081,10 +3068,6 @@
       <row>
         <entry>avanti</entry>
         <entry><link linkend='command-forward'>fd</link></entry>
-      </row>
-      <row>
-        <entry>back</entry>
-        <entry><link linkend='command-back'>bk</link></entry>
       </row>
       <row>
         <entry>barrarovesciata?</entry>
@@ -3625,10 +3608,6 @@
       <row>
         <entry>formato</entry>
         <entry><link linkend='command-form'>form</link></entry>
-      </row>
-      <row>
-        <entry>forward</entry>
-        <entry><link linkend='command-forward'>fd</link></entry>
       </row>
       <row>
         <entry>fr</entry>
@@ -4858,9 +4837,10 @@
   </tgroup>
 </informaltable>
 </appendix>
-<appendix>
-<title>Color Names: Italian to English</title>
+<appendix id='to-english-color-names'>
+<title>Italian to English: Color Names</title>
 <indexterm><primary>To English (color names)</primary></indexterm>
+<para>See Also: English to Italian (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and Italian to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='3'>
     <thead>

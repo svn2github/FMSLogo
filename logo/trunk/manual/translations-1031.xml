@@ -1,6 +1,7 @@
-<appendix>
-<title>Procedure Names: English to German</title>
+<appendix id='from-english-procedure-names'>
+<title>English to German: Procedure Names</title>
 <indexterm><primary>From English (procedure names)</primary></indexterm>
+<para>See Also: English to German (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and German to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='2'>
     <thead>
@@ -1666,9 +1667,10 @@
   </tgroup>
 </informaltable>
 </appendix>
-<appendix>
-<title>Color Names: English to German</title>
+<appendix id='from-english-color-names'>
+<title>English to German: Color Names</title>
 <indexterm><primary>From English (color names)</primary></indexterm>
+<para>See Also: English to German (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and German to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='3'>
     <thead>
@@ -2349,9 +2351,10 @@
 </informaltable>
 </appendix>
 
-<appendix>
-<title>Procedure Names: German to English</title>
+<appendix id='to-english-procedure-names'>
+<title>German to English: Procedure Names</title>
 <indexterm><primary>To English (procedure names)</primary></indexterm>
+<para>See Also: English to German (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and German to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='2'>
     <thead>
@@ -4013,9 +4016,10 @@
   </tgroup>
 </informaltable>
 </appendix>
-<appendix>
-<title>Color Names: German to English</title>
+<appendix id='to-english-color-names'>
+<title>German to English: Color Names</title>
 <indexterm><primary>To English (color names)</primary></indexterm>
+<para>See Also: English to German (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and German to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='3'>
     <thead>

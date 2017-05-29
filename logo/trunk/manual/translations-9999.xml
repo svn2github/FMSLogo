@@ -1,6 +1,7 @@
-<appendix>
-<title>Procedure Names: English to Pseudoloc</title>
+<appendix id='from-english-procedure-names'>
+<title>English to Pseudoloc: Procedure Names</title>
 <indexterm><primary>From English (procedure names)</primary></indexterm>
+<para>See Also: English to Pseudoloc (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and Pseudoloc to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='2'>
     <thead>
@@ -1894,9 +1895,10 @@
   </tgroup>
 </informaltable>
 </appendix>
-<appendix>
-<title>Color Names: English to Pseudoloc</title>
+<appendix id='from-english-color-names'>
+<title>English to Pseudoloc: Color Names</title>
 <indexterm><primary>From English (color names)</primary></indexterm>
+<para>See Also: English to Pseudoloc (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and Pseudoloc to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='3'>
     <thead>
@@ -2647,9 +2649,10 @@
 </informaltable>
 </appendix>
 
-<appendix>
-<title>Procedure Names: Pseudoloc to English</title>
+<appendix id='to-english-procedure-names'>
+<title>Pseudoloc to English: Procedure Names</title>
 <indexterm><primary>To English (procedure names)</primary></indexterm>
+<para>See Also: English to Pseudoloc (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and Pseudoloc to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='2'>
     <thead>
@@ -4543,9 +4546,10 @@
   </tgroup>
 </informaltable>
 </appendix>
-<appendix>
-<title>Color Names: Pseudoloc to English</title>
+<appendix id='to-english-color-names'>
+<title>Pseudoloc to English: Color Names</title>
 <indexterm><primary>To English (color names)</primary></indexterm>
+<para>See Also: English to Pseudoloc (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and Pseudoloc to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='3'>
     <thead>

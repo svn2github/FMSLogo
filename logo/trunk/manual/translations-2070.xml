@@ -1,6 +1,7 @@
-<appendix>
-<title>Procedure Names: English to Portuguese</title>
+<appendix id='from-english-procedure-names'>
+<title>English to Portuguese: Procedure Names</title>
 <indexterm><primary>From English (procedure names)</primary></indexterm>
+<para>See Also: English to Portuguese (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and Portuguese to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='2'>
     <thead>
@@ -449,10 +450,6 @@
       <row>
         <entry><link linkend='command-dribble'>dribble</link></entry>
         <entry>registre</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-edall'>edall</link></entry>
-        <entry>editor</entry>
       </row>
       <row>
         <entry><link linkend='command-edall'>edall</link></entry>
@@ -1527,10 +1524,6 @@
         <entry>atualize</entry>
       </row>
       <row>
-        <entry><link linkend='command-refresh'>refresh</link></entry>
-        <entry>atualize</entry>
-      </row>
-      <row>
         <entry><link linkend='command-remainder'>remainder</link></entry>
         <entry>resto</entry>
       </row>
@@ -1979,10 +1972,6 @@
         <entry>tom</entry>
       </row>
       <row>
-        <entry><link linkend='command-tone'>tone</link></entry>
-        <entry>tom</entry>
-      </row>
-      <row>
         <entry><link linkend='command-towards'>towards</link></entry>
         <entry>direçãopara</entry>
       </row>
@@ -2146,9 +2135,10 @@
   </tgroup>
 </informaltable>
 </appendix>
-<appendix>
-<title>Color Names: English to Portuguese</title>
+<appendix id='from-english-color-names'>
+<title>English to Portuguese: Color Names</title>
 <indexterm><primary>From English (color names)</primary></indexterm>
+<para>See Also: English to Portuguese (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and Portuguese to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='3'>
     <thead>
@@ -2879,9 +2869,10 @@
 </informaltable>
 </appendix>
 
-<appendix>
-<title>Procedure Names: Portuguese to English</title>
+<appendix id='to-english-procedure-names'>
+<title>Portuguese to English: Procedure Names</title>
 <indexterm><primary>To English (procedure names)</primary></indexterm>
+<para>See Also: English to Portuguese (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and Portuguese to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='2'>
     <thead>
@@ -4999,9 +4990,10 @@
   </tgroup>
 </informaltable>
 </appendix>
-<appendix>
-<title>Color Names: Portuguese to English</title>
+<appendix id='to-english-color-names'>
+<title>Portuguese to English: Color Names</title>
 <indexterm><primary>To English (color names)</primary></indexterm>
+<para>See Also: English to Portuguese (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and Portuguese to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='3'>
     <thead>

@@ -1,6 +1,7 @@
-<appendix>
-<title>Procedure Names: English to French</title>
+<appendix id='from-english-procedure-names'>
+<title>English to French: Procedure Names</title>
 <indexterm><primary>From English (procedure names)</primary></indexterm>
+<para>See Also: English to French (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and French to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='2'>
     <thead>
@@ -969,10 +970,6 @@
       <row>
         <entry><link linkend='command-label'>label</link></entry>
         <entry>étiquette</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-label'>label</link></entry>
-        <entry>etiquette</entry>
       </row>
       <row>
         <entry><link linkend='command-label'>label</link></entry>
@@ -2618,9 +2615,10 @@
   </tgroup>
 </informaltable>
 </appendix>
-<appendix>
-<title>Color Names: English to French</title>
+<appendix id='from-english-color-names'>
+<title>English to French: Color Names</title>
 <indexterm><primary>From English (color names)</primary></indexterm>
+<para>See Also: English to French (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and French to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='3'>
     <thead>
@@ -3306,9 +3304,10 @@
 </informaltable>
 </appendix>
 
-<appendix>
-<title>Procedure Names: French to English</title>
+<appendix id='to-english-procedure-names'>
+<title>French to English: Procedure Names</title>
 <indexterm><primary>To English (procedure names)</primary></indexterm>
+<para>See Also: English to French (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and French to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='2'>
     <thead>
@@ -5906,9 +5905,10 @@
   </tgroup>
 </informaltable>
 </appendix>
-<appendix>
-<title>Color Names: French to English</title>
+<appendix id='to-english-color-names'>
+<title>French to English: Color Names</title>
 <indexterm><primary>To English (color names)</primary></indexterm>
+<para>See Also: English to French (<link linkend='from-english-procedure-names'>procedures</link> | <link linkend='from-english-color-names'>colors</link>) and French to English (<link linkend='to-english-procedure-names'>procedures</link> | <link linkend='to-english-color-names'>colors</link>)</para>
 <informaltable>
   <tgroup cols='3'>
     <thead>

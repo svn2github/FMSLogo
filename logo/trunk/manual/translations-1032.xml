@@ -1,5 +1,5 @@
-<appendix>
-<title>Procedure Names: English to Greek</title>
+<appendix id='from-english-procedure-names'>
+<title>English to Greek: Procedure Names</title>
 <indexterm><primary>From English (procedure names)</primary></indexterm>
 <informaltable>
   <tgroup cols='2'>
@@ -1047,8 +1047,8 @@
 </informaltable>
 </appendix>
 
-<appendix>
-<title>Procedure Names: Greek to English</title>
+<appendix id='to-english-procedure-names'>
+<title>Greek to English: Procedure Names</title>
 <indexterm><primary>To English (procedure names)</primary></indexterm>
 <informaltable>
   <tgroup cols='2'>
