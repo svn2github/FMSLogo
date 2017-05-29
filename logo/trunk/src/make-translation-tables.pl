@@ -384,7 +384,11 @@ sub AddTranslation($$$$) {
   if (not $$EnglishToLocalized{$EnglishWord}) {
     @$EnglishToLocalized{$EnglishWord} = \();
   }
-  push @{$$EnglishToLocalized{$EnglishWord}}, $TranslatedWord;
+
+  # Add this word to the list of translations for $EnglishWord (if it's not already there)
+  if (not grep(/^\Q$TranslatedWord\E$/, @{$$EnglishToLocalized{$EnglishWord}})) {
+    push @{$$EnglishToLocalized{$EnglishWord}}, $TranslatedWord;
+  }
 
   $$LocalizedToEnglish{$TranslatedWord} = $EnglishWord;
 }
