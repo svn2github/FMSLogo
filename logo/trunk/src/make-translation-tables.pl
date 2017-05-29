@@ -8,7 +8,6 @@
 # documentation.
 ############################################################
 use locale; # case-insensitive sorting
-use utf8;
 use IO::File;
 use Encode qw(encode_utf8);
 use strict;
@@ -240,7 +239,7 @@ sub PrintTranslationsAsDocBook($$$$$$) {
   # add a row for each english to localized translation
   foreach my $english (sort keys %{$EnglishToLocalizedProcedure}) {
     my $englishLinkend      = GetLinkend($english);
-    my @encodedTranslations = map { encode_utf8 $_} @{$$EnglishToLocalizedProcedure{$english}};
+    my @encodedTranslations = map { encode_utf8 $_ } @{$$EnglishToLocalizedProcedure{$english}};
 
     $docbook .= "      <row>\n";
     $docbook .= "        <entry><link linkend='$englishLinkend'>$english</link></entry>\n";
@@ -273,9 +272,8 @@ sub PrintTranslationsAsDocBook($$$$$$) {
 
     # add a row for each english to localized translation
     foreach my $english (sort keys %{$EnglishToLocalizedColor}) {
-      foreach my $translation (@{$$EnglishToLocalizedColor{$english}}) {
+      foreach my $translation (map { encode_utf8 $_ } @{$$EnglishToLocalizedColor{$english}}) {
         my $colorImagePath = GetColorFileRef($english);
-        utf8::encode($translation);
         $docbook .= "      <row>\n";
         $docbook .= "        <entry>$english</entry>\n";
         $docbook .= "        <entry>$translation</entry>\n";
@@ -309,11 +307,9 @@ sub PrintTranslationsAsDocBook($$$$$$) {
 
   # add a row for each localized to English translation
   foreach my $translation (sort keys %{$LocalizedToEnglishProcedure}) {
-
     my $english        = $$LocalizedToEnglishProcedure{$translation};
+    my $translation    = encode_utf8 $translation;
     my $englishLinkend = GetLinkend($english);
-
-    utf8::encode($translation);
 
     $docbook .= "      <row>\n";
     $docbook .= "        <entry>$translation</entry>\n";
@@ -348,7 +344,7 @@ sub PrintTranslationsAsDocBook($$$$$$) {
     # add a row for each english to localized translation
     foreach my $translation (sort keys %{$LocalizedToEnglishColor}) {
       my $english = $$LocalizedToEnglishColor{$translation};
-      utf8::encode($translation);
+      $translation = encode_utf8 $translation;
 
       my $colorImagePath = GetColorFileRef($english);
 
