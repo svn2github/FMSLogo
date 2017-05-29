@@ -357,7 +357,7 @@ sub PrintTranslationsAsDocBook($$$$$$) {
       $docbook .= "      <row>\n";
       $docbook .= "        <entry>$translation</entry>\n";
       $docbook .= "        <entry>$english</entry>\n";
-      $docbook .= "        <entry><mediaobject><imageobject><imagedata align='center' fileref='$colorImagePath.png'/></imageobject></mediaobject></entry>\n";
+      $docbook .= "        <entry><mediaobject><imageobject><imagedata align='center' fileref='$colorImagePath'/></imageobject></mediaobject></entry>\n";
       $docbook .= "      </row>\n";
     }
 
