@@ -93,6 +93,26 @@ sub InitializeColorTable() {
   $colorSourceCode->close();
 }
 
+# Returns a file path to an image that shows a color for an English color.
+# dies if no such file exists.
+sub GetColorFileRef($) {
+  my $EnglishColorName = shift or die "not enough arguments";
+
+  my $rgbCode = $main::EnglishColorToRgbCode{$EnglishColorName};
+
+  # If we don't have an RGB code for this color, something has gone wrong.
+  if (not $rgbCode) {
+    die "Could not find RGB code for $EnglishColorName";
+  }
+
+  # If the image file does not exist, then something is wrong.
+  if (not -e "../manual/media/rgb$rgbCode.png") {
+    die "No RGB color image found for $EnglishColorName (../manual/media/rgb$rgbCode.png)";
+  }
+
+  return "media/rgb$rgbCode.png";
+}
+
 sub PrintShadowedProcedures($$$) {
   my $LocaleName         = shift or die "not enough arguments";
   my $English            = shift or die "not enough arguments";
@@ -256,15 +276,12 @@ sub PrintTranslationsAsDocBook($$$$$$) {
     # add a row for each english to localized translation
     foreach my $english (sort keys %{$EnglishToLocalizedColor}) {
       foreach my $translation (@{$$EnglishToLocalizedColor{$english}}) {
-        my $rgbCode = $main::EnglishColorToRgbCode{$english};
-        die "Could not find RGB code for $english" if not $rgbCode;
-        die "No RGB color image found for $english (../manual/media/rgb$rgbCode.png)" if not -e "../manual/media/rgb$rgbCode.png";
-
+        my $colorImagePath = GetColorFileRef($english);
         utf8::encode($translation);
         $docbook .= "      <row>\n";
         $docbook .= "        <entry>$english</entry>\n";
         $docbook .= "        <entry>$translation</entry>\n";
-        $docbook .= "        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb$rgbCode.png'/></imageobject></mediaobject></entry>\n";
+        $docbook .= "        <entry><mediaobject><imageobject><imagedata align='center' fileref='$colorImagePath'/></imageobject></mediaobject></entry>\n";
         $docbook .= "      </row>\n";
       }
     }
@@ -335,14 +352,12 @@ sub PrintTranslationsAsDocBook($$$$$$) {
       my $english = $$LocalizedToEnglishColor{$translation};
       utf8::encode($translation);
 
-      my $rgbCode = $main::EnglishColorToRgbCode{$english};
-      die "Could not find RGB code for $english" if not $rgbCode;
-      die "No RGB color image found for $english (../manual/media/rgb$rgbCode.png)" if not -e "../manual/media/rgb$rgbCode.png";
+      my $colorImagePath = GetColorFileRef($english);
 
       $docbook .= "      <row>\n";
       $docbook .= "        <entry>$translation</entry>\n";
       $docbook .= "        <entry>$english</entry>\n";
-      $docbook .= "        <entry><mediaobject><imageobject><imagedata align='center' fileref='media/rgb$rgbCode.png'/></imageobject></mediaobject></entry>\n";
+      $docbook .= "        <entry><mediaobject><imageobject><imagedata align='center' fileref='$colorImagePath.png'/></imageobject></mediaobject></entry>\n";
       $docbook .= "      </row>\n";
     }
 
