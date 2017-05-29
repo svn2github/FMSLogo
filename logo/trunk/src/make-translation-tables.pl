@@ -470,9 +470,26 @@ sub MakeTranslationTables($$$) {
   #
   # extract the library routines and primitives that were translated with COPYDEF
   #
+  my $inProcedureDefinition = 0;
+
+  my @to = ('to');
+  push @to, @{$englishToLocalizedProcedure{'to'}} if $englishToLocalizedProcedure{'to'};
+  my $toLineRegExp = "^\\s*(" . join('|', @to) . ")\\b";
+
+  my @end = ('end');
+  push @end, @{$englishToLocalizedProcedure{'end'}} if $englishToLocalizedProcedure{'end'};
+  my $endLineRegExp = "^\\s*(" . join('|', @end) . ")\\b";
+
   $localizedfile = new IO::File "startup-$LocaleId.logoscript" or die $!;
   while (<$localizedfile>) {
-    if (m/copydef\s+"([\S]+)\s+"([^]\s]+)/i) {
+    if (/$toLineRegExp/i) {
+      # This is a TO line
+      $inProcedureDefinition = 1;
+    } elsif (/$endLineRegExp/i) {
+      # This is an END line
+      $inProcedureDefinition = 0;
+    } elsif (not $inProcedureDefinition and /copydef\s+"([\S]+)\s+"([^]\s]+)/i) {
+      # This is a COPYDEF that is at the top-level (not within a procedure definition)
       my $newname  = lc $1;
       my $original = lc $2;
 
@@ -484,21 +501,13 @@ sub MakeTranslationTables($$$) {
       }
 
       if ($original ne $newname) {
-
         # Only add procedures to the translation tables which are documented.
         if (IsDocumentedEnglishProcedure($original)) {
-
-          # The Italian startup.logoscript re-implements SLOWDRAW, which has a
-          # COPYDEF "FORWARD "FD.  To support this pattern we ignore any COPYDEF
-          # that copy an English abbreviation to equal its long procedure name (or vice-vera).
-          if ((not $main::EnglishAbbreviation{$newname}  or $main::EnglishAbbreviation{$newname}  ne $original) and
-              (not $main::EnglishAbbreviation{$original} or $main::EnglishAbbreviation{$original} ne $newname)) {
-            AddTranslation(
-              $original,
-              $newname,
-              \%englishToLocalizedProcedure,
-              \%localizedToEnglishProcedure);
-          }
+          AddTranslation(
+            $original,
+            $newname,
+            \%englishToLocalizedProcedure,
+            \%localizedToEnglishProcedure);
         }
       }
     }

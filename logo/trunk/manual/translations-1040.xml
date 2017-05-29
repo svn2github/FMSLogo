@@ -96,10 +96,6 @@
         <entry>indietro</entry>
       </row>
       <row>
-        <entry><link linkend='command-back'>back</link></entry>
-        <entry>origback</entry>
-      </row>
-      <row>
         <entry><link linkend='command-backslashedp'>backslashed?</link></entry>
         <entry>barrarovesciata?</entry>
       </row>
@@ -178,10 +174,6 @@
       <row>
         <entry><link linkend='command-back'>bk</link></entry>
         <entry>i</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-back'>bk</link></entry>
-        <entry>indietro</entry>
       </row>
       <row>
         <entry><link linkend='command-butlast'>bl</link></entry>
@@ -576,10 +568,6 @@
         <entry>a</entry>
       </row>
       <row>
-        <entry><link linkend='command-forward'>fd</link></entry>
-        <entry>avanti</entry>
-      </row>
-      <row>
         <entry><link linkend='command-fence'>fence</link></entry>
         <entry>muro</entry>
       </row>
@@ -638,10 +626,6 @@
       <row>
         <entry><link linkend='command-forward'>forward</link></entry>
         <entry>avanti</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-forward'>forward</link></entry>
-        <entry>origforward</entry>
       </row>
       <row>
         <entry><link linkend='command-fput'>fput</link></entry>
@@ -3067,7 +3051,7 @@
       </row>
       <row>
         <entry>avanti</entry>
-        <entry><link linkend='command-forward'>fd</link></entry>
+        <entry><link linkend='command-forward'>forward</link></entry>
       </row>
       <row>
         <entry>barrarovesciata?</entry>
@@ -3667,7 +3651,7 @@
       </row>
       <row>
         <entry>indietro</entry>
-        <entry><link linkend='command-back'>bk</link></entry>
+        <entry><link linkend='command-back'>back</link></entry>
       </row>
       <row>
         <entry>infila</entry>
@@ -4100,14 +4084,6 @@
       <row>
         <entry>ordina</entry>
         <entry><link linkend='command-sort'>sort</link></entry>
-      </row>
-      <row>
-        <entry>origback</entry>
-        <entry><link linkend='command-back'>back</link></entry>
-      </row>
-      <row>
-        <entry>origforward</entry>
-        <entry><link linkend='command-forward'>forward</link></entry>
       </row>
       <row>
         <entry>parola</entry>
