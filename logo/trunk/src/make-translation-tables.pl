@@ -196,7 +196,7 @@ sub PrintTranslationsAsDocBook($$$$$$) {
   my $LocalizedToEnglishProcedure = shift or die "not enough arguments";
   my $EnglishToLocalizedColor     = shift or die "not enough arguments";
   my $LocalizedToEnglishColor     = shift or die "not enough arguments";
-  
+
   # To keep the the Help menu clean, there is only one link into the appendix
   # from the menu for each direction of the translations.  Since the procedure
   # name table can become large, it would be easy for a user not to notice the
@@ -204,20 +204,20 @@ sub PrintTranslationsAsDocBook($$$$$$) {
   # translated color names are discoverable, we add navigation links.
   my $navigationLinks = '';
   if (%{$EnglishToLocalizedColor} or %{$LocalizedToEnglishColor}) {
-      $navigationLinks .= "<para>";
-      $navigationLinks .= "See Also: ";
-      $navigationLinks .= "English to $LocaleName (";
-      $navigationLinks .= "<link linkend='from-english-procedure-names'>procedures</link> | ";
-      $navigationLinks .= "<link linkend='from-english-color-names'>colors</link>";
-      $navigationLinks .= ")";
-      $navigationLinks .= " and ";
-      $navigationLinks .= "$LocaleName to English (";
-      $navigationLinks .= "<link linkend='to-english-procedure-names'>procedures</link> | ";
-      $navigationLinks .= "<link linkend='to-english-color-names'>colors</link>";
-      $navigationLinks .= ")";
-      $navigationLinks .= "</para>\n";
+    $navigationLinks .= "<para>";
+    $navigationLinks .= "See Also: ";
+    $navigationLinks .= "English to $LocaleName (";
+    $navigationLinks .= "<link linkend='from-english-procedure-names'>procedures</link> | ";
+    $navigationLinks .= "<link linkend='from-english-color-names'>colors</link>";
+    $navigationLinks .= ")";
+    $navigationLinks .= " and ";
+    $navigationLinks .= "$LocaleName to English (";
+    $navigationLinks .= "<link linkend='to-english-procedure-names'>procedures</link> | ";
+    $navigationLinks .= "<link linkend='to-english-color-names'>colors</link>";
+    $navigationLinks .= ")";
+    $navigationLinks .= "</para>\n";
   }
-  
+
 
   my $docbook = '';
 
@@ -260,7 +260,7 @@ sub PrintTranslationsAsDocBook($$$$$$) {
     $docbook .= "<appendix id='from-english-color-names'>\n";
     $docbook .= "<title>English to $LocaleName: Color Names</title>\n";
     $docbook .= "<indexterm><primary>From English (color names)</primary></indexterm>\n";
-    
+
     $docbook .= $navigationLinks;
     $docbook .= "<informaltable>\n";
     $docbook .= "  <tgroup cols='3'>\n";
