@@ -111,7 +111,7 @@ var previousinstalldir ; full path to the uninstaller
 LangString FMSLogoDescription ${LANG_ENGLISH}     "Install the FMSLogo programming environment."
 LangString FMSLogoDescription ${LANG_GERMAN}      "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
 LangString FMSLogoDescription ${LANG_SPANISH}     "Instale el entorno de programación FMSLogo."
-LangString FMSLogoDescription ${LANG_ITALIAN}     "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
+LangString FMSLogoDescription ${LANG_ITALIAN}     "Installa l'ambiente di programmazione FMSLogo."
 LangString FMSLogoDescription ${LANG_PORTUGUESE}  "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
 LangString FMSLogoDescription ${LANG_FRENCH}      "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
 LangString FMSLogoDescription ${LANG_GREEK}       "Install the FMSLogo programming environment." ; NOT_YET_LOCALIZED
@@ -137,7 +137,7 @@ LangString DesktopShortcut ${LANG_SIMPCHINESE} "×ÀÃæ¿ì½Ý·½Ê½"
 LangString DesktopShortcutDescription ${LANG_ENGLISH}     "Put a shortcut to FMSLogo on the desktop."
 LangString DesktopShortcutDescription ${LANG_GERMAN}      "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
 LangString DesktopShortcutDescription ${LANG_SPANISH}     "Ponga un acceso directo a FMSLogo sobre el escritorio."
-LangString DesktopShortcutDescription ${LANG_ITALIAN}     "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
+LangString DesktopShortcutDescription ${LANG_ITALIAN}     "Aggiungi un collegamento a FMSLogo sul Desktop."
 LangString DesktopShortcutDescription ${LANG_PORTUGUESE}  "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
 LangString DesktopShortcutDescription ${LANG_FRENCH}      "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
 LangString DesktopShortcutDescription ${LANG_GREEK}       "Put a shortcut to FMSLogo on the desktop." ; NOT_YET_LOCALIZED
@@ -150,7 +150,7 @@ LangString DesktopShortcutDescription ${LANG_SIMPCHINESE} "ÔÚ×ÀÃæ·ÅÖÃFMSLogo¿ì½Ý
 LangString ScreenSaver ${LANG_ENGLISH}     "Screen Saver"
 LangString ScreenSaver ${LANG_GERMAN}      "Screen Saver" ; NOT_YET_LOCALIZED
 LangString ScreenSaver ${LANG_SPANISH}     "Salvapantallas"
-LangString ScreenSaver ${LANG_ITALIAN}     "Screen Saver" ; NOT_YET_LOCALIZED
+LangString ScreenSaver ${LANG_ITALIAN}     "Salvaschermo"
 LangString ScreenSaver ${LANG_PORTUGUESE}  "Screen Saver" ; NOT_YET_LOCALIZED
 LangString ScreenSaver ${LANG_FRENCH}      "Screen Saver" ; NOT_YET_LOCALIZED
 LangString ScreenSaver ${LANG_GREEK}       "Screen Saver" ; NOT_YET_LOCALIZED
@@ -163,7 +163,7 @@ LangString ScreenSaver ${LANG_SIMPCHINESE} "ÆÁ±£"
 LangString ScreenSaverDescription ${LANG_ENGLISH}     "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this."
 LangString ScreenSaverDescription ${LANG_GERMAN}      "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
 LangString ScreenSaverDescription ${LANG_SPANISH}     "Instale un salvapantallas que puede ejecutar programas de FMSLogo.$\n$\nDebe ser un administrador para hacerlo."
-LangString ScreenSaverDescription ${LANG_ITALIAN}     "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
+LangString ScreenSaverDescription ${LANG_ITALIAN}     "Installa un salvaschermo che può eseguire programmi FMSLogo.$\n$\nDevi avere diritti di amministratore per farlo."
 LangString ScreenSaverDescription ${LANG_PORTUGUESE}  "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
 LangString ScreenSaverDescription ${LANG_FRENCH}      "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
 LangString ScreenSaverDescription ${LANG_GREEK}       "Install a screensaver that can run FMSLogo programs.$\n$\nYou must be an administrator to do this." ; NOT_YET_LOCALIZED
@@ -216,7 +216,7 @@ LangString AlreadyRunningCannotUninstallMessage ${LANG_SIMPCHINESE} "±¾°²×°³ÌÐò»
 LangString CannotFindInstallationMessage ${LANG_ENGLISH}     "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue."
 LangString CannotFindInstallationMessage ${LANG_GERMAN}      "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
 LangString CannotFindInstallationMessage ${LANG_SPANISH}     "O FMSLogo ya ha sido borrado o no tiene permiso para desinstalarlo.$\nDe cualquier manera, esta desinstalación no puede continuar."
-LangString CannotFindInstallationMessage ${LANG_ITALIAN}     "L'installatore o FMSLogo sono già in esecuzione.$\nL'installazione non può continuare."
+LangString CannotFindInstallationMessage ${LANG_ITALIAN}     "FMSLogo è stato già disinstallato oppure non hai i permessi per disinstallarlo.$\nIn entrambi i casi la disinstallazione non può continuare."
 LangString CannotFindInstallationMessage ${LANG_PORTUGUESE}  "Ou o FMSLogo já foi deletado ou você não possui permissão para desinstalá-lo.$\nEm ambos os casos, essa desinstalação não poderá continuar." 
 LangString CannotFindInstallationMessage ${LANG_FRENCH}      "FMSLogo a déjà été supprimé ou vous n'avez pas la permission de le désinstaller.$\nLa désinstallation ne peut continuer." 
 LangString CannotFindInstallationMessage ${LANG_GREEK}       "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
