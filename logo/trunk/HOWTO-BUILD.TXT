@@ -47,7 +47,7 @@ Checkout the trunk of the "logo" project from FMSLogo's subversion repository.
 
 Once these steps are complete, you can build the entire FMSLogo package by running
 "make binaryexe" in the fmslogo-trunk directory.  This will take a long time
-as it builds FMSLogo many times over, one for each supported language.
+as it builds FMSLogo many times over, once for each supported language.
 If you only want to build the English fmslogo.exe, you can "cd src" and run "make".
 (The default Makefile target builds the English version.)  Similarly, "make" in the
 "manual" directory only builds the English manual and "make" in the "screensaver"
