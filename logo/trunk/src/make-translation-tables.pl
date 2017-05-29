@@ -176,14 +176,36 @@ sub PrintTranslationsAsDocBook($$$$$$) {
   my $LocalizedToEnglishProcedure = shift or die "not enough arguments";
   my $EnglishToLocalizedColor     = shift or die "not enough arguments";
   my $LocalizedToEnglishColor     = shift or die "not enough arguments";
-
+  
+  # To keep the the Help menu clean, there is only one link into the appendix
+  # from the menu for each direction of the translations.  Since the procedure
+  # name table can become large, it would be easy for a user not to notice the
+  # translation for the color names that follow it.  To make sure that the
+  # translated color names are discoverable, we add navigation links.
+  my $navigationLinks = '';
+  if (%{$EnglishToLocalizedColor} or %{$LocalizedToEnglishColor}) {
+      $navigationLinks .= "<para>";
+      $navigationLinks .= "See Also: ";
+      $navigationLinks .= "English to $LocaleName (";
+      $navigationLinks .= "<link linkend='from-english-procedure-names'>procedures</link> | ";
+      $navigationLinks .= "<link linkend='from-english-color-names'>colors</link>";
+      $navigationLinks .= ")";
+      $navigationLinks .= " and ";
+      $navigationLinks .= "$LocaleName to English (";
+      $navigationLinks .= "<link linkend='to-english-procedure-names'>procedures</link> | ";
+      $navigationLinks .= "<link linkend='to-english-color-names'>colors</link>";
+      $navigationLinks .= ")";
+      $navigationLinks .= "</para>\n";
+  }
+  
 
   my $docbook = '';
 
-  $docbook .= "<appendix>\n";
-  $docbook .= "<title>Procedure Names: English to $LocaleName</title>\n";
+  $docbook .= "<appendix id='from-english-procedure-names'>\n";
+  $docbook .= "<title>English to $LocaleName: Procedure Names</title>\n";
   $docbook .= "<indexterm><primary>From English (procedure names)</primary></indexterm>\n";
 
+  $docbook .= $navigationLinks;
   $docbook .= "<informaltable>\n";
   $docbook .= "  <tgroup cols='2'>\n";
   $docbook .= "    <thead>\n";
@@ -215,11 +237,12 @@ sub PrintTranslationsAsDocBook($$$$$$) {
 
   # If the color names have been translated, include a table for those.
   if (%{$EnglishToLocalizedColor}) {
-    $docbook .= "<appendix>\n";
-    $docbook .= "<title>Color Names: English to $LocaleName</title>\n";
+    $docbook .= "<appendix id='from-english-color-names'>\n";
+    $docbook .= "<title>English to $LocaleName: Color Names</title>\n";
     $docbook .= "<indexterm><primary>From English (color names)</primary></indexterm>\n";
+    
+    $docbook .= $navigationLinks;
     $docbook .= "<informaltable>\n";
-
     $docbook .= "  <tgroup cols='3'>\n";
     $docbook .= "    <thead>\n";
     $docbook .= "      <row>\n";
@@ -233,9 +256,10 @@ sub PrintTranslationsAsDocBook($$$$$$) {
     # add a row for each english to localized translation
     foreach my $english (sort keys %{$EnglishToLocalizedColor}) {
       foreach my $translation (@{$$EnglishToLocalizedColor{$english}}) {
-          my $rgbCode = $main::EnglishColorToRgbCode{$english};
-          die "Could not find RGB code for $english" if not $rgbCode;
-          die "No RGB color image found for $english (../manual/media/rgb$rgbCode.png)" if not -e "../manual/media/rgb$rgbCode.png";
+        my $rgbCode = $main::EnglishColorToRgbCode{$english};
+        die "Could not find RGB code for $english" if not $rgbCode;
+        die "No RGB color image found for $english (../manual/media/rgb$rgbCode.png)" if not -e "../manual/media/rgb$rgbCode.png";
+
         utf8::encode($translation);
         $docbook .= "      <row>\n";
         $docbook .= "        <entry>$english</entry>\n";
@@ -253,9 +277,11 @@ sub PrintTranslationsAsDocBook($$$$$$) {
 
   $docbook .= "\n";
 
-  $docbook .= "<appendix>\n";
-  $docbook .= "<title>Procedure Names: $LocaleName to English</title>\n";
+  $docbook .= "<appendix id='to-english-procedure-names'>\n";
+  $docbook .= "<title>$LocaleName to English: Procedure Names</title>\n";
   $docbook .= "<indexterm><primary>To English (procedure names)</primary></indexterm>\n";
+
+  $docbook .= $navigationLinks;
   $docbook .= "<informaltable>\n";
   $docbook .= "  <tgroup cols='2'>\n";
   $docbook .= "    <thead>\n";
@@ -288,11 +314,12 @@ sub PrintTranslationsAsDocBook($$$$$$) {
 
   # If the color names have been translated, include a table for those.
   if (%{$LocalizedToEnglishColor}) {
-    $docbook .= "<appendix>\n";
-    $docbook .= "<title>Color Names: $LocaleName to English</title>\n";
+    $docbook .= "<appendix id='to-english-color-names'>\n";
+    $docbook .= "<title>$LocaleName to English: Color Names</title>\n";
     $docbook .= "<indexterm><primary>To English (color names)</primary></indexterm>\n";
-    $docbook .= "<informaltable>\n";
 
+    $docbook .= $navigationLinks;
+    $docbook .= "<informaltable>\n";
     $docbook .= "  <tgroup cols='3'>\n";
     $docbook .= "    <thead>\n";
     $docbook .= "      <row>\n";
