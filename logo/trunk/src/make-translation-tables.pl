@@ -408,7 +408,6 @@ sub MakeTranslationTables($$$) {
   #
   my $englishfile = new IO::File "localizedstrings-en.h" or die $!;
   while (<$englishfile>) {
-    chomp;
     if (m/^\#define\s+LOCALIZED_ALTERNATE_(\w+)\s*"([^"]+)"/) {
       $symbolToEnglishProcedure{$1} = $2;
     } elsif (m/^\#define\s+LOCALIZED_COLOR_(\w+)\s*"([^"]+)"/) {
