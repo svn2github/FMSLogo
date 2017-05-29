@@ -462,18 +462,25 @@ sub MakeTranslationTables($$$) {
       # until we find the original.
       while ($localizedToEnglishProcedure{$original} &&
              $localizedToEnglishProcedure{$original} ne $original) {
-        $original = $localizedToEnglishProcedure{$original};
+        $original = lc $localizedToEnglishProcedure{$original};
       }
 
-      if (lc $original ne lc $newname) {
+      if ($original ne $newname) {
 
         # Only add procedures to the translation tables which are documented.
         if (IsDocumentedEnglishProcedure($original)) {
-          AddTranslation(
-            $original,
-            $newname,
-            \%englishToLocalizedProcedure,
-            \%localizedToEnglishProcedure);
+
+          # The Italian startup.logoscript re-implements SLOWDRAW, which has a
+          # COPYDEF "FORWARD "FD.  To support this pattern we ignore any COPYDEF
+          # that copy an English abbreviation to equal its long procedure name (or vice-vera).
+          if ((not $main::EnglishAbbreviation{$newname}  or $main::EnglishAbbreviation{$newname}  ne $original) and
+              (not $main::EnglishAbbreviation{$original} or $main::EnglishAbbreviation{$original} ne $newname)) {
+            AddTranslation(
+              $original,
+              $newname,
+              \%englishToLocalizedProcedure,
+              \%localizedToEnglishProcedure);
+          }
         }
       }
     }
