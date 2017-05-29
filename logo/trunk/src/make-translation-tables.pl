@@ -10,6 +10,7 @@
 use locale; # case-insensitive sorting
 use utf8;
 use IO::File;
+use Encode qw(encode_utf8);
 use strict;
 
 # Procedures whose documentation is located in the documentation
@@ -238,16 +239,13 @@ sub PrintTranslationsAsDocBook($$$$$$) {
 
   # add a row for each english to localized translation
   foreach my $english (sort keys %{$EnglishToLocalizedProcedure}) {
+    my $englishLinkend      = GetLinkend($english);
+    my @encodedTranslations = map { encode_utf8 $_} @{$$EnglishToLocalizedProcedure{$english}};
 
-    my $englishLinkend = GetLinkend($english);
-
-    foreach my $translation (@{$$EnglishToLocalizedProcedure{$english}}) {
-      utf8::encode($translation);
-      $docbook .= "      <row>\n";
-      $docbook .= "        <entry><link linkend='$englishLinkend'>$english</link></entry>\n";
-      $docbook .= "        <entry>$translation</entry>\n";
-      $docbook .= "      </row>\n";
-    }
+    $docbook .= "      <row>\n";
+    $docbook .= "        <entry><link linkend='$englishLinkend'>$english</link></entry>\n";
+    $docbook .= "        <entry><literallayout>" . join("\n", @encodedTranslations) . "</literallayout></entry>\n";
+    $docbook .= "      </row>\n";
   }
 
   $docbook .= "    </tbody>\n";

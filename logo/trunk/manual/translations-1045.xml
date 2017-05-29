@@ -13,147 +13,141 @@
     <tbody>
       <row>
         <entry><link linkend='command-back'>back</link></entry>
-        <entry>wstecz</entry>
+        <entry><literallayout>wstecz</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-back'>bk</link></entry>
-        <entry>ws</entry>
+        <entry><literallayout>ws</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-clearscreen'>clearscreen</link></entry>
-        <entry>czyæ</entry>
+        <entry><literallayout>czyæ</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-end'>end</link></entry>
-        <entry>ju¿</entry>
+        <entry><literallayout>ju¿</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-false'>false</link></entry>
-        <entry>fa³sz</entry>
+        <entry><literallayout>fa³sz</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-forward'>fd</link></entry>
-        <entry>np</entry>
+        <entry><literallayout>np</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-fill'>fill</link></entry>
-        <entry>zamaluj</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-fill'>fill</link></entry>
-        <entry>zam</entry>
+        <entry><literallayout>zamaluj
+zam</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-forward'>forward</link></entry>
-        <entry>naprzód</entry>
+        <entry><literallayout>naprzód</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
-        <entry>schowajmnie</entry>
+        <entry><literallayout>schowajmnie</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-hideturtle'>ht</link></entry>
-        <entry>s¿</entry>
+        <entry><literallayout>s¿</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-if'>if</link></entry>
-        <entry>jeli</entry>
+        <entry><literallayout>jeli</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-iffalse'>iffalse</link></entry>
-        <entry>jesliNie</entry>
+        <entry><literallayout>jesliNie</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-iftrue'>iftrue</link></entry>
-        <entry>jeliTak</entry>
+        <entry><literallayout>jeliTak</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-label'>label</link></entry>
-        <entry>wpisztekst</entry>
+        <entry><literallayout>wpisztekst</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-left'>left</link></entry>
-        <entry>lewo</entry>
+        <entry><literallayout>lewo</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-left'>lt</link></entry>
-        <entry>lw</entry>
+        <entry><literallayout>lw</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-pendown'>pd</link></entry>
-        <entry>opu</entry>
+        <entry><literallayout>opu</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-pendown'>pendown</link></entry>
-        <entry>opuæ</entry>
+        <entry><literallayout>opuæ</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-penup'>penup</link></entry>
-        <entry>podnie</entry>
+        <entry><literallayout>podnie</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-penup'>pu</link></entry>
-        <entry>pod</entry>
+        <entry><literallayout>pod</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-repeat'>repeat</link></entry>
-        <entry>powtórz</entry>
+        <entry><literallayout>powtórz</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-right'>right</link></entry>
-        <entry>prawo</entry>
+        <entry><literallayout>prawo</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-right'>rt</link></entry>
-        <entry>pw</entry>
+        <entry><literallayout>pw</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-setfloodcolor'>setfc</link></entry>
-        <entry>ukm</entry>
+        <entry><literallayout>ukm</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
-        <entry>ustalKolMal</entry>
-      </row>
-      <row>
-        <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
-        <entry>ustalkolzam</entry>
+        <entry><literallayout>ustalKolMal
+ustalkolzam</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-setpencolor'>setpc</link></entry>
-        <entry>ukp</entry>
+        <entry><literallayout>ukp</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
-        <entry>ustalKolPis</entry>
+        <entry><literallayout>ustalKolPis</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-setpensize'>setpensize</link></entry>
-        <entry>ustalGruboæ</entry>
+        <entry><literallayout>ustalGruboæ</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
-        <entry>ustalKolorT³a</entry>
+        <entry><literallayout>ustalKolorT³a</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-showturtle'>showturtle</link></entry>
-        <entry>poka¿mnie</entry>
+        <entry><literallayout>poka¿mnie</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-sqrt'>sqrt</link></entry>
-        <entry>pwk</entry>
+        <entry><literallayout>pwk</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-showturtle'>st</link></entry>
-        <entry>p¿</entry>
+        <entry><literallayout>p¿</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-to'>to</link></entry>
-        <entry>oto</entry>
+        <entry><literallayout>oto</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-true'>true</link></entry>
-        <entry>prawda</entry>
+        <entry><literallayout>prawda</literallayout></entry>
       </row>
     </tbody>
   </tgroup>

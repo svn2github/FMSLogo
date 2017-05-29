@@ -12,27 +12,27 @@
     <tbody>
       <row>
         <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
-        <entry>floodcolour</entry>
+        <entry><literallayout>floodcolour</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-pencolor'>pencolor</link></entry>
-        <entry>pencolour</entry>
+        <entry><literallayout>pencolour</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-screencolor'>screencolor</link></entry>
-        <entry>screencolour</entry>
+        <entry><literallayout>screencolour</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
-        <entry>setfloodcolour</entry>
+        <entry><literallayout>setfloodcolour</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
-        <entry>setpencolour</entry>
+        <entry><literallayout>setpencolour</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
-        <entry>setscreencolour</entry>
+        <entry><literallayout>setscreencolour</literallayout></entry>
       </row>
     </tbody>
   </tgroup>
