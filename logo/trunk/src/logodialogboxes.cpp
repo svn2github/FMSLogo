@@ -19,9 +19,13 @@
 #ifndef USE_PRECOMPILED_HEADER
    #include "dlgwind.h"
 
-   #include <windows.h>
-   #include <windowsx.h> // for combobox macros
-   #include <commctrl.h> // for combobox style manifest constants
+   #ifndef WX_PURE
+     #include <windows.h>
+     #include <windowsx.h> // for combobox macros
+     #include <commctrl.h> // for combobox style manifest constants
+   #else
+     #define MAX_PATH (260)
+   #endif // WX_PURE
 
    #include <wx/app.h>
    #include <wx/button.h>

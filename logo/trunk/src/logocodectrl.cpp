@@ -1,6 +1,9 @@
 #include "pch.h"
 #ifndef USE_PRECOMPILED_HEADER
-   #include <windows.h>      // for MAKELCID and language functions
+   #ifndef WX_PURE
+     #include <windows.h>    // for MAKELCID and language functions
+   #endif
+
    #include <wx/gdicmn.h>    // for wxPoint
    #include <wx/printdlg.h>
    #include <wx/msgdlg.h>
