@@ -80,6 +80,7 @@
     #include "netwind.h"
     #include "questionbox.h"
     #include "cursor.h" // lsetcursorarrow
+    #include "files.h" // silent_load
     #include "stringadapter.h"
     #include "debugheap.h"
 
@@ -1384,6 +1385,18 @@ static void EraseContentsOfWorkspace()
     lerase(workspace_contents);
     gcref(workspace_contents);
 
+    // Many non-English translations either translate the names of
+    // library procedures using a COPYDEF or implement complete replacements
+    // within their startup.logoscript file.  Since the intention of erasing the
+    // workspace was to restore FMSLogo to its original state (not to erase
+    // translated versions of library procedures), we restore them by reloading
+    // the startup.logoscript file.
+    char startupScript[MAX_PATH + 1];
+    MakeHelpPathName(startupScript, "startup.logoscript");
+    silent_load(NIL, startupScript);
+
+    // Now that the workspace has no user changes, mark it as not needing to
+    // be saved.
     IsDirty = false;
 }
 
