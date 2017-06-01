@@ -1391,9 +1391,31 @@ static void EraseContentsOfWorkspace()
     // workspace was to restore FMSLogo to its original state (not to erase
     // translated versions of library procedures), we restore them by reloading
     // the startup.logoscript file.
+
+    // If a startup.logscript file contains a COPYDEF, then loading it will
+    // load any file whose name matches the copied routine. For example,
+    // if startup.logoscript runs the instruction
+    //  
+    //     COPYDEF "MYPROC "PROC
+    //
+    // Then FMSLogo would attempt to load "PROC.LGO from the current working
+    // directory.  If such a file exists and contains logo procedures, then
+    // instead of erasing the workspace, we'd end up with the contents of that
+    // file in the workpace, which is not what was desired.
+    //
+    // To avoid this, or rather to have the same behavior as when FMSLogo first
+    // started, we switch to the FMSLogo directory before loading the
+    // startup.logoscript file.
+    const wxString savedWorkingDirectory(wxGetCwd());
+    wxSetWorkingDirectory(WXSTRING(g_FmslogoBaseDirectory));
+
+    // Load the startup script.
     char startupScript[MAX_PATH + 1];
     MakeHelpPathName(startupScript, "startup.logoscript");
-    silent_load(NIL, startupScript);
+    fileload(startupScript);
+
+    // Restore the previous working directory.
+    wxSetWorkingDirectory(savedWorkingDirectory);
 
     // Now that the workspace has no user changes, mark it as not needing to
     // be saved.
@@ -1508,6 +1530,9 @@ void CMainFrame::OnFileOpen(wxCommandEvent& WXUNUSED(Event))
         this);                                      // parent window
     if (!fileToLoad.empty())
     {
+        // erase the contents of the workspace
+        EraseContentsOfWorkspace();
+
         // The user made a selection.
         // Save it for seeding a default in future dialog boxes.
         m_LastLoadedLogoFile.Assign(fileToLoad);
@@ -1521,9 +1546,6 @@ void CMainFrame::OnFileOpen(wxCommandEvent& WXUNUSED(Event))
 
         // start with a clean plate
         m_IsNewFile = false;
-
-        // erase the contents of the workspace
-        EraseContentsOfWorkspace();
 
         start_execution();
 
