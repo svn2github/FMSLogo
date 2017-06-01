@@ -491,7 +491,6 @@ NODE *lwait(NODE *args)
         //   (input / 60) * 1000 = input * 50 / 3 
         DWORD totalTicksToWait = g_round(input * 50.0 / 3.0);
 
-#ifdef WX_PURE
         // Do a busy sleep so that a long WAIT can be interrupted by a HALT
         wxLongLong endTime = wxGetUTCTimeMillis() + totalTicksToWait;
         while (wxGetUTCTimeMillis() < endTime && !IsTimeToHalt) 
@@ -502,24 +501,9 @@ NODE *lwait(NODE *args)
             {
                 // We're more than 10 ms away from the target time,
                 // so we don't risk missing our target time by yielding.
-                wxMicroSleep(1);  // yield
+                wxMilliSleep(1);  // yield
             }
         }     
-#else
-        // Do a busy sleep so that a long WAIT can be interrupted by a HALT
-        DWORD endTime = GetTickCount() + totalTicksToWait;
-        while (GetTickCount() < endTime && !IsTimeToHalt) 
-        {
-            MyMessageScan();
-
-            if (GetTickCount() + 10 < endTime)
-            {
-                // We're more than 10 ms away from the target time,
-                // so we don't risk missing our target time by yielding.
-                Sleep(1);  // yield
-            }
-        }
-#endif
     }
 
     return Unbound;
