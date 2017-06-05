@@ -6,17 +6,24 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>ELLIPSE2</command> <parameter>crosswise.semiaxis</parameter> <parameter>inline.semiaxis</parameter></synopsis>
+<synopsis><command>ELLIPSE2</command> <parameter>inline.semiaxis</parameter> <parameter>crosswise.semiaxis</parameter></synopsis>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Moves the turtle clockwise in an ellipse.
-The size of the ellipse is based on the <parameter>crosswise.semiaxis</parameter> and <parameter>inline.semiaxis</parameter> inputs.
-The <parameter>crosswise.semiaxis</parameter> input is the distance from the center-point of the ellipse to the ellipse's edge in the direction perpendicular to the turtle's current heading.
+Draws an ellipse as if the turtle moved clockwise in an ellipse.
+The size and shape of the ellipse are determined by the <parameter>inline.semiaxis</parameter> and <parameter>crosswise.semiaxis</parameter> inputs.
 The <parameter>inline.semiaxis</parameter> input is the distance from the center-point of the ellipse to the ellipse's edge in the direction which the turtle is currently heading.
+The <parameter>crosswise.semiaxis</parameter> input is the distance from the center-point of the ellipse to the ellipse's edge in the direction perpendicular to the turtle's current heading.
+</para>
+<para>
+The ellipse is drawn tangent to the turtle's current position and heading.
+This tangent point is at the extreme of the ellipse's crosswise axis and the whole ellipse appears to the turtle's right.
+</para>
+<para>
+Note that the <parameter>inline.semiaxis</parameter> and <parameter>crosswise.semiaxis</parameter> inputs are given in the reverse order as the inputs to the <link linkend="command-ellipse">ELLIPSE</link> command.
 </para>
 </listitem>
 </varlistentry>
