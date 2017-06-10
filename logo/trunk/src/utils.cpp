@@ -1,5 +1,4 @@
 /*
- *
  *       Copyright (C) 1995 by the Regents of the University of California
  *       Copyright (C) 1995 by George Mills
  *
@@ -18,13 +17,31 @@
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+// This file implements functions for saving and reading global configuration
+// options.  It has a Windows-specific native implementation in addition to the
+// WX_PURE portion to ensure that configuration set in older version of FMSLogo
+// continue to work.  This could be rewritten to be platform-independent if the
+// installer included some migration logic to move from the legacy FMSLogo format
+// to a wxWidgets-compatible format.
+
 #include "pch.h"
 #ifndef USE_PRECOMPILED_HEADER
-    #include <windows.h>
+
+    #ifndef WX_PURE
+        #include <windows.h>
+    #endif
+
     #include <stdio.h>
+    #include <string.h>
+    #include <wx/config.h>
+    #include <stringadapter.h>
+
     #include "localizedstrings.h"
     #include "debugheap.h"
+
 #endif
+
+#ifndef WX_PURE
 
 // the name of the FMSLogo registry key under HKCU
 const char FMSLOGO_REGISTRY_KEY_NAME[] = "Software\\FMSLogo";
@@ -90,12 +107,18 @@ OpenFmsLogoKeyForGettingValue()
     return fmslogoKey;
 }
 
+#endif // !define WX_PURE
+
 void
 SetConfigurationInt(
     const char *        Name,
     int                 Value
     )
 {
+#ifdef WX_PURE
+    wxConfig config("fmslogo");
+    config.Write(WXSTRING(Name), Value);
+#else
     HKEY fmslogoKey = OpenFmsLogoKeyForSettingValue();
     if (fmslogoKey != NULL)
     {
@@ -112,6 +135,7 @@ SetConfigurationInt(
 
         RegCloseKey(fmslogoKey);
     }
+#endif // WX_PURE    
 }
 
 int
@@ -120,6 +144,11 @@ GetConfigurationInt(
     int                 DefaultValue
     )
 {
+#ifdef WX_PURE
+    wxConfig config("fmslogo");
+    long longValue = config.ReadLong(WXSTRING(Name), DefaultValue);
+    return longValue;
+#else    
     int returnValue = DefaultValue;
 
     HKEY fmslogoKey = OpenFmsLogoKeyForGettingValue();
@@ -149,6 +178,7 @@ GetConfigurationInt(
     }
 
     return returnValue;
+#endif // WX_PURE    
 }
 
 void
@@ -157,6 +187,10 @@ SetConfigurationString(
     const char *        Value
     )
 {
+#ifdef WX_PURE
+    wxConfig config("fmslogo");
+    config.Write(WXSTRING(Name), WXSTRING(Value));
+#else
     HKEY fmslogoKey = OpenFmsLogoKeyForSettingValue();
     if (fmslogoKey != NULL)
     {
@@ -173,6 +207,7 @@ SetConfigurationString(
 
         RegCloseKey(fmslogoKey);
     }
+#endif // WX_PURE    
 }
 
 void
@@ -187,6 +222,15 @@ GetConfigurationString(
     memset(Value, 0xDD, ValueLength);
 #endif
 
+#ifdef WX_PURE    
+    wxConfig config("fmslogo");
+    wxString value = config.Read(WXSTRING(Name), WXSTRING(DefaultValue));
+
+    // Copy the configuration into the Value buffer
+    size_t lengthToCopy = std::min(ValueLength - 1, value.Len());
+    memcpy(Value, WXSTRING_TO_STRING(value), lengthToCopy);
+    Value[lengthToCopy] = '\0';
+#else
     bool useDefaultValue = true;
 
     HKEY fmslogoKey = OpenFmsLogoKeyForGettingValue();
@@ -219,6 +263,7 @@ GetConfigurationString(
     {
         strcpy(Value, DefaultValue);
     }
+#endif // WX_PURE
 }
 
 void
@@ -289,6 +334,8 @@ SetConfigurationQuadruple(
         quadruple);
 }
 
+#ifndef WX_PURE
+
 static
 char *
 GetRelativeFontPropertyPointer(
@@ -303,8 +350,6 @@ GetRelativeFontPropertyPointer(
 
     return relativeName;
 }
-
-
 
 void
 GetConfigurationFont(
@@ -389,3 +434,5 @@ SetConfigurationFont(
         SetConfigurationInt(fullyQualifiedName, properties[i].Value);
     }
 }
+
+#endif // !defined WX_PURE

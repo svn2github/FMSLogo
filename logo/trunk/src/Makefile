@@ -264,13 +264,6 @@ obj/$(1)/pch.h.gch : pch/pch.h version.h *.h
 	-mkdir $$(dir $$@)
 	$(CXX) -c -o $$@ -Iobj/$(1) $(CXXFLAGS) -DLOCALE=$1 $$<
 
-ifeq "$(TOOLKIT)" "GTK"
-
-obj/$(1)/%.o: linux/%.cpp obj/$(1)/pch.h.gch
-	$(CXXC) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
-
-endif
-
 obj/$(1)/%.o : %.cpp version.h obj/$(1)/pch.h.gch
 	$(CXX) -c -o $$@ -Iobj/$(1) $(CXXFLAGS) -DLOCALE=$1 $$<
 
