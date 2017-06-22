@@ -21,7 +21,7 @@ The arc spans <parameter>arc.angle</parameter> degrees of the ellipse, starting 
 The size and shape of the elliptic arc can visualized in the following manner.
 First, imagine an ellipse drawn in the center of the screen, such that the <parameter>x.semiaxis</parameter> is the distance from the center to the ellipse along the X-axis and <parameter>y.semiaxis</parameter> is the distance from the center to the ellipse along the Y-axis.
 ELLIPSEARC2 draws part of this ellipse, an arc between two points on the ellipse.
-The starting point for this arc can be visualized by imagining a turtle at the elipse's center with a <link linkend="command-heading">HEADING</link> of <parameter>start.angle</parameter>.
+The starting point for this arc can be visualized by imagining a turtle at the ellipse's center with a <link linkend="command-heading">HEADING</link> of <parameter>start.angle</parameter>.
 Wherever this turtle intersects the ellipse as it moves forward is the starting point of the arc.
 The ending point can be similarly imagined as if that turtle had turned RIGHT an additional <parameter>arc.angle</parameter> degrees before moving forward to intersect the ellipse.
 </para>
@@ -34,8 +34,8 @@ Second, if <parameter>start.angle</parameter> and <parameter>arc.angle</paramete
 </para>
 
 <para>
-Despite the confusing behavior, it is straight-forward to use ELLIPSEARC2 to iteratively draw contigious segments of an ellipse.
-If your first call has a <parameter>start.angle</parameter> of 0 and in each subsequent call, the <parameter>start.angle</parameter> is the sum of all <parameter>arc.angle</parameter> inputs previously given, you'll end drawing contigious ellipse arcs, even though the intermediate turtle positions may not lie on the ellipse.
+Despite the confusing behavior, it is straight-forward to use ELLIPSEARC2 to iteratively draw contiguous segments of an ellipse.
+If your first call has a <parameter>start.angle</parameter> of 0 and in each subsequent call, the <parameter>start.angle</parameter> is the sum of all <parameter>arc.angle</parameter> inputs previously given, you'll end drawing contiguous ellipse arcs, even though the intermediate turtle positions may not lie on the ellipse.
 </para>
 
 <para>
