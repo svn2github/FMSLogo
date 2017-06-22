@@ -19,6 +19,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 7.2.0
+  o Fix Bug #94; Clarify the meaning and usage of the "start.angle" input the
+    documentation for ELLIPSEARC2.
   o Fix Bug #492; File -> New and File -> Open no longer erase translated
     library procedures in non-English versions of FMSLogo.
   o Fix Bug #493; the Italian translation of SLOWDRAW now affects the behavior

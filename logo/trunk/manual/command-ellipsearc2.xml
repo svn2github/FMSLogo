@@ -6,72 +6,58 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>ELLIPSEARC2</command> <parameter>angle</parameter> <parameter>inline.semiaxis</parameter> <parameter>crosswise.semiaxis</parameter> <parameter>startangle</parameter></synopsis>
+<synopsis><command>ELLIPSEARC2</command> <parameter>arc.angle</parameter> <parameter>y.semiaxis</parameter> <parameter>x.semiaxis</parameter> <parameter>start.angle</parameter></synopsis>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-ELLIPSEARC2 Moves the turtle clockwise over an elliptic arc. This arc will span <parameter>angle</parameter> degrees, starting at <parameter>startangle</parameter> degrees
-and ending at (<parameter>startangle</parameter> + <parameter>angle</parameter>) degrees.
+Moves the turtle clockwise over an elliptic arc.
+The arc spans <parameter>arc.angle</parameter> degrees of the ellipse, starting at the point described by <parameter>start.angle</parameter> degrees and ending at the point described by (<parameter>start.angle</parameter> + <parameter>arc.angle</parameter>).
 </para>
 
 <para>
-The size of the ellipse is based on the <parameter>crosswise.semiaxis</parameter> and <parameter>inline.semiaxis</parameter> inputs.
+The size and shape of the elliptic arc can visualized in the following manner.
+First, imagine an ellipse drawn in the center of the screen, such that the <parameter>x.semiaxis</parameter> is the distance from the center to the ellipse along the X-axis and <parameter>y.semiaxis</parameter> is the distance from the center to the ellipse along the Y-axis.
+ELLIPSEARC2 draws part of this ellipse, an arc between two points on the ellipse.
+The starting point for this arc can be visualized by imagining a turtle at the elipse's center with a <link linkend="command-heading">HEADING</link> of <parameter>start.angle</parameter>.
+Wherever this turtle intersects the ellipse as it moves forward is the starting point of the arc.
+The ending point can be similarly imagined as if that turtle had turned RIGHT an additional <parameter>arc.angle</parameter> degrees before moving forward to intersect the ellipse.
+</para>
+
+<para>
+The position and orientation of the ellipse arc more difficult to understand, especially since the elliptic arc is not always drawn from where the turtle starts to where the turtle ends up.
+However, there are two simple cases.
+First, if <parameter>start.angle</parameter> is a multiple of 90 degrees, then the arc is drawn tangent to the turtle's heading.
+Second, if <parameter>start.angle</parameter> and <parameter>arc.angle</parameter> sum to a multiple of 90 degrees, then the turtle ends up tangent to the arc which is drawn.
+</para>
+
+<para>
+Despite the confusing behavior, it is straight-forward to use ELLIPSEARC2 to iteratively draw contigious segments of an ellipse.
+If your first call has a <parameter>start.angle</parameter> of 0 and in each subsequent call, the <parameter>start.angle</parameter> is the sum of all <parameter>arc.angle</parameter> inputs previously given, you'll end drawing contigious ellipse arcs, even though the intermediate turtle positions may not lie on the ellipse.
+</para>
+
+<para>
+Normally, the arc is drawn in clockwise direction, but if the <parameter>arc.angle</parameter> input is negative, then the turtle moves backward in a counter-clockwise direction.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Drawing details</term>
-<listitem>
-<para>
-The <parameter>crosswise.semiaxis</parameter> input is the distance from the center-point of the ellipse to the ellipse's edge along the crosswise axis.
-The <parameter>inline.semiaxis</parameter> input is the distance from the center-point of the ellipse to the ellipse's edge along the inline axis.
-</para>
-
-<para>
-The actual orientation of the ellipse's axes relative to the turtle direction will depend on the chosen <parameter>startangle</parameter>.
-</para>
-
-<para>
-The inline axis will start at 0 degrees and will end at 180 degrees; the crosswise axis will start at 90 degrees and will end at 270 degrees. 
-</para>
-
-<para>
-The ellipse will be tangent to the current position and direction of the turtle, for instance:
-if <parameter>startangle</parameter> is 0 the inline axis will be perpendicular to the turtle's direction;
-if <parameter>startangle</parameter> is 90 the inline axis will be parallel to the turtle's direction.
-</para>
-
-<para>
-Normally, the turtle moves forward in a clockwise direction, but if the <parameter>angle</parameter> input is negative, then the turtle will move backward in a counter-clockwise direction.
-</para>
-</listitem>
-</varlistentry>
-
-<varlistentry><term>Important</term>
-<listitem>
-<para>
-FMSLogo computes the angles for the elliptic arc as if the arc had been traced on a circle and then stretched to fit on the
-ellipse's axes. This means that if you choose an angle that is not zero or a multiple of 90 degrees then the actual angle (from 
-the beginning of the arc to the center of the ellipse) will be either smaller or larger when compared to the
-ellipse's axes in the final drawing; this will depend on the direction and amount of the ellipse's stretching.
-The same applies for the angle to the end of the elliptic arc.
-</para>
-</listitem>
-</varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
 
-<programlisting><userinput>; a 2D example
-ELLIPSEARC2 90 100 200 0
+<para>
+A simple 2D example:
+<programlisting><userinput>ELLIPSEARC2 90 100 200 0
 ELLIPSEARC2 90  50 100 0</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; a 2D ellipse built out of multiple consecutive arcs
-SETPENSIZE 10
+<para>
+A 2D ellipse built out of multiple consecutive arcs:
+<programlisting><userinput>SETPENSIZE 10
 SETPENCOLOR "RED
 ELLIPSEARC2 90 150 100 0
 SETPENCOLOR "LIME
@@ -81,11 +67,25 @@ ELLIPSEARC2 90 150 100 180
 SETPENCOLOR "YELLOW
 ELLIPSEARC2 90 150 100 270</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; a 3D example
-PERSPECTIVE
+<para>
+An ellipse drawn with a dashed line using multiple consecutive arcs:
+<programlisting><userinput>REPEAT 36 [
+   PENDOWN
+   ELLIPSEARC2 10 50 200 REPCOUNT*20-20
+   PENUP
+   ELLIPSEARC2 10 50 200 REPCOUNT*20-10
+]</userinput>
+</programlisting>
+</para>
+
+<para>
+A 3D example:
+<programlisting><userinput>PERSPECTIVE
 REPEAT 72 [ELLIPSEARC2 90 50 100 0 RIGHTROLL 5]</userinput>
 </programlisting>
+</para>
 
 </listitem>
 </varlistentry>
