@@ -2,9 +2,9 @@ LOAD "testlib.lgo
 LOAD "uiautomationlib.lgo
 
 TO BUG59TEST
-   REPORTTESTINFO [executing regression test for Bug #59]
+   REPORTTESTINFO [Executing regression test for Bug #59]
    ELLIPSEARC 1e20 50 50 0
-   REPORTTESTPASSED ["|Bug #59 is fixed; 'ELLIPSEARC 1e20 50 50 0' did not crash.| ]
+   REPORTTESTPASSED "|Bug #59 is fixed; 'ELLIPSEARC 1e20 50 50 0' did not crash.|
 END
 
 
@@ -27,7 +27,7 @@ TO BUG54TEST
    UIAUTOMATION.UNINITIALIZE
    SPLITSCREEN
 
-   REPORTTESTPASSED ["|Bug #54 is fixed; 'CIRCLE 1e50' halted.| ]
+   REPORTTESTPASSED "|Bug #54 is fixed; 'CIRCLE 1e50' halted.|
 END
 
 TO ARCSMOKETEST
