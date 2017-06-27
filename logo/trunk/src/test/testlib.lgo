@@ -902,6 +902,14 @@ TO RUNLOGOPROGRAM :program
 END
 BURY [RUNLOGOPROGRAM]
 
+TO MOVETO :X :Y
+  ; Moves to an X/Y coordinate without drawing.
+  LOCALMAKE "penIsDown PENDOWN?
+  PENUP
+  SETXY :X :Y
+  IF :penIsDown [ PENDOWN ]
+END
+BURY [MOVETO]
 
 TO PTEST [:procedures PROCEDURES]
   ; Prints out all top-level tests (ones that take no arguments).

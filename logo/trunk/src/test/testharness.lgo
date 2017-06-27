@@ -239,7 +239,7 @@ TO TESTALL
   LABELTEST            ; from label.lgo
   PENTEST              ; from pen.lgo
   CLEARPALETTETEST     ; from clearpalette.lgo
-  ARCTEST              ; from curves.lgo
+  CURVESTEST           ; from curves.lgo
   FILLTEST             ; from fill.lgo
   FILETEST             ; from file.lgo
   COLORTEST            ; from color.lgo
