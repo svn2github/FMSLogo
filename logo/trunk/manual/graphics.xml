@@ -379,7 +379,7 @@ When using a color index, the index-to-color mapping is given in the following t
       <row>
         <entry>13</entry>
         <entry>[144 113 208]</entry>
-        <entry>Medium Purple</entry> 
+        <entry>Medium Purple</entry>
         <entry><mediaobject><imageobject><imagedata align="center" fileref="media/rgb9071D0.png"/></imageobject></mediaobject></entry>
       </row>
       <row>
@@ -474,7 +474,7 @@ When using a color name, the name-to-color mapping is given in the following tab
       </row>
       <row>
         <entry>BurlyWood</entry>
-        <entry>[222 184 135]</entry> 
+        <entry>[222 184 135]</entry>
         <entry><mediaobject><imageobject><imagedata align="center" fileref="media/rgbDEB887.png"/></imageobject></mediaobject></entry>
       </row>
       <row>
