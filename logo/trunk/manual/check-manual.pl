@@ -821,13 +821,13 @@ $Exceptions{'workspace-management.xml'}{'logo'}             = 1;
 
 sub LogError($$$)
 {
-  print "$_[0]:$_[1] error: $_[2]\n";
+  print "$_[0]:$_[1]: error: $_[2]\n";
   $main::TotalErrors++;
 }
 
 sub LogWarning($$$)
 {
-  print "$_[0]:$_[1] warning: $_[2]\n";
+  print "$_[0]:$_[1]: warning: $_[2]\n";
   $main::TotalWarnings++;
 }
 
@@ -1123,8 +1123,9 @@ foreach my $filename (<../src/Logolib/*>) {
   }
 }
 
+my $filename   = "../src/init.cpp";
 my $linenumber = 0;
-my $fh = new IO::File "< ../src/init.cpp" or die $!;
+my $fh = new IO::File $filename or die $!;
 foreach my $line (<$fh>) {
   $linenumber++;
 
@@ -1136,7 +1137,7 @@ foreach my $line (<$fh>) {
 
     # make sure that this primitive appears in the manual
     if (not $Commands{$procedureName} and not $CanonicalSpelling{$procedureName}) {
-      LogWarning('init.cpp', $linenumber, "Primitive $procedureName is not documented");
+      LogWarning($filename, $linenumber, "Primitive $procedureName is not documented");
     }
   }
 }
