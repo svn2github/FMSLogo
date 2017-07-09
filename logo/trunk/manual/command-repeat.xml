@@ -17,7 +17,7 @@ Runs the instructions in <parameter>instructionlist</parameter> repeatedly, <par
 </para>
 
 <para>
-The number of times which instructionlist has been run can be determined with <link linkend="command-repcount">REPCOUNT</link>.
+The number of times which <parameter>instructionlist</parameter> has been run can be determined with <link linkend="command-repcount">REPCOUNT</link>.
 </para>
 
 </listitem>
