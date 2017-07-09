@@ -14,7 +14,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Sends a MIDI message to the MIDI sequences.
+Sends a MIDI message to the MIDI sequencer.
 You must call <link linkend="command-midiopen">MIDIOPEN</link> before using this command.
 </para>
 
@@ -45,7 +45,7 @@ It has the form [status data1 data2 status data1 data2 ...].
 <formalpara>
 <title>The System Exclusive Form</title>
 <para>
-The system exclusive form is a list that start with 240 (0xF0 in hexadecimal).
+The system exclusive form is a list that starts with 240 (0xF0 in hexadecimal).
 It can then be followed by any number of data bytes.
 It has the form [240 data1 data2 ...]
 </para>
