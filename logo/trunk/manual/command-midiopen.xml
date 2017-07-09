@@ -15,7 +15,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command opens the MIDI device and accesses it through a MIDI device driver.
+Opens the MIDI device and accesses it through a MIDI device driver.
 The device driver chosen depends on several things.
 When no inputs are given, MIDIOPEN attempts to use the MIDI-MAPPER.
 When an <parameter>id</parameter> input is given, MIDIOPEN lets you choose any available MIDI driver available on your system.

@@ -13,9 +13,9 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This operation is only meaningful within the instruction list of a <link linkend="command-repeat">REPEAT</link> command.
-It outputs the number of repetitions that have been done, including the current one.
-That is, it outputs 1 the first time through, 2 the second time, and so on.
+Outputs the number of the current repetition of a <link linkend="command-repeat">REPEAT</link> command's instruction list.
+That is, it outputs 1 the first time the instruction list is run, outputs 2 the second time, and so on.
+REPCOUNT outputs -1 when it is run outside the context of a FOREVER or REPEAT command's instruction list.
 </para>
 
 <para>

@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command restores the turtle to its original triangle shape.
+Restores the turtle to its original triangle shape.
 It is the opposite of <link linkend="command-bitmapturtle">BITMAPTURTLE</link>.
 </para>
 </listitem>

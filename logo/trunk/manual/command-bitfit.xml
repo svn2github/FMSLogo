@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command "fits" the currently "cut" (<link linkend="command-bitcut">BITCUT</link> or <link linkend="command-bitcopy">BITCOPY</link>) image into the specified dimensions.
+Resizes (or "fits") the currently "cut" (<link linkend="command-bitcut">BITCUT</link> or <link linkend="command-bitcopy">BITCOPY</link>) image into the specified dimensions.
 Anytime later, you can "paste" (<link linkend="command-bitpaste">BITPASTE</link>) it back into the image.
 &PRODUCTNAME; fits the "cut" image to a width of the <parameter>width</parameter> pixels and a height of the <parameter>height</parameter> pixels.
 The original "cut" image is replaced by this newly "fit" image.

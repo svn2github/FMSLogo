@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command does nothing.
+CLEARPALETTE does nothing.
 It has been kept for compatibility with old programs, but its function is no longer needed.
 </para>
 

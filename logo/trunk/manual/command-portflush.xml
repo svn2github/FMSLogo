@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command flushes either the input or output queue of the open port.
+Flushes either the input or output queue of the open port.
 If <parameter>port</parameter> is 0, then the output queue is flushed.
 If <parameter>port</parameter> is 1, then the input queue is flushed.
 </para>

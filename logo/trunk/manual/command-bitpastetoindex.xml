@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command "pastes" the entire image that was "cut" with <link linkend="command-bitcut">BITCUT</link> to the <parameter>x</parameter>, <parameter>y</parameter> coordinate of the bitmap at the <parameter>index</parameter> input.
+Pastes the entire image that was "cut" with <link linkend="command-bitcut">BITCUT</link> to the <parameter>x</parameter>, <parameter>y</parameter> coordinate of the bitmap at the <parameter>index</parameter> input.
 Don't confuse the indices here; the <parameter>index</parameter> input specifies the index to paste to, whereas <link linkend="command-setbitindex">SETBITINDEX</link> specifies the index to copy from.
 </para>
 

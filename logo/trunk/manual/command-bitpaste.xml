@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command "pastes" the image that was <link linkend="command-bitcut">BITCUT</link> into the bitmap index specified by <link linkend="command-bitindex">BITINDEX</link>.
+Pastes the image that was <link linkend="command-bitcut">BITCUT</link> into the bitmap index specified by <link linkend="command-bitindex">BITINDEX</link>.
 If BITINDEX is 0, then BITPASTE pastes the contents of the clipboard.
 The bitmap is pasted to the location of the turtle, with the turtle being the lower-left corner.
 </para>

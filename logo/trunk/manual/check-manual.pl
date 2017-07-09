@@ -18,6 +18,8 @@
 # * Banned words/phrases are not used
 # * Examples include at least one instance of the command that they document.
 # * There is no trailing whitespace.
+# * The first sentence of a procedure's documentation does not begin with
+#   "This command" or "This operation".
 # * All procedures are documented.
 #
 # Missing checks:
@@ -916,6 +918,8 @@ foreach my $filename (<*.xml>) {
 
   my $command = FilenameToCommand($filename);
 
+  my $paragraphNumber        = 0;
+  my $firstSentence          = '';
   my $exampleIsStarted       = 0;
   my $exampleContainsCommand = 0;
 
@@ -923,6 +927,12 @@ foreach my $filename (<*.xml>) {
   foreach my $line (<$fh>) {
 
     $linenumber++;
+
+    # Strip the XML tags/entities from the line.
+    my $strippedLine = $line;
+    $strippedLine =~ s/<[^>]+>//g;   # remove XML tags
+    $strippedLine =~ s/&[-\.\w]+;//g; # remove character entities
+
     if ($command) {
 
       # this is the documentation for a command
@@ -980,6 +990,22 @@ foreach my $filename (<*.xml>) {
 
         if ($synopsisCommand ne $command) {
           LogError($filename, $linenumber, "first command listed in synopsis is `$synopsisCommand'.  It should match the filename.");
+        }
+      }
+
+      # The first sentence of any command should start be a sentence fragment with an implicit
+      # subject of the command that is being documented.  For example, documentation should start
+      # with "does XYZ", instead of "This command does XYZ".
+      if ($line =~ m/<para\b/) {
+        $paragraphNumber++;
+      }
+      if ($paragraphNumber == 1) {
+        if ($firstSentence eq '' && $strippedLine =~ /\S/) {
+          # This is the first non-blank sentence within the command's documentation.    
+          $firstSentence = $strippedLine;
+          if ($firstSentence =~ /^This/) {
+            LogError($filename, $linenumber, "First sentence begins with 'This'.  It should be a sentence fragment with no explicit subject.");
+          }
         }
       }
 
@@ -1077,13 +1103,6 @@ foreach my $filename (<*.xml>) {
     #
     # Find use of banned words
     #
-
-    # Strip the XML tags from the line, because banned words,
-    # like "parameter" that are DocBook tags are not a violation.
-    my $strippedLine = $line;
-    $strippedLine =~ s/<[^>]+>//g;   # remove XML tags
-    $strippedLine =~ s/&[-\.\w]+;//g; # remove character entities
-
     if ($strippedLine =~ m/$bannedWordRegExp/i) {
       if (not $Exceptions{$filename}{bannedword}{lc $1}) {
         LogError($filename, $linenumber, "use of banned word: $1");

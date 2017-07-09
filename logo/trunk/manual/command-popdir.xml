@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command pops you up (1 level) out of a directory.
+Pops you up (1 level) out of a directory.
 It is equivalent to:
 <programlisting><userinput>CHDIR "..</userinput></programlisting>
 </para>

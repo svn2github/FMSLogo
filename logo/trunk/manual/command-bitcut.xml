@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command "cuts" out part of the image and stores it in memory (or the clipboard, if <link linkend="command-bitindex">BITINDEX</link> is 0).
+Cuts out part of the image and stores it in memory (or the clipboard, if <link linkend="command-bitindex">BITINDEX</link> is 0).
 Anytime later, you can use <link linkend="command-bitpaste">BITPASTE</link> to "paste" it back into the image.
 &PRODUCTNAME; cuts a rectangle starting at the turtle's position with a width of <parameter>width</parameter> pixels and a height of <parameter>height</parameter> pixels.
 </para>

@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command sets the current bitmap cut buffer according to <parameter>index</parameter>.
+Sets the current bitmap cut buffer according to <parameter>index</parameter>.
 The <parameter>index</parameter> input must be a number from 0 to 1023.
 Its purpose is to allow multiple images to be stored in memory ready for quick pasting when doing animation.
 </para>

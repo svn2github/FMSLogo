@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command loads the GIF picture (compressed bitmap image) specified by the <parameter>filename</parameter> input.
+Loads the GIF picture (compressed bitmap image) specified by the <parameter>filename</parameter> input.
 The <parameter>filename</parameter> input must be a word that is the name of valid GIF file.
 </para>
 
