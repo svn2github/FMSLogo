@@ -21,7 +21,7 @@ Changing the write stream does not close the file that was previously the write 
 </para>
 
 <para>
-If you <link linkend="command-close">CLOSE</link> the current writer, then the write stream will be closed and <link linkend="command-writer">WRITER</link> will be changed back to the Commander.
+If you <link linkend="command-close">CLOSE</link> the current writer, then the write stream is closed and <link linkend="command-writer">WRITER</link> is changed back to the Commander.
 </para>
 
 </listitem>

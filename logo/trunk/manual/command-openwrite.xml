@@ -24,10 +24,10 @@ If the file by the given filename already exists, the old version is deleted and
 
 <para>
 The <parameter>binarymode</parameter> is a boolean value (TRUE or FALSE).
-If <parameter>binarymode</parameter> is FALSE or not given, then the file will be written as a text file.
-That is, the end-of-line sequence will be converted from LF to CRLF.
-If <parameter>binarymode</parameter> is TRUE, then the file will be written as a binary file.
-That is, no end-of-line sequence conversion will be performed.
+If <parameter>binarymode</parameter> is FALSE or not given, then the file is written as a text file.
+That is, the end-of-line sequence is converted from LF to CRLF.
+If <parameter>binarymode</parameter> is TRUE, then the file is written as a binary file.
+That is, no end-of-line sequence conversion is performed.
 </para>
 
 </listitem>

@@ -23,7 +23,7 @@ If you wish to create an edit control (a combobox without a listbox) set the hei
 </para>
 
 <para>
-The <parameter>parent</parameter> input is the name of the window that will own the new combobox.
+The <parameter>parent</parameter> input is the name of the window that owns the new combobox.
 If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 

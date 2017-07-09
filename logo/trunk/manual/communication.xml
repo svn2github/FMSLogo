@@ -5,16 +5,16 @@
       <title>Transmitters</title>
 
 <para>
-If there is a variable named <link linkend="command-printdepthlimit">PRINTDEPTHLIMIT</link> with a nonnegative integer value, then complex list and array structures will be printed only to the allowed depth.
-That is, members of members of ... of members will be allowed only so far.
+If there is a variable named <link linkend="command-printdepthlimit">PRINTDEPTHLIMIT</link> with a nonnegative integer value, then complex list and array structures are printed only to the allowed depth.
+That is, members of members of ... of members are allowed only so far.
 An elispsis indicates when items are omitted because the exceeded the depth limit.
-For example, a list with two items that is just before the depth limit will print as <userinput>[...  ...]</userinput>.
+For example, a list with two items that is just before the depth limit is printed as <userinput>[...  ...]</userinput>.
 </para>
 
 <para>
-If there is a variable named <link linkend="command-printwidthlimit">PRINTWIDTHLIMIT</link> with a nonnegative integer value, then only the first so many items of any array or list will be printed.
+If there is a variable named <link linkend="command-printwidthlimit">PRINTWIDTHLIMIT</link> with a nonnegative integer value, then only the first so many items of any array or list are printed.
 A single ellipsis replaces all missing objects within the structure.
-The width limit also applies to the number of characters printed in a word, except that a PRINTWIDTHLIMIT between 0 and 9 will be treated as if it were 10 when applied to words.
+The width limit also applies to the number of characters printed in a word, except that a PRINTWIDTHLIMIT between 0 and 9 is treated as if it were 10 when applied to words.
 This limit applies not only to the top-level printed object but to any substructures within it.
 </para>
 

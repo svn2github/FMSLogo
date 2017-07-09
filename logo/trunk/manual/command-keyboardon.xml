@@ -35,7 +35,7 @@ All the "callbacks" for the keyboard are automatically run in <link linkend="com
 For historical reasons, the set of keys that are captured when KEYBOARDON is given one input is different from the set of keys that are captured when it is given two inputs.
 When only a <parameter>keydown</parameter> input is given, the keys are trapped as characters, not as strict keydown events.
 This means that lowercase <keycap>a</keycap> has a different value than uppercase <keycap>A</keycap>, even though the same key is pressed.
-Because of this, a program that only looks for <userinput>ASCII "a</userinput> won't work when <keycap>Caps Lock</keycap> is on.
+Because of this, a program that only looks for <userinput>ASCII "a</userinput> doesn't work when <keycap>Caps Lock</keycap> is on.
 This also means that when only one input is given to KEYBOARDON, it ignores keystrokes that don't have a textual character representation.
 This includes ignoring the arrow keys, the function keys, most navigation keys, the Shift key, the Control key, and others.
 </para>
@@ -83,8 +83,8 @@ END
 (KEYBOARDON [ONKEYDOWN] [ONKEYUP])
 FULLSCREEN</userinput>
 
-<replaceable>While you hold down the "T" key, the turtle will hide.
-While you hold down the "S" key, the screen will turn blue.</replaceable>
+<replaceable>While you hold down the "T" key, the turtle hides.
+While you hold down the "S" key, the screen turns blue.</replaceable>
 
 <userinput>SPLITSCREEN
 KEYBOARDOFF</userinput>

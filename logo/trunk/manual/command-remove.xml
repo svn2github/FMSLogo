@@ -20,7 +20,7 @@ The <parameter>things</parameter> input must be either a list or a word.
 </para>
 <para>
 Because the members of a word are single characters, if <parameter>things</parameter> is a word, then <parameter>thingtoremove</parameter> should be a single character.
-REMOVE won't remove multi-character substrings from a word.
+REMOVE does not remove multi-character substrings from a word.
 </para>
 </listitem>
 </varlistentry>

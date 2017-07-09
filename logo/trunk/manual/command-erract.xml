@@ -20,8 +20,8 @@ ERRACT typically has the value <userinput>[PAUSE]</userinput> to allow interacti
 <para>
 Some errors may be recoverable if ERRACT can fix the problem.
 For example, many bad input errors (such as running <userinput>FORWARD [1]</userinput>) are recoverable.
-If a bad input error causes ERRACT to be run, then the output of ERRACT will be used instead of the bad input that caused the error.
-If ERRACT outputs another datum of bad input, then it will be run again to fix the new problem.
+If a bad input error causes ERRACT to be run, then the output of ERRACT is used instead of the bad input that caused the error.
+If ERRACT outputs another datum of bad input, then it is run again to fix the new problem.
 </para>
 
 </listitem>

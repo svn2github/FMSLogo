@@ -27,7 +27,7 @@ Therefore, it is important to <link linkend="understand-your-orientation-in-3D">
 </para>
 <para>
 To illustrate this, suppose you want to draw the wheel of a bicycle with all spokes joining at the center.
-You may think that this will work:
+You may think that this works:
 
 <programlisting><userinput>TO BADWHEEL
   PERSPECTIVE

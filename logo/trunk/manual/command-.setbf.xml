@@ -23,7 +23,7 @@ The <parameter>list</parameter> input must be a list and cannot be empty.
 <para>
 WARNING: Primitives whose names start with a period are <emphasis>dangerous</emphasis>.
 Their use by non-experts is not recommended.
-The use of .SETBF can lead to circular list structures, which will get some primitives into infinite loops; unexpected changes to other data structures that share storage with the list being modified; crashes and core dumps if the <link linkend="command-butfirst">BUTFIRST</link> of a list is not itself a list; and the permanent loss of memory if a circular structure is released.
+The use of .SETBF can lead to circular list structures, which gets some primitives into infinite loops; unexpected changes to other data structures that share storage with the list being modified; crashes and core dumps if the <link linkend="command-butfirst">BUTFIRST</link> of a list is not itself a list; and the permanent loss of memory if a circular structure is released.
 </para>
 </listitem>
 </varlistentry>

@@ -101,7 +101,7 @@ The meaning of each item within the list is explained by the following table:
 </para>
 
 <para>
-If you choose a font typeface that is not available on the system, then SETLABELFONT will list all fonts that are available.
+If you choose a font typeface that is not available on the system, then SETLABELFONT lists all fonts that are available.
 </para>
 
 <para>

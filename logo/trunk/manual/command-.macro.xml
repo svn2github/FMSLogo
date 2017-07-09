@@ -36,7 +36,7 @@ This version works fine for most purposes, for example
 <programlisting>MY.REPEAT 5 [PRINT "hello]
 </programlisting>
 
-But it doesn't work if the instructions to be carried out include <link linkend="command-output">OUTPUT</link>, <link linkend="command-stop">STOP</link>, or <link linkend="command-local">LOCAL</link>.
+But it doesn't work if the instructions to be run include <link linkend="command-output">OUTPUT</link>, <link linkend="command-stop">STOP</link>, or <link linkend="command-local">LOCAL</link>.
 For example, consider this procedure:
 
 <programlisting>TO EXAMPLE
@@ -48,7 +48,7 @@ END
 </para>
 
 <para>
-This procedure works as written, but if MY.REPEAT is used instead of REPEAT, it won't work because the STOP will stop MY.REPEAT instead of stopping EXAMPLE as desired.
+This procedure works as written, but if MY.REPEAT were used instead of REPEAT, it wouldn't work because the STOP would stop MY.REPEAT instead of stopping EXAMPLE as desired.
 </para>
 
 <para>
@@ -77,7 +77,7 @@ To see how the MY.REPEAT macro works, let's take the example
 </para>
 
 <para>
-For this example, MY.REPEAT will output the instruction list
+For this example, MY.REPEAT outputs the instruction list
 <programlisting>[PRINT "hello MY.REPEAT 4 [PRINT "hello]]
 </programlisting>
 </para>
@@ -110,9 +110,9 @@ END
 </para>
 
 <para>
-If the instructions do not include STOP or OUTPUT, then REPEAT1 will reach its base case and invoke <link linkend="command-throw">THROW</link>.
-As a result, MY.REPEAT's last instruction line will output an empty list, so the second evaluation of the macro result will do nothing.
-But if a STOP or OUTPUT happens, then REPEAT.DONE will output a STOP or OUTPUT instruction that will be re-executed in the caller's context.
+If the instructions do not include STOP or OUTPUT, then REPEAT1 reaches its base case and invokes <link linkend="command-throw">THROW</link>.
+As a result, MY.REPEAT's last instruction line outputs an empty list, so the second evaluation of the macro does nothing.
+But if a STOP or OUTPUT happens, then REPEAT.DONE outputs a STOP or OUTPUT instruction that is re-run in the caller's context.
 </para>
 
 <para>

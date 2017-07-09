@@ -45,11 +45,11 @@ When you start at (X=0, Y=0, Z=0) the +Y axis is still up the screen and the +X 
 But now you can go into the screen (away from you) or out of the screen (closer to you).
 How? Just like an airplane flies.
 When an airplane rolls to the right it does not change its trajectory, and neither does the turtle.
-But if you rolled 90 degrees to the right and then take a right turn guess what will happen.
+But if you rolled 90 degrees to the right and then take a right turn guess what happens.
 You'll go down real fast, straight down.
 Think of a real turtle on the floor.
 Now roll him on to his right side.
-Now if he takes a right turn towards his right front leg (like he always does) his nose will be facing the floor.
+Now if he takes a right turn towards his right front leg (like he always does) his nose will face the floor.
 FORWARD will now go down in the Z axis (away from you).
 </para>
 
@@ -270,8 +270,8 @@ Many commands are repeated in both columns because they are designed for 2D mode
 <formalpara>
 <title>Limitations of Perspecive Mode</title>
 <para>
-There are several 2D commands which will work in perspective mode but still behave in a 2D fashion.
-Their action will take place at the correct X, Y, Z coordinate, but the orientation will be limited to a 2D plane.
+There are several 2D commands which work in perspective mode but still behave in a 2D fashion.
+Their actions take place at the correct X, Y, Z coordinate, but the orientation is limited to a 2D plane.
 For example, you can not draw text with <link linkend="command-label">LABEL</link> on 6 sides of cube.
 However, you can LABEL the 8 vertices of the cube by moving to each vertex using 3D maneuvers.
 Furthermore, nothing prevents you from building a "3D block letter" alphabet library made up of 3D vectors.
@@ -309,7 +309,7 @@ Note curved objects (like those based on <link linkend="command-ellipsearc">ELLI
 The other option is to record each "scene" in a bitmap and play them back at any rate you wish.
 This method is shown in the <filename>GROW.LGO</filename> example.
 It does not matter whether you're "recording" 2D scenes or 3D scenes.
-This will be limited by how much memory your computer has.
+This is limited by how much memory your computer has.
 </para>
 
 </listitem>

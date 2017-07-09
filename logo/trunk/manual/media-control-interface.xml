@@ -9,7 +9,7 @@ The Media Control Interface (MCI) is a facility provided by the operating system
 
 <para>
 MCI is too rich and too complex to fully document here.
-Instead, we will give a brief overview of the core MCI concepts and examine some sample procedures for performing common tasks.
+Instead, we give a brief overview of the core MCI concepts and examine some sample procedures for performing common tasks.
 For a complete reference on MCI, search for "Media Control Interface" on http://msdn.microsoft.com/.
 As you read through the official reference manual, keep in mind that &PRODUCTNAME; programs access MCI through its "command string" interface, not its "command message" interface.
 </para>
@@ -304,7 +304,7 @@ The <userinput>pause</userinput> and <userinput>resume</userinput> commands are 
 
 <para>
 The <userinput>close</userinput> command is used to tell the Media Control Interface that you are done with the video file.
-This will close the window in which the video was playing.
+This closes the window in which the video was playing.
 </para>
 
 </section>

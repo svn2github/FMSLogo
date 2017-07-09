@@ -24,7 +24,7 @@ By using <link linkend="command-pixel">PIXEL</link> and SETPIXEL, you can scan a
 </para>
 
 <para>
-SETPIXEL can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode but only the "closest" pixel set will be seen.
+SETPIXEL can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode but only the "closest" pixel set is seen.
 See <filename>Examples\3D\3DBITMAP.LGO</filename> for an example of using SETPIXEL in perspective mode.
 </para>
 

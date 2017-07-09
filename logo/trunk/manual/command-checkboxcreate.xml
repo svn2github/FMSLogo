@@ -19,7 +19,7 @@ A checkbox must be associated with a groupbox control (see <link linkend="comman
 </para>
 
 <para>
-The <parameter>parent</parameter> input is the name of the window that will own the new checkbox.
+The <parameter>parent</parameter> input is the name of the window that owns the new checkbox.
 If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 
@@ -32,7 +32,7 @@ The <parameter>name</parameter> input identifies the new checkbox and <emphasis>
 </para>
 
 <para>
-The <parameter>label</parameter> input is a word that will be written next to the checkbox.
+The <parameter>label</parameter> input is a word to write next to the checkbox.
 </para>
 
 <para>

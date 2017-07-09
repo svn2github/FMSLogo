@@ -24,7 +24,7 @@ The larger the frequency the higher the pitch.
 
 <para>
 The <parameter>duration</parameter> input must be a number and is measured in milliseconds.
-The larger the duration the longer the tone will play for.
+The larger the duration the longer the tone plays for.
 </para>
 
 <para>

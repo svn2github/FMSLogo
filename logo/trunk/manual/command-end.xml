@@ -18,7 +18,7 @@ END delimits the end of a procedure that is defined with <link linkend="command-
 
 <para>
 END is not really a command.
-As a result, procedures that manipulate other procedures won't work on END.
+As a result, procedures that manipulate other procedures don't work on END.
 For example, <userinput><link linkend="command-procedurep">PROCEDUREP</link> "END</userinput> outputs FALSE.
 </para>
 </listitem>

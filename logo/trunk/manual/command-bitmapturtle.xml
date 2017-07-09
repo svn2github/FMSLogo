@@ -23,16 +23,16 @@ For example, turtle 2 can only be mapped to bitmap 2, not bitmap 1 or bitmap 3.
 
 <para>
 Because bitmap 0 is always mapped to the clipboard, BITMAPTURTLE can only map turtle 0 to the clipboard.
-That is, if you select turtle 0 and run BITMAPTURTLE then the turtle will be whatever is in the clipboard and will be updated if the clipboard changes.
-Note the clipboard must have a bitmap in it or else &PRODUCTNAME; will complain.
+That is, if you select turtle 0 and run BITMAPTURTLE, then the turtle changes to whatever is in the clipboard and is updated whenever the clipboard subsequently changes.
+&PRODUCTNAME; complains if the clipboard is not holding an image while turtle 0 is bitmapped.
 </para>
 
 <para>
-Both <link linkend="command-nobitmapturtle">NOBITMAPTURTLE</link> and <link linkend="command-clearscreen">CLEARSCREEN</link> will restore the turtle to its normal shape, but will not erase the corresponding bitmap.
+Both <link linkend="command-nobitmapturtle">NOBITMAPTURTLE</link> and <link linkend="command-clearscreen">CLEARSCREEN</link> restores the turtle to its normal shape, but does not erase the corresponding bitmap.
 </para>
 
 <para>
-If the optional <parameter>rotatebitmap</parameter> input is TRUE, then the bitmap will rotate with the turtle's heading.
+If the optional <parameter>rotatebitmap</parameter> input is TRUE, then the bitmap rotates with the turtle's heading.
 If the <parameter>rotatebitmap</parameter> input is not given, it defaults to FALSE.
 This must be either TRUE or FALSE.
 </para>

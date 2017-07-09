@@ -15,12 +15,11 @@
 <para>
 This command "cuts" out part of the image and stores it in memory (or the clipboard, if <link linkend="command-bitindex">BITINDEX</link> is 0).
 Anytime later, you can use <link linkend="command-bitpaste">BITPASTE</link> to "paste" it back into the image.
-&PRODUCTNAME; will cut starting at the turtle's position with a width of the first input and a height of the second input.
+&PRODUCTNAME; cuts a rectangle starting at the turtle's position with a width of <parameter>width</parameter> pixels and a height of <parameter>height</parameter> pixels.
 </para>
 
 <para>
-The <parameter>width</parameter> and <parameter>height</parameter> inputs are measured in pixels and specify the amount of the image to cut.
-The bitmap is always taken horizontally and vertically, regardless of the turtle's heading.
+The rectangle that is cut is always taken horizontally and vertically, regardless of the turtle's heading.
 </para>
 
 <para>

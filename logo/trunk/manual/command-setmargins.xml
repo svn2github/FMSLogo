@@ -17,8 +17,8 @@
 
 <para>
 In other &GENERICNAME; environments, SETMARGINS clears the text screen and then arrange for all further printing to be shifted down and to the right according to the <parameter>margins</parameter> input, effectively adding margins to the text screen.
-Specifically, every time a newline character is printed (explicitly or implicitly) &GENERICNAME; will type x_margin spaces, and on every invocation of SETCURSOR the margins will be added to the input x and y coordinates.
-(<link linkend="command-cursor">CURSOR</link> reports the cursor position relative to the margins, so this shift will be invisible to &GENERICNAME; programs.)
+Specifically, every time a newline character is printed (explicitly or implicitly) &GENERICNAME; types x_margin spaces, and on every invocation of SETCURSOR the margins are added to the input x and y coordinates.
+(<link linkend="command-cursor">CURSOR</link> reports the cursor position relative to the margins, so this shift is invisible to &GENERICNAME; programs.)
 </para>
 
 <para>

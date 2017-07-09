@@ -18,7 +18,7 @@ The dialog box also has "OK" and "Cancel" buttons.
 Processing does not continue until the user clicks one of these buttons.
 The commander window is also disabled until dialog is dismissed.
 If the user presses "OK", then QUESTIONBOX outputs the text in the edit control as a list.
-If the user presses "Cancel", then processing will be halted, as if by the <link linkend="command-halt">HALT</link> command.
+If the user presses "Cancel", then processing is halted, as if by the <link linkend="command-halt">HALT</link> command.
 </para>
 
 <para>

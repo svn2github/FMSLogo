@@ -30,7 +30,7 @@ This must be an integer that is greater than or equal to <parameter>min</paramet
 <para>
 The <parameter>position</parameter> input is the current value of the scrollbar.
 This must be an integer.
-If <parameter>position</parameter> is not between <parameter>min</parameter> and <parameter>max</parameter>, then the scrollbar's position will be set to either <parameter>min</parameter> or <parameter>max</parameter>, whichever is closer.
+If <parameter>position</parameter> is not between <parameter>min</parameter> and <parameter>max</parameter>, then the scrollbar's position is set to either <parameter>min</parameter> or <parameter>max</parameter>, whichever is closer.
 </para>
 
 </listitem>

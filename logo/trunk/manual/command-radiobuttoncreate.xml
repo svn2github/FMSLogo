@@ -20,7 +20,7 @@ A radio button must be associated with a group box control (see <link linkend="c
 </para>
 
 <para>
-The <parameter>parent</parameter> input is the name of the window that will own the new radio button.
+The <parameter>parent</parameter> input is the name of the window that owns the new radio button.
 If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 
@@ -34,7 +34,7 @@ The <parameter>name</parameter> input identifies the new radio button and <empha
 </para>
 
 <para>
-The <parameter>label</parameter> input is a word that will be written next to the radio button.
+The <parameter>label</parameter> input is a word that is written next to the radio button.
 </para>
 
 <para>

@@ -35,7 +35,7 @@ Because DIALOGCREATE doesn't stop until the dialog closes, if you disable the di
 END
 
 DIALOGCREATE "main "mydialog "mytitle 0 0 100 100 [MYSETUP]</userinput>
-<replaceable>Clicking the "Disable" button will make &PRODUCTNAME; lock up</replaceable>
+<replaceable>Clicking the "Disable" button causes &PRODUCTNAME; to lock up</replaceable>
 </programlisting>
 </listitem>
 </varlistentry>

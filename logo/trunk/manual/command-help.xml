@@ -15,8 +15,8 @@
 <listitem>
 <para>
 HELP has two forms: with and without a <parameter>keyword</parameter> input.
-When no <parameter>keyword</parameter> is given, &PRODUCTNAME; will open the &PRODUCTNAME; manual to the table of contents.
-When a <parameter>keyword</parameter> is given, &PRODUCTNAME; will search the &PRODUCTNAME; manual for the section on <parameter>keyword</parameter>.
+When no <parameter>keyword</parameter> is given, &PRODUCTNAME; opens the &PRODUCTNAME; manual to the table of contents.
+When a <parameter>keyword</parameter> is given, &PRODUCTNAME; searches the &PRODUCTNAME; manual for the section on <parameter>keyword</parameter>.
 You may enter the full keyword or a partial keyword.
 </para>
 </listitem>

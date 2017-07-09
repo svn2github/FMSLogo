@@ -14,9 +14,9 @@
 <listitem>
 <para>
 Tells the turtle to enter "window" mode.
-From now on, if the turtle is asked to move past the boundary of the graphics window, it will move off screen.
+From now on, when the turtle is asked to move past the boundary of the graphics window, it moves off screen.
 The visible graphics window is considered as just part of an infinite graphics plane; the turtle can be anywhere on the plane.
-If you lose the turtle, <link linkend="command-home">HOME</link> will bring it back to the center of the window.
+If you lose the turtle, <link linkend="command-home">HOME</link> moves it back to the center of the window.
 </para>
 
 <para>

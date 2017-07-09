@@ -13,13 +13,13 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command will load the GIF picture (compressed bitmap image) specified by the <parameter>filename</parameter> input.
+This command loads the GIF picture (compressed bitmap image) specified by the <parameter>filename</parameter> input.
 The <parameter>filename</parameter> input must be a word that is the name of valid GIF file.
 </para>
 
 <para>
-If the picture is small enough, it will be pasted onto the screen such that its lower left corner will be at the turtle's current position.
-Otherwise, the picture will be positioned in the upper left corner of the screen.
+If the picture is small enough, it is pasted onto the screen such that its lower left corner is at the turtle's current position.
+Otherwise, the picture is positioned in the upper left corner of the screen.
 The picture is always pasted right-side-up with the bottom running horizontally and the sides running vertically, regardless of the turtle's orientation.
 </para>
 

@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Opens the <link linkend="editor">editor</link> on the file with the given <parameter>filename</parameter>.
-When the contents of the file is saved, it will be saved to the file, not the workspace.
+When the contents of the file is saved, it is saved to the file, not the workspace.
 The <parameter>callback</parameter> instruction list is run when the user closes the editor.
 </para>
 </listitem>

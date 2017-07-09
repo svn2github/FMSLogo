@@ -15,10 +15,10 @@
 <para>
 Displays a dialog box with <parameter>title</parameter> as the title bar and <parameter>choicelist</parameter> as a list of choices.
 The dialog also has an "OK" and a "Cancel" button.
-Processing will not continue until the user clicks one of these buttons.
+&PRODUCTNAME; does not evaluate any further instructions until the user clicks one of these buttons.
 The commander window is also disabled until dialog is dismissed.
-If the user presses "OK", then SELECTBOX outputs the index of the selected item (1 for first item, 2 for the second item, etc.) and processing continues.
-If the user presses "Cancel", then processing will be halted, as if by the <link linkend="command-halt">HALT</link> command.
+If the user presses "OK", then SELECTBOX outputs the index of the selected item (1 for first item, 2 for the second item, etc.) and instruction evaluation continues.
+If the user presses "Cancel", then instruction evaluation is halted, as if by the <link linkend="command-halt">HALT</link> command.
 </para>
 
 <para>

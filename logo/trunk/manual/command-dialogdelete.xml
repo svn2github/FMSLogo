@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Deletes (closes) the dialog whose name is <parameter>name</parameter>.
-All child window and controls will be also deleted.
+All child window and controls are also deleted.
 </para>
 </listitem>
 </varlistentry>

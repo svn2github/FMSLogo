@@ -18,7 +18,7 @@ A listbox control shows the user a set of items and lets them select one of them
 </para>
 
 <para>
-The <parameter>parent</parameter> input is the name of the window that will own the new listbox.
+The <parameter>parent</parameter> input is the name of the window that owns the new listbox.
 If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 

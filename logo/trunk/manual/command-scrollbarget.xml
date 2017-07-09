@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Output the current position of the scrollbar control that is identified by <parameter>name</parameter>.
-The output will be within the range specified by <link linkend="command-scrollbarset">SCROLLBARSET</link>.
+The output is within the range specified by <link linkend="command-scrollbarset">SCROLLBARSET</link>.
 </para>
 </listitem>
 </varlistentry>

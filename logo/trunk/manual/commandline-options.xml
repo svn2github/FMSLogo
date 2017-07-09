@@ -8,7 +8,7 @@ Just add these switches after the &LOGOEXE;.
 </para>
 
 <para>
-You can add any command line option to the &PRODUCTNAME; program icon so that when you double click on it, &PRODUCTNAME; will start with the selected option.
+You can add any command line option to the &PRODUCTNAME; program icon so that when you double click on it, &PRODUCTNAME; starts with the selected option.
 For example, if you want to start &PRODUCTNAME; in "<link linkend="commandline-e">expert</link>" mode:
 
 
@@ -132,21 +132,21 @@ In "Expert" mode the following occurs:
 </para>
 
 <para>
-<link linkend="command-pos">POS</link> and <link linkend="command-posxyz">POSXYZ</link> will not "round" the returned data and you may see positions such as [0 -1.0e-12].
+<link linkend="command-pos">POS</link> and <link linkend="command-posxyz">POSXYZ</link> do not "round" their output and you may see positions such as [0 -1.0e-12].
 This is due to "normal" floating point errors.
 Rounding POS serves no purpose other than to make the POS look good.
-But in some applications this rounding can introduce error if you save and restore the position.
-In other words, SETPOS POS has no side effect (will not round) in "Expert" mode.
+But in some applications this rounding can introduce errors if you save and restore the position.
+In other words, SETPOS POS has no side effect (does not round) in "Expert" mode.
 </para>
 
 <para>
-&PRODUCTNAME; will allow multiple edit sessions.
+&PRODUCTNAME; allows multiple edit sessions.
 Multiple edit sessions can lead to unexpected behavior if you don't understand how &PRODUCTNAME; manages the workspace.
 If procedures are lost or have unexpected changes then you should not be using expert mode.
 </para>
 
 <para>
-&PRODUCTNAME; will allow saves directly to the workspace.
+&PRODUCTNAME; allows you to save directly to the workspace.
 Saving directly to workspace can lead to unexpected behavior if you don't understand how &PRODUCTNAME; manages the workspace.
 If procedures are lost or change unexpectedly then you should not be using expert mode.
 </para>
@@ -162,8 +162,8 @@ If procedures are lost or change unexpectedly then you should not be using exper
 
 <para>
 &PRODUCTNAME; allows you to <link linkend="command-load">LOAD</link> one or more filenames on the command line when starting &PRODUCTNAME;.
-These files will be loaded before the interpreter starts reading commands from the commander.
-If you load a file that runs some program that includes a <link linkend="command-bye">BYE</link> instruction, &PRODUCTNAME; will run that program and exit.
+These files are loaded before the interpreter starts reading commands from the commander.
+If you load a file that runs a program that includes a <link linkend="command-bye">BYE</link> instruction, &PRODUCTNAME; runs that program and exits.
 You can therefore write standalone programs in &PRODUCTNAME; and run them as new shortcuts.
 Note, the "-L" switch must follow any other switches.
 </para>

@@ -5,11 +5,11 @@
       <section id="menu-file">
         <title>File Menu</title>
         <para>The File menu includes options that enable you to operate on &GENERICNAME; procedure files.
-Note that, as a side effect, any selection in this menu that has a directory in its dialog box will effectively change the current working directory to that directory.</para>
+Note that, as a side effect, any selection in this menu that has a directory in its dialog box effectively changes the current working directory to that directory.</para>
 
         <section id="menu-file-new">
           <title>File - New</title>
-          <para>This will <link linkend="command-erase">ERASE</link> all procedures, variables, and property lists in the workspace.
+          <para>This <link linkend="command-erase">ERASE</link>s all procedures, variables, and property lists in the workspace.
 It's like starting with a "new" session.</para>
         </section>
 
@@ -45,14 +45,15 @@ See also the <link linkend="command-save">SAVE</link> command.</para>
         <section id="menu-file-edit">
           <title>File - Edit...</title>
           <para>This is how you edit procedures that have already been loaded (or developed) in memory.
-You will be prompted with all existing procedures (currently loaded within memory) and you can also enter a new one.
+          This menu option prompts you to select which existing procedures you want to edit.
+          You can also enter a new one.
 See also the <link linkend="command-edit">EDIT</link> command.</para>
         </section>
 
         <section id="menu-file-erase">
           <title>File - Erase...</title>
           <para>This is how you erase procedures that have already been loaded (or developed) in memory.
-You will be prompted with all existing procedures (currently loaded within memory).
+          This menu option prompts you to select which existing procedures you want to erase.
 See also the <link linkend="command-erase">ERASE</link> command.</para>
         </section>
 
@@ -71,7 +72,7 @@ See also the <link linkend="command-bye">BYE</link> command.</para>
 
         <section id="menu-bitmap-new">
           <title>Bitmap - New</title>
-          <para>This will clear the work done on the screen and create a new environment to save things in.</para>
+          <para>This clears the work done on the screen and creates a new environment to save things in.</para>
         </section>
 
         <section id="menu-bitmap-load">
@@ -119,7 +120,7 @@ You no longer need to wait for the software to build a full image.
 It takes less time and less memory to print and disk space to save a partial image.
 As a side effect you can adjust where your image ends up on the page by selecting different extents.
 You may at anytime click on reset to put the extents back to the full image.
-&PRODUCTNAME; will remember what you set them to even after you exit.</para>
+&PRODUCTNAME; remembers what you set them to even after you exit.</para>
 
           <para>This menu option also allows you to set how many "turtle steps" are mapped to an inch on your printout.
 The default is 125 turtle steps per inch of paper.
@@ -144,14 +145,14 @@ You can also set the pen size with the &GENERICNAME; command <link linkend="comm
 
         <section id="menu-set-labelfont">
           <title>Set - Label Font...</title>
-          <para>This allows you to set the font with which the <link linkend="command-label">LABEL</link> command will write.
+          <para>This allows you to set the font with which the <link linkend="command-label">LABEL</link> command writes.
 You can also set the font with the &GENERICNAME; command <link linkend="command-setlabelfont">SETLABELFONT</link> and get it with the &GENERICNAME; command <link linkend="command-labelfont">LABELFONT</link>.</para>
         </section>
 
         <section id="menu-set-commanderfont">
           <title>Set - Commander Font...</title>
           <para>This allows you to choose the Commander's font.
-The chosen font will remain selected even after &PRODUCTNAME; has been restarted.</para>
+The chosen font remains selected even after &PRODUCTNAME; has been restarted.</para>
         </section>
 
         <section id="menu-set-pencolor">
@@ -163,7 +164,7 @@ You can also set the pen color with the &GENERICNAME; command <link linkend="com
 
         <section id="menu-set-floodcolor">
           <title>Set - Flood Color...</title>
-          <para>This allows you to set the flood color in which the turtle will <link linkend="command-fill">FILL</link>.
+          <para>This allows you to set the flood color with which the turtle <link linkend="command-fill">FILL</link>s.
 You can also set the flood color with the &GENERICNAME; command <link linkend="command-setfloodcolor">SETFLOODCOLOR</link> and get it with the &GENERICNAME; command <link linkend="command-floodcolor">FLOODCOLOR</link>.</para>
         </section>
 

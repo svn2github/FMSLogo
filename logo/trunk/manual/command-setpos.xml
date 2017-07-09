@@ -23,8 +23,8 @@ Let's look at some code:
 
 <programlisting><userinput>MAKE "x 0
 MAKE "y 100
-SETPOS [:x :y]      ; will fail
-SETPOS (list :x :y) ; will work</userinput>
+SETPOS [:x :y]      ; fails
+SETPOS (list :x :y) ; works</userinput>
 </programlisting>
 
 The first case is a list that contains 2 words <userinput>":x</userinput> and <userinput>":y</userinput>.

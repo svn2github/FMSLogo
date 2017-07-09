@@ -14,7 +14,7 @@
 <listitem>
 <para>
 PRINTWIDTHLIMIT is a special variable.
-If its value is a nonnegative integer, then &PRODUCTNAME; treats its value as the maximum number of items in any one list (or array) that will be printed by <link linkend="command-print">PRINT</link>, etc.
+If its value is a nonnegative integer, then &PRODUCTNAME; treats its value as the maximum number of items in any one list (or array) that is printed by <link linkend="command-print">PRINT</link>, etc.
 &PRODUCTNAME; also treats its value as the limit of how many characters in a word are printed, although at least 10 characters of every word is printed, regardless of PRINTWIDTHLIMIT's value.
 </para>
 </listitem>

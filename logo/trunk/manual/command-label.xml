@@ -45,8 +45,8 @@ The width and height of the text's bounding box can be determined with <link lin
 </para>
 
 <para>
-LABEL can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode but the text will not be on the same plane as the turtle.
-The text will be placed wherever the turtle is on the screen and oriented according to the turtle's heading.
+LABEL can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode, but the text is not printed on the same plane as the turtle.
+Instead, the text is placed wherever the turtle is on the screen (in two dimensions) and oriented according to the turtle's heading.
 </para>
 
 <para>
@@ -100,7 +100,7 @@ AXIS</userinput>
 
 <programlisting><userinput>; flash a message
 TO FLASH :message
-  ; Quality=3 will disable anti-aliasing
+  ; Quality=3 disables anti-aliasing
   SETLABELFONT [[Arial] -19 0 0 700 0 0 0 0 3 2 3 49]
   PENPAINT
   LABEL :message

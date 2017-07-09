@@ -33,7 +33,7 @@ END
 
 MYPROGRAM
 STEP "MYPROGRAM</userinput>
-<replaceable>Each line of MYPROGRAM will be displayed and will wait for OK to continue to next line.</replaceable>
+<replaceable>Each line of MYPROGRAM is displayed and waits for OK to continue to next line.</replaceable>
 <userinput>UNSTEP "MYPROGRAM
 MYPROGRAM</userinput>
 </programlisting>

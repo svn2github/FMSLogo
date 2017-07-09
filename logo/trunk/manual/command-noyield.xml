@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-NOYIELD tells &PRODUCTNAME; not to interrupt running &GENERICNAME; code to process windows messages, such as keyboard input, mouse clicks, or notifications to repaint the screen.
-When &PRODUCTNAME; is in NOYIELD mode, it will be unresponsive while running &GENERICNAME; code and won't process important user interactions such as pressing on the <link linkend="commander-halt">Halt Button</link>.
+NOYIELD tells &PRODUCTNAME; not to interrupt running &GENERICNAME; instructions to process windows messages, such as keyboard input, mouse clicks, or notifications to repaint the screen.
+When &PRODUCTNAME; is in NOYIELD mode, it is unresponsive while running &GENERICNAME; instructions and ignores important user interactions such as pressing on the <link linkend="commander-halt">Halt Button</link>.
 &PRODUCTNAME; may appear to lock up until the &GENERICNAME; code finishes or it runs <link linkend="command-yield">YIELD</link>.
 </para>
 

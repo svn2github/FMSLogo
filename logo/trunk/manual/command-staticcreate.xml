@@ -19,7 +19,7 @@ The term "static control" is somewhat misleading because the text displayed by a
 </para>
 
 <para>
-The <parameter>parent</parameter> input is the name of the window that will own the new static control.
+The <parameter>parent</parameter> input is the name of the window that owns the new static control.
 If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 
@@ -28,7 +28,7 @@ The <parameter>name</parameter> input identifies the new static control and <emp
 </para>
 
 <para>
-The <parameter>text</parameter> input is a word that will be written on the static control.
+The <parameter>text</parameter> input is a word that is written on the static control.
 If there is more text than can fit within the width of the static control on a single line, then the text is word-wrapped.
 </para>
 

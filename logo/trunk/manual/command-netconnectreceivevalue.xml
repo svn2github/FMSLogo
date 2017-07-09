@@ -15,7 +15,7 @@
 <para>
 This command outputs the value of the last network data received on the connection that was created with <link linkend="command-netconnecton">NETCONNECTON</link>.
 It is best to call this procedure in your <parameter>receiveready</parameter> callback code of your NETCONNECTON command.
-If you don't, then the data will be discarded the next time <parameter>receiveready</parameter> is run.
+If you don't, then the data is discarded the next time <parameter>receiveready</parameter> is run.
 </para>
 </listitem>
 </varlistentry>

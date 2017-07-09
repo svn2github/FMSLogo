@@ -60,7 +60,7 @@ To use it, start a Windows command prompt and type
 </programlisting>
 
 where <parameter>remotemachine</parameter> is the name or IP address of the machine you'd like to test connectivity to.
-PING will tell if it can reach that machine and how long it takes to do so.
+PING reports if it can reach that machine and how long it takes to do so.
 If PING cannot reach the remote machine, then no other networking software, including the &PRODUCTNAME; Networking commands will be able to connect to it.
 If PING fails with the name, but succeeds with the IP address works, then there is probably something wrong with DNS or the name.
 </para>
@@ -110,8 +110,8 @@ These routers typically perform multiple services, including DNS, DHCP (assignme
 </formalpara>
 
 <para>
-In general, when Windows boots up, it will try to get an IP address using DHCP.
-Your network router (acting as a DHCP server) will assign it an IP address and (acting as a DNS server) use the computer name for the IP address.
+In general, when Windows boots up, it tries to get an IP address using DHCP.
+Your network router (acting as a DHCP server) assigns it an IP address and (acting as a DNS server) uses the computer name for the IP address.
 You can determine your machine's name by starting a command prompt and running
 
 <programlisting><userinput>ECHO %COMPUTERNAME%</userinput>

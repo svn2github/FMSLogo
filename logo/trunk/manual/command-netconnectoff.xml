@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Shuts down a connection that was created with <link linkend="command-netconnecton">NETCONNECTON</link>.
-After running this, <link linkend="command-netconnectsendvalue">NETCONNECTSENDVALUE</link> and <link linkend="command-netconnectreceivevalue">NETCONNECTRECEIVEVALUE</link> will no longer work.
+After running this command, <link linkend="command-netconnectsendvalue">NETCONNECTSENDVALUE</link> and <link linkend="command-netconnectreceivevalue">NETCONNECTRECEIVEVALUE</link> no longer work.
 </para>
 </listitem>
 </varlistentry>

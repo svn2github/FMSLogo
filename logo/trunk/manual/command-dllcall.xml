@@ -131,7 +131,7 @@ The actions taken for each argument are given in the following table:
 
 
 <para>
-If the optional <parameter>dllname</parameter> input is given, then DLLCALL will only look for the function within that DLL.
+If the optional <parameter>dllname</parameter> input is given, then DLLCALL only looks for the function within that DLL.
 </para>
 
 <para>

@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Tells &GENERICNAME; not to remember the turtle's motions.
-This will make drawing faster, but prevents recovery if the window is obscured by another window.
+This makes drawing faster, but prevents recovery if the window is obscured by another window.
 </para>
 
 <para>

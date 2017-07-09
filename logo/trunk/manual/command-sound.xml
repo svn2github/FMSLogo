@@ -21,7 +21,7 @@ Plays a sequence of tones on the PC speaker.
 The <parameter>soundlist</parameter> input must be a list of pairs.
 Each pair specifies a frequency (in hertz) and duration (clock ticks).
 The larger the frequency the higher the pitch.
-The larger the duration the longer the sound will play for.
+The larger the duration the longer the sound plays for.
 </para>
 
 <para>

@@ -14,7 +14,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Saves a picture (bitmap image) of your work on the computer's disk so that the computer will not forget it.
+Saves a picture (bitmap image) of your work on the computer's disk.
 It also allows you to add more work to an existing piece of work.
 The dimensions of the picture are determined by <link linkend="command-activearea">ACTIVEAREA</link>.
 </para>

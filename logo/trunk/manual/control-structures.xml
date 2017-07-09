@@ -9,7 +9,7 @@ Taken together, these facilities are commonly called "flow control", because the
 <para>
 In the following descriptions, an "instruction list" input may be a list or a word.
 If it's a word, it is parsed into list form before it is run.
-Thus, <userinput><link linkend="command-run">RUN</link> <link linkend="command-readword">READWORD</link></userinput> or <userinput><link linkend="command-run">RUN</link> <link linkend="command-readlist">READLIST</link></userinput> will work.
+Thus, <userinput><link linkend="command-run">RUN</link> <link linkend="command-readword">READWORD</link></userinput> or <userinput><link linkend="command-run">RUN</link> <link linkend="command-readlist">READLIST</link></userinput> work.
 The former is slightly preferable because it allows for a continued line (with <userinput>~</userinput>) that includes a comment (with <userinput>;</userinput>) on the first line.
 </para>
 

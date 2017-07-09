@@ -43,7 +43,7 @@ Where the meaning of each member is given by the table below.
         <entry>Wordsize</entry>
         <entry>
             The number of bits in a machine word.
-            If the version of &PRODUCTNAME; was compiled for a 32-bit machine, this will be 32 even when running on a 64-bit Windows.
+            If the version of &PRODUCTNAME; was compiled for a 32-bit machine, this is 32 even when running on a 64-bit Windows.
         </entry>
       </row>
       <row>

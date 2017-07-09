@@ -24,7 +24,7 @@ If the read stream is a file and the end of file is reached, READCHAR outputs th
 </para>
 <para>
 If the read stream is the Commander, then the "Input Mode" dialog prompts the user for a line of text and READCHAR outputs the first character entered by the user.
-Successive calls to READCHAR read the rest of the line until there are no more characters, in which case the "Input Mode" dialog will be shown again.
+Successive calls to READCHAR read the rest of the line until there are no more characters, in which case the "Input Mode" dialog is shown again.
 </para>
 <para>
 Backslash, vertical bar, and tilde characters have no special meaning in this context.

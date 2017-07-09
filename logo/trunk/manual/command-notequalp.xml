@@ -27,7 +27,9 @@ If there is a variable named <link linkend="command-caseignoredp">CASEIGNOREDP</
 (This is the case by default.)
 Two lists are equal if their members are equal.
 An array is only equal to itself; two separately created arrays are never equal even if their elements are equal.
-(It is important to be able to know if two expressions have the same array as their value because arrays are mutable; if, for example, two variables have the same array as their values then performing <link linkend="command-setitem">SETITEM</link> on one of them will also change the other.)</para>
+(It is important to be able to know if two expressions have the same array as their value because arrays are mutable.
+For example, if two variables have the same array as their values, then running <link linkend="command-setitem">SETITEM</link> on one of them would change both of them.)</para>
+
 </listitem>
 </varlistentry>
 

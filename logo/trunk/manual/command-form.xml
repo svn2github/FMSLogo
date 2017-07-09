@@ -14,8 +14,8 @@
 <listitem>
 <para>
 Outputs a word containing a printable representation of <parameter>num</parameter>, possibly preceded by spaces (and therefore not a number for purposes of performing arithmetic operations).
-The output will have at least <parameter>width</parameter> characters, including exactly <parameter>precision</parameter> digits after the decimal point.
-If <parameter>precision</parameter> is 0 then there will be no decimal point in the output.
+The output has at least <parameter>width</parameter> characters, including exactly <parameter>precision</parameter> digits after the decimal point.
+If <parameter>precision</parameter> is 0 then there is no decimal point in the output.
 </para>
 </listitem>
 </varlistentry>

@@ -71,7 +71,7 @@ SCROLLBARCREATE "mywindow "myscroll 5 5 90 0 [ SCROLLBARCALLBACK ]
 SCROLLBARUPDATE 50</userinput>
 
 <replaceable>Try to change the scrollbar's position with the mouse.
-It will snap back to the value which was set by SCROLLBARUPDATE.</replaceable>
+It snaps back to the value which is set by SCROLLBARUPDATE in SCROLLBARCALLBACK.</replaceable>
 
 <userinput>; Programmatically change the value.
 SCROLLBARUPDATE 100

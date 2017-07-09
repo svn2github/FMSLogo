@@ -22,14 +22,14 @@ To avoid that danger, if the same error condition occurs twice in a row from an 
 </para>
 
 <para>
-During the running of the ERRACT instruction list, the value of ERRACT is ignored, so that an error in the ERRACT instruction list will not cause a loop.
-In particular, an error during a pause will not cause a pause-within-a-pause.
+During the running of the ERRACT instruction list, the value of ERRACT is ignored, so that an error in the ERRACT instruction list does not cause a loop.
+In particular, an error during a pause does not cause a pause-within-a-pause.
 </para>
 
 <para>
 If ERRACT has no value, &GENERICNAME; handles the error by generating an internal <userinput>THROW "ERROR</userinput>.
 If this <link linkend="command-throw">THROW</link> is not caught by a <userinput>CATCH "ERROR</userinput> in the user program, it is eventually caught either by the toplevel instruction loop or by a pause loop, which prints the error message.
-An invocation of <userinput>CATCH "ERROR</userinput> will take precedence over ERRACT.
+An invocation of <userinput>CATCH "ERROR</userinput> takes precedence over ERRACT.
 </para>
 
 <para>

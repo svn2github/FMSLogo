@@ -19,7 +19,7 @@ Radio buttons and checkboxes must belong to a group box control.
 </para>
 
 <para>
-The <parameter>parent</parameter> input is the name of the window that will own the new group box control.
+The <parameter>parent</parameter> input is the name of the window that owns the new group box control.
 If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 

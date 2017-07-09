@@ -21,7 +21,7 @@ When no inputs are given, MIDIOPEN attempts to use the MIDI-MAPPER.
 When an <parameter>id</parameter> input is given, MIDIOPEN lets you choose any available MIDI driver available on your system.
 The <parameter>id</parameter> input can be any integer from 0 to 1 less than number of MIDI drivers available.
 To determine which <parameter>id</parameter> maps to which driver try several MIDIOPEN commands with increasing <parameter>id</parameter> inputs.
-MIDIOPEN will output the name of the driver being used.
+MIDIOPEN outputs the name of the driver being used.
 </para>
 
 <para>
@@ -30,7 +30,7 @@ On success, MIDIOPEN outputs a list of words that represents the name of the dri
 
 <para>
 MIDI allows you to generate sound on your sound card.
-You will need to install the appropriate drivers under Windows for your sound card to work.
+You must install the appropriate drivers under Windows for your sound card to work.
 Most sound cards come with a MIDI player which reads MIDI messages from a file and passes them to the MIDI driver.
 If you have a working MIDI player under Windows then &PRODUCTNAME; should work, too.
 </para>

@@ -19,7 +19,7 @@ The only function of the button control is to run the <parameter>callback</param
 </para>
 
 <para>
-The <parameter>parent</parameter> input is the name of the window that will own the new button.
+The <parameter>parent</parameter> input is the name of the window that owns the new button.
 If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 
@@ -28,7 +28,7 @@ The <parameter>name</parameter> input identifies the new button and <emphasis>mu
 </para>
 
 <para>
-The <parameter>label</parameter> input is a word that will be written on the button.
+The <parameter>label</parameter> input is a word to write on the button.
 </para>
 
 <para>

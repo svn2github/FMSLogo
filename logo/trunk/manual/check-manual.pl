@@ -66,6 +66,8 @@ $main::TotalWarnings = 0;
   'issue',            # use "run", "apply", or "call" instead
   'issues',           # use "runs", "applies", or "calls", instead
   'issued',           # use "ran", "applied", or "called", instead
+  'will',             # use the present tense
+  "won't",            # use the present tense
 );
 
 my %Commands = ();
@@ -150,6 +152,7 @@ my %CanonicalSpelling = ();
 
 my %Exceptions = ();
 $Exceptions{'command-.eq.xml'}{'allcaps'}{'WARNING'}        = 1;
+$Exceptions{'command-.eq.xml'}{'bannedword'}{'will'}        = 1;
 
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'EXAMPLE'}     = 1;
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'LISP'}        = 1;
@@ -204,6 +207,10 @@ $Exceptions{'command-checkboxcreate.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 $Exceptions{'command-checkboxget.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 
 $Exceptions{'command-clearpalette.xml'}{'bannedword'}{'function'} = 1;
+
+$Exceptions{'command-close.xml'}{'bannedword'}{'will'} = 1;
+
+$Exceptions{'command-copydef.xml'}{'bannedword'}{'will'} = 1;
 
 $Exceptions{'command-comboboxaddstring.xml'}{'allcaps'}{'DODRAW'} = 1;
 
@@ -289,6 +296,9 @@ $Exceptions{'command-erps.xml'}{'allcaps'}{'FOO'}  = 1;
 
 $Exceptions{'command-error.xml'}{'allcaps'}{'MYPROGRAM'}   = 1;
 
+$Exceptions{'command-eventcheck.xml'}{'bannedword'}{"won't"} = 1;
+$Exceptions{'command-eventcheck.xml'}{'bannedword'}{'will'}  = 1;
+
 $Exceptions{'command-halt.xml'}{'bannedword'}{'execute'}   = 1;
 
 $Exceptions{'command-files.xml'}{'allcaps'}{'LICENSE.TXT'} = 1;
@@ -337,6 +347,8 @@ $Exceptions{'command-iffalse.xml'}{'allcaps'}{'MYTEST'}  = 1;
 $Exceptions{'command-iftrue.xml'}{'allcaps'}{'MYTEST'}  = 1;
 
 $Exceptions{'command-ignore.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
+
+$Exceptions{'command-int.xml'}{'bannedword'}{'will'} = 1;
 
 $Exceptions{'command-item.xml'}{'bannedword'}{'element'}  = 1;
 
@@ -413,20 +425,26 @@ $Exceptions{'command-namelist.xml'}{'allcaps'}{'FOO'} = 1;
 $Exceptions{'command-names.xml'}{'allcaps'}{'BAR'} = 1;
 $Exceptions{'command-names.xml'}{'allcaps'}{'FOO'} = 1;
 
+$Exceptions{'command-netaccepton.xml'}{'bannedword'}{"won't"} = 1;
+
 $Exceptions{'command-netacceptreceivevalue.xml'}{'allcaps'}{'TODO'} = 1;
 
 $Exceptions{'command-netacceptsendvalue.xml'}{'allcaps'}{'TODO'} = 1;
 
-$Exceptions{'command-netconnecton.xml'}{'allcaps'}{'DNS'}   = 1;
-$Exceptions{'command-netconnecton.xml'}{'allcaps'}{'HOSTS'} = 1;
-$Exceptions{'command-netconnecton.xml'}{'allcaps'}{'IP'}    = 1;
-$Exceptions{'command-netconnecton.xml'}{'allcaps'}{'TCP'}   = 1;
+$Exceptions{'command-netconnecton.xml'}{'allcaps'}{'DNS'}      = 1;
+$Exceptions{'command-netconnecton.xml'}{'allcaps'}{'HOSTS'}    = 1;
+$Exceptions{'command-netconnecton.xml'}{'allcaps'}{'IP'}       = 1;
+$Exceptions{'command-netconnecton.xml'}{'allcaps'}{'TCP'}      = 1;
+$Exceptions{'command-netconnecton.xml'}{'bannedword'}{"won't"} = 1;
 
 $Exceptions{'command-netconnectreceivevalue.xml'}{'allcaps'}{'TODO'} = 1;
 
 $Exceptions{'command-netconnectsendvalue.xml'}{'allcaps'}{'TODO'} = 1;
 
-$Exceptions{'command-netstartup.xml'}{'allcaps'}{'DNS'}  = 1;
+$Exceptions{'command-netshutdown.xml'}{'bannedword'}{'will'} = 1;
+
+$Exceptions{'command-netstartup.xml'}{'allcaps'}{'DNS'}     = 1;
+$Exceptions{'command-netstartup.xml'}{'bannedword'}{'will'} = 1;
 
 $Exceptions{'command-notequalp.xml'}{'bannedword'}{'elements'}  = 1;
 
@@ -450,6 +468,7 @@ $Exceptions{'command-pause.xml'}{'allcaps'}{'MYPROGRAM'} = 1;
 $Exceptions{'command-pause.xml'}{'allcaps'}{'OK'} = 1;
 
 $Exceptions{'command-perspective.xml'}{'allcaps'}{'GROW.LGO'} = 1;
+$Exceptions{'command-perspective.xml'}{'bannedword'}{'will'}  = 1;
 
 $Exceptions{'command-playwave.xml'}{'allcaps'}{'WAVE'}       = 1;
 $Exceptions{'command-playwave.xml'}{'bannedword'}{'returns'} = 1;
@@ -601,11 +620,14 @@ $Exceptions{'command-windowset.xml'}{'allcaps'}{'HIDEANDRESTORE'} = 1;
 
 $Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}     = 1;
 
+$Exceptions{'command-zoom.xml'}{'bannedword'}{'will'}  = 1;
+
 $Exceptions{'commander.xml'}{'allcaps'}{'ENTER'}       = 1;
 $Exceptions{'commander.xml'}{'bannedword'}{'execute'}  = 1;
 
-$Exceptions{'commandline-options.xml'}{'allcaps'}{'OK'}   = 1;
-$Exceptions{'commandline-options.xml'}{'logo'}            = 1;
+$Exceptions{'commandline-options.xml'}{'allcaps'}{'OK'}      = 1;
+$Exceptions{'commandline-options.xml'}{'bannedword'}{'will'} = 1;
+$Exceptions{'commandline-options.xml'}{'logo'}               = 1;
 
 $Exceptions{'communication.xml'}{'allcaps'}{'DLL'}        = 1;
 $Exceptions{'communication.xml'}{'allcaps'}{'PORT'}       = 1;
@@ -640,6 +662,8 @@ $Exceptions{'environment-commands.xml'}{'bannedword'}{'elements'} = 1;
 $Exceptions{'error-processing.xml'}{'bannedword'}{'returns'} = 1;
 
 $Exceptions{'glossary.xml'}{'bannedword'}{'element'} = 1;
+
+$Exceptions{'graphics.xml'}{'bannedword'}{"won't"} = 1;
 
 $Exceptions{'introduction.xml'}{'allcaps'}{'FD'}          = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'LISP'}        = 1;
@@ -719,6 +743,7 @@ $Exceptions{'logohelp.xml'}{'allcaps'}{'WHETHER'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'WITH'}            = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'WITHOUT'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'XML'}             = 1;
+$Exceptions{'logohelp.xml'}{'bannedword'}{'will'}         = 1;
 $Exceptions{'logohelp.xml'}{'logo'}                       = 1;
 
 $Exceptions{'media-control-interface.xml'}{'allcaps'}{'BREAK'}           = 1;
@@ -733,6 +758,7 @@ $Exceptions{'media-control-interface.xml'}{'allcaps'}{'RECORD.WAVEFORM'} = 1;
 $Exceptions{'media-control-interface.xml'}{'allcaps'}{'TMFS'}            = 1;
 $Exceptions{'media-control-interface.xml'}{'bannedword'}{'parameter'}    = 1;
 $Exceptions{'media-control-interface.xml'}{'bannedword'}{'parameters'}   = 1;
+$Exceptions{'media-control-interface.xml'}{'bannedword'}{'will'}         = 1;
 
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'COMPUTERNAME'} = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'DHCP'}         = 1;
@@ -747,13 +773,15 @@ $Exceptions{'networking-commands.xml'}{'allcaps'}{'PING'}         = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'POPMAIL'}      = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'TCP'}          = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'TELNET'}       = 1;
+$Exceptions{'networking-commands.xml'}{'bannedword'}{'will'}      = 1;
 
-$Exceptions{'main-menu.xml'}{'allcaps'}{'MS'}   = 1;
-$Exceptions{'main-menu.xml'}{'allcaps'}{'HTML'} = 1;
-$Exceptions{'main-menu.xml'}{'allcaps'}{'BMP'}  = 1;
-$Exceptions{'main-menu.xml'}{'allcaps'}{'GIF'}  = 1;
-$Exceptions{'main-menu.xml'}{'allcaps'}{'DEMO'} = 1;
-$Exceptions{'main-menu.xml'}{'logo'}            = 1;
+$Exceptions{'main-menu.xml'}{'allcaps'}{'MS'}      = 1;
+$Exceptions{'main-menu.xml'}{'allcaps'}{'HTML'}    = 1;
+$Exceptions{'main-menu.xml'}{'allcaps'}{'BMP'}     = 1;
+$Exceptions{'main-menu.xml'}{'allcaps'}{'GIF'}     = 1;
+$Exceptions{'main-menu.xml'}{'allcaps'}{'DEMO'}    = 1;
+$Exceptions{'main-menu.xml'}{'bannedword'}{'will'} = 1;
+$Exceptions{'main-menu.xml'}{'logo'}               = 1;
 
 $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'CD'}   = 1;
 $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'FX'}   = 1;
@@ -763,6 +791,9 @@ $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'MSB'}  = 1;
 
 $Exceptions{'tokenization.xml'}{'logo'}                 = 1;
 $Exceptions{'tokenization.xml'}{'bannedword'}{'return'} = 1;
+$Exceptions{'tokenization.xml'}{'bannedword'}{'will'}   = 1;
+
+$Exceptions{'windows-commands.xml'}{'bannedword'}{'will'} = 1;
 
 # translation tables are completely exempt
 $Exceptions{'translations-1031.xml'}  = 1;

@@ -34,7 +34,7 @@ For example, the Shift, Ctrl, Home, and End keys are ignored.
 <para>
 If KEYBOARDON was given two inputs, then KEYBOARDVALUE outputs the keystrokes as distinct physcial keys on the keyboard, but not necessarily the intended character.
 In this case, when the 5 key is pressed, KEYBOARDVALUE outputs the same number regardless of whether Shift was being held at the time.
-However, there will be a distinct event when the Shift key is pressed and released, so you can still identify the difference between a <userinput>5</userinput> and a <userinput>%</userinput>.
+However, there are distinct events when the Shift key is pressed and when it is released, so you can still identify the difference between a <userinput>5</userinput> and a <userinput>%</userinput>.
 </para>
 
 <para>

@@ -24,10 +24,10 @@ The <parameter>filename</parameter> can also be the reserved word <userinput>"cl
 
 <para>
 The <parameter>binarymode</parameter> is a boolean value (TRUE or FALSE).
-If <parameter>binarymode</parameter> is FALSE or not given, then the file will be read as a text file.
-That is, the end-of-line sequence will be converted from CRLF to LF.
-If <parameter>binarymode</parameter> is TRUE, then the file will be read as a binary file.
-That is, no end-of-line sequence conversion will be performed.
+If <parameter>binarymode</parameter> is FALSE or not given, then the file is read as a text file.
+That is, the end-of-line sequence is converted from CRLF to LF.
+If <parameter>binarymode</parameter> is TRUE, then the file is read as a binary file.
+That is, no end-of-line sequence conversion is performed.
 </para>
 
 </listitem>

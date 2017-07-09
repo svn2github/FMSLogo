@@ -18,7 +18,7 @@ Its purpose is to indicate two things.
 First, it indicates that the current operation may take some time.
 Second, it indicates the user does not have control until the operation completes.
 This command only works when not yielding.
-Once &PRODUCTNAME; is set to yield, the appropriate (non-hourglass) cursor will be used on the next event involving the cursor (like moving the mouse).
+Once &PRODUCTNAME; is set to yield, the appropriate (non-hourglass) cursor is used on the next event involving the cursor (like moving the mouse).
 This means that you must run <link linkend="command-noyield">NOYIELD</link> before each SETCURSORWAIT.
 If you decide to <link linkend="command-yield">YIELD</link> momentarily during a computation you must run SETCURSORWAIT again.
 In other words, if you wish to use SETCURSORWAIT it should always be paired up with a NOYIELD (just before it).

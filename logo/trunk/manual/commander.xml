@@ -74,7 +74,7 @@ See also the <link linkend="command-trace">TRACE</link> and <link linkend="comma
 <para>
 Pressing the Halt button stops &PRODUCTNAME; from running any further instructions.
 It works by throwing a "Stopping..." error.
-Pressing the Halt button will leave &PRODUCTNAME; waiting for your next instruction, assuming that the "Stopping..." error isn't caught.
+Pressing the Halt button leaves &PRODUCTNAME; waiting for your next instruction, assuming that the "Stopping..." error isn't caught.
 </para>
 <para>
 The Halt button is disabled when &PRODUCTNAME; is not running instructions.

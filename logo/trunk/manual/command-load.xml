@@ -24,19 +24,19 @@ It is important to understand that the file is executed, not copied, into the wo
 <itemizedlist>
 <listitem>
 <para>
-If &GENERICNAME; sees a TO instruction, then it will define that procedure (the code within a definition is not executed).
+If &GENERICNAME; sees a TO instruction, then it defines that procedure (the instructions between the TO and END are not immediately run, but instead become the body of the procedure).
 </para>
 </listitem>
 
 <listitem>
 <para>
-If &GENERICNAME; sees a MAKE instruction, then it will make that name.
+If &GENERICNAME; sees a MAKE instruction, then it makes that name.
 </para>
 </listitem>
 
 <listitem>
 <para>
-If &GENERICNAME; sees instructions that are outside of a procedure definition, then it will run that those instructions in the order seen.
+If &GENERICNAME; sees instructions that are outside of a procedure definition, then it runs that those instructions in the order seen.
 </para>
 </listitem>
 </itemizedlist>

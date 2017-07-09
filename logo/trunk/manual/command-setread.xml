@@ -21,7 +21,7 @@ Changing the read stream does not close the file that was previously the read st
 </para>
 
 <para>
-If you <link linkend="command-close">CLOSE</link> the current reader, then the read stream will be closed and <link linkend="command-reader">READER</link> will be changed back to the Commander.
+If you <link linkend="command-close">CLOSE</link> the current reader, then the read stream is closed and <link linkend="command-reader">READER</link> is changed back to the Commander.
 </para>
 
 </listitem>

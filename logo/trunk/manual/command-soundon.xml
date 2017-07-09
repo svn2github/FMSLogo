@@ -15,7 +15,7 @@
 <listitem>
 <para>
 Starts playing a sound on the PC speaker.
-The sound will remain playing until you call <link linkend="command-soundoff">SOUNDOFF</link>.
+The sound remains playing until you call <link linkend="command-soundoff">SOUNDOFF</link>.
 </para>
 
 <para>

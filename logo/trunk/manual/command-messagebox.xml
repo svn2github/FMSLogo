@@ -15,10 +15,10 @@
 <para>
 Displays a dialog box with <parameter>title</parameter> in the title bar and <parameter>message</parameter> as the message.
 The dialog has an "OK" and a "Cancel" button.
-Processing will not continue until the user clicks one of these buttons.
+Processing does not continue until the user clicks one of these buttons.
 The commander window is also disabled until messagebox is dismissed.
-If the user presses "OK", then processing will continue.
-If the user presses "Cancel", then processing will be halted, as if by the <link linkend="command-halt">HALT</link> command.
+If the user presses "OK", then processing continues.
+If the user presses "Cancel", then processing is halted, as if by the <link linkend="command-halt">HALT</link> command.
 </para>
 
 <para>
@@ -28,7 +28,7 @@ Both the <parameter>title</parameter> and <parameter>message</parameter> inputs 
 <para>
 The <parameter>message</parameter> input is truncated according to the current values of <link linkend="command-printwidthlimit">PRINTWIDTHLIMIT</link> and <link linkend="command-printdepthlimit">PRINTDEPTHLIMIT</link>.
 The message box is automatically sized to fit <parameter>message</parameter>.
-The message will not be word-wrapped, so if you have a long message, you may want to put in some line breaks.
+The message is not word-wrapped, so if you have a long message, you may want to put in some line breaks.
 </para>
 
 </listitem>

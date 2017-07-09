@@ -22,7 +22,7 @@ You can also close the reserved file <userinput>"clipboard</userinput> with this
 </para>
 
 <para>
-If you close the current <link linkend="command-reader">READER</link> or <link linkend="command-writer">WRITER</link>, then the reader or writer will be set back to the Commander.
+If you close the current <link linkend="command-reader">READER</link> or <link linkend="command-writer">WRITER</link>, then the reader or writer is reset to the Commander.
 </para>
 
 </listitem>

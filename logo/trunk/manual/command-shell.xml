@@ -33,7 +33,7 @@ For example, if a file named <userinput>c:\Program.exe</userinput> exists, then 
 <programlisting><userinput>SHOW SHELL [c:\\Program Files\\Audacity\\audacity.exe]</userinput>
 </programlisting>
 
-However, the following instruction will always run <userinput>audacity.exe</userinput>, regardless of whether <userinput>c:\Program.exe</userinput> exists:
+However, the following instruction always runs <userinput>audacity.exe</userinput>, regardless of whether <userinput>c:\Program.exe</userinput> exists:
 
 <programlisting><userinput>SHOW SHELL [\"c:\\Program Files\\Audacity\\audacity.exe\"]</userinput>
 </programlisting>

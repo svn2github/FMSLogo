@@ -25,12 +25,12 @@ You can change the range and position with <link linkend="command-scrollbarset">
 
 <para>
 The orientation (vertical or horizontal) of the scrollbar is determined by the longest dimension.
-That is, if <parameter>width</parameter> > <parameter>height</parameter>, then the scrollbar will be horizontal.
-Otherwise, the scrollbar will be vertical.
+That is, if <parameter>width</parameter> > <parameter>height</parameter>, then the scrollbar is horizontal.
+Otherwise, the scrollbar is vertical.
 </para>
 
 <para>
-The <parameter>parent</parameter> input is the name of the window that will own the new scrollbar.
+The <parameter>parent</parameter> input is the name of the window that owns the new scrollbar.
 If no window or dialog with that name exists, then the &PRODUCTNAME; screen window is used as the parent.
 </para>
 

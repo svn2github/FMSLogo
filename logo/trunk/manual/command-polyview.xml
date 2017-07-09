@@ -25,7 +25,7 @@ If you need to add other things to your drawing such as LABELs or BITMAPs etc., 
 
 <para>
 You can call POLYVIEW immediately after any POLYEND to watch polygons get shaded as your program builds your object.
-But keep in mind POLYVIEW is an expensive operation and will slow down the program considerably if you call it with every POLYEND.
+But keep in mind POLYVIEW is an expensive operation and slows down the program considerably if you call it with every POLYEND.
 </para>
 
 <para>

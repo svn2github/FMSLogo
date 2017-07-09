@@ -50,11 +50,11 @@ abcdef</programlisting>
 
     <para>Semicolon has no special meaning in data lines read by <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link>, but such a line can later be reparsed using <link linkend="command-runparse">RUNPARSE</link> and then comments will be recognized.
 <!-- not true in fms:
-If a tilde is typed for line continuation, &GENERICNAME; will use a tilde as a prompt character for the continuation line.
+If a tilde is typed for line continuation, &GENERICNAME; uses a tilde as a prompt character for the continuation line.
 --></para>
 
     <para>To include an otherwise delimiting character (including semicolon or tilde) in a word, precede it with backslash (<userinput>\</userinput>).
-If the last character of a line is a backslash, then the newline character following the backslash will be part of the last word on the line, and the line continues onto the following line.
+If the last character of a line is a backslash, then the newline character following the backslash is part of the last word on the line, and the line continues onto the following line.
 To include a backslash in a word, use <userinput>\\</userinput>.
 <!-- not true in fms:
 If the combination backslash-newline is entered, &GENERICNAME; will use a backslash as a prompt character for the continuation line.
@@ -62,7 +62,7 @@ If the combination backslash-newline is entered, &GENERICNAME; will use a backsl
 All of this applies to data lines read with <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link> as well as to instruction lines.</para>
 
     <para>In &PRODUCTNAME; there is no "prompt character" nor is the carriage return passed from the input control box of the commander.
-However, &PRODUCTNAME; does add the linefeed control character which will translate to a carriage return.</para>
+However, &PRODUCTNAME; does add the linefeed control character which translates to a carriage return.</para>
 
     <para>Example:</para>
 
@@ -72,7 +72,7 @@ how
 are
 you</programlisting>
 
-    <para>This will work in a procedure or from the input control box.</para>
+    <para>This works in a procedure or from the input control box.</para>
 
     <para>A character entered with backslash is <link linkend="command-equalp">EQUALP</link> to the same character without the backslash, but can be distinguished by the <link linkend="command-backslashedp">BACKSLASHEDP</link> predicate.  Backslashing is effective only on characters for which it is necessary: whitespace, parentheses, brackets, infix operators, backslash, vertical bar, tilde, quote, question mark, colon, and semicolon.</para>
 
@@ -89,11 +89,11 @@ This distinction is important only if you are building a &GENERICNAME; expressio
 
     <programlisting>PRINT RUN (SENTENCE "\( 2 "+ 3 "\))</programlisting>
 
-    <para>will print 5, but</para>
+    <para>prints 5, but</para>
 
     <programlisting>RUN (SENTENCE "MAKE ""|(| 2)</programlisting>
 
-    <para>will create a variable whose name is open-parenthesis.  (Each example would fail if vertical bars and backslashes were interchanged.)</para>
+    <para>creates a variable whose name is open-parenthesis.  (Each example would fail if vertical bars and backslashes were interchanged.)</para>
 
 </section>
 

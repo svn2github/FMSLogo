@@ -27,8 +27,8 @@ The <parameter>inline.semiaxis</parameter> input is the distance from the turtle
 The <parameter>startangle</parameter> input is relative to the turtle's current heading.
 A <parameter>startangle</parameter> of 0 indicates that the elliptic arc should start <parameter>inline.semiaxis</parameter> turtle steps directly behind the turtle.
 The <parameter>startangle</parameter> is measured in a clockwise direction, so a value of 90 indicates that the elliptic arc should start to the turtle's left.
-The start position will always be on the same ellipse, regardless of <parameter>startangle</parameter>.
-For example, a <parameter>startangle</parameter> of 90 will start <parameter>crosswise.semiaxis</parameter> turtle steps to the turtle's left.
+The start position is always on the same ellipse, regardless of <parameter>startangle</parameter>.
+For example, a <parameter>startangle</parameter> of 90 starts <parameter>crosswise.semiaxis</parameter> turtle steps to the turtle's left.
 </para>
 
 <para>

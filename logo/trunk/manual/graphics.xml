@@ -40,9 +40,9 @@ By default, all turtles share the same pen mode, pen color, and pen size, but yo
 
 <para>
 Turtles start at index 0, which is the default turtle.
-All turtles between 0 and the highest turtle ever selected will be "activated", so don't choose turtle 100 and 200 if you only need 2 turtles.
+All turtles between 0 and the highest turtle ever selected are "activated", so don't choose turtle 100 and 200 if you only need 2 turtles.
 Having thousands of active turtles may slow &PRODUCTNAME; down considerably as it pauses to redraw every turtle after every instruction.
-Pressing the "Reset" button or running <link linkend="command-clearscreen">CLEARSCREEN</link> will select turtle 0 and deactivate all other turtles.
+Pressing the "Reset" button or running <link linkend="command-clearscreen">CLEARSCREEN</link> selects turtle 0 and deactivates all other turtles.
 </para>
 
 <para>
@@ -1221,7 +1221,7 @@ But it is correct, think about the maneuvers I made and where the turtle should 
 <para>
 But don't worry, &PRODUCTNAME; makes it easy, you just need to understand some basic rules so that you don't get lost in 3D space.
 The turtle controls ROLL, PITCH, and HEADING do affect one another but in a certain way which is important.
-The most important is that a change in HEADING (with RIGHT, LEFT or SETHEADING) will not effect your ROLL or PITCH.
+The most important is that a change in HEADING (with RIGHT, LEFT or SETHEADING) does not effect your ROLL or PITCH.
 This is what allows you to use a lot of your existing 2D code in 3D.
 </para>
 
@@ -1291,7 +1291,7 @@ SHOW ORIENTATION</userinput>
 
 <para>
 There is also another command that knows about your ORIENTATION and that is <link linkend="command-towardsxyz">TOWARDSXYZ</link>.
-TOWARDSXYZ will output an orientation that is compatible with SETORIENTATION.
+TOWARDSXYZ outputs an orientation that is compatible with SETORIENTATION.
 </para>
 
 
@@ -1305,7 +1305,7 @@ SHOW POSXYZ</userinput>
 
 <para>
 Having said all that, you don't really need to think in terms of absolute ORIENTATION.
-ORIENTATION and SETORIENTATION will be used mostly to save, report and restore your ORIENTATION (just like you do with HEADING and SETHEADING in 2D).
+ORIENTATION and SETORIENTATION are used mostly to save, report and restore your ORIENTATION (just like you do with HEADING and SETHEADING in 2D).
 And like explained earlier changes in your heading with RIGHT, LEFT and SETHEADING only effect what they effected in 2D (your HEADING).
 </para>
 
@@ -1334,7 +1334,7 @@ Vectors alone are ambiguous with respect to surfaces.
 
 <para>
 &GENERICNAME; programmers are used to dealing with filled polygons, you do it all the time so it should not be a strange new concept.
-But &PRODUCTNAME; in 3D mode will take care of the correct filling of that polygon with respect to the color you should see based on your eye view, light source, obstructions, and the color of the surface.
+But &PRODUCTNAME; in 3D mode fills that polygon with respect to the color you should see based on your eye view, light source, obstructions, and the color of the surface.
 </para>
 
 <para>
@@ -1364,7 +1364,7 @@ Color is affected by the angle of the surface between your eye (turtle -1) and t
 
 <para>
 The 3D lighting model in &PRODUCTNAME; uses some modern techniques, but is primarily designed for performance.
-It will not do shadows, reflections, etc.
+It does not draw shadows, reflections, etc.
 You may see pixel errors sometimes.
 This is an expected artifact of the algorithm I chose.
 </para>
@@ -1426,7 +1426,7 @@ POLYEND</userinput></programlisting>
   <title>Restriction #2: A polygon must be convex</title>
 
 <para>
-Being "convex" means that if you pick any 2 points within the polygon and connect them with a straight line, the line will never go outside the polygon.
+Being "convex" means that if you pick any 2 points within the polygon and connect them with a straight line, the line never goes outside the polygon.
 Triangles, squares, and circles are all convex.
 The letter "E" (as a polygon) is not convex.
 </para>

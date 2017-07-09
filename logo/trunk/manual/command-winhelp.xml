@@ -15,8 +15,8 @@
 <listitem>
 <para>
 WINHELP has two forms: with and without a <parameter>keyword</parameter> input.
-When no <parameter>keyword</parameter> is given, &PRODUCTNAME; will open the Windows help on <parameter>filename</parameter> to the table of contents.
-When a <parameter>keyword</parameter> is given, &PRODUCTNAME; will search the Windows help for the section on <parameter>keyword</parameter> within the given help file.
+When no <parameter>keyword</parameter> is given, &PRODUCTNAME; opens the Windows help on <parameter>filename</parameter> to the table of contents.
+When a <parameter>keyword</parameter> is given, &PRODUCTNAME; searches the Windows help for the section on <parameter>keyword</parameter> within the given help file.
 You must enter the full keyword.
 </para>
 </listitem>

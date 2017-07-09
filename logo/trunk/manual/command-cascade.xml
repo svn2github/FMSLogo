@@ -24,7 +24,7 @@ The <parameter>template</parameter> is a one-slot expression template.
 That template is evaluated some number of times (perhaps zero).
 On the first evaluation, the slot is filled with the <parameter>startvalue</parameter> input; on subsequent evaluations, the slot is filled with the result of the previous evaluation.
 The number of evaluations is determined by the <parameter>endtest</parameter> input.
-This can be either a nonnegative integer, in which case the template is evaluated that many times, or a predicate expression template, in which case it is evaluated (with the same slot filler that will be used for the evaluation of the second input) repeatedly, and the CASCADE evaluation continues as long as the predicate value is FALSE.
+This can be either a nonnegative integer, in which case the template is evaluated that many times, or a predicate expression template, in which case it is evaluated (with the same slot filler that is used for the evaluation of the second input) repeatedly, and the CASCADE evaluation continues as long as the predicate value is FALSE.
 (In other words, the predicate template indicates the condition for stopping.)
 </para>
 

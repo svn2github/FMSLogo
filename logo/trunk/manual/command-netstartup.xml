@@ -19,7 +19,7 @@ This must be called before any other network commands will work.
 </para>
 
 <para>
-If the <parameter>synchronous_dns</parameter> input is not given, &PRODUCTNAME; will use asynchronous DNS.
+If the <parameter>synchronous_dns</parameter> input is not given, &PRODUCTNAME; uses asynchronous DNS.
 You may optionally call NETSTARTUP with the <parameter>synchronous_dns</parameter> input as 0 (asynchronous) or 1 (synchronous).
 Synchronous DNS makes &PRODUCTNAME; unresponsive during a network name lookup.
 Support for synchronous DNS was added to work around "Host not Found" errors with Trumpet WinSock in the early 1990s.

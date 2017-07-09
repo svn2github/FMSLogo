@@ -78,7 +78,7 @@ If you're not trying to create software for the industry, then you don't need to
 
 <para>
 Novices can start in &GENERICNAME; without having to program at all by just learning how to command the turtle.
-Learning turtle graphics will teach the user about geometry (and they won't even know it).
+Learning turtle graphics teaches the user about geometry.
 It's amazing how soon you can introduce the concept of programming once they grasp the turtle concept.
 Let's look at some simple examples:
 </para>
@@ -114,7 +114,7 @@ Wouldn't it be more useful just to say "square" when you wanted a square?
 </para>
 
 <programlisting>EDIT "SQUARE
-&lt;Editor will pop up>
+&lt;Editor pops up>
 TO SQUARE
   REPEAT 4 [FORWARD 100 RIGHT 90]
 END

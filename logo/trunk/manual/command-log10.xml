@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Outputs the common logarithm of <parameter>num</parameter>.
-That is, 10 raised to the output will be <parameter>num</parameter>.
+That is, 10 raised to the output is <parameter>num</parameter>.
 </para>
 
 </listitem>

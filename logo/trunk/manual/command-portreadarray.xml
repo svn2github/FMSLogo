@@ -20,8 +20,7 @@ PORTMODE outputs the actual number of bytes read.
 </para>
 
 <para>
-If <parameter>count</parameter> is larger than the size of the <parameter>buffer</parameter> array, then
-the number of characters read will be limited to the size of the buffer.
+If <parameter>count</parameter> is larger than the size of the <parameter>buffer</parameter> array, then the number of characters read is limited to the size of the buffer.
 </para>
 
 </listitem>

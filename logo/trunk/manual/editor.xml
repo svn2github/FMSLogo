@@ -6,7 +6,7 @@
 Multiple edit sessions are supported.
 But be careful of having multiple edits going that include the same definition.
 The final editor that is exited (and saved) is what takes precedence.
-Also realize if you delete procedures, property lists or names while in the editor they will be erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.
+Also realize if you delete procedures, property lists or names while in the editor, they are erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.
 </para>
 
     <section id="editor-menu">
@@ -21,7 +21,7 @@ Also realize if you delete procedures, property lists or names while in the edit
 When you exit the editor, &PRODUCTNAME; loads the revised definitions and modifies the workspace accordingly.
 Multiple edit sessions are supported, but be careful not to have multiple edits that include the same definition.
 The final editor that is exited (and saved) is what takes precedence.
-Also realize if you delete procedures, property lists or names while in the editor they will be erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.
+Also realize if you delete procedures, property lists or names while in the editor they are erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.
 See also <link linkend="editor-errors">Edit Errors</link>.
 </para>
         </section>
@@ -72,7 +72,7 @@ Select this option if you want to discard your changes.</para>
         <section id="editor-menu-edit-paste">
           <title>Edit - Paste</title>
           <para>Pastes the text in the clipboard to the cursor position.
-If text is selected it will be replaced with the pasted text.
+If text is selected it is replaced with the pasted text.
 See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
         </section>
 
@@ -121,7 +121,7 @@ See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</pa
           <title>Set - Font</title>
           <para>You can change the editor's font by going to the Font Menu of the editor and selecting the desired font.
 The new font affects the entire Editor not just selected Text.
-The chosen font will remain selected even after &PRODUCTNAME; has been restarted.</para>
+The chosen font remains selected even after &PRODUCTNAME; has been restarted.</para>
         </section>
 
       </section>
@@ -132,7 +132,7 @@ The chosen font will remain selected even after &PRODUCTNAME; has been restarted
         <section id="editor-menu-testbang">
           <title>Test!</title>
           <para>You can test your code by selecting a section of code and clicking on Test! in the menu.
-This will take each line and send it to the commander for execution.
+This sends each selected line to the commander for execution.
 Keep in mind that if you select code that has variables or other context that they must be defined in the selection or already defined in the workspace.
 Using this feature is as if you typed in that selection into the commander.
 </para>
@@ -166,9 +166,9 @@ Using this feature is as if you typed in that selection into the commander.
     <section id="editor-errors">
       <title>Editor Errors</title>
 
-      <para>If an error occurs when &GENERICNAME; "loads" in your edit you will be prompted to reenter the Editor.
+      <para>If an error occurs when &GENERICNAME; "loads" your edit, it prompts you to fix the error in the Editor.
 This situation commonly occurs when a continuation "~" is missing within a list or missing a matching "]".
-When the editor reloads you will be placed at the start of the definition that caused the error.
+When the editor is reopened, &PRODUCTNAME; places the cursor at the start of the definition that has the error.
 When this occurs make sure to check the commander window for a hint of what the problem was when loading.</para>
 
     </section>

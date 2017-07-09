@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Reads one byte from the currently open port and outputs it as an integer.
-It will output "-1" if no character is available.
+It outputs "-1" if no character is available.
 </para>
 
 </listitem>

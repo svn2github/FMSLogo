@@ -21,7 +21,7 @@ If the pause is ended by a <link linkend="command-continue">CONTINUE</link> inst
 
 <para>
 If the variable <link linkend="command-erract">ERRACT</link> exists and an error condition occurs, then the contents of that variable are run as an instruction list.
-Typically ERRACT is given the value [PAUSE] so that an interactive pause will be entered in the event of an error.
+Typically ERRACT is given the value [PAUSE] so that an interactive pause mode is entered in the event of an error.
 This allows the user to check values of local variables at the time of the error.
 </para>
 

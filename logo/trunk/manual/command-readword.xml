@@ -34,8 +34,8 @@ This strange behavior enables the resulting word to be parsed into a list with P
 The notion that vertical bars are both processed <emphasis>and</emphasis> preserved in the output warrants a fuller explanation.
 In processing, vertical bars retain their ability to allow a single line of text to include newline characters.
 So if a newline follows a vertical bar, READWORD continues reading more text until it finds a vertical bar that closes the vertical bar grouping, then it reads until it finds another newline, which terminates the line.
-None of the newlines between the vertical bars will be considered line breaks and READWORD will output all of the text as a single word.
-The output will also include the vertical bars.
+None of the newlines between the vertical bars are considered line breaks and READWORD outputs all of the text as a single word.
+The output also includes the vertical bars.
 </para>
 
 </listitem>

@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Sets the file pointer of the read stream file so that the next <link linkend="command-readlist">READLIST</link>, etc., will begin reading at the <parameter>charpos</parameter>-th character in the file, counting from 0.
-(That is, <userinput>SETREADPOS 0</userinput> will start reading from the beginning of the file.)
+Sets the file pointer of the read stream file so that the next <link linkend="command-readlist">READLIST</link>, etc., begins reading at the <parameter>charpos</parameter>-th character in the file, counting from 0.
+(That is, <userinput>SETREADPOS 0</userinput> starts reading from the beginning of the file.)
 This is meaningless if the read stream is [].
 </para>
 </listitem>

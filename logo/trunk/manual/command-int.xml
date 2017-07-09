@@ -20,7 +20,7 @@ That is, INT outputs an integer with the same sign as the input, whose absolute 
 <para>
 Inside the computer, numbers are represented with two different formats, one for integers and one for numbers with fractional parts.
 On most computers the largest number that can be represented in integer format is smaller than the largest integer that can be represented in fractional format.
-The INT operation will always output a number whose value is mathematically an integer, but if its input is very large the output may not be in integer format.
+The INT operation always outputs a number whose value is mathematically an integer, but if its input is very large the output may not be in integer format.
 In that case, operations like <link linkend="command-remainder">REMAINDER</link> that require an integer input will not accept this number.
 </para>
 
