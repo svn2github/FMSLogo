@@ -843,6 +843,9 @@ CLogoCodeCtrl::DoSearchOperation(
     {
         // Found it.  Select the string.
         SetSelection(location, location + StringToFind.Length());
+
+        // Scroll the selection into view.
+        EnsureCaretVisible();
     }
     else
     {
