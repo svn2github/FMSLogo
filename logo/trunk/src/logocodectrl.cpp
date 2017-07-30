@@ -781,9 +781,9 @@ CLogoCodeCtrl::DoSearchOperation(
     // Configure Scintilla to search as requested
     SetScintillaSearchFlags(WxSearchFlags);
 
-    if (SearchOperation == SEARCH_OPERATION_FindAndReplace)
+    if (SearchOperation == SEARCH_OPERATION_ReplaceAndFind)
     {
-        // We are doing a find&replace operation.
+        // We are doing a replace&find operation.
         // If the string to be replaced is currently selected, then replace it.
         // After the replacement is performed, search for the next occurence.
         const wxString & selectedText = GetSelectedText();
@@ -883,7 +883,7 @@ CLogoCodeCtrl::Replace(
     )
 {
     DoSearchOperation(
-        SEARCH_OPERATION_FindAndReplace,
+        SEARCH_OPERATION_ReplaceAndFind,
         WxSearchFlags,
         StringToFind,
         ReplacementString);

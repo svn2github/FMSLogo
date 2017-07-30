@@ -89,7 +89,7 @@ public:
 
     enum SEARCH_OPERATION
     {
-        SEARCH_OPERATION_FindAndReplace,
+        SEARCH_OPERATION_ReplaceAndFind,
         SEARCH_OPERATION_Find,
     };
 
