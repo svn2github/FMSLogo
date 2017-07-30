@@ -160,6 +160,13 @@ public:
             wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
             wxCLIP_CHILDREN | wxCAPTION)
     {
+        // In wxWidgets, if a wxTopLevelWindow (such as this wxDialog) has a single
+        // child and no auto-layout then it ignores the position and size of that
+        // child and makes it fill the entire top level window.
+        // Since the FMSLogo API does not have this behavior, we must disable it.
+        // The easiest way to do so is to make wxWidets think the dialog box has
+        // auto layout, which we can do by setting an empty sizer (and never use it).
+        SetSizer(new wxBoxSizer(wxHORIZONTAL));
     }
 
 private:
@@ -455,13 +462,13 @@ public:
         const char             * Callback
         )
     {
-#ifdef __WXMSW__     
-      // Initializing the native window using the wxButton ctor
-      // caused some painting problems.  The problems seemed
-      // related to changing the font to the MSWLogo-compatible
-      // one.  Since this is not necessary when using the raw
-      // win32 BUTTON class, we create the child window using
-      // CreateWindow.
+#ifdef __WXMSW__ 
+        // Initializing the native window using the wxButton ctor
+        // caused some painting problems.  The problems seemed
+        // related to changing the font to the MSWLogo-compatible
+        // one.  Since this is not necessary when using the raw
+        // win32 BUTTON class, we create the child window using
+        // CreateWindow.
         HWND hwnd = CreateWindow(
             WC_BUTTON, // window class
             Caption,    // caption

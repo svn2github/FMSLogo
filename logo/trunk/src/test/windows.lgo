@@ -1281,6 +1281,61 @@ TO WINDOWSTEST.REGRESSIONTEST
 
 END
 
+TO WINDOWSTEST.SINGLEWIDGET.SETUP
+  BUTTONCREATE "windowstest.singletest "b1 [Close Window] 5 5 80 20 [
+    WINDOWDELETE "windowstest.singletest ; close the window
+  ]
+END
+
+TO WINDOWSTEST.SINGLEWIDGET
+
+   ; This is a regression test for Bug #499, which is that adding a widget to a window
+   ; from the "setup" instruction list causes it to fill the entire space of the window,
+   ; instead of honoring the x/y/width/height inputs.
+
+   UIAUTOMATION.INITIALIZE
+
+   CATCH "ERROR [
+
+     LOCALMAKE "title "|Window With Single Button|
+
+     ; create a window with a single button on it
+     TRACEINSTRUCTION [ 
+       WINDOWCREATE "main "windowstest.singletest :title 50 50 300 300 [WINDOWSTEST.SINGLEWIDGET.SETUP]
+     ]
+
+     LOCALMAKE "parenthwnd UIAUTOMATION.FINDWINDOW :title 0
+     if :parenthwnd = 0 [
+       REPORTTESTBUG (word "|Couldn't find window named "| :title "|"|)
+       STOP
+     ]
+
+     LOCALMAKE "button UIAUTOMATION.FINDCHILDWINDOW :parenthwnd "|Close Window| 0
+     if :button = 0 [
+       REPORTTESTBUG (word "|Couldn't find button named "| :buttontext "|" on "| :parentwindowtitle "|"|)
+       STOP
+     ]
+
+     LOCALMAKE "rect UIAUTOMATION.GETWINDOWRECT :button
+     IF NOTEQUAL? :rect [] [
+        MAKE "left   ITEM 1 :rect
+        MAKE "top    ITEM 2 :rect
+        MAKE "right  ITEM 3 :rect
+        MAKE "bottom ITEM 4 :rect
+        FAILIFNOTTRUE [ :right  - :left < 200 ]
+        FAILIFNOTTRUE [ :bottom - :top  < 200 ]
+     ]
+
+     ; Close the window
+     WINDOWDELETE "windowstest.singletest
+   ]
+
+   IGNORE FAILIFERROR "WINDOWSTEST.SINGLEWIDGET
+   UIAUTOMATION.UNINITIALIZE
+
+END
+
+
 TO WINDOWSTEST
 
    WINDOWSTEST.WINDOW.SMOKETEST

@@ -318,3 +318,46 @@ TO UIAUTOMATION.POSTFOCUSTOWINDOW :parentwindowtitle :childwindowclass
   uiautomation.postevent :uievent
 END
 BURY "UIAUTOMATION.POSTFOCUSTOWINDOW
+
+
+TO UIAUTOMATION.UNPACK.UINT32 :buffer :offset
+  ; Extract (and outputs) a 32-bit integer from :buffer, which was
+  ; created by DLLCALL.  :offset is zero-indexed.
+  LOCAL [b1 b2 b3 b4]
+  MAKE "b1 RAWASCII ITEM SUM :offset 1 :buffer 
+  MAKE "b2 RAWASCII ITEM SUM :offset 2 :buffer 
+  MAKE "b3 RAWASCII ITEM SUM :offset 3 :buffer
+  MAKE "b4 RAWASCII ITEM SUM :offset 4 :buffer
+  OUTPUT (BITOR (LSHIFT :b4 24) (LSHIFT :b3 16) (LSHIFT :b2 8) :b1)
+END
+BURY "UIAUTOMATION.UNPACK.UINT32
+
+TO UIAUTOMATION.GETWINDOWRECT :hwnd
+  ; Calls the win32 function GetWindowRect() and unmarhals the returned
+  ; RECT into a list [left top right bottom]
+  LOCAL [rval rect isOk]
+
+  MAKE "rval (DLLCALL (LIST "L "GetWindowRect "B 16 "L :hwnd) "user32.dll)
+  MAKE "isOk ITEM 1 :rval
+  IF EQUAL? 0 :isOk [
+     REPORTTESTBUG (WORD "|GetWindowRect() failed to find | :hwnd ". )
+     OUTPUT []
+  ]
+
+  ; Now unpack the RECT, which is defined as the following C struct
+  ;
+  ;  typedef struct _RECT {
+  ;    LONG left;
+  ;    LONG top;
+  ;    LONG right;
+  ;    LONG bottom;
+  ;  } RECT, *PRECT;
+  ;
+  MAKE "rect ITEM 2 :rval
+  MAKE "left   UIAUTOMATION.UNPACK.UINT32 :rect 0
+  MAKE "top    UIAUTOMATION.UNPACK.UINT32 :rect 4
+  MAKE "right  UIAUTOMATION.UNPACK.UINT32 :rect 8
+  MAKE "bottom UIAUTOMATION.UNPACK.UINT32 :rect 12
+  OUTPUT (LIST :left :top :right :bottom)
+END
+BURY "UIAUTOMATION.GETWINDOWRECT
