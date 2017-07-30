@@ -1318,10 +1318,10 @@ TO WINDOWSTEST.SINGLEWIDGET
 
      LOCALMAKE "rect UIAUTOMATION.GETWINDOWRECT :button
      IF NOTEQUAL? :rect [] [
-        MAKE "left   ITEM 1 :rect
-        MAKE "top    ITEM 2 :rect
-        MAKE "right  ITEM 3 :rect
-        MAKE "bottom ITEM 4 :rect
+        LOCALMAKE "left   ITEM 1 :rect
+        LOCALMAKE "top    ITEM 2 :rect
+        LOCALMAKE "right  ITEM 3 :rect
+        LOCALMAKE "bottom ITEM 4 :rect
         FAILIFNOTTRUE [ :right  - :left < 200 ]
         FAILIFNOTTRUE [ :bottom - :top  < 200 ]
      ]
