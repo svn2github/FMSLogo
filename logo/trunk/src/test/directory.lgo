@@ -119,19 +119,28 @@ TO CHDIRTEST
 END
 
 TO CURRENTWORKINGDIRECTORY
-   ; FMSLogo has no built-in "cwd" command, so it must be done with a Perl callout.
-   ; Use Perl to write out a file that contains the current working directory.  
-   IGNORE (SHELL "|perl.exe -e \"use Cwd\; open OUT, '>currentdirectory.txt'; print OUT cwd()"| LOCALETRUE)
+    ; FMSLogo has no built-in "cwd" command, so it must be done with a callout.
+    LOCAL [workingDirectorySize lastError workingDirectory]
 
-   ; Read the file into a variable
-   OPENREAD  "currentdirectory.txt
-   SETREAD   "currentdirectory.txt
-   LOCALMAKE "currentworkingdirectory READRAWLINE
-   CLOSE     "currentdirectory.txt
+    DLLLOAD "kernel32.dll
 
-   ERASEFILE "currentdirectory.txt
+    ; Call it with a NULL buffer to determine the required buffer size.
+    MAKE "workingDirectorySize Item 1 (DLLCALL [L GetCurrentDirectoryA L 0 L 0] "kernel32.dll)
+    IFELSE :workingDirectorySize = 0 [
+        MAKE "lastError (DLLCALL [L GetLastError] "kernel32.dll)
+    ][
+        ; Read the directory name into a correctly-sized buffer.
+        MAKE "workingDirectory ITEM 2 (DLLCALL (LIST "L "GetCurrentDirectoryA "B :workingDirectorySize "L :workingDirectorySize) "kernel32.dll)
+    ]
 
-   OUTPUT :currentworkingdirectory
+    (DLLFREE "kernel32.dll)
+
+    IF NAME? "lastError [ 
+       REPORTTESTBUG (Word "|Could get the module's file name (error=| Item 1 :lastError "|)|)
+    ]
+
+    ; Remove the NUL characters from the buffer
+    OUTPUT FILTER [NOTEQUAL? CHAR 0 ? ] :workingDirectory
 END
 
 TO DIRECTROYTEST.WITHOUTDOTS
