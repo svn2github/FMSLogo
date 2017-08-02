@@ -19,6 +19,25 @@ TO ISPSEUDOLOCBUILD
 END
 BURY [ISPSEUDOLOCBUILD]
 
+TO STRIPNULS :message
+  ; Recursively replaces NUL characters in any words in :message with "\0".
+  ; This is used immediately before printing a result so that the NUL characters
+  ; don't enter the output stream literally.
+  IF WORD? :message [
+    OUTPUT MAP [IFELSE EQUAL? RAWASCII ? 0 ["\\0] [?] ] :message
+  ]
+  IF LIST? :message [
+    ; Use RUNRESULT to work around bugs where some tests output UNBOUND.
+    OUTPUT MAP [IFELSE EQUAL? [] RUNRESULT [?] [ "nothing ] [ STRIPNULS ? ] ] :message
+  ]
+  IF ARRAY? :message [
+    ; work around a bug in ARRAYTOLIST which doesn't handle {} correctly.
+    IF EQUAL? 0 COUNT :message [ OUTPUT :message ]
+    OUTPUT LISTTOARRAY STRIPNULS ARRAYTOLIST :message
+  ]
+END
+BURY "STRIPNULS
+
 TO UNLIMITEDPRINT :listtoprint
   ; declare printwidthlimit and printdepthlimit local so that logging happens as expected.
   local [printdepthlimit printwidthlimit pseudo.printdepthlimit pseudo.printwidthlimit]
@@ -49,13 +68,14 @@ TO REPORTTESTINFO :message
   LOCALMAKE "previouswriter WRITER
   SETWRITE :testlog
 
-  UNLIMITEDPRINT (SENTENCE "INFO: :message)
+  ; Remove NUL characters before we print, since they can hide results
+  ; and confuse diff programs into thinking the test log is binary.
+  UNLIMITEDPRINT (SENTENCE "INFO: STRIPNULS :message)
 
   ; restore the current writer
   SETWRITE :previouswriter
 END
 BURY [REPORTTESTINFO]
-
 
 TO REPORTTESTPASSED :message
 
@@ -63,7 +83,9 @@ TO REPORTTESTPASSED :message
   LOCALMAKE "previouswriter WRITER
   SETWRITE :testlog
 
-  UNLIMITEDPRINT (SENTENCE "PASS: :message)
+  ; Remove NUL characters before we print, since they can hide results
+  ; and confuse diff programs into thinking the test log is binary.
+  UNLIMITEDPRINT (SENTENCE "PASS: STRIPNULS :message)
 
   ; restore the current writer
   SETWRITE :previouswriter
@@ -77,7 +99,9 @@ TO REPORTTESTFAILED :message
   LOCALMAKE "previouswriter WRITER
   SETWRITE :testlog
 
-  LOCALMAKE "result (SENTENCE "FAIL: :message)
+  ; Remove NUL characters before we print, since they can hide results
+  ; and confuse diff programs into thinking the test log is binary.
+  LOCALMAKE "result (SENTENCE "FAIL: STRIPNULS :message)
   UNLIMITEDPRINT :result
   UNLIMITEDMESSAGEBOX [Test Failed] :result
 
@@ -92,7 +116,9 @@ TO REPORTTESTBUG :message
   LOCALMAKE "previouswriter WRITER
   SETWRITE :testlog
 
-  LOCALMAKE "result (SENTENCE "TESTBUG: :message)
+  ; Remove NUL characters before we print, since they can hide results
+  ; and confuse diff programs into thinking the test log is binary.
+  LOCALMAKE "result (SENTENCE "TESTBUG: STRIPNULS :message)
   UNLIMITEDPRINT :result
   UNLIMITEDMESSAGEBOX [Test Bug] :result
 
@@ -173,12 +199,11 @@ TO SIMPLEREPORTTEST.CHECKRESULT :instruction :result :expectedresult
   ; require strict case correctness
   MAKE "caseignoredp "false
 
-  IF NOTEQUAL? :result :expectedresult [
-    REPORTTESTFAILED (LIST :instruction "output :result "|. We expected| :expectedresult ".)
-    STOP
+  IFELSE EQUAL? :result :expectedresult [
+    REPORTTESTPASSED (LIST :instruction "output STRIPNULS :result "|, as expected.|)
+  ][ 
+    REPORTTESTFAILED (LIST :instruction "output STRIPNULS :result "|. We expected | STRIPNULS :expectedresult ".)
   ]
-
-  REPORTTESTPASSED (LIST :instruction "output :result "|, as expected.|)
 END
 BURY [SIMPLEREPORTTEST.CHECKRESULT]
 
