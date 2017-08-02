@@ -145,13 +145,13 @@ TO SETLABELFONTTEST
   RUNTOOMANYINPUTSTEST   [(SETLABELFONT [[Arial]] "toomany)]
 
 
-  REPORTTESTINFO [Testing that SETLABELFONT doesn't modify its input list on error]
-  localmake "original [SETLABELFONT [[Arial] 24 0 0 400 0 0 bad 0 0 0 0 0]]
-  localmake "used     [SETLABELFONT [[Arial] 24 0 0 400 0 0 bad 0 0 0 0 0]]
+  REPORTTESTINFO "|Testing that SETLABELFONT doesn't modify its input list on error.|
+  LOCALMAKE "original [SETLABELFONT [[Arial] 24 0 0 400 0 0 bad 0 0 0 0 0]]
+  LOCALMAKE "used     [SETLABELFONT [[Arial] 24 0 0 400 0 0 bad 0 0 0 0 0]]
   CATCH "ERROR :used
   IGNORE ERROR
-  REPORTTESTINFO [Now comparing the original instruction to the one that was used]
-  FAILIFNOTTRUE (LIST :original "= :used)
+  REPORTTESTINFO "|Now comparing the original instruction to the one that was used.|
+  SIMPLEREPORTTEST [:used] :original
 
 END
 
