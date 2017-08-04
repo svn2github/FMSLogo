@@ -19,7 +19,7 @@ REPCOUNT outputs -1 when it is run outside the context of a FOREVER or REPEAT co
 </para>
 
 <para>
-If two REPEAT commands are nested, REPCOUNT outputs the repeat count if the innermost REPEAT.
+If two REPEAT commands are nested, REPCOUNT outputs the repeat count of the innermost REPEAT.
 </para>
 </listitem>
 </varlistentry>
