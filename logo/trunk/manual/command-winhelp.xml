@@ -19,6 +19,12 @@ When no <parameter>keyword</parameter> is given, &PRODUCTNAME; opens the Windows
 When a <parameter>keyword</parameter> is given, &PRODUCTNAME; searches the Windows help for the section on <parameter>keyword</parameter> within the given help file.
 You must enter the full keyword.
 </para>
+
+<para>
+The WinHelp file format has been deprecated by Microsoft.
+Therefore, this command is deprecated in &PRODUCTNAME;.
+</para>
+
 </listitem>
 </varlistentry>
 
@@ -28,6 +34,12 @@ You must enter the full keyword.
 WINHELP "c:\\windows\\help\\notepad.hlp</userinput>
 </programlisting>
 </listitem>
+</varlistentry>
+
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-help">HELP</link></member>
+</simplelist></listitem>
 </varlistentry>
 
 </variablelist>
