@@ -6,9 +6,9 @@ to aaa
 ; It works by "scanning" the 2D Image pixel by pixel and
 ; places that pixel in 3D space.
 ;
-; It assumes you have a common bitmap c:windowsforest.bmp
-; If it's not there change it to whatever you like.
-; But don't make it much bigger than say 200x200 pixels.
+; It assumes you have a bitmap fmslogo.bmp.
+; If not, you can change it to whatever you like, but
+; don't make it much bigger than say 200x200 pixels.
 ;
 ; Experiment:
 ;
@@ -19,23 +19,27 @@ to aaa
 ; command FD 1.
 ;
 ; But remember FMSLogo does not do hidden surface/line removal. 
-; Don't go all the way around. Or if you do draw
-; the side facing you last (go around the back then then
-; front).
+; Don't go all the way around. Or if you do, draw the
+; side facing you last (go around the back then the front).
 ;
 cs
 ht
 pu
+
 ; Reset scrollers
 scrollx 0
 scrolly 0
 scrolly -500
+
 ; Place image to be scanned here
 setxy 200 200
-make "size bitloadsize "c:\\windows\\forest.bmp
-bitload "c:\\windows\\forest.bmp
+make "bitmapFilename "fmslogo.bmp
+make "size bitloadsize :bitmapFilename
+bitload :bitmapFilename
+
 ; Enable 3D mode
 perspective
+
 ;
 ; Position Eye such that the size of something in 2D is the
 ; same size as it would be if it were on the XY plane in 3D.
@@ -53,6 +57,7 @@ perspective
 setturtle -1
 setxyz 0 0 855
 setturtle 0
+
 ;
 ; All the images are placed high in Y axis so we can see under
 ; the cube. We could of moved turtle -1 as we normally do for a
@@ -64,11 +69,13 @@ setposxyz [-100 200 0]
 setorientation [0 0 0]
 rr 45
 DrawImage3D
+
 ; Position and orientation in 3D to place 2nd image
 setposxyz [-100 200 0]
 setorientation [0 0 0]
 rr 135
 DrawImage3D
+
 ; Position and orientation in 3D to place 3rd image
 setposxyz [-100 200 0]
 setorientation [0 0 0]

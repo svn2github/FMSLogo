@@ -30,6 +30,7 @@ II. New features/bugs fixed:
     This was a regression in FMSLogo 7.0.0.
   o Fix Bug #500; Searching for off-screen text in the editor once again scrolls
     to the text when its found.  This was a regression in FMSLogo 7.0.0.
+  o Fix Bug #501; Examples/3D/3DBITMAP.LGO no longer has a .bmp not found error.
   o Improvements to the Italian translation.
   o Improvements to the German translation.
 
