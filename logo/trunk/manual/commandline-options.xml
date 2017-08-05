@@ -8,14 +8,14 @@ Just add these switches after the &LOGOEXE;.
 </para>
 
 <para>
-You can add any command line option to the &PRODUCTNAME; program icon so that when you double click on it, &PRODUCTNAME; starts with the selected option.
+You can add any command line option to the &PRODUCTNAME; desktop shortcut so that when you double click on it, &PRODUCTNAME; starts with the selected option.
 For example, if you want to start &PRODUCTNAME; in "<link linkend="commandline-e">expert</link>" mode:
 
 
 <orderedlist>
 <listitem>
 <para>
-Right-click on the FMSLogo program icon.
+Right-click on the &PRODUCTNAME; desktop shortcut.
 </para>
 </listitem>
 
@@ -27,7 +27,7 @@ Click the Shortcut tab in the Properties dialog.
 
 <listitem>
 <para>
-In the Target field, add the command -E so the line looks like this <userinput>"C:\Program Files\FMSLogo\fmslogo.exe" -E</userinput>.
+In the Target field, append "-E" so the line looks like this <userinput>"C:\Program Files\FMSLogo\fmslogo.exe" -E</userinput>.
 </para>
 </listitem>
 
@@ -38,7 +38,7 @@ Click the OK button.
 </listitem>
 </orderedlist>
 
-The next time you double click the program icon, &PRODUCTNAME; will start in expert mode.
+The next time you double-click the shortcut, &PRODUCTNAME; will start in expert mode.
 </para>
 
 <section id="commandline-w">
@@ -164,7 +164,7 @@ If procedures are lost or change unexpectedly then you should not be using exper
 &PRODUCTNAME; allows you to <link linkend="command-load">LOAD</link> one or more filenames on the command line when starting &PRODUCTNAME;.
 These files are loaded before the interpreter starts reading commands from the commander.
 If you load a file that runs a program that includes a <link linkend="command-bye">BYE</link> instruction, &PRODUCTNAME; runs that program and exits.
-You can therefore write standalone programs in &PRODUCTNAME; and run them as new shortcuts.
+You can therefore write stand-alone programs in &PRODUCTNAME; and run them as new shortcuts.
 Note, the "-L" switch must follow any other switches.
 </para>
 
