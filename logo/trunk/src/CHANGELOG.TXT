@@ -1,5 +1,21 @@
 This file contains the changes that were made in each version of FMSLogo.
 
+Changed in 7.2.0
+o Fix Bug #94; Clarify the meaning and usage of the "start.angle" input the
+  documentation for ELLIPSEARC2.
+o Fix Bug #492; File -> New and File -> Open no longer erase translated
+  library procedures in non-English versions of FMSLogo.
+o Fix Bug #493; the Italian translation of SLOWDRAW now affects the behavior
+  of the Italian translations of FORWARD, FD, BACK, and BK.
+o Fix Bug #499; Creating a single child widget from the setup instructionlist
+  of WINDOWCREATE or DIALOGCREATE no longer fills the entire window/dialog.
+  This was a regression in FMSLogo 7.0.0.
+o Fix Bug #500; Searching for off-screen text in the editor once again scrolls
+  to the text when its found.  This was a regression in FMSLogo 7.0.0.
+o Fix Bug #501; Examples/3D/3DBITMAP.LGO no longer has a .bmp not found error.
+o Improvements to the Italian translation.
+o Improvements to the German translation.
+
 Changed in 7.1.0
 o Add Simplified Chinese translation (contributed by pachleng)
 o Fix Bug #490; the status dialog no longer shows negative numbers when the
