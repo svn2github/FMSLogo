@@ -31,6 +31,13 @@ Prints the input or inputs to the current write stream, just like <link linkend=
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-printdepthlimit">PRINTDEPTHLIMIT</link></member>
+<member><link linkend="command-printwidthlimit">PRINTWIDTHLIMIT</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+
+</variablelist>
 </section>
