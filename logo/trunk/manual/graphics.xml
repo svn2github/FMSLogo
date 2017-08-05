@@ -46,7 +46,7 @@ Pressing the "Reset" button or running <link linkend="command-clearscreen">CLEAR
 </para>
 
 <para>
-In addition the turtles that you can create, there are also three special turtles used when in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+In addition to the turtles which you can create, there are also three special turtles which are used in <link linkend="command-perspective">PERSPECTIVE</link> mode.
 
 <informaltable frame='all'>
   <tgroup cols='2'>
