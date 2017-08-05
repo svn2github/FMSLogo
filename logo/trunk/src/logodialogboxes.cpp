@@ -36,6 +36,7 @@
    #include <wx/checkbox.h>
    #include <wx/radiobut.h>
    #include <wx/scrolbar.h>
+   #include <wx/sizer.h>
 
    #include <wx/filename.h>
    #include <wx/filedlg.h> 
