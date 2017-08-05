@@ -8,7 +8,7 @@ Just add these switches after the &LOGOEXE;.
 </para>
 
 <para>
-You can add any command line option to the &PRODUCTNAME; desktop shortcut so that when you double click on it, &PRODUCTNAME; starts with the selected option.
+You can add any command line option to the &PRODUCTNAME; desktop shortcut so that when you double-click on it, &PRODUCTNAME; starts with the selected option.
 For example, if you want to start &PRODUCTNAME; in "<link linkend="commandline-e">expert</link>" mode:
 
 

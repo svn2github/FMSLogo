@@ -55,6 +55,9 @@ $main::TotalWarnings = 0;
   'routines',         # use "procedures", instead
   'parameter',        # use "input", instead
   'parameters',       # use "inputs", instead
+  'program icon',     # use "desktop shortcut", instead
+  'doubleclick',      # use "double-click", instead
+  'double click',     # use "double-click", instead
   'argument',         # use "input", instead
   'arguments',        # use "inputs", instead
   'execute',          # use "run", instead
