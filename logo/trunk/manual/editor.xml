@@ -3,10 +3,9 @@
     <indexterm><primary>Editor</primary></indexterm>
 
     <para>When you exit the editor, &PRODUCTNAME; loads the revised definitions and modifies the workspace accordingly.
-Multiple edit sessions are supported.
-But be careful of having multiple edits going that include the same definition.
-The final editor that is exited (and saved) is what takes precedence.
-Also realize if you delete procedures, property lists or names while in the editor, they are erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.
+Multiple edit sessions are supported, but be careful of having multiple edit sessions that include the same definition.
+The final editor that is exited (and saved) takes precedence.
+Also realize if you delete procedures, property lists, or names while in the editor, then they are erased (see <link linkend="command-erase">ERASE</link>) from the workspace at the time of exiting (and saving) the edit session you deleted them from.
 </para>
 
     <section id="editor-menu">
@@ -17,11 +16,11 @@ Also realize if you delete procedures, property lists or names while in the edit
 
         <section id="editor-menu-file-saveandexit">
           <title>File - Save and Exit</title>
-          <para>Exits the editor and prompts you whether to save the work to the &GENERICNAME; workspace.
+          <para>Exits the editor and prompts you whether to save the changes to the &GENERICNAME; workspace.
 When you exit the editor, &PRODUCTNAME; loads the revised definitions and modifies the workspace accordingly.
-Multiple edit sessions are supported, but be careful not to have multiple edits that include the same definition.
-The final editor that is exited (and saved) is what takes precedence.
-Also realize if you delete procedures, property lists or names while in the editor they are erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.
+Multiple edit sessions are supported, but be careful not to have multiple edit sessions that include the same definition.
+The final editor that is exited (and saved) takes precedence.
+Also realize if you delete procedures, property lists, or names while in the editor, then they are erased (see <link linkend="command-erase">ERASE</link>) from the workspace at the time of exiting (and saving) the edit session you deleted them from.
 See also <link linkend="editor-errors">Edit Errors</link>.
 </para>
         </section>
