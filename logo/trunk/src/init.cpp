@@ -306,14 +306,12 @@ static const PRIMTYPE prims[] =
     { "lessp", 2, 2, 2, PREFIX_PRIORITY, llessp, LOCALIZED_ALTERNATE_LESSP },
     { "light", 0, 0, 0, PREFIX_PRIORITY, llight, LOCALIZED_ALTERNATE_LIGHT },
     { "list", 0, 2, -1, PREFIX_PRIORITY, llist, LOCALIZED_ALTERNATE_LIST },
-#if !defined WX_PURE
     { "listboxaddstring", 2, 2, 2, PREFIX_PRIORITY, llistboxaddstring, LOCALIZED_ALTERNATE_LISTBOXADDSTRING },
     { "listboxcreate", 6, 6, 6, PREFIX_PRIORITY, llistboxcreate, LOCALIZED_ALTERNATE_LISTBOXCREATE },
     { "listboxenable", 2, 2, 2, PREFIX_PRIORITY, llistboxenable, LOCALIZED_ALTERNATE_LISTBOXENABLE },
     { "listboxdelete", 1, 1, 1, PREFIX_PRIORITY, llistboxdelete, LOCALIZED_ALTERNATE_LISTBOXDELETE },
     { "listboxdeletestring", 2, 2, 2, PREFIX_PRIORITY, llistboxdeletestring, LOCALIZED_ALTERNATE_LISTBOXDELETESTRING },
     { "listboxgetselect", 1, 1, 1, PREFIX_PRIORITY, llistboxgetselect, LOCALIZED_ALTERNATE_LISTBOXGETSELECT },
-#endif
     { "listp", 1, 1, 1, PREFIX_PRIORITY, llistp, LOCALIZED_ALTERNATE_LISTP },
     { "list?", 1, 1, 1, PREFIX_PRIORITY, llistp, LOCALIZED_ALTERNATE_LIST_ },
     { "ln", 1, 1, 1, PREFIX_PRIORITY, lln, LOCALIZED_ALTERNATE_LN },

@@ -178,17 +178,28 @@ class CLogoListBox : public wxListBox
 {
 public:
 
+    CLogoListBox(
+        wxWindow               * Parent,
+        const CClientRectangle & ClientRectangle
+        )
+#ifdef WX_PURE        
+        : wxListBox(
+            Parent,
+            wxID_ANY,
+            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
+            0,    // no selected choice
+            NULL, // no choices upon creation
+            wxLB_SINGLE)
+    {
+    }
+#else
     // In MSWLogo, the list boxes rounded down the height so that
     // they would never show a partial item in the list.  I wasn't
     // able to figure out to change the style of a wxListBox so that
     // it didn't include LBS_NOINTEGRALHEIGHT, so instead I create
     // the window using CreateWindowEx().
-    CLogoListBox(
-        wxWindow               * Parent,
-        const CClientRectangle & ClientRectangle
-        )
     {
-#ifdef __WXMSW__
         HWND hwnd = ::CreateWindowEx(
             WS_EX_CLIENTEDGE | WS_EX_LEFT, // extended style
             WC_LISTBOX,                    // window class
@@ -219,14 +230,45 @@ public:
         SetHWND(hwnd);
         SubclassWin(hwnd);
         AdoptAttributesFromHWND();
-#endif
     }
+#endif
 
 private:
 
     DECLARE_NO_COPY_CLASS(CLogoListBox);
 };
 
+#ifdef WX_PURE
+
+// TODO: because the GTK wxComboBox does not support wxCB_SIMPLE,
+// to provide MSWLogo compatability, we will likely need to implement
+// our own combobox, composed of a wxListBox and a wxTextEntry.
+
+class CLogoComboBox : public wxComboBox
+{
+public:
+    CLogoComboBox(
+        wxWindow               * Parent, 
+        const CClientRectangle & ClientRectangle
+        )
+        : wxComboBox(
+            Parent,
+            wxID_ANY,
+            wxEmptyString, // no initial value
+            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
+            0, // no initial selection
+            NULL, // no initial choices
+            wxCB_SIMPLE)
+    {
+    }
+
+private:
+    DECLARE_NO_COPY_CLASS(CLogoComboBox);
+};
+
+#else
+    
 // Unfortunately, wxComboBox does not handle CBS_SIMPLE Windows comboboxes well.
 // In particular, there is no way to set CBS_DISABLENOSCROLL, which means that
 // its height would vary with the number of elements within it, which makes it
@@ -243,7 +285,6 @@ public:
         const CClientRectangle & ClientRectangle
         )
     {
-#ifdef __WXMSW__
         HWND hwnd = CreateWindow(
             WC_COMBOBOX, // window class
             "",           // caption
@@ -315,12 +356,10 @@ public:
                 SetSize(x, y);
             }
         }
-#endif // __WXMSW__
     }
 
     const wxString GetValue() const
     {
-#ifdef __WXMSW__
         // Determine how long the value is.
         int valueLength = ComboBox_GetTextLength(static_cast<HWND>(GetHandle()));
 
@@ -339,15 +378,10 @@ public:
 
         // Return the value
         return value;
-#else
-	return wxString("TODO");
-#endif
-	
     }
 
     void SetValue(const wxString & NewValue)
     {
-#ifdef __WXMSW__
         // For compatibility with MSWLogo, make a best
         // effort to change the selected item to match the
         // new text.
@@ -363,12 +397,10 @@ public:
         {
             // TODO: raise a wxWidgets error
         }
-#endif
     }
 
     void Delete(int IndexToDelete)
     {
-#ifdef __WXMSW__
         int totalItems = ComboBox_DeleteString(
             static_cast<HWND>(GetHandle()),
             IndexToDelete);
@@ -376,12 +408,10 @@ public:
         {
             // TODO: raise a wxWidgets error
         }
-#endif
     }
 
     void Append(const wxString & NewValue)
     {
-#ifdef __WXMSW__
         int newIndex = ComboBox_AddString(
             static_cast<HWND>(GetHandle()),
             NewValue.c_str());
@@ -389,12 +419,10 @@ public:
         {
             // TODO: raise a wxWidgets error
         }
-#endif
     }
 
     void SetSelection(int IndexToSelect)
     {
-#ifdef __WXMSW__
         int status = ComboBox_SetCurSel(
             static_cast<HWND>(GetHandle()),
             IndexToSelect);
@@ -402,15 +430,43 @@ public:
         {
             // TODO: raise a wxWidgets error
         }
-#endif
     }
 
 private:
     DECLARE_NO_COPY_CLASS(CLogoComboBox);
 };
 
-// CLogoStaticText cannot be derived from wxStaticText because that
-// class does not support word-wrapping in the same manner that 
+#endif // __WXMSW__
+
+
+#ifdef WX_PURE        
+
+class CLogoStaticText : public wxStaticText
+{
+public:
+    CLogoStaticText(
+        wxWindow               * Parent,
+        const char             * Text, 
+        const CClientRectangle & ClientRectangle
+        )
+        : wxStaticText(
+            Parent,
+            wxID_ANY,
+            WXSTRING(Text),
+            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
+            wxALIGN_LEFT | wxST_NO_AUTORESIZE)
+    {
+    }
+
+private:
+    DECLARE_NO_COPY_CLASS(CLogoStaticText);
+};
+
+#else
+
+// On Windows, CLogoStaticText cannot be derived from wxStaticText because that
+// class does not support word-wrapping in the same manner that
 // the static text control in MSWLogo does.
 class CLogoStaticText : public wxStaticTextBase
 {
@@ -421,7 +477,6 @@ public:
         const CClientRectangle & ClientRectangle
         )
     {
-#ifdef __WXMSW__
         HWND hwnd = CreateWindow(
             WC_STATIC, // window class
             Text,       // caption
@@ -446,12 +501,13 @@ public:
         SetHWND(hwnd);
         SubclassWin(hwnd);
         AdoptAttributesFromHWND();
-#endif
     }
 
 private:
     DECLARE_NO_COPY_CLASS(CLogoStaticText);
 };
+
+#endif
 
 class CLogoButton : public wxButton
 {
@@ -462,8 +518,19 @@ public:
         const CClientRectangle & ClientRectangle,
         const char             * Callback
         )
+#ifdef WX_PURE
+        : wxButton(
+            Parent,
+            wxID_ANY,
+            WXSTRING(Caption),
+            wxPoint(ClientRectangle.GetX(), ClientRectangle.GetY()),
+            wxSize(ClientRectangle.GetWidth(), ClientRectangle.GetHeight()),
+            wxBU_LEFT | wxBU_TOP)
     {
-#ifdef __WXMSW__ 
+        strcpy(m_Callback, Callback);
+    }
+#else
+    {
         // Initializing the native window using the wxButton ctor
         // caused some painting problems.  The problems seemed
         // related to changing the font to the MSWLogo-compatible
@@ -498,8 +565,8 @@ public:
         AdoptAttributesFromHWND();
 
         strcpy(m_Callback, Callback);
-#endif
     }
+#endif
 
 private:
     // Event handlers

@@ -3768,7 +3768,12 @@ void MyMessageScan()
 
 void init_videomode()
 {
-#ifndef WX_PURE
+#ifdef WX_PURE
+    // Choose dialog units that map 1:2 to pixels
+    // This creates dialog close to the way MSWLogo did.
+    BaseUnitsx = 8;
+    BaseUnitsy = 16;
+#else
     // Get Dialog Units for Controls
     BaseUnitsx = LOWORD(GetDialogBaseUnits());
     BaseUnitsy = HIWORD(GetDialogBaseUnits());
