@@ -131,6 +131,7 @@ LOAD "map.lgo
 LOAD "crossmap.lgo
 LOAD "polygon.lgo
 LOAD "item.lgo
+LOAD "arraytolist.lgo
 LOAD "listtoarray.lgo
 LOAD "remove.lgo
 LOAD "smallwindowhang.lgo
@@ -192,6 +193,7 @@ TO TESTALL
   QUEUETEST            ; from queue.lgo
   STACKTEST            ; from stack.lgo
   COMBINETEST          ; from combine.lgo
+  ARRAYTOLISTTEST      ; from arraytolist.lgo
   LISTTOARRAYTEST      ; from listtoarray.lgo
   REVERSETEST          ; from reverse.lgo
   REMOVETEST           ; from remove.lgo
