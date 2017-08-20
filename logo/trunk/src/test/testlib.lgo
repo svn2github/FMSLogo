@@ -274,7 +274,7 @@ END
 BURY [REPORTTESTUNINITIALIZE]
 
 
-TO CHECKERRORITEM :item :lasterror :expectedvalue :description
+TO CHECKERRORITEM :instructions :item :lasterror :expectedvalue :description
 
   LOCALMAKE "lastitem ITEM :item :lasterror
 
@@ -295,7 +295,7 @@ TO CHECKERRORITEM :item :lasterror :expectedvalue :description
   IFELSE EQUALP :lastitem :expectedvalue [
     REPORTTESTPASSED (LIST "error :description "is :lastitem "|, as expected.|)
   ] [
-    REPORTTESTFAILED (LIST "error :description "is :lastitem "|.  We expected| :expectedvalue ".)
+    REPORTTESTFAILED (LIST "|After running| :instructions "error :description "is :lastitem "|.  We expected| :expectedvalue ".)
   ]
 
 END
@@ -319,10 +319,10 @@ TO CHECKERROR :instructions :expectederror :expectedtext :expectedprocedure :exp
     STOP
   ]
 
-  CHECKERRORITEM 1 :lasterror :expectederror     "code
-  CHECKERRORITEM 2 :lasterror :expectedtext      "text
-  CHECKERRORITEM 3 :lasterror :expectedprocedure "procedure
-  CHECKERRORITEM 4 :lasterror :expectedline      "line
+  CHECKERRORITEM :instructions 1 :lasterror :expectederror     "code
+  CHECKERRORITEM :instructions 2 :lasterror :expectedtext      "text
+  CHECKERRORITEM :instructions 3 :lasterror :expectedprocedure "procedure
+  CHECKERRORITEM :instructions 4 :lasterror :expectedline      "line
 
 END
 BURY [CHECKERROR]
