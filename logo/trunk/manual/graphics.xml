@@ -1270,7 +1270,7 @@ SETORIENTATION [45 45 45]
 </para>
 
 <para>
-SETORIENTATION understands the interactions between ROLL, PITCH and HEADING.
+SETORIENTATION understands the interactions between ROLL, PITCH, and HEADING.
 All SETORIENTATION knows is that it has to do things in the correct order.
 It basically backs out your current orientation and applies the requested one.
 It does this in a very specific order.
@@ -1305,8 +1305,8 @@ SHOW POSXYZ</userinput>
 
 <para>
 Having said all that, you don't really need to think in terms of absolute ORIENTATION.
-ORIENTATION and SETORIENTATION are used mostly to save, report and restore your ORIENTATION (just like you do with HEADING and SETHEADING in 2D).
-And like explained earlier changes in your heading with RIGHT, LEFT and SETHEADING only effect what they effected in 2D (your HEADING).
+ORIENTATION and SETORIENTATION are used mostly to save, report, and restore your ORIENTATION (just like you do with HEADING and SETHEADING in 2D).
+Futhermore, as explained earlier, changes in your heading with RIGHT, LEFT, and SETHEADING only effect what they effected in 2D (your HEADING).
 </para>
 
 <para>
