@@ -1306,7 +1306,7 @@ SHOW POSXYZ</userinput>
 <para>
 Having said all that, you don't really need to think in terms of absolute ORIENTATION.
 ORIENTATION and SETORIENTATION are used mostly to save, report, and restore your ORIENTATION (just like you do with HEADING and SETHEADING in 2D).
-Futhermore, as explained earlier, changes in your heading with RIGHT, LEFT, and SETHEADING only effect what they effected in 2D (your HEADING).
+Futhermore, as explained earlier, changes in your heading with RIGHT, LEFT, and SETHEADING only affect what they affected in 2D (your HEADING).
 </para>
 
 <para>
