@@ -73,6 +73,8 @@ $main::TotalWarnings = 0;
   'issued',           # use "ran", "applied", or "called", instead
   'will',             # use the present tense
   "won't",            # use the present tense
+  'side-effect',      # use "side effect"
+  'side-effects',     # use "side effects"
 );
 
 my %Commands = ();

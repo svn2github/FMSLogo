@@ -152,7 +152,7 @@ Procedures that don't output a value are called commands.
       <glossterm>Run</glossterm>
       <glossdef>
         <para>
-The process of evaluating one or more instructions or expressions and performing all of the side-effects associated with them.
+The process of evaluating one or more instructions or expressions and performing all of the side effects associated with them.
         </para>
       </glossdef>
     </glossentry>
