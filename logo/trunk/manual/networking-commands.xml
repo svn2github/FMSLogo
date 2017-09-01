@@ -62,7 +62,7 @@ To use it, start a Windows command prompt and type
 where <parameter>remotemachine</parameter> is the name or IP address of the machine you'd like to test connectivity to.
 PING reports if it can reach that machine and how long it takes to do so.
 If PING cannot reach the remote machine, then no other networking software, including the &PRODUCTNAME; Networking commands will be able to connect to it.
-If PING fails with the name, but succeeds with the IP address works, then there is probably something wrong with DNS or the name.
+If PING fails with the name, but succeeds with the IP address, then there is probably something wrong with DNS or the name.
 </para>
 </formalpara>
 
