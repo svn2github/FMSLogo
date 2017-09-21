@@ -85,6 +85,15 @@ website : index.html media/*.png
 	-mkdir www/media
 	cp media/*.png www/media
 
+# Experimental Spanish manual
+spanish : $(wildcard 1034/*.xml) translations-1034.xml $(HHP_STYLESHEET)
+	echo -n $(FMSLOGO_VERSION) > 1034/logoversion.xml
+	echo -n $* > 1034/locale.xml
+	cp translations-1034.xml 1034/translations.xml
+	$(XMLLINT) --valid --noout --nonet 1034/$(ROOTFILE)
+#	$(XSLTPROC) --novalid --nonet $(HTML_STYLESHEET) 1034/$(ROOTFILE)
+	$(XSLTPROC) --novalid --nonet --param htmlhelp.chm \"'logohelp-1034-experimental.chm'\" $(HHP_STYLESHEET) 1034/$(ROOTFILE)
+
 # Generate an XML file that contains the version
 # We use the UNIX version of echo to make sure there is no newline
 logoversion.xml : ../version.mk
