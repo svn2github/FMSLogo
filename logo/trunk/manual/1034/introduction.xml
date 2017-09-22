@@ -10,9 +10,9 @@
 <para>
 Cuando hay tantos lenguajes de programación de que uno se peude eligir, ¿por qué eligiría alguien &GENERICNAME;?
 Cuando &GENERICNAME; fue creado en 1967, era al menos tan poderoso como cualquier de sus contemporáneos.
-El mundo de los computadoras ha cambiado mucho hasta hoy y las exigencias de la industria han engendrado muchas nuevos lenguajes que ofrecen nuevas funciónes poderosas.
+El mundo de los computadoras ha cambiado mucho hasta hoy y las exigencias de la industria han engendrado muchas nuevos lenguajes que ofrecen nuevas funcionalidades poderosas.
 Durante ese tiempo, &GENERICNAME; no cambiaba mucho.
-Hoy por hoy, &GENERICNAME; carece de muchas funciónes que son necesarias en la industria y, por lo tanto, no es utilizado por los programadores profesionales salvo para proyectos pequeños.
+Hoy por hoy, &GENERICNAME; carece de muchas funcionalidades que son necesarias en la industria y, por lo tanto, no es utilizado por los programadores profesionales salvo para proyectos pequeños.
 </para>
 
 <para>
@@ -23,16 +23,16 @@ Entonces, si &GENERICNAME; no es utilizado por programadores profesionales, ¿po
 Primero, &GENERICNAME; no fue diseñado para crear software de grado industrial, sino fue diseñado como herramienta para ayudar a los niños aprender una habilidad importante, una que es tan importante hoy como la era en 1967: la habilidad de aprender como aprender.
 Las nuevas funciónes de lenguaje que se exigia la industria son irrelevantes para ayudar a la gente aprender como aprender.
 Mientras que las otras lenguajes son diseñadas sobre conceptos abstractos de la ciencia de la computación, &GENERICNAME; es diseñado alrededor de la manera en que la gente aprende.
-The basic philosophy of &GENERICNAME; is that education should focus on learning, not teaching, and that learning happens best when the learner is mentally engaged in a constructive project.
-The programmer assumes the role of "teacher" and learns by "teaching" a computer to do things.
-The &GENERICNAME; language is not, itself, the subject to learn, rather it is a tool to explore idea in areas such as art, music, mathematics, intelligence, and language.
+La filosofía basica de &GENERICNAME; es que la educación debe enfocar en aprendizaje, no enseñamiento, y que apprendizaje ocurre mejor cuando el aprendedor es comprometido mentalmente en un proyecto constructivo.
+El programador desempeña el papel de "profesor" y aprende por "enseñar" a una computadora a hacer cosas.
+&GENERICNAME; no es, por sí mismo, la materia por apprender, sino es una herramienta para explorar ideas tal como el arte, la música, las matemáticas, la inteligencia, y el lenguaje.
 </para>
 
 <para>
-In a sense, &GENERICNAME;'s lack of features is one of its best features.
-Many full-featured programming languages require complex setup.
-Before you can start to program in them, you must learn about things like compilers, syntax, virtual machines, classes, and entry points.
-Such things are important for a professional, but they are unnecessary obstacles for a beginner.
+En un sentido, la carencia de funcionalidades en &GENERICNAME; es uno de sus mejores funcionalidades.
+Muchos lenguajes de programación que tienen las últimas funcionalidades require una configuración complejo.
+Antes de que uno se puede comenzar a programar, uno debe primero apprender sobre cosas como compiladores, sintaxis, máquinas virtuales, clases, y puntos de entrada.
+Cosas así son importantes para profesionales, pero son obstáculos innecesarios para los principiantes.
 With &GENERICNAME;, you are ready to start programming as soon as the &GENERICNAME; environment starts.
 Every instruction that you type is run immediately.
 This gives you instant feedback on your instructions, whether they do what you expect or not.
