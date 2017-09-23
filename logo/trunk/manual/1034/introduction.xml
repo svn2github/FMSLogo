@@ -8,7 +8,7 @@
       <indexterm><primary>¿Por qué &GENERICNAME;?</primary></indexterm>
 
 <para>
-Cuando hay tantos lenguajes de programación de que uno se peude eligir, ¿por qué eligiría alguien &GENERICNAME;?
+Cuando hay tantos lenguajes de programación de que uno se puede eligir, ¿por qué elegiría alguien &GENERICNAME;?
 Cuando &GENERICNAME; fue creado en 1967, era al menos tan poderoso como cualquier de sus contemporáneos.
 El mundo de los computadoras ha cambiado mucho hasta hoy y las exigencias de la industria han engendrado muchas nuevos lenguajes que ofrecen nuevas funcionalidades poderosas.
 Durante ese tiempo, &GENERICNAME; no cambiaba mucho.
@@ -21,41 +21,42 @@ Entonces, si &GENERICNAME; no es utilizado por programadores profesionales, ¿po
 
 <para>
 Primero, &GENERICNAME; no fue diseñado para crear software de grado industrial, sino fue diseñado como herramienta para ayudar a los niños aprender una habilidad importante, una que es tan importante hoy como la era en 1967: la habilidad de aprender como aprender.
-Las nuevas funciónes de lenguaje que se exigia la industria son irrelevantes para ayudar a la gente aprender como aprender.
+Las nuevas funciones de lenguaje que se exige la industria son irrelevantes para ayudar a la gente aprender como aprender.
 Mientras que las otras lenguajes son diseñadas sobre conceptos abstractos de la ciencia de la computación, &GENERICNAME; es diseñado alrededor de la manera en que la gente aprende.
-La filosofía basica de &GENERICNAME; es que la educación debe enfocar en aprendizaje, no enseñamiento, y que apprendizaje ocurre mejor cuando el aprendedor es comprometido mentalmente en un proyecto constructivo.
+La filosofía básica de &GENERICNAME; es que la educación debe enfocar en aprendizaje, no enseñanza, y que aprendizaje ocurre mejor cuando el aprendedor es comprometido mentalmente en un proyecto constructivo.
 El programador desempeña el papel de "profesor" y aprende por "enseñar" a una computadora a hacer cosas.
-&GENERICNAME; no es, por sí mismo, la materia por apprender, sino es una herramienta para explorar ideas tal como el arte, la música, las matemáticas, la inteligencia, y el lenguaje.
+&GENERICNAME; no es, por sí mismo, la materia por aprender, sino es una herramienta para explorar ideas tal como el arte, la música, las matemáticas, la inteligencia, y el lenguaje.
 </para>
 
 <para>
 En un sentido, la carencia de funcionalidades en &GENERICNAME; es uno de sus mejores funcionalidades.
-Muchos lenguajes de programación que tienen las últimas funcionalidades require una configuración complejo.
-Antes de que uno se puede comenzar a programar, uno debe primero apprender sobre cosas como compiladores, sintaxis, máquinas virtuales, clases, y puntos de entrada.
+Muchos lenguajes de programación que tienen las últimas funcionalidades requiere una configuración complejo.
+Antes de que uno se puede comenzar a programar, uno debe primero aprender sobre cosas como compiladores, sintaxis, máquinas virtuales, clases, y puntos de entrada.
 Cosas así son importantes para profesionales, pero son obstáculos innecesarios para los principiantes.
-With &GENERICNAME;, you are ready to start programming as soon as the &GENERICNAME; environment starts.
-Every instruction that you type is run immediately.
-This gives you instant feedback on your instructions, whether they do what you expect or not.
+Con &GENERICNAME;, estás listo a empezar a programar en cuanto el entorno de &GENERICNAME; aparece en la pantalla.
+Cada instrucción que tecleas es ejecutada de inmediato.
+Esto te da resultados instantáneos de tus instrucciones, sea que funcionen como esperabas o no.
 </para>
 
 <para>
-Another advantage of &GENERICNAME; is its support for "Turtle Graphics".
-Turtle graphics is a simple and powerful set of commands used to manipulate a screen object called a turtle.
-The idea behind turtle graphics is that you program by giving instructions to a "turtle" (represented in &PRODUCTNAME; as a triangle) and these instructions make the turtle walk around on the screen, drawing a line wherever it goes.
-With just a few keystrokes, you can program the computer to draw a line on the screen.
-For example <userinput>FD 100</userinput> means "turtle, walk 100 steps forward".
-By adding more instructions, you can program the computer to draw complete pictures.
+Otra ventaja de &GENERICNAME; es su apoyo de «Gráficas tortuga».
+Gráficas tortuga son un simple y poderoso conjunto de comandos usados para manipular un elemento de pantalla que se lama «la tortuga».
+La idea detrás de gráficas tortuga es que programas por dar instrucciones a una "tortuga" (representado en &PRODUCTNAME; por un triángulo) y esas instrucciones hacen que la tortuga camina en la pantalla, dibujando una línea por donde va.
+Con solo unos pocos tecleos, puedes programar la computadora a dibujar una línea en la pantalla.
+Por ejemplo <userinput>AV 100</userinput> quiere decir «tortuga, camina 100 pasos adelante».
+Añadiendo más instrucciones, puedes programar la computadora a dibujar imágenes completas.
 </para>
 
 <para>
-Turtle graphics brings computer programming into a world that is familiar to children, one of colors, shapes, and art.
-It enables a child to start programming at a stage in their cognitive development before they understand symbolic reasoning.
+Gráficas tortuga aportan la programación‎ informática dentro del mundo familiar a los niños, uno de colores, formas, y arte.
+Habilitan a un niño a empezar a programar en una etapa de su desarrollo cognitivo antes de que pueda entender razonamiento simbólico.
 </para>
 
 <para>
-&GENERICNAME; has a simple syntax that requires less typing than other languages, which is especially important for children who are not yet confident typists.
-As you've seen, you can draw a line on the screen by writing <userinput>FD 100</userinput>.
-In other languages, an equivalent instruction might be <userinput>Turtle.Forward(100);</userinput> and if you forget one of the syntactic elements, like the semi-colon at the end, you'll get a difficult-to-understand error message, like "syntax error: unterminated statement", which is meaningless to a beginner.
+&GENERICNAME; tiene un sintaxis sencillo que requiere menos tecleando que otras lenguajes, algo que es especialmente importante para los niños quienes aun no pueden teclear fácilmente.
+Como has visto, puedes dibujar una línea en la pantalla por escribir <userinput>AV 100</userinput>.
+En otras lenguajes, una instrucción equivalente tal vez sería <userinput>Tortuga.Avanzar(100);</userinput> y si olvides uno del los elementos de sintaxis, como el punto y coma al fin, conseguirás un mensaje de error críptico (y probablemente en inglés), como «syntax error: unterminated statement».
+Tales mensajes no tienen sentido para los principiantes.
 </para>
 
 <para>
