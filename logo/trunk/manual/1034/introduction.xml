@@ -1,4 +1,3 @@
-
 <preface id="preface">
    <title>Introducción</title>
    <indexterm><primary>Introducción</primary></indexterm>
@@ -41,7 +40,7 @@ Esto te da resultados instantáneos de tus instrucciones, sea que funcionen como
 <para>
 Otra ventaja de &GENERICNAME; es su apoyo de «Gráficas tortuga».
 Gráficas tortuga son un simple y poderoso conjunto de comandos usados para manipular un elemento de pantalla que se lama «la tortuga».
-La idea detrás de gráficas tortuga es que programas por dar instrucciones a una "tortuga" (representado en &PRODUCTNAME; por un triángulo) y esas instrucciones hacen que la tortuga camina en la pantalla, dibujando una línea por donde va.
+La idea detrás de gráficas tortuga es que programas por dar instrucciones a una «tortuga» (representado en &PRODUCTNAME; por un triángulo) y esas instrucciones hacen que la tortuga camina en la pantalla, dibujando una línea por donde va.
 Con solo unos pocos tecleos, puedes programar la computadora a dibujar una línea en la pantalla.
 Por ejemplo <userinput>AV 100</userinput> quiere decir «tortuga, camina 100 pasos adelante».
 Añadiendo más instrucciones, puedes programar la computadora a dibujar imágenes completas.
@@ -74,158 +73,157 @@ Si no vas a crear software para la industria, entonces no necesitas usar ninguna
     </section>
 
     <section id="where-to-start">
-      <title>Where to Start</title>
-      <indexterm><primary>Where to Start</primary></indexterm>
+      <title>¿Cómo empezar?</title>
+      <indexterm><primary>¿Cómo empezar?</primary></indexterm>
 
 <para>
-Novices can start in &GENERICNAME; without having to program at all by just learning how to command the turtle.
-Learning turtle graphics teaches the user about geometry.
-It's amazing how soon you can introduce the concept of programming once they grasp the turtle concept.
-Let's look at some simple examples:
-</para>
-
-
-<para>
-Draw a square using the turtle.
-</para>
-
-<programlisting>FORWARD 100
-RIGHT 90
-FORWARD 100
-RIGHT 90
-FORWARD 100
-RIGHT 90
-FORWARD 100
-RIGHT 90</programlisting>
-
-<para>
-That was easy but too much typing, let's try again.
-</para>
-
-<programlisting>REPEAT 4 [FD 100 RT 90]</programlisting>
-
-<para>
-That's it?
-Yes, that's the same square.
-We did two things.
-We noticed a lot of repeated instructions in our first example, so we asked &GENERICNAME; to repeat the same sequence 4 times.
-We also used abbreviated forms of the same commands.
-But we can still do better.
-Wouldn't it be more useful just to say "square" when you wanted a square?
-</para>
-
-<programlisting>EDIT "SQUARE
-&lt;Editor pops up>
-TO SQUARE
-  REPEAT 4 [FORWARD 100 RIGHT 90]
-END
-&lt;Exit Editor and save>
-
-SQUARE</programlisting>
-
-<para>
-What are the TO and END for?
-They define a procedure (a small program) for the square.
-The TO can be thought of as "to do something", the END terminates the TO.
-Once SQUARE was "defined" we then called it.
-That's all you need to get a square now, just type SQUARE.
-There is a problem, however.
-SQUARE only draws squares of 100 by 100.
-What about square of other sizes?
-</para>
-
-<programlisting>EDIT "SQUARE
-
-TO SQUARE :length
-  REPEAT 4 [FORWARD :length RIGHT 90]
-END
-
-SQUARE 100
-SQUARE 200</programlisting>
-
-<para>
-Note all we did is replace 100 with a variable name called :length.
-Now when we call square we must specify how big we want it.
-Above we asked &GENERICNAME; to draw one square at 100x100 and another at 200x200.
-Note the ":" in front of the word length tells &GENERICNAME; that length is a variable.
-However, we can still do better.
-Wouldn't it be nice if we could draw something other than a square, like a triangle?
-</para>
-
-<programlisting>TO TRIANGLE :length
-  REPEAT 3 [FORWARD :length RIGHT 120]
-END
-
-TO SQUARE :length
-  REPEAT 4 [FORWARD :length RIGHT 90]
-END
-
-TO PENTAGON :length
-  REPEAT 5 [FORWARD :length RIGHT 72]
-END
-
-TRIANGLE 100
-SQUARE 100
-PENTAGON 100</programlisting>
-
-<para>
-That works, but it's more typing than we need to do.
-Worse, the different procedures are mostly the same and we need to define a different procedure for every shape.
-Let's try again.
-</para>
-
-<programlisting>TO POLYGON :length :sides
-  REPEAT :sides [FORWARD :length RIGHT 360/:sides]
-END
-
-POLYGON 100 3
-POLYGON 100 4
-POLYGON 100 5
-</programlisting>
-
-<para>
-What happened to TRIANGLE, SQUARE and PENTAGON?
-We don't need them because POLYGON can draw every equal-sided polygon possible and with only one line of code.
-We now repeat the sequence based on how many :sides the caller asked for and we turn (RIGHT) the amount of degrees appropriate for that shape.
-You may not realize it but this is <emphasis>programming</emphasis>.
+Los que nunca han programado podrán comenzar a dar órdenes &GENERICNAME; a la tortuga.
+Las Gráficas tortuga descubrirán al usuario aspectos de geometría que no conocían.
+Asombra cómo pronto se puede introducir en el concepto de programación una vez que se aprende a manejar la tortuga.
+Algunos ejemplos:
 </para>
 
 <para>
-Now that we have a program, it's a good idea to save it to a file.
-The edits you've made so far are all in &GENERICNAME;'s memory and not on the disk.
-How do you save your work?
-It's easy.
+Dibujar un cuadrado usando la tortuga
 </para>
 
-<programlisting>SAVE "SHAPES.LGO
-BYE
-</programlisting>
+<programlisting>AVANZA 100
+GIRADERECHA  90
+AVANZA 100
+GIRADERECHA  90
+AVANZA 100
+GIRADERECHA  90
+AVANZA 100
+GIRADERECHA  90</programlisting>
 
 <para>
-If you ever want to use these definitions again you'll have to load them.
-How do you load you work from disk?
+Eso fue fácil, pero tiene demasiado texto, probemos de nuevo.
 </para>
 
-<programlisting>LOAD "SHAPES.LGO</programlisting>
+<programlisting>REPITE 4 [ AV 100 GD 90 ]</programlisting>
 
 <para>
-I could go on forever, yes forever, even to the point of writing &GENERICNAME; within &GENERICNAME;.
+¿Es todo?
+Sí, es el mismo cuadrado.
+Hicimos dos cosas.
+Nos dimos cuenta de que en nuestro primer ejemplo hay demasiado código redundante, ¿para qué repetir la misma sucesión 4 veces?
+También usamos abreviaturas de las mismas órdenes.
+Pero podemos mejorarlo todavía.
+¿No sería más útil dar sólo la orden «CUADRADO» cuando queremos un cuadrado?
+</para>
+
+<programlisting>EDITA "CUADRADO
+
+<replaceable>Se entra en el Editor</replaceable>
+
+PARA CUADRADO
+  REPITE 4 [ AV 100 GD 90 ]
+FIN
+
+<replaceable>Guardar y salir del Editor</replaceable>
+
+CUADRADO</programlisting>
+
+<para>
+¿Para qué sirve «PARA» y «FIN»?
+Sirven para definir un procedimiento (un programa pequeño) para el cuadrado.
+PARA es como "hacer algo".
+FIN termina PARA.
+Una vez que CUADRADO está «definido» entonces lo llamamos dos veces.
+Eso es todo lo que se necesita para hacer un cuadrado…pero sólo un cuadrado del mismo tipo.
+Sólo dibuja cuadrados de 100 por 100.
+¿No sería mejor dibujar un cuadrado de cualquier tamaño?
+Pues es fácil.
+</para>
+
+<programlisting>EDITA "cuadrado
+
+PARA CUADRADO :longitud
+  REPITE 4 [ AV :longitud GD 90 ]
+FIN
+
+<replaceable>Guardar y salir del Editor</replaceable>
+
+CUADRADO 100
+CUADRADO 200</programlisting>
+
+<para>
+Lo que hicimos es reemplazar 100 por una variable llamada :longitud.
+Ahora cuando llamemos cuadrado, debemos especificar su longitud, 100 o 200.
+Nota «:» delante de la palabra <emphasis>longitud</emphasis> indica a &GENERICNAME; que es una variable.
+De cualquier modo, podemos conseguir otras mejoras; pues, ¿no sería mejor si pudiéramos dibujar además de un cuadrado otras figuras como, triángulo, pentágono, etc.?
+</para>
+
+<programlisting>PARA TRIÁNGULO :longitud
+  REPITE 3 [ AV :longitud GD 120 ]
+FIN
+
+PARA CUADRADO :longitud
+  REPITE 4 [ AV :longitud GD 90 ]
+FIN
+
+PARA PENTÁGONO :longitud
+  REPITE 5 [ AV :longitud GD 72 ]
+FIN
+
+TRIÁNGULO 100
+CUADRADO  100
+PENTÁGONO 100</programlisting>
+
+<para>
+Funciona, pero ¿Demasiada texto?
+(Los programadores odian teclear).
+¿Por qué?
+Porque cuando hay errores que rectificar y cuando se necesita hacer un cambio habría que hacerlo en muchos lugares.
+No siempre lo más corto es lo mejor, pero generalmente, facilita los cambios.
+Probemos de nuevo.
+</para>
+
+<programlisting>PARA POLÍGONO :longitud :lados
+  REPITE :lados [ AV :longitud GD 360/:lados ]
+FIN
+ 
+POLÍGONO 100 3
+POLÍGONO 100 4
+POLÍGONO 100 5</programlisting>
+
+<para>
+¿Qué pasó con TRIÁNGULO, CUADRADO y PENTÁGONO?
+POLÍGONO ahora sirve para dibujar cualquier polígono y con una sola línea de codificación!
+Ahora repetimos la secuencia basado en cuantos :lados el llamador ha pedido y giramos (GD) la cantidad de grados que conviene a aquella forma.
+Se puede pasar por alto, pero esto es <emphasis>programación</emphasis>.
 </para>
 
 <para>
-That's a quick introduction.
-Do you want to learn more?
-Almost every command in this help file has a simple example that shows how to use it.
-Also check out the examples that come with &PRODUCTNAME; (see the Help Menu).  These examples show how to combine several procedures to perform a simple task.
-You can search for some tutorials on the Web, like <ulink url="http://fmslogo.sourceforge.net/workshop/">The Logo Workshop</ulink>.
-Jim Muller's book "The Great Logo Adventure" is based on MSWLogo, but should be applicable to &PRODUCTNAME;.
-For more advanced topics, see Brian Harvey's three volume <ulink url="https://people.eecs.berkeley.edu/~bh/v1-toc2.html">Computer Science Logo Style</ulink> from the MIT Press.
+Ahora que tenemos un programa, es una buena idea guardarlo en el disco.
+El Editor ha hecho hasta ahora el trabajo dentro de la memoria de &GENERICNAME; y no en el disco.
+Guardar el trabajo es fácil.
+</para>
+
+<programlisting>GUARDA "FIGURAS.LGO
+ADIOS</programlisting>
+
+<para>
+Si alguna vez quieres usar de nuevo estas definiciones, tendrás que cargarlas.
+¿Cómo cargar el trabajo del disco?
+</para>
+
+<programlisting>CARGA "SHAPES.LGO</programlisting>
+
+<para>
+Eso fue una muy breve introducción.
+¿Dónde puede aprender más?
+Generalmente, hay un ejemplo para cada procedimiento en este fichero de ayuda.
+Comprobar los ejemplos (veas el Menú de la Ayuda).
+Estos ejemplos demuestran como combinar unos procedimiento para hacer un tarea.
+Puedes buscar cursillos en la Web, como <ulink url="http://fmslogo.sourceforge.net/workshop/">The Logo Workshop</ulink>.
+El libro de Jim Muller llamado «The Great Logo Adventure», principalmente basado en MSWLogo, aplica a &PRODUCTNAME; también.
+Veas los libros de Brian Harvey <ulink url="https://people.eecs.berkeley.edu/~bh/v1-toc2.html">Computer Science Logo Style</ulink> del MIT Press Books, para programación más avanzada.
 </para>
 
 <para>
-However you choose to learn more, make sure that you have <emphasis>fun</emphasis> learning it.
+Cualquier manera que aprenda más, asegúrate que <emphasis>te diviertas</emphasis>.
 </para>
 
     </section>
 </preface>
-
