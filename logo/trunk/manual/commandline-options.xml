@@ -15,7 +15,7 @@ For example, if you want to start &PRODUCTNAME; in "<link linkend="commandline-e
 <orderedlist>
 <listitem>
 <para>
-Right-click on the &PRODUCTNAME; desktop shortcut.
+Right-click on the &PRODUCTNAME; desktop shortcut and select <guimenuitem>Properties</guimenuitem> from the popup menu.
 </para>
 </listitem>
 
