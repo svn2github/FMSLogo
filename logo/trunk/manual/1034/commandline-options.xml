@@ -1,50 +1,49 @@
 <chapter id="commandline-options">
-<title>Command Line Options</title>
+<title>Opciones de la Línea de Órdenes</title>
 <indexterm><primary>command line options</primary></indexterm>
 
 <para>
-Command line options can be set as properties of your shortcut to &PRODUCTNAME;.
-Just add these switches after the &LOGOEXE;.
+Las opciones de la línea de órdenes pueden fijarse como propiedades del funcionamiento de &PRODUCTNAME;.
+Sólo hay que agregar estos interruptores después de teclear &LOGOEXE;.
 </para>
 
 <para>
-You can add any command line option to the &PRODUCTNAME; desktop shortcut so that when you double-click on it, &PRODUCTNAME; starts with the selected option.
-For example, if you want to start &PRODUCTNAME; in "<link linkend="commandline-e">expert</link>" mode:
-
+Puedes agregar cualquier opción de la línea de órdenes al acceso directo del escritorio de &PRODUCTNAME; para que cuando hicieras doble clic, &PRODUCTNAME; empezara con las opciones deseadas.
+Por ejemplo, si quieres que &PRODUCTNAME; siempre empezara en modo «<link linkend="commandline-e">experto</link>»:
 
 <orderedlist>
 <listitem>
 <para>
-Right-click on the &PRODUCTNAME; desktop shortcut.
+Haz clic derecho sobre el acceso directo de &PRODUCTNAME; y selecciona <guimenuitem>Propriedades</guimenuitem> del menú.
 </para>
 </listitem>
 
 <listitem>
 <para>
-Click the Shortcut tab in the Properties dialog.
+Haz clic sobre la pestaña <guilabel>Acceso directo</guilabel> en el cuadro de diálogo de Propriedades.
 </para>
 </listitem>
 
 <listitem>
 <para>
-In the Target field, append "-E" so the line looks like this <userinput>"C:\Program Files\FMSLogo\fmslogo.exe" -E</userinput>.
+En la caja de texto de Destino, agrega «-E» para que la línea parece como <userinput>"C:\Program Files\FMSLogo\fmslogo.exe" -E</userinput>.
 </para>
 </listitem>
 
 <listitem>
 <para>
-Click the OK button.
+Haz clic en el botón <guibutton>Aceptar</guibutton>.
 </para>
 </listitem>
 </orderedlist>
 
-The next time you double-click the shortcut, &PRODUCTNAME; will start in expert mode.
+La próxima vez que haces doble clic en el acceso directo, &PRODUCTNAME; empezará en modo «experto».
 </para>
 
 <section id="commandline-w">
 <title>-W</title>
 
-<synopsis>-W <replaceable>width</replaceable></synopsis>
+<synopsis>-W <replaceable>anchura</replaceable></synopsis>
 
 <para>
 This sets the width of your virtual drawing workspace to <option>width</option>.
