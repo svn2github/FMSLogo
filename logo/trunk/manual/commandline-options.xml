@@ -186,7 +186,10 @@ If you invoke a procedure that has not been defined, &PRODUCTNAME; first looks f
 If such a file exists, &PRODUCTNAME; loads that file.
 If the missing procedure is still undefined, or if there is no such file, &PRODUCTNAME; then looks in the library directory for a file named <filename>proc</filename> (without the ".lgo" extension) and, if it exists, loads it.
 If neither file contains a definition for the procedure, then &PRODUCTNAME; signals an error.
-Several procedures that are primitive in most versions of &PRODUCTNAME; are included in the default library, so if you use a different library you may want to include some or all of the default library in it.
+</para>
+
+<para>
+Many of &PRODUCTNAME;'s built-in procedures are included in the default library, so if you use a different library you may want to include some or all of the default library in it.
 </para>
 </section>
 
