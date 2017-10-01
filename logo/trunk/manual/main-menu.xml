@@ -59,7 +59,7 @@ See also the <link linkend="command-erase">ERASE</link> command.</para>
 
         <section id="menu-file-exit">
           <title>File - Exit...</title>
-          <para>This is how you exits &PRODUCTNAME;.
+          <para>This is how you exit &PRODUCTNAME;.
 See also the <link linkend="command-bye">BYE</link> command.</para>
         </section>
 
