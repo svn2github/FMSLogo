@@ -28,3 +28,11 @@ programmatically.
    sample as a comment).
    This is violated in many places and all of them should be fixed.
    Ideally this would be enforced by check-manual.pl.
+
+6) The following terms should always be translated in the same way
+
+   The Commander   - El Centro de Comandos
+   command         - comando
+   drawing surface - área de dibujo
+   turtle graphics - gráficas tortuga
+   workspace       - área de trabajo
