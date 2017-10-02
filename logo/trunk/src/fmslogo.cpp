@@ -162,17 +162,23 @@ void CFmsLogo::ProcessCommandLine()
 #if wxUSE_UNICODE
     // On wxWidgets 3.X, argv is no longer a wxChar**, but a wxCmdLineArgsArray.
     // This mostly emulates a real argv, but does not ensure that argv[argc]==0.
-    // This break the code below in a way that would disruptive to rewrite.
+    // This breaks the code below in a way that would disruptive to rewrite.
+    // Instead, this code creates a local variable that shadows argv and
+    // initializes it how it was in wxWidgets 2.8.
     // I opened http://trac.wxwidgets.org/ticket/17531 to track this in hopes that
     // it would be accepted as a bug fixed before a Unicode FMSLogo is ever released.
-    // Instead, this code creates a shadow variable for argv and initializes it
-    // how it was in wxWidgets 2.8.
     const wxArrayString & realArgv = argv.GetArguments();
     size_t argvSize = realArgv.GetCount();
     wxChar ** argv = new wxChar* [argvSize + 1];
     for (size_t i = 0; i < argvSize; i++)
     {
-        argv[i] = realArgv[i].wchar_str();
+        // copy from realArgv[i] to argv[i]
+        argv[i] = new wxChar[realArgv[i].Len() + 1];
+        for (size_t j = 0; j < realArgv[i].Len(); j++)
+        {
+            argv[i][j] = realArgv[i][j];
+        }
+        argv[i][realArgv[i].Len()] = '\0';
     }
     argv[argvSize] = NULL;
 #endif
@@ -263,6 +269,10 @@ void CFmsLogo::ProcessCommandLine()
     }
 
 #if wxUSE_UNICODE
+    for (wxChar ** nextArgument = argv; *nextArgument != NULL; nextArgument++)
+    {
+        delete [] *nextArgument;
+    }
     delete [] argv;
 #endif
 }
