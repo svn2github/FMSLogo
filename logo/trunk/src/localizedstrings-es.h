@@ -745,12 +745,12 @@
 #define LOCALIZED_EDITOR_SET_FONT                "&Tipo de letra..."
 
 #define LOCALIZED_EDITOR_TEST                    "&Probar"
-#define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "&Run Selection\tCtrl+R" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "&Ejecutar selección\tCtrl+R"
 
 #define LOCALIZED_EDITOR_HELP                    "A&yuda"
 #define LOCALIZED_EDITOR_HELP_INDEX              "&Indice"
 #define LOCALIZED_EDITOR_HELP_EDITOR             "&Editor"
-#define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "&Busqueda por tema\tF1"
+#define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "&Búsqueda por tema\tF1"
 
 
 //

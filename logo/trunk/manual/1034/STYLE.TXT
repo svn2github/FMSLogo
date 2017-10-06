@@ -31,8 +31,10 @@ programmatically.
 
 6) The following terms should always be translated in the same way
 
-   The Commander   - El Centro de Comandos
-   command         - comando
-   drawing surface - área de dibujo
-   turtle graphics - gráficas tortuga
-   workspace       - área de trabajo
+   The Commander              - El Centro de Comandos
+   The (Commander) Input Box  - La Caja de Entrada (del Centro de Comandos)
+   The Commander History Box  - La Caja de Historia de instrucciones
+   command                    - comando
+   drawing surface            - área de dibujo
+   turtle graphics            - gráficas tortuga
+   workspace                  - área de trabajo
