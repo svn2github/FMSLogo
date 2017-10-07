@@ -14,11 +14,11 @@ Also realize if you delete procedures, property lists, or names while in the edi
       <section id="editor-menu-file">
         <title>File Menu</title>
 
-        <section id="editor-menu-file-saveandexit">
+         <section id="editor-menu-file-saveandexit">
           <title>File - Save and Exit</title>
-          <para>Exits the editor and prompts you whether to save the changes to the &GENERICNAME; workspace.
+          <para>Saves the contents of the editor to the workspace and exits the editor.
 When you exit the editor, &PRODUCTNAME; loads the revised definitions and modifies the workspace accordingly.
-Multiple edit sessions are supported, but be careful not to have multiple edit sessions that include the same definition.
+Multiple edit sessions are supported, but be careful not to have multiple edit sessions that include the definition of the same procedure, property, or variable.
 The final editor that is exited (and saved) takes precedence.
 Also realize if you delete procedures, property lists, or names while in the editor, then they are erased (see <link linkend="command-erase">ERASE</link>) from the workspace at the time of exiting (and saving) the edit session you deleted them from.
 See also <link linkend="editor-errors">Edit Errors</link>.
@@ -27,7 +27,7 @@ See also <link linkend="editor-errors">Edit Errors</link>.
 
         <section id="editor-menu-file-savetoworkspace">
           <title>File - Save to Workspace</title>
-          <para>Saves the contents of the editor to the &GENERICNAME; workspace.
+          <para>Saves the contents of the editor to the &GENERICNAME; workspace without exiting.
 This is only available in <link linkend="commandline-e">expert mode</link>.
 </para>
         </section>
@@ -39,13 +39,13 @@ This is only available in <link linkend="commandline-e">expert mode</link>.
 
         <section id="editor-menu-file-exit">
           <title>File - Exit</title>
-          <para>Exits the editor without saving the contents of the workspace.
-Select this option if you want to discard your changes.</para>
+          <para>Prompts you whether to save the changes to the &GENERICNAME; workspace and then exits the editor.
+          Select this option if you want to discard your changes.</para>
         </section>
 
       </section>
 
-        <section id="editor-menu-edit">
+      <section id="editor-menu-edit">
         <title>Edit Menu</title>
 
         <section id="editor-menu-edit-undo">
@@ -60,12 +60,14 @@ Select this option if you want to discard your changes.</para>
 
         <section id="editor-menu-edit-cut">
           <title>Edit - Cut</title>
-          <para>Copies the selected text to the clipboard and deletes it.  See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
+          <para>Copies the selected text to the clipboard and deletes it.
+          See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
         </section>
 
         <section id="editor-menu-edit-copy">
           <title>Edit - Copy</title>
-          <para>Copies the selected text to the clipboard.  See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
+          <para>Copies the selected text to the clipboard.
+          See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
         </section>
 
         <section id="editor-menu-edit-paste">
@@ -129,8 +131,8 @@ The chosen font remains selected even after &PRODUCTNAME; has been restarted.</p
         <title>Test Menu</title>
 
         <section id="editor-menu-testbang">
-          <title>Test!</title>
-          <para>You can test your code by selecting a section of code and clicking on Test! in the menu.
+          <title>Run Selection</title>
+          <para>You can test your code by selecting a section of code and clicking on Run Selection in the menu.
 This sends each selected line to the commander for execution.
 Keep in mind that if you select code that has variables or other context that they must be defined in the selection or already defined in the workspace.
 Using this feature is as if you typed in that selection into the commander.
