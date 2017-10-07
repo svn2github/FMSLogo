@@ -6,7 +6,7 @@
   <!ENTITY PRODUCTNAME  "FMSLogo">
   <!ENTITY GENERICNAME  "Logo">
 
-  <!ENTITY PRODUCTVERSION            SYSTEM "logoversion.xml">
+  <!ENTITY PRODUCTVERSION            SYSTEM "../logoversion.xml">
   <!ENTITY PRODUCTLOCALE             SYSTEM "locale.xml">
 
   <!ENTITY introduction              SYSTEM "introduction.xml">
@@ -34,7 +34,7 @@
   <!ENTITY multimedia-commands       SYSTEM "multimedia-commands.xml">
   <!ENTITY media-control-interface   SYSTEM "media-control-interface.xml">
   <!ENTITY glossary                  SYSTEM "glossary.xml">
-  <!ENTITY translations              SYSTEM "translations.xml">
+  <!ENTITY translations              SYSTEM "../translations-1034.xml">
 
   <!ENTITY command-.setbf       SYSTEM "command-.setbf.xml">
   <!ENTITY command-.setfirst    SYSTEM "command-.setfirst.xml">
