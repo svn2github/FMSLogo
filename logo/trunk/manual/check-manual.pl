@@ -377,9 +377,6 @@ $Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F11'} = 1;
 $Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'F12'} = 1;
 $Exceptions{'command-keyboardvalue.xml'}{'allcaps'}{'US'}  = 1;
 
-$Exceptions{'command-keyp.xml'}{'allcaps'}{'CBREAK'}  = 1;
-$Exceptions{'command-keyp.xml'}{'allcaps'}{'UNIX'}    = 1;
-
 $Exceptions{'command-label.xml'}{'allcaps'}{'AXIS'}     = 1;
 $Exceptions{'command-label.xml'}{'allcaps'}{'FLASH'}    = 1;
 $Exceptions{'command-label.xml'}{'allcaps'}{'TELLJOKE'} = 1;
@@ -629,7 +626,6 @@ $Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}     = 1;
 
 $Exceptions{'command-zoom.xml'}{'bannedword'}{'will'}  = 1;
 
-$Exceptions{'commander.xml'}{'allcaps'}{'ENTER'}       = 1;
 $Exceptions{'commander.xml'}{'bannedword'}{'execute'}  = 1;
 
 $Exceptions{'commandline-options.xml'}{'allcaps'}{'OK'}      = 1;
@@ -647,7 +643,6 @@ $Exceptions{'control-structures.xml'}{'allcaps'}{'PROC'}           = 1;
 $Exceptions{'control-structures.xml'}{'allcaps'}{'TRANSPOSE'}      = 1;
 $Exceptions{'control-structures.xml'}{'logo'}                      = 1;
 
-$Exceptions{'editor.xml'}{'allcaps'}{'CTRL'}   = 1;
 $Exceptions{'editor.xml'}{'allcaps'}{'F1'}     = 1;
 
 $Exceptions{'glossary.xml'}{'allcaps'}{'SQUARE'}   = 1;
@@ -753,9 +748,7 @@ $Exceptions{'logohelp.xml'}{'allcaps'}{'XML'}             = 1;
 $Exceptions{'logohelp.xml'}{'bannedword'}{'will'}         = 1;
 $Exceptions{'logohelp.xml'}{'logo'}                       = 1;
 
-$Exceptions{'media-control-interface.xml'}{'allcaps'}{'BREAK'}           = 1;
 $Exceptions{'media-control-interface.xml'}{'allcaps'}{'CD'}              = 1;
-$Exceptions{'media-control-interface.xml'}{'allcaps'}{'CTRL'}            = 1;
 $Exceptions{'media-control-interface.xml'}{'allcaps'}{'MIDI'}            = 1;
 $Exceptions{'media-control-interface.xml'}{'allcaps'}{'PLAY.AVI'}        = 1;
 $Exceptions{'media-control-interface.xml'}{'allcaps'}{'PLAY.MIDI'}       = 1;

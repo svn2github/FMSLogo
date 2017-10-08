@@ -14,7 +14,7 @@ The Commander also has buttons that give you quick-access to important ways of c
 <para>
 The input box is tied to the <link linkend="commander-history">Output/Command-Recall List</link> and the <link linkend="commander-execute">Execute</link> button.
 You type instructions in the input box and then have &GENERICNAME; run them when you
-press the <keycap>ENTER</keycap> key or the Execute button.
+press the <keycap>Enter</keycap> key or the Execute button.
 Pressing the Up/Down arrow keys automatically jumps (gives focus) to the output/command-recall list box.
 </para>
 <para>
@@ -39,7 +39,7 @@ The output/command-recall list box supports <link linkend="editor-context-help">
       <title>Execute Button</title>
 <para>
 Pressing the Execute button runs whatever is in the <link linkend="commander-input">Input Box</link>.
-It is the same as pressing the <keycap>ENTER</keycap> key, except that you can use it to interrupt &GENERICNAME; while is busy running other instructions.
+It is the same as pressing the <keycap>Enter</keycap> key, except that you can use it to interrupt &GENERICNAME; while is busy running other instructions.
 </para>
    </section>
 

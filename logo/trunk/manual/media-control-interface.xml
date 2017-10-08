@@ -53,7 +53,7 @@ This means that &PRODUCTNAME; runs the command immediately, but doesn't wait for
 In general, this is what you want.
 However, all commands optionally accept a <userinput>wait</userinput> flag, which instructs &PRODUCTNAME; to wait until the command has finished before running the next instruction.
 During this time, &PRODUCTNAME; will be unresponsive, so use this flag with caution.
-If you specify <userinput>wait</userinput> and then realize that you don't want to wait anymore, you can press CTRL+BREAK to stop waiting.
+If you specify <userinput>wait</userinput> and then realize that you don't want to wait anymore, you can press <keycombo><keycap>Ctrl</keycap><keycap>Break</keycap></keycombo> to stop waiting.
 </para>
 
 <para>

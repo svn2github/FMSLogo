@@ -186,7 +186,7 @@ This means you can copy examples in this document directly to the editor (see <l
 <para>
 The <link linkend="commander-input">Input Box</link> also supports the clipboard.
 Only one line of text is supported between the Input Box and the clipboard.
-You can either use the context-sensitive popup menu or keyboard shortcuts for the desired actions (Cut <keycombo><keycap>CTRL</keycap><keycap>X</keycap></keycombo>, Copy <keycombo><keycap>CTRL</keycap><keycap>C</keycap></keycombo>, Paste <keycombo><keycap>CTRL</keycap><keycap>V</keycap></keycombo>).
+You can either use the context-sensitive popup menu or keyboard shortcuts for the desired actions (Cut <keycombo><keycap>Ctrl</keycap><keycap>X</keycap></keycombo>, Copy <keycombo><keycap>Ctrl</keycap><keycap>C</keycap></keycombo>, Paste <keycombo><keycap>Ctrl</keycap><keycap>V</keycap></keycombo>).
 </para>
 
 <para>
