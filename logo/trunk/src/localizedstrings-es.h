@@ -270,7 +270,7 @@
 #define LOCALIZED_ALTERNATE_FILES                  "listaArchivos" // "listaarch"
 #define LOCALIZED_ALTERNATE_FIRST                  "primero"
 #define LOCALIZED_ALTERNATE_FIRSTS                 "primeros"
-#define LOCALIZED_ALTERNATE_FLOODCOLOR             "pintaColor"
+#define LOCALIZED_ALTERNATE_FLOODCOLOR             "colorRelleno"
 #define LOCALIZED_ALTERNATE_FONTFACENAMES          "tiposDeLetra"
 #define LOCALIZED_ALTERNATE_FOREVER                "siempre"
 #define LOCALIZED_ALTERNATE_FORM                   "formatoNumero"
@@ -490,7 +490,7 @@
 #define LOCALIZED_ALTERNATE_RUNRESULT              "resultadoEjecuta"
 #define LOCALIZED_ALTERNATE_RW                     "lp"
 #define LOCALIZED_ALTERNATE_SAVE                   "guarda"
-#define LOCALIZED_ALTERNATE_SCREENCOLOR            "colorf"
+#define LOCALIZED_ALTERNATE_SCREENCOLOR            "colorFondo"
 #define LOCALIZED_ALTERNATE_SCROLLBARCREATE        "creaBarraDesplazamiento"
 #define LOCALIZED_ALTERNATE_SCROLLBARENABLE        "habilitaBarraDesplazamiento"
 #define LOCALIZED_ALTERNATE_SCROLLBARDELETE        "borraBarraDesplazamiento"
@@ -646,7 +646,7 @@
 #define LOCALIZED_SET                  "&Configurar"
 #define LOCALIZED_SET_PENSIZE          "&Tamaño del lápiz..."
 #define LOCALIZED_SET_LABELFONT        "Tipo de letra de &rotulador..."
-#define LOCALIZED_SET_COMMANDERFONT    "Tipo de letra &comandos..."
+#define LOCALIZED_SET_COMMANDERFONT    "Tipo de letra del &centro de comandos..."
 #define LOCALIZED_SET_PENCOLOR         "Color de &lápiz..."
 #define LOCALIZED_SET_FLOODCOLOR       "Color de r&elleno..."
 #define LOCALIZED_SET_SCREENCOLOR      "Color de &fondo..."
@@ -659,9 +659,9 @@
 #define LOCALIZED_HELP                 "A&yuda"
 #define LOCALIZED_HELP_INDEX           "&Indice"
 #define LOCALIZED_HELP_TUTORIAL        "&Tutorial"
-#define LOCALIZED_HELP_DEMO            "&Demostracion"
+#define LOCALIZED_HELP_DEMO            "&Demostración"
 #define LOCALIZED_HELP_EXAMPLE         "&Ejemplos"
-#define LOCALIZED_HELP_RELEASENOTES    "&Notas de la version"
+#define LOCALIZED_HELP_RELEASENOTES    "&Notas de la versión"
 #define LOCALIZED_HELP_ABOUTFMSLOGO    "&Acerca de " LOCALIZED_GENERAL_PRODUCTNAME "..."
 #define LOCALIZED_HELP_MS              "Acerca de &FMS..."
 // The following two help options display tables for translating to/from English
@@ -678,7 +678,7 @@
 #define LOCALIZED_SELECTACTIVEAREA_XHIGH        "X-Sup"
 #define LOCALIZED_SELECTACTIVEAREA_XLOW         "X-Inf"
 #define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "Puntos por pulgada impresa:"
-#define LOCALIZED_SELECTACTIVEAREA_RESET        "&Reset"
+#define LOCALIZED_SELECTACTIVEAREA_RESET        "&Restaurar"
 #define LOCALIZED_SELECTACTIVEAREA_OK           LOCALIZED_GENERAL_OKBUTTON
 #define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON
 

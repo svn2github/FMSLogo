@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 7.2.0 for Microsoft Windows
+FMSLogo Version 7.3.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -13,26 +13,14 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-7.2.0.exe - Installer for the Logo environment
-  fmslogo-7.2.0.zip - ZIP of the Logo environment
+  fmslogo-7.3.0.exe - Installer for the Logo environment
+  fmslogo-7.3.0.zip - ZIP of the Logo environment
 
 II. New features/bugs fixed:
 
-  Changed in 7.2.0
-  o Fix Bug #94; Clarify the meaning and usage of the "start.angle" input the
-    documentation for ELLIPSEARC2.
-  o Fix Bug #492; File -> New and File -> Open no longer erase translated
-    library procedures in non-English versions of FMSLogo.
-  o Fix Bug #493; the Italian translation of SLOWDRAW now affects the behavior
-    of the Italian translations of FORWARD, FD, BACK, and BK.
-  o Fix Bug #499; Creating a single child widget from the setup instructionlist
-    of WINDOWCREATE or DIALOGCREATE no longer fills the entire window/dialog.
-    This was a regression in FMSLogo 7.0.0.
-  o Fix Bug #500; Searching for off-screen text in the editor once again scrolls
-    to the text when its found.  This was a regression in FMSLogo 7.0.0.
-  o Fix Bug #501; Examples/3D/3DBITMAP.LGO no longer has a .bmp not found error.
-  o Improvements to the Italian translation.
-  o Improvements to the German translation.
+  Changed in 7.3.0
+  o Improvements to the Spanish translation.
+  o Improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
   https://sourceforge.net/p/fmslogo/source/HEAD/tree/trunk/logo/src/CHANGELOG.TXT

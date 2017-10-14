@@ -1422,4 +1422,6 @@ FIN
 
 TAPA "VECTORMD
 
-
+; para compatibilidad con versiones anteriores
+catch "error [ copydef "pintaColor "colorRelleno ]
+catch "error [ copydef "colorf     "colorFondo   ]
