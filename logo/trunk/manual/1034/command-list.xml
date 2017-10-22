@@ -1,37 +1,40 @@
 <section id="command-list">
-<title>LIST</title>
+<title>LISTA</title>
+<indexterm><primary>LISTA</primary></indexterm>
 <indexterm><primary>LIST</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>LIST</command> <parameter>thing1</parameter> <parameter>thing2</parameter>
-(<command>LIST</command> <parameter>thing1</parameter> <parameter>thing2</parameter> <parameter>thing3</parameter> <parameter>...</parameter>)</synopsis>
+<synopsis><command>LISTA</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter>
+(<command>LISTA</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter> <parameter>cosa3</parameter> <parameter>...</parameter>)
+<command>LIST</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter>
+(<command>LIST</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter> <parameter>cosa3</parameter> <parameter>...</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a list whose members are its inputs, which can be any &GENERICNAME; thing (word, list, or array).
+Devuelve una lista cuyos miembros son las entradas, que pueden ser cualquier cosa de Logo (palabra, lista, o vector).
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SHOW (LIST "This "is "a "List)</userinput>
-[This is a List]
+    <programlisting><userinput>MUESTRA (LISTA "Esto "es "una "Lista)</userinput>
+[Esto es una Lista]
 </programlisting>
 
-    <programlisting><userinput>SHOW LIST [1 2 3] [a b c]</userinput>
+    <programlisting><userinput>MUESTRA LISTA [1 2 3] [a b c]</userinput>
 [[1 2 3] [a b c]]</programlisting>
 
-    <programlisting><userinput>MAKE "red 100
-MAKE "green 100
-MAKE "blue 100
-SHOW (LIST :red :green :blue)</userinput>
+    <programlisting><userinput>HAZ "rojo 100
+HAZ "verde 100
+HAZ "azul 100
+MUESTRA (LISTA :rojo :verde :azul)</userinput>
 [100 100 100]</programlisting>
 </listitem>
 

@@ -1,41 +1,47 @@
 <section id="command-sentence">
-<title>SENTENCE</title>
+<title>FRASE</title>
+<indexterm><primary>FRASE</primary></indexterm>
+<indexterm><primary>FR</primary></indexterm>
 <indexterm><primary>SENTENCE</primary></indexterm>
 <indexterm><primary>SE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SENTENCE</command> <parameter>thing1</parameter> <parameter>thing2</parameter>
-<command>SE</command> <parameter>thing1</parameter> <parameter>thing2</parameter>
-(<command>SENTENCE</command> <parameter>thing1</parameter> <parameter>thing2</parameter> <parameter>thing3</parameter> <parameter>...</parameter>)
-(<command>SE</command> <parameter>thing1</parameter> <parameter>thing2</parameter> <parameter>thing3</parameter> <parameter>...</parameter>)</synopsis>
+<synopsis><command>FRASE</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter>
+<command>FR</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter>
+(<command>FRASE</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter> <parameter>cosa3</parameter> <parameter>...</parameter>)
+(<command>FR</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter> <parameter>cosa3</parameter> <parameter>...</parameter>)
+<command>SENTENCE</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter>
+<command>SE</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter>
+(<command>SENTENCE</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter> <parameter>cosa3</parameter> <parameter>...</parameter>)
+(<command>SE</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter> <parameter>cosa3</parameter> <parameter>...</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 
-<para>
-Outputs a list whose members are its inputs, if those inputs are not lists.
-Outputs the members of its inputs, if those inputs are lists.
+<para>  
+Devuelve una lista cuyos miembros son sus entradas, si esas entradas no son listas.
+Devuelve los miembros de sus entradas, si esas entradas son listas.
 </para>
 
 <para>
-SENTENCE throws an error if any of its inputs is an array.
+FRASE lanza un error si cualquiera de sus entradas es un vector.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW (SENTENCE "A "sentence "is "simply "a "list "of "words)</userinput>
-[A sentence is simply a list of words]</programlisting>
+<programlisting><userinput>MUESTRA (FRASE "Una "frase "es "simplemente "una "lista "de "palabras)</userinput>
+[Una frase es simplemente una lista de palabras]</programlisting>
 
-<programlisting><userinput>SHOW (SENTENCE "A "sentence [is simply a] "list [of words])</userinput>
-[A sentence is simply a list of words]</programlisting>
+<programlisting><userinput>SHOW (FRASE "Una "frase [es simplemente una] "lista [de palabras])</userinput>
+[Una frase es simplemente una lista de palabras]</programlisting>
 </listitem>
 </varlistentry>
 

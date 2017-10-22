@@ -35,7 +35,12 @@ programmatically.
    The (Commander) Input Box  - La Caja de Entrada (del Centro de Comandos)
    The Commander History Box  - La Caja de Historia de instrucciones
    active area                - área activa
+   array                      - vector
    command                    - comando
+   item                       - miembro
+   input (n)                  - entrada
+   output (n)                 - devuelto
+   throw an error             - lanza un error
    drawing surface            - área de dibujo
    turtle graphics            - gráficas tortuga
    workspace                  - área de trabajo
