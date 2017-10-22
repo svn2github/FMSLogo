@@ -1,8 +1,8 @@
 <chapter id="data-structure-commands">
-   <title>Data Structure Commands</title>
+   <title>Procedimientos de estructuras de datos</title>
 
    <section id="data-structure-constructors">
-      <title>Data Structure Constructors</title>
+      <title>Constructores de estructuras de datos</title>
       &command-word;
       &command-list;
       &command-sentence;
@@ -19,7 +19,7 @@
    </section>
 
    <section id="data-structure-selectors">
-      <title>Data Structure Selectors</title>
+      <title>Selectores de estructuras de datos</title>
       &command-first;
       &command-firsts;
       &command-last;
@@ -35,7 +35,7 @@
    </section>
 
    <section id="data-structure-mutators">
-      <title>Data Structure Mutators</title>
+      <title>Mutadores de estructuras de datos</title>
 
       &command-setitem;
       &command-mdsetitem;
@@ -49,7 +49,7 @@
    </section>
 
    <section id="data-structure-predicates">
-      <title>Data Structure Predicates</title>
+      <title>Predicados de estructuras de datos</title>
 
       &command-wordp;
       &command-numberp;
@@ -66,7 +66,7 @@
    </section>
 
    <section id="queries">
-      <title>Data Structure Queries</title>
+      <title>Consultas de estructuras de datos</title>
 
       &command-count;
       &command-ascii;
