@@ -1,6 +1,6 @@
 <chapter id="commandline-options">
-<title>Opciones de la Línea de Órdenes</title>
-<indexterm><primary>command line options</primary></indexterm>
+<title>Opciones de la línea de órdenes</title>
+<indexterm><primary>Opciones de la línea de órdenes</primary></indexterm>
 
 <para>
 Las opciones de la línea de órdenes pueden fijarse como propiedades del funcionamiento de &PRODUCTNAME;.
@@ -180,7 +180,7 @@ Nota, el interruptor «-L» debe seguir a los demás interruptores.
 
 
 <section id="invoking-and-exiting-fmslogo">
-<title>Iniciar y Salir &PRODUCTNAME;</title>
+<title>Iniciar y salir &PRODUCTNAME;</title>
 
 <para>
 Para iniciar &PRODUCTNAME;, haz clic en el icono &PRODUCTNAME;.
@@ -195,7 +195,8 @@ Si ninguno de los archivos contiene una definición para el procedimiento, enton
 </para>
 
 <para>
-Muchos procedimientos que son incorporados en &PRODUCTNAME; son incluido en el directorio de biblioteca.  Entonces, si utilizas una biblioteca diferente, tal vez querrías incluir en esta algunos o todos los archivos de la biblioteca original.
+Muchos procedimientos que son incorporados en &PRODUCTNAME; son incluido en el directorio de biblioteca.
+Entonces, si utilizas una biblioteca diferente, tal vez querrías incluir en esta algunos o todos los archivos de la biblioteca original.
 </para>
 </section>
 
