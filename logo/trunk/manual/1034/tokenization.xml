@@ -1,114 +1,114 @@
 <chapter id="language-mechanics">
-   <title>Language Mechanics</title>
+  <title>Funcionamiento del lenguaje</title>
 
-<para>
-This chapter explains how the &GENERICNAME; language works.
-</para>
+  <para>Este capítulo explica como funcione el lenguaje &GENERICNAME;.</para>
 
-<section id="tokenization">
-   <title>Tokenization</title>
-   <indexterm><primary>tokenization</primary></indexterm>
+  <section id="tokenization">
+    <title>Análisis lexicográfico</title>
+    <indexterm><primary>Análisis lexicográfico</primary></indexterm>
 
-   <indexterm><primary>;</primary></indexterm>
-   <indexterm><primary>semicolon</primary></indexterm>
-   <indexterm><primary>comment</primary></indexterm>
+    <indexterm><primary>;</primary></indexterm>
+    <indexterm><primary>punto y coma</primary></indexterm>
+    <indexterm><primary>comentario</primary></indexterm>
 
-   <indexterm><primary>~</primary></indexterm>
-   <indexterm><primary>line continuation</primary></indexterm>
+    <indexterm><primary>~</primary></indexterm>
+    <indexterm><primary>continuación de línea</primary></indexterm>
 
-   <para>Names of procedures, variables, and property lists are case-insensitive.
-So are the special words <link linkend="command-end">END</link>, <link linkend="command-true">TRUE</link>, and <link linkend="command-false">FALSE</link>.
-Case of letters is preserved in everything you type, however.</para>
+    <para>Los nombres de los procedimientos, de las variables, y de las listas de propiedades son insensible a las mayúsculas y minúsculas.
+    También son las palabras especiales <link linkend="command-end">FIN</link>, <link linkend="command-true">CIERTO</link>, y <link linkend="command-false">FALSO</link>.
+    Sin embargo, las mayúsculas y minúsculas son preservadas en todo el resto que tecleas.</para>
 
-    <para>Within square brackets, words are delimited only by spaces and square brackets.
-<userinput>[2+3]</userinput> is a list containing one word.</para>
+    <para>Dentro de corchetes, las palabras están delimitadas sólo por espacios y corchetes.
+    Así, <userinput>[2+3]</userinput> es una lista que contiene una sóla palabra.</para>
 
-    <para>A word not after a quotation mark or inside square brackets is delimited by a space, a bracket, a parenthesis, or an infix operator <userinput>+-*/=&lt;></userinput>.
-Words that follow colons are also in this category.
-Note that quote and colon are not delimiters.</para>
+    <para>Después de una comilla inglesa (que no está dentro de corchetes), una palabra está delimitada por un espacio, corchetes, o paréntesis.</para>
+     
+    <para>Una palabra que no está después de una comilla inglesa o entre corchetes se delimita con un espacio, corchetes, paréntesis, o un operador infijo <userinput>+-*/=&lt;></userinput>.
+    Observas que las comillas inglesas y comas no son delimitadores.</para>
 
-    <para>A word consisting of a question mark followed by a number (e.g., <userinput>?3</userinput>), is parsed as if it were the sequence<programlisting>(? 3)</programlisting>
-making the number an input to the <userinput>?</userinput> procedure.
-(See the section on <link linkend="template-based-iteration">Template-Based Iteration</link>).
-This special treatment does not apply to words read as data, to words with a non-number following the question mark, or if the question mark is backslashed.</para>
+    <para>Una interrogación seguida por un número (por ejemplo, <userinput>?3</userinput>), cuando se ejecuta (por ejemplo, cuando se espera un procedimiento), son ejecutados como si fueran la secuencia
+    <programlisting>(? 3)</programlisting>
+    es decir, como si fuera el número una entrada del procedimiento <userinput>?</userinput>.
+    (Veas el tema de <link linkend="template-based-iteration">Iteración de Plantilla</link>.)
+    Este tratamiento especial no se aplica a palabras leídas como datos, a palabras en las que al signo de interrogación no le sigue un carácter numérico, si el signo de interrogación es escapado con barra inversa, o si el signo de interrogación es «¿».</para>
 
-    <para>A line (an instruction line or one read by <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link>) can be continued onto the following line if its last character is a tilde (<userinput>~</userinput>).
-<link linkend="command-readword">READWORD</link> preserves the tilde and the newline; <link linkend="command-readlist">READLIST</link> does not.
-    A tilde which appears anywhere else in a line has no special meaning.</para>
+    <para>Una línea (línea de instrucciones o una línea leída con <link linkend="command-readlist">LEELISTA</link> o <link linkend="command-readword">LEEPALABRA</link>) puede continuar en la línea siguiente si su último carácter es una tilde de la eñe (<userinput>~</userinput>).
+    LEEPALABRA guarda el carácter y la nueva línea; LEELISTA no.
+    Una tilde de la eñe que se aparece en cualquier otra parte de una línea no tiene tratamiento especial.</para>
 
+    <para>Un punto y coma inicia un comentario en una línea de instrucciones.
+    &GENERICNAME; ignora todos los caracteres que siguen al punto y coma hasta el final de la línea.
+    Una tilde de la eñe (<userinput>~</userinput>) como último carácter de una línea que tiene comentario indica una continuación de la línea, pero no del comentario.</para>
 
-    <para>A semicolon begins a comment in an instruction line.
-&GENERICNAME; ignores characters from the semicolon to the end of the line.
-A tilde (<userinput>~</userinput>) as the last character in the line still indicates a continuation line, but not a continuation of the comment.</para>
+    <para>Ejemplo:</para>
 
-    <para>Example:</para>
-
-    <programlisting><userinput>print "abc;comment ~
+    <programlisting><userinput>escribe "abc;comentario ~
 def</userinput>
 abcdef</programlisting>
 
+    <para>El punto y coma no tiene un significado especial en las líneas de datos leídos con LEEPALABRA o LEELISTA, pero se puede reanalizar la línea usando <link linkend="command-runparse">EJECUTAANALIZA</link> y entonces se reconocerá el comentario.
+    <!-- not true in fms:
+         If a tilde is typed for line continuation, &GENERICNAME; uses a tilde as a prompt character for the continuation line.
+    --></para>
 
-    <para>Semicolon has no special meaning in data lines read by <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link>, but such a line can later be reparsed using <link linkend="command-runparse">RUNPARSE</link> and then comments will be recognized.
-<!-- not true in fms:
-If a tilde is typed for line continuation, &GENERICNAME; uses a tilde as a prompt character for the continuation line.
---></para>
+    <para>Si quieres incluir un delimitador (punto y coma o tilde de la eñe) en una palabra, debe estar precedido por una barra inversa (<userinput>\</userinput>).
+    Si el último carácter de una línea es una barra inversa, entonces el carácter de nueva línea es parte del último palabra en la línea, y la línea sigue a través de la próxima línea.
+    Para incluir una barra inversa en una palabra, usa dos barras inversas <userinput>\\</userinput>.
+    <!-- not true in fms:
+         If the combination backslash-newline is entered, &GENERICNAME; will use a backslash as a prompt character for the continuation line.
+    -->
+    Todo esto se aplica a las líneas de datos leídas con LEEPALABRA o LEELISTA como a las líneas de instrucciones.</para>
 
-    <para>To include an otherwise delimiting character (including semicolon or tilde) in a word, precede it with backslash (<userinput>\</userinput>).
-If the last character of a line is a backslash, then the newline character following the backslash is part of the last word on the line, and the line continues onto the following line.
-To include a backslash in a word, use <userinput>\\</userinput>.
-<!-- not true in fms:
-If the combination backslash-newline is entered, &GENERICNAME; will use a backslash as a prompt character for the continuation line.
--->
-All of this applies to data lines read with <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link> as well as to instruction lines.</para>
+    <para>&PRODUCTNAME; no presenta «el prompt al carácter» ni salto de línea.
+    Sin embargo, &PRODUCTNAME; ha añadido «\n», carácter de control que se traduce como retorno de carro y salto de línea.</para>
 
-    <para>In &PRODUCTNAME; there is no "prompt character" nor is the carriage return passed from the input control box of the commander.
-However, &PRODUCTNAME; does add the linefeed control character which translates to a carriage return.</para>
+    <para>Ejemplo:</para>
 
-    <para>Example:</para>
+    <programlisting><userinput>escribe "Hola\ncómo\está\nusted</userinput>
+Hola
+cómo
+está
+usted</programlisting>
 
-    <programlisting><userinput>print "Hello\nhow\nare\nyou</userinput>
-Hello
-how
-are
-you</programlisting>
+    <para>Funciona de esta manera tanto en un procedimiento como en la Caja de Entrada.</para>
 
-    <para>This works in a procedure or from the input control box.</para>
+    <para>Un carácter con barra inversa y el mismo sin el signo son <link linkend="command-equalp">IGUALES?</link>; es decir el resultado es <link linkend="command-true">CIERTO</link>, pero puedes distinguirlos con el predicado <link linkend="command-backslashedp">TIENEBARRA?</link>.
+    La barra inversa solo tiene efecto sobre los caracteres que la necesitan: espacio en blanco, parentésis, corchetes, operadores infijos, barra inversa, barra vertical, tilde de la eñe, comilla inglesa, signo de interrogación, dos puntos, y punto y coma.</para>
 
-    <para>A character entered with backslash is <link linkend="command-equalp">EQUALP</link> to the same character without the backslash, but can be distinguished by the <link linkend="command-backslashedp">BACKSLASHEDP</link> predicate.  Backslashing is effective only on characters for which it is necessary: whitespace, parentheses, brackets, infix operators, backslash, vertical bar, tilde, quote, question mark, colon, and semicolon.</para>
+    <para>Una notación alternativa para delimitar caracteres en palabras es incluir el grupo de caracteres entre barras verticales (<userinput>|</userinput>).
+    Todos los caracteres entre barras verticales son tratados como letras.
+    En datos leídos con LEEPALABRA las barras verticales se guardan en la palabra resultante.
+    En datos leídos con LEELISTA (o en el resultado de un <link linkend="command-parse">ANALIZA</link> o EJECUTAANALIZA de una palabra) las barras verticales no aparecen explícitamente; todos los caracteres delimitadores (espacios, corchetes, paréntesis, y operadores infijos) aparecen como si se hubieran entrado con barra inversa (<userinput>\</userinput>).
+    Dentro de las barras verticales se puede usar barra inversa; en este contexto solo las barra inversas y las barras verticales deben ser escapado con barra inversa.</para>
 
-    <para>An alternative notation to include otherwise delimiting characters in words is to enclose a group of characters in vertical bars (<userinput>|</userinput>).
-All characters between vertical bars are treated as if they were letters.
-In data read with <link linkend="command-readword">READWORD</link> the vertical bars are preserved in the resulting word.
-In data read with <link linkend="command-readlist">READLIST</link> (or resulting from a <link linkend="command-parse">PARSE</link> or <link linkend="command-runparse">RUNPARSE</link> of a word) the vertical bars do not appear explicitly; all potentially delimiting characters (including spaces, brackets, parentheses, and infix operators) appear as though entered with a backslash.
-Within vertical bars, backslash may still be used; the only characters that must be backslashed in this context are backslash and vertical bar themselves.</para>
+    <para>Los caracteres entrados entre barras verticales son siempre especiales, aun cuando la palabra o lista que los contiene sea analizada con ANALIZA o EJECUTAANALIZA.
+    Igualmente sucede con un carácter escrito después de una barra inversa, excepto cuando una palabra que contiene caracteres escapos con barras inversas es ejecutada y analizada, los caracteres escapados con barras inversas pierden su cualidad especial, como si se hubieran escrito normalmente.
+    Esta distinción es importante sólo si construyes una expresión &GENERICNAME; que ejecutarás después, y quieres usar paréntesis.
+    Por ejemplo,</para>
 
-    <para>Characters entered between vertical bars are forever special, even if the word or list containing them is later reparsed with <link linkend="command-parse">PARSE</link> or <link linkend="command-runparse">RUNPARSE</link>.
-The same is true of a character typed after a backslash, except that when a quoted word containing a backslashed character is runparsed, the backslashed character loses its special quality and acts thereafter as if typed normally.
-This distinction is important only if you are building a &GENERICNAME; expression out of parts, to be RUN later, and want to use parentheses.  For example,</para>
+    <programlisting>ESCRIBE EJECUTA (FRASE "\( 2 "+ 3 "\))</programlisting>
 
+    <para>escribe 5, pero</para>
 
-    <programlisting>PRINT RUN (SENTENCE "\( 2 "+ 3 "\))</programlisting>
+    <programlisting>EJECUTA (FRASE "HAZ ""|(| 2)</programlisting>
 
-    <para>prints 5, but</para>
+    <para>Crea una variable cuyo nombre es el paréntesis que abre <userinput>(</userinput>.</para>
 
-    <programlisting>RUN (SENTENCE "MAKE ""|(| 2)</programlisting>
+    <para>Estos dos ejemplos fallarían si se intercambiaran las barras verticales y las barras inversas.</para>
 
-    <para>creates a variable whose name is open-parenthesis.  (Each example would fail if vertical bars and backslashes were interchanged.)</para>
+  </section>
 
-</section>
-
-<section id="procedure-loading">
-<title>Procedure Loading</title>
-<para>
-When &PRODUCTNAME; encounters a token that it neither a variable, a number, a word, an infix operator, a parenthesis, nor a bracket, then the token is interpreted as the name of a procedure.
-If this is the name of a primitive or a procedure that has already been defined, then &PRODUCTNAME; calls that procedure.
-Otherwise, &PRODUCTNAME; attempts to load the procedure into the workspace.
-If a ".lgo" file with the same name as with the procedure exists in the current working directory, then &PRODUCTNAME; loads that file (as with the <link linkend="command-load">LOAD</link> command).
-If no errors were encountered and the procedure was defined by loading the file, then that procedure is called.
-However, if the procedure is still not defined and a file with the same name exists in the Logolib directory, then that Logolib file is loaded.
-If no errors were encountered and the procedure was defined by loading the Logolib file, then the procedure is called.
-If the procedure is still not defined, then &PRODUCTNAME; throws an "I don't know how to" error.
-</para>
-</section>
+  <section id="procedure-loading">
+    <title>Carga de procedimientos</title>
+    <para>Cuando &PRODUCTNAME; se encuentra un token que no es ni variable, ni numero, ni palabra, ni operador infijo, ni paréntesis, ni corchete, entonces &PRODUCTNAME; lo interpreta como nombre de procedimiento.
+    Si el token es el nombre de una primitiva o un procedimiento que ya ha sido definido, entonces &PRODUCTNAME; ejecuta ese procedimiento.
+    De lo contrario, &PRODUCTNAME; intenta cargar el procedimiento en el área de trabajo.
+    &PRODUCTNAME; busca primero un archivo en el directorio de trabajo actual llamado <filename>procedimiento.lgo</filename> donde «procedimiento» es el nombre del procedimiento en letras minúsculas.
+    Si un tal archivo existe, &PRODUCTNAME; carga ese archivo (como con la primitiva <link linkend="command-load">CARGA</link>).
+    Si no hubiese errores y el procedimiento ahora es definido, entonces &PRODUCTNAME; lo ejecuta.
+    Sin embargo, si el procedimiento aún no es definido, &PRODUCTNAME; busca un archivo llamado <filename>procedimiento</filename> (sin «.lgo») en el directorio de biblioteca y, si existe, lo carga.
+    Si no hubiese errores y el procedimiento fue definido en cargando el archivo de biblioteca, entonces &PRODUCTNAME; lo ejecuta.
+    Si aún no tiene una definición para el procedimiento, &PRODUCTNAME; lanza un «no sé cómo realizar» error.</para>
+  </section>
 
 </chapter>

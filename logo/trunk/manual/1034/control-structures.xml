@@ -68,7 +68,7 @@ Most procedures are either one or the other, but some are both.
 
 
    <section id="template-based-iteration">
-       <title>Template-Based Iteration</title>
+       <title>Iteración de Plantilla</title>
 
 <para>
 This section describes iteration tools that are based on the idea of a "template".
