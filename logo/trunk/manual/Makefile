@@ -86,10 +86,14 @@ website : index.html media/*.png
 	cp media/*.png www/media
 
 # Experimental Spanish manual
-spanish : $(wildcard 1034/*.xml) logoversion.xml translations-1034.xml $(HHP_STYLESHEET)
+logohelp-1034-experimental.chm : $(wildcard 1034/*.xml) logoversion.xml translations-1034.xml $(HHP_STYLESHEET)
 	$(XMLLINT) --valid --noout --nonet 1034/$(ROOTFILE)
 #	$(XSLTPROC) --novalid --nonet $(HTML_STYLESHEET) 1034/$(ROOTFILE)
 	$(XSLTPROC) --novalid --nonet --param htmlhelp.chm \"'logohelp-1034-experimental.chm'\" $(HHP_STYLESHEET) 1034/$(ROOTFILE)
+	mv htmlhelp.hhp htmlhelp-1034.hhp
+	-$(HHC) htmlhelp-1034.hhp
+
+spanish : logohelp-1034-experimental.chm ;
 
 # Generate an XML file that contains the version
 # We use the UNIX version of echo to make sure there is no newline
