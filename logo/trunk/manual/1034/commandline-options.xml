@@ -70,7 +70,7 @@ La letra «W» viene de la palabra por «anchura» en inglés: «width».
 <synopsis>-H <replaceable>altura</replaceable></synopsis>
 
 <para>
-Pone la altura del área de dibujo a la valor de <option>altura</option>
+Pone la altura del área de dibujo a la valor de <option>altura</option>.
 Mientras mayor sea la altura más memoria se requiere.
 Por omisión se establece en 1000.
 </para>
