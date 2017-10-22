@@ -190,7 +190,7 @@ Para salir de &PRODUCTNAME;, entra la instrucción <link linkend="command-bye">A
 <para>
 Si ejecutas un procedimiento que no es definido, &PRODUCTNAME; busca primero un archivo en el directorio de trabajo actual llamado <filename>procedimiento.lgo</filename> donde «procedimiento» es el nombre del procedimiento en letras minúsculas.
 Si un tal archivo existe, &PRODUCTNAME; carga ese archivo.
-Si el procedimiento aun no es definido o si no hay tal archivo, &PRODUCTNAME; busca en el directorio de biblioteca para un archivo llamado <filename>procedimiento</filename> (sin «.lgo») y, si existe, &PRODUCTNAME; lo carga.
+Si el procedimiento aun no es definido o si no hay tal archivo, &PRODUCTNAME; busca un archivo llamado <filename>procedimiento</filename> (sin «.lgo») en el directorio de biblioteca y, si existe, lo carga.
 Si ninguno de los archivos contiene una definición para el procedimiento, entonces &PRODUCTNAME; lanza un error.
 </para>
 
