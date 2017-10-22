@@ -36,7 +36,7 @@ If &GENERICNAME; sees a MAKE instruction, then it makes that name.
 
 <listitem>
 <para>
-If &GENERICNAME; sees instructions that are outside of a procedure definition, then it runs that those instructions in the order seen.
+If &GENERICNAME; sees instructions that are outside of a procedure definition, then it runs those instructions in the order seen.
 </para>
 </listitem>
 </itemizedlist>
