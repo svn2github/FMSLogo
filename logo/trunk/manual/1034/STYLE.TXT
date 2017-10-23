@@ -37,7 +37,7 @@ programmatically.
    active area                - área activa
    array                      - vector
    command                    - comando
-   item                       - miembro
+   item                       - elemento
    input (n)                  - entrada
    output (n)                 - devuelto
    throw an error             - lanza un error

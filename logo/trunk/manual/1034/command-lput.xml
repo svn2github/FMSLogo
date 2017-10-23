@@ -16,7 +16,7 @@
 
 <varlistentry><term>Descripción</term>
 <listitem>
-<para>Devuelve una lista igual a <parameter>lista</parameter> con <parameter>cosa</parameter> añadido como el último miembro.</para>
+<para>Devuelve una lista igual a <parameter>lista</parameter> con <parameter>cosa</parameter> añadido como el último elemento.</para>
 </listitem>
 </varlistentry>
 

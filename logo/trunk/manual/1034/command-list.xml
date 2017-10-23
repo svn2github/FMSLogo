@@ -17,7 +17,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve una lista cuyos miembros son las entradas, que pueden ser cualquier cosa de Logo (palabra, lista, o vector).
+Devuelve una lista cuyos elementos son las entradas, que pueden ser cualquier cosa de Logo (palabra, lista, o vector).
 </para>
 </listitem>
 </varlistentry>

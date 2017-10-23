@@ -24,8 +24,8 @@
 <listitem>
 
 <para>  
-Devuelve una lista cuyos miembros son sus entradas, si esas entradas no son listas.
-Devuelve los miembros de sus entradas, si esas entradas son listas.
+Devuelve una lista cuyos elementos son sus entradas, si esas entradas no son listas.
+Devuelve los elementos de sus entradas, si esas entradas son listas.
 </para>
 
 <para>
