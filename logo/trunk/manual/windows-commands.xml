@@ -36,7 +36,7 @@ When controls are on the &PRODUCTNAME; screen window the coordinates are in the 
 
 <para>
 Windows are one of two types of basic "canvas" types.
-A window has a title bar, frames, and a grey client area upon which other window control are places.
+A window has a title bar, a frame, and a grey client area upon which other window controls can be placed.
 Unlike dialogs, windows are modeless, which means that &PRODUCTNAME; continues to run instructions while the window is displayed.
 </para>
 
@@ -50,9 +50,9 @@ Unlike dialogs, windows are modeless, which means that &PRODUCTNAME; continues t
 
 <para>
 Dialogs are one of two types of basic "canvas" types.
-A dialog has a title bar, frames, and a grey client area upon which other window control are places.
+A dialog has a title bar, a frame, and a grey client area upon which other window controls can be placed.
 Unlike windows, dialogs are modal, which means that &PRODUCTNAME; does not run any instructions until the dialog is closed.
-Because of this, dialogs are used when to present the user with a question that must be answered before the program can continue.
+Because of this, dialogs are used to present the user with a question that must be answered before the program can continue.
 </para>
 
       &command-dialogcreate;
