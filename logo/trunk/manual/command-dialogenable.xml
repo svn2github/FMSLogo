@@ -20,7 +20,7 @@ If <parameter>state</parameter> equals FALSE, then the window is disabled.
 
 <para>
 Be careful when using DIALOGENABLE to disable a dialog.
-Because DIALOGCREATE doesn't stop until the dialog closes, if you disable the dialog box, they user may not be able to close the dialog, which means &PRODUCTNAME; may get stuck waiting forever.
+Because DIALOGCREATE doesn't stop until the dialog closes, if you disable the dialog box, the user may not be able to close the dialog, which means &PRODUCTNAME; may get stuck waiting forever.
 </para>
 
 </listitem>
