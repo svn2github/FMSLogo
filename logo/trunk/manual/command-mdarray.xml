@@ -8,7 +8,7 @@
 <varlistentry><term>Synopsis</term>
 <listitem>
 <synopsis><command>MDARRAY</command> <parameter>sizelist</parameter>
-(<command>MDARRAY</command> <parameter>sizelist</parameter> origin)</synopsis>
+(<command>MDARRAY</command> <parameter>sizelist</parameter> <parameter>origin</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
