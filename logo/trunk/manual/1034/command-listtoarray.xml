@@ -1,25 +1,32 @@
 <section id="command-listtoarray">
-<title>LISTTOARRAY</title>
+<title>LISTAAVECTOR</title>
+<indexterm><primary>LISTAAVECTOR</primary></indexterm>
 <indexterm><primary>LISTTOARRAY</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>LISTTOARRAY</command> <parameter>list</parameter>
-(<command>LISTTOARRAY</command> <parameter>list</parameter> origin)</synopsis>
+<synopsis><command>LISTAAVECTOR</command> <parameter>lista</parameter>
+(<command>LISTAAVECTOR</command> <parameter>lista</parameter> <parameter>origen</parameter>)
+<command>LISTTOARRAY</command> <parameter>lista</parameter>
+(<command>LISTTOARRAY</command> <parameter>lista</parameter> <parameter>origen</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-   <para>Outputs an array with the same elements as the input list.</para>
+  <para>Convierte una lista en vector, ya que devuelve una vector del mismo tamaño que la entrada <parameter>lista</parameter>, cuyos elementos son los miembros de la entrada <parameter>lista</parameter>.</para>
+
+  <para>Si se da una entrada <parameter>origen</parameter>, entonces el primer elemento del vector es al índice <parameter>origen</parameter>.
+  Por defecto, el origen es 1.</para>
+
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SHOW LISTTOARRAY [1 2 3]</userinput>
+    <programlisting><userinput>MUESTRA LISTAAVECTOR [1 2 3]</userinput>
 {1 2 3}</programlisting>
 </listitem>
 </varlistentry>
