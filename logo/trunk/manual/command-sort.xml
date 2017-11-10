@@ -20,7 +20,8 @@ The output is a new sequence of the same type as <parameter>sequence</parameter>
 </para>
 
 <para>
-The <parameter>predicate</parameter> input must be the name of a procedure that inputs two values and outputs either TRUE or FALSE.
+The <parameter>predicate</parameter> input must be either an <link linkend="explict-slot-templates">explicit-slot template</link> or the name of a procedure that acts as the predicate.
+The predicate must input two values and output either TRUE or FALSE.
 </para>
 
 <para>
