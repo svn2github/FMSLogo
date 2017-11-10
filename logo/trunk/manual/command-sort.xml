@@ -20,7 +20,7 @@ The output is a new sequence of the same type as <parameter>sequence</parameter>
 </para>
 
 <para>
-The <parameter>predicate</parameter> input must be a procedure that inputs two values and outputs either TRUE or FALSE.
+The <parameter>predicate</parameter> input must be the name of a procedure that inputs two values and outputs either TRUE or FALSE.
 </para>
 
 <para>
