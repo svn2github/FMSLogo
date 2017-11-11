@@ -1,29 +1,31 @@
 <section id="command-combine">
-<title>COMBINE</title>
+<title>COMBINA</title>
+<indexterm><primary>COMBINA</primary></indexterm>
 <indexterm><primary>COMBINE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>COMBINE</command> <parameter>thing1</parameter> <parameter>thing2</parameter></synopsis>
+  <synopsis><command>COMBINA</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter>
+<command>COMBINE</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<para>Combines both of its inputs into a single value.
-If the second input is a word, this acts like <link linkend="command-word">WORD</link>.
-If the second input is a list, this acts like <link linkend="command-fput">FPUT</link>.</para>
+<para>Combina ambos de sus entradas en un solo valor.
+Si <parameter>cosa2</parameter> es una palabra, funciona como <link linkend="command-word">PALABRA</link>.
+Si <parameter>cosa2</parameter> es una lista, funciona como <link linkend="command-fput">PONPRIMERO</link>.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SHOW COMBINE "a "b</userinput>
+    <programlisting><userinput>MUESTRA COMBINA "a "b</userinput>
 ab</programlisting>
 
-    <programlisting><userinput>SHOW COMBINE "a [b]</userinput>
+    <programlisting><userinput>MUESTRA COMBINA "a [b]</userinput>
 [a b]</programlisting>
 </listitem>
 </varlistentry>

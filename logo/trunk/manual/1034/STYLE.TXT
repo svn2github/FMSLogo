@@ -37,6 +37,8 @@ programmatically.
    active area                - área activa
    array                      - vector
    command                    - comando
+   predicate                  - predicado
+   template                   - plantilla
    item                       - elemento
    input (n)                  - entrada
    output (n)                 - devuelto

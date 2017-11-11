@@ -1,56 +1,60 @@
 <section id="command-sort">
-    <title>SORT</title>
+    <title>ORDENA</title>
+<indexterm><primary>ORDENA</primary></indexterm>
 <indexterm><primary>SORT</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SORT</command> <parameter>sequence</parameter>
-(<command>SORT</command> <parameter>sequence</parameter> <parameter>predicate</parameter>)</synopsis>
+<synopsis><command>ORDENA</command> <parameter>secuencia</parameter>
+(<command>ORDENA</command> <parameter>secuencia</parameter> <parameter>predicado</parameter>)
+<command>SORT</command> <parameter>secuencia</parameter>
+(<command>SORT</command> <parameter>secuencia</parameter> <parameter>predicado</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 
 <para>
-Sorts a sequence (list, array, or word) in ascending order, or according to a given predicate.
-The output is a new sequence of the same type as <parameter>sequence</parameter> that contains the same items ordered such that there are no two successive items, a and b, where <userinput>(<parameter>predicate</parameter> a b)</userinput> is FALSE and <userinput>(<parameter>predicate</parameter> b a)</userinput> is TRUE.
+Ordena una secuencia (lista, vector, o palabra) en orden ascendente o según un predicado dado.
+Lo devuelto es una secuencia nuevo del mismo tipo como <parameter>secuencia</parameter> que contiene los mismos miembros ordenado tal que no hay dos elementos sucesivo, A y B, donde <userinput>(<parameter>predicado</parameter> A B)</userinput> es FALSO y <userinput>(<parameter>predicado</parameter> B A)</userinput> es CIERTO.
 </para>
 
 <para>
-The <parameter>predicate</parameter> input must be a procedure that inputs two values and outputs either TRUE or FALSE.
+La entrada <parameter>predicado</parameter> debe ser el nombre de un procedimiento o una plantilla.
+El predicado debe tomar dos entradas y devuelve o CIERTO o FALSO.
 </para>
 
 <para>
-If no <parameter>predicate</parameter> input is given, then the predicate used depends on the <parameter>sequence</parameter> input, as defined by the following table.
+Si no entrada <parameter>predicado</parameter> es dado, entonces, el predicado usado depende de la entrada <parameter>secuencia</parameter>, de acuerdo con la tabla siguiente.
 
 <informaltable frame='all'>
   <tgroup cols='2'>
     <thead>
-      <row><entry><parameter>sequence</parameter> type</entry> <entry>output</entry></row>
+      <row><entry><parameter>secuencia</parameter> tipo</entry> <entry>devuelto</entry></row>
     </thead>
     <tbody>
       <row>
-        <entry>A list of numbers</entry>
-        <entry>A list sorted by <link linkend="command-lessp">LESSP</link></entry>
+        <entry>Una lista de números</entry>
+        <entry>Una lista ordenado por <link linkend="command-lessp">MENOR?</link></entry>
       </row>
       <row>
-         <entry>A list of non-numbers</entry>
-         <entry>A list sorted by <link linkend="command-beforep">BEFOREP</link></entry>
+         <entry>Una lista de no números</entry>
+         <entry>Una lista ordenado por <link linkend="command-beforep">ANTERIOR?</link></entry>
       </row>
       <row>
-         <entry>An array of numbers</entry>
-         <entry>An array sorted by <link linkend="command-lessp">LESSP</link></entry>
+         <entry>Un vector de números</entry>
+         <entry>Un vector ordenado por <link linkend="command-lessp">MENOR?</link></entry>
       </row>
       <row>
-         <entry>An array of non-numbers</entry>
-         <entry>An array sorted by <link linkend="command-beforep">BEFOREP</link></entry>
+         <entry>Un vector de no números</entry>
+         <entry>Un vector ordenado por <link linkend="command-beforep">ANTERIOR?</link></entry>
       </row>
       <row>
-         <entry>A word</entry>
-         <entry>A word whose characters are sorted by <link linkend="command-beforep">BEFOREP</link></entry>
+         <entry>Una palabra</entry>
+         <entry>Una palabra cuyos caracteres son ordenado por <link linkend="command-beforep">ANTERIOR?</link></entry>
       </row>
     </tbody>
   </tgroup>
@@ -60,40 +64,40 @@ If no <parameter>predicate</parameter> input is given, then the predicate used d
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
 <para>
-Sorting in ascending order:
-<programlisting><userinput>SHOW SORT [3 1 2]</userinput>
+Ordenando en orden ascendente:
+<programlisting><userinput>MUESTRA ORDENA [3 1 2]</userinput>
 [1 2 3]
 </programlisting>
 </para>
 
 <para>
-Sorting in descending order:
-<programlisting><userinput>SHOW (SORT [3 1 2] "GREATERP)</userinput>
+Ordenando en orden descendente:
+<programlisting><userinput>MUESTRA (ORDENA [3 1 2] "MAYOR?)</userinput>
 [3 2 1]
 </programlisting>
 </para>
 
 <para>
-Sorting complex records:
-<programlisting><userinput>;       [name age height]
-MAKE "a [Ana  12  52]
-MAKE "b [Bob  11  54]
-MAKE "c [Cole 12  57]
-MAKE "d [Dan  12  52]
-MAKE "e [Erin 11  54]
-MAKE "data (LIST :e :d :c :b :a)
+Ordenando registros complejos:
+<programlisting><userinput>;      [nombre años altura]
+HAZ "a [Ana     12  52]
+HAZ "b [Barto   11  54]
+HAZ "c [Clara   12  57]
+HAZ "d [Diego   12  52]
+HAZ "e [Ernesto 11  54]
+HAZ "datos (LISTA :e :d :c :b :a)
 
-; Sort by height.
-SHOW (SORT :data [LESSP LAST ?1 LAST ?2])</userinput>
-[[Dan 12 52] [Ana 12 52] [Erin 11 54] [Bob 11 54] [Cole 12 57]]
+; Ordena por altura.
+MUESTRA (ORDENA :datos [MENOR? ULTIMO ?1 ULTIMO ?2])</userinput>
+[[Diego 12 52] [Ana 12 52] [Ernesto 11 54] [Barto 11 54] [Clara 12 57]]
 
-<userinput>; Sort by height with ties sorted by name.
-SHOW (SORT (SORT :data [BEFOREP FIRST ?1 FIRST ?2]) [LESSP LAST ?1 LAST ?2])</userinput>
-[[Ana 12 52] [Dan 12 52] [Bob 11 54] [Erin 11 54] [Cole 12 57]]
+<userinput>; Ordena por altura con empates ordenado por nombre.
+MUESTRA (ORDENA (ORDENA :datos [ANTERIOR? PRIMERO ?1 PRIMERO ?2]) [MENOR? ULTIMO ?1 ULTIMO ?2])</userinput>
+[[Ana 12 52] [Diego 12 52] [Barto 11 54] [Ernesto 11 54] [Clara 12 57]]
 </programlisting>
 </para>
 

@@ -82,7 +82,7 @@ The extensions are primarily to allow for variable numbers of inputs.
 </para>
 
      <section id="explict-slot-templates">
-         <title>Explicit-Slot Templates</title>
+         <title>Plantilla de Ranura Explícita</title>
 
 <para>
 The most commonly used form of template is the "explicit-slot" form, which is sometimes called the "question mark" form.
