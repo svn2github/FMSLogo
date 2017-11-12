@@ -1,31 +1,41 @@
 <section id="command-firsts">
-<title>FIRSTS</title>
+<title>PRIMEROS</title>
+<indexterm><primary>PRIMEROS</primary></indexterm>
 <indexterm><primary>FIRSTS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>FIRSTS</command> <parameter>list</parameter></synopsis>
+<synopsis><command>PRIMEROS</command> <parameter>lista</parameter>
+<command>FIRSTS</command> <parameter>lista</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<para>Outputs a list containing the <link linkend="command-first">FIRST</link> of each member of the input list.
-It is an error if any member of the input list is empty.
-The input itself may be empty, in which case the output is also empty.
+<para>
+Devuelve una lista que contiene el primer elemento de cada una de los miembros de <parameter>lista</parameter>.
+Lanza un error si algún miembro de la lista de entrada es vacío.
+</para>
+<para>
+La entrada <parameter>lista</parameter> puede ser vacía, en cuyo caso PRIMEROS devuelve la lista vacía.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW FIRSTS [[1 2 3] [a b c]]</userinput>
+<programlisting><userinput>MUESTRA PRIMEROS [[1 2 3] [a b c]]</userinput>
 [1 a]</programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>Ve También</term>
+<listitem><simplelist>
+<member><link linkend="command-first">PRIMERO</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>

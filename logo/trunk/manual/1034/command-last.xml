@@ -1,40 +1,44 @@
 <section id="command-last">
-<title>LAST</title>
+<title>ULTIMO</title>
+<indexterm><primary>ULTIMO</primary></indexterm>
+<indexterm><primary>UL</primary></indexterm>
 <indexterm><primary>LAST</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>LAST</command> <parameter>thing</parameter></synopsis>
+<synopsis><command>ULTIMO</command> <parameter>cosa</parameter>
+<command>UL</command> <parameter>cosa</parameter>
+<command>LAST</command> <parameter>cosa</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-If <parameter>thing</parameter> is a word, outputs the last character of the word.
-If <parameter>thing</parameter> is a list, outputs the last member of the list.
+Si <parameter>cosa</parameter> es una palabra, devuelve el último carácter de la palabra.
+Si <parameter>cosa</parameter> es una lista, devuelve el último miembro de la lista.
 </para>
 
 <para>
-LAST throws a bad input error if given the empty list, the empty string, or an array.
+ULTIMO lanza un error de mala entrada si <parameter>cosa</parameter> es la lista vacía, la palabra vacía, o un vector.
 </para>
+
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW LAST [1 2 3]</userinput>
+<programlisting><userinput>MUESTRA ULTIMO [1 2 3]</userinput>
 3</programlisting>
 
-<programlisting><userinput>SHOW LAST "Hello</userinput>
-o</programlisting>
+<programlisting><userinput>MUESTRA ULTIMO "Hola</userinput>
+a</programlisting>
 
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

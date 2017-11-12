@@ -1,32 +1,34 @@
 <section id="command-item">
-<title>ITEM</title>
+<title>ELEMENTO</title>
+<indexterm><primary>ELEMENTO</primary></indexterm>
 <indexterm><primary>ITEM</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>ITEM</command> <parameter>index</parameter> <parameter>thing</parameter></synopsis>
+<synopsis><command>ELEMENTO</command> <parameter>índice</parameter> <parameter>cosa</parameter>
+<command>ITEM</command> <parameter>índice</parameter> <parameter>cosa</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-If <parameter>thing</parameter> is a word, ITEM outputs the <parameter>index</parameter>-th character of the word.
+Si <parameter>cosa</parameter> es una palabra, ELEMENTO devuelve el carácter número <parameter>índice</parameter> de la palabra.
 </para>
 
 <para>
-If <parameter>thing</parameter> is a list, ITEM outputs the <parameter>index</parameter>-th member of the list.
+Si <parameter>cosa</parameter> es una lista, ELEMENTO devuelve el miembro número <parameter>índice</parameter> de la lista.
 </para>
 
 <para>
-If <parameter>thing</parameter> is an array whose origin is 1 (which is most arrays), ITEM outputs the <parameter>index</parameter>-th element.
-If <parameter>thing</parameter> is an array whose origin is not 1, then ITEM outputs the element that is at <parameter>index</parameter> - origin + 1.
+Si <parameter>cosa</parameter> es un vector con origen 1 (la mayoría de los vectores), ELEMENTO devuelve el elemento número <parameter>índice</parameter> del vector.
+Si <parameter>cosa</parameter> es un vector con origen que no es 1, entonces ELEMENTO devuelve el elemento número <parameter>índice</parameter> - origen + 1.
 </para>
 
 <para>
-An index starts at 1 for words and lists; the starting index of an array is specified when the array is created.
+Los índices siempre empiezan a 1 para palabras y listas; el primer índice de un vector es especificado cuando el vector sea creado.
 </para>
 
 </listitem>
@@ -35,19 +37,19 @@ An index starts at 1 for words and lists; the starting index of an array is spec
 
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW ITEM 2 [a b c]</userinput>
+<programlisting><userinput>MUESTRA ELEMENTO 2 [a b c]</userinput>
 b</programlisting>
 
-<programlisting><userinput>SHOW ITEM 3 "abc</userinput>
+<programlisting><userinput>MUESTRA ELEMENTO 3 "abc</userinput>
 c</programlisting>
 
-<programlisting><userinput>SHOW ITEM 1 {a b c}</userinput>
+<programlisting><userinput>MUESTRA ELEMENTO 1 {a b c}</userinput>
 a</programlisting>
 
-<programlisting><userinput>SHOW ITEM 1 {a b c}@0</userinput>
+<programlisting><userinput>MUESTRA ELEMENTO 1 {a b c}@0</userinput>
 b</programlisting>
 
 </listitem>

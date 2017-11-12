@@ -1,37 +1,43 @@
 <section id="command-butlast">
-<title>BUTLAST</title>
+<title>MENOSULTIMO</title>
+<indexterm><primary>MENOSULTIMO</primary></indexterm>
+<indexterm><primary>MUL</primary></indexterm>
+<indexterm><primary>MU</primary></indexterm>
 <indexterm><primary>BUTLAST</primary></indexterm>
 <indexterm><primary>BL</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>BUTLAST</command> <parameter>thing</parameter>
-<command>BL</command> <parameter>thing</parameter></synopsis>
+<synopsis><command>MENOSULTIMO</command> <parameter>cosa</parameter>
+<command>MU</command> <parameter>cosa</parameter>
+<command>MUL</command> <parameter>cosa</parameter>
+<command>BUTLAST</command> <parameter>cosa</parameter>
+<command>BL</command> <parameter>cosa</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-If the input is a word, BUTLAST outputs a word containing all but the last character of the input.
-If the input is a list, BUTLAST outputs a list containing all but the last member of the input.
+Si <parameter>cosa</parameter> es una palabra, devuelve una palabra que contiene todos los caracteres de la entrada, menos el último.
+Si <parameter>cosa</parameter> es una lista, devuelve una lista que contiene todos los miembros de la entrada, menos el último.
 </para>
 
 <para>
-BUTLAST throws a bad input error if given the empty list, the empty string, or an array.
+MENOSULTIMO lanza un error de mala entrada si <parameter>cosa</parameter> es la lista vacía, la palabra vacía, o un vector.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW BUTLAST [1 2 3]</userinput>
+<programlisting><userinput>MUESTRA MENOSULTIMO [1 2 3]</userinput>
 [1 2]</programlisting>
 
-<programlisting><userinput>SHOW BUTLAST "Hello</userinput>
-Hell</programlisting>
+<programlisting><userinput>MUESTRA MENOSULTIMO "Hola</userinput>
+Hol</programlisting>
 
 </listitem>
 </varlistentry>

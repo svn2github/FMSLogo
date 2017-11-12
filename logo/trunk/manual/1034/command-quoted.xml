@@ -1,33 +1,35 @@
 <section id="command-quoted">
-<title>QUOTED</title>
+<title>ENTRECOMILLAS</title>
+<indexterm><primary>ENTRECOMILLAS</primary></indexterm>
 <indexterm><primary>QUOTED</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>QUOTED</command> <parameter>thing</parameter></synopsis>
+<synopsis><command>ENTRECOMILLAS</command> <parameter>cosa</parameter>
+<command>QUOTED</command> <parameter>cosa</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-If the input is a word, QUOTED outputs the word with a double-quote character (<userinput>"</userinput>) appended to the front.
-Otherwise, QUOTED outputs whatever the input is.
+Si la entrada es una palabra, ENTRECOMILLAS devuelve la palabra con una comilla inglesa (<userinput>"</userinput>) al frente.
+Si la entrada no es una palabra, ENTRECOMILLAS la devuelve sin modificaciones.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW "Hello</userinput>
-Hello
+<programlisting><userinput>MUESTRA "Hola</userinput>
+Hola
 
-<userinput>SHOW QUOTED "Hello</userinput>
-"Hello</programlisting>
+<userinput>MUESTRA ENTRECOMILLAS "Hola</userinput>
+"Hola</programlisting>
 
-<programlisting><userinput>SHOW QUOTED [1 2 3]</userinput>
+<programlisting><userinput>SHOW ENTRECOMILLAS [1 2 3]</userinput>
 [1 2 3]</programlisting>
 </listitem>
 </varlistentry>

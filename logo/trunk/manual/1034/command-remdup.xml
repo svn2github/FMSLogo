@@ -1,37 +1,39 @@
 <section id="command-remdup">
-<title>REMDUP</title>
+<title>QUITAREPETIDOS</title>
+<indexterm><primary>QUITAREPETIDOS</primary></indexterm>
 <indexterm><primary>REMDUP</primary></indexterm>
 
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>REMDUP</command> <parameter>things</parameter></synopsis>
+<synopsis><command>QUITAREPETIDOS</command> <parameter>cosas</parameter>
+<command>REMDUP</command> <parameter>cosas</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a copy of its input with duplicate members removed.
-If two or more members of the input are equal, the rightmost of those members is the one that remains in the output.
+Devuelve una copia de <parameter>cosas</parameter>, pero sin los miembros repetidos.
+Si dos o más miembros de la entrada son iguales, sólo permanece uno en lo devuelto, el que es más a la derecha.
 </para>
 
 <para>
-REMDUP throws an error if <parameter>things</parameter> is an array.
+QUITAREPETIDOS lanza un error de mala entrada si <parameter>cosas</parameter> es un vector.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW REMDUP [a b c c b]</userinput>
+<programlisting><userinput>MUESTRA QUITAREPETIDOS [a b c c b]</userinput>
 [a c b]</programlisting>
 
-<programlisting><userinput>SHOW REMDUP "Hello</userinput>
-Helo</programlisting>
+<programlisting><userinput>MUESTRA QUITAREPETIDOS "Saludos</userinput>
+aludos</programlisting>
 
 </listitem>
 </varlistentry>

@@ -1,37 +1,39 @@
 <section id="command-pick">
-<title>PICK</title>
+<title>SACAALAZAR</title>
+<indexterm><primary>SACAALAZAR</primary></indexterm>
 <indexterm><primary>PICK</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PICK</command> <parameter>thing</parameter></synopsis>
+<synopsis><command>SACAALAZAR</command> <parameter>cosa</parameter>
+<command>PICK</command> <parameter>cosa</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a randomly chosen item from <parameter>thing</parameter>.
+Devuelve un elemento escogido al azar de un objeto de entrada.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW PICK [1 2 3]</userinput>
+<programlisting><userinput>MUESTRA SACAALAZAR [1 2 3]</userinput>
 2</programlisting>
 
-<programlisting><userinput>SHOW PICK [1 2 3]</userinput>
+<programlisting><userinput>MUESTRA SACAALAZAR [1 2 3]</userinput>
 3</programlisting>
 
-<programlisting><userinput>SHOW PICK [1 2 3]</userinput>
+<programlisting><userinput>MUESTRA SACAALAZAR [1 2 3]</userinput>
 2</programlisting>
 
-<programlisting><userinput>SHOW PICK "Hello</userinput>
-e</programlisting>
+<programlisting><userinput>MUESTRA SACAALAZAR "Hola</userinput>
+l</programlisting>
 
 </listitem>
 </varlistentry>

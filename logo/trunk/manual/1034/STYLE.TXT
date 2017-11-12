@@ -29,7 +29,12 @@ programmatically.
    This is violated in many places and all of them should be fixed.
    Ideally this would be enforced by check-manual.pl.
 
-6) The following terms should always be translated in the same way
+6) Because the procedure documentation is a declarative statement of truth for
+   all time, use SER instead of ESTAR when referring to the state of inputs.
+   For example: "Si la entrada es una palabra", not "Si la entrada está una
+   palabra".
+
+7) The following terms should always be translated in the same way
 
    The Commander              - El Centro de Comandos
    The (Commander) Input Box  - La Caja de Entrada (del Centro de Comandos)
@@ -43,6 +48,8 @@ programmatically.
    input (n)                  - entrada
    output (n)                 - devuelto
    throw an error             - lanza un error
+   throws a bad input error   - lanza un error de mala entrada
    drawing surface            - área de dibujo
    turtle graphics            - gráficas tortuga
    workspace                  - área de trabajo
+   a double-quote (")         - una comilla inglesa (")

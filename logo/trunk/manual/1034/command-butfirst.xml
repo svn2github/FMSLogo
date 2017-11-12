@@ -1,43 +1,48 @@
 <section id="command-butfirst">
-<title>BUTFIRST</title>
+<title>MENOSPRIMERO</title>
+<indexterm><primary>MENOSPRIMERO</primary></indexterm>
+<indexterm><primary>MPR</primary></indexterm>
+<indexterm><primary>MP</primary></indexterm>
 <indexterm><primary>BUTFIRST</primary></indexterm>
 <indexterm><primary>BF</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>BUTFIRST</command> <parameter>thing</parameter>
-<command>BF</command> <parameter>thing</parameter></synopsis>
+<synopsis><command>MENOSPRIMERO</command> <parameter>cosa</parameter>
+<command>MPR</command> <parameter>cosa</parameter>
+<command>MP</command> <parameter>cosa</parameter>
+<command>BUTFIRST</command> <parameter>cosa</parameter>
+<command>BF</command> <parameter>cosa</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-If <parameter>thing</parameter> is a word, outputs a word containing all but the first character of the input.
-If <parameter>thing</parameter> is a list, outputs a list containing all but the first member of the input.
+Si <parameter>cosa</parameter> es una palabra, devuelve una palabra que contiene todos los caracteres de la palabra, menos el primero.
+Si <parameter>cosa</parameter> es una lista, devuelve una lista que contiene todos los miembros de la lista de entrada, menos el primero.
 </para>
 
 <para>
-BUTFIRST throws a bad input error if given the empty list, the empty string, or an array.
+MENOSPRIMERO lanza un error de mala entrada si <parameter>cosa</parameter> es la lista vacía, la palabra vacía, o un vector vacío.
 </para>
+
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW BUTFIRST [1 2 3]</userinput>
+<programlisting><userinput>MUESTRA MENOSPRIMERO [1 2 3]</userinput>
 [2 3]</programlisting>
 
-<programlisting><userinput>SHOW BUTFIRST "Hello</userinput>
-ello</programlisting>
+<programlisting><userinput>MUESTRA MENOSPRIMERO "Hola</userinput>
+ola</programlisting>
 
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
-

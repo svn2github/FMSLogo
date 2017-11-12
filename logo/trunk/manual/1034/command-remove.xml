@@ -1,38 +1,41 @@
 <section id="command-remove">
-<title>REMOVE</title>
+<title>QUITA</title>
+<indexterm><primary>QUITA</primary></indexterm>
 <indexterm><primary>REMOVE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>REMOVE</command> <parameter>thingtoremove</parameter> <parameter>things</parameter></synopsis>
+<synopsis><command>QUITA</command> <parameter>cosa_a_quitar</parameter> <parameter>cosas</parameter>
+<command>REMOVE</command> <parameter>cosa_a_quitar</parameter> <parameter>cosas</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a new thing that is equal to <parameter>things</parameter> with all members equal to <parameter>thingtoremove</parameter> removed.
+Devuelve una nueva cosa que es igual a <parameter>cosas</parameter> con todos los miembros igual a <parameter>cosa_a_quitar</parameter> eliminado.
 </para>
 <para>
-The <parameter>things</parameter> input must be either a list or a word.
+La entrada <parameter>cosas</parameter> debe ser o una lista o una palabra.
 </para>
 <para>
-Because the members of a word are single characters, if <parameter>things</parameter> is a word, then <parameter>thingtoremove</parameter> should be a single character.
-REMOVE does not remove multi-character substrings from a word.
+Recordar que los miembros de una palabra son caracteres singulares.
+Entonces, si <parameter>cosas</parameter> es una palabra, <parameter>cosa_a_quitar</parameter> debe ser un carácter singular.
+QUITA no elimina palabras multi-caracteres de una otra palabra.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW REMOVE "b [a b c b]</userinput>
+<programlisting><userinput>MUESTRA QUITA "b [a b c b]</userinput>
 [a c]</programlisting>
 
-<programlisting><userinput>SHOW REMOVE "e "Hello</userinput>
-Hllo</programlisting>
+<programlisting><userinput>MUESTRA QUITA "o "Hola</userinput>
+Hla</programlisting>
 
 </listitem>
 </varlistentry>
