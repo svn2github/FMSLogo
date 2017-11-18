@@ -1,36 +1,46 @@
 <section id="command-pop">
-<title>POP</title>
+<title>DESAPILA</title>
+<indexterm><primary>DESAPILA</primary></indexterm>
 <indexterm><primary>POP</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>POP</command> <parameter>stackname</parameter></synopsis>
+<synopsis><command>DESAPILA</command> <parameter>nombre_de_pila</parameter>
+<command>POP</command> <parameter>nombre_de_pila</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the most recent thing that was pushed on, using <link linkend="command-push">PUSH</link>, off the stack whose name is <parameter>stackname</parameter> and removes that member from the stack.
+Devuelve la última cosa que entró en la pila, usando <link linkend="command-push">APILA</link>, y que sale fuera de la pila.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "mystack []
-PUSH "mystack 1
-PUSH "mystack 2
-SHOW :mystack</userinput>
-[2 1]</programlisting>
+<programlisting><userinput>HAZ "mi_pila []
+APILA "mi_pila 1
+APILA "mi_pila 2
+APILA "mi_pila 3
+MUESTRA :mi_pila</userinput>
+[3 2 1]
 
-<programlisting><userinput>SHOW POP "mystack</userinput>
-2</programlisting>
+<userinput>MUESTRA DESAPILA "mi_pila</userinput>
+3
 
-<programlisting><userinput>SHOW POP "mystack</userinput>
-1</programlisting>
+<userinput>MUESTRA :mi_pila</userinput>
+[2 1]
+
+<userinput>MUESTRA DESAPILA "mi_pila</userinput>
+2
+
+<userinput>MUESTRA :mi_pila</userinput>
+[1]</programlisting>
+
 </listitem>
 </varlistentry>
 

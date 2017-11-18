@@ -1,39 +1,41 @@
 <section id="command-.setfirst">
-   <title>.SETFIRST</title>
+   <title>.PONPRIMERO</title>
+<indexterm><primary>.PONPRIMERO</primary></indexterm>
 <indexterm><primary>.SETFIRST</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>.SETFIRST</command> <parameter>list</parameter> <parameter>value</parameter></synopsis>
+<synopsis><command>.PONPRIMERO</command> <parameter>lista</parameter> <parameter>valor</parameter>
+<command>.SETFIRST</command> <parameter>lista</parameter> <parameter>valor</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 
 <para>
-Changes the first member of <parameter>list</parameter> to be <parameter>value</parameter>.
+Cambia el valor del primer elemento de <parameter>lista</parameter> por un nuevo <parameter>valor</parameter>.
 </para>
 
 <para>
-The <parameter>list</parameter> input must be list and cannot be empty.
+La entrada <parameter>lista</parameter> debe ser una lista y no puede ser vaciá.
 </para>
 
 <para>
-WARNING: Primitives whose names start with a period are <emphasis>dangerous</emphasis>.
-Their use by non-experts is not recommended.
-The use of .SETFIRST can lead to circular list structures, which causes infinite loops for some primitives; unexpected changes to other data structures that share storage with the list being modified; and the permanent loss of memory if a circular structure is released.
+PRECAUCIÓN: los procedimientos cuyos nombres empiezan con punto (.) son <emphasis>peligrosos</emphasis>.
+No se recomienda su uso a los no expertos.
+El uso de .PONPRIMERO puede llevar a listas con ciclos, bucles infinitos; cambios inesperados de los datos de otras estructuras que comparten los datos modificados; y pérdida permanente de la memoria si se libera una estructura con ciclos.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Examples</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "mylist [1 2 3]
-.SETFIRST :mylist 0
-SHOW :mylist</userinput>
+<programlisting><userinput>HAZ "mi_lista [1 2 3]
+.PONPRIMERO :mi_lista 0
+MUESTRA :mi_lista</userinput>
 [0 2 3]
 </programlisting>
 </listitem>

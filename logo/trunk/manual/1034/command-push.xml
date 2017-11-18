@@ -1,39 +1,45 @@
 <section id="command-push">
-<title>PUSH</title>
+<title>APILA</title>
+<indexterm><primary>APILA</primary></indexterm>
 <indexterm><primary>PUSH</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PUSH</command> <parameter>stackname</parameter> <parameter>value</parameter></synopsis>
+<synopsis><command>APILA</command> <parameter>nombre_de_pila</parameter> <parameter>valor</parameter>
+<command>PUSH</command> <parameter>nombre_de_pila</parameter> <parameter>valor</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<para>Adds a thing to the front of a stack whose name is <parameter>stackname</parameter>.</para>
+<para>
+Añade un <parameter>valor</parameter> al frente de la pila nombrada <parameter>nombre_de_pila</parameter>.
+</para>
 
-<para>This variable must have a list as its value; the initial value should be the empty list.
-New members are added at the front of the list.
-Later, you can <link linkend="command-pop">POP</link> value off the stack.
+<para>
+La variable cuyo nombre es <parameter>nombre_de_pila</parameter> debe tener una lista como su valor; el valor inicial debería ser la lista vaciá.
+Los nuevos miembros se añaden al principio de la lista.
+Después, con <link linkend="command-pop">DESAPILA</link>, puedes sacar los valores de la pila.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>MAKE "mystack []
-PUSH "mystack 1
-PUSH "mystack 2
-SHOW :mystack</userinput>
+    <programlisting><userinput>HAZ "mi_pila []
+APILA "mi_pila 1
+APILA "mi_pila 2
+APILA "mi_pila 3
+MUESTRA :mi_pila</userinput>
+[3 2 1]
+
+<userinput>MUESTRA DESAPILA "mi_pila</userinput>
+3
+
+<userinput>MUESTRA :mi_pila</userinput>
 [2 1]</programlisting>
-
-    <programlisting><userinput>SHOW POP "mystack</userinput>
-2</programlisting>
-
-    <programlisting><userinput>SHOW POP "mystack</userinput>
-1</programlisting>
 </listitem>
 </varlistentry>
 

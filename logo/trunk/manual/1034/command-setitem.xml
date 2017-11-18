@@ -1,32 +1,34 @@
 <section id="command-setitem">
-<title>SETITEM</title>
+<title>PONELEMENTO</title>
+<indexterm><primary>PONELEMENTO</primary></indexterm>
 <indexterm><primary>SETITEM</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETITEM</command> <parameter>index</parameter> <parameter>array</parameter> <parameter>value</parameter></synopsis>
+<synopsis><command>PONELEMENTO</command> <parameter>índice</parameter> <parameter>vector</parameter> <parameter>valor</parameter>
+<command>SETITEM</command> <parameter>índice</parameter> <parameter>vector</parameter> <parameter>valor</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<para>Replaces the <parameter>index</parameter>-th item of an input array with a new value.</para>
+<para>Cambia el valor del elemento número <parameter>índice</parameter> en <parameter>vector</parameter> por un <parameter>valor</parameter>.</para>
 
-<para>SETITEM ensures that the resulting array is not circular.
-That is, <parameter>value</parameter> may not be a list or array that contains the same array.</para>
+<para>PONELEMENTO asegura que el vector resultante no contiene ciclos.
+Es decir, <parameter>valor</parameter> no puede ser una lista o un vector que contiene <parameter>vector</parameter>.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>MAKE "myarray (ARRAY 3 0)
-SETITEM 2 :myarray 1
-SETITEM 1 :myarray [2]
-SETITEM 0 :myarray 3
-SHOW :myarray</userinput>
+<programlisting><userinput>HAZ "mi_vector (VECTOR 3 0)
+PONELEMENTO 2 :mi_vector 1
+PONELEMENTO 1 :mi_vector [2]
+PONELEMENTO 0 :mi_vector 3
+MUESTRA :mi_vector</userinput>
 {3 [2] 1}</programlisting>
 
 </listitem>
@@ -35,4 +37,3 @@ SHOW :myarray</userinput>
 </variablelist>
 
 </section>
-

@@ -1,39 +1,49 @@
 <section id="command-dequeue">
-    <title>DEQUEUE</title>
+<title>DESCOLA</title>
+<indexterm><primary>DESCOLA</primary></indexterm>
 <indexterm><primary>DEQUEUE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>DEQUEUE</command> <parameter>queuename</parameter></synopsis>
+<synopsis><command>DESCOLA</command> <parameter>nombre_de_cola</parameter>
+<command>DEQUEUE</command> <parameter>nombre_de_cola</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-    <para>Outputs the least recent (oldest) thing that was enqueued onto a queue with <link linkend="command-queue">QUEUE</link>.
-This value is removed from the queue.</para>
+<para>
+Devuelve el objeto que entró primero en la cola, usando <link linkend="command-queue">ENCOLA</link>, y que saldrá de la cola.
+</para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>MAKE "myqueue []
-QUEUE "myqueue 1
-QUEUE "myqueue 2
-SHOW :myqueue</userinput>
-[1 2]</programlisting>
+    <programlisting><userinput>HAZ "mi_cola []
+ENCOLA "mi_cola 1
+ENCOLA "mi_cola 2
+ENCOLA "mi_cola 3
+MUESTRA :mi_cola</userinput>
+[1 2 3]
 
-    <programlisting><userinput>SHOW DEQUEUE "myqueue</userinput>
-1</programlisting>
+<userinput>MUESTRA DESCOLA "mi_cola</userinput>
+1
 
-    <programlisting><userinput>SHOW DEQUEUE "myqueue</userinput>
-2</programlisting>
+<userinput>MUESTRA :mi_cola</userinput>
+[2 3]
+
+<userinput>MUESTRA DESCOLA "mi_cola</userinput>
+2
+
+<userinput>MUESTRA :mi_cola</userinput>
+[3]</programlisting>
+
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

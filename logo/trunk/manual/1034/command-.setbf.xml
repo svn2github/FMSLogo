@@ -1,38 +1,41 @@
 <section id="command-.setbf">
-   <title>.SETBF</title>
+   <title>.PONMP</title>
+<indexterm><primary>.PONMP</primary></indexterm>
 <indexterm><primary>.SETBF</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>.SETBF</command> <parameter>list</parameter> <parameter>value</parameter></synopsis>
+<synopsis><command>.PONMP</command> <parameter>lista</parameter> <parameter>valor</parameter>
+<command>.SETBF</command> <parameter>lista</parameter> <parameter>valor</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Changes the BUTFIRST of the <parameter>list</parameter> input to a given value.
+Cambia el valor de todos los elementos de una lista, menos el primero, por un nuevo <parameter>valor</parameter>.
 </para>
 
 <para>
-The <parameter>list</parameter> input must be a list and cannot be empty.
+La entrada <parameter>lista</parameter> debe ser una lista y no puede ser vaciá.
 </para>
 
 <para>
-WARNING: Primitives whose names start with a period are <emphasis>dangerous</emphasis>.
-Their use by non-experts is not recommended.
-The use of .SETBF can lead to circular list structures, which gets some primitives into infinite loops; unexpected changes to other data structures that share storage with the list being modified; crashes and core dumps if the <link linkend="command-butfirst">BUTFIRST</link> of a list is not itself a list; and the permanent loss of memory if a circular structure is released.
+PRECAUCIÓN: los procedimientos cuyos nombres empiezan con punto (.) son <emphasis>peligrosos</emphasis>.
+No se recomienda su uso a los no expertos.
+El uso de .PONMP puede llevar a listas con ciclos, bucles infinitos; cambios inesperados de los datos de otras estructuras que comparten los datos modificados; errores fatales si <parameter>valor</parameter> no es, si misma, una lista; y pérdida permanente de la memoria si se libera una estructura con ciclos.
 </para>
+
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "mylist [1 2 3]
-.SETBF :mylist [a b]
-SHOW :mylist</userinput>
+<programlisting><userinput>HAZ "mi_lista [1 2 3]
+.PONMP :mi_lista [a b]
+MUESTRA :mi_lista</userinput>
 [1 a b]</programlisting>
 </listitem>
 </varlistentry>

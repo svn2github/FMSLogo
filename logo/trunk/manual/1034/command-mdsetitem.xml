@@ -1,45 +1,47 @@
 <section id="command-mdsetitem">
-<title>MDSETITEM</title>
+<title>PONELEMENTOMD</title>
+<indexterm><primary>PONELEMENTOMD</primary></indexterm>
 <indexterm><primary>MDSETITEM</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>MDSETITEM</command> <parameter>indexlist</parameter> <parameter>mdarray</parameter> <parameter>value</parameter></synopsis>
+<synopsis><command>PONELEMENTOMD</command> <parameter>índicelista</parameter> <parameter>vectormd</parameter> <parameter>valor</parameter>
+<command>MDSETITEM</command> <parameter>índicelista</parameter> <parameter>vectormd</parameter> <parameter>valor</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Replaces an item in a multi-dimensional array with a new value.
-The item to replace is selected by a list of indices.
+Cambia el valor de un elemento de un vector multi-dimensional (<parameter>vectormd</parameter>), por un nuevo <parameter>valor</parameter>.
+El elemento se selecciona con el argumento <parameter>índicelista</parameter>, una lista de enteros que sirve como indices.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "myarray (MDARRAY [2 3] 0)
-MDSETITEM [0 0] :myarray 1
-MDSETITEM [0 1] :myarray 2
-MDSETITEM [0 2] :myarray 3
-MDSETITEM [1 0] :myarray 4
-MDSETITEM [1 1] :myarray 5
-MDSETITEM [1 2] :myarray 6
-SHOW :myarray</userinput>
+<programlisting><userinput>HAZ "mi_vector (VECTORMD [2 3] 0)
+PONELEMENTOMD [0 0] :mi_vector 1
+PONELEMENTOMD [0 1] :mi_vector 2
+PONELEMENTOMD [0 2] :mi_vector 3
+PONELEMENTOMD [1 0] :mi_vector 4
+PONELEMENTOMD [1 1] :mi_vector 5
+PONELEMENTOMD [1 2] :mi_vector 6
+MUESTRA :mi_vector</userinput>
 {{1 2 3} {4 5 6}}
 </programlisting>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>See Also</term>
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-mdarray">MDARRAY</link></member>
-<member><link linkend="command-mditem">MDITEM</link></member>
-<member><link linkend="command-setitem">SETITEM</link></member>
+<member><link linkend="command-mdarray">VECTORMD</link></member>
+<member><link linkend="command-mditem">ELEMENTOMD</link></member>
+<member><link linkend="command-setitem">PONELEMENTO</link></member>
 </simplelist></listitem>
 </varlistentry>
 

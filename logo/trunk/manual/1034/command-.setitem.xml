@@ -1,40 +1,42 @@
 <section id="command-.setitem">
-<title>.SETITEM</title>
+<title>.PONELEMENTO</title>
+<indexterm><primary>.PONELEMENTO</primary></indexterm>
 <indexterm><primary>.SETITEM</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>.SETITEM</command> <parameter>index</parameter> <parameter>array</parameter> <parameter>value</parameter></synopsis>
+<synopsis><command>.PONELEMENTO</command> <parameter>índice</parameter> <parameter>vector</parameter> <parameter>valor</parameter>
+<command>.SETITEM</command> <parameter>índice</parameter> <parameter>vector</parameter> <parameter>valor</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 
 <para>
-Change the <parameter>index</parameter>th item of array to be <parameter>value</parameter>.
-This similar to <link linkend="command-setitem">SETITEM</link>, except that it does not check for circularity.
+Cambia el elemento número <parameter>índice</parameter> de una <parameter>vector</parameter> por un nuevo <parameter>valor</parameter>.
+Funciona similar a <link linkend="command-setitem">PONELEMENTO</link>, excepto que .PONELEMENTO no previene estructuras con ciclos.
 </para>
 
 <para>
-WARNING: Primitives whose names start with a period are <emphasis>dangerous</emphasis>.
-Their use by non-experts is not recommended.
-The use of .SETITEM can lead to circular array structures, which can lead to very unintuitive behavior.
+PRECAUCIÓN: los procedimientos cuyos nombres empiezan con punto (.) son <emphasis>peligrosos</emphasis>.
+No se recomienda su uso a los no expertos.
+El uso de .PONELEMENTO puede llevar a vectores con cicloso, que, en torno, llevas a comportamiento poco intuitivo.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>MAKE "myarray (ARRAY 3 0)
-.SETITEM 2 :myarray 1
-.SETITEM 1 :myarray 2
-.SETITEM 0 :myarray 3
-SHOW :myarray</userinput>
+<programlisting><userinput>HAZ "mi_vector (VECTOR 3 0)
+.PONELEMENTO 2 :mi_vector 1
+.PONELEMENTO 1 :mi_vector 2
+.PONELEMENTO 0 :mi_vector 3
+MUESTRA :mi_vector</userinput>
 {3 2 1}</programlisting>
 
 </listitem>

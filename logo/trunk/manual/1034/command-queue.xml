@@ -1,44 +1,48 @@
 <section id="command-queue">
-<title>QUEUE</title>
+<title>ENCOLA</title>
+<indexterm><primary>ENCOLA</primary></indexterm>
 <indexterm><primary>QUEUE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>QUEUE</command> <parameter>queuename</parameter> <parameter>value</parameter></synopsis>
+<synopsis><command>ENCOLA</command> <parameter>nombre_de_cola</parameter> <parameter>valor</parameter>
+<command>QUEUE</command> <parameter>nombre_de_cola</parameter> <parameter>valor</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<para>Adds a thing to the back of a queue whose name is <parameter>queuename</parameter>.</para>
+<para>
+Añade un <parameter>valor</parameter> al detrás de la cola nombrada <parameter>nombre_de_cola</parameter>.
+</para>
 
-<para>This variable must have a list as its value; the initial value should be the empty list.
-New members are added at the back of the list.
-Later, you can <link linkend="command-dequeue">DEQUEUE</link> value from the queue.
+<para>
+La variable cuyo nombre es <parameter>nombre_de_cola</parameter> debe tener una lista como su valor; el valor inicial debería ser la lista vaciá.
+Los nuevos miembros se añaden al final de la lista.
+Después, con <link linkend="command-pop">DESCOLA</link>, puedes sacar los valores de la cola.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>MAKE "myqueue []
-QUEUE "myqueue 1
-QUEUE "myqueue 2
-SHOW :myqueue</userinput>
-[1 2]</programlisting>
+    <programlisting><userinput>HAZ "mi_cola []
+ENCOLA "mi_cola 1
+ENCOLA "mi_cola 2
+ENCOLA "mi_cola 3
+MUESTRA :mi_cola</userinput>
+[1 2 3]
 
-    <programlisting><userinput>SHOW DEQUEUE "myqueue</userinput>
-1</programlisting>
+<userinput>MUESTRA DESCOLA "mi_cola</userinput>
+1
 
-    <programlisting><userinput>SHOW DEQUEUE "myqueue</userinput>
-2</programlisting>
+<userinput>MUESTRA :mi_cola</userinput>
+[2 3]</programlisting>
 
 </listitem>
-
-
 </varlistentry>
-</variablelist>
 
+</variablelist>
 </section>
