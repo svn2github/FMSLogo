@@ -26,19 +26,18 @@ Later, you can <link linkend="command-dequeue">DEQUEUE</link> value from the que
     <programlisting><userinput>MAKE "myqueue []
 QUEUE "myqueue 1
 QUEUE "myqueue 2
+QUEUE "myqueue 3
 SHOW :myqueue</userinput>
-[1 2]</programlisting>
+[1 2 3]
 
-    <programlisting><userinput>SHOW DEQUEUE "myqueue</userinput>
-1</programlisting>
+<userinput>SHOW DEQUEUE "myqueue</userinput>
+1
 
-    <programlisting><userinput>SHOW DEQUEUE "myqueue</userinput>
-2</programlisting>
+<userinput>SHOW :myqueue</userinput>
+[2 3]</programlisting>
 
 </listitem>
-
-
 </varlistentry>
-</variablelist>
 
+</variablelist>
 </section>

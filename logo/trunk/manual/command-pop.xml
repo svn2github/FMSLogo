@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the most recent thing that was pushed on, using <link linkend="command-push">PUSH</link>, off the stack whose name is <parameter>stackname</parameter> and removes that member from the stack.
+Outputs the most recent thing that was pushed on the stack named <parameter>stackname</parameter> (using <link linkend="command-push">PUSH</link>) and removes that member from the stack.
 </para>
 </listitem>
 </varlistentry>
@@ -23,14 +23,22 @@ Outputs the most recent thing that was pushed on, using <link linkend="command-p
 <programlisting><userinput>MAKE "mystack []
 PUSH "mystack 1
 PUSH "mystack 2
+PUSH "mystack 3
 SHOW :mystack</userinput>
-[2 1]</programlisting>
+[3 2 1]
 
-<programlisting><userinput>SHOW POP "mystack</userinput>
-2</programlisting>
+<userinput>SHOW POP "mystack</userinput>
+3
 
-<programlisting><userinput>SHOW POP "mystack</userinput>
-1</programlisting>
+<userinput>SHOW :mystack</userinput>
+[2 1]
+
+<userinput>SHOW POP "mystack</userinput>
+2
+
+<userinput>SHOW :mystack</userinput>
+[1]</programlisting>
+
 </listitem>
 </varlistentry>
 

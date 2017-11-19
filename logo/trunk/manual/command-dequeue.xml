@@ -23,17 +23,24 @@ This value is removed from the queue.</para>
     <programlisting><userinput>MAKE "myqueue []
 QUEUE "myqueue 1
 QUEUE "myqueue 2
+QUEUE "myqueue 3
 SHOW :myqueue</userinput>
-[1 2]</programlisting>
+[1 2 3]
 
-    <programlisting><userinput>SHOW DEQUEUE "myqueue</userinput>
-1</programlisting>
+<userinput>SHOW DEQUEUE "myqueue</userinput>
+1
 
-    <programlisting><userinput>SHOW DEQUEUE "myqueue</userinput>
-2</programlisting>
+<userinput>SHOW :myqueue</userinput>
+[2 3]
+
+<userinput>SHOW DEQUEUE "myqueue</userinput>
+2
+
+<userinput>SHOW :myqueue</userinput>
+[3]</programlisting>
+
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
