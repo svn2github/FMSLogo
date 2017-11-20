@@ -3,7 +3,7 @@
 
 // WXSTRING - converts from const char * to wxString
 #if wxUSE_UNICODE
-#define WXSTRING(STRING) wxString(STRING, wxConvLibc)
+#define WXSTRING(STRING) wxString(STRING, wxConvISO8859_1)
 #else
 #define WXSTRING(STRING) wxString(STRING)
 #endif
