@@ -55,8 +55,9 @@ true</programlisting>
 <programlisting><userinput>SHOW NOTEQUALP {1 2 3} {1 2 3}</userinput>
 true</programlisting>
 
-<programlisting><userinput>MAKE "myarray {1 2 3}
-SHOW NOTEQUALP :myarray :myarray</userinput>
+<programlisting><userinput>MAKE "myarray1 {1 2 3}
+MAKE "myarray2 :myarray1
+SHOW NOTEQUALP :myarray1 :myarray2</userinput>
 false</programlisting>
 </listitem>
 </varlistentry>
