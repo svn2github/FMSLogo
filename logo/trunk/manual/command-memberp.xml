@@ -40,8 +40,14 @@ true</programlisting>
 <programlisting><userinput>SHOW MEMBERP 4 [1 2 3]</userinput>
 false</programlisting>
 
+<programlisting><userinput>SHOW MEMBERP "b "abc</userinput>
+true</programlisting>
+
+<programlisting><userinput>SHOW MEMBERP "bc "abc</userinput>
+false</programlisting>
+
 </listitem>
 </varlistentry>
-</variablelist>
 
+</variablelist>
 </section>
