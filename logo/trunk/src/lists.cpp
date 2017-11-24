@@ -596,7 +596,7 @@ NODE *memberp_helper(NODE *args, bool notp, bool substr)
     NODE * obj2 = cadr(args);
     if (is_list(obj2))
     {
-        if (substr) 
+        if (substr)
         {
             return Falsex.GetNode();
         }
@@ -608,7 +608,7 @@ NODE *memberp_helper(NODE *args, bool notp, bool substr)
                 return notp ? obj2 : Truex.GetNode();
             }
             obj2 = cdr(obj2);
-            if (check_throwing) 
+            if (check_throwing)
             {
                 break;
             }
@@ -632,7 +632,7 @@ NODE *memberp_helper(NODE *args, bool notp, bool substr)
 
         while (--len >= 0 && NOT_THROWING)
         {
-            if (equalp_help(obj1, *data++, caseig)) 
+            if (equalp_help(obj1, *data++, caseig))
             {
                 return Truex.GetNode();
             }
@@ -652,12 +652,11 @@ NODE *memberp_helper(NODE *args, bool notp, bool substr)
         setcar(args, cnv_node_to_strnode(obj1));
         obj1 = car(args);
 
-        if (obj1 != Unbound && 
+        if (obj1 != Unbound &&
             obj2 != Unbound &&
             getstrlen(obj1) <= getstrlen(obj2) &&
             (substr || (getstrlen(obj1) == 1)))
         {
-
             // how many different places are there to compare obj1 in obj2
             int leng = getstrlen(obj2) - getstrlen(obj1);
 
