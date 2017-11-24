@@ -21,7 +21,7 @@ END
 
 TO EQUALPTEST.SMOKETEST
 
-  LOCALMAKE "CASEIGNOREDP LOCALETRUE
+  LOCAL "CASEIGNOREDP ; default CASEIGNOREDP
 
   LOCAL "myarray
   FAILIFNOTTRUE [EQUALP 1    1                      ]
@@ -82,19 +82,46 @@ TO EQUALPTEST.SMOKETEST
   FAILIFNOTFALSE [ EQUALP    0     -1e-16 ]
 
   ; now test case-sensitive comparisons
-  LOCAL "CASEIGNOREDP
   TRACEINSTRUCTION [MAKE "CASEIGNOREDP LOCALEFALSE]
+
+  FAILIFNOTTRUE  [ EQUALP "HELLO "HELLO  ]
+  FAILIFNOTTRUE  [ EQUALP "hello "hello  ]
+  FAILIFNOTFALSE [ EQUALP "HELLO "hello  ]
+  FAILIFNOTFALSE [ EQUALP "hello "HELLO  ]
+  FAILIFNOTFALSE [ EQUALP "hello "hellox ]
 
   ; Even "true and "false obey the rules of caseignoredp
   FAILIFNOTTRUE  [ EQUALP "true  "true    ]
   FAILIFNOTTRUE  [ EQUALP "false "false   ]
   FAILIFNOTFALSE [ EQUALP "true  "TRUE    ]
   FAILIFNOTFALSE [ EQUALP "false "FALSE   ]
+  FAILIFNOTFALSE [ EQUALP "true  "trueish ]
 
-  FAILIFNOTTRUE  [ EQUALP "HELLO "HELLO ]
-  FAILIFNOTTRUE  [ EQUALP "hello "hello ]
-  FAILIFNOTFALSE [ EQUALP "HELLO "hello ]
-  FAILIFNOTFALSE [ EQUALP "hello "HELLO ]
+  ; Now test explicitly case-insensitive comparisons
+  TRACEINSTRUCTION [MAKE "CASEIGNOREDP LOCALETRUE]
+
+  FAILIFNOTTRUE  [ EQUALP "HELLO "HELLO  ]
+  FAILIFNOTTRUE  [ EQUALP "hello "hello  ]
+  FAILIFNOTTRUE  [ EQUALP "HELLO "hello  ]
+  FAILIFNOTTRUE  [ EQUALP "hello "HELLO  ]
+  FAILIFNOTFALSE [ EQUALP "hello "hellox ]
+
+  ; Even "true and "false obey the rules of caseignoredp
+  FAILIFNOTTRUE  [ EQUALP "true  "true    ]
+  FAILIFNOTTRUE  [ EQUALP "false "false   ]
+  FAILIFNOTTRUE  [ EQUALP "true  "TRUE    ]
+  FAILIFNOTTRUE  [ EQUALP "false "FALSE   ]
+  FAILIFNOTFALSE [ EQUALP "true  "trueish ]
+
+  ; Now test a non-boolean CASEIGNOREDP value.
+  ; This should behave as if it were FALSE
+  TRACEINSTRUCTION [MAKE "CASEIGNOREDP 1]
+
+  FAILIFNOTTRUE  [ EQUALP "HELLO "HELLO  ]
+  FAILIFNOTTRUE  [ EQUALP "hello "hello  ]
+  FAILIFNOTFALSE [ EQUALP "HELLO "hello  ]
+  FAILIFNOTFALSE [ EQUALP "hello "HELLO  ]
+  FAILIFNOTFALSE [ EQUALP "hello "hellox ]
 
 END
 
@@ -172,7 +199,7 @@ END
 
 TO NOTEQUALPTEST.SMOKETEST
 
-  LOCALMAKE "CASEIGNOREDP LOCALETRUE
+  LOCAL "CASEIGNOREDP ; default behavior
 
   LOCAL "myarray
   FAILIFNOTFALSE [NOTEQUALP 1    1                      ]
@@ -227,15 +254,33 @@ TO NOTEQUALPTEST.SMOKETEST
   FAILIFNOTFALSE [ [[1 2 3] [1]] <> [[1 2 3] [1]] ]
 
 
-  ; now test case-sensitive comparisons
-  LOCAL "CASEIGNOREDP
+  ; Now test explicitly case-sensitive comparisons
   TRACEINSTRUCTION [MAKE "CASEIGNOREDP LOCALEFALSE]
 
   ; Even "true and "false obey the rules of caseignoredp
-  FAILIFNOTFALSE [ NOTEQUALP "true  "true    ]
-  FAILIFNOTFALSE [ NOTEQUALP "false "false   ]
-  FAILIFNOTTRUE  [ NOTEQUALP "true  "TRUE    ]
-  FAILIFNOTTRUE  [ NOTEQUALP "false "FALSE   ]
+  FAILIFNOTFALSE [ NOTEQUALP "true  "true     ]
+  FAILIFNOTFALSE [ NOTEQUALP "false "false    ]
+  FAILIFNOTTRUE  [ NOTEQUALP "true  "TRUE     ]
+  FAILIFNOTTRUE  [ NOTEQUALP "false "FALSE    ]
+  FAILIFNOTTRUE  [ NOTEQUALP "false "falseish ]
+
+  FAILIFNOTFALSE [ NOTEQUALP "HELLO "HELLO ]
+  FAILIFNOTFALSE [ NOTEQUALP "hello "hello ]
+  FAILIFNOTTRUE  [ NOTEQUALP "HELLO "hello ]
+  FAILIFNOTTRUE  [ NOTEQUALP "hello "HELLO ]
+
+  ; Now test explicitly case-insensitive comparisons
+  TRACEINSTRUCTION [MAKE "CASEIGNOREDP LOCALETRUE]
+
+  FAILIFNOTFALSE [ NOTEQUALP "HELLO "HELLO  ]
+  FAILIFNOTFALSE [ NOTEQUALP "hello "hello  ]
+  FAILIFNOTFALSE [ NOTEQUALP "HELLO "hello  ]
+  FAILIFNOTFALSE [ NOTEQUALP "hello "HELLO  ]
+  FAILIFNOTTRUE  [ NOTEQUALP "HELLO "HELLOx ]
+
+  ; Now test a non-boolean CASEIGNOREDP setting.
+  ; This should behave the same as FALSE
+  TRACEINSTRUCTION [MAKE "CASEIGNOREDP 1]
 
   FAILIFNOTFALSE [ NOTEQUALP "HELLO "HELLO ]
   FAILIFNOTFALSE [ NOTEQUALP "hello "hello ]
