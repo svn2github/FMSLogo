@@ -28,7 +28,9 @@ MAKE "y 1
 SHOW .EQ :x :y</userinput>
 false</programlisting>
 
-<programlisting><userinput>SHOW .EQ :x :x</userinput>
+<programlisting><userinput>MAKE "x 1
+MAKE "y :x
+SHOW .EQ :x :y</userinput>
 true</programlisting>
 </listitem>
 </varlistentry>
