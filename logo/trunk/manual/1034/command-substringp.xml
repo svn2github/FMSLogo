@@ -1,41 +1,46 @@
 <section id="command-substringp">
-<title>SUBSTRINGP</title>
+<title>CONTIENE?</title>
+<indexterm><primary>CONTIENE?</primary></indexterm>
 <indexterm><primary>SUBSTRINGP</primary></indexterm>
+<indexterm><primary>SUBSTRING?</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SUBSTRINGP</command> <parameter>thing1</parameter> <parameter>thing2</parameter>
-<command>SUBSTRING?</command> <parameter>thing1</parameter> <parameter>thing2</parameter></synopsis>
+<synopsis><command>CONTIENE?</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter>
+<command>SUBSTRINGP</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter>
+<command>SUBSTRING?</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-If <parameter>thing1</parameter> or <parameter>thing2</parameter> is a list or an array, outputs FALSE.
+Si <parameter>cosa2</parameter> es una palabra, devuelve CIERTO si <parameter>cosa1</parameter> y una parte de <parameter>cosa2</parameter> son <link linkend="command-equalp">IGUALES?</link>, FALSO si no lo son.
 </para>
 
 <para>
-If <parameter>thing2</parameter> is a word, outputs TRUE if <parameter>thing1</parameter> is <link linkend="command-equalp">EQUALP</link> to a substring of <parameter>thing2</parameter>, FALSE otherwise.
+Si <parameter>cosa1</parameter> o <parameter>cosa2</parameter> es una lista o un vector, devuelve FALSO.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW SUBSTRINGP "bc "abc</userinput>
-true</programlisting>
+<programlisting><userinput>MUESTRA CONTIENE? "bc "abc</userinput>
+cierto</programlisting>
 
-<programlisting><userinput>SHOW SUBSTRINGP "bd "abc</userinput>
-false</programlisting>
+<programlisting><userinput>MUESTRA CONTIENE? "bd "abc</userinput>
+falso</programlisting>
+
+<programlisting><userinput>MUESTRA "a [a b c]</userinput>
+falso</programlisting>
 
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

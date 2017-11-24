@@ -1,38 +1,40 @@
 <section id="command-wordp">
-<title>WORDP</title>
+<title>PALABRA?</title>
+<indexterm><primary>PALABRA?</primary></indexterm>
+<indexterm><primary>WORD?</primary></indexterm>
 <indexterm><primary>WORDP</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>WORDP</command> <parameter>thing</parameter>
-<command>WORD?</command> <parameter>thing</parameter></synopsis>
+<synopsis><command>PALABRA?</command> <parameter>cosa</parameter>
+<command>WORDP</command> <parameter>cosa</parameter>
+<command>WORD?</command> <parameter>cosa</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs TRUE if the input is a word, FALSE otherwise.
+Devuelve CIERTO si la entrada <parameter>cosa</parameter> es una palabra, FALSO si no lo es.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW WORDP "Hello</userinput>
-true</programlisting>
+<programlisting><userinput>MUESTRA PALABRA? "Hola</userinput>
+cierto</programlisting>
 
-<programlisting><userinput>SHOW WORDP [Hello]</userinput>
+<programlisting><userinput>MUESTRA PALABRA? [Hola]</userinput>
 false</programlisting>
 
-<programlisting><userinput>SHOW WORDP {Hello}</userinput>
+<programlisting><userinput>MUESTRA PALABRA? {Hola}</userinput>
 false</programlisting>
 
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

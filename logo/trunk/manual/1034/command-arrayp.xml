@@ -1,38 +1,40 @@
 <section id="command-arrayp">
-<title>ARRAYP</title>
+<title>VECTOR?</title>
+<indexterm><primary>VECTOR?</primary></indexterm>
 <indexterm><primary>ARRAYP</primary></indexterm>
+<indexterm><primary>ARRAY?</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>ARRAYP</command> <parameter>thing</parameter>
-<command>ARRAY?</command> <parameter>thing</parameter></synopsis>
+<synopsis><command>VECTOR?</command> <parameter>cosa</parameter>
+<command>ARRAYP</command> <parameter>cosa</parameter>
+<command>ARRAY?</command> <parameter>cosa</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs TRUE if the input is an array, FALSE otherwise.
+Devuelve CIERTO si la entrada <parameter>cosa</parameter> es un vector, FALSO si no lo es.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW ARRAYP "Hello</userinput>
-false</programlisting>
+<programlisting><userinput>MUESTRA VECTOR? "Hola</userinput>
+falso</programlisting>
 
-<programlisting><userinput>SHOW ARRAYP [Hello]</userinput>
-false</programlisting>
+<programlisting><userinput>MUESTRA VECTOR? [Hola]</userinput>
+falso</programlisting>
 
-<programlisting><userinput>SHOW ARRAYP {Hello}</userinput>
-true</programlisting>
+<programlisting><userinput>MUESTRA VECTOR? {Hola}</userinput>
+cierto</programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

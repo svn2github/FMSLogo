@@ -1,39 +1,41 @@
 <section id="command-backslashedp">
-<title>BACKSLASHEDP</title>
+<title>TIENEBARRA?</title>
 <indexterm><primary>BACKSLASHEDP</primary></indexterm>
+<indexterm><primary>BACKSLASHED?</primary></indexterm>
 
 <variablelist>
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>BACKSLASHEDP</command> <parameter>character</parameter>
-<command>BACKSLASHED?</command> <parameter>character</parameter></synopsis>
+<synopsis><command>TIENEBARRA?</command> <parameter>carácter</parameter>
+<command>BACKSLASHEDP</command> <parameter>carácter</parameter>
+<command>BACKSLASHED?</command> <parameter>carácter</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs TRUE if <parameter>character</parameter> was originally entered with a backslash (<userinput>\</userinput>) before it or between vertical bars (<userinput>|</userinput>) to prevent its usual semantic meaning.  Outputs FALSE, otherwise.
+Devuelve CIERTO si <parameter>carácter</parameter> fue entrado inmediatamente después de una barra inversa (<userinput>\</userinput>) o entre barras verticales (<userinput>|</userinput>) para suprimir su significado usual.
+Devuelve FALSO si no lo fue.
 </para>
 
 <para>
-That is, it outputs TRUE if only if <parameter>character</parameter> is a backslashed space, tab, newline, or one of <userinput>()[]+-*/=&lt;>":;\~?</userinput>.
+Es decir, TIENEBARRA? devuelve CIERTO si (y solamente si) <parameter>carácter</parameter> es un espacio, un carácter tab, una nueva línea, o uno de los siguientes <userinput>()[]+-*/=&lt;>":;\~?</userinput>.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW BACKSLASHEDP "a</userinput>
-false</programlisting>
+<programlisting><userinput>MUESTRA TIENEBARRA? "a</userinput>
+falso</programlisting>
 
-<programlisting><userinput>SHOW BACKSLASHEDP "|(|</userinput>
-true</programlisting>
+<programlisting><userinput>MUESTRA TIENEBARRA? "|(|</userinput>
+cierto</programlisting>
 
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

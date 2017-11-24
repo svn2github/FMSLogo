@@ -1,40 +1,42 @@
 <section id="command-listp">
-<title>LISTP</title>
+<title>LISTA?</title>
+<indexterm><primary>LISTA?</primary></indexterm>
 <indexterm><primary>LISTP</primary></indexterm>
+<indexterm><primary>LIST?</primary></indexterm>
 
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>LISTP</command> <parameter>thing</parameter>
-<command>LIST?</command> <parameter>thing</parameter></synopsis>
+<synopsis><command>LISTA?</command> <parameter>cosa</parameter>
+<command>LISTP</command> <parameter>cosa</parameter>
+<command>LIST?</command> <parameter>cosa</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs TRUE if the input is a list, FALSE otherwise.
+Devuelve CIERTO si la entrada <parameter>cosa</parameter> es una lista, FALSO si no lo es.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW LISTP "Hello</userinput>
-false</programlisting>
+<programlisting><userinput>MUESTRA LISTA? "Hola</userinput>
+falso</programlisting>
 
-<programlisting><userinput>SHOW LISTP [Hello]</userinput>
-true</programlisting>
+<programlisting><userinput>MUESTRA LISTA? [Hola]</userinput>
+cierto</programlisting>
 
-<programlisting><userinput>SHOW LISTP {Hello}</userinput>
-false</programlisting>
+<programlisting><userinput>MUESTRA LISTA? {Hola}</userinput>
+falso</programlisting>
 
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

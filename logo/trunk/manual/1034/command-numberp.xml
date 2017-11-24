@@ -1,33 +1,38 @@
 <section id="command-numberp">
-<title>NUMBERP</title>
+<title>NUMERO?</title>
+<indexterm><primary>NUMERO?</primary></indexterm>
 <indexterm><primary>NUMBERP</primary></indexterm>
+<indexterm><primary>NUMBER?</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>NUMBERP</command> <parameter>thing</parameter>
-<command>NUMBER?</command> <parameter>thing</parameter></synopsis>
+<synopsis><command>NUMERO?</command> <parameter>cosa</parameter>
+<command>NUMBERP</command> <parameter>cosa</parameter>
+<command>NUMBER?</command> <parameter>cosa</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<para>Outputs TRUE if <parameter>thing</parameter> is a number, FALSE otherwise.</para>
+<para>
+Devuelve CIERTO si la entrada <parameter>cosa</parameter> es un numero, FALSO si no lo es.
+</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW NUMBERP 1</userinput>
-true</programlisting>
+<programlisting><userinput>MUESTRA NUMERO? 1</userinput>
+cierto</programlisting>
 
-<programlisting><userinput>SHOW NUMBERP "1</userinput>
-true</programlisting>
+<programlisting><userinput>MUESTRA NUMERO? "1</userinput>
+cierto</programlisting>
 
-<programlisting><userinput>SHOW NUMBERP [1]</userinput>
-false</programlisting>
+<programlisting><userinput>MUESTRA NUMERO? [1]</userinput>
+falso</programlisting>
 </listitem>
 </varlistentry>
 

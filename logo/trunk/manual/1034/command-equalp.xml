@@ -1,65 +1,68 @@
 <section id="command-equalp">
-<title>EQUALP</title>
+<title>IGUALES?</title>
+<indexterm><primary>IGUALES?</primary></indexterm>
 <indexterm><primary>EQUALP</primary></indexterm>
+<indexterm><primary>EQUAL?</primary></indexterm>
 <indexterm><primary>=</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>EQUALP</command> <parameter>thing1</parameter> <parameter>thing2</parameter>
-<command>EQUAL?</command> <parameter>thing1</parameter> <parameter>thing2</parameter>
-<parameter>thing1</parameter> <command>=</command> <parameter>thing2</parameter></synopsis>
+<synopsis><command>IGUALES?</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter>
+<command>EQUALP</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter>
+<command>EQUAL?</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter>
+<parameter>cosa1</parameter> <command>=</command> <parameter>cosa2</parameter></synopsis>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs TRUE if both inputs are equal, FALSE otherwise.
+Devuelve CIERTO si las entradas <parameter>cosa1</parameter> y <parameter>cosa2</parameter> son iguales, FALSO si no lo son.
 </para>
 
 <para>
-Two numbers are equal if they have the same numeric value.
-Two non-numeric words are equal if they contain the same characters in the same order.
-If there is a variable named <link linkend="command-caseignoredp">CASEIGNOREDP</link> whose value is TRUE, then an upper case letter is considered the same as the corresponding lower case letter.
-(This is the case by default.)
-Two lists are equal if their members are equal.
-An array is only equal to itself; two separately created arrays are never equal even if all of their items are equal.
-(It is important to be able to know if two expressions have the same array as their value because arrays are mutable.
-For example, if two variables have the same array as their values, then running <link linkend="command-setitem">SETITEM</link> on one of them would change both of them.)</para>
+Dos números son iguales si tienen el mismo valor numérico.
+Dos palabras son iguales si contienen los mismos caracteres en el mismo orden.
+Por defecto, un carácter mayúsculo es igual al carácter minúsculo correspondiente, pero si hay una variable que se llama <link linkend="command-caseignoredp">IGNORAMAYUSCULAS?</link> y si su valor no es CIERTO, entonces un carácter mayúsculo no es considerado igual al carácter correspondiente en minúsculo.
+Dos listas son iguales si sus miembros son iguales.
+Un vector sólo es igual a sí mismo; dos vectores creados separadamente nunca son iguales, aunque sus elementos sean iguales.
+(Es importante poder saber si dos variables refieren al mismo vector porque los vectores son mutable.
+Por ejemplo, si dos variables tienen el mismo vector como sus valores, entonces ejecutando <link linkend="command-setitem">PONELEMENTO</link> con uno de ellas cambiaría las dos.)
+</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW 1=1</userinput>
-true</programlisting>
+<programlisting><userinput>MUESTRA 1=1</userinput>
+cierto</programlisting>
 
-<programlisting><userinput>SHOW EQUALP 1 1</userinput>
-true</programlisting>
+<programlisting><userinput>MUESTRA IGUALES? 1 1</userinput>
+cierto</programlisting>
 
-<programlisting><userinput>SHOW EQUALP 1 2</userinput>
-false</programlisting>
+<programlisting><userinput>MUESTRA IGUALES? 1 2</userinput>
+falso</programlisting>
 
-<programlisting><userinput>SHOW EQUALP [1 2 3] [1 2 3]</userinput>
-true</programlisting>
+<programlisting><userinput>MUESTRA IGUALES? [1 2 3] [1 2 3]</userinput>
+cierto</programlisting>
 
-<programlisting><userinput>SHOW EQUALP [1 2 3] [3 2 1]</userinput>
-false</programlisting>
+<programlisting><userinput>MUESTRA IGUALES? [1 2 3] [3 2 1]</userinput>
+falso</programlisting>
 
-<programlisting><userinput>SHOW EQUALP {1 2 3} {1 2 3}</userinput>
-false</programlisting>
+<programlisting><userinput>MUESTRA IGUALES? {1 2 3} {1 2 3}</userinput>
+falso</programlisting>
 
-<programlisting><userinput>MAKE "myarray {1 2 3}
-SHOW EQUALP :myarray :myarray</userinput>
-true</programlisting>
+<programlisting><userinput>HAZ "mi_vector1 {1 2 3}
+HAZ "mi_vector2 :mi_vector1
+MUESTRA IGUALES? :mi_vector1 :mi_vector2</userinput>
+cierto</programlisting>
 </listitem>
 </varlistentry>
 
 
 </variablelist>
-
 </section>
