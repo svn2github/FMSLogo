@@ -17,7 +17,7 @@
 <para>
 Outputs a multi-dimensional array.
 </para>
-  
+
 <para>
 The <parameter>sizelist</parameter> input describes the size of each dimension in the multi-dimensional array.
 The number of items in this list determines the dimension of the array.

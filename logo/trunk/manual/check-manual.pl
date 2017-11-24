@@ -411,6 +411,8 @@ $Exceptions{'command-maximize.xml'}{'logo'}               = 1;
 $Exceptions{'command-mci.xml'}{'allcaps'}{'CD'}        = 1;
 $Exceptions{'command-mci.xml'}{'allcaps'}{'SOUNDIT'}   = 1;
 
+$Exceptions{'command-mdarray.xml'}{'bannedword'}{'element'} = 1;
+
 $Exceptions{'command-messagebox.xml'}{'allcaps'}{'OK'}    = 1;
 
 $Exceptions{'command-midiclose.xml'}{'allcaps'}{'MIDI'}   = 1;
