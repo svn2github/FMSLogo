@@ -36,7 +36,7 @@ cierto</programlisting>
 <programlisting><userinput>MUESTRA CONTIENE? "bd "abc</userinput>
 falso</programlisting>
 
-<programlisting><userinput>MUESTRA "a [a b c]</userinput>
+<programlisting><userinput>MUESTRA CONTIENE? "a [a b c]</userinput>
 falso</programlisting>
 
 </listitem>
