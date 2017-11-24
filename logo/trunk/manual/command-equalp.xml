@@ -1,6 +1,7 @@
 <section id="command-equalp">
 <title>EQUALP</title>
 <indexterm><primary>EQUALP</primary></indexterm>
+<indexterm><primary>EQUAL?</primary></indexterm>
 <indexterm><primary>=</primary></indexterm>
 
 <variablelist>

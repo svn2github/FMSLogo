@@ -1,6 +1,7 @@
 <section id="command-numberp">
 <title>NUMBERP</title>
 <indexterm><primary>NUMBERP</primary></indexterm>
+<indexterm><primary>NUMBER?</primary></indexterm>
 
 <variablelist>
 

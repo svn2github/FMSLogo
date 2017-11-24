@@ -1,6 +1,7 @@
 <section id="command-notequalp">
 <title>NOTEQUALP</title>
 <indexterm><primary>NOTEQUALP</primary></indexterm>
+<indexterm><primary>NOTEQUAL?</primary></indexterm>
 <indexterm><primary>&lt;></primary></indexterm>
 
 <variablelist>

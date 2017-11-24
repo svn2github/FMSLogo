@@ -1,6 +1,7 @@
 <section id="command-backslashedp">
 <title>BACKSLASHEDP</title>
 <indexterm><primary>BACKSLASHEDP</primary></indexterm>
+<indexterm><primary>BACKSLASHED?</primary></indexterm>
 
 <variablelist>
 <varlistentry><term>Synopsis</term>
