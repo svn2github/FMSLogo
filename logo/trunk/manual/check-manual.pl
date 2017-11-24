@@ -388,6 +388,7 @@ $Exceptions{'command-listboxaddstring.xml'}{'allcaps'}{'DODRAW'} = 1;
 
 $Exceptions{'command-listboxgetselect.xml'}{'allcaps'}{'DODRAW'} = 1;
 
+$Exceptions{'command-listtoarray.xml'}{'bannedword'}{'element'}  = 1;
 $Exceptions{'command-listtoarray.xml'}{'bannedword'}{'elements'} = 1;
 
 $Exceptions{'command-load.xml'}{'allcaps'}{'MYPROGRAM1'} = 1;

@@ -14,7 +14,7 @@
 <varlistentry><term>Description</term>
 <listitem>
   <para>Outputs an array with the same elements as the input <parameter>list</parameter>.</para>
- 
+
   <para>If an <parameter>origin</parameter> input is given, then the first element of the new array is at index <parameter>origin</parameter>.
   Otherwise, the default of 1 is used.</para>
 </listitem>
