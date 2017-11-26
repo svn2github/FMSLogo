@@ -25,12 +25,18 @@ Devuelve CIERTO si las entradas <parameter>cosa1</parameter> y <parameter>cosa2<
 
 <para>
 Dos números son iguales si tienen el mismo valor numérico.
-Dos palabras son iguales si contienen los mismos caracteres en el mismo orden.
+Dos palabras no numéricas son iguales si contienen los mismos caracteres en el mismo orden.
 Por defecto, un carácter mayúsculo es igual al carácter minúsculo correspondiente, pero si hay una variable que se llama <link linkend="command-caseignoredp">IGNORAMAYUSCULAS?</link> y si su valor no es CIERTO, entonces un carácter mayúsculo no es considerado igual al carácter correspondiente en minúsculo.
-Dos listas son iguales si sus miembros son iguales.
+</para>
+
+<para>
+Dos listas son iguales si sus miembros son iguales y son en el mismo orden.
+</para>
+
+<para>
 Un vector sólo es igual a sí mismo; dos vectores creados separadamente nunca son iguales, aunque sus elementos sean iguales.
-(Es importante poder saber si dos variables refieren al mismo vector porque los vectores son mutable.
-Por ejemplo, si dos variables tienen el mismo vector como sus valores, entonces ejecutando <link linkend="command-setitem">PONELEMENTO</link> con uno de ellas cambiaría las dos.)
+Es importante poder saber si dos variables refieren al mismo vector porque los vectores son mutable.
+Por ejemplo, si dos variables tienen el mismo vector como sus valores, entonces ejecutando <link linkend="command-setitem">PONELEMENTO</link> con uno de ellas cambiaría las dos.
 </para>
 </listitem>
 </varlistentry>
