@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Outputs the list that would result if <parameter>word</parameter> were entered in response to a <link linkend="command-readlist">READLIST</link> operation.
-That is, PARSE <link linkend="command-readword">READWORD</link> has the same value as READLIST for the same characters read.
+That is, PARSE <link linkend="command-readword">READWORD</link> outputs the same value as READLIST for the same characters read.
 </para>
 </listitem>
 </varlistentry>
