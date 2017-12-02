@@ -1,44 +1,46 @@
 <section id="command-rawascii">
-<title>RAWASCII</title>
+<title>ASCIIPURO</title>
+<indexterm><primary>ASCIIPURO</primary></indexterm>
 <indexterm><primary>RAWASCII</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>RAWASCII</command> <parameter>character</parameter></synopsis>
+<synopsis><command>ASCIIPURO</command> <parameter>carácter</parameter>
+<command>RAWASCII</command> <parameter>carácter</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the number that represents <parameter>character</parameter> in your current code page.
+Deveulve el número entre 0 y 255 que representa la entrada <parameter>carácter</parameter> en la página de códigos actual.
 </para>
 
 <para>
-Unlike <link linkend="command-ascii">ASCII</link>, RAWASCII interprets control characters as representing themselves.
+A differencia de <link linkend="command-ascii">ASCII</link>, ASCIIPURO interpreta los códigos de control como si se representan ellos mismos.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW RAWASCII "a</userinput>
+<programlisting><userinput>MUESTRA ASCIIPURO "a</userinput>
 97</programlisting>
 
-<programlisting><userinput>SHOW RAWASCII "A</userinput>
+<programlisting><userinput>MUESTRA ASCIIPURO "A</userinput>
 65</programlisting>
 
-<programlisting><userinput>SHOW RAWASCII "|(|</userinput>
+<programlisting><userinput>MUESTRA ASCIIPURO "|(|</userinput>
 6</programlisting>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
 <member><link linkend="command-ascii">ASCII</link></member>
 </simplelist></listitem>
@@ -46,5 +48,4 @@ Unlike <link linkend="command-ascii">ASCII</link>, RAWASCII interprets control c
 
 
 </variablelist>
-
 </section>

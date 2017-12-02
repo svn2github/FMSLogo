@@ -1,40 +1,47 @@
 <section id="command-member">
-<title>MEMBER</title>
+<title>MIEMBRO</title>
+<indexterm><primary>MIEMBRO</primary></indexterm>
 <indexterm><primary>MEMBER</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>MEMBER</command> <parameter>thing1</parameter> <parameter>thing2</parameter></synopsis>
+<synopsis><command>MIEMBRO</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter>
+<command>MEMBER</command> <parameter>cosa1</parameter> <parameter>cosa2</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-If <parameter>thing2</parameter> is a word or list and if <link linkend="command-memberp">MEMBERP</link> with these inputs would output TRUE, then MEMBER outputs the portion of <parameter>thing2</parameter> from the first instance of <parameter>thing1</parameter> to the end.
-If <link linkend="command-memberp">MEMBERP</link> would output FALSE, then MEMBER outputs the empty word or list according to the type of <parameter>thing2</parameter>.
-It is an error for <parameter>thing2</parameter> to be an array.
+Si <parameter>cosa2</parameter> es una palabra o lista y <link linkend="command-memberp">MIEMBRO?</link> devolvería CIERTO con las mismas entradas, entonces MIEMBRO devuelve la parte de <parameter>cosa2</parameter> desde la primera aparición de <parameter>cosa1</parameter> hasta el fin.
+</para>
+
+<para>
+Si <link linkend="command-memberp">MIEMBRO?</link> devolvería FALSO con las mismas entradas, entonces MIEMBRO devuelve la palabra vacía o la lista vacía según el tipo de <parameter>cosa2</parameter>.
+</para>
+
+<para>
+MIEMBRO lanza un error si <parameter>cosa2</parameter> es un vector.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW MEMBER "b [a b c d]</userinput>
+<programlisting><userinput>MUESTRA MIEMBRO "b [a b c d]</userinput>
 [b c d]</programlisting>
 
-<programlisting><userinput>SHOW MEMBER "c [a b c d]</userinput>
+<programlisting><userinput>MUESTRA MIEMBRO "c [a b c d]</userinput>
 [c d]</programlisting>
 
-<programlisting><userinput>SHOW MEMBER "b "abba"</userinput>
+<programlisting><userinput>MUESTRA MIEMBRO "b "abba"</userinput>
 bba</programlisting>
 
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

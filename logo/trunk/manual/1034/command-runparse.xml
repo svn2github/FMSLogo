@@ -1,27 +1,29 @@
 <section id="command-runparse">
-<title>RUNPARSE</title>
+<title>EJECUTAANALIZA</title>
+<indexterm><primary>EJECUTAANALIZA</primary></indexterm>
 <indexterm><primary>RUNPARSE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>RUNPARSE</command> <parameter>thing</parameter></synopsis>
+<synopsis><command>EJECUTAANALIZA</command> <parameter>cosa</parameter>
+<command>RUNPARSE</command> <parameter>cosa</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the list that would result if <parameter>thing</parameter> (word or list) were entered as an instruction line; characters such as infix operators and parentheses are separate members of the output.
-Note that sublists of a runparsed list are not themselves runparsed.
+Devuelve la lista que resultaría si la entrada <parameter>cosa</parameter> (palabra o lista) hubiera sido analizada como línea de instrucciones; caracteres tal como los operadores infijos y paréntesis son miembros distintos en la lista devuelta.
+Tengas en cuento que las listas inferiores de una lista que ha sido procesado con EJECUTAANALIZA no son, ellas mismas, ejecutaanalizadas.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW RUNPARSE "a&lt;b</userinput>
+<programlisting><userinput>MUESTRA EJECUTAANALIZA "a&lt;b</userinput>
 [a &lt; b]
 </programlisting>
 </listitem>

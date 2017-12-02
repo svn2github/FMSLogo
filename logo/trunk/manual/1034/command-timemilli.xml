@@ -1,32 +1,33 @@
 <section id="command-timemilli">
-<title>TIMEMILLI</title>
+<title>HORAMILI</title>
+<indexterm><primary>HORAMILI</primary></indexterm>
 <indexterm><primary>TIMEMILLI</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>TIMEMILLI</command></synopsis>
+<synopsis><command>HORAMILI</command>
+<command>TIMEMILLI</command></synopsis>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the time since Windows started, measured in milliseconds.
-Use this for precision timing.
-The output is also known as the "tick count".
+Devuelve el tiempo transcurrido desde que se inició Windows, con una precisión de milisegundos.
+Se usa HORAMILI por cronometrando eventos con precisión.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "start TIMEMILLI
-REPEAT 36 [ELLIPSE 100 200 RIGHT 5]
-SHOW TIMEMILLI - :start</userinput>
+<programlisting><userinput>HAZ "comienzo HORAMILI
+REPITE 36 [ELIPSE 100 200 GIRADERECHA 5]
+MUESTRA HORAMILI - :comienzo</userinput>
 8189</programlisting>
 </listitem>
 </varlistentry>

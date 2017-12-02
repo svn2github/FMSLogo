@@ -1,27 +1,29 @@
 <section id="command-lowercase">
-<title>LOWERCASE</title>
+<title>MINUSCULAS</title>
+<indexterm><primary>MINUSCULAS</primary></indexterm>
 <indexterm><primary>LOWERCASE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>LOWERCASE</command> <parameter>word</parameter></synopsis>
+<synopsis><command>MINUSCULAS</command> <parameter>palabra</parameter>
+<command>LOWERCASE</command> <parameter>palabra</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a word which is a copy of <parameter>word</parameter>, but with all uppercase letters changed to the corresponding lowercase letter.
+Devuelve una copia de la entrada <parameter>palabra</parameter>, pero en la que se han cambiado las mayúsculas por las correspondientes minúsculas.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW LOWERCASE "HeLlo</userinput>
-hello</programlisting>
+<programlisting><userinput>MUESTRA MINUSCULAS "HolA</userinput>
+hola</programlisting>
 </listitem>
 </varlistentry>
 
