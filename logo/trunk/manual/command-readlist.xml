@@ -26,7 +26,7 @@ Similarly, square brackets have their usual effect of spanning multiple lines an
 The contents enclosed in square brackets appear in the output list as a nested list.
 </para>
 <para>
-READLIST treats curly braces analogously to how it treats brackets, except the the enclosed content appears in the output as a nested array.
+READLIST treats curly braces analogously to how it treats brackets, except that the enclosed content appears in the output as a nested array.
 </para>
 <para>
 READLIST does not treat semicolon as a comment character, so the semicolon and whatever follows it appears in the output list.
