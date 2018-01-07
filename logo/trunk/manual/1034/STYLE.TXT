@@ -55,5 +55,6 @@ programmatically.
    an infix operator          - un operador infijo
    a double-quote (")         - una comilla inglesa (")
    a backslash (\)            - una barra inversa (\)
+   a tilda (~)                - una tilde de la eñe
    the current write stream   - el flujo de escritura actual
    the current read stream    - el flujo de lectura actual

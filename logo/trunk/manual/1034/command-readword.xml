@@ -1,65 +1,69 @@
 <section id="command-readword">
-<title>READWORD</title>
+<title>LEEPALABRA</title>
+<indexterm><primary>LEEPALABRA</primary></indexterm>
+<indexterm><primary>LP</primary></indexterm>
 <indexterm><primary>READWORD</primary></indexterm>
 <indexterm><primary>RW</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>READWORD</command>
+<synopsis><command>LEEPALABRA</command>
+<command>LP</command>
+<command>READWORD</command>
 <command>RW</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Reads a line from the read stream and outputs that line as a word (without the end-of-line sequence).
-The output is a single word even if the line contains spaces, brackets, etc.
-A blank line is output as the empty word.
-If the read stream is a file and the last character in the file is not an end-of-line sequence, then READWORD treats the end-of-file as an end-of-line.
-After the file as been completely read, READWORD outputs the empty list (not the empty word).
+Lee una línea desde el flujo de lectura actual (inicialmente un cuadro de diálogo) y la devuelve como una palabra (sin el carácter de nueva línea).
+Devuelve una sola palabra aunque la línea tenga espacios, corchetes, etc.
+Por una línea en blanco, LEEPALABRA devuelve la palabra vaciá.
+Si el flujo de lectura es un fichero que no se termina en un carácter de nueva línea, entonces trata el fin del fichero como carácter de nueva línea.
+Cuando se había leído por completo el fichero, LEEPALABRA devuelve la lista vacía (no la palabra vacía).
 </para>
 
 <para>
-READWORD processes backslash, vertical bar, and tilde characters in the read stream.
-In the case of a tilde used for line continuation, the output word <emphasis>does</emphasis> include the tilde and the newline characters.
-Vertical bars in the line are also preserved in the output.
-Backslash characters are not preserved in the output, except for the ones that follow a backslash.
-This strange behavior enables the resulting word to be parsed into a list with PARSE in a way that preserves the normal sematics.
+LEEPALABRA procesa las barras inversas, barras verticales, y tildes de la eñe del flujo de lectura.
+En caso de una tilde usada para la continuación de una línea, la palabra devuelta <emphasis>sí incluye</emphasis> la tilde y los caracteres de nueva línea.
+LEEPALABRA también guarda las barras verticales en la lista devuelta.
+Las barras inversas no son preservado en la lista devuelta, excepto por las que sigue una otra barra inversa.
+Este comportamiento extraño facilita que la palabra devuelta sea analizada con <link linkend="command-parse">ANALIZA</link> de una manera que preserva la semántica normal.
 </para>
 
 <para>
-The notion that vertical bars are both processed <emphasis>and</emphasis> preserved in the output warrants a fuller explanation.
-In processing, vertical bars retain their ability to allow a single line of text to include newline characters.
-So if a newline follows a vertical bar, READWORD continues reading more text until it finds a vertical bar that closes the vertical bar grouping, then it reads until it finds another newline, which terminates the line.
-None of the newlines between the vertical bars are considered line breaks and READWORD outputs all of the text as a single word.
-The output also includes the vertical bars.
+La noción que las barras verticales son a la vez procesadas <emphasis>y</emphasis> preservadas en la lista devuelta merece una explicación expandida.
+Cuando LEEPALABRA procesa la línea, las barras verticales retienen su habilidad de permitir una sola línea de texto de incluir los caracteres de nueva línea.
+Así que, aún si un carácter de nueva línea sigue una barra vertical, LEEPALABRA siga leyendo más texto hasta que encuentre una barra vertical que cierra el agrupamiento, entonces LEEPALABRA siga leyendo hasta que encuentre un carácter de nueva línea que termine la línea.
+Ninguna de las nuevas líneas entre barras verticales son consideradas como el fin de la línea y LEEPALABRA devuelve todo el texto como una sola palabra.
+La palabra devuelta también incluye las barras verticales.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <para>A simple example:
-<programlisting><userinput>SHOW READWORD
-Hello how are you?</userinput>
-Hello how are you?</programlisting>
+    <para>Un ejemplo sencillo:
+<programlisting><userinput>MUESTRA LEEPALABRA
+Hola, cómo estás?</userinput>
+Hola, cómo estás?</programlisting>
     </para>
 
-    <para>The following example shows how vertical bars are processed <emphasis>and</emphasis> preserved.
-Notice that READWORD outputs all of the text as a single word.
-<programlisting><userinput>SHOW READWORD
-This is a line | WITH ONE VERTICAL BAR
-THIS IS NOW WITHIN A VERTICAL BAR
-THE END | some more text | BACK IN VERTICAL BAR
-THIS | ends it.</userinput>
-This is a line | WITH ONE VERTICAL BAR
-THIS IS NOW WITHIN A VERTICAL BAR
-THE END | some more text | BACK IN VERTICAL BAR
-THIS | ends it.</programlisting>
+    <para>El ejemplo siguiente muestra como las barras verticales son procesadas <emphasis>y</emphasis> preservadas a la vez.
+Nota que LEEPALABRA devuelve todo el texto como una sola palabra.
+<programlisting><userinput>MUESTRA LEEPALABRA
+Esto es una línea | CON UNA BARRA VERTICAL
+ESTO ES AHORA ENTRE BARRAS VERTICALES
+ESTE CUENTO SE HA ACABADO | más texto | DE NUEVO ENTRE BARRAS VERTICALES
+ESTO | pone fin a la línea.</userinput>
+Esto es una línea | CON UNA BARRA VERTICAL
+ESTO ES AHORA ENTRE BARRAS VERTICALES
+ESTE CUENTO SE HA ACABADO | más texto | DE NUEVO ENTRE BARRAS VERTICALES
+ESTO | pone fin a la línea.</programlisting>
 </para>
 
 </listitem>

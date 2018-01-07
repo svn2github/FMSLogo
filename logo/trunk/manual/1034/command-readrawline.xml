@@ -4,31 +4,31 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
 <synopsis><command>READRAWLINE</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Reads a line from the read stream and outputs that line as a word.
-READRAWLINE outputs the exact string of characters as they appear in the line, with no special meaning for backslash, vertical bar, tilde, or any other formatting characters.
-The output is a single word even if the line contains spaces, brackets, etc.
+Lee una línea desde el flujo de lectura actual y la devuelve como una palabra.
+READRAWLINE devuelve la exacta cadena de caracteres que aparecen en la línea, sin ningún tratamiento especial por las barras inversas, barras verticales, tildes de la eñe, o cualquier otro carácter de formato.
+La devuelta es una sola palabra, aun si la línea contiene un espacio, un corchete, etc.
 </para>
 <para>
-If the read stream is a file and the last character in the file is not an end-of-line sequence, then READRAWLINE treats the end-of-file as an end-of-line.
-After the file as been completely read, READRAWLINE outputs the empty list (not the empty word).
+Si el flujo de lectura es un fichero que no se termina en un carácter de nueva línea, entonces trata el fin del fichero como carácter de nueva línea.
+Cuando se había leído por completo el fichero, READRAWLINE devuelve la lista vacía (no la palabra vacía).
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW READRAWLINE
-Special | Characters</userinput>
-Special | Characters</programlisting>
+<programlisting><userinput>MUESTRA READRAWLINE
+Caracteres | Especiales</userinput>
+Caracteres | Especiales</programlisting>
 </listitem>
 </varlistentry>
 

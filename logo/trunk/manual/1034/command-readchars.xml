@@ -1,52 +1,56 @@
 <section id="command-readchars">
-<title>READCHARS</title>
+<title>LEECARS</title>
+<indexterm><primary>LEECARS</primary></indexterm>
+<indexterm><primary>LCS</primary></indexterm>
 <indexterm><primary>READCHARS</primary></indexterm>
 <indexterm><primary>RCS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>READCHARS</command> <parameter>number</parameter>
-<command>RCS</command> <parameter>number</parameter></synopsis>
+<synopsis><command>LEECARS</command> <parameter>número</parameter>
+<command>LCS</command> <parameter>número</parameter>
+<command>READCHARS</command> <parameter>número</parameter>
+<command>RCS</command> <parameter>número</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 
 <para>
-Reads <parameter>number</parameter> characters from the read stream and outputs those characters as a word.
-If <parameter>number</parameter> is larger than the number of characters remaining in the read stream, then READCHARS outputs the rest of the read stream.
-If the read stream is a file and there are no unread characters in the file, then READCHARS outputs the empty list (not the empty word).
+Lee <parameter>número</parameter> de caracteres desde el flujo de lectura actual y devuelve esos caracteres como una palabra.
+Si <parameter>número</parameter> es mayor que el número de caracteres que queda en el flujo de lectura, entonces LEECARS devuelve el resto del flujo.
+Si se lee de un fichero y se llega al final, LEECARS devuelve la lista vacía (no la palabra vacía).
 </para>
 
 <para>
-If the read stream is the Commander, then READCHARS always outputs the empty list.
+Si el flujo de lectura es el Centro de Comandos, entonces LEECAR siempre devuelve la lista vacía.
 </para>
 
 <para>
-Backslash, vertical bar, and tilde characters have no special meaning in this context.
+Las barras inversas, barras verticales, y tildes de la eñe no tienen un tratamiento especial.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>OPENWRITE "dummy.fil
-SETWRITE "dummy.fil
-PRINT "Hello
-SETWRITE []
-CLOSE "dummy.fil
+<programlisting><userinput>ABREESCRITURA "ejemplo.txt
+PONESCRITURA "ejemplo.txt
+ESCRIBE "Hola
+PONESCRITURA []
+CIERRA "ejemplo.txt
 
-OPENREAD "dummy.fil
-SETREAD "dummy.fil
-SHOW READCHARS 5</userinput>
-Hello
-<userinput>SETREAD []
-CLOSE "dummy.fil</userinput>
+PONLECTURA "ejemplo.txt
+MUESTRA LEECARS 4</userinput>
+Hola
+
+<userinput>PONLECTURA []
+CIERRA "ejemplo.txt</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
