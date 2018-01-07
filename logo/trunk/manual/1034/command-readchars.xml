@@ -22,7 +22,7 @@
 <para>
 Lee <parameter>número</parameter> de caracteres desde el flujo de lectura actual y devuelve esos caracteres como una palabra.
 Si <parameter>número</parameter> es mayor que el número de caracteres que queda en el flujo de lectura, entonces LEECARS devuelve el resto del flujo.
-Si se lee de un fichero y se llega al final, LEECARS devuelve la lista vacía (no la palabra vacía).
+Si se lee de un archivo y se llega al final, LEECARS devuelve la lista vacía (no la palabra vacía).
 </para>
 
 <para>

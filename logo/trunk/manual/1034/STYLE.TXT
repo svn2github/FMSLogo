@@ -58,3 +58,5 @@ programmatically.
    a tilda (~)                - una tilde de la eñe
    the current write stream   - el flujo de escritura actual
    the current read stream    - el flujo de lectura actual
+   a file                     - un archivo
+

@@ -1,6 +1,6 @@
 <chapter id="main-menu">
   <title>Menú Principal</title>
-  <para>El Menú Principal gestiona diferentes tareas en &PRODUCTNAME; como, cargar un programa &GENERICNAME;, cargar una imagen, configurar una impresora o quizás leer este fichero de ayuda.</para>
+  <para>El Menú Principal gestiona diferentes tareas en &PRODUCTNAME; como, cargar un programa &GENERICNAME;, cargar una imagen, configurar una impresora o quizás leer este archivo de ayuda.</para>
 
   <section id="menu-file">
     <title>Menú Archivo</title>
@@ -15,7 +15,7 @@
 
     <section id="menu-file-load">
       <title>Archivo - Cargar...</title>
-      <para>Carga del disco un fichero con procedimientos para que se pueda ejecutar o modificar un programa.
+      <para>Carga del disco un archivo con procedimientos para que se pueda ejecutar o modificar un programa.
       Veas también la primitiva <link linkend="command-load">CARGA</link>.</para>
     </section>
 
@@ -239,7 +239,7 @@
 
     <section id="menu-help-releasenotes">
       <title>Ayuda - Notas de la versión</title>
-      <para>Muestra un fichero que contiene notas sobre esta versión de &PRODUCTNAME;.</para>
+      <para>Muestra un archivo que contiene notas sobre esta versión de &PRODUCTNAME;.</para>
     </section>
 
     <section id="menu-help-aboutfmslogo">

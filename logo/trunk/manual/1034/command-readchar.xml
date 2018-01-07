@@ -18,12 +18,12 @@
 <listitem>
 <para>
 Lee un sólo carácter desde el flujo de lectura actual y lo devuelve.
-Si el flujo de lectura es un fichero que fue abierto en modo texto, entonces el carácter lo devuelve como palabra.
-Si el flujo de lectura es un fichero que fue abierto en modo binario, entonces el carácter lo devuelve como número.
+Si el flujo de lectura es un archivo que fue abierto en modo texto, entonces el carácter lo devuelve como palabra.
+Si el flujo de lectura es un archivo que fue abierto en modo binario, entonces el carácter lo devuelve como número.
 </para>
 
 <para>
-Si el flujo de lectura es un fichero y se lee el final del fichero, LEECAR devuelve la lista vacía (no la palabra vacía).
+Si el flujo de lectura es un archivo y se lee el final del archivo, LEECAR devuelve la lista vacía (no la palabra vacía).
 </para>
 
 

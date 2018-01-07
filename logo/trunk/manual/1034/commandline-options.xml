@@ -167,7 +167,7 @@ Si pierdes procedimientos o tienes un inesperado cambio entonces no debes usar e
 <synopsis>-L <replaceable>archivo1</replaceable> <replaceable>[archivo2]</replaceable></synopsis>
 
 <para>
-&PRODUCTNAME; puede <link linkend="command-load">CARGA</link> uno o más ficheros desde la línea de comandos cuando cargas &PRODUCTNAME;.
+&PRODUCTNAME; puede <link linkend="command-load">CARGA</link> uno o más archivos desde la línea de comandos cuando cargas &PRODUCTNAME;.
 Se cargarán estos archivos antes de que el intérprete comience la lectura de las órdenes.
 Si cargas un archivo que procesa un programa que incluye la instrucción, &PRODUCTNAME; ejecuta ese programa y sale del entorno.
 Puedes escribir por eso programas en &PRODUCTNAME; y ejecutarlos desde sus propios iconos.
