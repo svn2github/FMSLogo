@@ -29,7 +29,7 @@ Also, if you alternate reading and writing the same file, you must SETREADPOS be
 The <parameter>binarymode</parameter> is a boolean value (TRUE or FALSE).
 If <parameter>binarymode</parameter> is FALSE or not given, then the file is read/written as a text file.
 That is, the end-of-line sequence is converted from LF to CRLF when written and from CRLF to LF when read.
-If <parameter>binarymode</parameter> is TRUE, then the file is written as a binary file.
+If <parameter>binarymode</parameter> is TRUE, then the file is read and written as a binary file.
 That is, no end-of-line sequence conversion is performed.
 </para>
 
@@ -59,6 +59,7 @@ SETREADPOS 0
 REPEAT 3 [SHOW READLIST]</userinput>
 [Hello]
 [And how are you today]
+
 <userinput>CLOSE "dummy.fil</userinput>
 </programlisting>
 </listitem>
