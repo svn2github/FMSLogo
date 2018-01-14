@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Command that closes the named file.
-All subsequent attempts to read or write to the file will fail.
+Closes the file named <parameter>filename</parameter>.
+All subsequent attempts to read from or write to the file will fail.
 </para>
 
 <para>
@@ -51,5 +51,4 @@ CLOSE "dummy.fil</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>
