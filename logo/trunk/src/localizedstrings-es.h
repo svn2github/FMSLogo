@@ -602,7 +602,7 @@
 #define LOCALIZED_ALTERNATE_WORDP                  "palabra?"
 #define LOCALIZED_ALTERNATE_WORD_                  "palabra?"
 #define LOCALIZED_ALTERNATE_WRAP                   "modoVuelta"
-#define LOCALIZED_ALTERNATE_WRITEPOS               "posLectura"
+#define LOCALIZED_ALTERNATE_WRITEPOS               "posEscritura"
 #define LOCALIZED_ALTERNATE_WRITER                 "escritura"
 #define LOCALIZED_ALTERNATE_YESNOBOX               "siNoBox"
 #define LOCALIZED_ALTERNATE_YIELD                  "noExclusivo"
