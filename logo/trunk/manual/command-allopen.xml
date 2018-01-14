@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Outputs a list whose members are the names of all files currently open.
-This list does not include the dribble file, if any.
+This list does not include the <link linkend="command-dribble">DRIBBLE</link> file.
 </para>
 </listitem>
 </varlistentry>
@@ -31,5 +31,4 @@ SHOW ALLOPEN</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>
