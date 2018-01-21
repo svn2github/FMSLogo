@@ -22,6 +22,10 @@ Stops copying information to the dribble file and closes the file.
 <varlistentry><term>Example</term>
 <listitem>
 
+<para>
+For the following example, you must run each instruction separately.
+</para>
+
 <programlisting><userinput>DRIBBLE "dummy.fil
 FORWARD 100
 RIGHT 90
@@ -39,6 +43,11 @@ CLOSE "dummy.fil</userinput>
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-dribble">DRIBBLE</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>

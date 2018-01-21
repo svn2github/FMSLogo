@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Command that creates a new file whose name is the input, like <link linkend="command-openwrite">OPENWRITE</link>, and begins recording in that file everything that is read from the keyboard.
+Creates a new file whose name is the <parameter>filename</parameter> input, like <link linkend="command-openwrite">OPENWRITE</link>, and begins recording in that file everything that is read from the keyboard.
 This writing is in addition to the writing to <link linkend="command-writer">WRITER</link>.
 The intent is to create a transcript of a &GENERICNAME; session, including things like prompt characters and interactions.
 </para>
@@ -23,6 +23,10 @@ The intent is to create a transcript of a &GENERICNAME; session, including thing
 
 <varlistentry><term>Example</term>
 <listitem>
+
+<para>
+For the following example, you must run each instruction separately.
+</para>
 
 <programlisting><userinput>; Dribble a few instructions, then stop.
 DRIBBLE "dummy.fil
@@ -44,6 +48,13 @@ CLOSE "dummy.fil</userinput>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-nodribble">NODRIBBLE</link></member>
+</simplelist></listitem>
+</varlistentry>
+
+
+</variablelist>
 </section>
