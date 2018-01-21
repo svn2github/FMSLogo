@@ -1,32 +1,34 @@
 <section id="command-writer">
-<title>WRITER</title>
+<title>ESCRITURA</title>
+<indexterm><primary>ESCRITURA</primary></indexterm>
 <indexterm><primary>WRITER</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>WRITER</command></synopsis>
+<synopsis><command>ESCRITURA</command>
+<command>WRITER</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the name of the current write stream file, or the empty list if the write stream is the Commander.
+Devuelve el nombre del archivo del flujo de escritura actual, o la lista vacía se el flujo de escritura actual es el Centro de Comandos.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>OPENWRITE "dummy.fil
-SETWRITE "dummy.fil
+<programlisting><userinput>ABREESCRITURA "ejemplo.txt
+PONESCRITURA "ejemplo.txt
 
-; Can't use "SHOW WRITER", because the output
-; would go to dummy.fil, not the commander.
-; Use "MESSAGEBOX" instead.
-MESSAGEBOX "writer WRITER</userinput>
+; No puedas usar «MUESTRA ESCRITURA», porque la salida
+; iría al ejemplo.txt y no al Centro de Comandos.
+; Usa «MENSAJE» en lugar de «MUESTRA».
+MENSAJE "Escritura ESCRITURA</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

@@ -1,55 +1,55 @@
 <section id="command-close">
-<title>CLOSE</title>
+<title>CIERRA</title>
+<indexterm><primary>CIERRA</primary></indexterm>
 <indexterm><primary>CLOSE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>CLOSE</command> <parameter>filename</parameter></synopsis>
+<synopsis><command>CIERRA</command> <parameter>nombre_de_archivo</parameter>
+<command>CLOSE</command> <parameter>nombre_de_archivo</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Command that closes the named file.
-All subsequent attempts to read or write to the file will fail.
+Cierra el archivo nombrado <parameter>nombre_de_archivo</parameter>.
+Fallará todos los intentos siguientes para leer de o escribir a este archivo.
 </para>
 
 <para>
-You can also close the reserved file <userinput>"clipboard</userinput> with this command.
+Puedes también cerrar el archivo reservada llamado <userinput>"clipboard</userinput> con este comando.
 </para>
 
 <para>
-If you close the current <link linkend="command-reader">READER</link> or <link linkend="command-writer">WRITER</link>, then the reader or writer is reset to the Commander.
+Si cierras la <link linkend="command-reader">LECTURA</link> o <link linkend="command-writer">ESCRITURA</link> actual, entonces se revuelve la lectura o escritura al Centro de Comandos.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>OPENWRITE "dummy.fil
-SETWRITE "dummy.fil
-PRINT "Hello
-PRINT [Good Bye]
-SETWRITE []
-CLOSE "dummy.fil
+<programlisting><userinput>ABREESCRITURA "ejemplo.txt
+PONESCRITURA "ejemplo.txt
+ESCRIBE "Hola
+ESCRIBE [Adiós, Amigo]
+PONESCRITURA []
+CIERRA "ejemplo.txt
 
-OPENREAD "dummy.fil
-SETREAD "dummy.fil
-REPEAT 2 [SHOW READLIST]</userinput>
-[Hello]
-[Good Bye]
-<userinput>SETREAD []
-CLOSE "dummy.fil</userinput>
+ABRELECTURA "ejemplo.txt
+PONLECTURA "ejemplo.txt
+REPITE 2 [MUESTRA LEELISTA]</userinput>
+[Hola]
+[Adiós, Amigo]
+<userinput>PONLECTURA []
+CIERRA "ejemplo.txt</userinput>
 </programlisting>
-
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

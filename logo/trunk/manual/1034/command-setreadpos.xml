@@ -1,49 +1,54 @@
 <section id="command-setreadpos">
-<title>SETREADPOS</title>
+<title>PONPOSLECTURA</title>
+<indexterm><primary>PONPOSLECTURA</primary></indexterm>
 <indexterm><primary>SETREADPOS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETREADPOS</command> <parameter>charpos</parameter></synopsis>
+<synopsis><command>PONPOSLECTURA</command> <parameter>posición</parameter>
+<command>SETREADPOS</command> <parameter>posición</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Sets the file pointer of the read stream file so that the next <link linkend="command-readlist">READLIST</link>, etc., begins reading at the <parameter>charpos</parameter>-th character in the file, counting from 0.
-(That is, <userinput>SETREADPOS 0</userinput> starts reading from the beginning of the file.)
-This is meaningless if the read stream is [].
+Pone la posición del archivo del flujo de lectura para que la próxima <link linkend="command-readlist">LEELISTA</link>, etc., empezaría leyendo del carácter numero <parameter>posición</parameter> en el archivo, contando desde 0.
+(Es decir, <userinput>PONPOSLECTURA 0</userinput> empieza leyendo del principio del archivo.)
 </para>
+
+<para>
+PONPOSLECTURA no tiene sentido cuando el flujo de lectura es [].
+</para>
+
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>OPENWRITE "dummy.fil
-SETWRITE "dummy.fil
-PRINT "Hello
-PRINT [Good Bye]
-SETWRITE []
-CLOSE "dummy.fil
+<programlisting><userinput>ABREESCRITURA "ejemplo.txt
+PONESCRITURA "ejemplo.txt
+ESCRIBE "Hola
+ESCRIBE [Adiós, Amigo]
+PONESCRITURA []
+CIERRA "ejemplo.txt
 
-OPENREAD "dummy.fil
-SETREAD "dummy.fil
-SHOW READLIST</userinput>
-[Hello]
-<userinput>SETREADPOS 0
-SHOW READLIST</userinput>
-[Hello]
-<userinput>SETREAD []
-CLOSE "dummy.fil</userinput>
+ABRELECTURA "ejemplo.txt
+PONLECTURA "ejemplo.txt
+MUESTRA LEELISTA</userinput>
+[Hola]
+<userinput>PONPOSLECTURA 0
+MUESTRA LEELISTA</userinput>
+[Hola]
+<userinput>PONLECTURA []
+CIERRA "ejemplo.txt</userinput>
 </programlisting>
 
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

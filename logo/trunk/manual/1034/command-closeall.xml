@@ -1,41 +1,42 @@
 <section id="command-closeall">
-    <title>CLOSEALL</title>
+<title>CIERRATODO</title>
+<indexterm><primary>CIERRATODO</primary></indexterm>
 <indexterm><primary>CLOSEALL</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>CLOSEALL</command></synopsis>
+<synopsis><command>CIERRATODO</command>
+<command>CLOSEALL</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Closes all open files.
+Cierra todos los archivos abiertos.
 </para>
 
 <para>
-This is equivalent to <programlisting><link linkend="command-foreach">FOREACH</link> <link linkend="command-allopen">ALLOPEN</link> [<link linkend="command-close">CLOSE</link> ?]</programlisting>
+Este comando equivale a <programlisting><link linkend="command-foreach">PARACADA</link> <link linkend="command-allopen">ABIEROS</link> [<link linkend="command-close">CIERRA</link> ?]</programlisting>
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>OPENWRITE "dummy1.fil
-OPENWRITE "dummy2.fil
-SHOW ALLOPEN</userinput>
-[dummy1.fil dummy2.fil]
-<userinput>CLOSEALL
-SHOW ALLOPEN</userinput>
+<programlisting><userinput>ABREESCRITURA "ejemplo1.txt
+ABREESCRITURA "ejemplo2.txt
+MUESTRA ABIERTOS</userinput>
+[ejemplo1.txt ejemplo2.txt]
+<userinput>CIERRATODO
+MUESTRA ABIERTOS</userinput>
 []
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

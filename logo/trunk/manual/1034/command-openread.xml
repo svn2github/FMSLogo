@@ -1,62 +1,66 @@
 <section id="command-openread">
-<title>OPENREAD</title>
+<title>ABRELECTURA</title>
+<indexterm><primary>ABRELECTURA</primary></indexterm>
 <indexterm><primary>OPENREAD</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>OPENREAD</command> <parameter>filename</parameter>
-(<command>OPENREAD</command> <parameter>filename</parameter> <parameter>binarymode</parameter>)</synopsis>
+<synopsis><command>ABRELECTURA</command> <parameter>nombre_de_archivo</parameter>
+(<command>ABRELECTURA</command> <parameter>nombre_de_archivo</parameter> <parameter>modo_binario</parameter>)
+<command>OPENREAD</command> <parameter>nombre_de_archivo</parameter>
+(<command>OPENREAD</command> <parameter>nombre_de_archivo</parameter> <parameter>modo_binario</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Opens the file named <parameter>filename</parameter> for reading.
-The read position is initially at the beginning of the file.
+Abre el archivo nombrado <parameter>nombre_de_archivo</parameter> para lectura.
+La posición de lectura se pone al principio del archivo.
 </para>
 
 <para>
-The <parameter>filename</parameter> can also be the reserved word <userinput>"clipboard</userinput> to read data from the clipboard just like a file.
+El <parameter>nombre_de_archivo</parameter> también puede ser la palabra reservada <userinput>"clipboard</userinput> para leer datos del portapapeles como si fuera un archivo (la palabra «clipboard» quiere decir «portapapeles» en inglés).
 </para>
 
 <para>
-The <parameter>binarymode</parameter> is a boolean value (TRUE or FALSE).
-If <parameter>binarymode</parameter> is FALSE or not given, then the file is read as a text file.
-That is, the end-of-line sequence is converted from CRLF to LF.
-If <parameter>binarymode</parameter> is TRUE, then the file is read as a binary file.
-That is, no end-of-line sequence conversion is performed.
+El <parameter>modo_binario</parameter> debe ser un valor booleano (CIERTO o FALSO).
+Si <parameter>modo_binario</parameter> es FALSO o no es dado, entonces el archivo es leído como texto.
+Es decir, la secuencia del fin de línea es convertida de CRLF a LF.
+Si <parameter>modo_binario</parameter> es CIERTO, entonces el archivo es leído como un archivo binario.
+Es decir, no se hace ninguna conversión por el fin de línea.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>OPENWRITE "dummy.fil
-SETWRITE "dummy.fil
-PRINT "Hello
-PRINT [Good Bye]
-SETWRITE []
-CLOSE "dummy.fil
+<programlisting><userinput>ABREESCRITURA "ejemplo.txt
+PONESCRITURA "ejemplo.txt
+ESCRIBE "Hola
+ESCRIBE [Adiós, Amigo]
+PONESCRITURA []
+CIERRA "ejemplo.txt
 
-OPENREAD "dummy.fil
-SETREAD "dummy.fil
-REPEAT 2 [SHOW READLIST]</userinput>
-[Hello]
-[Good Bye]
-<userinput>SETREAD []
-CLOSE "dummy.fil</userinput>
+ABRELECTURA "ejemplo.txt
+PONLECTURA "ejemplo.txt
+REPITE 2 [MUESTRA LEELISTA]</userinput>
+[Hola]
+[Adiós, Amigo]
+<userinput>PONLECTURA []
+CIERRA "ejemplo.txt</userinput>
 </programlisting>
+
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-close">CLOSE</link></member>
+<member><link linkend="command-close">CIERRA</link></member>
 </simplelist></listitem>
 </varlistentry>
 

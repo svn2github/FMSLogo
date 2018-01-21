@@ -1,46 +1,51 @@
 <section id="command-setwritepos">
-<title>SETWRITEPOS</title>
+<title>PONPOSESCRITURA</title>
+<indexterm><primary>PONPOSESCRITURA</primary></indexterm>
 <indexterm><primary>SETWRITEPOS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETWRITEPOS</command> <parameter>charpos</parameter></synopsis>
+<synopsis><command>PONPOSESCRITURA</command> <parameter>posición</parameter>
+<command>SETWRITEPOS</command> <parameter>posición</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Sets the file pointer of the write stream file so that the next <link linkend="command-print">PRINT</link>, etc., begins writing at the <parameter>charpos</parameter>-th character in the file, counting from 0.
-(That is, <userinput>SETWRITEPOS 0</userinput> starts writing from the beginning of the file.)
-This is meaningless if the write stream is [].
+Pone la posición del archivo del flujo de escritura para que la próxima <link linkend="command-print">ESCRIBE</link>, etc., empezaría escribiendo al carácter numero <parameter>posición</parameter> en el archivo, contando desde 0.
+(Es decir, <userinput>PONPOSESCRITURA 0</userinput> empieza escribiendo del principio del archivo.)
 </para>
+
+<para>
+PONPOSESCRITURA no tiene sentido cuando el flujo de escritura es [].
+</para>
+
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>OPENWRITE "dummy.fil
-SETWRITE "dummy.fil
-PRINT "Hello
-SETWRITEPOS 0
-TYPE "J
-SETWRITE []
-CLOSE "dummy.fil
+<programlisting><userinput>ABREESCRITURA "ejemplo.txt
+PONESCRITURA "ejemplo.txt
+ESCRIBE "Hola
+PONPOSESCRITURA 0
+MUESTRAT "J
+PONESCRITURA []
+CIERRA "ejemplo.txt
 
-OPENREAD "dummy.fil
-SETREAD "dummy.fil
-SHOW READLIST</userinput>
-[Jello]
-<userinput>SETREAD []
-CLOSE "dummy.fil</userinput>
+ABREESCRITURA "ejemplo.txt
+PONLECTURA "ejemplo.txt
+MUESTRA LEELISTA</userinput>
+[Jola]
+<userinput>PONLECTURA []
+CIERRA "ejemplo.txt</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

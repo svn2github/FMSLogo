@@ -1,56 +1,65 @@
 <section id="command-setread">
-<title>SETREAD</title>
+<title>PONLECTUTRA</title>
+<indexterm><primary>PONLECTURA</primary></indexterm>
 <indexterm><primary>SETREAD</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETREAD</command> <parameter>filename</parameter></synopsis>
+<synopsis><command>PONLECTURA</command> <parameter>nombre_de_archivo</parameter>
+<command>SETREAD</command> <parameter>nombre_de_archivo</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Sets the read stream to the file named <parameter>filename</parameter>.
-The read stream is used by <link linkend="command-readlist">READLIST</link>, <link linkend="command-readword">READWORD</link>, etc.
-The file must already be open with <link linkend="command-openread">OPENREAD</link> or <link linkend="command-openupdate">OPENUPDATE</link>.
-If the input is the empty list, then the read stream becomes the Commander, as usual.
-Changing the read stream does not close the file that was previously the read stream, so it is possible to alternate between files.
+Pone el flujo de lectura al archivo llamado <parameter>nombre_de_archivo</parameter>.
+El flujo de lectura es usado por <link linkend="command-readlist">LEELISTA</link>, <link linkend="command-readword">LEEPALABRA</link>, etc.
+El archivo debe está abierto por <link linkend="command-openread">ABRELECTURA</link> o <link linkend="command-openupdate">ABREACTUALIZAR</link>.
+Si <parameter>nombre_de_archivo</parameter> es la lista vacía, entonces el flujo de lectura se vuelve el Centro de Comandos.
 </para>
 
 <para>
-If you <link linkend="command-close">CLOSE</link> the current reader, then the read stream is closed and <link linkend="command-reader">READER</link> is changed back to the Commander.
+Cambiando el flujo de lectura no cierra el archivo que fue previamente el flujo de lectura.
+Así que, es posible oscilar entre leyendo de archivos distintos.
+</para>
+
+<para>
+Si cierres (con <link linkend="command-close">CIERRA</link>) el archivo de la lectura actual, además de cerrar el archivo, el flujo de lectura se vuelve el Centro de Comandos.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
-<programlisting><userinput>OPENWRITE "dummy.fil
-SETWRITE "dummy.fil
-PRINT "Hello
-PRINT [Good Bye]
-SETWRITE []
-CLOSE "dummy.fil
 
-OPENREAD "dummy.fil
-SETREAD "dummy.fil
-REPEAT 2 [SHOW READLIST]</userinput>
-[Hello]
-[Good Bye]
-<userinput>SETREAD []
-CLOSE "dummy.fil</userinput>
+<varlistentry><term>Ejemplo</term>
+<listitem>
+
+<programlisting><userinput>ABREESCRITURA "ejemplo.txt
+PONESCRITURA "ejemplo.txt
+ESCRIBE "Hola
+ESCRIBE [Adiós, Amigo]
+PONESCRITURA []
+CIERRA "ejemplo.txt
+
+ABRELECTURA "ejemplo.txt
+PONLECTURA "ejemplo.txt
+REPITE 2 [MUESTRA LEELISTA]</userinput>
+[Hola]
+[Adiós, Amigo]
+<userinput>PONLECTURA []
+CIERRA "ejemplo.txt</userinput>
 </programlisting>
+
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-setwrite">SETWRITE</link></member>
-<member><link linkend="command-reader">READER</link></member>
+<member><link linkend="command-setread">PONLECTURA</link></member>
+<member><link linkend="command-writer">ESCRITURA</link></member>
 </simplelist></listitem>
 </varlistentry>
 

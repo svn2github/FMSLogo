@@ -1,45 +1,47 @@
 <section id="command-writepos">
-<title>WRITEPOS</title>
+<title>POSESCRITURA</title>
+<indexterm><primary>POSESCRITURA</primary></indexterm>
 <indexterm><primary>WRITEPOS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>WRITEPOS</command></synopsis>
+<synopsis><command>POSESCRITURA</command>
+<command>WRITEPOS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the file position of the current write stream file as a number.
-An output value of 0 means that the write position is at the beginning of the stream.
+Devuelve la posición del archivo del flujo de escritura como número de caracteres ya escrito.
+Un valor de 0 indica que la posición está al principio del flujo.
+Un valor de 1 indica que la posición está al segundo carácter del flujo (que un carácter ya ha sido escrito).
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<note><para>The output is stored in a list and displayed when the writer is returned to screen ([]).</para></note>
+<para>Nota que, en el ejemplo siguiente, se almacena lo que POSESCRITURA devuelve en una lista y se lo muestra después de que el flujo de escritura se vuelve al Centro de Comandos ([]).</para>
 
-<programlisting><userinput>OPENWRITE "dummy.fil
-SETWRITE "dummy.fil
-MAKE "history []
-MAKE "history LPUT WRITEPOS :history
-PRINT "Hello
-MAKE "history LPUT WRITEPOS :history
-PRINT [Good Bye]
-MAKE "history LPUT WRITEPOS :history
-SETWRITE []
-CLOSE "dummy.fil
-SHOW :history</userinput>
-[0 7 17]
+<programlisting><userinput>ABREESCRITURA "ejemplo.txt
+PONESCRITURA "ejemplo.txt
+HAZ "historia []
+HAZ "historia PONULTIMO POSESCRITURA :historia
+ESCRIBE "Hola
+HAZ "historia PONULTIMO POSESCRITURA :historia
+ESCRIBE [Adiós, Amigo]
+HAZ "historia PONULTIMO POSESCRITURA :historia
+PONESCRITURA []
+CIERRA "ejemplo.txt
+MUESTRA :historia</userinput>
+[0 6 20]
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

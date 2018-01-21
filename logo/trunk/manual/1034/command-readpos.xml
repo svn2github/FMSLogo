@@ -1,47 +1,50 @@
 <section id="command-readpos">
-<title>READPOS</title>
+<title>POSLECTURA</title>
+<indexterm><primary>POSLECTURA</primary></indexterm>
 <indexterm><primary>READPOS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>READPOS</command></synopsis>
+<synopsis><command>POSLECTURA</command>
+<command>READPOS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the file character position of the current read stream file as a number.
-An output value of 0 means that the read position is at the beginning of the stream.
+Devuelve la posición del archivo del flujo de lectura como número de caracteres ya leído.
+Un valor de 0 indica que la posición está al principio del flujo.
+Un valor de 1 indica que la posición está al segundo carácter del flujo (que un carácter ya ha sido leído).
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>OPENWRITE "dummy.fil
-SETWRITE "dummy.fil
-PRINT "Hello
-PRINT [Good Bye]
-SETWRITE []
-CLOSE "dummy.fil
+<programlisting><userinput>ABREESCRITURA "ejemplo.txt
+PONESCRITURA "ejemplo.txt
+ESCRIBE "Hola
+ESCRIBE [Adiós, Amigo]
+PONESCRITURA []
+CIERRA "ejemplo.txt
 
-OPENREAD "dummy.fil
-SETREAD "dummy.fil
-REPEAT 2 [SHOW READPOS SHOW READLIST]</userinput>
+ABRELECTURA "ejemplo.txt
+PONLECTURA "ejemplo.txt
+REPITE 2 [MUESTRA POSLECTURA MUESTRA LEELISTA]</userinput>
 0
-[Hello]
-7
-[Good Bye]
-<userinput>SETREAD []
-CLOSE "dummy.fil</userinput>
+[Hola]
+6
+[Adiós, Amigo]
+<userinput>PONLECTURA []
+CIERRA "ejemplo.txt</userinput>
 </programlisting>
+
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
