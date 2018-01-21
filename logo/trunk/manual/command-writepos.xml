@@ -22,7 +22,7 @@ An output value of 0 means that the write position is at the beginning of the st
 <varlistentry><term>Example</term>
 <listitem>
 
-<note><para>The output is stored in a list and displayed when the writer is returned to screen ([]).</para></note>
+<para>Note that, in the following example, the output from WRITEPOS is stored in a list and shown after the writer is set back to the Commander ([]).</para>
 
 <programlisting><userinput>OPENWRITE "dummy.fil
 SETWRITE "dummy.fil
@@ -41,5 +41,4 @@ SHOW :history</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>
