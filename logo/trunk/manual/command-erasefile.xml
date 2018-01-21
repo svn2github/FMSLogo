@@ -31,11 +31,6 @@ SETWRITE []
 CLOSE "dummy.fil
 
 OPENREAD "dummy.fil
-SETREAD "dummy.fil
-SHOW READLIST</userinput>
-[Hello]
-
-<userinput>SETREAD []
 CLOSE "dummy.fil
 
 ERASEFILE "dummy.fil
@@ -46,5 +41,4 @@ File system error: I can't open that file
 </varlistentry>
 
 </variablelist>
-
 </section>
