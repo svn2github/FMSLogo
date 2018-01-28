@@ -6,20 +6,32 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>PORTFLUSH</command> <parameter>port</parameter></synopsis>
+<synopsis><command>PORTFLUSH</command> <parameter>input</parameter></synopsis>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Flushes either the input or output queue of the open port.
-If <parameter>port</parameter> is 0, then the output queue is flushed.
-If <parameter>port</parameter> is 1, then the input queue is flushed.
+Flushes all buffered output to the open port.
+</para>
+
+<para>
+Because writing to a port can be slow, the operating system stores data which you write in a temporary holding place called a "buffer" and writes it to the port at the appropriate speed.
+This buffering makes your program faster, as your program does not need to wait for the data to be sent to the port before continuing its execution.
+The act of flushing actively pushes all data which is in the buffer to the port.
+After the flush is complete, you can be sure that all of the data which you have previously written to the port has really been sent there.
+</para>
+
+<para>
+The <parameter>input</parameter> input is required, but is otherwise ignored.
+It is retained as a required input for backward compatibility with older programs.
 </para>
 
 </listitem>
 </varlistentry>
+
+
 
 <varlistentry><term>Example</term>
 <listitem>
@@ -31,5 +43,4 @@ If <parameter>port</parameter> is 1, then the input queue is flushed.
 </varlistentry>
 
 </variablelist>
-
 </section>
