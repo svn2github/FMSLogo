@@ -597,7 +597,7 @@ pri</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
-        <entry><literallayout>pintaColor</literallayout></entry>
+        <entry><literallayout>colorRelleno</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-fontfacenames'>fontfacenames</link></entry>
@@ -1592,7 +1592,7 @@ pul</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-screencolor'>screencolor</link></entry>
-        <entry><literallayout>colorf</literallayout></entry>
+        <entry><literallayout>colorFondo</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-scrollbarcreate'>scrollbarcreate</link></entry>
@@ -2073,7 +2073,7 @@ raizcuadrada</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-writepos'>writepos</link></entry>
-        <entry><literallayout>posLectura</literallayout></entry>
+        <entry><literallayout>posEscritura</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-writer'>writer</link></entry>
@@ -3262,12 +3262,16 @@ raizcuadrada</literallayout></entry>
         <entry><link linkend='command-quotient'>quotient</link></entry>
       </row>
       <row>
-        <entry>colorf</entry>
+        <entry>colorFondo</entry>
         <entry><link linkend='command-screencolor'>screencolor</link></entry>
       </row>
       <row>
         <entry>colorLapiz</entry>
         <entry><link linkend='command-pencolor'>pencolor</link></entry>
+      </row>
+      <row>
+        <entry>colorRelleno</entry>
+        <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
       </row>
       <row>
         <entry>combina</entry>
@@ -4258,10 +4262,6 @@ raizcuadrada</literallayout></entry>
         <entry><link linkend='command-ask'>ask</link></entry>
       </row>
       <row>
-        <entry>pintaColor</entry>
-        <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
-      </row>
-      <row>
         <entry>ponAreaActiva</entry>
         <entry><link linkend='command-setactivearea'>setactivearea</link></entry>
       </row>
@@ -4458,12 +4458,16 @@ raizcuadrada</literallayout></entry>
         <entry><link linkend='command-posxyz'>posxyz</link></entry>
       </row>
       <row>
+        <entry>posEscritura</entry>
+        <entry><link linkend='command-writepos'>writepos</link></entry>
+      </row>
+      <row>
         <entry>posicionate</entry>
         <entry><link linkend='command-setposxyz'>setposxyz</link></entry>
       </row>
       <row>
         <entry>posLectura</entry>
-        <entry><link linkend='command-writepos'>writepos</link></entry>
+        <entry><link linkend='command-readpos'>readpos</link></entry>
       </row>
       <row>
         <entry>posRaton</entry>
