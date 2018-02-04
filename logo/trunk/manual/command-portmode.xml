@@ -14,12 +14,12 @@
 <listitem>
 <para>
 Sets the mode (speed, parity, data bits, and stop bits) of the open COM port.
-The port characteristics (such as speed and flow control) cannot be set through &PRODUCTNAME;.
+The flow control characteristic cannot be set through &PRODUCTNAME;.
 </para>
 
 <para>
 The <parameter>modestring</parameter> must be of the form <userinput>"COM<replaceable>n</replaceable>:<replaceable>SPEED</replaceable>,<replaceable>PARITY</replaceable>,<replaceable>DATA</replaceable>,<replaceable>STOP</replaceable></userinput>.
-This is the same format that is used by MODE, the DOS shell command.
+This is the same format that is used by MODE, the Windows command shell program.
 </para>
 
 </listitem>
@@ -35,5 +35,4 @@ This is the same format that is used by MODE, the DOS shell command.
 </varlistentry>
 
 </variablelist>
-
 </section>
