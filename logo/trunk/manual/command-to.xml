@@ -82,7 +82,7 @@ When this procedure is invoked as:
 
 <programlisting><userinput>PROC "x</userinput></programlisting>
 
-<parameter>:in1</parameter> would have the value <userinput>"x</userinput>, <parameter>:in2</parameter> would have the value <parameter>"foo</parameter>, and <parameter>:in3</parameter> would have the value <userinput>[]</userinput> (the empty list).
+<parameter>:in1</parameter> would have the value <userinput>"x</userinput>, <parameter>:in2</parameter> would have the value <userinput>"foo</userinput>, and <parameter>:in3</parameter> would have the value <userinput>[]</userinput> (the empty list).
 When it is invoked as:
 
 <programlisting><userinput>(PROC "a "b "c "d)</userinput></programlisting>
