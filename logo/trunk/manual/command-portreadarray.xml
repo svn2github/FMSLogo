@@ -29,7 +29,7 @@ If <parameter>count</parameter> is larger than the size of the <parameter>buffer
 <varlistentry><term>Example</term>
 <listitem>
     <programlisting><userinput>PORTOPEN "com1
-PRINT SENTENCE [Sending...] PORTWRITEARRAY 3 LISTTOARRAY MAP [ASCII ?] ARRAYTOLIST LISTTOARRAY "at</userinput>
+PRINT SENTENCE [Sending...] PORTWRITEARRAY 3 LISTTOARRAY MAP [ASCII ?] [a t]</userinput>
 Sending... 2
 <userinput>SHOW PORTWRITECHAR 13</userinput>
 1
