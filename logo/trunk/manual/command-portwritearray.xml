@@ -19,7 +19,7 @@ It outputs the actual number of bytes written.
 </para>
 
 <para>
-If <parameter>count</parameter> is larger than the size of the <parameter>buffer</parameter> array, then then entire array is written.
+If <parameter>count</parameter> is larger than the size of the <parameter>buffer</parameter> array, then the entire array is written.
 </para>
 
 </listitem>
