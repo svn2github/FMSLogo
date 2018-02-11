@@ -1,4 +1,89 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This file contains tests for the hardware procedures:
+; That is, it contains tests for the PORTxxx procedures, as well as
+; INPORT, INPORTB, OUTPORT, OUTPORTB, and INGAMEPORT.
+;
+; However, since many modern computers (including mine) don't have COM ports,
+; the tests only test the interface for the PORTxxx procedures.  A manual test,
+; which assumes a pair of COM ports with a null modem is porttest-nullmodem.lgo.
+;
+; Similarly, INPORT, INPORTB, OUTPORT, and OUTPORTB were implemented using
+; x86 instructions that are now illegal to execute from user mode.  As a result,
+; these test essentially only test that running them doesn't crash.
+;
+; Similarly, INGAMEPORT requires that the computer have a game card, so only
+; basic input tests are used.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 LOAD "testlib.lgo
+
+TO PORTOPENTEST
+
+  ; Open a port.
+  ; The name of the port isn't important for this test.
+  TRACEINSTRUCTION [ PORTOPEN "someportname ]
+
+  ; Open a port while a port is open.
+  RUNSTOPPINGTEST  [ PORTOPEN "alreadyopen ]
+  TRACEINSTRUCTION [ PORTCLOSE ]
+
+  ; Bad input
+  RUNTOOMANYINPUTSTEST [(PORTCLOSE "COM1)]
+END
+
+TO PORTFLUSHTEST
+
+  ; Flushing when the port is not open is an error.
+  RUNSTOPPINGTEST [ PORTFLUSH "1 ]
+
+  ; Flush when the port is open.
+  ; Since this test does not assume that a particuilar port exists,
+  ; it expects an error when flushing.
+  TRACEINSTRUCTION [ PORTOPEN "doesnotexist ]
+  RUNSTOPPINGTEST [ PORTFLUSH "ignored  ]
+  RUNSTOPPINGTEST [ PORTFLUSH [1]       ]
+  RUNSTOPPINGTEST [ PORTFLUSH {ignored} ]
+  TRACEINSTRUCTION [ PORTCLOSE ]
+
+  ; Bad input
+  RUNNOTENOUGHINPUTSTEST [(PORTFLUSH)]
+  RUNTOOMANYINPUTSTEST   [(PORTFLUSH "198 "toomany)]
+
+END
+
+TO PORTMODETEST
+
+  ; Setting the mode of a port when none is open is an error.
+  RUNSTOPPINGTEST [ PORTMODE "com1:9600,n,8,1 ]
+
+  ; Open a port.
+  ; The name of the port isn't important for this test.
+  TRACEINSTRUCTION [ PORTOPEN "someportname ]
+
+  ; Bad input  
+  RUNNOTENOUGHINPUTSTEST [(PORTMODE)]
+  RUNSTOPPINGTEST        [ PORTMODE "malformed-string ]
+  RUNSTOPPINGTEST        [ PORTMODE "9600,n,8,1  ] ; well-formed but cannot be set on fake port
+  RUNSTOPPINGTEST        [ PORTMODE [9600,n,8,1] ] ; lists are accepted (problem is fake port)
+  RUNTOOMANYINPUTSTEST   [(PORTMODE "9600,n,8,1 "toomany)]
+
+  ; Cleanup
+  TRACEINSTRUCTION [ PORTCLOSE ]
+  
+END
+
+TO PORTCLOSETEST
+
+  ; Open and close a port.
+  ; The name of the port isn't important for this test.
+  TRACEINSTRUCTION [ PORTOPEN "someportname ]
+  TRACEINSTRUCTION [ PORTCLOSE ]
+
+  ; Close a port when it's not open is an error.
+  RUNSTOPPINGTEST [ PORTCLOSE ]
+
+  ; Bad input
+  RUNTOOMANYINPUTSTEST [(PORTCLOSE "COM1)]
+END
 
 TO INPORTTEST
 
@@ -26,6 +111,7 @@ TO INPORTTEST
   RUNBADINPUTTEST        [INPORTB "hello]
   RUNTOOMANYINPUTSTEST   [(INPORTB "198 "toomany)]
 END
+
 
 TO OUTPORTTEST
 
@@ -55,8 +141,56 @@ TO OUTPORTTEST
 
 END
 
+TO INGAMEPORTTEST
+   LOCAL "value
+
+   ; Since we don't know if a joystick is connected, or what it's
+   ; state is if it is connected, we can only test that INGAMEPORT
+   ; returns a number in the expected range (0 - 1000) or an error (-1)
+   MAKE "value INGAMEPORT 1
+   FAILIFNOTTRUE [AND -1 <= :value :value <= 1000]
+
+   MAKE "value INGAMEPORT 2
+   FAILIFNOTTRUE [AND -1 <= :value :value <= 1000]
+
+   MAKE "value INGAMEPORT 4
+   FAILIFNOTTRUE [AND -1 <= :value :value <= 1000]
+
+   MAKE "value INGAMEPORT 8
+   FAILIFNOTTRUE [AND -1 <= :value :value <= 1000]
+
+   ; For backward compatibility, you can specify a "port"
+   MAKE "value (INGAMEPORT 1 513)
+   FAILIFNOTTRUE [AND -1 <= :value :value <= 1000]
+
+   ; A unsupported mask always outputs -1
+   SIMPLEREPORTTEST [INGAMEPORT 0  ] -1
+   SIMPLEREPORTTEST [INGAMEPORT 3  ] -1
+   SIMPLEREPORTTEST [INGAMEPORT 255] -1
+
+   ; bad input
+   RUNNOTENOUGHINPUTSTEST [ (INGAMEPORT)         ]
+   RUNDOESNTLIKEINPUTTEST [ INGAMEPORT [1]       ]
+   RUNDOESNTLIKEINPUTTEST [ INGAMEPORT {1}       ]
+   RUNDOESNTLIKEINPUTTEST [ INGAMEPORT "bad      ]
+   RUNDOESNTLIKEINPUTTEST [ INGAMEPORT 1.2       ]
+   RUNDOESNTLIKEINPUTTEST [ (INGAMEPORT 1 "bad)  ]
+   RUNDOESNTLIKEINPUTTEST [ (INGAMEPORT 1 -1)    ]
+   RUNDOESNTLIKEINPUTTEST [ (INGAMEPORT 1 [513]) ]
+   RUNDOESNTLIKEINPUTTEST [ (INGAMEPORT 1 {513}) ]
+   RUNTOOMANYINPUTSTEST   [ (INGAMEPORT 1 512 "toomany) ]
+
+END
+
 TO PORTTEST
+
+  PORTOPENTEST
+  PORTFLUSHTEST
+  PORTMODETEST
+  PORTCLOSETEST
+
+  INGAMEPORTTEST
+
   INPORTTEST
   OUTPORTTEST
 END
-
