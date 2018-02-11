@@ -28,7 +28,8 @@ This is the same format that is used by MODE, the Windows command shell program.
 <varlistentry><term>Example</term>
 <listitem>
 
-<programlisting><userinput>PORTMODE "com1:9600,n,8,1</userinput>
+<programlisting><userinput>PORTOPEN "com1
+PORTMODE "com1:9600,n,8,1</userinput>
 </programlisting>
 
 </listitem>
