@@ -557,12 +557,12 @@ NODE *loutportb(NODE *args)
 
 // A special case for reading the joystick port.
 // Reading it directly is impossible from user-mode,
-// but we can read it through the Win32 API.
+// but we can read what's used to be available at 0x201 using the Win32 API.
 static int simulate_inport(int portid) {
     int value = 0;
-#ifndef WX_PURE
     if (portid == 0x201)
     {
+#ifndef WX_PURE
         // hardware port for the joystick port
         UINT totalJoysticks = joyGetNumDevs();
         if (totalJoysticks != 0)
@@ -597,8 +597,9 @@ static int simulate_inport(int portid) {
                 }
             }
         }
-    }
 #endif
+    }
+
     return value;
 }
 
@@ -629,17 +630,18 @@ NODE *linport(NODE *args)
 
 NODE *lingameport(NODE *args)
 {
-    int portid;
-
     int mask = getint(nonnegative_int_arg(args));
 
-    if (cdr(args) == NIL)
+    // The second input was a "portid" in MSWLogo and documented as the
+    // hardware port to read from.  In MSWLogo, this function was implemented
+    // using x86 assembly which executed, among other things, "cli" to suspend
+    // interrupts, an "in" instruction to direct directly from the hardware
+    // port, then "sti" to restore interrupts.  This is all now illegal from
+    // user mode, so FMSLogo uses the "joy" API to emulate it.  The portid
+    // input is parsed for backward compatibility.
+    if (cdr(args) != NIL)
     {
-        portid = 0x201;
-    }
-    else
-    {
-        portid = getint(nonnegative_int_arg(cdr(args)));
+        getint(nonnegative_int_arg(cdr(args)));
     }
 
     int value = -1;
