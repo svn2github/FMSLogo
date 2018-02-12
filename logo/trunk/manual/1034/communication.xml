@@ -84,7 +84,7 @@ La otra se usa para manipular al «hardware» del puerto de comunicaciones.
    </section>
 
    <section id="dll-communications">
-      <title>Comunicacion con bibliotecas de enlace dinámico</title>
+      <title>Comunicación con bibliotecas de enlace dinámico</title>
 
       &command-dllload;
       &command-dllcall;
