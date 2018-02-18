@@ -60,12 +60,12 @@ Este límite aplica no sólo a las cosas al nivel lo mas superior, pero también
    </section>
 
    <section id="hardware-communications">
-      <title>Comunicacion con hardware</title>
+      <title>Comunicación con hardware</title>
 
 <para>
 Hay dos clases de procedimientos para comunicar con hardware.
 Una clase es para comunicar a través del puerto serie (RS-232) y el puerto paralelo.
-La otra se usa para manipular al «hardware» del puerto de comunicaciones.
+La otra se usa para leer de y escribir a direcciones de puerto de E/S.
 </para>
 
       &command-portopen;
