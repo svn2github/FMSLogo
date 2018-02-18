@@ -1,35 +1,47 @@
 <section id="command-portflush">
-<title>PORTFLUSH</title>
+<title>LIMPIAPUERTO</title>
+<indexterm><primary>LIMPIAPUERTO</primary></indexterm>
 <indexterm><primary>PORTFLUSH</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PORTFLUSH</command> <parameter>port</parameter></synopsis>
+<synopsis><command>LIMPIAPUERTO</command> <parameter>entrada</parameter>
+<command>PORTFLUSH</command> <parameter>entrada</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Flushes either the input or output queue of the open port.
-If <parameter>port</parameter> is 0, then the output queue is flushed.
-If <parameter>port</parameter> is 1, then the input queue is flushed.
+Limpia (despeja) todos los datos almacenados al puerto abierto.
 </para>
 
+<para>
+Escribir a un puerto puede ser lento.
+Así que el sistema operativo pone todo lo escrito en un almacén temporal y luego lo escribe al puerto a la rapidez adecuada por el puerto.
+Este almacenamiento deja que tu programa ejecuta más rápidamente, porque tu programa no necesita esperar hasta que los datos escritos son enviados al puerto antes de continuar su ejecución.
+El acto de despejar empuja todos los datos en el almacén al puerto.
+Después del despejamiento, te puedes estar seguro que todos los datos que has escrito anteriormente al puerto ya ha sido enviado al puerto.
+</para>
+
+<para>
+Se requiere la entrada <parameter>entrada</parameter>, pero es ignorada.
+Queda como entrada requerida para la retrocompatibilidad con programas antiguos.
+</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>PORTFLUSH 1</userinput>
+<programlisting><userinput>LIMPIAPUERTO 1</userinput>
 </programlisting>
 
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

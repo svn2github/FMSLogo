@@ -1,46 +1,48 @@
 <section id="command-portopen">
-<title>PORTOPEN</title>
+<title>ABREPUERTO</title>
+<indexterm><primary>ABREPUERTO</primary></indexterm>
 <indexterm><primary>PORTOPEN</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PORTOPEN</command> <parameter>port</parameter> </synopsis>
+<synopsis><command>ABREPUERTO</command> <parameter>puerto</parameter>
+<command>PORTOPEN</command> <parameter>puerto</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Gives you access to the serial and parallel ports of your computer.
-The <parameter>port</parameter> input is a string that is the name of the port you wish to open (for example, COM1-COM4 and LPT1-LPT3).
+Te da acceso a los puertos serie y paralelo.
+El <parameter>puerto</parameter> es una palabra que contiene el nombre del puerto a que quieres acceso (por ejemplo, COM1-COM4 o LPT1-LPT3).
 </para>
 
 <para>
-Once the desired port is open you can read from it with <link linkend="command-portreadchar">PORTREADCHAR</link> or <link linkend="command-portreadarray">PORTREADARRAY</link>, or you can write to it with <link linkend="command-portwritechar">PORTWRITECHAR</link> or <link linkend="command-portwritearray">PORTWRITEARRAY</link>.
-You can set the characteristics of the port with <link linkend="command-portmode">PORTMODE</link>.
-Only one port can be open at any given time.
-When you have finished with the port, you should close it with <link linkend="command-portclose">PORTCLOSE</link>.
+Una vez abierto, puedes leer del puerto con <link linkend="command-portreadchar">LEECARACTERPUERTO</link> o <link linkend="command-portreadarray">LEECADENAPUERTO</link> y escribir al puerto con <link linkend="command-portwritechar">ESCRIBECARACTERPUERTO</link> o <link linkend="command-portwritearray">ESCRIBECADENAPUERTO</link>.
+Las características del puerto se fijan con <link linkend="command-portmode">MODOPUERTO</link>.
+Sólo puedes tener un puerto abierto a la vez.
+Cuando has terminado con el puerto, debes cerrarlo con <link linkend="command-portclose">CIERRAPUERTO</link>.
 </para>
 
 <para>
-Do not confuse PORTOPEN with <link linkend="command-inport">INPORT</link> and <link linkend="command-outport">OUTPORT</link>, which are for "hardware" port communications.
+No debes confundir este comando con <link linkend="command-inport">LEEPUERTO2</link> y <link linkend="command-outport">ESCRIBEPUERTO2</link> que se refieren al puertos de «hardware».
 </para>
-
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>PORTOPEN "com1
-PORTCLOSE</userinput>
+<programlisting><userinput>ABREPUERTO "com1
+CIERRAPUERTO</userinput>
 </programlisting>
+
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

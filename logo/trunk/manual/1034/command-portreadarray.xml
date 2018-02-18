@@ -1,50 +1,51 @@
 <section id="command-portreadarray">
-    <title>PORTREADARRAY</title>
+<title>LEECADENAPUERTO</title>
+<indexterm><primary>LEECADENAPUERTO</primary></indexterm>
 <indexterm><primary>PORTREADARRAY</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PORTREADARRAY</command> <parameter>count</parameter> <parameter>buffer</parameter></synopsis>
+<synopsis><command>LEECADENAPUERTO</command> <parameter>total</parameter> <parameter>vector</parameter>
+<command>PORTREADARRAY</command> <parameter>total</parameter> <parameter>vector</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Read data from the currently open port into the given buffer array.
-PORTMODE attempts to read <parameter>count</parameter> many characters from the port, if they are available.
-When characters are written to <parameter>buffer</parameter>, they are written as small integers (between 0 and 255).
-PORTMODE outputs the actual number of bytes read.
+Lee del puerto abierto y escribe los datos en la entrada <parameter>vector</parameter>.
+Intentará leer hasta <parameter>total</parameter> bytes que estén disponibles.
+Escribe los bytes a <parameter>vector</parameter> como enteros pequeños (entre -127 y 128).
+Devuelve el número de bytes leído.
 </para>
 
 <para>
-If <parameter>count</parameter> is larger than the size of the <parameter>buffer</parameter> array, then the number of characters read is limited to the size of the buffer.
+Si <parameter>total</parameter> es más grande que el tamaño de <parameter>vector</parameter>, entonces se limita el número de bytes leído del puerto hasta el tamaño del vector.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>PORTOPEN "com1
-PRINT SENTENCE [Sending...] PORTWRITEARRAY 3 LISTTOARRAY MAP [ASCII ?] ARRAYTOLIST LISTTOARRAY "at</userinput>
-Sending... 2
-<userinput>SHOW PORTWRITECHAR 13</userinput>
+    <programlisting><userinput>ABREPUERTO "com1
+ESCRIBE FRASE [Enviando...] ESCRIBECADENAPUERTO 3 LISTAAVECTOR TEJE [ASCII ?] [a t]</userinput>
+Enviando... 2
+<userinput>MUESTRA ESCRIBECARACTERPUERTO 13</userinput>
 1
-<userinput>WAIT 60
-MAKE "buff {0 0 0 0 0 0 0 0 0 0}
-PRINT SENTENCE [Receiving...] PORTREADARRAY 10 :buff</userinput>
-Receiving... 9
-<userinput>PRINT SENTENCE [Data Rx...] MAP [CHAR ?] REMOVE [] ARRAYTOLIST :buff</userinput>
-Data Rx... at | |
+<userinput>ESPERA 60
+HAZ "datos {0 0 0 0 0 0 0 0 0 0}
+ESCRIBE FRASE [Recibiendo...] LEECADENAPUERTO 10 :vector</userinput>
+Recibiendo... 9
+<userinput>ESCRIBE FRASE [Datos Rx...] TEJE [CAR ?] QUITA [] VECTORALISTA :vector</userinput>
+Datos Rx... at | |
 O K |
-<userinput>PORTCLOSE</userinput>
+<userinput>CIERRAPUERTO</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

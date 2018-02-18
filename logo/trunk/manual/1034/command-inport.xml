@@ -1,44 +1,46 @@
 <section id="command-inport">
-<title>INPORT</title>
+<title>LEEPUERTO2</title>
+<indexterm><primary>LEEPUERTO2</primary></indexterm>
 <indexterm><primary>INPORT</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>INPORT</command> <parameter>portid</parameter></synopsis>
+<synopsis><command>LEEPUERTO2</command> <parameter>dirección_de_puerto</parameter>
+<command>INPORT</command> <parameter>dirección_de_puerto</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 
 <para>
-Reads 2 bytes (16 bits) from the port specified by <parameter>portid</parameter> and output the data as an integer.
-The <parameter>portid</parameter> input specifies a "Hardware" port.
+Lee 2 bytes (16 bits) de la especificada <parameter>dirección_de_puerto</parameter> y devuelve los datos como un entero.
+La entrada <parameter>dirección_de_puerto</parameter> especifica una dirección de un puerto de E/S.
 </para>
 
 <para>
-Do not confuse INPORT with <link linkend="command-portopen">PORTOPEN</link> and <link linkend="command-portreadchar">PORTREADCHAR</link> which are for communications through the serial and parallel ports.
+No debes confundir este procedimiento con <link linkend="command-portopen">ABREPUERTO</link> y <link linkend="command-portreadchar">LEECARACTERPUERTO</link> que sirven para las comunicaciones a través de los puertos Serie y Paralelo.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW INPORT 198</userinput>
+<programlisting><userinput>MUESTRA LEEPUERTO2 198</userinput>
 25730
 </programlisting>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-inportb">INPORTB</link></member>
-<member><link linkend="command-outport">OUTPORT</link></member>
+<member><link linkend="command-inportb">LEEPUERTO</link></member>
+<member><link linkend="command-outport">ESCRIBEPUERTO2</link></member>
 </simplelist></listitem>
 </varlistentry>
 

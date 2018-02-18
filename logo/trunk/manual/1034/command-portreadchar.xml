@@ -1,47 +1,50 @@
 <section id="command-portreadchar">
-    <title>PORTREADCHAR</title>
+    <title>LEECARACTERPUERTO</title>
+<indexterm><primary>LEECARACTERPUERTO</primary></indexterm>
 <indexterm><primary>PORTREADCHAR</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PORTREADCHAR</command></synopsis>
+<synopsis><command>LEECARACTERPUERTO</command>
+<command>PORTREADCHAR</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Reads one byte from the currently open port and outputs it as an integer.
-It outputs "-1" if no character is available.
+Lee un byte del puerto abierto y lo devuelve como un entero entre -127 y 128.
+También devuelve -1 cuando no hay un byte disponible.
+Entonces, si LEECARACTERPUERTO devuelve -1, puede ser que o no haya un byte disponible o el byte leído es -1.
+Por esa razón, si -1 es posible como dato, es mejor usar <link linkend="command-portreadarray">LEECADENAPUERTO</link>.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>PORTOPEN "com1
-SHOW PORTWRITECHAR ASCII "a</userinput>
+    <programlisting><userinput>ABREPUERTO "com1
+MUESTRA ESCRIBECARACTERPUERTO ASCII "a</userinput>
 1
-<userinput>SHOW PORTWRITECHAR ASCII "t</userinput>
+<userinput>MUESTRA ESCRIBECARACTERPUERTO ASCII "t</userinput>
 1
-<userinput>SHOW PORTWRITECHAR 13</userinput>
+<userinput>MUESTRA ESCRIBECARACTERPUERTO 13</userinput>
 1
-<userinput>WAIT 60
-PRINT "Reading...</userinput>
-Reading...
-<userinput>REPEAT 10 [MAKE "x PORTREADCHAR IF NOT :x = -1 [TYPE CHAR :x]]
-PRINT ".</userinput>
+<userinput>ESPERA 60
+ESCRIBE "Leyendo...</userinput>
+Leyendo...
+<userinput>REPITE 10 [HAZ "x LEECARACTERPUERTO SI NO :x = -1 [MUESTRAT CAR :x]]
+ESCRIBE ".</userinput>
 at||
 OK|
 .
-<userinput>PORTCLOSE</userinput>
+<userinput>CIERRAPUERTO</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
