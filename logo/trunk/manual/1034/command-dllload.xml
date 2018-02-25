@@ -1,40 +1,41 @@
 <section id="command-dllload">
-    <title>DLLLOAD</title>
+    <title>CARGADLL</title>
+<indexterm><primary>CARGADLL</primary></indexterm>
 <indexterm><primary>DLLLOAD</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>DLLLOAD</command> <parameter>dllfilename</parameter></synopsis>
+<synopsis><command>CARGADLL</command> <parameter>nombre_de_biblioteca</parameter>
+<command>DLLLOAD</command> <parameter>nombre_de_biblioteca</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Loads the DLL (Dynamic Linked Library) called <parameter>dllfilename</parameter> into &PRODUCTNAME;.
-Once loaded you can call functions with <link linkend="command-dllcall">DLLCALL</link>.
-When you have finished, you can unload the DLL with <link linkend="command-dllfree">DLLFREE</link>.
+Carga la biblioteca de enlace dinámico (DLL por sus siglas en inglés) cuyo nombre de archivo es <parameter>nombre_de_biblioteca</parameter>.
+Una vez cargada, puedes llamar a las funciones con <link linkend="command-dllcall">LLAMADLL</link>.
+Cuando hayas concluido el trabajo con la biblioteca, debes cerrarla con <link linkend="command-dllfree">QUITADLL</link>.
 </para>
 
 <para>
-You may load more than one DLL at a time.
-Loading a DLL that is already loaded simply increments a reference count and requires an additional call to DLLFREE to actually unload the DLL.
+Puedes cargar más de una biblioteca a la vez.
+Cargando una biblioteca que ya está cargada solamente incrementa un contador de referencias y requeriría una ejecución más de QUITADLL para quitarla de veras.
 </para>
 
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>DLLLOAD "user32.dll
-DLLFREE</userinput>
+<programlisting><userinput>CARGADLL "user32.dll
+QUITADLL</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

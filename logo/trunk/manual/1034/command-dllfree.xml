@@ -1,30 +1,33 @@
 <section id="command-dllfree">
-<title>DLLFREE</title>
+<title>QUITADLL</title>
+<indexterm><primary>QUITADLL</primary></indexterm>
 <indexterm><primary>DLLFREE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>DLLFREE</command>
-(<command>DLLFREE</command> <parameter>dllname</parameter>)</synopsis>
+<synopsis><command>QUITADLL</command>
+(<command>QUITADLL</command> <parameter>nombre_de_biblioteca</parameter>)
+<command>DLLFREE</command>
+(<command>DLLFREE</command> <parameter>nombre_de_biblioteca</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Unloads a DLL that was loaded with <link linkend="command-dllload">DLLLOAD</link>.
-If a <parameter>dllname</parameter> input is given, then the DLL by that name is unloaded.
-Otherwise, the most recently loaded DLL is unloaded.
+Cierra una biblioteca (DLL) previamente cargada con <link linkend="command-dllload">CARAGADLL</link>.
+Si la entrada <parameter>nombre_de_biblioteca</parameter> es dada, entonces se cierra la biblioteca con ese nombre.
+Si no, QUITADLL cierra la biblioteca cargada más recientemente.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>DLLLOAD "user32.dll
-DLLFREE</userinput>
+<programlisting><userinput>CARGADLL "user32.dll
+QUITADLL</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
