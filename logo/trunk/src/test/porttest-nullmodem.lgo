@@ -12,21 +12,339 @@
 ;
 ; Because FMSLogo is limited to having only one COM port open at a time,
 ; all test cases must invoke a second FMSLogo instance to operate on the
-; other side of the null modem.
+; other side of the null modem.  All of the tests write to the port using
+; the second instance of FMSLogo and read from the port using this instance,
+; regardless of which procedure is being tested.
+;
+; All of the tests must open the "read por"t before starting the FMSLogo
+; instance that writes to it.  Otherwise there would be a deadlock (the writer
+; would block waiting for someone to open the other side of the reader port,
+; and the test would block waiting for the other instance to terminate.
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 LOAD "testlib.lgo
 
+TO NULLMODEMTEST.WRITECHAR.8BIT
+
+  ; Open the port in an 8-bit mode.
+  PORTOPEN :readport
+  PORTMODE "9600,n,8,1
+
+  ; TODO: collect the output of PORTWRITECHAR and test it.
+  RUNLOGOPROGRAM (WORD
+    "|TO RUNTEST\n|
+    "|  ; Use PORTWRITECHAR to write all bytes from 0 to 256\n|
+    "|  PORTOPEN "| :writeport "|\n|
+    "|  PORTMODE "9600,n,8,1\n|
+    "|  REPEAT 256 [ SHOW PORTWRITECHAR REPCOUNT - 1 ]\n|
+    "|  PORTCLOSE\n|
+    "|\n|
+    "|END\n|
+    "|\n|
+    "|MAKE "startup [RUNTEST BYE]\n|
+  )
+
+  ; We should be able to read all 256 bytes.
+  ; Values from 0-127 appear as written.
+  ; Values from 128-255 are negative.
+  REPEAT 128 [
+    SIMPLEREPORTTEST [PORTREADCHAR] REPCOUNT-1
+  ]
+  REPEAT 128 [
+    SIMPLEREPORTTEST [PORTREADCHAR] REPCOUNT - 1 - 128
+  ]
+
+  ; The 257th PORTREADCHAR should output -1, to indicate
+  ; that no more data are available.
+  SIMPLEREPORTTEST [PORTREADCHAR] -1
+
+  ; Close the reader port
+  PORTCLOSE
+
+END
+
+TO NULLMODEMTEST.WRITECHAR.7BIT
+
+  ; Open the port in a 8-bit mode (the writer uses the 7-bit mode).
+  PORTOPEN :readport
+  PORTMODE "9600,n,8,1
+
+  ; TODO: collect the output of PORTWRITECHAR and test it.
+  RUNLOGOPROGRAM (WORD
+    "|TO RUNTEST\n|
+    "|  ; Use PORTWRITECHAR to write all bytes from 0 to 256\n|
+    "|  PORTOPEN "| :writeport "|\n|
+    "|  PORTMODE "9600,n,7,1\n|
+    "|  REPEAT 256 [ SHOW PORTWRITECHAR REPCOUNT - 1 ]\n|
+    "|  PORTCLOSE\n|
+    "|\n|
+    "|END\n|
+    "|\n|
+    "|MAKE "startup [RUNTEST BYE]\n|
+  )
+
+  ; We should be able to read all 256 bytes.
+  ; Values from 0-127 appear as written.
+  ; Values from 128-255 were masked to 7-bits, per the port mode.
+  REPEAT 128 [
+    SIMPLEREPORTTEST [PORTREADCHAR] REPCOUNT-1
+  ]
+  REPEAT 128 [
+    SIMPLEREPORTTEST [PORTREADCHAR] REPCOUNT-1
+  ]
+
+  ; The 257th PORTREADCHAR should output -1, to indicate
+  ; that no more data are available.
+  SIMPLEREPORTTEST [PORTREADCHAR] -1
+
+  ; Close the reader port
+  PORTCLOSE
+
+END
+
+TO NULLMODEMTEST.WRITECHAR.BADDATA
+  ; This tests the bad input tests which do not throw errors.
+
+  ; Open the port in an 8-bit mode.
+  PORTOPEN :readport
+  PORTMODE "9600,n,8,1
+
+  ; TODO: collect the output of PORTWRITECHAR and test it.
+  RUNLOGOPROGRAM (WORD
+    "|TO RUNTEST\n|
+    "|  ; Use PORTWRITECHAR to write numbers that are out of range.\n|
+    "|  PORTOPEN "| :writeport "|\n|
+    "|  PORTMODE "9600,n,8,1\n|
+    "|  SHOW PORTWRITECHAR "25\n|
+    "|  SHOW PORTWRITECHAR 50.0\n|
+    "|  SHOW PORTWRITECHAR 256\n|
+    "|  SHOW PORTWRITECHAR 1000\n|
+    "|  SHOW PORTWRITECHAR 1000.0\n|
+    "|  PORTCLOSE\n|
+    "|\n|
+    "|END\n|
+    "|\n|
+    "|MAKE "startup [RUNTEST BYE]\n|
+  )
+
+  ; PORTWRITECHAR 25
+  SIMPLEREPORTTEST [PORTREADCHAR] 25
+
+  ; PORTWRITECHAR 50.0
+  SIMPLEREPORTTEST [PORTREADCHAR] 50
+
+  ; PORTWRITECHAR 256 (silent masking)
+  SIMPLEREPORTTEST [PORTREADCHAR] 0
+
+  ; PORTWRITECHAR 1000 (silent masking)
+  SIMPLEREPORTTEST [PORTREADCHAR] -24
+
+  ; PORTWRITECHAR 1000.0 (silent masking)
+  SIMPLEREPORTTEST [PORTREADCHAR] -24
+
+  ; No extra data should have been written
+  SIMPLEREPORTTEST [PORTREADCHAR] -1
+
+  ; Close the reader port
+  PORTCLOSE
+
+END
+
+TO NULLMODEMTEST.READARRAY.8BIT
+  LOCAL [buffer]
+
+  ; Open the port in an 8-bit mode.
+  PORTOPEN :readport
+  PORTMODE "9600,n,8,1
+
+  RUNLOGOPROGRAM (WORD
+    "|TO RUNTEST\n|
+    "|  ; Use PORTWRITECHAR to write all bytes from 0 to 256\n|
+    "|  PORTOPEN "| :writeport "|\n|
+    "|  PORTMODE "9600,n,8,1\n|
+    "|  REPEAT 256 [ IGNORE PORTWRITECHAR REPCOUNT - 1 ]\n|
+    "|  REPEAT 256 [ IGNORE PORTWRITECHAR REPCOUNT - 1 ]\n|
+    "|  PORTCLOSE\n|
+    "|\n|
+    "|END\n|
+    "|\n|
+    "|MAKE "startup [RUNTEST BYE]\n|
+  )
+
+  ; We should be able to read all 512 bytes in a single read,
+  ; but FMSLogo has an internal limit of 256.
+  ; Values from 0-127 appear as written.
+  ; Values from 128-255 are negative.
+  MAKE "buffer ARRAY 512
+  SIMPLEREPORTTEST [PORTREADARRAY 512 :buffer ] 256
+
+  REPEAT 128 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT :buffer] REPCOUNT-1
+  ]
+  REPEAT 128 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT+128 :buffer] REPCOUNT - 1 - 128
+  ]
+
+  ; The rest of the array should not have been modified (it was
+  ; initialized to empty lists.
+  REPEAT 256 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT+256 :buffer] []
+  ]
+
+  ; Confirm that really only 256 characters were read above by reading
+  ; the next 256 characters.
+  SIMPLEREPORTTEST [PORTREADARRAY 512 :buffer ] 256
+  REPEAT 128 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT :buffer] REPCOUNT-1
+  ]
+  REPEAT 128 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT+128 :buffer] REPCOUNT - 1 - 128
+  ]
+
+  ; Again, the rest of the array should remain unmodified.
+  REPEAT 256 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT+256 :buffer] []
+  ]
+
+  ; At this point the port should have no more data.
+  ; We confirm this by setting all values in the buffer to something
+  ; non-numeric, reading from the port, and confirming that contents
+  ; of the array remain unchanged.
+  REPEAT 512 [ SETITEM REPCOUNT :buffer "X ]
+  SIMPLEREPORTTEST [PORTREADARRAY 512 :buffer ] 0
+  REPEAT 512 [ SIMPLEREPORTTEST [ITEM REPCOUNT :buffer] "X ]
+
+  ; Close the reader port
+  PORTCLOSE
+
+END
+
+TO NULLMODEMTEST.READARRAY.7BIT
+  LOCAL [buffer]
+
+  ; Open the read port in 7-bit mode.
+  PORTOPEN :readport
+  PORTMODE "9600,n,7,1
+
+  RUNLOGOPROGRAM (WORD
+    "|TO RUNTEST\n|
+    "|  ; Use PORTWRITECHAR to write all bytes from 0 to 256\n|
+    "|  PORTOPEN "| :writeport "|\n|
+    "|  PORTMODE "9600,n,8,1\n|
+    "|  REPEAT 256 [ IGNORE PORTWRITECHAR REPCOUNT - 1 ]\n|
+    "|  REPEAT 256 [ IGNORE PORTWRITECHAR REPCOUNT - 1 ]\n|
+    "|  PORTCLOSE\n|
+    "|\n|
+    "|END\n|
+    "|\n|
+    "|MAKE "startup [RUNTEST BYE]\n|
+  )
+
+  ; We should be able to read all 512 bytes in a single read,
+  ; but FMSLogo has an internal limit of 256.
+  ; Values from 0-127 appear as written.
+  ; Values from 128-255 are masked to 7-bits, per the port mode.
+  MAKE "buffer ARRAY 512
+  SIMPLEREPORTTEST [PORTREADARRAY 512 :buffer ] 256
+
+  REPEAT 128 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT :buffer] REPCOUNT - 1
+  ]
+  REPEAT 128 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT+128 :buffer] REPCOUNT - 1
+  ]
+
+  ; The rest of the array should not have been modified (it was
+  ; initialized to empty lists.
+  REPEAT 256 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT+256 :buffer] []
+  ]
+
+  ; Confirm that really only 256 characters were read above by reading
+  ; the next 256 characters.
+  SIMPLEREPORTTEST [PORTREADARRAY 512 :buffer ] 256
+  REPEAT 128 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT :buffer] REPCOUNT-1
+  ]
+  REPEAT 128 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT+128 :buffer] REPCOUNT - 1
+  ]
+
+  ; Again, the rest of the array should remain unmodified.
+  REPEAT 256 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT+256 :buffer] []
+  ]
+
+  ; Close the reader port
+  PORTCLOSE
+
+END
+
+TO NULLMODEMTEST.READARRAY.ORIGINANDSIZE
+  LOCAL [buffer]
+
+  ; Open the read port
+  PORTOPEN :readport
+
+  RUNLOGOPROGRAM (WORD
+    "|TO RUNTEST\n|
+    "|  ; Use PORTWRITECHAR to write 100 bytes from 1-100\n|
+    "|  PORTOPEN "| :writeport "|\n|
+    "|  REPEAT 100 [ IGNORE PORTWRITECHAR REPCOUNT ]\n|
+    "|  PORTCLOSE\n|
+    "|\n|
+    "|END\n|
+    "|\n|
+    "|MAKE "startup [RUNTEST BYE]\n|
+  )
+
+  ; Read 512 bytes into a 10 byte array.
+  ; Only the first 10 bytes should be read.
+  MAKE "buffer (ARRAY 10)
+  SIMPLEREPORTTEST [PORTREADARRAY 512 :buffer ] 10
+
+  REPEAT 10 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT :buffer] REPCOUNT
+  ]
+
+  ; Read 512 bytes into a 20 byte array with a negative origin.
+  MAKE "buffer (ARRAY 20 -100)
+  SIMPLEREPORTTEST [PORTREADARRAY 512 :buffer ] 20
+
+  REPEAT 20 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT-101 :buffer] REPCOUNT+10
+  ]
+
+  ; Read 512 bytes into a 11 byte array with a large positive origin
+  MAKE "buffer (ARRAY 11 1000)
+  SIMPLEREPORTTEST [PORTREADARRAY 512 :buffer ] 11
+  REPEAT 11 [
+    SIMPLEREPORTTEST [ITEM REPCOUNT+999 :buffer] REPCOUNT+10+20
+  ]
+
+  ; Read 512 bytes into a 0-byte buffer.
+  ; This should read nothing.
+  MAKE "buffer ARRAY 0
+  SIMPLEREPORTTEST [PORTREADARRAY 512 :buffer ] 0
+
+  ; Read less than the array size.
+  MAKE "buffer {X X X X X X X X X X}
+  SIMPLEREPORTTEST [PORTREADARRAY 1 :buffer ] 1
+  
+  ; Only the first byte should have been read.
+  ; The rest should have remained X
+  SIMPLEREPORTTEST [ITEM 1 :buffer] 1+10+20+11
+  REPEAT 9 [ SIMPLEREPORTTEST [ITEM REPCOUNT+1 :buffer] "X ]
+
+  ; Close the reader port
+  PORTCLOSE
+
+END
+
+
 TO NULLMODEMTEST.WRITEARRAY.8BIT
 
-  ; Because FMSLogo is limited to having only one COM port open at
-  ; a time, this test must invoke a second FMSLogo instance to
-  ; operate on the other port.
-
-  ; Open the port before starting the FMSLogo instance that writes to it.
-  ; Otherwise there will be a deadlock (the writer will block waiting
-  ; for someone to open the other side of the reader port, and this
-  ; this program will block on the other instance).
+  ; Open the port in an 8-bit mode.
   PORTOPEN :readport
   PORTMODE "9600,n,8,1
 
@@ -69,12 +387,9 @@ END
 
 TO NULLMODEMTEST.WRITEARRAY.7BIT
 
-  ; Open the port before starting the FMSLogo instance that writes to it.
-  ; Otherwise there will be a deadlock (the writer will block waiting
-  ; for someone to open the other side of the reader port, and this
-  ; this program will block on the other instance).
+  ; Open the read port in an 8-bit mode (the writer uses a 7-bit mode).
   PORTOPEN :readport
-  PORTMODE "9600,n,7,1
+  PORTMODE "9600,n,8,1
 
   ; TODO: collect the output of PORTWRITEARRAY and test it.
   RUNLOGOPROGRAM (WORD
@@ -85,7 +400,7 @@ TO NULLMODEMTEST.WRITEARRAY.7BIT
     "|\n|
     "|  ; Use PORTWRITEARRAY to write all of the data\n|
     "|  PORTOPEN "| :writeport "|\n|
-    "|  PORTMODE "9600,n,8,1\n|
+    "|  PORTMODE "9600,n,7,1\n|
     "|  SHOW PORTWRITEARRAY 256 :buffer\n|
     "|  PORTCLOSE\n|
     "|\n|
@@ -113,11 +428,130 @@ TO NULLMODEMTEST.WRITEARRAY.7BIT
 
 END
 
+TO NULLMODEMTEST.WRITEARRAY.ORIGINANDSIZE
+  ; This is a test for PORTWRITEARRAY with variations on the
+  ; array's origin and size.
+  PORTOPEN :readport
+
+  ; TODO: collect the output of PORTWRITEARRAY and test it.
+  RUNLOGOPROGRAM (WORD
+    "|TO RUNTEST\n|
+    "|\n|
+    "|  PORTOPEN "| :writeport "|\n|
+    "|\n|
+    "|  ; PORTWRITEARRAY with number larger than array size.\n|
+    "|  SHOW PORTWRITEARRAY 256 {1 2 3 4 5 6 7 8 9 10}\n|
+    "|\n|
+    "|  ; PORTWRITEARRAY with array with large negative origin\n|
+    "|  SHOW PORTWRITEARRAY 256 {1 2 3 4 5 6 7 8 9 10}@-500\n|
+    "|\n|
+    "|  ; PORTWRITEARRAY with array with large positive origin\n|
+    "|  SHOW PORTWRITEARRAY 256 {1 2 3 4 5 6 7 8 9 10}@500\n|
+    "|\n|
+    "|  ; PORTWRITEARRAY with a 0-byte array\n|
+    "|  SHOW PORTWRITEARRAY 256 {}\n|
+    "|\n|
+    "|  ; PORTWRITEARRAY to write 0 bytes from an array with data\n|
+    "|  SHOW PORTWRITEARRAY 0 {100 100 100 100}\n|
+    "|\n|
+    "|  ; Fill a large array with 1s\n|
+    "|  MAKE "buffer ARRAY 512\n|
+    "|  REPEAT 512 [ SETITEM REPCOUNT :buffer 1 ]\n|
+    "|  SHOW PORTWRITEARRAY 512 :buffer\n|
+    "|\n|
+    "|  PORTCLOSE\n|
+    "|\n|
+    "|END\n|
+    "|\n|
+    "|MAKE "startup [RUNTEST BYE]\n|
+  )
+
+  ; The first test should have written 1 - 10.
+  REPEAT 10 [ SIMPLEREPORTTEST [PORTREADCHAR] REPCOUNT ]
+
+  ; The second test should have written 1 - 10
+  REPEAT 10 [ SIMPLEREPORTTEST [PORTREADCHAR] REPCOUNT ]
+
+  ; The third test should have written 1 - 10
+  REPEAT 10 [ SIMPLEREPORTTEST [PORTREADCHAR] REPCOUNT ]
+
+  ; The fourth and fifth test should not have written anything.
+
+  ; The final tests should have written 512, but it's internally
+  ; limited to 256 bytes.
+  REPEAT 256 [ SIMPLEREPORTTEST [PORTREADCHAR] 1 ]
+  SIMPLEREPORTTEST [PORTREADCHAR] -1
+
+  ; Close the reader port
+  PORTCLOSE
+END
+
+TO NULLMODEMTEST.WRITEARRAY.BADDATA
+  ; This is a test for PORTWRITEARRAY with variations on bad
+  ; data contained within the array.
+  PORTOPEN :readport
+
+  ; TODO: collect the output of PORTWRITEARRAY and test it.
+  RUNLOGOPROGRAM (WORD
+    "|TO RUNTEST\n|
+    "|\n|
+    "|  PORTOPEN "| :writeport "|\n|
+    "|\n|
+    "|  SHOW PORTWRITEARRAY 256 {\n|
+    "|    1    ; good data\n|
+    "|    1.1  ; not integer\n|
+    "|    bad  ; not number\n|
+    "|    -1   ; not positive\n|
+    "|    256  ; too large\n|
+    "|    1000 ; way too large\n|
+    "|    [1]  ; not a number\n|
+    "|    {1}  ; not a number\n|
+    "|    1XXX ; begins with a number, but is not one\n|
+    "|    2    ; good data\n|
+    "|  }\n|
+    "|\n|
+    "|  PORTCLOSE\n|
+    "|\n|
+    "|END\n|
+    "|\n|
+    "|MAKE "startup [RUNTEST BYE]\n|
+  )
+
+  SIMPLEREPORTTEST [PORTREADCHAR] 1    ; 1
+  SIMPLEREPORTTEST [PORTREADCHAR] -102 ; 1.1
+  SIMPLEREPORTTEST [PORTREADCHAR] -38  ; bad
+  SIMPLEREPORTTEST [PORTREADCHAR] -1   ; -1
+  SIMPLEREPORTTEST [PORTREADCHAR] 0    ; 256
+  SIMPLEREPORTTEST [PORTREADCHAR] -24  ; 1000
+  SIMPLEREPORTTEST [PORTREADCHAR] -38  ; [1]  (probably 0xDA, uninitialized)
+  SIMPLEREPORTTEST [PORTREADCHAR] -38  ; {1}  (probably 0xDA, uninitialized)
+  SIMPLEREPORTTEST [PORTREADCHAR] -38  ; 1XXX
+  SIMPLEREPORTTEST [PORTREADCHAR] 2    ; 2
+  SIMPLEREPORTTEST [PORTREADCHAR] -1   ; done
+  SIMPLEREPORTTEST [PORTREADCHAR] -1   ; done
+  SIMPLEREPORTTEST [PORTREADCHAR] -1   ; done
+  SIMPLEREPORTTEST [PORTREADCHAR] -1   ; done
+
+  ; Close the reader port
+  PORTCLOSE
+END
+
+
 TO NULLMODEMTEST
   LOCAL [readport writeport]
   MAKE "readport  "COM4
   MAKE "writeport "COM5
 
+  NULLMODEMTEST.WRITECHAR.8BIT
+  NULLMODEMTEST.WRITECHAR.7BIT
+  NULLMODEMTEST.WRITECHAR.BADDATA
+
+  NULLMODEMTEST.READARRAY.8BIT
+  NULLMODEMTEST.READARRAY.7BIT
+  NULLMODEMTEST.READARRAY.ORIGINANDSIZE
+
   NULLMODEMTEST.WRITEARRAY.8BIT
   NULLMODEMTEST.WRITEARRAY.7BIT
+  NULLMODEMTEST.WRITEARRAY.ORIGINANDSIZE
+  NULLMODEMTEST.WRITEARRAY.BADDATA
 END
