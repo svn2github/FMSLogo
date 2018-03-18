@@ -15,7 +15,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Lee un byte del puerto abierto y lo devuelve como un entero entre -127 y 128.
+Lee un byte del puerto abierto y lo devuelve como un entero entre -128 y 127.
 También devuelve -1 cuando no hay un byte disponible.
 Entonces, si LEECARACTERPUERTO devuelve -1, puede ser que o no haya un byte disponible o el byte leído es -1.
 Por esa razón, si -1 es posible como dato, es mejor usar <link linkend="command-portreadarray">LEECADENAPUERTO</link>.
