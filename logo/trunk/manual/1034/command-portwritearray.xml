@@ -17,7 +17,7 @@
 <para>
 Escribe al puerto abierto los datos en <parameter>vector</parameter>, que debe ser un vector de enteros del tamaño de un byte (entre -127 y 255).
 Intenta escribir <parameter>total</parameter> caracteres al puerto, si es posible.
-Devuelve el número actual de bytes escritos.
+Si se escriben los datos con éxito, entonces ESCRIBECADENAPUERTO devuelve <code>1</code>, sino devuelve <code>0</code>.
 </para>
 
 <para>
