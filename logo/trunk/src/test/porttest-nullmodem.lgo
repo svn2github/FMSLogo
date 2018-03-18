@@ -16,7 +16,7 @@
 ; the second instance of FMSLogo and read from the port using this instance,
 ; regardless of which procedure is being tested.
 ;
-; All of the tests must open the "read por"t before starting the FMSLogo
+; All of the tests must open the "read port" before starting the FMSLogo
 ; instance that writes to it.  Otherwise there would be a deadlock (the writer
 ; would block waiting for someone to open the other side of the reader port,
 ; and the test would block waiting for the other instance to terminate.
@@ -30,14 +30,23 @@ TO NULLMODEMTEST.WRITECHAR.8BIT
   PORTOPEN :readport
   PORTMODE "9600,n,8,1
 
-  ; TODO: collect the output of PORTWRITECHAR and test it.
   RUNLOGOPROGRAM (WORD
     "|TO RUNTEST\n|
+    "|\n|
+    "|  ; Open a file to store the output from PORTWRITECHAR.\n|
+    "|  ; The output is tested in the reader instance.\n|
+    "|  OPENWRITE "portwritechar-output.txt\n|
+    "|  SETWRITE  "portwritechar-output.txt\n|
+    "|\n|
     "|  ; Use PORTWRITECHAR to write all bytes from 0 to 256\n|
     "|  PORTOPEN "| :writeport "|\n|
     "|  PORTMODE "9600,n,8,1\n|
     "|  REPEAT 256 [ SHOW PORTWRITECHAR REPCOUNT - 1 ]\n|
     "|  PORTCLOSE\n|
+    "|\n|
+    "|  ; Close the output file.\n|
+    "|  SETWRITE []\n|
+    "|  CLOSE "portwritechar-output.txt\n|
     "|\n|
     "|END\n|
     "|\n|
@@ -61,6 +70,15 @@ TO NULLMODEMTEST.WRITECHAR.8BIT
   ; Close the reader port
   PORTCLOSE
 
+  ; Each time PORTWRITECHAR was called, it should have output 1.
+  OPENREAD "portwritechar-output.txt
+  SETREAD  "portwritechar-output.txt
+  REPEAT 256 [ SIMPLEREPORTTEST [READWORD ] 1 ]
+  SIMPLEREPORTTEST [READWORD] [] ; EOF
+  SETREAD []
+  CLOSE     "portwritechar-output.txt
+  ERASEFILE "portwritechar-output.txt
+
 END
 
 TO NULLMODEMTEST.WRITECHAR.7BIT
@@ -69,14 +87,23 @@ TO NULLMODEMTEST.WRITECHAR.7BIT
   PORTOPEN :readport
   PORTMODE "9600,n,8,1
 
-  ; TODO: collect the output of PORTWRITECHAR and test it.
   RUNLOGOPROGRAM (WORD
     "|TO RUNTEST\n|
+    "|\n|
+    "|  ; Open a file to store the output from PORTWRITECHAR.\n|
+    "|  ; The output is tested in the reader instance.\n|
+    "|  OPENWRITE "portwritechar-output.txt\n|
+    "|  SETWRITE  "portwritechar-output.txt\n|
+    "|\n|
     "|  ; Use PORTWRITECHAR to write all bytes from 0 to 256\n|
     "|  PORTOPEN "| :writeport "|\n|
     "|  PORTMODE "9600,n,7,1\n|
     "|  REPEAT 256 [ SHOW PORTWRITECHAR REPCOUNT - 1 ]\n|
     "|  PORTCLOSE\n|
+    "|\n|
+    "|  ; Close the output file.\n|
+    "|  SETWRITE []\n|
+    "|  CLOSE "portwritechar-output.txt\n|
     "|\n|
     "|END\n|
     "|\n|
@@ -100,18 +127,31 @@ TO NULLMODEMTEST.WRITECHAR.7BIT
   ; Close the reader port
   PORTCLOSE
 
+  ; Each time PORTWRITECHAR was called, it should have output 1.
+  OPENREAD "portwritechar-output.txt
+  SETREAD  "portwritechar-output.txt
+  REPEAT 256 [ SIMPLEREPORTTEST [READWORD ] 1 ]
+  SIMPLEREPORTTEST [READWORD] [] ; EOF
+  SETREAD []
+  CLOSE     "portwritechar-output.txt
+  ERASEFILE "portwritechar-output.txt
+
 END
 
 TO NULLMODEMTEST.WRITECHAR.BADDATA
-  ; This tests the bad input tests which do not throw errors.
+  ; These are bad input tests which do not throw errors.
 
   ; Open the port in an 8-bit mode.
   PORTOPEN :readport
   PORTMODE "9600,n,8,1
 
-  ; TODO: collect the output of PORTWRITECHAR and test it.
   RUNLOGOPROGRAM (WORD
     "|TO RUNTEST\n|
+    "|  ; Open a file to store the output from PORTWRITECHAR.\n|
+    "|  ; The output is tested in the reader instance.\n|
+    "|  OPENWRITE "portwritechar-output.txt\n|
+    "|  SETWRITE  "portwritechar-output.txt\n|
+    "|\n|
     "|  ; Use PORTWRITECHAR to write numbers that are out of range.\n|
     "|  PORTOPEN "| :writeport "|\n|
     "|  PORTMODE "9600,n,8,1\n|
@@ -121,6 +161,10 @@ TO NULLMODEMTEST.WRITECHAR.BADDATA
     "|  SHOW PORTWRITECHAR 1000\n|
     "|  SHOW PORTWRITECHAR 1000.0\n|
     "|  PORTCLOSE\n|
+    "|  ; Close the output file.\n|
+    "|  SETWRITE []\n|
+    "|  CLOSE "portwritechar-output.txt\n|
+    "|\n|
     "|\n|
     "|END\n|
     "|\n|
@@ -148,6 +192,15 @@ TO NULLMODEMTEST.WRITECHAR.BADDATA
   ; Close the reader port
   PORTCLOSE
 
+  ; Each time PORTWRITECHAR was called, it should have output 1.
+  OPENREAD "portwritechar-output.txt
+  SETREAD  "portwritechar-output.txt
+  REPEAT 5 [ SIMPLEREPORTTEST [READWORD ] 1 ]
+  SIMPLEREPORTTEST [READWORD] [] ; EOF
+  SETREAD []
+  CLOSE     "portwritechar-output.txt
+  ERASEFILE "portwritechar-output.txt
+
 END
 
 TO NULLMODEMTEST.READARRAY.8BIT
@@ -165,7 +218,6 @@ TO NULLMODEMTEST.READARRAY.8BIT
     "|  REPEAT 256 [ IGNORE PORTWRITECHAR REPCOUNT - 1 ]\n|
     "|  REPEAT 256 [ IGNORE PORTWRITECHAR REPCOUNT - 1 ]\n|
     "|  PORTCLOSE\n|
-    "|\n|
     "|END\n|
     "|\n|
     "|MAKE "startup [RUNTEST BYE]\n|
@@ -234,7 +286,6 @@ TO NULLMODEMTEST.READARRAY.7BIT
     "|  REPEAT 256 [ IGNORE PORTWRITECHAR REPCOUNT - 1 ]\n|
     "|  REPEAT 256 [ IGNORE PORTWRITECHAR REPCOUNT - 1 ]\n|
     "|  PORTCLOSE\n|
-    "|\n|
     "|END\n|
     "|\n|
     "|MAKE "startup [RUNTEST BYE]\n|
@@ -292,7 +343,6 @@ TO NULLMODEMTEST.READARRAY.ORIGINANDSIZE
     "|  PORTOPEN "| :writeport "|\n|
     "|  REPEAT 100 [ IGNORE PORTWRITECHAR REPCOUNT ]\n|
     "|  PORTCLOSE\n|
-    "|\n|
     "|END\n|
     "|\n|
     "|MAKE "startup [RUNTEST BYE]\n|
@@ -348,9 +398,13 @@ TO NULLMODEMTEST.WRITEARRAY.8BIT
   PORTOPEN :readport
   PORTMODE "9600,n,8,1
 
-  ; TODO: collect the output of PORTWRITEARRAY and test it.
   RUNLOGOPROGRAM (WORD
     "|TO RUNTEST\n|
+    "|  ; Open a file to store the output from PORTWRITEARRAY.\n|
+    "|  ; The output is tested in the reader instance.\n|
+    "|  OPENWRITE "portwritearray-output.txt\n|
+    "|  SETWRITE  "portwritearray-output.txt\n|
+    "|\n|
     "|  ; Populate a buffer with all legal values from 0 - 255\n|
     "|  MAKE "buffer ARRAY 256\n|
     "|  REPEAT 256 [ SETITEM REPCOUNT :buffer (REPCOUNT - 1) ]\n|
@@ -361,6 +415,9 @@ TO NULLMODEMTEST.WRITEARRAY.8BIT
     "|  SHOW PORTWRITEARRAY 256 :buffer\n|
     "|  PORTCLOSE\n|
     "|\n|
+    "|  ; Close the output file.\n|
+    "|  SETWRITE []\n|
+    "|  CLOSE "portwritearray-output.txt\n|
     "|END\n|
     "|\n|
     "|MAKE "startup [RUNTEST BYE]\n|
@@ -383,6 +440,15 @@ TO NULLMODEMTEST.WRITEARRAY.8BIT
   ; Close the reader port
   PORTCLOSE
 
+  ; PORTWRITEARRAY should have output 1 to indicate success.
+  OPENREAD "portwritearray-output.txt
+  SETREAD  "portwritearray-output.txt
+  SIMPLEREPORTTEST [READWORD] 1
+  SIMPLEREPORTTEST [READWORD] [] ; EOF
+  SETREAD []
+  CLOSE     "portwritearray-output.txt
+  ERASEFILE "portwritearray-output.txt
+
 END
 
 TO NULLMODEMTEST.WRITEARRAY.7BIT
@@ -391,9 +457,13 @@ TO NULLMODEMTEST.WRITEARRAY.7BIT
   PORTOPEN :readport
   PORTMODE "9600,n,8,1
 
-  ; TODO: collect the output of PORTWRITEARRAY and test it.
   RUNLOGOPROGRAM (WORD
     "|TO RUNTEST\n|
+    "|  ; Open a file to store the output from PORTWRITEARRAY.\n|
+    "|  ; The output is tested in the reader instance.\n|
+    "|  OPENWRITE "portwritearray-output.txt\n|
+    "|  SETWRITE  "portwritearray-output.txt\n|
+    "|\n|
     "|  ; Populate a buffer with all legal values from 0 - 255\n|
     "|  MAKE "buffer ARRAY 256\n|
     "|  REPEAT 256 [ SETITEM REPCOUNT :buffer (REPCOUNT - 1) ]\n|
@@ -404,6 +474,9 @@ TO NULLMODEMTEST.WRITEARRAY.7BIT
     "|  SHOW PORTWRITEARRAY 256 :buffer\n|
     "|  PORTCLOSE\n|
     "|\n|
+    "|  ; Close the output file.\n|
+    "|  SETWRITE []\n|
+    "|  CLOSE "portwritearray-output.txt\n|
     "|END\n|
     "|\n|
     "|MAKE "startup [RUNTEST BYE]\n|
@@ -426,6 +499,14 @@ TO NULLMODEMTEST.WRITEARRAY.7BIT
   ; Close the reader port
   PORTCLOSE
 
+  ; PORTWRITEARRAY should have output 1 to indicate success.
+  OPENREAD "portwritearray-output.txt
+  SETREAD  "portwritearray-output.txt
+  SIMPLEREPORTTEST [READWORD] 1
+  SIMPLEREPORTTEST [READWORD] [] ; EOF
+  SETREAD []
+  CLOSE     "portwritearray-output.txt
+  ERASEFILE "portwritearray-output.txt
 END
 
 TO NULLMODEMTEST.WRITEARRAY.ORIGINANDSIZE
@@ -433,9 +514,12 @@ TO NULLMODEMTEST.WRITEARRAY.ORIGINANDSIZE
   ; array's origin and size.
   PORTOPEN :readport
 
-  ; TODO: collect the output of PORTWRITEARRAY and test it.
   RUNLOGOPROGRAM (WORD
     "|TO RUNTEST\n|
+    "|  ; Open a file to store the output from PORTWRITEARRAY.\n|
+    "|  ; The output is tested in the reader instance.\n|
+    "|  OPENWRITE "portwritearray-output.txt\n|
+    "|  SETWRITE  "portwritearray-output.txt\n|
     "|\n|
     "|  PORTOPEN "| :writeport "|\n|
     "|\n|
@@ -461,6 +545,9 @@ TO NULLMODEMTEST.WRITEARRAY.ORIGINANDSIZE
     "|\n|
     "|  PORTCLOSE\n|
     "|\n|
+    "|  ; Close the output file.\n|
+    "|  SETWRITE []\n|
+    "|  CLOSE "portwritearray-output.txt\n|
     "|END\n|
     "|\n|
     "|MAKE "startup [RUNTEST BYE]\n|
@@ -484,6 +571,15 @@ TO NULLMODEMTEST.WRITEARRAY.ORIGINANDSIZE
 
   ; Close the reader port
   PORTCLOSE
+
+  ; PORTWRITEARRAY should have output 1 to indicate success.
+  OPENREAD "portwritearray-output.txt
+  SETREAD  "portwritearray-output.txt
+  REPEAT 6 [ SIMPLEREPORTTEST [READWORD] 1 ]
+  SIMPLEREPORTTEST [READWORD] [] ; EOF
+  SETREAD []
+  CLOSE     "portwritearray-output.txt
+  ERASEFILE "portwritearray-output.txt
 END
 
 TO NULLMODEMTEST.WRITEARRAY.BADDATA
@@ -491,9 +587,12 @@ TO NULLMODEMTEST.WRITEARRAY.BADDATA
   ; data contained within the array.
   PORTOPEN :readport
 
-  ; TODO: collect the output of PORTWRITEARRAY and test it.
   RUNLOGOPROGRAM (WORD
     "|TO RUNTEST\n|
+    "|  ; Open a file to store the output from PORTWRITEARRAY.\n|
+    "|  ; The output is tested in the reader instance.\n|
+    "|  OPENWRITE "portwritearray-output.txt\n|
+    "|  SETWRITE  "portwritearray-output.txt\n|
     "|\n|
     "|  PORTOPEN "| :writeport "|\n|
     "|\n|
@@ -512,6 +611,9 @@ TO NULLMODEMTEST.WRITEARRAY.BADDATA
     "|\n|
     "|  PORTCLOSE\n|
     "|\n|
+    "|  ; Close the output file.\n|
+    "|  SETWRITE []\n|
+    "|  CLOSE "portwritearray-output.txt\n|
     "|END\n|
     "|\n|
     "|MAKE "startup [RUNTEST BYE]\n|
@@ -534,6 +636,15 @@ TO NULLMODEMTEST.WRITEARRAY.BADDATA
 
   ; Close the reader port
   PORTCLOSE
+
+  ; PORTWRITEARRAY should have output 1 to indicate success.
+  OPENREAD "portwritearray-output.txt
+  SETREAD  "portwritearray-output.txt
+  SIMPLEREPORTTEST [READWORD] 1 
+  SIMPLEREPORTTEST [READWORD] [] ; EOF
+  SETREAD []
+  CLOSE     "portwritearray-output.txt
+  ERASEFILE "portwritearray-output.txt
 END
 
 
