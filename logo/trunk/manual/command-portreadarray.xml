@@ -13,14 +13,14 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Read data from the currently open port into the given buffer array.
-PORTREADARRAY attempts to read <parameter>count</parameter> many characters from the port, if they are available.
-When characters are written to <parameter>buffer</parameter>, they are written as small integers (between 0 and 255).
+Reads data from the currently open port into the given buffer array.
+PORTREADARRAY attempts to read <parameter>count</parameter> bytes from the port, if they are available.
+When bytes are written to <parameter>buffer</parameter>, they are written as small integers (between -128 and 127).
 PORTREADARRAY outputs the actual number of bytes read.
 </para>
 
 <para>
-If <parameter>count</parameter> is larger than the size of the <parameter>buffer</parameter> array, then the number of characters read is limited to the size of the buffer.
+If <parameter>count</parameter> is larger than the size of the <parameter>buffer</parameter> array, then the number of bytes read is limited to the size of the buffer.
 </para>
 
 </listitem>
