@@ -14,7 +14,7 @@
 <listitem>
 <para>
 PORTWRITEARRAY writes to the currently open port with the data in <parameter>buffer</parameter>, which must be an array of byte-sized integers.
-It attempts to write <parameter>count</parameter> many bytes to the port, if possible.
+It attempts to write <parameter>count</parameter> bytes to the port, if possible.
 It outputs the actual number of bytes written.
 </para>
 
