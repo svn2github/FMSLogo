@@ -13,7 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Writes one byte to the currently open port and output the actual number of bytes written (0 or 1).
+Writes one byte to the currently open port.
+PORTWRITECHAR outputs 1 if the byte was written succesfully and outputs -1 otherwise.
 The <parameter>data</parameter> input must be an integer from 0 to 255.
 </para>
 
