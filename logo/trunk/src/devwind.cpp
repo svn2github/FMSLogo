@@ -67,8 +67,8 @@ char *keyboard_keyup = NULL;           // KeyBoard key up
 
 #ifndef WX_PURE
 static HANDLE ComId;
-static bool   ComIsOpen = false;
 #endif
+static bool   ComIsOpen = false;
 
 // function definitions
 
@@ -213,7 +213,6 @@ NODE *lkeyboardvalue(NODE *)
 
 NODE *lportclose(NODE *)
 {
-#ifndef WX_PURE
     // if port closed output error else close it
     if (!ComIsOpen)
     {
@@ -222,15 +221,16 @@ NODE *lportclose(NODE *)
     else
     {
         ComIsOpen = false;
+#ifndef WX_PURE
         CloseHandle(ComId);
-    }
 #endif
+    }
+
     return Unbound;
 }
 
 NODE *lportopen(NODE *args)
 {
-#ifndef WX_PURE
     CStringPrintedNode comport(car(args));
 
     // if port open output error else open it
@@ -240,6 +240,7 @@ NODE *lportopen(NODE *args)
     }
     else
     {
+#ifndef WX_PURE
         ComId = CreateFile(
             comport,
             GENERIC_READ | GENERIC_WRITE,
@@ -275,33 +276,34 @@ NODE *lportopen(NODE *args)
         {
             ComIsOpen = true;
         }
-    }
 #endif
+    }
+
     return Unbound;
 }
 
 NODE *lportflush(NODE * /* args */)
 {
-#ifndef WX_PURE
     if (!ComIsOpen)
     {
         ShowErrorMessageAndStop(LOCALIZED_ERROR_PORTNOTOPEN);
     }
     else
     {
+#ifndef WX_PURE
         int err = FlushFileBuffers(ComId);
         if (err == 0)
         {
             ShowErrorMessageAndStop(LOCALIZED_ERROR_CANTFLUSHPORT);
         }
-    }
 #endif
+    }
+
     return Unbound;
 }
 
 NODE *lportmode(NODE *args)
 {
-#ifndef WX_PURE
     CStringPrintedNode commode(car(args));
 
     // if closed output error else set mode
@@ -311,6 +313,7 @@ NODE *lportmode(NODE *args)
     }
     else
     {
+#ifndef WX_PURE
         // build dcb, if no error continue
         DCB dcb;
         memset(&dcb, 0, sizeof(DCB));
@@ -339,8 +342,9 @@ NODE *lportmode(NODE *args)
                 ShowErrorMessageAndStop(LOCALIZED_ERROR_CANTSETPORT);
             }
         }
-    }
 #endif
+    }
+
     return Unbound;
 }
 
@@ -352,7 +356,6 @@ int min3(int a, int b, int c)
 
 NODE *lportwritearray(NODE *args)
 {
-#ifndef WX_PURE
     NODE * val = nonnegative_int_arg(args);
     NODE * obj = cadr(args);
 
@@ -373,7 +376,7 @@ NODE *lportwritearray(NODE *args)
         {
             // get min of max array and the array
             char txbuffer[MAX_BUFFER_SIZE];
-            DWORD count = min3(getint(val), getarrdim(obj), sizeof(txbuffer));
+            int count = min3(getint(val), getarrdim(obj), sizeof(txbuffer));
 
             // fill buffer with elements of the array
             for (size_t i = 0; i < count; i++)
@@ -395,6 +398,7 @@ NODE *lportwritearray(NODE *args)
                 }
             }
 
+#ifndef WX_PURE
             // now write buffer
             DWORD errorCode;
             ClearCommError(ComId, &errorCode, NULL);
@@ -410,16 +414,15 @@ NODE *lportwritearray(NODE *args)
 
             // return byte count sent
             return make_intnode(status);
+#endif
         }
     }
 
-#endif
     return Unbound;
 }
 
 NODE *lportreadarray(NODE *args)
 {
-#ifndef WX_PURE
     NODE * val = nonnegative_int_arg(args);
     NODE * obj = cadr(args);
 
@@ -433,9 +436,7 @@ NODE *lportreadarray(NODE *args)
     {
         if (nodetype(obj) == ARRAY)
         {
-
             // if closed the error, else continue
-
             if (!ComIsOpen)
             {
                 ShowErrorMessageAndStop(LOCALIZED_ERROR_PORTNOTOPEN);
@@ -446,6 +447,7 @@ NODE *lportreadarray(NODE *args)
                 char rxbuffer[MAX_BUFFER_SIZE];
                 int count = min3(getarrdim(obj), getint(val), sizeof(rxbuffer));
 
+#ifndef WX_PURE
                 // Clear any errors
                 DWORD errorCode;
                 COMSTAT Stat;
@@ -475,16 +477,16 @@ NODE *lportreadarray(NODE *args)
 
                 // return actual transfered
                 return make_intnode(count);
+#endif
             }
         }
     }
-#endif
+
     return make_intnode(0);
 }
 
 NODE *lportwritechar(NODE *args)
 {
-#ifndef WX_PURE
     // get arg
     char txchar[1];
     txchar[0] = getint(nonnegative_int_arg(args));
@@ -497,6 +499,7 @@ NODE *lportwritechar(NODE *args)
     }
     else
     {
+#ifndef WX_PURE
         // write the 1 byte
         DWORD status;
         if (!WriteFile(ComId, txchar, 1, &status, NULL))
@@ -513,14 +516,14 @@ NODE *lportwritechar(NODE *args)
 
         // return byte count sent
         return make_intnode(status);
-    }
 #endif
+    }
+
     return Unbound;
 }
 
 NODE *lportreadchar(NODE *)
 {
-#ifndef WX_PURE
     // if closed output error, else continue
     if (!ComIsOpen)
     {
@@ -528,6 +531,7 @@ NODE *lportreadchar(NODE *)
     }
     else
     {
+#ifndef WX_PURE
         // Clear Comm Error in case last operation failed otherwise we won't get anything
         DWORD errorCode;
         ClearCommError(ComId, &errorCode, NULL);
@@ -546,8 +550,9 @@ NODE *lportreadchar(NODE *)
         {
             return make_intnode(-1);
         }
-    }
 #endif
+    }
+
     return Unbound;
 }
 
