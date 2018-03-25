@@ -457,16 +457,8 @@ NODE *lportreadarray(NODE *args)
                 DWORD actual;
                 ReadFile(ComId, rxbuffer, count, &actual, NULL);
 
-                // if nothing there then return 0 count
-                if (actual == 0) 
-                {
-                    return make_intnode(0);
-                }
-
-                count = actual;
-
                 // now fill in the array
-                for (int i = 0; i < count; i++)
+                for (DWORD i = 0; i < actual; i++)
                 {
                     lsetitem(
                         cons_list(
@@ -475,8 +467,8 @@ NODE *lportreadarray(NODE *args)
                             make_intnode(rxbuffer[i])));
                 }
 
-                // return actual transfered
-                return make_intnode(count);
+                // return actual transfered, which may be 0.
+                return make_intnode(actual);
 #endif
             }
         }
