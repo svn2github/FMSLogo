@@ -1038,7 +1038,6 @@
 #define LOCALIZED_ERROR_CANTSETPORT          "Αδύνατη η ρύθμιση της θύρας" // 
 #define LOCALIZED_ERROR_PORTALREADYOPEN      "Η θύρα είναι ήδη ανοιχτή" // 
 #define LOCALIZED_ERROR_PORTNOTOPEN          "Η θύρα δεν είναι ανοιχτή" // 
-#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "Η πρώτη παράγραφος πρέπει να είναι πίνακας (array)" // 
 
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Υπάρχει ήδη: %s"
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Δεν υπάρχει: %s"

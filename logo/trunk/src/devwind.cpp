@@ -356,7 +356,7 @@ NODE *lportwritearray(NODE *args)
     NODE * val = nonnegative_int_arg(args);
     NODE * obj = cadr(args);
 
-    while ((obj == NIL || obj == Null_Word) && NOT_THROWING)
+    while (nodetype(obj) != ARRAY && NOT_THROWING)
     {
         setcar(cdr(args), err_logo(BAD_DATA, obj));
         obj = cadr(args);
@@ -364,50 +364,42 @@ NODE *lportwritearray(NODE *args)
 
     if (NOT_THROWING)
     {
-        if (nodetype(obj) == ARRAY)
+        // if closed the error, else continue
+        if (!ComIsOpen)
         {
-            // if closed the error, else continue
-            if (!ComIsOpen)
-            {
-                ShowErrorMessageAndStop(LOCALIZED_ERROR_PORTNOTOPEN);
-            }
-            else
-            {
-                // get min of max array and the array
-                char txbuffer[MAX_BUFFER_SIZE];
-                DWORD count = min3(getint(val), getarrdim(obj), sizeof(txbuffer));
-
-                // fill buffer with elements of the array
-                for (int i = 0; i < count; i++)
-                {
-                    NODE * item = litem(cons_list(make_intnode(i + getarrorg(obj)), obj));
-                    txbuffer[i] = getint(cnv_node_to_numnode(item));
-                }
-
-                // now write buffer
-                DWORD errorCode;
-                ClearCommError(ComId, &errorCode, NULL);
-
-                DWORD actual;
-                int status = WriteFile(ComId, txbuffer, count, &actual, NULL);
-
-                // if problem GetComError will Put up Message box
-                if (status == 0)
-                {
-                    ClearCommError(ComId, &errorCode, NULL);
-                }
-
-                // return byte count sent
-                return make_intnode(status);
-            }
+            ShowErrorMessageAndStop(LOCALIZED_ERROR_PORTNOTOPEN);
         }
         else
         {
-            ShowMessageAndStop(
-                LOCALIZED_ERROR, 
-                LOCALIZED_ERROR_FIRSTINPUTNOTANARRY);
+            // get min of max array and the array
+            char txbuffer[MAX_BUFFER_SIZE];
+            DWORD count = min3(getint(val), getarrdim(obj), sizeof(txbuffer));
+
+            // fill buffer with elements of the array
+            for (int i = 0; i < count; i++)
+            {
+                NODE * item = litem(cons_list(make_intnode(i + getarrorg(obj)), obj));
+                txbuffer[i] = getint(cnv_node_to_numnode(item));
+            }
+
+            // now write buffer
+            DWORD errorCode;
+            ClearCommError(ComId, &errorCode, NULL);
+
+            DWORD actual;
+            int status = WriteFile(ComId, txbuffer, count, &actual, NULL);
+
+            // if problem GetComError will Put up Message box
+            if (status == 0)
+            {
+                ClearCommError(ComId, &errorCode, NULL);
+            }
+
+            // return byte count sent
+            return make_intnode(status);
         }
     }
+
 #endif
     return Unbound;
 }

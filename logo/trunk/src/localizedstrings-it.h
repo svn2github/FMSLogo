@@ -1038,7 +1038,6 @@
 #define LOCALIZED_ERROR_CANTSETPORT          "Impossibile configurare la porta"
 #define LOCALIZED_ERROR_PORTALREADYOPEN      "La porta è già aperta"
 #define LOCALIZED_ERROR_PORTNOTOPEN          "La porta non è aperta"
-#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "Il primo argomento deve essere un array"
 
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s esiste già"
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s non esiste"

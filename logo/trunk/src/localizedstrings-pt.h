@@ -1038,7 +1038,6 @@
 #define LOCALIZED_ERROR_CANTSETPORT          "Não foi possível mudar a porta"
 #define LOCALIZED_ERROR_PORTALREADYOPEN      "PORTA já aberta"
 #define LOCALIZED_ERROR_PORTNOTOPEN          "PORTA não aberta"
-#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "O primeiro parâmetro deve ser um vetor"
 
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s já existe"
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s não existe"

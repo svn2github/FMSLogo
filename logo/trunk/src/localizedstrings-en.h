@@ -1038,7 +1038,6 @@
 #define LOCALIZED_ERROR_CANTSETPORT          "Could not set port"
 #define LOCALIZED_ERROR_PORTALREADYOPEN      "Port is already open"
 #define LOCALIZED_ERROR_PORTNOTOPEN          "Port is not open"
-#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "First input must be an array"
 
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s already exists"
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s does not exist"

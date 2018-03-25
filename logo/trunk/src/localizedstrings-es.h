@@ -1038,7 +1038,6 @@
 #define LOCALIZED_ERROR_CANTSETPORT          "No se puede poner el PUERTO"
 #define LOCALIZED_ERROR_PORTALREADYOPEN      "PUERTO ya abierto"
 #define LOCALIZED_ERROR_PORTNOTOPEN          "PUERTO no abierto"
-#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "El primer parámetro debe ser un vector"
 
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s ya existe"
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s no existe"

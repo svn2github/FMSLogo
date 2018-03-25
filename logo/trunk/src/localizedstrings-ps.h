@@ -1038,7 +1038,6 @@
 #define LOCALIZED_ERROR_CANTSETPORT          "pseudo.Could not set port"
 #define LOCALIZED_ERROR_PORTALREADYOPEN      "pseudo.Port is already open"
 #define LOCALIZED_ERROR_PORTNOTOPEN          "pseudo.Port is not open"
-#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "pseudo.First input must be an array"
 
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "pseudo.%s already exists"
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "pseudo.%s does not exist"

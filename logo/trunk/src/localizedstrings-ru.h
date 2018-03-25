@@ -1038,7 +1038,6 @@
 #define LOCALIZED_ERROR_CANTSETPORT          "Невозможно установить порт" 
 #define LOCALIZED_ERROR_PORTALREADYOPEN      "Порт уже открыт" 
 #define LOCALIZED_ERROR_PORTNOTOPEN          "Порт не открыт" 
-#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "Первый аргумент должен быть массивом" 
 
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s уже существует" 
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s не существует" 

@@ -1038,7 +1038,6 @@
 #define LOCALIZED_ERROR_CANTSETPORT          "Impossible de paramétrer le port" // 
 #define LOCALIZED_ERROR_PORTALREADYOPEN      "Le port est déjà ouvert" // 
 #define LOCALIZED_ERROR_PORTNOTOPEN          "Le port n'est pas ouvert" // 
-#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "Le premier argument doit être un tableau" // 
 
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s existe déjà"
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s n'existe pas"
