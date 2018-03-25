@@ -537,14 +537,14 @@ NODE *lportreadchar(NODE *)
         ClearCommError(ComId, &errorCode, NULL);
 
         // ReadFile will return immediately even if there is nothing to read
-        char rxchar[64];
+        char rxchar;
         DWORD actual;
-        ReadFile(ComId, rxchar, 1, &actual, NULL);
+        ReadFile(ComId, &rxchar, 1, &actual, NULL);
 
         // if something was read then return it else return -1
         if (actual == 1)
         {
-            return make_intnode(rxchar[0]);
+            return make_intnode(rxchar);
         }
         else
         {
