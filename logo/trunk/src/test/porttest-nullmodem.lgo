@@ -586,6 +586,7 @@ TO NULLMODEMTEST.WRITEARRAY.BADDATA
   ; This is a test for PORTWRITEARRAY with variations on bad
   ; data contained within the array.
   PORTOPEN :readport
+  PORTMODE "9600,n,8,1
 
   RUNLOGOPROGRAM (WORD
     "|TO RUNTEST\n|
@@ -595,19 +596,23 @@ TO NULLMODEMTEST.WRITEARRAY.BADDATA
     "|  SETWRITE  "portwritearray-output.txt\n|
     "|\n|
     "|  PORTOPEN "| :writeport "|\n|
+    "|  PORTMODE "9600,n,8,1\n|
     "|\n|
-    "|  SHOW PORTWRITEARRAY 256 {\n|
-    "|    1    ; good data\n|
-    "|    1.1  ; not integer\n|
-    "|    bad  ; not number\n|
-    "|    -1   ; not positive\n|
-    "|    256  ; too large\n|
-    "|    1000 ; way too large\n|
-    "|    [1]  ; not a number\n|
-    "|    {1}  ; not a number\n|
-    "|    1XXX ; begins with a number, but is not one\n|
-    "|    2    ; good data\n|
-    "|  }\n|
+    "|  MAKE "buffer ARRAY 13\n|
+    "|  SETITEM 1  :buffer 1     ; good data\n|
+    "|  SETITEM 2  :buffer "2    ; good data (word converted to int)\n|
+    "|  SETITEM 3  :buffer 3.0   ; good data (float converted to int)\n|
+    "|  SETITEM 4  :buffer 1.1   ; not integer\n|
+    "|  SETITEM 5  :buffer "bad  ; not number\n|
+    "|  SETITEM 6  :buffer -1    ; not positive\n|
+    "|  SETITEM 7  :buffer 256   ; too large\n|
+    "|  SETITEM 8  :buffer 1000  ; way too large\n|
+    "|  SETITEM 9  :buffer []    ; NIL (always a good test)\n|
+    "|  SETITEM 10 :buffer [1]   ; not a number\n|
+    "|  SETITEM 11 :buffer {1}   ; not a number\n|
+    "|  SETITEM 12 :buffer "1XXX ; begins with a number, but is not one\n|
+    "|  SETITEM 13 :buffer 100   ; good data\n|
+    "|  SHOW PORTWRITEARRAY 256 :buffer\n|
     "|\n|
     "|  PORTCLOSE\n|
     "|\n|
@@ -620,15 +625,18 @@ TO NULLMODEMTEST.WRITEARRAY.BADDATA
   )
 
   SIMPLEREPORTTEST [PORTREADCHAR] 1    ; 1
-  SIMPLEREPORTTEST [PORTREADCHAR] -102 ; 1.1
-  SIMPLEREPORTTEST [PORTREADCHAR] -38  ; bad
+  SIMPLEREPORTTEST [PORTREADCHAR] 2    ; "2
+  SIMPLEREPORTTEST [PORTREADCHAR] 3    ; 3.0
+  SIMPLEREPORTTEST [PORTREADCHAR] 32   ; 1.1  (bad input converted to ASCII space)
+  SIMPLEREPORTTEST [PORTREADCHAR] 32   ; bad  (bad input converted to ASCII space)
   SIMPLEREPORTTEST [PORTREADCHAR] -1   ; -1
-  SIMPLEREPORTTEST [PORTREADCHAR] 0    ; 256
-  SIMPLEREPORTTEST [PORTREADCHAR] -24  ; 1000
-  SIMPLEREPORTTEST [PORTREADCHAR] -38  ; [1]  (probably 0xDA, uninitialized)
-  SIMPLEREPORTTEST [PORTREADCHAR] -38  ; {1}  (probably 0xDA, uninitialized)
-  SIMPLEREPORTTEST [PORTREADCHAR] -38  ; 1XXX
-  SIMPLEREPORTTEST [PORTREADCHAR] 2    ; 2
+  SIMPLEREPORTTEST [PORTREADCHAR] 0    ; 256  (cast to uint8)
+  SIMPLEREPORTTEST [PORTREADCHAR] -24  ; 1000 (cast to uint8)
+  SIMPLEREPORTTEST [PORTREADCHAR] 32   ; []   (bad input converted to ASCII space)
+  SIMPLEREPORTTEST [PORTREADCHAR] 32   ; [1]  (bad input converted to ASCII space)
+  SIMPLEREPORTTEST [PORTREADCHAR] 32   ; {1}  (bad input converted to ASCII space)
+  SIMPLEREPORTTEST [PORTREADCHAR] 32   ; 1XXX (bad input converted to ASCII space)
+  SIMPLEREPORTTEST [PORTREADCHAR] 100  ; 100
   SIMPLEREPORTTEST [PORTREADCHAR] -1   ; done
   SIMPLEREPORTTEST [PORTREADCHAR] -1   ; done
   SIMPLEREPORTTEST [PORTREADCHAR] -1   ; done

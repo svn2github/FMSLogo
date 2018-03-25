@@ -21,6 +21,8 @@ II. New features/bugs fixed:
   Changed in 7.3.0
   o Fix Bug #515; PORTWRITEARRAY now throws a "doesn't like input" error
     when given a non-array second input.
+  o Fix Bug #514; PORTWRITEARRAY now writes a ASCII space instead of
+    uninitialized memory for non-integer items in its data array input.
   o Fix Bug #511; Fix the Spanish translations for READPOS and WRITEPOS (as
     POSLECTURA and POSESCRITURA, respectively).
   o Improvements to the Spanish translation.

@@ -376,10 +376,23 @@ NODE *lportwritearray(NODE *args)
             DWORD count = min3(getint(val), getarrdim(obj), sizeof(txbuffer));
 
             // fill buffer with elements of the array
-            for (int i = 0; i < count; i++)
+            for (size_t i = 0; i < count; i++)
             {
-                NODE * item = litem(cons_list(make_intnode(i + getarrorg(obj)), obj));
-                txbuffer[i] = getint(cnv_node_to_numnode(item));
+                NODE * item = getarrptr(obj)[i];
+                NODE * intItem = cnv_node_to_intnode(item);
+                if (nodetype(intItem) == INTEGER)
+                {
+                    txbuffer[i] = getint(intItem);
+                }
+                else
+                {
+                    // This NODE value could be coerced into a byte.
+                    // In this case, it would be more correct to throw a
+                    // BAD_DATA error, but that could break compatibility
+                    // with older programs.  Instead we replace it with a
+                    // value that is likely to be "safe" for COM ports.
+                    txbuffer[i] = ' ';
+                }
             }
 
             // now write buffer
