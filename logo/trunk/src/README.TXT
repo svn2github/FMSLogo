@@ -23,6 +23,7 @@ II. New features/bugs fixed:
     when given a non-array second input.
   o Fix Bug #514; PORTWRITEARRAY now writes a ASCII space instead of
     uninitialized memory for non-integer items in its data array input.
+  o Fix Bug #513; PORTWRITEARRAY no longer leaks memory.
   o Fix Bug #511; Fix the Spanish translations for READPOS and WRITEPOS (as
     POSLECTURA and POSESCRITURA, respectively).
   o Improvements to the Spanish translation.

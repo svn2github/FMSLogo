@@ -396,6 +396,7 @@ NODE *lportwritearray(NODE *args)
                     // value that is likely to be "safe" for COM ports.
                     txbuffer[i] = ' ';
                 }
+                gcref(intItem);
             }
 
 #ifndef WX_PURE
