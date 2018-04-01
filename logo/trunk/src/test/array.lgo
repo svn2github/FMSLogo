@@ -151,22 +151,34 @@ TO BUG32TEST
 END
 
 TO SETITEMTEST
+   LOCALMAKE "array {1 2 3}
 
    ; wrong number of inputs
    RUNNOTENOUGHINPUTSTEST [(SETITEM)]
    RUNNOTENOUGHINPUTSTEST [(SETITEM 1)]
-   RUNNOTENOUGHINPUTSTEST [(SETITEM 1 {1 2 3})]
-   RUNTOOMANYINPUTSTEST   [(SETITEM 1 {1 2 3} "value "toomany)]
+   RUNNOTENOUGHINPUTSTEST [(SETITEM 1 :array)]
+   RUNTOOMANYINPUTSTEST   [(SETITEM 1 :array "value "toomany)]
 
    ; bad input
-   RUNBADINPUTTEST [SETITEM "one {1 2 3} "value]
-   RUNBADINPUTTEST [SETITEM    1 [1 2 3] "value]
-   RUNBADINPUTTEST [SETITEM    1 "string "value]
-   RUNBADINPUTTEST [SETITEM    5     {1} "value]
+   RUNDOESNTLIKEINPUTTEST               [SETITEM "one  :array "value]
+   RUNDOESNTLIKEINPUTTEST               [SETITEM    1 [1 2 3] "value]
+   RUNDOESNTLIKEINPUTTEST               [SETITEM    1 "string "value]
+   RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [SETITEM    4 :array  "outofbounds]
+   RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [SETITEM    0 :array  "outofbounds]
+   RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [SETITEM    1  {1}@0  "value]
 
-   ; can't create circular arrays
-   LOCALMAKE "myarray {1 2 3}
-   RUNBADINPUTTEST  [SETITEM 1 :myarray :myarray]
+   ; Can't create circular arrays.
+   RUNDOESNTLIKEINPUTTEST [SETITEM 1 :array :array]
+
+   ; Nodes shouldn't be freed until after set.
+   SETITEM 1 :array ITEM 1 :array
+   SETITEM 2 :array ITEM 2 :array
+   SETITEM 3 :array ITEM 3 :array
+
+   ; None of the tests should have modified the array
+   SIMPLEREPORTTEST [ITEM 1 :array] 1
+   SIMPLEREPORTTEST [ITEM 2 :array] 2
+   SIMPLEREPORTTEST [ITEM 3 :array] 3
 END
 
 TO ARRAYGCCRASHTEST
