@@ -461,11 +461,11 @@ NODE *lportreadarray(NODE *args)
                 // now fill in the array
                 for (DWORD i = 0; i < actual; i++)
                 {
-                    lsetitem(
-                        cons_list(
-                            make_intnode(i + getarrorg(obj)),
-                            obj,
-                            make_intnode(rxbuffer[i])));
+                    // Free whatever value happens to be in the array.
+                    deref(getarrptr(obj)[i]);
+
+                    // Set the new value.
+                    getarrptr(obj)[i] = vref(make_intnode(rxbuffer[i]));
                 }
 
                 // return actual transfered, which may be 0.
