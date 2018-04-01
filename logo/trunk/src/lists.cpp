@@ -940,7 +940,9 @@ NODE *setitem_helper(NODE *args, bool safe)
         {
             i -= getarrorg(obj);
             if (i < 0 || i >= getarrdim(obj))
+            {
                 err_logo(BAD_DATA_UNREC, val);
+            }
             else
             {
                 val = (getarrptr(obj))[i];
