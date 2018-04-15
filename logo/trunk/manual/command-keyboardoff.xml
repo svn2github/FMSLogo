@@ -29,8 +29,8 @@ a</userinput>
 a
 <userinput>b</userinput>
 b
-SPLITSCREEN
-KEYBOARDOFF
+<userinput>SPLITSCREEN
+KEYBOARDOFF</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
