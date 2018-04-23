@@ -16,7 +16,7 @@
 <note><para>SETCURSOR is not supported in &PRODUCTNAME;.</para></note>
 
 <para>
-Moves the screen cursor to an x,y coordinate given by an input vector (a list of two numbers).
+In other &GENERICNAME; environments, SETCURSOR moves the screen cursor to an x,y coordinate given by an input vector (a list of two numbers).
 The origin is the upper left corner, positive direction is down and right.
 This command also forces the immediate printing of any buffered characters.
 </para>
