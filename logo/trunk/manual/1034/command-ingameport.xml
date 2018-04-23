@@ -25,7 +25,7 @@ Puedes leer el estado de los botones con <userinput>LEEPUERTO 513</userinput>.
 </para>
 
 <para>
-LEEPUERTOJUEGO devuelve -1 si nada esta connectada al puerto de juego o si la entrada <parameter>máscara</parameter> no es un valor suportado.
+LEEPUERTOJUEGO devuelve -1 si nada esta connectada al puerto de juego o si la entrada <parameter>máscara</parameter> no es un valor soportado.
 </para>
 </listitem>
 </varlistentry>

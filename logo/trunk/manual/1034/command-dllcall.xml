@@ -29,7 +29,7 @@ La entrada <parameter>función_y_argumentos</parameter> es de la forma <userinpu
 LLAMADLL interpreta <parameter>tipof</parameter> como descripción del valor de retorno de la función.
 El valor de retorno es analizado a una lista, como con <link linkend="command-parse">ANALIZA</link>.
 Todos los búferes que fue creado para «parámetros de retorno» son agregado al fin de esta lista y LLAMADLL devuelve la lista completa.
-El significado de cada <parameter>tipof</parameter> suportado se da en la tabla siguiente:
+El significado de cada <parameter>tipof</parameter> soportado se da en la tabla siguiente:
 
 <informaltable frame='all'>
   <tgroup cols='3'>
