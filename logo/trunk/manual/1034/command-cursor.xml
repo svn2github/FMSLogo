@@ -4,20 +4,20 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
 <synopsis><command>CURSOR</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 
-<note><para>CURSOR is not supported in &PRODUCTNAME;.</para></note>
+<note><para>No se soporta CURSOR en &PRODUCTNAME;.</para></note>
 
 <para>
-In other &GENERICNAME; environments, CURSOR outputs a list containing the current x and y coordinates of the screen cursor.
-In &PRODUCTNAME;, it always outputs [0 0].
+En otros entornos de &GENERICNAME;, CURSOR devuelve una lista que contiene las coordenadas x,y del cursor de pantalla.
+En &PRODUCTNAME;, siempre devuelve [0 0].
 </para>
 </listitem>
 </varlistentry>

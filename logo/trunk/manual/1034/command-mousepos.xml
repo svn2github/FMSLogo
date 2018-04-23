@@ -1,41 +1,43 @@
 <section id="command-mousepos">
-    <title>MOUSEPOS</title>
+    <title>POSRATON</title>
+<indexterm><primary>POSRATON</primary></indexterm>
 <indexterm><primary>MOUSEPOS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>MOUSEPOS</command></synopsis>
+<synopsis><command>POSRATON</command>
+<command>MOUSEPOS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 
 <para>
-Output the position of the mouse at the time the last mouse event was generated.
-The position is given as a list with two items: [X, Y].
-The mouse must first be turned on by calling <link linkend="command-mouseon">MOUSEON</link>.
+Devuelve la posición del puntero del ratón, al tiempo del previo evento de ratón.
+La devuelve como una lista de dos elementos: [X, Y].
+Es menester ejecutar previamente <link linkend="command-mouseon">HABILITARATON</link> para habilita la captura de los eventos de ratón.
 </para>
 
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<para>
-<programlisting><userinput>PENUP
-MOUSEON [SETPOS MOUSEPOS PENDOWN] [PENUP] [] [] [SETPOS MOUSEPOS]</userinput>
+<programlisting><userinput>SUBELAPIZ
+HABILITARATON [PONPOS POSRATON BAJALAPIZ] [SUBELAPIZ] [] [] [PONPOS POSRATON]</userinput>
+
+<replaceable>Mueve el ratón.
+Mantiene presionado el botón izquierdo para dibujar.</replaceable>
+
+<userinput>INHABILITARATON</userinput>
 </programlisting>
-Move the mouse around.  Hold down the left button to draw.
-<programlisting><userinput>MOUSEOFF</userinput>
-</programlisting>
-</para>
 </listitem>
 </varlistentry>
+
 
 </variablelist>
-
 </section>

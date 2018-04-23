@@ -1,43 +1,44 @@
 <section id="command-mouseoff">
-    <title>MOUSEOFF</title>
+    <title>INHABILITARATON</title>
+<indexterm><primary>INHABILITARATON</primary></indexterm>
 <indexterm><primary>MOUSEOFF</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>MOUSEOFF</command></synopsis>
+<synopsis><command>INHABILITARATON</command>
+<command>MOUSEOFF</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Disables trapping of mouse events.
+Inhabilita la captura de los eventos del ratón.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>PENUP
-MOUSEON [SETPOS MOUSEPOS PENDOWN] [PENUP] [] [] [SETPOS MOUSEPOS]</userinput>
+<programlisting><userinput>SUBELAPIZ
+HABILITARATON [PONPOS POSRATON BAJALAPIZ] [SUBELAPIZ] [] [] [PONPOS POSRATON]</userinput>
 
-<replaceable>Move the mouse around.
-Hold down the left button to draw.</replaceable>
+<replaceable>Mueve el ratón.
+Mantiene presionado el botón izquierdo para dibujar.</replaceable>
 
-<userinput>MOUSEOFF</userinput>
-
-<replaceable>Move the mouse around and hold down the left button.
-Nothing happens anymore.</replaceable>
+<userinput>INHABILITARATON</userinput>
+<replaceable>Mueve el ratón y mantiene presionado el botón izquierdo.
+Ahora, ya nada sucede.</replaceable>
 </programlisting>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>See Also</term>
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-mouseon">MOUSEON</link></member>
+<member><link linkend="command-mouseon">HABILITARATON</link></member>
 </simplelist></listitem>
 </varlistentry>
 

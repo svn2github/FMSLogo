@@ -1,93 +1,99 @@
 <section id="command-keyboardon">
-    <title>KEYBOARDON</title>
+    <title>HABILITATECLADO</title>
+<indexterm><primary>HABILITATECLADO</primary></indexterm>
 <indexterm><primary>KEYBOARDON</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>KEYBOARDON</command> <parameter>keydown</parameter>
-(<command>KEYBOARDON</command> <parameter>keydown</parameter> <parameter>keyup</parameter>)</synopsis>
+<synopsis><command>HABILITATECLADO</command> <parameter>tecla_pulsada</parameter>
+(<command>HABILITATECLADO</command> <parameter>tecla_pulsada</parameter> <parameter>tecla_liberada</parameter>)
+<command>KEYBOARDON</command> <parameter>tecla_pulsada</parameter>
+(<command>KEYBOARDON</command> <parameter>tecla_pulsada</parameter> <parameter>tecla_liberada</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 
 <para>
-Starts trapping keyboard events and sending them to <parameter>keydown</parameter> and <parameter>keyup</parameter>.
-When a key is pressed down, <parameter>keydown</parameter> is called.
-When a key is released, <parameter>keyup</parameter> is called.
-You can determine the key that was pressed or released by calling <link linkend="command-keyboardvalue">KEYBOARDVALUE</link> in your <parameter>keydown</parameter> or <parameter>keyup</parameter> procedure.
+Empieza a capturar los eventos del teclado, enviándolos al <parameter>tecla_pulada</parameter> y <parameter>tecla_librada</parameter>.
+Cuando se pulsa una tecla, se ejecuta <parameter>tecla_pulsada</parameter>.
+Cuando se libra una tecla, se ejecuta <parameter>tecla_librada</parameter>.
+Para obtener el carácter afectado, ejecutas a <link linkend="command-keyboardvalue">LEETECLA</link> desde <parameter>tecla_pulsada</parameter> o <parameter>tecla_librada</parameter>.
 </para>
 
 <para>
-<parameter>keydown</parameter> or <parameter>keyup</parameter> may either be a word that is the name of a procedure to call, or a list of commands.
+<parameter>tecla_pulsada</parameter> y <parameter>tecla_librada</parameter> puede ser o una palabra que es el nombre de un procedimiento o una lista de instrucciones.
 </para>
 
 <para>
-Note the "Screen" must have focus (NOT the commander) to catch the key events.
-You can force this by calling <userinput>SETFOCUS [&PRODUCTNAME;]</userinput> after you call KEYBOARDON.
-All the "callbacks" for the keyboard are automatically run in <link linkend="command-noyield">NOYIELD</link> mode.
+Nota que la «Pantalla» debe tener foco (no la Caja de Entrada del Centro de Comandos) para capturar los eventos del teclado.
+Puedes lograr esto si ejecutaras <userinput>PONFOCO [&PRODUCTNAME;]</userinput> después de ejecutar HABILITATECLADO.
 </para>
 
 <para>
-For historical reasons, the set of keys that are captured when KEYBOARDON is given one input is different from the set of keys that are captured when it is given two inputs.
-When only a <parameter>keydown</parameter> input is given, the keys are trapped as characters, not as strict keydown events.
-This means that lowercase <keycap>a</keycap> has a different value than uppercase <keycap>A</keycap>, even though the same key is pressed.
-Because of this, a program that only looks for <userinput>ASCII "a</userinput> doesn't work when <keycap>Caps Lock</keycap> is on.
-This also means that when only one input is given to KEYBOARDON, it ignores keystrokes that don't have a textual character representation.
-This includes ignoring the arrow keys, the function keys, most navigation keys, the Shift key, the Control key, and others.
+&PRODUCTNAME; siempre ejecuta <parameter>tecla_pulsada</parameter> y <parameter>tecla_librada</parameter> en modo <link linkend="command-noyield">EXCLUSIVO</link>.
 </para>
 
 <para>
-In contrast, when KEYBOARDON has two inputs, it captures nearly all key events, including the arrow keys, the function keys, the navigation keys, the Shift key, and the Control key.
-Furthermore, each unique key press generates a separate callback.
-So uppercase <keycap>A</keycap> might generate the following keyboard events: a <keycap>Shift</keycap> keydown event, followed by an <keycap>A</keycap> keydown event, followed by an <keycap>A</keycap> keyup event, followed by a <keycap>Shift</keycap> keyup event.
+Para razones históricos, un distinto conjunto de teclas son capturadas cuando HABILITATECLADO es dado un solo argumento y cuando es dado <parameter>tecla_pulsada</parameter> y <parameter>tecla_liberada</parameter>.
+Cuando solo un <parameter>tecla_pulsada</parameter> argumento es dado, las teclas son capturadas como caracteres y no eventos de pulsada de rigor.
+Eso quiere decir que <keycap>a</keycap> minúscula tiene un valor distinto que <keycap>A</keycap> mayúscula, aunque se presionan la misma tecla.
+A causa de esto, un programa que solo busca <userinput>ASCII "a</userinput> no funciona cuando el <keycap>Bloq Mayús</keycap> es en efecto.
+Esto también quiere decir que cuando solo le dieres <parameter>tecla_pulsada</parameter> a HABILITATECLADO, ignora a los pulsaciones de teclas que no se representan con caracteres textuales.
+Esto incluye ignorar a las teclas de dirección, las de función, las de Mayús, las de Ctrl, y otras.
+</para>
+
+<para>
+Por otro lado, cuando HABILITATECLADO tiene dos entradas, <parameter>tecla_pulsada</parameter> y <parameter>tecla_liberada</parameter>, captura casi todos los eventos del teclado, incluido eventos por las teclas de dirección, las de función, las de Mayús, y las de Ctrl.
+Adicionalmente, cada presión de tecla genera una ejecución diferente de <parameter>tecla_pulsada</parameter>.
+Por lo tanto, un <keycap>A</keycap> mayúscula puede generar los eventos del teclado siguiente: la tecla <keycap>Mayús</keycap> presionada, seguido por la tecla <keycap>A</keycap> presionada, seguido por la tecla <keycap>A</keycap> liberada, seguido por la tecla <keycap>Mayús</keycap> liberada.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
 <para>
-Using KEYBOARDON on with one input to print characters that are typed:
-<programlisting><userinput>KEYBOARDON [PRINT CHAR KEYBOARDVALUE]
-FULLSCREEN
-SETFOCUS [&PRODUCTNAME;]</userinput>
+Usando HABILITATECLADO con un solo entrada para escribir caracteres en cuanto están presionados:
+<programlisting><userinput>HABILITATECLADO [ESCRIBE CAR LEETECLA]
+PANTALLAGRAFICA
+PONFOCO [&PRODUCTNAME;]</userinput>
 
-<replaceable>Press the 'A' key on the keyboard</replaceable>
+<replaceable>Presiona la tecla «A» del teclado</replaceable>
 a
-<replaceable>Press the 'B' key on the keyboard</replaceable>
+<replaceable>Presiona la tecla «B» del teclado</replaceable>
 b
 
-<userinput>SPLITSCREEN
-KEYBOARDOFF</userinput>
+<userinput>PANTALLAPARTIDA
+INHABILITATECLADO</userinput>
 </programlisting>
 </para>
 
 <para>
-Using KEYBOARDON with two inputs to perform actions only while keys are held down:
-<programlisting><userinput>TO ONKEYDOWN
-  IF KEYBOARDVALUE = ASCII "T [ HIDETURTLE ]
-  IF KEYBOARDVALUE = ASCII "S [ IF SCREENCOLOR &lt;> 1 [SETSCREENCOLOR 1] ]
-END
+Usando HABILITATECLADO con dos entradas para hacer cosas solo cuando teclas están presionadas:
+<programlisting><userinput>PARA TECLAPRESIONADA
+  SI LEETECLA = ASCII "O [ OCULTATORTUGA ]
+  SI LEETECLA = ASCII "F [ SI COLORFONDO &lt;> 1 [PONCOLORFONDO 1] ]
+FIN
 
-TO ONKEYUP
-  IF KEYBOARDVALUE = ASCII "T [ SHOWTURTLE ]
-  IF KEYBOARDVALUE = ASCII "S [ SETSCREENCOLOR 7 ]
-END
+PARA TECLALIBERADA
+  SI LEETECLA = ASCII "O [ MUESTRATORTUGA  ]
+  SI LEETECLA = ASCII "F [ PONCOLORFONDO 7 ]
+FIN
 
-(KEYBOARDON [ONKEYDOWN] [ONKEYUP])
-FULLSCREEN</userinput>
+(HABILITATECLADO [TECLAPRESIONADA] [TECLALIBERADA])
+PANTALLAGRAFICA</userinput>
 
-<replaceable>While you hold down the "T" key, the turtle hides.
-While you hold down the "S" key, the screen turns blue.</replaceable>
+<replaceable>Mientras presionas la tecla «O», se oculta la tortuga.
+Mientras presionas la tecla «F», se pinta la pantalla en color azul.</replaceable>
 
-<userinput>SPLITSCREEN
-KEYBOARDOFF</userinput>
+<userinput>PANTALLAPARTIDA
+INHABILITATECLADO</userinput>
 </programlisting>
 </para>
 

@@ -1,47 +1,50 @@
 <section id="command-mouseon">
-    <title>MOUSEON</title>
+    <title>HABILITARATON</title>
 <indexterm><primary>MOUSEON</primary></indexterm>
+<indexterm><primary>HABILITARATON</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>MOUSEON</command> <parameter>leftbuttondown</parameter> <parameter>leftbuttonup</parameter> <parameter>rightbuttondown</parameter> <parameter>rightbuttonup</parameter> <parameter>move</parameter></synopsis>
+<synopsis><command>HABILITARATON</command> <parameter>boton_izquierdo_abajo</parameter> <parameter>boton_izquierdo_arriba</parameter> <parameter>boton_derecho_abajo</parameter> <parameter>boton_derecho_arriba</parameter> <parameter>mover</parameter>
+<command>MOUSEON</command> <parameter>boton_izquierdo_abajo</parameter> <parameter>boton_izquierdo_arriba</parameter> <parameter>boton_derecho_abajo</parameter> <parameter>boton_derecho_arriba</parameter> <parameter>mover</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 
 <para>
-Starts trapping mouse events that are sent to the "&PRODUCTNAME;" window and passes them to <parameter>leftbuttondown</parameter>, <parameter>leftbuttonup</parameter>, <parameter>rightbuttondown</parameter>, <parameter>rightbuttonup</parameter>, or <parameter>move</parameter>, depending on the type of event.
-The callbacks may either be a word that is the name of a procedure to call, or a list of instructions to run.
-All "callbacks" for the mouse are automatically run in <link linkend="command-noyield">NOYIELD</link> mode.
+Captura los eventos del ratón que son enviados a la ventana «&PRODUCTNAME;» y ejecuta <parameter>boton_izquierdo_abajo</parameter>, <parameter>boton_izquierdo_arriba</parameter>, <parameter>boton_derecho_abajo</parameter>, <parameter>boton_derecho_arriba</parameter>, o <parameter>mover</parameter>, dependiendo del tipo de evento.
+Los parámetros pueden ser o una palabra que es el nombre de un procedimiento a ejecutar o una lista de instrucciones a ejecutar.
+HABILITARATON ejecuta todos aquellos parámetros en modo <link linkend="command-noyield">EXCLUSIVO</link>.
 </para>
 
 <para>
-To obtain where the mouse was when a button was pushed or the mouse moved call <link linkend="command-mousepos">MOUSEPOS</link> in your button or move procedure.
+Para obtener la posición del ratón donde el botón fue presionado o liberado o a donde se mueve el ratón, puedes ejecutar <link linkend="command-mousepos">POSRATON</link> desde tu procedimiento de botón o procedimiento de movimiento.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>PENUP
-MOUSEON [SETPOS MOUSEPOS PENDOWN] [PENUP] [] [] [SETPOS MOUSEPOS]</userinput>
+<programlisting><userinput>SUBELAPIZ
+HABILITARATON [PONPOS POSRATON BAJALAPIZ] [SUBELAPIZ] [] [] [PONPOS POSRATON]</userinput>
 
-<replaceable>Move the mouse around.
-Hold down the left button to draw.</replaceable>
+<replaceable>Mueve el ratón.
+Mantiene presionado el botón izquierdo para dibujar.</replaceable>
 
-<userinput>MOUSEOFF</userinput>
+<userinput>INHABILITARATON</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-mouseoff">MOUSEOFF</link></member>
+<member><link linkend="command-mouseoff">INHABILITARATON</link></member>
 </simplelist></listitem>
 </varlistentry>
 

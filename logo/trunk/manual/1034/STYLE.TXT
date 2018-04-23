@@ -39,11 +39,13 @@ programmatically.
    The Commander              - El Centro de Comandos
    The (Commander) Input Box  - La Caja de Entrada (del Centro de Comandos)
    The Commander History Box  - La Caja de Historia de instrucciones
+   The Screen Window          - La Pantalla
    active area                - área activa
    array                      - vector
    command                    - comando
    predicate                  - predicado
    template                   - plantilla
+   instruction list           - una lista de instrucciones
    item                       - elemento
    input (n)                  - entrada
    output (n)                 - devuelto
@@ -59,4 +61,3 @@ programmatically.
    the current write stream   - el flujo de escritura actual
    the current read stream    - el flujo de lectura actual
    a file                     - un archivo
-
