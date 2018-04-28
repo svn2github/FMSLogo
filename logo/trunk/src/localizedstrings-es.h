@@ -296,9 +296,9 @@
 #define LOCALIZED_ALTERNATE_HASOWNPEN_             "hasownpen?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HEADING                "rumbo"
 #define LOCALIZED_ALTERNATE_HELP                   "ayuda"
-#define LOCALIZED_ALTERNATE_HIDETURTLE             "ot"
+#define LOCALIZED_ALTERNATE_HIDETURTLE             "ocultaTortuga"
 #define LOCALIZED_ALTERNATE_HOME                   "centro"
-#define LOCALIZED_ALTERNATE_HT                     "ocultaTortuga"
+#define LOCALIZED_ALTERNATE_HT                     "ot"
 #define LOCALIZED_ALTERNATE_IF                     "si"
 #define LOCALIZED_ALTERNATE_IFELSE                 "siSino"
 #define LOCALIZED_ALTERNATE_IFF                    "siFalso"

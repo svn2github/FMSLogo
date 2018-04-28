@@ -706,7 +706,7 @@ pp</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
-        <entry><literallayout>ot</literallayout></entry>
+        <entry><literallayout>ocultaTortuga</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-home'>home</link></entry>
@@ -714,7 +714,7 @@ pp</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-hideturtle'>ht</link></entry>
-        <entry><literallayout>ocultaTortuga</literallayout></entry>
+        <entry><literallayout>ot</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-if'>if</link></entry>
@@ -4191,7 +4191,7 @@ raizcuadrada</literallayout></entry>
       </row>
       <row>
         <entry>ocultaTortuga</entry>
-        <entry><link linkend='command-hideturtle'>ht</link></entry>
+        <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
       </row>
       <row>
         <entry>ordena</entry>
@@ -4203,7 +4203,7 @@ raizcuadrada</literallayout></entry>
       </row>
       <row>
         <entry>ot</entry>
-        <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
+        <entry><link linkend='command-hideturtle'>ht</link></entry>
       </row>
       <row>
         <entry>pa</entry>
