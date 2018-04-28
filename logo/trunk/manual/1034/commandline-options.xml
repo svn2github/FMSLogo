@@ -1,14 +1,14 @@
 <chapter id="commandline-options">
-<title>Opciones de la línea de órdenes</title>
-<indexterm><primary>Opciones de la línea de órdenes</primary></indexterm>
+<title>Opciones de la línea de comandos</title>
+<indexterm><primary>Opciones de la línea de comandos</primary></indexterm>
 
 <para>
-Las opciones de la línea de órdenes pueden fijarse como propiedades del funcionamiento de &PRODUCTNAME;.
+Las opciones de la línea de comandos pueden fijarse como propiedades del funcionamiento de &PRODUCTNAME;.
 Sólo hay que agregar estos interruptores después de teclear &LOGOEXE;.
 </para>
 
 <para>
-Puedes agregar cualquier opción de la línea de órdenes al acceso directo del escritorio de &PRODUCTNAME; para que cuando hicieras doble clic, &PRODUCTNAME; empezara con las opciones deseadas.
+Puedes agregar cualquier opción de la línea de comandos al acceso directo del escritorio de &PRODUCTNAME; para que cuando hicieras doble clic, &PRODUCTNAME; empezara con las opciones deseadas.
 Por ejemplo, si quieres que &PRODUCTNAME; siempre empezara en modo «<link linkend="commandline-e">experto</link>»:
 
 <orderedlist>

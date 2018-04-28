@@ -40,6 +40,7 @@ programmatically.
    The (Commander) Input Box  - La Caja de Entrada (del Centro de Comandos)
    The Commander History Box  - La Caja de Historia de instrucciones
    The Screen Window          - La Pantalla
+   the command line           - la línea de comandos
    active area                - área activa
    array                      - vector
    command                    - comando
