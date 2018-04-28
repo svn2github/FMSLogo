@@ -1,8 +1,8 @@
 <chapter id="arithmetic">
-   <title>Arithmetic</title>
+   <title>Aritmética</title>
 
    <section id="numeric-operations">
-      <title>Numeric Operations</title>
+      <title>Operaciones numéricas</title>
 
       &command-sum;
       &command-difference;
@@ -37,7 +37,7 @@
    </section>
 
    <section id="arithmetic-predicates">
-      <title>Arithmetic Predicates</title>
+      <title>Predicados (aritmética)</title>
 
       &command-lessp;
       &command-lessequalp;
@@ -46,7 +46,7 @@
    </section>
 
    <section id="random-numbers">
-      <title>Random Numbers</title>
+      <title>Números aleatorios</title>
 
       &command-random;
       &command-rerandom;
@@ -54,14 +54,14 @@
 
 
    <section id="print-formating">
-      <title>Print Formatting</title>
+      <title>Escribir con formato</title>
 
       &command-form;
    </section>
 
 
    <section id="bitwise-operations">
-      <title>Bitwise Operations</title>
+      <title>Operaciones a nivel de bits</title>
 
       &command-bitand;
       &command-bitor;
