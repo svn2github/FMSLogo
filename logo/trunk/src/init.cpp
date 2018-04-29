@@ -600,6 +600,10 @@ static const PRIMTYPE prims[] =
     { "zoom", 1, 1, 1, PREFIX_PRIORITY, lzoom, LOCALIZED_ALTERNATE_ZOOM },
 };
 
+// Interns a primitive procedure by its name.
+// If a procedure was previously interned with the same Name,
+// then the new procedure will be called in its place (that is,
+// the later call wins).
 static
 void
 intern_primitive(
@@ -636,6 +640,8 @@ intern_primitive(
     setprimmax(proc,  MaximumArgs);
     setprimmin(proc,  MinimumArgs);
 
+    // Make a new case object for this name.
+    // The call to make_instance() is what interns the name in the global hash table.
     NODE * primitive_name = vref(make_static_strnode(Name));
     NODE * lowercase_name = vref(make_lowercase_strnode_from_strnode(primitive_name));
     NODE * case_node      = vref(make_instance(primitive_name, lowercase_name));
