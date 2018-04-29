@@ -118,23 +118,38 @@ sub PrintShadowedProcedures($$$) {
   my $English            = shift or die "not enough arguments";
   my $LocalizedToEnglish = shift or die "not enough arguments";
 
-  # foreach localized procedure check to see if:
-  # 1) It's also the name of an English procedure
-  # 2) It's not a localization of that English procedure
-  foreach my $localizedProcedure (keys %{$LocalizedToEnglish}) {
-    foreach my $englishProcedure (values %{$English}) {
+  # For each localized procedure name L of an English procedure name E check that
+  # L is not the name of an English procedure other than E
+  foreach my $localizedProcedureName (keys %{$LocalizedToEnglish}) {
+    my $localizedProcedureNameInEnglish = $$LocalizedToEnglish{$localizedProcedureName};
 
-      # It's okay if predicates that end in "?" shadow the "p"
-      # form of the English predicate.
-      # The Spanish translation does this because "p" has no meaning.
-      if ($localizedProcedure =~ m/^(.*)\?$/ and $$LocalizedToEnglish{$localizedProcedure} eq "$1p") {
+    # Check this localization against all English procedure names.
+    foreach my $otherEnglishProcedureName (values %{$English}) {
+                
+      # If the localization matches the English procedure name, then the
+      # localization is redundant, but it's not shadowing.
+      if ($localizedProcedureNameInEnglish eq $otherEnglishProcedureName) {
         next;
       }
 
-      if ($englishProcedure eq $localizedProcedure and
-          $$LocalizedToEnglish{$localizedProcedure} ne $englishProcedure) {
-        print "WARNING: $LocaleName shadows the English procedure `$localizedProcedure' as a translations for `$$LocalizedToEnglish{$localizedProcedure}'\n";
+      # If the localized name doesn't match this English procedure name, then
+      # it's not shadowing this English procedure name.
+      if ($otherEnglishProcedureName ne $localizedProcedureName) {
+        next;
       }
+
+      # It's okay if predicates that end in "?" shadow the "p"
+      # form of the English predicate.
+      # The Spanish translation does this because "p" has no meaning, so it
+      # redefines some English library procedures predicates using their "?" names.
+      if ($localizedProcedureName =~ m/^(.*)\?$/ and $localizedProcedureNameInEnglish eq "$1p") {
+        next;
+      }
+
+      # The localized procedure name matches the name of some other English
+      # procedure name, which makes that English procedure inaccessible
+      # in this locale.
+      print "WARNING: $LocaleName shadows the English procedure `$otherEnglishProcedureName' as a translations for `$localizedProcedureNameInEnglish'\n";
     }
   }
 }
@@ -382,6 +397,10 @@ sub AddTranslation($$$$) {
   # Add this word to the list of translations for $EnglishWord (if it's not already there)
   if (not grep(/^\Q$TranslatedWord\E$/, @{$$EnglishToLocalized{$EnglishWord}})) {
     push @{$$EnglishToLocalized{$EnglishWord}}, $TranslatedWord;
+  }
+
+  if ($$LocalizedToEnglish{$TranslatedWord}) {
+    print "WARNING: $TranslatedWord is a translation for both $EnglishWord and $$LocalizedToEnglish{$TranslatedWord}\n";
   }
 
   $$LocalizedToEnglish{$TranslatedWord} = $EnglishWord;
