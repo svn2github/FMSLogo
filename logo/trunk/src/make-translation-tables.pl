@@ -154,6 +154,59 @@ sub PrintShadowedProcedures($$$) {
   }
 }
 
+sub NormalizeEnglishProcedureName($) {
+  my $EnglishProcedure = shift or die "not enough arguments";
+
+  # Expand any abbreviations to get the unabreviated name.  (ST -> SHOWTURTLE)
+  $EnglishProcedure = $main::EnglishAbbreviation{lc $EnglishProcedure} || $EnglishProcedure;
+
+  # "?" predicates are normalized to their "P" suffix.
+  $EnglishProcedure =~ s/\?$/p/;
+
+  # Normalize case
+  return lc $EnglishProcedure;
+}
+
+sub PrintAmbiguousTranslations($$) {
+  my $LocaleName         = shift or die "not enough arguments";
+  my $EnglishToLocalized = shift or die "not enough arguments";
+
+  # For each translation, make sure that translation doesn't appear
+  # as a translation for some other English name.
+  my @englishNames = keys %{$EnglishToLocalized};
+  foreach my $englishNameA (@englishNames) {
+    my $normalizedEnglishNameA = NormalizeEnglishProcedureName($englishNameA);
+
+    foreach my $englishNameB (@englishNames) {
+      # It's obviously not a conflict when the names are the same.
+      # We don't want to report the same problem twice, so we
+      # only check when name A is less than name B.
+      if ($englishNameA ge $englishNameB) {
+        next;
+      }
+
+      # If the normalized names are the same, then these are multiple
+      # translations for what is implemented as the same procedure, so
+      # translating them as the same is redundant, but not conflicting.
+      # For example "ST" and "SHOWTURTLE" or "defined?" and "definedp".
+      my $normalizedEnglishNameB = NormalizeEnglishProcedureName($englishNameB);
+      if ($normalizedEnglishNameA eq $normalizedEnglishNameB) {
+        next;
+      }
+
+      # Now that we know A and B are distict, make sure that they aren't
+      # translated with the same word.
+      foreach my $localizedNameA (@{$$EnglishToLocalized{$englishNameA}}) {
+        foreach my $localizedNameB (@{$$EnglishToLocalized{$englishNameB}}) {
+          if ($localizedNameA eq $localizedNameB) {
+            print "WARNING: $LocaleName tranlates both `$englishNameA' and `$englishNameB' to `$localizedNameA'\n";
+          }
+        }
+      }
+    }
+  }
+}
+
 sub PrintTranslationsAsText($$$) {
 
   my $LocaleId           = shift or die "not enough arguments";
@@ -185,22 +238,16 @@ sub PrintTranslationsAsText($$$) {
   }
   $toenglish->close();
 }
-
+      
 sub GetLinkend($) {
 
   my $EnglishProcedure = shift or die "not enough arguments";
 
-  if ($main::EnglishAbbreviation{lc $EnglishProcedure}) {
-    # This procedure has an abbreviation, we should link to the
-    # documentation for what it abbreviates.
-    $EnglishProcedure = $main::EnglishAbbreviation{lc $EnglishProcedure};
-  }
+  # If this procedure is an abbreviation, we must link to the documentation for
+  # what it abbreviates, since there is no documentation for the abbreviation.
+  $EnglishProcedure = NormalizeEnglishProcedureName($EnglishProcedure);
 
-  my $linkend = lc "command-$EnglishProcedure";
-
-  $linkend =~ s/\?$/p/; # predicates are indexed by their 'P' suffix.
-
-  return $linkend
+  return "command-$EnglishProcedure";
 }
 
 sub PrintTranslationsAsDocBook($$$$$$) {
@@ -399,10 +446,6 @@ sub AddTranslation($$$$) {
     push @{$$EnglishToLocalized{$EnglishWord}}, $TranslatedWord;
   }
 
-  if ($$LocalizedToEnglish{$TranslatedWord}) {
-    print "WARNING: $TranslatedWord is a translation for both $EnglishWord and $$LocalizedToEnglish{$TranslatedWord}\n";
-  }
-
   $$LocalizedToEnglish{$TranslatedWord} = $EnglishWord;
 }
 
@@ -544,6 +587,10 @@ sub MakeTranslationTables($$$) {
     $LocaleName,
     \%symbolToEnglishProcedure,
     \%localizedToEnglishProcedure);
+
+  PrintAmbiguousTranslations(
+    $LocaleName,
+    \%englishToLocalizedProcedure);
 }
 
 
