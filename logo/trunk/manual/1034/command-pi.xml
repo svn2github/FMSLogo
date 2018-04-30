@@ -4,26 +4,25 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
 <synopsis><command>PI</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the value pi (3.14159265358979...).
+Devuelve el valor del número pi (3.14159265358979).
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SHOW PI</userinput>
+    <programlisting><userinput>MUESTRA PI</userinput>
 3.14159265358979</programlisting>
-    <programlisting><userinput>SHOW RADSIN PI/2</userinput>
+    <programlisting><userinput>MUESTRA RADSEN PI/2</userinput>
 1</programlisting>
 </listitem>
 </varlistentry>

@@ -1,36 +1,38 @@
 <section id="command-goldenratio">
-<title>GOLDENRATIO</title>
+<title>NUMEROAUREO</title>
+<indexterm><primary>NUMEROAUREO</primary></indexterm>
 <indexterm><primary>GOLDENRATIO</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>GOLDENRATIO</command></synopsis>
+<synopsis><command>NUMEROAUREO</command>
+<command>GOLDENRATIO</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a close approximation to the golden ratio, which is <userinput>(1 + SQRT 5)/2</userinput>.
+Devuelve una aproximación cercana del número áureo, que es <userinput>(1 + RAIZCUADRADA 5)/2</userinput>.
 </para>
 
 <para>
-The golden ratio expresses the relationship when the sum of two quantities is to the larger quantity as the larger quantity is to the smaller quantity.
-That is:
+El número áureo expresa la proporción cuando la suma de dos cantidades es a la cantidad más grande como la cantidad más grande es a la cantidad más pequeña.
+Es decir:
 </para>
 
 <para>
-GOLDENRATIO = ((A + B) / A) = (A / B)
+NUMEROAUREO = ((A + B) / A) = (A / B)
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW GOLDENRATIO</userinput>
+<programlisting><userinput>MUESTRA NUMEROAUREO</userinput>
 1.61803398874989</programlisting>
 </listitem>
 </varlistentry>

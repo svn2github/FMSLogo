@@ -1,41 +1,42 @@
 <section id="command-int">
-    <title>INT</title>
+    <title>ENTERO</title>
+<indexterm><primary>ENTERO</primary></indexterm>
 <indexterm><primary>INT</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>INT</command> <parameter>num</parameter></synopsis>
+<synopsis><command>ENTERO</command> <parameter>número</parameter>
+<command>INT</command> <parameter>número</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs its input with fractional part removed.
-That is, INT outputs an integer with the same sign as the input, whose absolute value is the largest integer less than or equal to the absolute value of the input.
+Devuelve la entrada, sin la parte decimal.
+Es decir, ENTERO devuelve un entero con el mismo signo que la entrada, cuyo valor absoluto es menor o igual al valor absoluto de la entrada.
 </para>
 
 <para>
-Inside the computer, numbers are represented with two different formats, one for integers and one for numbers with fractional parts.
-On most computers the largest number that can be represented in integer format is smaller than the largest integer that can be represented in fractional format.
-The INT operation always outputs a number whose value is mathematically an integer, but if its input is very large the output may not be in integer format.
-In that case, operations like <link linkend="command-remainder">REMAINDER</link> that require an integer input will not accept this number.
+Dentro de la computadora, se representan los números con dos formatos distintos, uno por enteros y el otro por números con partes decimales.
+En la mayoría de las computadoras, el número más grande que se puede representar en el formato de los enteros es más pequeño que el número más grande que se puede representar en el formato con partes decimales.
+La operación ENTERO siempre devuelve un número cuyo valor es matemáticamente un entero, pero si su entrada es muy grande, entonces lo devuelto puede ser en el formato con partes decimales.
+En este caso, operaciones como <link linkend="command-remainder">RESTO</link> que requieren un entero no aceptaran lo devuelto.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SHOW INT 8.2</userinput>
+    <programlisting><userinput>MUESTRA ENTERO 8.2</userinput>
 8</programlisting>
-<programlisting><userinput>SHOW INT 8.7</userinput>
+<programlisting><userinput>MUESTRA ENTERO 8.7</userinput>
 8</programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

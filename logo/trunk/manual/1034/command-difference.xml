@@ -1,38 +1,39 @@
 <section id="command-difference">
-<title>DIFFERENCE</title>
+<title>DIFERENCIA</title>
+<indexterm><primary>DIFERENCIA</primary></indexterm>
 <indexterm><primary>DIFFERENCE</primary></indexterm>
 <indexterm><primary>-</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>DIFFERENCE</command> <parameter>number1</parameter> <parameter>number2</parameter>
-<parameter>number1</parameter> <command>-</command> <parameter>number2</parameter></synopsis>
+<synopsis><command>DIFERENCIA</command> <parameter>número1</parameter> <parameter>número2</parameter>
+<command>DIFFERENCE</command> <parameter>número1</parameter> <parameter>número2</parameter>
+<parameter>número1</parameter> <command>-</command> <parameter>número2</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the difference of its inputs.
+Devuelve la diferencia del valor numérico de las entradas.
 </para>
 <para>
-The minus sign (-) means infix difference in ambiguous contexts (when preceded by a complete expression), unless it is preceded by a space and followed by a non-space.
+Se interpreta el signo menos (-) como el operador infijo de diferencia en los contextos ambiguos (cuando se lo precede con una expresión completa), al menos que se lo precede con un espacio y se lo sigue con un no espacio.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW 3 - 2</userinput>
+<programlisting><userinput>MUESTRA 3 - 2</userinput>
 1</programlisting>
 
-<programlisting><userinput>SHOW DIFFERENCE 3 2</userinput>
+<programlisting><userinput>MUESTRA DIFERENCIA 3 2</userinput>
 1</programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

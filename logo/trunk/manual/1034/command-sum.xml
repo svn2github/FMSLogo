@@ -1,36 +1,39 @@
 <section id="command-sum">
-<title>SUM</title>
+<title>ADICION</title>
+<indexterm><primary>ADICION</primary></indexterm>
 <indexterm><primary>SUM</primary></indexterm>
 <indexterm><primary>+</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SUM</command> <parameter>addend1</parameter> <parameter>addend2</parameter>
-(<command>SUM</command> <parameter>addend1</parameter> <parameter>addend2</parameter> <parameter>...</parameter>)
-<parameter>addend1</parameter> <command>+</command> <parameter>addend2</parameter></synopsis>
+<synopsis><command>ADICION</command> <parameter>número1</parameter> <parameter>número2</parameter>
+(<command>ADICION</command> <parameter>número1</parameter> <parameter>número2</parameter> <parameter>...</parameter>)
+<command>SUM</command> <parameter>número1</parameter> <parameter>número2</parameter>
+(<command>SUM</command> <parameter>número1</parameter> <parameter>número2</parameter> <parameter>...</parameter>)
+<parameter>número1</parameter> <command>+</command> <parameter>número2</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the sum of its inputs.  If no inputs are given, then SUM outputs 0.
+Devuelve la suma del valor numérico de las entradas.
+Si no hay entradas, entonces ADICION devuelve 0.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW 2 + 3</userinput>
+<programlisting><userinput>MUESTRA 2 + 3</userinput>
 5
 </programlisting>
-<programlisting><userinput>SHOW (SUM 1 2 3)</userinput>
+<programlisting><userinput>MUESTRA (ADICION 1 2 3)</userinput>
 6</programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

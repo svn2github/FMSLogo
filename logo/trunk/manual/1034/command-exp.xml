@@ -4,28 +4,27 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>EXP</command> <parameter>exponent</parameter></synopsis>
+<synopsis><command>EXP</command> <parameter>exponente</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs e (2.718281828...) to the power of <parameter>exponent</parameter>.
+Devuelve el número e (2.718281828+) elevado a la potencia <parameter>exponente</parameter>.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SHOW EXP 2</userinput>
+    <programlisting><userinput>MUESTRA EXP 2</userinput>
 7.38905609893065</programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
