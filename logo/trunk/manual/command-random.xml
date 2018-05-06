@@ -25,7 +25,7 @@ For example, if the input is 10, then RANDOM outputs any of these integers with 
 <para>
 Computers are inherently deterministic, which means that, given a set of inputs, computers always follow a program to produce the exact same output.
 This makes it difficult for a computer to generate truly random numbers.
-For this reason, when a computer generates a random nummber, it is often called a pseudo-random number, which means "fake random number".
+For this reason, when a computer generates a random number, it is often called a pseudo-random number, which means "fake random number".
 Here's how RANDOM works.
 Imagine that RANDOM has a giant list of numbers that appear in a predetermined, random-looking order.
 Each time you run RANDOM, it reads the next number from the list, scales it to the requested range, and outputs the result.
