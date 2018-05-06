@@ -1,40 +1,44 @@
 <section id="command-lessp">
-<title>LESSP</title>
+<title>MENOR?</title>
+<indexterm><primary>MENOR?</primary></indexterm>
 <indexterm><primary>LESSP</primary></indexterm>
 <indexterm><primary>&lt;</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>LESSP</command> <parameter>num1</parameter> <parameter>num2</parameter>
-<command>LESS?</command> <parameter>num1</parameter> <parameter>num2</parameter>
-<parameter>num1</parameter> <command>&lt;</command> <parameter>num2</parameter></synopsis>
+<synopsis><command>MENOR?</command> <parameter>número1</parameter> <parameter>número2</parameter>
+<command>LESSP</command> <parameter>número1</parameter> <parameter>número2</parameter>
+<command>LESS?</command> <parameter>número1</parameter> <parameter>número2</parameter>
+<parameter>número1</parameter> <command>&lt;</command> <parameter>número2</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs TRUE if <parameter>num1</parameter> is strictly less than <parameter>num2</parameter>.
-Outputs FALSE, otherwise.
+Devuelve CIERTO si <parameter>número1</parameter> es estrictamente menor que <parameter>número2</parameter>.
+Devuelve FALSO, sino.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW 1 &lt; 2</userinput>
-true
+<programlisting><userinput>MUESTRA 1 &lt; 2</userinput>
+cierto
 </programlisting>
-<programlisting><userinput>SHOW 2 &lt; 1</userinput>
-false
+<programlisting><userinput>MUESTRA 2 &lt; 1</userinput>
+falso
 </programlisting>
-<programlisting><userinput>SHOW 2 &lt; 2</userinput>
-false
+<programlisting><userinput>MUESTRA 2 &lt; 2</userinput>
+falso
 </programlisting>
-<programlisting><userinput>SHOW LESSP 1 2</userinput>
-true
+<programlisting><userinput>MUESTRA MENOR? 1 2</userinput>
+cierto
 </programlisting>
 </listitem>
 </varlistentry>
