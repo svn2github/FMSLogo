@@ -14,22 +14,22 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Command that makes the results of <link linkend="command-random">RANDOM</link> reproducible.
+Makes the output of <link linkend="command-random">RANDOM</link> reproducible.
 Ordinarily the sequence of random numbers is different each time &GENERICNAME; is used.
-If you need the same sequence of pseudo-random numbers repeatedly, e.g.  to debug a program, say RERANDOM before the first invocation of RANDOM.
-If you need more than one repeatable sequence, you can give RERANDOM an integer input; each possible input selects a unique sequence of numbers.
+If you need the same sequence of pseudo-random numbers repeatedly, for example, to debug a program, run RERANDOM before the first invocation of RANDOM or PICK.
+If you need more than one repeatable sequence, you can give RERANDOM an integer input called a "seed"; each distinct seed selects a unique sequence of numbers.
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>RERANDOM 1234
-repeat 2 [show random 10]</userinput>
+    <programlisting><userinput>RERANDOM
+REPEAT 2 [SHOW RANDOM 10]</userinput>
 6
 2
-<userinput>RERANDOM 1234
-repeat 2 [show random 10]</userinput>
+<userinput>RERANDOM
+REPEAT 2 [SHOW RANDOM 10]</userinput>
 6
 2</programlisting>
 </listitem>
