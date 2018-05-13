@@ -1,37 +1,41 @@
 <section id="command-lshift">
-    <title>LSHIFT</title>
+    <title>DESPLAZAIZQUIERDA</title>
+<indexterm><primary>DESPLAZAIZQUIERDA</primary></indexterm>
 <indexterm><primary>LSHIFT</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>LSHIFT</command> <parameter>int</parameter> <parameter>amount</parameter></synopsis>
+<synopsis><command>DESPLAZAIZQUIERDA</command> <parameter>entero</parameter> <parameter>cantidad</parameter>
+<command>LSHIFT</command> <parameter>entero</parameter> <parameter>cantidad</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs <parameter>int</parameter> arithmetic-shifted to the left by <parameter>amount</parameter> bits.
-If <parameter>amount</parameter> is negative, the shift is to the right with zero fill.
-The inputs must be integers.
+Devuelve <parameter>entero</parameter> con un desplazamiento lógico a la izquierda <parameter>cantidad</parameter> bits en total.
+Si <parameter>cantidad</parameter> es negativa, el desplazamiento es a la derecha con todos los nuevos bits más significativos siendo apagados.
+Las entradas deben ser números enteros.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SHOW LSHIFT 5 2</userinput>
+    <programlisting><userinput>MUESTRA DESPLAZAIZQUIERDA 5 2</userinput>
 20
-<userinput>SHOW LSHIFT 20 -1</userinput>
+<userinput>MUESTRA DESPLAZAIZQUIERDA 20 -1</userinput>
 10
-<userinput>SHOW LSHIFT -20 -1</userinput>
+<userinput>MUESTRA DESPLAZAIZQUIERDA -20 -1</userinput>
 2147183638
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

@@ -1,37 +1,41 @@
 <section id="command-ashift">
-    <title>ASHIFT</title>
+    <title>DESPLAZA</title>
+<indexterm><primary>DESPLAZA</primary></indexterm>
 <indexterm><primary>ASHIFT</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>ASHIFT</command> <parameter>int</parameter> <parameter>amount</parameter></synopsis>
+<synopsis><command>DESPLAZA</command> <parameter>entero</parameter> <parameter>cantidad</parameter>
+<command>ASHIFT</command> <parameter>entero</parameter> <parameter>cantidad</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs <parameter>int</parameter> arithmetic-shifted to the left by <parameter>amount</parameter> bits.
-If <parameter>amount</parameter> is negative, the shift is to the right with sign extension.
-The inputs must be integers.
+Devuelve <parameter>entero</parameter> con un desplazamiento aritmético a la izquierda <parameter>cantidad</parameter> bits en total.
+Si <parameter>cantidad</parameter> es negativa, el desplazamiento es a la derecha con los nuevos bits más significativos siendo apagados o encendidos según el signo de <parameter>entero</parameter> en representación complemento a dos (encendidos si <parameter>entero</parameter> es negativo, apagados sino).
+Las entradas deben ser números enteros.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SHOW ASHIFT 5 2</userinput>
+    <programlisting><userinput>MUESTRA DESPLAZA 5 2</userinput>
 20
-<userinput>SHOW ASHIFT 20 -1</userinput>
+<userinput>MUESTRA DESPLAZA 20 -1</userinput>
 10
-<userinput>SHOW ASHIFT -20 -1</userinput>
+<userinput>MUESTRA DESPLAZA -20 -1</userinput>
 -10
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

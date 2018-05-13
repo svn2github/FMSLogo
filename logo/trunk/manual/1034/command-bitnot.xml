@@ -4,30 +4,32 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>BITNOT</command> <parameter>int</parameter></synopsis>
+<synopsis><command>BITNOT</command> <parameter>entero</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the bitwise negation of its input, which must be an integer.
+Devuelve el resultado de la operación NOT bit a bit de la entrada, que debe ser un entero.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SHOW BITNOT 1</userinput>
+    <programlisting><userinput>MUESTRA BITNOT 1</userinput>
 -2
-<userinput>SHOW BITNOT 5</userinput>
+<userinput>MUESTRA BITNOT 5</userinput>
 -6
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

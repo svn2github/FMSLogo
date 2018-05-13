@@ -4,34 +4,36 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>BITOR</command> <parameter>int1</parameter> <parameter>int2</parameter>
-(<command>BITOR</command> <parameter>int1</parameter> <parameter>int2</parameter> <parameter>int3</parameter> <parameter>...</parameter>)</synopsis>
+<synopsis><command>BITOR</command> <parameter>entero1</parameter> <parameter>entero2</parameter>
+(<command>BITOR</command> <parameter>entero1</parameter> <parameter>entero2</parameter> <parameter>entero3</parameter> <parameter>...</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the bitwise OR of its inputs, which must be integers.
-If no inputs are given, then BITOR outputs a value with no bits set.
+Devuelve el resultado de la operación OR bit a bit de las entradas, que deben ser enteros.
+Si no hay entradas, entonces BITOR devuelve un valor con todos los bits apagados.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SHOW BITOR 5 2</userinput>
+    <programlisting><userinput>MUESTRA BITOR 5 2</userinput>
 7
-<userinput>SHOW BITOR 5 1</userinput>
+<userinput>MUESTRA BITOR 5 1</userinput>
 5
-<userinput>SHOW (BITOR 6 2 10)</userinput>
+<userinput>MUESTRA (BITOR 6 2 10)</userinput>
 14
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>
