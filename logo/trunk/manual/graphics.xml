@@ -64,7 +64,7 @@ In addition to the turtles which you can create, there are also three special tu
       <row>
         <entry>-2</entry>
         <entry>Her position represents where your eye is looking when viewing a 3D scene (defaults to [0 0 0]).
-               Her orientation represents which direction is "up" on the screen (defaults to [0 0 0], the position Y axis is up).
+               Her orientation represents which direction is "up" on the screen (defaults to [0 0 0], the positive Y axis is up).
                Changing this turtle's position does not have any effect on the screen until something new is drawn.
         </entry>
       </row>
