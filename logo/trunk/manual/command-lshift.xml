@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs <parameter>int</parameter> arithmetic-shifted to the left by <parameter>amount</parameter> bits.
+Outputs <parameter>int</parameter> shifted logically to the left by <parameter>amount</parameter> bits.
 If <parameter>amount</parameter> is negative, the shift is to the right with zero fill.
 The inputs must be integers.
 </para>
