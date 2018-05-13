@@ -1,45 +1,50 @@
 <section id="command-and">
-    <title>AND</title>
+    <title>Y</title>
+<indexterm><primary>Y</primary></indexterm>
 <indexterm><primary>AND</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>AND</command> <parameter>boolean1</parameter> <parameter>boolean2</parameter>
-(<command>AND</command> <parameter>boolean1</parameter> <parameter>boolean2</parameter> <parameter>boolean3</parameter> <parameter>...</parameter>)</synopsis>
+<synopsis><command>Y</command> <parameter>booleano1</parameter> <parameter>booleano2</parameter>
+(<command>Y</command> <parameter>booleano1</parameter> <parameter>booleano2</parameter> <parameter>booleano3</parameter> <parameter>...</parameter>)
+<command>AND</command> <parameter>booleano1</parameter> <parameter>booleano2</parameter>
+(<command>AND</command> <parameter>booleano1</parameter> <parameter>booleano2</parameter> <parameter>booleano3</parameter> <parameter>...</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs TRUE if all inputs are TRUE, otherwise FALSE.
-All inputs must be TRUE or FALSE.
+Devuelve CIERTO si todas las entradas tienen el valor CIERTO, en otro caso, devuelve FALSO.
+Todas las entradas deben tener un valor de CIERTO o FALSO.
 </para>
 
 <para>
-Comparison is case-insensitive regardless of the value of <link linkend="command-caseignoredp">CASEIGNOREDP</link>.
-That is, "true" or "True" or "TRUE" are all the same.
+La comparación siempre es insensible a las mayúsculas y minúsculas, no importa el valor de <link linkend="command-caseignoredp">IGNORAMAYUSCULAS?</link>.
+Es decir, «cierto», «Cierto», y «CIERTO» son todos iguales.
 </para>
 
 <para>
-If given no inputs, AND outputs TRUE.
+Si no hay entradas, Y devuelve CIERTO.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SHOW AND "true "true</userinput>
-"true
-<userinput>SHOW AND "true "false</userinput>
-"false
+    <programlisting><userinput>MUESTRA Y "cierto "cierto</userinput>
+cierto
+<userinput>MUESTRA Y "cierto "falso</userinput>
+falso
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

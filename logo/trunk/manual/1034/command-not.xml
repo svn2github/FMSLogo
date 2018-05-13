@@ -1,34 +1,38 @@
 <section id="command-not">
-    <title>NOT</title>
+    <title>NO</title>
+<indexterm><primary>NO</primary></indexterm>
 <indexterm><primary>NOT</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>NOT</command> <parameter>boolean</parameter></synopsis>
+<synopsis><command>NO</command> <parameter>booleano</parameter>
+<command>NOT</command> <parameter>booleano</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs TRUE if the input is FALSE, and vice versa.
-The input must be a boolean value.
+Devuelve CIERTO si la entrada tiene el valor FALSO, y viceversa.
+La entrada debe tener un valor de CIERTO o FALSO.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SHOW NOT "true</userinput>
-"false
-<userinput>SHOW NOT "false</userinput>
-"true
+    <programlisting><userinput>MUESTRA NO "cierto</userinput>
+falso
+<userinput>MUESTRA NO "falso</userinput>
+cierto
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

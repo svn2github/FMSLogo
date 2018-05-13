@@ -1,47 +1,50 @@
 <section id="command-or">
-    <title>OR</title>
+    <title>O</title>
+<indexterm><primary>O</primary></indexterm>
 <indexterm><primary>OR</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>OR</command> <parameter>boolean1</parameter> <parameter>boolean2</parameter>
-(<command>OR</command> <parameter>boolean1</parameter> <parameter>boolean2</parameter> <parameter>boolean3</parameter> <parameter>...</parameter>)</synopsis>
+<synopsis><command>O</command> <parameter>booleano1</parameter> <parameter>booleano2</parameter>
+(<command>O</command> <parameter>booleano1</parameter> <parameter>booleano2</parameter> <parameter>booleano3</parameter> <parameter>...</parameter>)
+<command>OR</command> <parameter>booleano1</parameter> <parameter>booleano2</parameter>
+(<command>OR</command> <parameter>booleano1</parameter> <parameter>booleano2</parameter> <parameter>booleano3</parameter> <parameter>...</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs TRUE if at least one input is TRUE.  Outputs FALSE, otherwise.
-All inputs must be TRUE or FALSE.
+Devuelve CIERTO si al menos una de las entradas tienen el valor CIERTO.  En otro caso, devuelve FALSO.
+Todas las entradas deben tener un valor de CIERTO o FALSO.
 </para>
 
 <para>
-Comparison is case-insensitive regardless of the value of <link linkend="command-caseignoredp">CASEIGNOREDP</link>.
-That is, "true" or "True" or "TRUE" are all the same.
+La comparación siempre es insensible a las mayúsculas y minúsculas, no importa el valor de <link linkend="command-caseignoredp">IGNORAMAYUSCULAS?</link>.
+Es decir, «cierto», «Cierto», y «CIERTO» son todos iguales.
 </para>
 
 <para>
-If given no inputs, OR outputs FALSE.
+Si no hay entradas, O devuelve FALSO.
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SHOW OR "true "true</userinput>
-"true
-<userinput>SHOW OR "true "false</userinput>
-"true
-<userinput>SHOW OR "false "false</userinput>
-"false
+    <programlisting><userinput>MUESTRA O "cierto "cierto</userinput>
+cierto
+<userinput>MUESTRA O "cierto "falso</userinput>
+cierto
+<userinput>SHOW OR "falso "falso</userinput>
+falso
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>
