@@ -19,8 +19,8 @@ All inputs must be TRUE or FALSE.
 </para>
 
 <para>
-Comparison is case-insensitive regardless of the value of <link linkend="command-caseignoredp">CASEIGNOREDP</link>.
-That is, "true" or "True" or "TRUE" are all the same.
+The comparison is always case-insensitive, regardless of the value of <link linkend="command-caseignoredp">CASEIGNOREDP</link>.
+That is, "true", "True", and "TRUE" are all the same.
 </para>
 
 <para>
@@ -33,11 +33,11 @@ If given no inputs, OR outputs FALSE.
 <varlistentry><term>Example</term>
 <listitem>
     <programlisting><userinput>SHOW OR "true "true</userinput>
-"true
+true
 <userinput>SHOW OR "true "false</userinput>
-"true
+true
 <userinput>SHOW OR "false "false</userinput>
-"false
+false
 </programlisting>
 </listitem>
 </varlistentry>

@@ -22,9 +22,9 @@ The input must be a boolean value.
 <varlistentry><term>Example</term>
 <listitem>
     <programlisting><userinput>SHOW NOT "true</userinput>
-"false
+false
 <userinput>SHOW NOT "false</userinput>
-"true
+true
 </programlisting>
 </listitem>
 </varlistentry>
