@@ -175,14 +175,13 @@ NODE *lrandom(NODE *arg)
     NODE *val = nonnegative_int_arg(arg);
     if (NOT_THROWING)
     {
-        long r;
-#ifdef bsd
-        r = (getint(val) == 0 ? 0 : random() % getint(val));
-#else
-        // r = (getint(val) == 0 ? 0 : rand() % getint(val));
-        r = (((long) rand()) << 15) | rand();
+        // rand() is only guaranteed to return 15 bits of entropy,
+        // so we call it twice to get at least 30 bits.
+        // Note that we store it in an unsigned value so that %
+        // doesn't return a negative number.
+        unsigned long r = (rand() << 15) ^ rand();
         r = (getint(val) == 0 ? 0 : r % getint(val));
-#endif
+
         val = make_intnode((FIXNUM) r);
         return val;
     }
@@ -202,11 +201,7 @@ NODE *lrerandom(NODE *arg)
     }
     if (NOT_THROWING)
     {
-#ifdef bsd
-        srandom((int) seed);
-#else
         srand((int) seed);
-#endif
     }
     return Unbound;
 }
