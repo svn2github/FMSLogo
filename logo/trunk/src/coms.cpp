@@ -473,11 +473,24 @@ NODE *ltime(NODE *)
 /* LOGO time */
 NODE *ltimemilli(NODE *)
 {
+    FIXNUM timeInMilliseconds;
 #ifdef WX_PURE
-    return NIL;
+    // TIMEMILLI is defined to output the number of milliseconds which
+    // have elapsed since Windows started (that is, ::GetTickCount()).
+    // This is difficult on a GNU/Linux system and not worth the
+    // effort.  It should be acceptable to have an ever-increasing
+    // time in the granularity of milliseconds which can occasionally
+    // wrap around.
+    wxLongLong utcTimeMilliAtStartup = wxGetUTCTimeMillis(); 
+
+    // Get the lower 32 bits from the wxLongLong.  This is
+    // similar to a wrap-around, assuming that the system started
+    // at the last wrap-around.
+    timeInMilliseconds = utcTimeMilliAtStartup.GetLo();
 #else
-    return make_intnode((FIXNUM) GetTickCount());
+    timeInMilliseconds = GetTickCount();
 #endif
+    return make_intnode(timeInMilliseconds);
 }
 
 NODE *lwait(NODE *args)
