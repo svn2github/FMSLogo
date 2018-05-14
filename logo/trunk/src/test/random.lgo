@@ -4,16 +4,30 @@ TO RANDOMTEST.SMOKETEST
 
    ; RANDOM 10 should output a value between 0 and 9
    REPEAT 20 [
-     SIMPLEREPORTTEST [(RANDOM 10) >= 0] "true
-     SIMPLEREPORTTEST [(RANDOM 10) < 10] "true
+     FAILIFNOTTRUE [(RANDOM 10) >= 0]
+     FAILIFNOTTRUE [(RANDOM 10) < 10]
    ]
 
    ; RANDOM 1 always outputs 0
    SIMPLEREPORTTEST [RANDOM 1] 0
 
-   ; RANDOM 1 always outputs 0
+   ; RANDOM 0 always outputs 0
    SIMPLEREPORTTEST [RANDOM 0] 0
 
+END
+
+TO RANDOMTEST.LARGENUMBERTEST
+   ; Tests that RANDOM can output numbers greater than 16 bits.
+   LOCAL [randomNumber]
+
+   REPEAT 10000 [
+     MAKE "randomNumber RANDOM 2147483647
+     IF (POWER 2 16) < :randomNumber [
+       REPORTTESTPASSED (WORD "|RANDOM 2147483647 output | :randomNumber "|, which is larger than 16 bits.|)
+       STOP
+     ]
+   ]
+   REPORTTESTFAILED "|After 10000 attempts, RANDOM 2147483647 never output a number larger than 16 bits.|
 END
 
 TO RANDOMTEST.BADINPUT
@@ -25,6 +39,7 @@ TO RANDOMTEST.BADINPUT
    RUNDOESNTLIKEINPUTTEST [RANDOM [1] ]
    RUNDOESNTLIKEINPUTTEST [RANDOM 1.5 ]
    RUNDOESNTLIKEINPUTTEST [RANDOM -1  ]
+   RUNDOESNTLIKEINPUTTEST [RANDOM 2147483648 ]
 
 END
 
@@ -80,6 +95,7 @@ END
 TO RANDOMTEST
 
    RANDOMTEST.SMOKETEST
+   RANDOMTEST.LARGENUMBERTEST
    RANDOMTEST.BADINPUT
 
    RERANDOMTEST.SMOKETEST
