@@ -1346,8 +1346,8 @@ Here are the new commands:
       <row><entry>Command</entry> <entry>Description</entry></row>
     </thead>
     <tbody>
-      <row><entry>POLYSTART</entry>     <entry>Start a new polygon (a surface of PENCOLOR)</entry></row>
-      <row><entry>POLYEND</entry>       <entry>End the definition of the polygon and display it.</entry></row>
+      <row><entry>POLYSTART</entry>     <entry>Start a new polygon (a surface of PENCOLOR).</entry></row>
+      <row><entry>POLYEND</entry>       <entry>End the definition of the polygon.</entry></row>
       <row><entry>POLYVIEW</entry>      <entry>Shade and view all polygons that have been defined.</entry></row>
       <row><entry>SETTURTLE -3</entry>  <entry>Use this turtle to position light source.</entry></row>
       <row><entry>SETLIGHT</entry>      <entry>Use to set how objects should be illuminated.</entry></row>
@@ -1357,10 +1357,12 @@ Here are the new commands:
 </para>
 
 <para>
-The PEN color when drawing 3D surfaces is the color of the surface.
-If you drew a box in 3D (6 Polygons) that all were drawn the same color, all you'd see is a FILLed octagon looking thing.
-Color is affected by the angle of the surface between your eye (turtle -1) and the light source (turtle -3).
+If you drew a box in 3D (6 Polygons) that all were drawn the same color and you FILLed each of them, all you'd see is a flat octagon-looking thing.
+This is not so with the new commands.
+The PENCOLOR in effect when drawing 3D a surface becomes the color of that surface.
+The color is also affected by the angle of the surface between your eye (turtle -1) and the light source (turtle -3).
 </para>
+
 
 <para>
 The 3D lighting model in &PRODUCTNAME; uses some modern techniques, but is primarily designed for performance.
@@ -1404,7 +1406,7 @@ MAKE "savepos POSXYZ
 FORWARD 100
 RIGHT   0.00000001 ; very small angles are okay
 FORWARD 100
-SETPOS :saveposxyz
+SETPOSXYZ :savepos
 POLYEND</userinput></programlisting>
 </para>
 
@@ -1417,7 +1419,7 @@ FORWARD 50
 FORWARD 50 ; error can't have straight angles
 RIGHT   90
 FORWARD 100
-SETPOS :saveposxyz
+SETPOSXYZ :savepos
 POLYEND</userinput></programlisting>
 </para>
    </section>
