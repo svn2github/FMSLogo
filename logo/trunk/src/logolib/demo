@@ -367,7 +367,7 @@ setxyz 207 243 97
 setturtle 0
 hideturtle
 penup
-Sphere 150 10 [128 0 0]
+Sphere 150 10
 polyview
 pendown
 end
@@ -876,10 +876,13 @@ to Slice :rad :step
    ]
 end
 
-to Sphere :rad :step :color
-   setpc :color
-   ; Cover the surface of the sphere with polygons
-   repeat 360/:step [Slice :rad :step rr :step]
+to Sphere :rad :step
+   ; Cover the surface of the sphere with polygons of different colors
+   repeat 360/:step [
+     setpc item sum 1 modulo repcount 3 [ [128 0 0] [0 128 0] [0 0 128] ]
+     Slice :rad :step
+     rr :step
+   ]
 end
 
 bury "axis
