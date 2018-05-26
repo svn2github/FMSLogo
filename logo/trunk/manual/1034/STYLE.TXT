@@ -62,3 +62,7 @@ programmatically.
    the current write stream   - el flujo de escritura actual
    the current read stream    - el flujo de lectura actual
    a file                     - un archivo
+   true color                 - color real
+   color-by-index             - color indexado
+   a color name               - un nombre de color
+   a color vector             - un vector de color
