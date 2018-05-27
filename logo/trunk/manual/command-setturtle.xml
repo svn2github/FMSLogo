@@ -27,7 +27,7 @@ You also can change a previously activated turtle to use its own pen (or not) by
 
 <para>
 If no <parameter>hasownpen</parameter> input is given and SETTURTLE does not activate any new turtles, then the selected turtle's pen remains unchanged.
-If no <parameter>hasownpen</parameter> input is given and SETTURTLE activates a new turtle, then the turtle's initial pen uses the initial pen that &PRODUCTNAME; uses.
+If no <parameter>hasownpen</parameter> input is given and SETTURTLE activates a new turtle, then the new turtle uses the shared pen (the one that &PRODUCTNAME; initally gave to turtle 0 when it started).
 </para>
 </listitem>
 </varlistentry>
@@ -35,26 +35,32 @@ If no <parameter>hasownpen</parameter> input is given and SETTURTLE activates a 
 <varlistentry><term>Example</term>
 <listitem>
 
-<programlisting><userinput>; 2D Example
-REPEAT 8 [SETTURTLE REPCOUNT-1 FORWARD 10*REPCOUNT]</userinput>
+<para>
+An example in 2D:
+<programlisting><userinput>REPEAT 8 [SETTURTLE REPCOUNT RIGHT REPCOUNT*30 FORWARD 20*REPCOUNT]</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; 3D Example
-PERSPECTIVE
+<para>
+An example in 3D that draws a cube from the default vantage point:
+<programlisting><userinput>PERSPECTIVE
 CLEARSCREEN
-; Draw a cube from the default vantage point
-REPEAT 4 [REPEAT 4 [FORWARD 100 RIGHT 90] FORWARD 100 DOWNPITCH 90]</userinput>
-</programlisting>
+REPEAT 4 [REPEAT 4 [FORWARD 100 RIGHT 90] FORWARD 100 DOWNPITCH 90]</userinput></programlisting>
+</para>
 
-<programlisting><userinput>; 3D Example with moving eye
-PERSPECTIVE
+<para>
+An example in 3D that uses SETTURTLE to draw the same cube from a different vantage point:
+<programlisting><userinput>PERSPECTIVE
 CLEARSCREEN
-SETTURTLE -1 ; select the "eye position" turtle
-SETXYZ 500 500 500
+SETTURTLE -1       ; Select the "eye position" turtle
+SETXYZ 500 500 500 ; Move the vantage point
+
+; Draw a cube from the new vantage point.
 SETTURTLE 0
-; Draw a cube from a new vantage point
 REPEAT 4 [REPEAT 4 [FORWARD 100 RIGHT 90] FORWARD 100 DOWNPITCH 90]</userinput>
 </programlisting>
+</para>
+
 </listitem>
 </varlistentry>
 
