@@ -14,7 +14,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the currently selected turtle (the one that is obeying all turtle commands).
+Outputs the number which corresponds to the currently selected turtle (the one that is obeying all turtle commands).
 Use <link linkend="command-setturtle">SETTURTLE</link> to select a turtle.
 </para>
 </listitem>
