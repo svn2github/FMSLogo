@@ -13,35 +13,39 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Sets the current bitmap mode for the currently selected turtle to <parameter>mode</parameter>.
-The <parameter>mode</parameter> input must be a number from 1 to 9.
+Sets the bitmap mode for the currently selected turtle.
+The bitmap mode controls how bitmapped turtles (see <link linkend="command-bitmapturtle">BITMAPTURTLE</link>) paste their image onto the screen.
+Sometimes you want the background erased and sometimes not.
+Sometimes you wish to invert the image before pasting it and sometimes not.
+</para>
+
+<para>
+The <parameter>mode</parameter> input must be an integer from 1 to 9.
 The meaning of each value is given by the following table:
 
 <informaltable frame='all'>
   <tgroup cols='2'>
     <thead>
-      <row><entry>Mode</entry> <entry>Meaning</entry></row>
+      <row><entry>Mode</entry> <entry>Turtle Image</entry></row>
     </thead>
     <tbody>
-      <row><entry>1</entry> <entry>Take copy of memory then copy to screen</entry></row>
-      <row><entry>2</entry> <entry>Take copy of memory OR with copy of screen then copy to screen</entry></row>
-      <row><entry>3</entry> <entry>Take copy of memory AND with copy of screen then copy to screen</entry></row>
-      <row><entry>4</entry> <entry>Take copy of memory XOR with copy of screen then copy to screen</entry></row>
-      <row><entry>5</entry> <entry>Take copy of memory AND with invert of screen then copy to screen</entry></row>
-      <row><entry>6</entry> <entry>Take invert of memory then copy to screen</entry></row>
-      <row><entry>7</entry> <entry>Take copy of memory OR with copy of screen then invert to screen</entry></row>
-      <row><entry>8</entry> <entry>Take invert of memory OR with copy of screen then copy to screen</entry></row>
-      <row><entry>9</entry> <entry>Take invert of screen then copy to screen</entry></row>
+      <row><entry>1</entry> <entry>The bitmap in memory, without modification</entry></row>
+      <row><entry>2</entry> <entry>A bitwise OR of the bitmap in memory and the screen</entry></row>
+      <row><entry>3</entry> <entry>A bitwise AND of the bitmap in memory and the screen</entry></row>
+      <row><entry>4</entry> <entry>A bitwise XOR of the bitmap in memory with the screen</entry></row>
+      <row><entry>5</entry> <entry>A bitwise AND of the bitmap in memory with the bitwise inversion of screen</entry></row>
+      <row><entry>6</entry> <entry>A bitwise inversion of the bitmap in memory</entry></row>
+      <row><entry>7</entry> <entry>A bitwise OR of the bitmap in memory with the bitwise inversion of the screen</entry></row>
+      <row><entry>8</entry> <entry>A bitwise OR of the bitwise inversion of the bitmap in memory and the screen</entry></row>
+      <row><entry>9</entry> <entry>A bitwise inversion of the screen</entry></row>
     </tbody>
   </tgroup>
 </informaltable>
 </para>
 
 <para>
-SETTURTLEMODE only works if the selected turtle is currently bitmapped (as with <link linkend="command-bitmapturtle">BITMAPTURTLE</link>).
-It enables bitmapped turtles to paste their images in different ways.
-Sometimes you want the background erased and sometimes not.
-Sometimes you wish to invert the image before pasting it and sometimes not.
+SETTURTLEMODE has no effect if the selected turtle is not currently bitmapped.
+It is an error to run SETTURTLEMODE on a turtle that was bitmapped with a rotating bitmap.
 </para>
 
 <para>
@@ -54,11 +58,6 @@ Use <link linkend="command-turtlemode">TURTLEMODE</link> to obtain the selected 
 
 <para>
 Use <link linkend="command-bitmapturtle">BITMAPTURTLE</link> to map a turtle to a bitmap.
-</para>
-
-<para>
-SETTURTLEMODE has no effect if the selected turtle is not currently bitmapped.
-It is an error to run SETTURTLEMODE on a turtle that was bitmapped with a rotating bitmap.
 </para>
 
 </listitem>
@@ -86,7 +85,7 @@ BITCOPY 101 101
 ; Use a simple copy for the turtle's mode
 BITMAPTURTLE
 
-; fill the screen with yellow
+; Fill the screen with yellow
 SETSCREENCOLOR [255 255 0]
 ; Notice that the white corners show up when using the default turtle mode
 
