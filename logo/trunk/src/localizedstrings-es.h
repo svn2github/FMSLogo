@@ -376,7 +376,7 @@
 #define LOCALIZED_ALTERNATE_NETCONNECTSENDVALUE    "enviaValorConectaRed"
 #define LOCALIZED_ALTERNATE_NETSHUTDOWN            "finRed"
 #define LOCALIZED_ALTERNATE_NETSTARTUP             "iniciaRed"
-#define LOCALIZED_ALTERNATE_NOBITMAPTURTLE         "ponFormaTortuga" // "quitadibujotortuga"
+#define LOCALIZED_ALTERNATE_NOBITMAPTURTLE         "quitaForma"
 #define LOCALIZED_ALTERNATE_NODES                  "nodos"
 #define LOCALIZED_ALTERNATE_NODRIBBLE              "noEco"
 #define LOCALIZED_ALTERNATE_NOSTATUS               "quitaEstado"

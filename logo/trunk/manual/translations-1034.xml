@@ -1072,7 +1072,7 @@ pul</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-nobitmapturtle'>nobitmapturtle</link></entry>
-        <entry><literallayout>ponFormaTortuga</literallayout></entry>
+        <entry><literallayout>quitaForma</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-nodes'>nodes</link></entry>
@@ -4334,10 +4334,6 @@ raizcuadrada</literallayout></entry>
         <entry><link linkend='command-bitmapturtle'>bitmapturtle</link></entry>
       </row>
       <row>
-        <entry>ponFormaTortuga</entry>
-        <entry><link linkend='command-nobitmapturtle'>nobitmapturtle</link></entry>
-      </row>
-      <row>
         <entry>ponGrosor</entry>
         <entry><link linkend='command-setpensize'>setpensize</link></entry>
       </row>
@@ -4540,6 +4536,10 @@ raizcuadrada</literallayout></entry>
       <row>
         <entry>quitaEstado</entry>
         <entry><link linkend='command-nostatus'>nostatus</link></entry>
+      </row>
+      <row>
+        <entry>quitaForma</entry>
+        <entry><link linkend='command-nobitmapturtle'>nobitmapturtle</link></entry>
       </row>
       <row>
         <entry>quitarepetidos</entry>
