@@ -1,68 +1,76 @@
 <section id="command-setturtle">
-<title>SETTURTLE</title>
+<title>ACTIVA</title>
+<indexterm><primary>ACTIVA</primary></indexterm>
 <indexterm><primary>SETTURTLE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETTURTLE</command> <parameter>index</parameter>
-(<command>SETTURTLE</command> <parameter>index</parameter> <parameter>hasownpen</parameter>)</synopsis>
+<synopsis><command>ACTIVA</command> <parameter>índice_de_tortuga</parameter>
+(<command>ACTIVA</command> <parameter>índice_de_tortuga</parameter> <parameter>tiene_propio_lápiz</parameter>)
+<command>SETTURTLE</command> <parameter>índice_de_tortuga</parameter>
+(<command>SETTURTLE</command> <parameter>índice_de_tortuga</parameter> <parameter>tiene_propio_lápiz</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Selects turtle <parameter>index</parameter> for control.
-If the turtle was not previously activated, then all turtles from zero to <parameter>index</parameter> are activated.
-From now until you select a different turtle, all turtle commands refers to the newly selected turtle.
+Activa por control a la tortuga que corresponde al <parameter>índice_de_tortuga</parameter>.
+Si la tortuga especificada no estaba previamente activada, entonces ACTIVA activa a todas las tortugas del índice 0 a índice <parameter>índice_de_tortuga</parameter>.
+Después, todos los comandos de tortuga estará dirigidos a la tortuga nuevamente activada hasta que activas a otra tortuga.
 </para>
 
 <para>
-Normally, all turtles share the same <link linkend="command-penmode">PENMODE</link>, <link linkend="command-pensize">PENSIZE</link> and <link linkend="command-pencolor">PENCOLOR</link>.
-However, if you supply the optional boolean <parameter>hasownpen</parameter> input as <userinput>"true</userinput>, then the selected turtle, as well as all newly activated turtles, have their own PENMODE, PENSIZE, and PENCOLOR.
-You also can change a previously activated turtle to use its own pen (or not) by specifying a <parameter>hasownpen</parameter> input.
+Cada tortuga mantiene su rumbo propio (orientación en 3D), posición, y lápiz, pero normalmente todas comparten el mismo <link linkend="command-penmode">LAPIZMODO</link>, <link linkend="command-pensize">GROSOR</link> y <link linkend="command-pencolor">COLORLAPIZ</link>.
+Sin embargo, si proporcionas la entrada opcional <parameter>tiene_propio_lápiz</parameter> como <userinput>"CIERTO</userinput>, entonces tanta la tortuga seleccionada como todas las otras que estén activadas nuevamente tendrán su proprio LAPIZMODO, GROSOR, y COLORLAPIZ.
+También puedes cambiar que una tortuga previamente activada usa (o no usa) su propio lápiz especificando <parameter>tiene_propio_lápiz</parameter>.
 </para>
 
 <para>
-If no <parameter>hasownpen</parameter> input is given and SETTURTLE does not activate any new turtles, then the selected turtle's pen remains unchanged.
-If no <parameter>hasownpen</parameter> input is given and SETTURTLE activates a new turtle, then the turtle's initial pen uses the initial pen that &PRODUCTNAME; uses.
+Si no das la entrada <parameter>tiene_propio_lápiz</parameter> y ACTIVA no activa a una nueva tortuga, entonces el lápiz de la tortuga especificada no cambia.
+Si no das la entrada <parameter>tiene_propio_lápiz</parameter> y ACTIVA sí activa a una nueva tortuga, entonces el lápiz de ésta tortuga estará el lápiz compartido (él que &PRODUCTNAME; dio inicialmente a la tortuga 0 cuando se inició).
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>; 2D Example
-REPEAT 8 [SETTURTLE REPCOUNT-1 FORWARD 10*REPCOUNT]</userinput>
-</programlisting>
+<para>
+Un ejemplo en 2D:
+<programlisting><userinput>REPITE 8 [ACTIVA CUENTAREPITE GIRADERECHA 30*CUENTAREPITE AVANZA 20*CUENTAREPITE]</userinput></programlisting>
+</para>
 
-<programlisting><userinput>; 3D Example
-PERSPECTIVE
-CLEARSCREEN
-; Draw a cube from the default vantage point
-REPEAT 4 [REPEAT 4 [FORWARD 100 RIGHT 90] FORWARD 100 DOWNPITCH 90]</userinput>
-</programlisting>
+<para>
+Un ejemplo en 3D que dibuja un cubo del punto de vista normal:
+<programlisting><userinput>PERSPECTIVA
+BORRAPANTALLA
+REPITE 4 [REPITE 4 [AVANZA 100 GIRADERECHA 90] AVANZA 100 BAJANARIZ 90]</userinput></programlisting>
+</para>
 
-<programlisting><userinput>; 3D Example with moving eye
-PERSPECTIVE
-CLEARSCREEN
-SETTURTLE -1 ; select the "eye position" turtle
-SETXYZ 500 500 500
-SETTURTLE 0
-; Draw a cube from a new vantage point
-REPEAT 4 [REPEAT 4 [FORWARD 100 RIGHT 90] FORWARD 100 DOWNPITCH 90]</userinput>
+<para>
+Un ejemplo en 3D que usa ACTIVA para dibujar el mismo cubo de un punto de vista diferente:
+<programlisting><userinput>PERSPECTIVA
+BORRAPANTALLA
+ACTIVA -1 ; activa a la tortuga que es el «punto de vista»
+PONXYZ 500 500 500 ; mueve el «punto de vista»
+
+; Dibuja un cubo del punto de vista nuevo.
+ACTIVA 0
+REPITE 4 [REPITE 4 [AVANZA 100 GIRADERECHA 90] AVANZA 100 BAJANARIZ 90]</userinput>
 </programlisting>
+</para>
+
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>See Also</term>
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-turtle">TURTLE</link></member>
-<member><link linkend="command-turtles">TURTLES</link></member>
+<member><link linkend="command-turtle">QUIEN</link></member>
+<member><link linkend="command-turtles">TORTUGAS</link></member>
 </simplelist></listitem>
 </varlistentry>
 

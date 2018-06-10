@@ -1,43 +1,47 @@
 <section id="command-hasownpenp">
-<title>HASOWNPENP</title>
+<title>HASOWNPEN?</title>
+<indexterm><primary>HASOWNPEN?</primary></indexterm>
 <indexterm><primary>HASOWNPENP</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>HASOWNPENP</command>
-<command>HASOWNPEN?</command></synopsis>
+<synopsis><command>HASOWNPEN?</command>
+<command>HASOWNPENP</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs TRUE if the currently selected turtle has its own setting for <link linkend="command-penmode">PENMODE</link>, <link linkend="command-pensize">PENSIZE</link>, and <link linkend="command-pencolor">PENCOLOR</link>.
-Outputs FALSE if the currently selected turtle shares its pen settings with other turtles.
+Devuelve CIERTO si la tortuga actual tiene su propio <link linkend="command-penmode">LAPIZMODO</link>, <link linkend="command-pensize">GROSOR</link>, y <link linkend="command-pencolor">COLORLAPIZ</link>.
+Devuelve FALSO si la tortuga actual comparte su control de lápiz con otras tortugas.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SETTURTLE 1
-SHOW HASOWNPENP</userinput>
-false
+<programlisting><userinput>ACTIVA 1
+MUESTRA HASOWNPEN?</userinput>
+falso
 </programlisting>
 
-<programlisting><userinput>(SETTURTLE 1 "true)
-SHOW HASOWNPENP</userinput>
-true
+<programlisting><userinput>(ACTIVA 1 "cierto)
+MUESTRA HASOWNPEN?</userinput>
+cierto
 </programlisting>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-setturtle">SETTURTLE</link></member>
+<member><link linkend="command-setturtle">ACTIVA</link></member>
 </simplelist></listitem>
 </varlistentry>
 

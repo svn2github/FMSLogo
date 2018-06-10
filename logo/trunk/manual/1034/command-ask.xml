@@ -1,42 +1,53 @@
 <section id="command-ask">
-<title>ASK</title>
+<title>PIDE</title>
+<indexterm><primary>PIDE</primary></indexterm>
 <indexterm><primary>ASK</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>ASK</command> <parameter>turtle</parameter> <parameter>instructionlist</parameter></synopsis>
+<synopsis><command>PIDE</command> <parameter>índice_de_tortuga</parameter> <parameter>lista_de_instrucciones</parameter>
+<command>ASK</command> <parameter>índice_de_tortuga</parameter> <parameter>lista_de_instrucciones</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Instructs a specific turtle to run a given set of instructions (which are usually turtle instructions).
+Instruye a la tortuga especificada ejecutar una lista de instrucciones especificada (la cual contiene normalmente instrucciones de tortuga).
 </para>
 <para>
-ASK selects to the turtle whose index matches the <parameter>turtle</parameter> input, runs <parameter>instructionlist</parameter>, then reselects the previous turtle.
+Primero, PIDE selecciona a la tortuga cuyo índice es igual a la entrada <parameter>índice_de_tortuga</parameter>.
+Entonces, PIDE ejecuta <parameter>lista_de_instrucciones</parameter>.
+Por último, PIDE reselecciona a la tortuga previo.
 </para>
 <para>
-ASK outputs whatever <parameter>instructionlist</parameter> outputs.  If <parameter>instructionlist</parameter> does not output anything, then ASK doesn't output anything, either.
+PIDE devuelve lo que <parameter>lista_de_instrucciones</parameter> devuelve.
+Si <parameter>lista_de_instrucciones</parameter> no devuelve nada, entonces PIDE tampoco devuelve nada.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
 
-<programlisting><userinput>; Send turtles out in four directions
-REPEAT 4 [ASK REPCOUNT [ RIGHT 90 * REPCOUNT FORWARD 100 ]</userinput>
+
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<para>
+Manda a cuatro tortugas en rumbos distintos:
+<programlisting><userinput>REPITE 4 [PIDE CUENTAREPITE [ GIRADERECHA 90 * CUENTAREPITE AVANZA 100 ]</userinput>
 </programlisting>
+</para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-setturtle">SETTURTLE</link></member>
+<member><link linkend="command-setturtle">ACTIVA</link></member>
 </simplelist></listitem>
 </varlistentry>
 

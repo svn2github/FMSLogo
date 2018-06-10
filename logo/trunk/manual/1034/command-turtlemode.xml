@@ -1,30 +1,32 @@
 <section id="command-turtlemode">
-<title>TURTLEMODE</title>
+<title>MODOTORTUGA</title>
+<indexterm><primary>MODOTORTUGA</primary></indexterm>
 <indexterm><primary>TURTLEMODE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>TURTLEMODE</command></synopsis>
+<synopsis><command>MODOTORTUGA</command>
+<command>TURTLEMODE</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the selected turtle's mode.
-See <link linkend="command-setturtlemode">SETTURTLEMODE</link> for an explaination of turtle modes.
+Devuelve el modo de bitmap de la tortuga actual.
+Ve <link linkend="command-setturtlemode">PONMODOTORTUGA</link> por una explicación de los modos posibles.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>REPEAT 4 [ FORWARD 30 RIGHT 90 ]
-BITCOPY 50 50
-BITMAPTURTLE
-SETTURTLEMODE 3</userinput>
+<programlisting><userinput>REPITE 4 [ AVANZA 30 GIRADERECHA 90 ]
+COPIAAREA 50 50
+PONFORMA
+PONMODOTORTUGA 3</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

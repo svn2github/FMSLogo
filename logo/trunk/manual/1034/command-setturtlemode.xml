@@ -1,64 +1,67 @@
 <section id="command-setturtlemode">
-<title>SETTURTLEMODE</title>
+<title>PONMODOTORTUGA</title>
+<indexterm><primary>PONMODOTORTUGA</primary></indexterm>
 <indexterm><primary>SETTURTLEMODE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETTURTLEMODE</command> <parameter>mode</parameter></synopsis>
+<synopsis><command>PONMODOTORTUGA</command> <parameter>modo</parameter>
+<command>SETTURTLEMODE</command> <parameter>modo</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Sets the current bitmap mode for the currently selected turtle to <parameter>mode</parameter>.
-The <parameter>mode</parameter> input must be a number from 1 to 9.
-The meaning of each value is given by the following table:
+Pon el modo de bitmap al tortuga actual.
+El modo de bitmap controla la manera en que la forma de la tortuga se muestra sobre la pantalla.
+PONMODOTORTUGA sólo funciona cuando la tortuga actual tiene forma de bitmap (ve <link linkend="command-bitmapturtle">PONFORMA</link>).
+Hace que tortugas con forma de bitmap muestra su forma de una manera diferente.
+Algunas veces, quieres que se borra el fondo de la pantalla y algunas veces no.
+Algunas veces, quieres que se invierta la imagen antes de mostrarla y algunas veces no.
+</para>
+
+<para>
+La entrada <parameter>modo</parameter> debe ser un entero entre 1 y 9.
+Se da el significado de cada valor en la tabla siguiente:
 
 <informaltable frame='all'>
   <tgroup cols='2'>
     <thead>
-      <row><entry>Mode</entry> <entry>Meaning</entry></row>
+      <row><entry>Modo</entry> <entry>Bitmap Final</entry></row>
     </thead>
     <tbody>
-      <row><entry>1</entry> <entry>Take copy of memory then copy to screen</entry></row>
-      <row><entry>2</entry> <entry>Take copy of memory OR with copy of screen then copy to screen</entry></row>
-      <row><entry>3</entry> <entry>Take copy of memory AND with copy of screen then copy to screen</entry></row>
-      <row><entry>4</entry> <entry>Take copy of memory XOR with copy of screen then copy to screen</entry></row>
-      <row><entry>5</entry> <entry>Take copy of memory AND with invert of screen then copy to screen</entry></row>
-      <row><entry>6</entry> <entry>Take invert of memory then copy to screen</entry></row>
-      <row><entry>7</entry> <entry>Take copy of memory OR with copy of screen then invert to screen</entry></row>
-      <row><entry>8</entry> <entry>Take invert of memory OR with copy of screen then copy to screen</entry></row>
-      <row><entry>9</entry> <entry>Take invert of screen then copy to screen</entry></row>
+      <row><entry>1</entry> <entry>La bitmap en memoria, sin modificaciones</entry></row>
+      <row><entry>2</entry> <entry>Un OR a nivel de bits con la bitmap en memoria y la bitmap sobre la pantalla</entry></row>
+      <row><entry>3</entry> <entry>Un AND a nivel de bits con la bitmap en memoria y la bitmap sobre la pantalla</entry></row>
+      <row><entry>4</entry> <entry>Un XOR a nivel de bits con la bitmap en memoria y la bitmap sobre la pantalla</entry></row>
+      <row><entry>5</entry> <entry>Un XOR a nivel de bits con la bitmap en memoria y un NOT de la bitmap sobre la pantalla</entry></row>
+      <row><entry>6</entry> <entry>Un NOT a nivel de bits con la bitmap en memoria</entry></row>
+      <row><entry>7</entry> <entry>Un OR a nivel de bits con la bitmap en memoria y un NOT de la bitmap sobre la pantalla</entry></row>
+      <row><entry>8</entry> <entry>Un OR a nivel de bits con un NOT de la bitmap en memoria y la bitmap sobre la pantalla</entry></row>
+      <row><entry>9</entry> <entry>Un NOT de la bitmap sobre la pantalla</entry></row>
     </tbody>
   </tgroup>
 </informaltable>
 </para>
 
 <para>
-SETTURTLEMODE only works if the selected turtle is currently bitmapped (as with <link linkend="command-bitmapturtle">BITMAPTURTLE</link>).
-It enables bitmapped turtles to paste their images in different ways.
-Sometimes you want the background erased and sometimes not.
-Sometimes you wish to invert the image before pasting it and sometimes not.
+PONMODOTORTUGA no tiene efecto si la tortuga actual no tiene forma de bitmap.
+Es un error ejecutar PONMODOTORTUGA a una tortuga que tiene forma giratoria.
 </para>
 
 <para>
-Use <link linkend="command-setturtle">SETTURTLE</link> to select a different turtle.
+Usa <link linkend="command-setturtle">ACTIVA</link> para seleccionar una tortuga diferente.
 </para>
 
 <para>
-Use <link linkend="command-turtlemode">TURTLEMODE</link> to obtain the selected turtle's mode.
+Usa <link linkend="command-turtlemode">MODOTORTUGA</link> para obtener el modo de bitmap de la tortuga actual.
 </para>
 
 <para>
-Use <link linkend="command-bitmapturtle">BITMAPTURTLE</link> to map a turtle to a bitmap.
-</para>
-
-<para>
-SETTURTLEMODE has no effect if the selected turtle is not currently bitmapped.
-It is an error to run SETTURTLEMODE on a turtle that was bitmapped with a rotating bitmap.
+Usa <link linkend="command-bitmapturtle">PONFORMA</link> para mapear la forma de una tortuga a un bitmap en memoria.
 </para>
 
 </listitem>
@@ -66,33 +69,33 @@ It is an error to run SETTURTLEMODE on a turtle that was bitmapped with a rotati
 
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>; Fill the screen with white
-SETSCREENCOLOR [255 255 255]
-CLEARSCREEN
+<programlisting><userinput>; Llena la pantalla con blanco
+PONCOLORFONDO [255 255 255]
+BORRAPANTALLA
 
-; Draw a circle and fill it with red
-PENDOWN
-CIRCLE 50
-SETFLOODCOLOR [255 0 0]
-FILL
+; Dibuja un círculo y llenalo con rojo
+BAJALAPIZ
+CIRCULO 50
+PONCOLORRELLENO [255 0 0]
+RELLENA
 
-; Copy the red circle to the clipboard
-PENUP
-SETXY -50 -50
-BITCOPY 101 101
+; Copia el círculo rojo al Portapapeles
+BAJALAPIZ
+PONXY -50 -50
+COPIAAREA 101 101
 
-; Use a simple copy for the turtle's mode
-BITMAPTURTLE
+; Usa el modo de bitmap por defecto (una copia sin modificaciones)
+PONFORMA
 
-; fill the screen with yellow
-SETSCREENCOLOR [255 255 0]
-; Notice that the white corners show up when using the default turtle mode
+; Llena la pantalla con amarillo
+PONCOLORFONDO [255 255 0]
+; Observa que las esquinas blanca se muestran en el modo de bitmap por defecto
 
-; Set the turtle mode to AND the image onto the background
-SETTURTLEMODE 3
-; Notice that the white corners disappeared</userinput>
+; Pon un modo de bitmap para hacer AND a nivel de bits con la imagen y el fondo.
+PONMODOTORTUGA 3
+; Observa que las esquinas blanca se han desaparecido</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

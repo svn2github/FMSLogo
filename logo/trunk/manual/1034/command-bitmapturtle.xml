@@ -1,91 +1,93 @@
 <section id="command-bitmapturtle">
-<title>BITMAPTURTLE</title>
+<title>PONFORMA</title>
+<indexterm><primary>PONFORMA</primary></indexterm>
 <indexterm><primary>BITMAPTURTLE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>BITMAPTURTLE</command>
-(<command>BITMAPTURTLE</command> <parameter>rotatebitmap</parameter>)</synopsis>
+<synopsis><command>PONFORMA</command>
+(<command>PONFORMA</command> <parameter>forma_gira?</parameter>)
+<command>BITMAPTURTLE</command>
+(<command>BITMAPTURTLE</command> <parameter>forma_gira?</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 
 <para>
-Maps the current turtle (see <link linkend="command-setturtle">SETTURTLE</link>) to the corresponding bitmap buffer (see <link linkend="command-bitcut">BITCUT</link>).
-BITMAPTURTLE can map turtle 0 to bitmap 0, turtle 1 to bitmap 1, turtle 2 to bitmap 2, etc., on a per-turtle basis.
-Note that there is no way to map a turtle to any bitmap index other than the turtle's index.
-For example, turtle 2 can only be mapped to bitmap 2, not bitmap 1 or bitmap 3.
+Hace que la tortuga actual (ves <link linkend="command-setturtle">ACTIVA</link>) adquiere la forma del Bitmap que se encuentra en el búfer correspondiente (ves <link linkend="command-bitcut">CORTAAREA</link>).
+PONFORMA mapea tortuga 0 a bitmap 0, tortuga 1 a bitmap 1, tortuga 2 a bitmap 2, etcétera, cada tortuga independientemente.
+Nota que no hay manera de mapear una tortuga a un bitmap que no tiene el mismo índice que la tortuga.
+Por ejemplo, solo se puede mapear tortuga 2 a bitmap 2, no a bitmap 1 o bitmap 3.
 </para>
 
 <para>
-Because bitmap 0 is always mapped to the clipboard, BITMAPTURTLE can only map turtle 0 to the clipboard.
-That is, if you select turtle 0 and run BITMAPTURTLE, then the turtle changes to whatever is in the clipboard and is updated whenever the clipboard subsequently changes.
-&PRODUCTNAME; complains if the clipboard is not holding an image while turtle 0 is bitmapped.
+Porque &PRODUCTNAME; siempre mapea bitmap 0 al Portapapeles, PONFORMA solo puede mapea tortuga 0 a la imagen en el Portapapeles.
+Esto es, si seleccionas la tortuga 0 y ejecutas PONFORMA la forma de la tortuga se vuelve a lo que está en el Portapapeles y se lo actualiza la forma cuando lo que está en el Portapapeles cambia.
+&PRODUCTNAME; queja si el Portapapeles no contiene un imagen mientras tortuga 0 adquiere su forma del Portapapeles.
 </para>
 
 <para>
-Both <link linkend="command-nobitmapturtle">NOBITMAPTURTLE</link> and <link linkend="command-clearscreen">CLEARSCREEN</link> restores the turtle to its normal shape, but does not erase the corresponding bitmap.
+Ambos <link linkend="command-nobitmapturtle">QUITAFORMA</link> y <link linkend="command-clearscreen">BORRAPANTALLA</link> restauran la forma normal de la tortuga, pero no borran el bitmap correspondiente.
 </para>
 
 <para>
-If the optional <parameter>rotatebitmap</parameter> input is TRUE, then the bitmap rotates with the turtle's heading.
-If the <parameter>rotatebitmap</parameter> input is not given, it defaults to FALSE.
-This must be either TRUE or FALSE.
+Si la entrada opcional <parameter>forma_gira?</parameter> es CIERTO, entonces el bitmap gira con el rumbo de la tortuga.
+Si no se da la entrada <parameter>forma_gira?</parameter>, es FALSO por omisión.
+Debe ser o CIERTO o FALSO.
 </para>
 
 <para>
-A turtle with a rotating bitmap treats all white pixels in the bitmap as transparent.
-There is no way to show white pixels in a rotating bitmap, but you can instead use nearly white pixels that look white, such as a very light grey.
-Neither turtle 0 (the clipboard bitmap), nor any of the special turtles, can be bitmapped using a rotating bitmap.
+Una tortuga con un bitmap giratorio trata a todos los píxeles blancos en el bitmap como transparente.
+No hay manera de mostrar píxeles blancos en un bitmap giratorio, pero en su lugar, puedes usar píxeles casi-blancos que parecen blancos, tal como un gris muy claro.
+Ni tortuga 0 (el bitmap de Portapapeles) ni cada una de las tortugas especiales, puede tener un bitmap giratorio.
 </para>
 
 <para>
-A turtle with a rotating bitmap draws the center of the bitmap at the turtle's position.
-A turtle with a non-rotating bitmap keeps the lower-left corner of the bitmap at the turtle's position.
+Una tortuga con forma de un bitmap giratorio dibuja el centro del bitmap a la posición de la tortuga.
+Una tortuga con forma de un bitmap no giratorio mantiene la esquina de abajo a la derecha del bitmap a la posición de la tortuga.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
 <para>
-The following example shows a regular bitmapped turtle that traces a circle.
-<programlisting><userinput>CLEARSCREEN
-LABEL "+
-SETBITINDEX 1
-BITCUT 20 20
-HIDETURTLE
-SETTURTLE 1
-BITMAPTURTLE
-REPEAT 360 [ FORWARD 1 RIGHT 1 WAIT 1 ]</userinput>
+El ejemplo siguiente demuestra una tortuga con forma regular que dibuja un circulo.
+<programlisting><userinput>BORRAPANTALLA
+ROTULO "+
+PONINDICEBIT 1
+CORTAAREA 20 20
+OCULTATORTUGA
+ACTIVA 1
+PONFORMA
+REPITE 360 [ AVANZA 1 GIRADERECHA 1 ESPERA 1 ]</userinput>
 </programlisting>
 </para>
 
 <para>
-The following example shows a turtle with a rotating bitmap that traces a circle on a blue background.
-<programlisting><userinput>SETSCREENCOLOR "WHITE
-CLEARSCREEN
-LABEL "+
-SETBITINDEX 1
-BITCUT 20 20
-HIDETURTLE
-SETTURTLE 1
-SETSCREENCOLOR "BLUE
-(BITMAPTURTLE "TRUE)
-REPEAT 360 [ FORWARD 1 RIGHT 1 WAIT 1 ]</userinput>
+El ejemplo siguiente demuestra una tortuga con forma giratoria que dibuja un circulo sobre un fondo azul.
+<programlisting><userinput>PONCOLORFONDO "blanco
+BORRAPANTALLA
+ROTULO "+
+PONINDICEBIT 1
+CORTAAREA 20 20
+OCULTATORTUGA
+ACTIVA 1
+PONCOLORFONDO "azul
+(PONFORMA "CIERTO)
+REPITE 360 [ AVANZA 1 GIRADERECHA 1 ESPERA 1 ]</userinput>
 </programlisting>
 </para>
 
-
 </listitem>
 </varlistentry>
+
 
 </variablelist>
-
 </section>

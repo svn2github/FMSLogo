@@ -1,37 +1,40 @@
 <section id="command-nobitmapturtle">
-<title>NOBITMAPTURTLE</title>
+<title>QUITAFORMA</title>
+<indexterm><primary>QUITAFORMA</primary></indexterm>
 <indexterm><primary>NOBITMAPTURTLE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>NOBITMAPTURTLE</command></synopsis>
+<synopsis><command>QUITAFORMA</command>
+<command>NOBITMAPTURTLE</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Restores the turtle to its original triangle shape.
-It is the opposite of <link linkend="command-bitmapturtle">BITMAPTURTLE</link>.
+Restaura a la tortuga su forma normal de triángulo.
+Es el procedimiento opuesto a <link linkend="command-bitmapturtle">PONFORMA</link>.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
 
-<programlisting><userinput>CLEARSCREEN
-LABEL "+
-BITCUT 20 20
-BITMAPTURTLE
-FORWARD 100
-NOBITMAPTURTLE</userinput>
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>BORRAPANTALLA
+ROTULO "+
+CORTAAREA 20 20
+PONFORMA
+AVANZA 100
+QUITAFORMA</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>
