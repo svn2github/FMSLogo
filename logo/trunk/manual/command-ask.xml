@@ -16,20 +16,22 @@
 Instructs a specific turtle to run a given set of instructions (which are usually turtle instructions).
 </para>
 <para>
-ASK selects to the turtle whose index matches the <parameter>turtle</parameter> input, runs <parameter>instructionlist</parameter>, then reselects the previous turtle.
+ASK selects the turtle whose index matches the <parameter>turtle</parameter> input, runs <parameter>instructionlist</parameter>, then reselects the previous turtle.
 </para>
 <para>
-ASK outputs whatever <parameter>instructionlist</parameter> outputs.  If <parameter>instructionlist</parameter> does not output anything, then ASK doesn't output anything, either.
+ASK outputs whatever <parameter>instructionlist</parameter> outputs.
+If <parameter>instructionlist</parameter> does not output anything, then ASK doesn't output anything, either.
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-
-<programlisting><userinput>; Send turtles out in four directions
-REPEAT 4 [ASK REPCOUNT [ RIGHT 90 * REPCOUNT FORWARD 100 ]</userinput>
+<para>
+Send four turtles in four different directions:
+<programlisting><userinput>REPEAT 4 [ASK REPCOUNT [ RIGHT 90 * REPCOUNT FORWARD 100 ]</userinput>
 </programlisting>
+</para>
 </listitem>
 </varlistentry>
 
