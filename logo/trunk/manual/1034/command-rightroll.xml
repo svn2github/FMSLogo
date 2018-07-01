@@ -1,37 +1,43 @@
 <section id="command-rightroll">
-<title>RIGHTROLL</title>
+<title>BALANCEADERECHA</title>
+<indexterm><primary>BALANCEADERECHA</primary></indexterm>
+<indexterm><primary>BD</primary></indexterm>
 <indexterm><primary>RIGHTROLL</primary></indexterm>
 <indexterm><primary>RR</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>RIGHTROLL</command> <parameter>angle</parameter>
-<command>RR</command> <parameter>angle</parameter></synopsis>
+<synopsis><command>BALANCEADERECHA</command> <parameter>ángulo</parameter>
+<command>BD</command> <parameter>ángulo</parameter>
+<command>RIGHTROLL</command> <parameter>ángulo</parameter>
+<command>RR</command> <parameter>ángulo</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Rolls the turtle toward his right side by the specified angle, measured in degrees (1/360 of a circle).
+Gira la tortuga hacia su lado derecho en el <parameter>ángulo</parameter> especificado, medido en grados (1/360 de la circunferencia).
 </para>
 <para>
-This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+Este comando se diseñaba para ejecutar en modo <link linkend="command-perspective">PERSPECTIVA</link>.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>PERSPECTIVE
-RIGHTROLL 45
-REPEAT 3 [FORWARD 100 LEFT 120]</userinput>
+<programlisting><userinput>PERSPECTIVA
+BALANCEADERECHA 45
+REPITE 3 [AVANZA 100 GIRAIZQUIERDA 120]</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

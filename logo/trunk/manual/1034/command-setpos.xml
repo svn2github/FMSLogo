@@ -1,42 +1,46 @@
 <section id="command-setpos">
-<title>SETPOS</title>
+<title>PONPOS</title>
+<indexterm><primary>PONPOS</primary></indexterm>
 <indexterm><primary>SETPOS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETPOS</command> <parameter>position</parameter></synopsis>
+<synopsis><command>PONPOS</command> <parameter>posición</parameter>
+<command>SETPOS</command> <parameter>posición</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Moves the turtle to an absolute X,Y coordinate.
-The <parameter>position</parameter> input is a list of two numbers, the X and Y coordinates.
+Mueve la tortuga a las coordenadas absolutas X, Y.
+La entrada <parameter>posición</parameter> debe ser una lista de dos números, las coordenadas X e Y.
+Ve también <link linkend="command-pos">POS</link>.
 </para>
 
 <para>
-There is often some confusion on how to call SETPOS with variables.
-Let's look at some code:
+No es obvio como ejecutar PONPOS con variables.
+Veremos algo de código:
 
-<programlisting><userinput>MAKE "x 0
-MAKE "y 100
-SETPOS [:x :y]      ; fails
-SETPOS (list :x :y) ; works</userinput>
+<programlisting><userinput>HAZ "x 0
+HAZ "y 100
+PONPOS [:x :y]       ; no funciona
+PONPOS (LISTA :x :y) ; funciona</userinput>
 </programlisting>
 
-The first case is a list that contains 2 words <userinput>":x</userinput> and <userinput>":y</userinput>.
-In the second case a list is constructed containing the value of <userinput>:x</userinput> and <userinput>:y</userinput>.
+El primer caso (el que no funciona) es una lista de dos palabras <userinput>":x</userinput> e <userinput>":y</userinput>.
+En cambio, <userinput>(LISTA :x :y)</userinput> construye una lista de los dos valores contenidos en <userinput>:x</userinput> e <userinput>:y</userinput>.
 </para>
 
 <para>
-You can see this more clearly by using <link linkend="command-show">SHOW</link>:
+Puedes ver con más claridad usando <link linkend="command-show">MUESTRA</link>:
 
-<programlisting><userinput>show [:x :y]</userinput>
+<programlisting><userinput>MUESTRA [:x :y]</userinput>
 [:x :y]
-<userinput>SHOW (LIST :x :y)</userinput>
+<userinput>MUESTRA (LISTA :x :y)</userinput>
 [0 100]
 </programlisting>
 
@@ -45,25 +49,28 @@ You can see this more clearly by using <link linkend="command-show">SHOW</link>:
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>; draw a square
-CLEARSCREEN
-SETPOS [0 100]
-SETPOS [100 100]
-SETPOS [100 0]
-SETPOS [0 0]</userinput></programlisting>
+<para>
+Dibuja un cuadrado usando PONPOS:
+<programlisting><userinput>BORRAPANTALLA
+PONPOS [0 100]
+PONPOS [100 100]
+PONPOS [100 0]
+PONPOS [0 0]</userinput></programlisting>
+</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
 <member><link linkend="command-pos">POS</link></member>
-<member><link linkend="command-setx">SETX</link></member>
-<member><link linkend="command-sety">SETY</link></member>
+<member><link linkend="command-setx">PONX</link></member>
+<member><link linkend="command-sety">PONY</link></member>
 </simplelist></listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

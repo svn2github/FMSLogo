@@ -66,5 +66,10 @@ programmatically.
    color-by-index             - color indexado
    a color name               - un nombre de color
    a color vector             - un vector de color
+
+8) The following terms are generally translated the same way
+
+   clockwise                  - en sentido horario
+   counter-clockwise          - en sentido antihorario
    upper left corner          - la esquina de arriba a la izquierda
    lower right corner         - la esquina de abajo a la derecha

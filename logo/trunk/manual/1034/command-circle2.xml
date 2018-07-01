@@ -1,41 +1,47 @@
 <section id="command-circle2">
-<title>CIRCLE2</title>
+<title>CIRCULO2</title>
+<indexterm><primary>CIRCULO2</primary></indexterm>
 <indexterm><primary>CIRCLE2</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>CIRCLE2</command> <parameter>radius</parameter></synopsis>
+<synopsis><command>CIRCULO2</command> <parameter>radio</parameter>
+<command>CIRCLE2</command> <parameter>radio</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Moves the turtle clockwise along a circle of the given radius.
-The turtle ends in the same position in which it starts.
+Mueve la tortuga tal que traza un círculo con un radio dado.
+La tortuga termina en la misma posición donde empieza.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>; a 2D example
-CIRCLE2 100</userinput>
+<para>Un ejemplo en 2D:
+<programlisting><userinput>CIRCULO2 100</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; a 3D example
-PERSPECTIVE
-REPEAT 72 [CIRCLE2 100 RIGHTROLL 5]</userinput>
+<para>Un ejemplo in 3D:
+<programlisting><userinput>PERSPECTIVA
+REPITE 72 [CIRCULO2 100 BALANCEADERECHA 5]</userinput>
 </programlisting>
-
+</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-circle">CIRCLE</link></member>
+<member><link linkend="command-circle">CIRCULO</link></member>
 </simplelist></listitem>
 </varlistentry>
 

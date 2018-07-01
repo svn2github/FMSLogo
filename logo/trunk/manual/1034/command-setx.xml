@@ -1,41 +1,46 @@
 <section id="command-setx">
-<title>SETX</title>
+<title>PONX</title>
+<indexterm><primary>PONX</primary></indexterm>
 <indexterm><primary>SETX</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETX</command> <parameter>xcor</parameter></synopsis>
+<synopsis><command>PONX</command> <parameter>xcor</parameter>
+<command>SETX</command> <parameter>xcor</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Moves the turtle along the X axis from its current position to a new absolute X coordinate.
-The <parameter>xcor</parameter> input is the new X coordinate.
+Mueve la tortuga a lo largo del eje X desde la posición actual a una nueva coordenada absoluta X.
+La entrada <parameter>xcor</parameter> es la nueva coordenada X.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SETX 100
-SETY 100
-SETX 0
-SETY 0</userinput>
+<programlisting><userinput>PONX 100
+PONY 100
+PONX 0
+PONY 0</userinput>
 </programlisting>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-xcor">XCOR</link></member>
-<member><link linkend="command-sety">SETY</link></member>
-<member><link linkend="command-setz">SETZ</link></member>
-<member><link linkend="command-setxy">SETXY</link></member>
+<member><link linkend="command-xcor">COORX</link></member>
+<member><link linkend="command-sety">PONY</link></member>
+<member><link linkend="command-setz">PONZ</link></member>
+<member><link linkend="command-setxy">PONXY</link></member>
 </simplelist></listitem>
 </varlistentry>
 

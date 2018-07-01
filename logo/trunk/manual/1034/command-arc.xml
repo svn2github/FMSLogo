@@ -1,55 +1,63 @@
 <section id="command-arc">
-<title>ARC</title>
+<title>ARCO</title>
+<indexterm><primary>ARCO</primary></indexterm>
 <indexterm><primary>ARC</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>ARC</command> <parameter>angle</parameter> <parameter>radius</parameter></synopsis>
+<synopsis><command>ARCO</command> <parameter>ángulo</parameter> <parameter>radio</parameter>
+<command>ARC</command> <parameter>ángulo</parameter> <parameter>radio</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Draws an arc (part of a circle) based on the turtle heading, turtle position, and inputs.
-The center-point of the arc is the turtle's current position.
-ARC does not move the turtle.
-The arc sweeps an amount given by the <parameter>angle</parameter> input.
-The size (curvature) of the arc is based on the <parameter>radius</parameter> input.
+Dibuja un arco (parte de una circunferencia), según el rumbo y posición de la tortuga y los argumentos.
+El centro del arco es la posición actual de la tortuga.
+ARCO no mueve la tortuga.
+El arco traza un ángulo igual a <parameter>ángulo</parameter>.
+El tamaño del arco depende del argumento <parameter>radio</parameter>.
 </para>
 
 <para>
-If <parameter>radius</parameter> is positive, then the arc starts <parameter>radius</parameter> turtle steps behind the turtle.
-If <parameter>radius</parameter> is negative, then the arc starts <parameter>radius</parameter> turtle steps in front of the turtle.
-In both cases, the arc sweeps an angle equal to the <parameter>angle</parameter> input.
-If <parameter>angle</parameter> is positive, then the arc is drawn in a clockwise direction.
-If <parameter>angle</parameter> is negative, then the arc is drawn in a counter-clockwise direction.
-If <parameter>angle</parameter> is 360 or greater (or -360 or less), then ARC draws a circle.
+Si <parameter>radio</parameter> es positivo, entonces el arco empieza <parameter>radio</parameter> pasos de tortuga detrás de la tortuga.
+Si <parameter>radio</parameter> es negativo, entonces el arco empieza <parameter>radio</parameter> pasos de tortuga en frente de la tortuga.
+En ambos casos, el arco traza un ángulo igual al argumento <parameter>ángulo</parameter>.
+Si <parameter>ángulo</parameter> es positivo, entonces se dibuja el arco en sentido horario.
+Si <parameter>ángulo</parameter> es negativo, entonces se dibuja el arco en sentido antihorario.
+Si <parameter>ángulo</parameter> es mayor o igual que 360 (o menor o igual que -360), entonces ARCO dibuja una circunferencia.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
-<programlisting><userinput>; a 2D example
-ARC 360 100
-ARC 90 50</userinput>
-</programlisting>
 
-<programlisting><userinput>; a 3D example
-PERSPECTIVE
-REPEAT 36 [RIGHTROLL 10 ARC 90 100]</userinput>
+
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<para>Ejemplos en 2D:
+<programlisting><userinput>ARCO 360 100
+ARCO 90 50</userinput>
 </programlisting>
+</para>
+
+<para>Un ejemplo en 3D:
+<programlisting><userinput>PERSPECTIVA
+REPITE 36 [BALANCEADERECHA 10 ARCO 90 100]</userinput>
+</programlisting>
+</para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-arc2">ARC2</link></member>
+<member><link linkend="command-arc2">ARCO2</link></member>
 </simplelist></listitem>
 </varlistentry>
 

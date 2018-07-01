@@ -1,47 +1,51 @@
 <section id="command-home">
-<title>HOME</title>
+<title>CENTRO</title>
+<indexterm><primary>CENTRO</primary></indexterm>
 <indexterm><primary>HOME</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>HOME</command></synopsis>
+<synopsis><command>CENTRO</command>
+<command>HOME</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Moves the turtle to the center of the screen and sets the turtle's heading, pitch, and roll to 0.
+Sitúa la tortuga en el centro de la pantalla y pon a 0 su rumbo, cabeceo y balanceo.
 </para>
 
 <para>
-In 2D modes, HOME is equivalent to
-<programlisting><userinput>SETPOS [0 0] SETHEADING 0</userinput>
+En modos 2D, CENTRO es equivalente a
+<programlisting><userinput>PONPOS [0 0] PONRUMBO 0</userinput>
 </programlisting>
 
-In PERSPECTIVE mode, HOME is equivalent to
-<programlisting><userinput>SETPOSXYZ [0 0 0] SETORIENTATION [0 0 0]</userinput>
+En modo PERSPECTIVA, CENTRO es equivalente a
+<programlisting><userinput>POSICIONATE [0 0 0] PONORIENTACION [0 0 0]</userinput>
 </programlisting>
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>FORWARD 100
-RIGHT 90
-FORWARD 100
-HOME</userinput>
+<programlisting><userinput>AVANZA 100
+GIRADERECHA 90
+AVANZA 100
+CENTRO</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-clearscreen">CLEARSCREEN</link></member>
+<member><link linkend="command-clearscreen">BORRAPANTALLA</link></member>
 </simplelist></listitem>
 </varlistentry>
 

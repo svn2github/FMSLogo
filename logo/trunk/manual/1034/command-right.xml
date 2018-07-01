@@ -1,32 +1,37 @@
 <section id="command-right">
-<title>RIGHT</title>
+<title>GIRADERECHA</title>
+<indexterm><primary>GIRADERECHA</primary></indexterm>
+<indexterm><primary>GD</primary></indexterm>
 <indexterm><primary>RIGHT</primary></indexterm>
 <indexterm><primary>RT</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>RIGHT</command> <parameter>angle</parameter>
-<command>RT</command> <parameter>angle</parameter></synopsis>
+<synopsis><command>GIRADERECHA</command> <parameter>ángulo</parameter>
+<command>GD</command> <parameter>ángulo</parameter>
+<command>RIGHT</command> <parameter>ángulo</parameter>
+<command>RT</command> <parameter>ángulo</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Turns the turtle clockwise by the specified angle, measured in degrees (1/360 of a circle).
+Gira la tortuga en el sentido horario en el <parameter>ángulo</parameter> especificado, medido en grados (1/360 de la circunferencia).
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>REPEAT 3 [FORWARD 100 RIGHT 120]</userinput>
+<programlisting><userinput>REPITE 3 [AVANZA 100 GIRAIZQUIERDA 120]</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

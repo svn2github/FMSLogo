@@ -10,7 +10,7 @@ Soporta múltiples tortugas pero no así las tortugas dinámicas como tampoco de
 <para>
 El centro de la pantalla (que pueda no ser el centro de la ventana dependiendo de como se la desplaza) es la posición [0 0] de la tortuga.
 Las posiciones X positivas están a la derecha; las posiciones Y positivas están hacia arriba.
-El rumbo (ángulos) se mide en grados en el sentido de las agujas del reloj desde el eje Y positivo (12:00), lo que es distinto que la convención matemática de medir los ángulos desde el eje X positivo (3:00).
+El rumbo (ángulos) se mide en grados en el sentido horario desde el eje Y positivo (12:00), lo que es distinto que la convención matemática de medir los ángulos desde el eje X positivo (3:00).
 La tortuga se representa como un triángulo isósceles; la posición actual de la tortuga está indicada por el punto medio de la base (el lado mayor.)
 
 <!-- not implemented
@@ -1584,7 +1584,7 @@ Siempre puedes dividir un polígono convexo en múltiples polígonos cóncavo m�
 
 <para>
 Siendo «plano» quiere decir que un polígono debe ser liso.
-Esto es fácil si nunca usas CABECEA, BAJANARIZ, BALANCEA, BALANCEAIZQUIERDA entre EMPIEZAPOLIGONO y TERMINAPOLIGONO.
+Esto es fácil si nunca usas CABECEA, BAJANARIZ, BALANCEADERECHA, BALANCEAIZQUIERDA entre EMPIEZAPOLIGONO y TERMINAPOLIGONO.
 </para>
 
 <para>
