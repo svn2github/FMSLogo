@@ -18,7 +18,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve CIERTO si <parameter>número1</parameter> es menor que o igual a <parameter>número2</parameter>.
+Devuelve CIERTO si <parameter>número1</parameter> es menor o igual que <parameter>número2</parameter>.
 Devuelve FALSO, sino.
 </para>
 </listitem>

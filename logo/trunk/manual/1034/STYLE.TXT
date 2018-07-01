@@ -73,3 +73,5 @@ programmatically.
    counter-clockwise          - en sentido antihorario
    upper left corner          - la esquina de arriba a la izquierda
    lower right corner         - la esquina de abajo a la derecha
+   less than or equal to      - menor o igual que
+   greater than or equal to   - major o igual que
