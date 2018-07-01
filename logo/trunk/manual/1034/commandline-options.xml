@@ -101,7 +101,7 @@ Si usas esta opción sin <link linkend="commandline-h">-H</link> o <link linkend
 </para>
 
 <para>
-<link linkend="command-fullscreen">PANTALLAGRAFICA</link>, <link linkend="command-splitscreen">PANTALLAPARTIDA</link>, y <link linkend="command-textscreen">PANTALLATEXTO</link> no cambian las dimensiones del área de dibujo cuando se inicia &PRODUCTNAME; con la opción «-F».
+<link linkend="command-fullscreen">PANTALLAGRAFICA</link>, <link linkend="command-splitscreen">PANTALLAPARTIDA</link> y <link linkend="command-textscreen">PANTALLATEXTO</link> no cambian las dimensiones del área de dibujo cuando se inicia &PRODUCTNAME; con la opción «-F».
 </para>
 
 <para>Ejemplo:</para>

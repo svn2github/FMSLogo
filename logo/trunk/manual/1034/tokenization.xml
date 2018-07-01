@@ -15,7 +15,7 @@
     <indexterm><primary>continuación de línea</primary></indexterm>
 
     <para>Los nombres de los procedimientos, de las variables, y de las listas de propiedades son insensible a las mayúsculas y minúsculas.
-    También son las palabras especiales <link linkend="command-end">FIN</link>, <link linkend="command-true">CIERTO</link>, y <link linkend="command-false">FALSO</link>.
+    También son las palabras especiales <link linkend="command-end">FIN</link>, <link linkend="command-true">CIERTO</link> y <link linkend="command-false">FALSO</link>.
     Sin embargo, las mayúsculas y minúsculas son preservadas en todo el resto que tecleas.</para>
 
     <para>Dentro de corchetes, las palabras están delimitadas sólo por espacios y corchetes.

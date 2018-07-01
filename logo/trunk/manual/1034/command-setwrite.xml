@@ -17,7 +17,7 @@
 <para>
 Pone el flujo de escritura al archivo llamado <parameter>nombre_de_archivo</parameter>.
 El flujo de escritura es usado por <link linkend="command-print">ESCRIBE</link>, <link linkend="command-show">MUESTRA</link>, etc.
-El archivo debe está abierto por <link linkend="command-openwrite">ABREESCRITURA</link>, <link linkend="command-openappend">ABREAÑADIR</link>, o <link linkend="command-openupdate">ABREACTUALIZAR</link>.
+El archivo debe está abierto por <link linkend="command-openwrite">ABREESCRITURA</link>, <link linkend="command-openappend">ABREAÑADIR</link> o <link linkend="command-openupdate">ABREACTUALIZAR</link>.
 Si <parameter>nombre_de_archivo</parameter> es la lista vacía, entonces el flujo de escritura se vuelve el Centro de Comandos.
 </para>
 

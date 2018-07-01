@@ -16,7 +16,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve CIERTO si la tortuga actual tiene su propio <link linkend="command-penmode">LAPIZMODO</link>, <link linkend="command-pensize">GROSOR</link>, y <link linkend="command-pencolor">COLORLAPIZ</link>.
+Devuelve CIERTO si la tortuga actual tiene su propio <link linkend="command-penmode">LAPIZMODO</link>, <link linkend="command-pensize">GROSOR</link> y <link linkend="command-pencolor">COLORLAPIZ</link>.
 Devuelve FALSO si la tortuga actual comparte su control de lápiz con otras tortugas.
 </para>
 </listitem>

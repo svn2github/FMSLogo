@@ -1277,7 +1277,7 @@ El trabajo en 2D es simple:
 <itemizedlist>
   <listitem>
     <para>
-      <link linkend="command-heading">RUMBO</link> cambia con <link linkend="command-left">GIRAIZQUIERDA</link>, <link linkend="command-right">GIRADERECHA</link>, y <link linkend="command-setheading">PONRUMBO</link>.
+      <link linkend="command-heading">RUMBO</link> cambia con <link linkend="command-left">GIRAIZQUIERDA</link>, <link linkend="command-right">GIRADERECHA</link> y <link linkend="command-setheading">PONRUMBO</link>.
     </para>
   </listitem>
 </itemizedlist>
@@ -1289,19 +1289,19 @@ Pero en modo 3D, (<link linkend="command-perspective">PERSPECTIVA</link>) las co
 <itemizedlist>
   <listitem>
     <para>
-      <link linkend="command-heading">RUMBO</link> cambia con <link linkend="command-left">GIRAIZQUIERDA</link>, <link linkend="command-right">GIRADERECHA</link>, y <link linkend="command-setheading">PONRUMBO</link>.
+      <link linkend="command-heading">RUMBO</link> cambia con <link linkend="command-left">GIRAIZQUIERDA</link>, <link linkend="command-right">GIRADERECHA</link> y <link linkend="command-setheading">PONRUMBO</link>.
     </para>
   </listitem>
 
   <listitem>
     <para>
-      <link linkend="command-roll">BALANCEO</link> cambia con <link linkend="command-leftroll">BALANCEAIZQUIERDA</link>, <link linkend="command-rightroll">BALANCEADERECHA</link>, y <link linkend="command-setroll">PONBALANCEO</link>.
+      <link linkend="command-roll">BALANCEO</link> cambia con <link linkend="command-leftroll">BALANCEAIZQUIERDA</link>, <link linkend="command-rightroll">BALANCEADERECHA</link> y <link linkend="command-setroll">PONBALANCEO</link>.
     </para>
   </listitem>
 
   <listitem>
     <para>
-      <link linkend="command-pitch">CABECEO</link> cambia con <link linkend="command-uppitch">CABECEA</link>, <link linkend="command-downpitch">BAJANARIZ</link>, y <link linkend="command-setpitch">PONCABECEO</link>.
+      <link linkend="command-pitch">CABECEO</link> cambia con <link linkend="command-uppitch">CABECEA</link>, <link linkend="command-downpitch">BAJANARIZ</link> y <link linkend="command-setpitch">PONCABECEO</link>.
     </para>
   </listitem>
 </itemizedlist>
@@ -1670,7 +1670,7 @@ MUESTRAPOLIGONO</userinput></programlisting>
 <para>
 La tortuga tiene un lápiz para dibujar.
 En cualquier momento el lápiz puede estar «alzado» (con lo que si se mueve la tortuga, no dibuja) o «bajado» (en que caso de que la tortuga se mueva, deja un rastro).
-Si el lápiz está bajado, puedes dibujar en uno de tres modos: LAPIZNORMAL (para que dibuje cuando se mueve la tortuga), GOMA (para que borre lo que se había dibujado en su camino), o LAPIZINVIERTE (para que invierta el estado de cada punto a lo largo del camino de la tortuga).
+Si el lápiz está bajado, puedes dibujar en uno de tres modos: LAPIZNORMAL (para que dibuje cuando se mueve la tortuga), GOMA (para que borre lo que se había dibujado en su camino) o LAPIZINVIERTE (para que invierta el estado de cada punto a lo largo del camino de la tortuga).
 </para>
 
         &command-pendown;

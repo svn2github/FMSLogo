@@ -193,7 +193,7 @@
 
   <section id="editor-context-help">
     <title>Ayuda Sensible al Contexto</title>
-    <para>El <link linkend="editor">Editor</link>, la <link linkend="commander-input">Caja de Entrada</link>, y la <link linkend="commander-history">Caja de Historia</link> disponen de Ayuda Sensible al Contexto.
+    <para>El <link linkend="editor">Editor</link>, la <link linkend="commander-input">Caja de Entrada</link> y la <link linkend="commander-history">Caja de Historia</link> disponen de Ayuda Sensible al Contexto.
     Si seleccionas por ejemplo, la palabra «AVANZA», tecleas <keycap>F1</keycap> o haz clic derecho y seleccionas <guimenuitem>Búsqueda por Tema</guimenuitem>, entonces &PRODUCTNAME; buscará la tema de «AVANZA» en el manual.</para>
   </section>
 

@@ -16,7 +16,7 @@
 <listitem>
 
 <para>
-Captura los eventos del ratón que son enviados a la ventana «&PRODUCTNAME;» y ejecuta <parameter>boton_izquierdo_abajo</parameter>, <parameter>boton_izquierdo_arriba</parameter>, <parameter>boton_derecho_abajo</parameter>, <parameter>boton_derecho_arriba</parameter>, o <parameter>mover</parameter>, dependiendo del tipo de evento.
+Captura los eventos del ratón que son enviados a la ventana «&PRODUCTNAME;» y ejecuta <parameter>boton_izquierdo_abajo</parameter>, <parameter>boton_izquierdo_arriba</parameter>, <parameter>boton_derecho_abajo</parameter>, <parameter>boton_derecho_arriba</parameter> o <parameter>mover</parameter>, dependiendo del tipo de evento.
 Los parámetros pueden ser o una palabra que es el nombre de un procedimiento a ejecutar o una lista de instrucciones a ejecutar.
 HABILITARATON ejecuta todos aquellos parámetros en modo <link linkend="command-noyield">EXCLUSIVO</link>.
 </para>
