@@ -30,19 +30,22 @@ Note that the <parameter>inline.semiaxis</parameter> and <parameter>crosswise.se
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>; a 2D example
-ELLIPSE2 100 200
+<para>
+A 2D example:
+<programlisting><userinput>ELLIPSE2 100 200
 CLEARSCREEN
 ELLIPSE2 50 50
 CLEARSCREEN
 ELLIPSE2 50 50</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; a 3D example
-PERSPECTIVE
+<para>
+A 3D example:
+<programlisting><userinput>PERSPECTIVE
 REPEAT 72 [ELLIPSE2 200 100 RIGHTROLL 5 FORWARD 5]</userinput>
 </programlisting>
-
+</para>
 </listitem>
 </varlistentry>
 

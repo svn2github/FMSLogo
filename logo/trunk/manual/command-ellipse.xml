@@ -25,18 +25,21 @@ The <parameter>inline.semiaxis</parameter> input is the distance from the turtle
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>; a 2D example
-ELLIPSE 100 200
+
+<para>A 2D example:
+<programlisting><userinput>ELLIPSE 100 200
 CLEARSCREEN
 ELLIPSE 50 50
 CLEARSCREEN
 ELLIPSE 50 50</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; a 3D example
-PERSPECTIVE
+<para>A 3D example:
+<programlisting><userinput>PERSPECTIVE
 REPEAT 18 [ELLIPSE 100 200 RIGHTROLL 10]</userinput>
 </programlisting>
+</para>
 
 </listitem>
 </varlistentry>

@@ -22,14 +22,18 @@ CIRCLE does not move the turtle.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>; a 2D example
-CIRCLE 100</userinput>
+<para>
+A 2D example:
+<programlisting><userinput>CIRCLE 100</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; a 3D example
-PERSPECTIVE
+<para>
+A 3D example:
+<programlisting><userinput>PERSPECTIVE
 REPEAT 36 [CIRCLE 100 RIGHTROLL 5]</userinput>
 </programlisting>
+</para>
 
 </listitem>
 </varlistentry>

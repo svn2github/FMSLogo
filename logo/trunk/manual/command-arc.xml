@@ -34,16 +34,19 @@ If <parameter>angle</parameter> is 360 or greater (or -360 or less), then ARC dr
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>; a 2D example
-ARC 360 100
+<para>
+A 2D example:
+<programlisting><userinput>ARC 360 100
 ARC 90 50</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; a 3D example
-PERSPECTIVE
+<para>
+A 3D example:
+<programlisting><userinput>PERSPECTIVE
 REPEAT 36 [RIGHTROLL 10 ARC 90 100]</userinput>
 </programlisting>
-
+</para>
 </listitem>
 </varlistentry>
 
