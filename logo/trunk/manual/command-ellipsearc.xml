@@ -21,8 +21,8 @@ The elliptic arc starts at a location given by <parameter>startangle</parameter>
 
 <para>
 The size and shape of the elliptic arc are determined by the <parameter>crosswise.semiaxis</parameter> and <parameter>inline.semiaxis</parameter> inputs.
-The <parameter>crosswise.semiaxis</parameter> input is the distance from the turtle to the ellipse in the direction perpendicular turtle's current heading.
-The <parameter>inline.semiaxis</parameter> input is the distance from the turtle to the ellipse in the direction which the turtle is currently heading.
+The <parameter>crosswise.semiaxis</parameter> input is the distance from the turtle to the ellipse in the direction perpendicular to the turtle's current heading.
+The <parameter>inline.semiaxis</parameter> input is the distance from the turtle to the ellipse in the direction in which the turtle is currently heading.
 This implies that the turtle's heading determines the orientation of the ellipse.
 </para>
 
@@ -41,20 +41,22 @@ Normally the elliptic arc is draw clockwise, but if the <parameter>angle</parame
 
 <varlistentry><term>Example</term>
 <listitem>
-
-<programlisting><userinput>; a 2D example
-ELLIPSEARC 360 100 200 0
+<para>
+A 2D example:
+<programlisting><userinput>ELLIPSEARC 360 100 200 0
 CLEARSCREEN
 ELLIPSEARC 90 50 50 0
 CLEARSCREEN
 ELLIPSEARC 90 50 50 90</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; a 3D example
-PERSPECTIVE
+<para>
+A 3D example:
+<programlisting><userinput>PERSPECTIVE
 REPEAT 72 [ELLIPSEARC 90 100 150 45 RIGHTROLL 5]</userinput>
 </programlisting>
-
+</para>
 </listitem>
 </varlistentry>
 
