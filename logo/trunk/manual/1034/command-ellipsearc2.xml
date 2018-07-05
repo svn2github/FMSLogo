@@ -25,7 +25,7 @@ Puedes visualizar el tamaño y forma del arco elíptico en la manera siguiente.
 Primero, imaginate una elipse dibujado al centro de la pantalla tal que el <parameter>medioeje.x</parameter> es la distancia del centro a través del eje X y que <parameter>medioeje.y</parameter> es la distancia del centro a través del eje Y.
 ARCOELIPSE2 dibuja parte de esta elipse, un arco entre dos puntos sobre la elipse.
 El punto de partida por este arco te puedes visualizar imaginando una tortuga al centro de la elipse con un <link linkend="command-heading">RUMBO</link> de <parameter>principio.ángulo</parameter>.
-El punto donde ésta tortuga cruza a la elipse cuando AVANZA es el punto de partida del arco.
+El punto donde esta tortuga cruza a la elipse cuando AVANZA es el punto de partida del arco.
 El punto final te puedes imaginar de una manera similar.
 Si, antes de avanzar, la tortuga hubiese ejecutado <userinput>GIRADERECHA <parameter>ángulo.del.arco</parameter></userinput>, entonces donde cruzara la elipse fuera el punto final.
 </para>

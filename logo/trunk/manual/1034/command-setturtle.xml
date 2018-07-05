@@ -30,7 +30,7 @@ También puedes cambiar que una tortuga previamente activada usa (o no usa) su p
 
 <para>
 Si no das la entrada <parameter>tiene_propio_lápiz</parameter> y ACTIVA no activa a una nueva tortuga, entonces el lápiz de la tortuga especificada no cambia.
-Si no das la entrada <parameter>tiene_propio_lápiz</parameter> y ACTIVA sí activa a una nueva tortuga, entonces el lápiz de ésta tortuga estará el lápiz compartido (él que &PRODUCTNAME; dio inicialmente a la tortuga 0 cuando se inició).
+Si no das la entrada <parameter>tiene_propio_lápiz</parameter> y ACTIVA sí activa a una nueva tortuga, entonces el lápiz de esta tortuga estará el lápiz compartido (él que &PRODUCTNAME; dio inicialmente a la tortuga 0 cuando se inició).
 </para>
 </listitem>
 </varlistentry>

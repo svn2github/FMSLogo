@@ -1601,7 +1601,7 @@ No está permitido:
 <programlisting><userinput>EMPIEZAPOLIGONO
 REPITE 3 [ AVANZA 100 GIRADERECHA 90 ]
 AVANZA      50
-CABECEA     90  ; ERROR: éstas instrucciones
+CABECEA     90  ; ERROR: estas instrucciones
 AVANZA      50  ;        van fuera del plano
 BAJANARIZ   90  ;        del polígono
 AVANZA      50  ;
