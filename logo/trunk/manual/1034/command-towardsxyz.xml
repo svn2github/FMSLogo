@@ -1,37 +1,42 @@
 <section id="command-towardsxyz">
-<title>TOWARDSXYZ</title>
+<title>HACIAXYZ</title>
+<indexterm><primary>HACIAXYZ</primary></indexterm>
 <indexterm><primary>TOWARDSXYZ</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>TOWARDSXYZ</command> <parameter>position</parameter></synopsis>
+<synopsis><command>HACIAXYZ</command> <parameter>posición</parameter>
+<command>TOWARDSXYZ</command> <parameter>posición</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a list, containing [roll pitch heading] at which the turtle should be oriented so that it would point from its current position to the position given.
-The position must be given as a three item list containing the X, Y, and Z coordinates of the position to face.
-It is important to <link linkend="understand-your-orientation-in-3D">understand your orientation in 3D</link>.
+Devuelve una lista que contiene [balanceo cabeceo rumbo] en grados, la orientación que debe tomar la tortuga para moverse desde su posición actual en línea recta hasta otra que se indica en el argumento <parameter>posición</parameter>.
+El argumento <parameter>posición</parameter> debe ser una lista de tres números, las coordenadas X, Y y Z de la otra posición.
 </para>
 <para>
-TOWARDSXYZ is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+Se diseñaba HACIAXYZ para ejecutar en modo <link linkend="command-perspective">PERSPECTIVA</link>.
+Para usarlo, es importante entender tu <link linkend="understand-your-orientation-in-3D">orientación en 3D</link>.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>PERSPECTIVE
-SETPOS [0 0 0]
-SHOW TOWARDSXYZ [100 100 0]</userinput>
+<programlisting><userinput>PERSPECTIVA
+POSICIONATE [0 0 0]
+MUESTRA HACIAXYZ [100 100 0]</userinput>
 [0 0 45]</programlisting>
 
-<programlisting><userinput>SETORIENTATION TOWARDSXYZ [100 100 100]
-FORWARD DISTANCEXYZ [100 100 100]</userinput></programlisting>
+<programlisting><userinput>PERSPECTIVA
+PONORIENTACION HACIAXYZ [100 100 100]
+AVANZA DISTANCIAXYZ [100 100 100]</userinput></programlisting>
 </listitem>
 </varlistentry>
 

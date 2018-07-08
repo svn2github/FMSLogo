@@ -1,27 +1,29 @@
 <section id="command-ycor">
-    <title>YCOR</title>
+    <title>COORY</title>
+<indexterm><primary>COORY</primary></indexterm>
 <indexterm><primary>YCOR</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>YCOR</command></synopsis>
+<synopsis><command>COORY</command>
+<command>YCOR</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the turtle's Y coordinate.
+Devuelve un número, la coordenada Y de la tortuga.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SETY 100
-SHOW YCOR</userinput>
+    <programlisting><userinput>PONY 100
+MUESTRA COORY</userinput>
 100
 </programlisting>
 </listitem>

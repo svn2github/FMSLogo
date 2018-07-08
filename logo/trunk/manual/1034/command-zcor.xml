@@ -1,35 +1,39 @@
 <section id="command-zcor">
-<title>ZCOR</title>
+<title>COORZ</title>
+<indexterm><primary>COORZ</primary></indexterm>
 <indexterm><primary>ZCOR</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>ZCOR</command></synopsis>
+<synopsis><command>COORZ</command>
+<command>ZCOR</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the turtle's Z coordinate.
+Devuelve un número, la coordenada Z de la tortuga.
 </para>
 <para>
-ZCOR is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+Este comando se diseñaba para ejecutar en modo <link linkend="command-perspective">PERSPECTIVA</link>.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SETZ 100
-SHOW ZCOR</userinput>
+<programlisting><userinput>PERSPECTIVA
+PONZ 100
+MUESTRA COORZ</userinput>
 100
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

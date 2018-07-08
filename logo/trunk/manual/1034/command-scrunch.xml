@@ -1,29 +1,32 @@
 <section id="command-scrunch">
-    <title>SCRUNCH</title>
+    <title>RONZAL</title>
+<indexterm><primary>RONZAL</primary></indexterm>
 <indexterm><primary>SCRUNCH</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SCRUNCH</command></synopsis>
+<synopsis><command>RONZAL</command>
+<command>SCRUNCH</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a list containing two numbers, the X and Y scrunch factors, as used by <link linkend="command-setscrunch">SETSCRUNCH</link>.
-Note that SETSCRUNCH takes two numbers as inputs, not one list of numbers.
+Devuelve una lista con dos números, X e Y, que se utilizan con <link linkend="command-setscrunch">PONROZAL</link>, (aunque PONRONZAL toma los números como distintos argumentos, no una lista de números.)
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SETSCRUNCH 2.0 1.0
-REPEAT 4 [FORWARD 100 RIGHT 90]
-SHOW SCRUNCH</userinput>
+    <programlisting><userinput>PONRONZAL 2.0 1.0
+REPITE 4 [AVANZA 100 GIRADERECHA 90]
+MUESTRA RONZAL</userinput>
 [2 1]</programlisting>
 
 </listitem>

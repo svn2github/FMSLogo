@@ -4,29 +4,28 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
 <synopsis><command>POS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the turtle's current position, as a list of two numbers, the X and Y coordinates.
+Devuelve la posición actual de la tortuga, como una lista de dos números, las coordenadas X e Y.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SETPOS [100 100]
-SHOW POS</userinput>
+    <programlisting><userinput>PONPOS [100 100]
+MUESTRA POS</userinput>
 [100 100]
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

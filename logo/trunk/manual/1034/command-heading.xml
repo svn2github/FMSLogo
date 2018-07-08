@@ -1,34 +1,39 @@
 <section id="command-heading">
-<title>HEADING</title>
+<title>RUMBO</title>
+<indexterm><primary>RUMBO</primary></indexterm>
 <indexterm><primary>HEADING</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>HEADING</command></synopsis>
+<synopsis><command>RUMBO</command>
+<command>HEADING</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the turtle's heading in degrees.
+Devuelve un ángulo que indica el rumbo de la tortuga en grados.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SETHEADING 90
-SHOW HEADING</userinput>
+<programlisting><userinput>PONRUMBO 90
+MUESTRA RUMBO</userinput>
 90</programlisting>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-setheading">SETHEADING</link></member>
+<member><link linkend="command-setheading">PONRUMBO</link></member>
 </simplelist></listitem>
 </varlistentry>
 

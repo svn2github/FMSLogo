@@ -1,38 +1,42 @@
 <section id="command-distance">
-    <title>DISTANCE</title>
+    <title>DISTANCIA</title>
+<indexterm><primary>DISTANCIA</primary></indexterm>
 <indexterm><primary>DISTANCE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>DISTANCE</command> <parameter>position</parameter></synopsis>
+<synopsis><command>DISTANCIA</command> <parameter>posición</parameter>
+<command>DISTANCE</command> <parameter>posición</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the distance the turtle must travel along a straight line to reach the position given as the <parameter>position</parameter> input.
-The <parameter>position</parameter> input must be a list containing two items, the X and Y coordinates.
+Devuelve un número que indica la distancia que la tortuga tiene que recorrer en línea recta hasta llegar a la posición que se indica en el argumento <parameter>posición</parameter>.
+El argumento <parameter>posición</parameter> debe ser una lista de dos números, las coordenadas X e Y.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SETPOS [0 0]
-SHOW DISTANCE [0 100]</userinput>
+    <programlisting><userinput>PONPOS [0 0]
+MUESTRA DISTANCIA [0 100]</userinput>
 100
-<userinput>SHOW DISTANCE [300 400]</userinput>
+<userinput>MUESTRA DISTANCIA [300 400]</userinput>
 500</programlisting>
 
-<programlisting><userinput>SETHEADING TOWARDS [300 400]
-FORWARD DISTANCE [300 400]</userinput>
+<programlisting><userinput>PONRUMBO HACIA [300 400]
+AVANZA DISTANCIA [300 400]</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

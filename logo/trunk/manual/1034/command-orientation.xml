@@ -1,46 +1,50 @@
 <section id="command-orientation">
-<title>ORIENTATION</title>
+<title>ORIENTACION</title>
+<indexterm><primary>ORIENTACION</primary></indexterm>
 <indexterm><primary>ORIENTATION</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>ORIENTATION</command></synopsis>
+<synopsis><command>ORIENTACION</command>
+<command>ORIENTATION</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a list, the turtle's [roll pitch heading] each in degrees.
-It is important to <link linkend="understand-your-orientation-in-3D">understand your orientation in 3D</link>.
+Devuelve una lista, el [balanceo cabeceo rumbo] de la tortuga, cada uno en grados.
+Para entender ORIENTACION, es importante entender tu <link linkend="understand-your-orientation-in-3D">orientación en 3D</link>.
 </para>
 
 <para>
-ORIENTATION is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
-When used in 2D modes, the roll and pitch outputs are zero.
+Se diseñaba ORIENTACION para ejecutar en modo <link linkend="command-perspective">PERSPECTIVA</link>.
+En modos 2D, los componentes cabeceo y balanceo están 0.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>PERSPECTIVE
-SETORIENTATION [180 45 90]
-SHOW ORIENTATION</userinput>
+<programlisting><userinput>PERSPECTIVA
+PONORIENTACION [180 45 90]
+MUESTRA ORIENTACION</userinput>
 [180 45 90]
 </programlisting>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>See Also</term>
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-setorientation">SETORIENTATION</link></member>
-<member><link linkend="command-roll">ROLL</link></member>
-<member><link linkend="command-pitch">PITCH</link></member>
-<member><link linkend="command-heading">HEADING</link></member>
+<member><link linkend="command-setorientation">PONORIENTACION</link></member>
+<member><link linkend="command-roll">BALANCEO</link></member>
+<member><link linkend="command-pitch">CABECEO</link></member>
+<member><link linkend="command-heading">RUMBO</link></member>
 </simplelist></listitem>
 </varlistentry>
 
