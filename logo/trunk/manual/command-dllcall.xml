@@ -160,11 +160,12 @@ You can write your own DLL with a compatible call interface to call more complex
 
 <varlistentry><term>Example</term>
 <listitem>
-<para>
-<programlisting><userinput>; Equivalent to the C call
-;   MessageBox(NULL, "Do you like &PRODUCTNAME;?", "Question", MB_YESNO);
+<para>The following example is equivalent to the C call:
+  <programlisting>MessageBox(NULL, "Do you like &PRODUCTNAME;?", "Question", MB_YESNO);</programlisting>
 
-DLLLOAD "user32.dll
+Note how an "A" is added to the end of the name "MessageBox" and how the arguments are passed in reverse order to conform to the stdcall calling convention.
+
+<programlisting><userinput>DLLLOAD "user32.dll
 IGNORE DLLCALL [L MessageBoxA L 4 S [Question] S [Do you like &PRODUCTNAME;?] L 0]</userinput>
 
 <replaceable>See a message box pop up.</replaceable>
