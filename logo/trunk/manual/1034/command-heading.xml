@@ -16,7 +16,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve un ángulo que indica el rumbo de la tortuga en grados.
+Devuelve un ángulo que indica el rumbo de la tortuga que se mide en grados desde el eje Y positivo en sentido horario.
 </para>
 </listitem>
 </varlistentry>

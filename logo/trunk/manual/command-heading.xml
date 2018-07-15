@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the turtle's heading in degrees.
+Outputs the turtle's heading measured in degrees clockwise from the positive Y-axis.
 </para>
 </listitem>
 </varlistentry>
