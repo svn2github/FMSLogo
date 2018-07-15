@@ -23,7 +23,8 @@ ZCOR is designed to run in <link linkend="command-perspective">PERSPECTIVE</link
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>SETZ 100
+<programlisting><userinput>PERSPECTIVE
+SETZ 100
 SHOW ZCOR</userinput>
 100
 </programlisting>
