@@ -26,13 +26,10 @@ Compare this command with <link linkend="command-wrap">WRAP</link>, <link linken
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>WRAP
-FORWARD 950
-RIGHT 90
-FENCE
-FORWARD 950</userinput>
+  <programlisting><userinput>FENCE
+FORWARD 10000</userinput>
 turtle out of bounds
-<userinput>FORWARD 100</userinput>
+<userinput>FORWARD 10</userinput>
 turtle out of bounds
 <userinput>BACK 500</userinput>
 </programlisting>
