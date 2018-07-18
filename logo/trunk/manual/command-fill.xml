@@ -25,7 +25,7 @@ If <parameter>fillmode</parameter> is not given, it defaults to FALSE.
 </para>
 
 <para>
-Fill can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode as long as the area to filled is bounded and you only fill what's in plain view.
+FILL can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode as long as the area to filled is bounded and you only fill what's in plain view.
 For example if you have a cube don't draw all 6 faces, only 3 at most can be in view, so draw just those faces and fill them.
 </para>
 </listitem>
@@ -34,35 +34,37 @@ For example if you have a cube don't draw all 6 faces, only 3 at most can be in 
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>; fill a square
-REPEAT 4 [FORWARD 100 RIGHT 90]
+<para>Fill a square:
+    <programlisting><userinput>REPEAT 4 [FORWARD 100 RIGHT 90]
 RIGHT 45
 PENUP
 FORWARD 20
 FILL</userinput>
 </programlisting>
+</para>
 
-    <programlisting><userinput>; fill while on the same color
-SETFLOODCOLOR 4
+<para>Fill while on the same color:
+    <programlisting><userinput>SETFLOODCOLOR 4
 SETPENCOLOR 1
 CIRCLE 50
 SETPENCOLOR 2
 CIRCLE 100
 FILL</userinput>
 </programlisting>
+</para>
 
-    <programlisting><userinput>; fill until the lines match PENCOLOR
-SETFLOODCOLOR 4
+<para>Fill until the lines match PENCOLOR:
+    <programlisting><userinput>SETFLOODCOLOR 4
 SETPENCOLOR 1
 CIRCLE 50
 SETPENCOLOR 2
 CIRCLE 100
 (FILL "TRUE)</userinput>
 </programlisting>
+</para>
 
-
-    <programlisting><userinput>; A 3D example
-TO SQUARE :color
+<para>A 3D example:
+    <programlisting><userinput>TO SQUARE :color
   REPEAT 4 [FORWARD 100 RIGHT 90]
   PENUP
   RIGHT 45
@@ -83,10 +85,10 @@ SQUARE 2
 UPPITCH 90
 SQUARE 3</userinput>
 </programlisting>
-
+</para>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>
