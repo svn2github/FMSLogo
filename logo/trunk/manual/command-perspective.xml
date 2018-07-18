@@ -297,16 +297,22 @@ The following commands retain their 2D feel, even in perspective mode.
 <para>
 Perspective mode does not do hidden line removal.
 Hidden line removal requires objects be composed of polygons.
+</para>
+
+<para>
 Perspective mode does not allow you to dynamically move the eye view.
 This is because &PRODUCTNAME; does not store your object (your vectors) in 3D, it stores them in a 2D bitmap.
 However you can do "fast" dynamic manipulation in two other ways.
 </para>
 
 <para>
-One simple way is to keep your scene very simple (relative to the performance of your computer).
+The first way to do "fast" dynamic manipulation requires that you keep your scene very simple (relative to the performance of your computer).
 You simply clear the screen and change the eye view (turtle -1) or the placement of the objects and draw again.
 Note curved objects (like those based on <link linkend="command-ellipsearc">ELLIPSEARC</link>) generate many vectors.
-The other option is to record each "scene" in a bitmap and play them back at any rate you wish.
+</para>
+
+<para>
+The other way to do "fast" dynamic manipulation is to record each "scene" in a bitmap and play them back at any rate you wish.
 This method is shown in the <filename>GROW.LGO</filename> example.
 It does not matter whether you're "recording" 2D scenes or 3D scenes.
 This is limited by how much memory your computer has.
