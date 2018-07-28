@@ -1,124 +1,136 @@
 <section id="command-label">
-    <title>LABEL</title>
+    <title>ROTULO</title>
+<indexterm><primary>ROTULO</primary></indexterm>
 <indexterm><primary>LABEL</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>LABEL</command> <parameter>text</parameter></synopsis>
+<synopsis><command>ROTULO</command> <parameter>texto</parameter>
+<command>LABEL</command> <parameter>texto</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Prints <parameter>text</parameter> to the screen at the turtle's current position and heading.
+Escribe <parameter>texto</parameter> en la pantalla a la posición y rumbo actuales de la tortuga.
 </para>
 
 <para>
-You can print any &GENERICNAME; thing (numbers, lists, strings, etc.).
-If <parameter>text</parameter> is a list, then any sub-lists are delimited by square brackets, but the entire object is not delimited by brackets.
-The text is truncated according to the current values of <link linkend="command-printwidthlimit">PRINTWIDTHLIMIT</link> and <link linkend="command-printdepthlimit">PRINTDEPTHLIMIT</link>.
+ROTULO puede escribir cualquier cosa de &GENERICNAME;: números, listas, palabras, o vectores.
+Si <parameter>texto</parameter> es una lista, se escribe cualquier sub-lista delimitada por corchetes, pero la lista más exterior no se escribe entre corchetes.
+Se trunca el texto según los valores actuales de <link linkend="command-printwidthlimit">PRINTWIDTHLIMIT</link> y <link linkend="command-printdepthlimit">PRINTDEPTHLIMIT</link>.
 </para>
 
 <para>
-The text is printed in the font described by <link linkend="command-labelfont">LABELFONT</link>, which is set with <link linkend="command-setlabelfont">SETLABELFONT</link> or the <link linkend="menu-set-labelfont">Set->Label Font</link> menu item.
+Se escribe el texto en el tipo de letra descrito por <link linkend="command-labelfont">TIPO</link>, que te puedas poner con <link linkend="command-setlabelfont">PONTIPO</link> o por el ítem de menú <link linkend="menu-set-labelfont">Configurar - Tipo de letra de rotulador</link>.
 </para>
 
 <para>
-The position of the text is determined by the location of the turtle.
-More precisely, the top-left corner of the text is placed at the turtle's position.
+Se determina la posición del texto por la posición de la tortuga.
+Más precisamente, la esquina de abajo a la izquierda del texto se coloca a la posición de la tortuga.
 </para>
 
 <para>
-The angle of the text is determined by the heading (direction) of the turtle.
-Not all fonts are capable of printing text at different angles, so be sure to use a TrueType or OpenType font if printing at different angles is desired.
+Se determina el ángulo del texto por el rumbo (dirección) de la tortuga.
+No todos los tipos se pueden imprimir a ángulos arbitrarios, así que asegúrate usar tipos de formato de TrueType o OpenType si quieres imprimir texto a ángulos diferentes.
 </para>
 
 <para>
-The color of the text is determined by the value of <link linkend="command-pencolor">PENCOLOR</link>, which is set with <link linkend="command-setpencolor">SETPENCOLOR</link>.
+Se determina el color del texto por el valor de <link linkend="command-pencolor">COLORLAPIZ</link>, que puedas poner con <link linkend="command-setpencolor">PONCOLORLAPIZ</link>.
 </para>
 
 <para>
-The width and height of the text's bounding box can be determined with <link linkend="command-labelsize">LABELSIZE</link>.
+El tamaño (anchura y alteza) del cuadro delimitador del texto se puede determinar con <link linkend="command-labelsize">ROTULOTAM</link>.
 </para>
 
 <para>
-LABEL can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode, but the text is not printed on the same plane as the turtle.
-Instead, the text is placed wherever the turtle is on the screen (in two dimensions) and oriented according to the turtle's heading.
+Se puede usar ROTULO en modo <link linkend="command-perspective">PERSPECTIVA</link>, pero no se escribe el texto en el mismo plano que la tortuga aunque está en la posición correcta.
+Por lo contrario, se escribe el texto donde está la tortuga sobre la pantalla (en dos dimensiones) y lo orienta según el rumbo de la tortuga (y no su cabeceo o balanceo).
 </para>
 
 <para>
-The capabilities of the text changes depending on the device (screen or printer), the turtle heading (direction), and the font.
-In other words, sometimes the text can be drawn at the turtle heading and sometimes it cannot.
-Sometimes what is on the screen is not exactly what you print.
+Las cualidades del texto dependen del dispositivo (pantalla o impresora), del rumbo de la tortuga (dirección) y del tipo.
+En otras palabras, a veces se puede dibujar el texto al rumbo de la tortuga y a veces no.
+A veces no se imprimirá exactamente como aparece en pantalla.
 </para>
 
 <para>
-If you want to flash a message by writing it in one color, then writing the same message in the background color, you should disable anti-aliasing in the LABELFONT by choosing a <parameter>Quality</parameter> of 3 when you run SETLABELFONT.
-Otherwise, you'll end up with a faint outline of the message which you wanted to completely erase.
+Si quieres parpadear un mensaje por escribirlo en un color y luego escribir el mismo mensaje en el color del fondo, mejor que deshabilites el antialiasing espacial en TIPO, escogiendo un <parameter>Cualidad</parameter> de 3 cuando ejecutaras PONTIPO.
+Sino, tendrás un esbozo ligero del mensaje que querías completamente borrar.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>; label the axes of a 3D Cartesian Coordinate System
-TO AXIS
-  SETLABELFONT [[Courier New] -19 0 0 700 0 0 0 0 3 2 1 49]
-  RIGHT 90
+<para>Rotular a los ejes del sistema de coordenadas Cartesianas:
+<programlisting><userinput>TO EJE
+  PONTIPO [[Courier New] -19 0 0 700 0 0 0 0 3 2 1 49]
+  GIRADERECHA 90
 
-  SETY  200
-  LABEL "+Y
-  SETY  -200
-  LABEL "-Y
-  SETY 0
+  PONY   200
+  ROTULO "+Y
+  PONY   -200
+  ROTULO "-Y
+  PONY   0
 
-  SETX 200
-  LABEL "+X
-  SETX -200
-  LABEL "-X
-  SETX 0
+  PONX   200
+  ROTULO "+X
+  PONX   -200
+  ROTULO "-X
+  PONX   0
 
-  SETZ 200
-  LABEL "+Z
-  SETZ -200
-  LABEL "-Z
-  SETZ 0
-  LEFT 90
-END
+  PONZ   200
+  ROTULO "+Z
+  PONZ   -200
+  ROTULO "-Z
+  PONZ   0
 
-PERSPECTIVE
-CLEARSCREEN
-SETTURTLE -1 ; select the eye position
-SETPOSXYZ [600 600 800]
-SETTURTLE 0
-AXIS</userinput>
+  GIRADERECHA 90
+FIN
+
+PERSPECTIVA
+BORRAPANTALLA
+ACTIVA -1 ; activa la posición del ojo
+POSICIONATE [600 600 800]
+ACTIVA 0
+EJE</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; flash a message
-TO FLASH :message
-  ; Quality=3 disables anti-aliasing
-  SETLABELFONT [[Arial] -19 0 0 700 0 0 0 0 3 2 3 49]
-  PENPAINT
-  LABEL :message
-  WAIT 180
-  PENERASE
-  LABEL :message
-  PENPAINT
-END
+<para>Parpadear un mensaje:
+<programlisting><userinput>TO PARPADEAR :mensaje
+  ; Cualidad=3 para deshabilitar antialiasing
+  PONTIPO [[Arial] -19 0 0 700 0 0 0 0 3 2 3 49]
+  LAPIZNORMAL
+  ROTULO :mensaje
+  ESPERA 180
+  GOMA
+  ROTULO :mensaje
+  LAPIZNORMAL
+FIN
 
-TO TELLJOKE
-  FLASH [Q: Why did the chicken cross the road?]
-  FLASH [A: To get to the other side!]
-  FLASH [Ha! ha! ha!]
-END</userinput>
+TO CONTARBROMA
+  PARPADEAR [Le dice la profesora a Jaimito:]
+  PARPADEAR [Jaimito, dime las formas verbales del verbo nadar.]
+  PARPADEAR [Y Jaimito dice gritando:]
+  PARPADEAR [- YO NADO, TÚ NADAS...]
+  PARPADEAR [Y la profesora le dice:]
+  PARPADEAR [- Más bajito, Jaimito.]
+  PARPADEAR [Y Jaimito contesta:]
+  PARPADEAR [- Yo buceo, tú buceas...]
+  PARPADEAR [¡ja, ja, ja!]
+FIN</userinput>
 </programlisting>
+</para>
+
 </listitem>
 </varlistentry>
+
 
 </variablelist>
-
 </section>

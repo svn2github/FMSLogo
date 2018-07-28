@@ -1,34 +1,40 @@
 <section id="command-hideturtle">
-<title>HIDETURTLE</title>
+<title>OCULTATORTUGA</title>
+<indexterm><primary>OCULTATORTUGA</primary></indexterm>
+<indexterm><primary>OT</primary></indexterm>
 <indexterm><primary>HIDETURTLE</primary></indexterm>
 <indexterm><primary>HT</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>HIDETURTLE</command>
+<synopsis><command>OCULTATORTUGA</command>
+<command>OT</command>
+<command>HIDETURTLE</command>
 <command>HT</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Makes the turtle invisible.
-To make the turtle visible again, call <link linkend="command-showturtle">SHOWTURTLE</link>.
+Hace invisible la tortuga.
+Para rehacerla visible, ejecuta <link linkend="command-showturtle">MUESTRATORTUGA</link>.
 </para>
 
 <para>
-It's a good idea to hide the turtle just before you start a complicated drawing, because hiding the turtle speeds up the drawing substantially.
+Es una buena idea emplear esta primitiva cuando la tortuga realiza un dibujo complicado, porque cuando está oculta aumenta la velocidad.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>HIDETURTLE
-SHOWTURTLE</userinput>
+<programlisting><userinput>OCULTATORTUGA
+MUESTRATORTUGA</userinput>
 </programlisting>
 
 </listitem>

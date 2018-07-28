@@ -1,266 +1,267 @@
 <section id="command-perspective">
-<title>PERSPECTIVE</title>
+<title>PERSPECTIVA</title>
+<indexterm><primary>PERSPECTIVA</primary></indexterm>
 <indexterm><primary>PERSPECTIVE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PERSPECTIVE</command></synopsis>
+<synopsis><command>PERSPECTIVA</command>
+<command>PERSPECTIVE</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Tells the turtle to enter "perspective" mode.
-Perspective mode adds a third dimension (Z axis) for the turtle to live in.
-Perspective is a term to describe how we view a three-dimensional world on a two-dimensional surface.
-You should be familiar with using &PRODUCTNAME; in 2D before jumping into 3D.
+Hace que la tortuga entra en el modo «perspectiva».
+De ahora en adelante, habrá una tercera dimensión (eje Z) donde puede vivir la tortuga.
+Perspectiva es un término que describe cómo se representa una realidad en 3 dimensiones en una superficie de 2 dimensiones.
+Debe conocer como dibujar usando &PRODUCTNAME; en 2D antes de pasar al modo 3D.
 </para>
 
 <para>
-You can switch out perspective mode by entering any of the 2D modes: <link linkend="command-wrap">WRAP</link>, <link linkend="command-window">WINDOW</link>, or <link linkend="command-fence">FENCE</link>.
-</para>
-
-
-<para>
-Everything that works in 2D applies in 3D (perspective mode).
-For example, if you had code that drew a 2D picture, say a star, you can run the same code and place that star on six sides of a cube by getting the turtle to the correct 3D coordinate and orientation before you run your 2D command for drawing a star.
+Puedes salirte de este modo por entrar en uno modo 2D: <link linkend="command-wrap">MODOVUELTA</link>, <link linkend="command-window">MODOVENTANA</link> o <link linkend="command-fence">MODOJAULA</link>.
 </para>
 
 
 <para>
-You move the turtle just like you fly an airplane.
-Airplanes have 3 controls to move them through 3D space.
-They have elevators on the tail (pitch), a rudder on the fin (yaw) and ailerons on the wings (roll).
-In 2D, you only have a rudder (right/left) also known as "yaw" and you only move around on one geometric plane.
-&PRODUCTNAME; offers the additional controls, ailerons (RIGHTROLL and LEFTROLL) and elevators (UPPITCH and DOWNPITCH) to maneuver 3D space.
-In 3D space, you can move around in an infinite number of geometric planes at any orientation.
-Once you set the pitch and roll to select the desired geometric plane you can use familiar 2D commands (FORWARD, BACK, LEFT, RIGHT) to traverse it.
-</para>
-
-<para>
-When you start at (X=0, Y=0, Z=0) the +Y axis is still up the screen and the +X axis is to the right of the screen.
-But now you can go into the screen (away from you) or out of the screen (closer to you).
-How? Just like an airplane flies.
-When an airplane rolls to the right it does not change its trajectory, and neither does the turtle.
-But if you rolled 90 degrees to the right and then take a right turn guess what happens.
-You'll go down real fast, straight down.
-Think of a real turtle on the floor.
-Now roll him on to his right side.
-Now if he takes a right turn towards his right front leg (like he always does) his nose will face the floor.
-FORWARD will now go down in the Z axis (away from you).
+Todo lo referente a 2D puede aplicarse a 3D (modo perspectiva).
+Por ejemplo, si tienes un procedimiento que dibuja una estrella en 2D, con el mismo código puedes colocar una estrella sobre las seis caras de un cubo, colocando a la tortuga en la orientación y en las coordenadas correctas en 3D, antes de ejecutar el código 2D que dibuja una estrella.
 </para>
 
 
 <para>
-For more information on maneuvering in 3D, read the section on <link linkend="understand-your-orientation-in-3D">understanding your orientation in 3D</link>.
+En 3D, manejas la tortuga como si fuese un avión.
+Los aviones tienen tres controles para moverse en un espacio en 3D.
+Hay timones de profundidad en la cola (cabeceo), un timón de dirección en la aleta (rumbo) y alerones en las alas (balanceo).
+In modos 2D, &PRODUCTNAME; te ofrece una especie de timón de dirección para girar la tortuga hacia la derecha e izquierda.
+En 3D, cuentas con mandos adicionales, como alerones (BALANCEADERECHA y BALANCEAIZQUIERDA) y timones de profundidad (CABECEA y BAJANARIZ).
+Ahora cuentas con un infinito número de aviones (geométricos, claro) para volar en cada uno con cualquier orientación.
+Una vez que la tortuga se encuentra en el plano deseado, te puedes usar los famosos comandos de 2D (AVANZA, RETROCEDE, GIRAIZQUIERDA y GIRADERECHA).
 </para>
 
 <para>
-There is a simple 3D introductory example called <filename>3DSTEPS.LGO</filename> in the <filename>Examples</filename> directory.
-Load it, run it, and understand it thoroughly before moving on.
+Cuando comiences en (X=0, Y=0, Z=0), el eje +Y todavía permanece como arriba en la pantalla y el eje +X está a la derecha de la pantalla.
+Pero ahora puedes sumirte en la pantalla (lejos de ti) o surgirte de la pantalla (cerca de ti).
+¿Cómo? De la misma forma en que vuela un avión.
+Cuando un avión balancea a la derecha no cambia su trayectoria, y tampoco lo hace la tortuga.
+Pero si balanceases 90 grados a la derecha y entonces tomases un giro a la derecha, imagínate lo que pasaría.
+Te bajarías en picado muy, muy rápido.
+Piensas en una tortuga de verdad en el suelo.
+Ahora hazla balancear hacia su lado derecho.
+Ahora, si la tortuga gira hacia su pata delantera derecha (como siempre lo hace), su nariz estará apuntando al suelo.
+Ahora AVANZA moverá la tortuga hacia abajo en el eje Z (lejos de ti).
 </para>
 
 <para>
-The table below summarizes of the relationship between commands in 2D mode and 3D mode.
-Many commands are repeated in both columns because they are designed for 2D mode but their behavior is affected by being in 3D mode.
+Para más información sobre cómo maniobrar en 3D, leas la sección titulada <link linkend="understand-your-orientation-in-3D">Orientación en 3D</link>.
+</para>
+
+<para>
+Hay un simple ejemplo de introducción llamado <filename>3DSTEPS.LGO</filename> en el directorio <filename>Examples</filename>.
+Cargalo, ejecutalo y entiéndelo antes de seguir adelante.
+</para>
+
+<para>
+Aquí tiene un resumen de la relación entre los comandos en modo 2D y modo 3D.
+Muchos comandos diseñado por modos 2D se repiten en ambas columnas porque les ha afectado estar en el modo 3D.
 
 <informaltable frame='all'>
   <tgroup cols='2'>
     <thead>
-      <row><entry>2D Command</entry> <entry>3D Command</entry></row>
+      <row><entry>Comando 2D</entry> <entry>Comando 3D</entry></row>
     </thead>
     <tbody>
 
       <row rowsep="0">
-        <entry>SETXY</entry>
-        <entry>SETXY (does not change z-coordinate)</entry>
+        <entry>PONXY</entry>
+        <entry>PONXY (no cambia la coordenada z)</entry>
       </row>
       <row>
         <entry></entry>
-        <entry>SETXYZ</entry>
+        <entry>PONXYZ</entry>
       </row>
 
       <row rowsep="0">
-        <entry>SETX (does not change y-coordinate)</entry>
-        <entry>SETX (does not change y-coordinate or z-coordinate)</entry>
+        <entry>PONX (no cambia la coordenada y)</entry>
+        <entry>PONX (no cambia ni la coordenada y ni la coordenada z)</entry>
       </row>
       <row rowsep="0">
-        <entry>SETY (does not change x-coordinate)</entry>
-        <entry>SETY (does not change x-coordinate or z-coordinate)</entry>
+        <entry>PONY (no cambia la coordenada x)</entry>
+        <entry>PONY (no cambia ni la coordenada x ni la coordenada z)</entry>
       </row>
       <row>
         <entry></entry>
-        <entry>SETZ (does not change x-coordinate or y-coordinate)</entry>
+        <entry>PONZ (no cambia ni la coordenada x ni la coordenada y)</entry>
       </row>
 
       <row rowsep="0">
-        <entry>XCOR</entry>
-        <entry>XCOR</entry>
+        <entry>COORX</entry>
+        <entry>COORX</entry>
       </row>
       <row rowsep="0">
-        <entry>YCOR</entry>
-        <entry>YCOR</entry>
+        <entry>COORY</entry>
+        <entry>COORY</entry>
       </row>
       <row>
         <entry></entry>
-        <entry>ZCOR</entry>
+        <entry>COORZ</entry>
       </row>
 
       <row rowsep="0">
         <entry>POS</entry>
-        <entry>POS (z-coordinate is ignored)</entry>
+        <entry>POS (ignora la coordenada z)</entry>
       </row>
       <row>
         <entry></entry>
-        <entry>POSXYZ</entry>
+        <entry>POS3D</entry>
       </row>
 
       <row rowsep="0">
-        <entry>SETPOS</entry>
-        <entry>SETPOS (does not change z-coordinate)</entry>
+        <entry>PONPOS</entry>
+        <entry>PONPOS (no cambia la coordenada z)</entry>
       </row>
       <row>
         <entry></entry>
-        <entry>SETPOSXYZ</entry>
+        <entry>POSICIONATE</entry>
       </row>
 
       <row rowsep="0">
-        <entry>TOWARDS</entry>
-        <entry>TOWARDS</entry>
+        <entry>HACIA</entry>
+        <entry>HACIA</entry>
       </row>
       <row>
         <entry></entry>
-        <entry>TOWARDSXYZ</entry>
+        <entry>HACIAXYZ</entry>
       </row>
 
       <row rowsep="0">
-        <entry>DISTANCE</entry>
-        <entry>DISTANCE</entry>
+        <entry>DISTANCIA</entry>
+        <entry>DISTANCIA</entry>
       </row>
       <row>
         <entry></entry>
-        <entry>DISTANCEXYZ</entry>
+        <entry>DISTANCIAXYZ</entry>
       </row>
 
       <row rowsep="0">
-        <entry>HEADING</entry>
-        <entry>HEADING</entry>
+        <entry>RUMBO</entry>
+        <entry>RUMBO</entry>
       </row>
       <row rowsep="0">
         <entry></entry>
-        <entry>ROLL</entry>
+        <entry>BALANCEO</entry>
       </row>
       <row rowsep="0">
         <entry></entry>
-        <entry>PITCH</entry>
+        <entry>CABECEO</entry>
       </row>
       <row>
         <entry></entry>
-        <entry>ORIENTATION</entry>
+        <entry>ORIENTACION</entry>
       </row>
 
       <row rowsep="0">
-        <entry>SETHEADING</entry>
-        <entry>SETHEADING</entry>
+        <entry>PONRUMBO</entry>
+        <entry>PONRUMBO</entry>
       </row>
       <row rowsep="0">
         <entry></entry>
-        <entry>SETROLL</entry>
+        <entry>PONBALANCEO</entry>
       </row>
       <row rowsep="0">
         <entry></entry>
-        <entry>SETPITCH</entry>
+        <entry>PONCABECEO</entry>
       </row>
       <row>
         <entry></entry>
-        <entry>SETORIENTATION</entry>
+        <entry>PONORIENTACION</entry>
       </row>
 
 
       <row rowsep="0">
-        <entry>RIGHT</entry>
-        <entry>RIGHT (on current plane)</entry>
+        <entry>GIRADERECHA</entry>
+        <entry>GIRADERECHA (en el plano actual)</entry>
       </row>
       <row rowsep="0">
         <entry></entry>
-        <entry>RIGHTROLL</entry>
+        <entry>BALANCEADERECHA</entry>
       </row>
       <row>
         <entry></entry>
-        <entry>UPPITCH</entry>
+        <entry>CABECEA</entry>
       </row>
 
 
       <row rowsep="0">
-        <entry>LEFT</entry>
-        <entry>LEFT (on current plane)</entry>
+        <entry>GIRAIZQUIERDA</entry>
+        <entry>GIRAIZQUIERDA (en el plano actual)</entry>
       </row>
       <row rowsep="0">
         <entry></entry>
-        <entry>LEFTROLL</entry>
+        <entry>BALANCEAIZQUIERDA</entry>
       </row>
       <row>
         <entry></entry>
-        <entry>DOWNPITCH</entry>
+        <entry>BAJANARIZ</entry>
       </row>
 
       <row rowsep="0">
-        <entry>WINDOW</entry>
-        <entry>PERSPECTIVE</entry>
+        <entry>MODOVENTANA</entry>
+        <entry>PERSPECTIVA</entry>
       </row>
       <row rowsep="0">
-        <entry>WRAP</entry>
+        <entry>MODOVUELTA</entry>
         <entry></entry>
       </row>
       <row>
-        <entry>FENCE</entry>
+        <entry>MODOJAULA</entry>
         <entry></entry>
       </row>
 
       <row rowsep="0">
-        <entry>SETTURTLE 0-1023</entry>
-        <entry>SETTURTLE 0-1023</entry>
+        <entry>ACTIVA (índices no negativos)</entry>
+        <entry>ACTIVA (índices no negativos)</entry>
       </row>
       <row rowsep="0">
         <entry></entry>
-        <entry>SETTURTLE -1 (the eye position)</entry>
+        <entry>ACTIVA -1 (la posición del ojo)</entry>
       </row>
       <row rowsep="0">
         <entry></entry>
-        <entry>SETTURTLE -2 (where the eye is looking)</entry>
+        <entry>ACTIVA -2 (la posición donde el ojo mira)</entry>
       </row>
       <row>
         <entry></entry>
-        <entry>SETTURTLE -3 (the position of the light)</entry>
+        <entry>ACTIVA -3 (la posición del fuente de luz)</entry>
       </row>
 
       <row rowsep="0">
         <entry></entry>
-        <entry>POLYSTART</entry>
+        <entry>EMPIEZAPOLIGONO</entry>
       </row>
       <row rowsep="0">
         <entry></entry>
-        <entry>POLYEND</entry>
+        <entry>TERMINAPOLIGONO</entry>
       </row>
       <row rowsep="0">
         <entry></entry>
-        <entry>POLYVIEW</entry>
+        <entry>MUESTRAPOLIGONO</entry>
       </row>
       <row rowsep="0">
         <entry></entry>
-        <entry>LIGHT</entry>
+        <entry>LUZ</entry>
       </row>
       <row>
         <entry></entry>
-        <entry>SETLIGHT</entry>
+        <entry>PONLUZ</entry>
       </row>
 
       <row>
-        <entry>ELLIPSEARC</entry>
-        <entry>ELLIPSEARC (great for spheres)</entry>
+        <entry>ARCOELIPSE</entry>
+        <entry>ARCOELIPSE (bueno para los esferas)</entry>
       </row>
     </tbody>
   </tgroup>
@@ -268,58 +269,64 @@ Many commands are repeated in both columns because they are designed for 2D mode
 </para>
 
 <formalpara>
-<title>Limitations of Perspecive Mode</title>
+<title>Limitaciones del modo perspectiva</title>
 <para>
-There are several 2D commands which work in perspective mode but still behave in a 2D fashion.
-Their actions take place at the correct X, Y, Z coordinate, but the orientation is limited to a 2D plane.
-For example, you can not draw text with <link linkend="command-label">LABEL</link> on 6 sides of cube.
-However, you can LABEL the 8 vertices of the cube by moving to each vertex using 3D maneuvers.
-Furthermore, nothing prevents you from building a "3D block letter" alphabet library made up of 3D vectors.
+Hay varios comandos que trabajan en 3D pero que aun así se comportarán como si fuese en 2D.
+Sus acciones tienen lugar en la correcta coordenada X, Y, Z, pero la orientación es limitada a un plano 2D.
+Por ejemplo, no puedes dibujar texto con <link linkend="command-label">ROTULO</link> en los 6 lados de un cubo.
+Pero si en los 8 vértices del cubo, cada etiqueta puede ser correctamente situada en cada vértice utilizando maniobras 3D.
+No hay nada que te impida construir tu propia biblioteca de procedimientos que dibujan cada letra del alfabeto mediante maniobras 3D.
 </para>
 </formalpara>
 
 <para>
-The following commands retain their 2D feel, even in perspective mode.
+Los comandos siguientes retienen su 2D comportamiento, aún en modo perspectiva.
 
 <itemizedlist spacing="compact">
-  <listitem><para>LABEL</para></listitem>
-  <listitem><para>BITCUT</para></listitem>
-  <listitem><para>BITPASTE</para></listitem>
-  <listitem><para>BITCOPY</para></listitem>
-  <listitem><para>BITBLOCK</para></listitem>
-  <listitem><para>FILL</para></listitem>
+  <listitem><para>ROTULO</para></listitem>
+  <listitem><para>CORTAAREA</para></listitem>
+  <listitem><para>BITPEGA</para></listitem>
+  <listitem><para>COPIAAREA</para></listitem>
+  <listitem><para>RECTANGULORELLENO</para></listitem>
+  <listitem><para>RELLENA</para></listitem>
   <listitem><para>PIXEL</para></listitem>
-  <listitem><para>SETPIXEL</para></listitem>
+  <listitem><para>PONPIXEL</para></listitem>
 </itemizedlist>
 
 </para>
 
 <para>
-Perspective mode does not do hidden line removal.
-Hidden line removal requires objects be composed of polygons.
-Perspective mode does not allow you to dynamically move the eye view.
-This is because &PRODUCTNAME; does not store your object (your vectors) in 3D, it stores them in a 2D bitmap.
-However you can do "fast" dynamic manipulation in two other ways.
+El modo perspectiva no realiza eliminaciones de líneas ocultas.
+La eliminación de líneas ocultas requiere que los objetos se compongan de polígonos.
 </para>
 
 <para>
-One simple way is to keep your scene very simple (relative to the performance of your computer).
-You simply clear the screen and change the eye view (turtle -1) or the placement of the objects and draw again.
-Note curved objects (like those based on <link linkend="command-ellipsearc">ELLIPSEARC</link>) generate many vectors.
-The other option is to record each "scene" in a bitmap and play them back at any rate you wish.
-This method is shown in the <filename>GROW.LGO</filename> example.
-It does not matter whether you're "recording" 2D scenes or 3D scenes.
-This is limited by how much memory your computer has.
+El modo perspectiva no le permite mover dinámicamente la perspectiva visual.
+Esto es debido a que &PRODUCTNAME; no almacena tu objeto (tus vectores) en 3D; lo almacena en un mapa 2D de bits.
+Sin embargo, puedes hacer manipulaciones dinámicas «rápidas» de otras dos maneras.
+</para>
+
+<para>
+La primera manera de hacer manipulaciones dinámicas «rápidas» requiere que mantengas tu escena muy simple (en lo que concierne a la actuación de tu computadora).
+Simplemente despeja la pantalla y cambia la perspectiva visual (tortuga -1) o el emplazamiento de los objetos y dibujalos de nuevo.
+Fíjate en que los objetos curvados (como aquellos basados en <link linkend="command-ellipsearc">ARCOELIPSE</link>) generan muchos vectores.
+</para>
+
+<para>
+La otra manera de hacer manipulaciones dinámicas «rápidas» es grabar cada «escena» en un mapa de bits y reproducirlas de nuevo a una velocidad deseada.
+Esto es el método que demuestra el ejemplo <filename>GROW.LGO</filename>.
+No importa que estés «grabando» escenas 2D o 3D, da lo mismo.
+Esto vendrá delimitado por la cantidad de memoria de la que disponga tu computadora.
 </para>
 
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>PERSPECTIVE
-REPEAT 72 [ELLIPSEARC 90 100 150 45 RIGHTROLL 5]</userinput>
+<programlisting><userinput>PERSPECTIVA
+REPITE 72 [ARCOELIPSE 90 100 150 45 BALANCEADERECHA 5]</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

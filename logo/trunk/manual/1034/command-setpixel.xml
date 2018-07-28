@@ -1,49 +1,51 @@
 <section id="command-setpixel">
-<title>SETPIXEL</title>
+<title>PONPIXEL</title>
+<indexterm><primary>PONPIXEL</primary></indexterm>
 <indexterm><primary>SETPIXEL</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETPIXEL</command> <parameter>colorvector</parameter></synopsis>
+<synopsis><command>PONPIXEL</command> <parameter>color</parameter>
+<command>SETPIXEL</command> <parameter>color</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Sets the pixel under the turtle to the color described by <parameter>colorvector</parameter>.
-The <parameter>colorvector</parameter> input must be a three item list of [red green blue] intensities, each of which must be an integer from 0 to 255.
-For an explanation of color vectors see <link linkend="using-color">Using Color</link>.
-SETPIXEL is similar to running <userinput>SETPENSIZE 1 SETPENCOLOR colorvector PENPAINT FORWARD 0</userinput>, except that SETPIXEL is faster and doesn't affect the pen state.
+Pone el píxel que está debajo de la tortuga con <parameter>color</parameter>.
+El argumento <parameter>color</parameter> debe ser una lista con las intensidades de los colores [rojo verde azul], cada elemento un entero de 0 a 255.
+Para una explicación del formato de <parameter>color</parameter> veas <link linkend="using-color">Usando Color</link>.
+PONPIXEL funciona como <userinput>PONGROSOR 1 PONCOLORLAPIZ color LAPIZNORMAL AVANZA 0</userinput>, pero es más rápido y no afecta el estado del lápiz.
 </para>
 
 <para>
-By using <link linkend="command-pixel">PIXEL</link> and SETPIXEL, you can scan and redraw an image at a new orientation (for example, to rotate a bitmap).
+Usando <link linkend="command-pixel">PIXEL</link> y PONPIXEL, puedes «escanear» y redibujar una imagen con una nueva orientación (por ejemplo, la rotación de un bitmap).
 </para>
 
 <para>
-SETPIXEL can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode but only the "closest" pixel set is seen.
-See <filename>Examples\3D\3DBITMAP.LGO</filename> for an example of using SETPIXEL in perspective mode.
+Puedes usar PONPIXEL en modo <link linkend="command-perspective">PERSPECTIVA</link>, pero sólo se verá el «más cercano» píxel.
+Ve <filename>Examples\3D\3DBITMAP.LGO</filename> por un ejemplo que usa PONPIXEL en modo perspectiva.
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>PENUP
-SETXY -128 -128
-FOR [red 0 255] [
-  FOR [green 0 255] [
-    SETPIXEL (LIST :red :green 0)
-    FORWARD 1
+<programlisting><userinput>SUBELAPIZ
+PONXY -128 -128
+DESDE [rojo 0 255] [
+  DESDE [verde 0 255] [
+    PONPIXEL (LISTA :rojo :verde 0)
+    AVANZA 1
   ]
-  BACK    256
-  RIGHT   90
-  FORWARD 1
-  LEFT    90
+  RETROCEDE     256
+  GIRADERECHA   90
+  AVANZA        1
+  GIRAIZQUIERDA 90
 ]</userinput>
 </programlisting>
 </listitem>

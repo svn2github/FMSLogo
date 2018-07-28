@@ -1,33 +1,35 @@
 <section id="command-clean">
-    <title>CLEAN</title>
+    <title>LIMPIA</title>
+<indexterm><primary>LIMPIA</primary></indexterm>
 <indexterm><primary>CLEAN</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>CLEAN</command></synopsis>
+<synopsis><command>LIMPIA</command>
+<command>CLEAN</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Erases all lines that the turtle has drawn on the graphics window.
-The turtle's state (position, heading, pen mode, etc.) is not changed.
+Borra todas las líneas que la tortuga dibujó en la pantalla.
+El estado de la tortuga (posición, rumbo, modo del lápiz, etcétera) no cambia.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>FORWARD 100
-CLEAN</userinput>
+    <programlisting><userinput>AVANZA 100
+LIMPIA</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

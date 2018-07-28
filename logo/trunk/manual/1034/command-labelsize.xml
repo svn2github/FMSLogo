@@ -1,48 +1,50 @@
 <section id="command-labelsize">
-<title>LABELSIZE</title>
+<title>ROTULOTAM</title>
+<indexterm><primary>ROTULOTAM</primary></indexterm>
 <indexterm><primary>LABELSIZE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>LABELSIZE</command> <parameter>text</parameter></synopsis>
+<synopsis><command>ROTULOTAM</command> <parameter>texto</parameter>
+<command>LABELSIZE</command> <parameter>texto</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the size (width and height) of the given text if it were rendered with the <link linkend="command-label">LABEL</link> command.
-The input may be a word or a list.
-The output is a two item list [width height].
+Devuelve el tamaño (anchura y altura) de <parameter>texto</parameter> tal como si fuera escrito con el comando <link linkend="command-label">ROTULO</link>.
+El argumento puede ser una palabra o una lista, la misma que se emplea con ROTULO.
+La devuelta es una lista de dos enteros [anchura altura].
 </para>
 
 <para>
-The width and height are always output relative to the text, not the turtle's orientation.
-The width is the length of the text along the direction that words are read.
-The height is line height of <link linkend="command-labelfont">LABELFONT</link> and is independent of the <parameter>text</parameter> input.
+La anchura y altura siempre son devueltas relativas al texto, y no la orientación de la tortuga.
+La anchura es la longitud del texto a través del rumbo en que se lee las palabras.
+La altura es la altura del línea de <link linkend="command-labelfont">TIPO</link> y es independiente del argumento <parameter>texto</parameter>.
 </para>
 
 <para>
-LABELSIZE's output may vary slightly depending on the turtle's orientation.
-For the best results, run LABELSIZE when the turtle's heading matches the heading when you run LABEL.
+Lo que devuelve ROTULOTAM puede variar un poco según la orientación de la tortuga.
+Para los mejores resultados, ejecuta ROTULOTAM cuando el rumbo de la tortuga es igual a lo de cuando ejecutaras ROTULO.
 </para>
 
 <para>
-You can use LABELSIZE to build other forms of LABEL, such as CENTERLABEL or VERTICALLABEL.
-You can also use this information to "prepare" a site for text (for example, frame it or set a background).
+Puedes usar ROTULOTAM para construir otras formas de ROTULO, tal como ROTOLOCENTRO o ROTOLOVERTICAL.
+También puedes usar esta información para «preparar» un sitio para texto (por ejemplo, para enmarcarlo o darle un fondo).
 </para>
 
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SETLABELFONT [[Times New Roman] -24 0 0 400 0 0 0 0 3 2 1 18]
-SHOW LABELSIZE "Hello</userinput>
-[44 24]
+<programlisting><userinput>PONTIPO [[Times New Roman] -24 0 0 400 0 0 0 0 3 2 1 18]
+MUESTRA ROTULOTAM "Hola</userinput>
+[38 24]
 </programlisting>
 </listitem>
 </varlistentry>

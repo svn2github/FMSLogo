@@ -1,44 +1,43 @@
 <section id="command-fence">
-    <title>FENCE</title>
+    <title>MODOJAULA</title>
+<indexterm><primary>MODOJAULA</primary></indexterm>
 <indexterm><primary>FENCE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>FENCE</command></synopsis>
+<synopsis><command>MODOJAULA</command>
+<command>FENCE</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Tells the turtle to enter "fence" mode.
-In fence mode, when the turtle is asked to move past the boundary of the graphics window, it moves as far as it can and then stops at the edge with an "out of bounds" error message.
+Hace que la tortuga entra en modo «jaula».
+De ahora en adelante, cuando la tortuga se mueve fuera de los límites de la pantalla, se moverá hasta el límite de la pantalla, donde se detendrá, al tiempo que aparece un mensaje de error «tortuga fuera de los límites».
 </para>
 
 <para>
-Compare this command with <link linkend="command-wrap">WRAP</link>, <link linkend="command-window">WINDOW</link>, and <link linkend="command-perspective">PERSPECTIVE</link>.
+Compara este comando con <link linkend="command-wrap">MODOVUELTA</link>, <link linkend="command-window">MODOVENTANA</link> y <link linkend="command-perspective">PERSPECTIVA</link>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>WRAP
-FORWARD 950
-RIGHT 90
-FENCE
-FORWARD 950</userinput>
-turtle out of bounds
-<userinput>FORWARD 100</userinput>
-turtle out of bounds
-<userinput>BACK 500</userinput>
+    <programlisting><userinput>MODOJAULA
+AVANZA 10000</userinput>
+tortuga fuera de los límites
+<userinput>AVANZA 10</userinput>
+tortuga fuera de los límites
+<userinput>RETROCEDE 500</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>
