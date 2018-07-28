@@ -153,7 +153,7 @@ LLAMADLL puede manejar un variado de funciones, aunque no todas.
 </para>
 
 <para>
-Con LLAMDADLL, puedes extender el alcance de &PRODUCTNAME; cuando sus procedimientos no son suficientes para tu tarea.
+Con LLAMADLL, puedes extender el alcance de &PRODUCTNAME; cuando sus procedimientos no son suficientes para tu tarea.
 Puedes escribir tu propia biblioteca (DLL) con una interfaz compatible para llamar funciones con interfaz incompatible.
 </para>
 
@@ -167,7 +167,7 @@ El ejemplo siguiente es equivalente a la llamada en C:
   <programlisting>MessageBox(NULL, "¿Te gusta &PRODUCTNAME;?", "Pregunta", MB_YESNO);</programlisting>
 
 Nota como se agrega un «A» al fin del nombre de «MessageBox» y como se pasa los argumentos en orden revés para conformar a la convención de stdcall.
-  
+
 <programlisting><userinput>CARAGADLL "user32.dll
 IGNORA LLAMADLL [L MessageBoxA L 4 S [Pregunta] S [¿Te gusta &PRODUCTNAME;?] L 0]</userinput>
 
