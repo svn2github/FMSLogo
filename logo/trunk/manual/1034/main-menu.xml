@@ -143,7 +143,7 @@
 
     <section id="menu-set-labelfont">
       <title>Configurar - Tipo de letra de rotulador...</title>
-      <para>Con esta opción seleccionas el tipo de letra que se utilizará con la primitiva <link linkend="command-label">ROTULA</link>.</para>
+      <para>Con esta opción seleccionas el tipo de letra que se utilizará con la primitiva <link linkend="command-label">ROTULO</link>.</para>
       <para>Puedes seleccionar también el tipo de letra con la primitiva <link linkend="command-setlabelfont">PONTIPO</link> y obtener el tipo actual con <link linkend="command-labelfont">TIPO</link>.</para>
     </section>
 
