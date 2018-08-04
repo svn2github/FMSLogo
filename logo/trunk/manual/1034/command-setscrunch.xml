@@ -1,38 +1,41 @@
 <section id="command-setscrunch">
-    <title>SETSCRUNCH</title>
+    <title>PONRONZAL</title>
+<indexterm><primary>PONRONZAL</primary></indexterm>
 <indexterm><primary>SETSCRUNCH</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETSCRUNCH</command> <parameter>xscale</parameter> <parameter>yscale</parameter></synopsis>
+<synopsis><command>PONRONZAL</command> <parameter>escala_x</parameter> <parameter>escala_y</parameter>
+<command>SETSCRUNCH</command> <parameter>escala_x</parameter> <parameter>escala_y</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 
-<note><para>SETSCRUNCH is not needed to correct display problems, but is available for folks who like to deliberately misadjust the aspect ratio.</para></note>
+<note><para>(No se necesita PONRONZAL para corregir problemas de pantalla, pero está disponible para quienes prefieren deliberadamente ajustar la relación de aspecto.</para></note>
 
 <para>
-Adjusts the aspect ratio and scaling of the graphics display.
-After SETSCRUNCH is used, all further turtle motion is adjusted by multiplying the horizontal and vertical extent of the motion by the two numbers given as inputs.
-For example, after the instruction "<userinput>SETSCRUNCH 2 1</userinput>" motion at a heading of 45 degrees moves twice as far horizontally as vertically.
-If your squares don't come out square, try using this command.
+Ajusta la relación de aspecto y la escala de las imágenes gráficas.
+Después de usar PONRONZAL, todos los movimientos de la tortuga se ajustarán multiplicando la extensión horizontal y vertical del movimiento por los valores de los dos argumentos.
+Por ejemplo, después de ejecutar la instrucción «<userinput>PONRONZAL 2 1</userinput>», con un rumbo de 45 grados cualquier movimiento será el doble en sentido horizontal y el vertical a la medida indicada.
+Si sus cuadrados no parecen cuadrados, pruebes este comando.
 </para>
 
 <para>
-Alternatively, you can use SETSCRUNCH to deliberately misadjust the aspect ratio to draw an ellipse.
+Alternativamente, puedes usar PONRONZAL para que tus círculos parecen unas elipses.
 </para>
+
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SETSCRUNCH 2.0 1.0
-REPEAT 4 [FORWARD 100 RIGHT 90]
-SHOW SCRUNCH</userinput>
+    <programlisting><userinput>PONRONZAL 2.0 1.0
+REPITE 4 [AVANZA 100 GIRADERECHA 90]
+MUESTRA RONZAL</userinput>
 [2 1]
 </programlisting>
 
@@ -40,5 +43,4 @@ SHOW SCRUNCH</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>

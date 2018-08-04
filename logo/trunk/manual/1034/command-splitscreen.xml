@@ -1,35 +1,40 @@
 <section id="command-splitscreen">
-<title>SPLITSCREEN</title>
+<title>PANTALLAPARTIDA</title>
+<indexterm><primary>PANTALLAPARTIDA</primary></indexterm>
+<indexterm><primary>PA</primary></indexterm>
 <indexterm><primary>SPLITSCREEN</primary></indexterm>
 <indexterm><primary>SS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SPLITSCREEN</command>
+<synopsis><command>PANTALLAPARTIDA</command>
+<command>PA</command>
+<command>SPLITSCREEN</command>
 <command>SS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Docks the commander window and the screen window inside the same frame and separates the two with a movable splitter bar.
-This leaves some room for text interaction while also keeping most of the graphics window visible.
+Empotra el Centro de Comandos por abajo de la pantalla y separa los dos con una barra que te puedes mover.
+Este comando deja algún espacio por interacciones de texto mientras que la mayoría de la pantalla queda visible.
 </para>
 
 <para>
-This is the default configuration.
+Este es la configuración inicial.
 </para>
 
 <para>
-Compare this command with <link linkend="command-fullscreen">FULLSCREEN</link> and <link linkend="command-textscreen">TEXTSCREEN</link>.
+Compara este comando con <link linkend="command-fullscreen">PANTALLAGRAFICA</link> y <link linkend="command-textscreen">PANTALLATEXTO</link>.
 </para>
 
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

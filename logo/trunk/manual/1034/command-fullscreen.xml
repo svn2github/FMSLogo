@@ -1,35 +1,39 @@
 <section id="command-fullscreen">
-<title>FULLSCREEN</title>
+<title>PANTALLAGRAFICA</title>
+<indexterm><primary>PANTALLAGRAFICA</primary></indexterm>
+<indexterm><primary>PG</primary></indexterm>
 <indexterm><primary>FULLSCREEN</primary></indexterm>
 <indexterm><primary>FS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>FULLSCREEN</command>
+<synopsis><command>PANTALLAGRAFICA</command>
+<command>PG</command>
+<command>FULLSCREEN</command>
 <command>FS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Undocks the commander window from the screen window so that you can resize it to maximize the space available for graphics.
-The commander window is always on top of the screen window, so you may find it useful to minimize the commander window after undocking it.
+Desempotra el Centro de Comandos de la pantalla para que puedas cambiar su tamaño y así maximizar el espacio disponible para interacciones de gráficos.
+La ventana del Centro de Comandos siempre será encima de la pantalla, así que puede ser útil minimizarlo después de desempotrarlo.
 </para>
 
 <para>
-Compare this command with <link linkend="command-splitscreen">SPLITSCREEN</link> and <link linkend="command-textscreen">TEXTSCREEN</link>.
+Compara este comando con <link linkend="command-splitscreen">PANTALLAPARTIDA</link> y <link linkend="command-textscreen">PANTALLATEXTO</link>.
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>FULLSCREEN
-ICON "Commander</userinput></programlisting>
+<programlisting><userinput>PANTALLAGRAFICA
+MINIMIZA [Centro de Comandos]</userinput></programlisting>
 </listitem>
 </varlistentry>
 
