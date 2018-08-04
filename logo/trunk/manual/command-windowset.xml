@@ -36,7 +36,7 @@ The following table details acceptable values and their meanings.
       <row>
         <entry>1</entry>
         <entry>Activates and displays a window.
-               If the window is minimized or maximized, Windows restores it to its original size and position.
+               If the window is minimized or maximized, it is restored it to its original size and position.
                An application should specify this flag when displaying the window for the first time.</entry>
       </row>
 
@@ -68,19 +68,21 @@ The following table details acceptable values and their meanings.
 
       <row>
         <entry>7</entry>
-        <entry>Displays a window in its most recent size and position. The active window remains active.</entry>
+        <entry>Displays a window in its most recent size and position.
+               The active window remains active.</entry>
       </row>
 
       <row>
         <entry>8</entry>
-        <entry>Displays the window in its current state. The active window remains active.</entry>
+        <entry>Displays the window in its current state.
+               The active window remains active.</entry>
       </row>
 
       <row>
         <entry>9</entry>
         <entry>Activates and displays the window.
-               If the window is minimized or maximized, Windows restores it to its original size and position.
-               An application should specify this flag when restoring a minimized window</entry>
+               If the window is minimized or maximized, it is restored it to its original size and position.
+               An application should specify this flag when restoring a minimized window.</entry>
       </row>
 
     </tbody>
