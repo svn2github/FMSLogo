@@ -1,3 +1,6 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Tests for POLYSTART, POLYEND, POLYVIEW, LIGHT, and SETLIGHT
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 LOAD "testlib.lgo
 
 TO NEAREST.DECIMAL.PLACES :n :num
@@ -174,7 +177,8 @@ TO POLYGONTEST.CLEARSCREEN
   TRACEINSTRUCTION [ POLYSTART REPEAT 4 [ FORWARD 100 RIGHT 90 ] POLYEND ] ; complete polygon
   TRACEINSTRUCTION [ POLYSTART REPEAT 4 [ FORWARD 100 LEFT  90 ] ]         ; open polygon
   TRACEINSTRUCTION [ CLEARSCREEN ] ; clears completed and open polygon
-  TRACEINSTRUCTION [ POLYVIEW ] ; should show nothing
+  TRACEINSTRUCTION [ FORWARD 100 ] ; draws something on the screen
+  TRACEINSTRUCTION [ POLYVIEW ] ; should do nothing because there are no polygons
 
   CHECKSCREEN "polyview-after-clearscreen
 
@@ -184,9 +188,12 @@ END
 TO POLYGONTEST.BADINPUT
   PERSPECTIVE
 
-  RUNTOOMANYINPUTSTEST [ (POLYSTART "toomany) ]
-  RUNTOOMANYINPUTSTEST [ (POLYEND   "toomany) ]
-  RUNTOOMANYINPUTSTEST [ (POLYVIEW  "toomany) ]
+  RUNTOOMANYINPUTSTEST   [ (POLYSTART "toomany) ]
+  RUNTOOMANYINPUTSTEST   [ (POLYEND   "toomany) ]
+  RUNTOOMANYINPUTSTEST   [ (POLYVIEW  "toomany) ]
+  RUNTOOMANYINPUTSTEST   [ (LIGHT     "toomany) ]
+  RUNNOTENOUGHINPUTSTEST [ (SETLIGHT)           ]
+  RUNTOOMANYINPUTSTEST   [ (SETLIGHT  [0.3 0.3] "toomany) ]
 
   ; POLYSTART while in POLYSTART
   TRACEINSTRUCTION [ POLYSTART ]
@@ -202,6 +209,22 @@ TO POLYGONTEST.BADINPUT
   ; POLYEND with two vertices
   TRACEINSTRUCTION [ POLYSTART FORWARD 10 RIGHT 40 FORWARD 10 ]
   RUNSTOPPINGTEST  [ POLYEND ]
+
+  ; SETLIGHT
+  TRACEINSTRUCTION [ SETLIGHT [0.1 0.2] ] ; seed with a known value
+  RUNDOESNTLIKEINPUTTEST [ SETLIGHT "word           ]
+  RUNDOESNTLIKEINPUTTEST [ SETLIGHT 100             ]
+  RUNDOESNTLIKEINPUTTEST [ SETLIGHT []              ] ; NIL (always a good test)
+  RUNDOESNTLIKEINPUTTEST [ SETLIGHT { 0.4 0.4 }     ] ; not a list
+  RUNDOESNTLIKEINPUTTEST [ SETLIGHT [ 0.4 ]         ] ; list too small
+  RUNDOESNTLIKEINPUTTEST [ SETLIGHT [ 0.4 0.4 0.4 ] ] ; list too large
+  RUNDOESNTLIKEINPUTTEST [ SETLIGHT [ abc 0.4 ]     ] ; bad ambient
+  RUNDOESNTLIKEINPUTTEST [ SETLIGHT [ []  0.4 ]     ] ; bad ambient
+  RUNDOESNTLIKEINPUTTEST [ SETLIGHT [ {}  0.4 ]     ] ; bad ambient
+  RUNDOESNTLIKEINPUTTEST [ SETLIGHT [ 0.4 abc ]     ] ; bad diffuse
+  RUNDOESNTLIKEINPUTTEST [ SETLIGHT [ 0.4 []  ]     ] ; bad diffuse
+  RUNDOESNTLIKEINPUTTEST [ SETLIGHT [ 0.4 {}  ]     ] ; bad diffuse
+  SIMPLEREPORTTEST [ LIGHT ] [0.1 0.2] ; the value of LIGHT should not have changed
 
   WRAP
 END
