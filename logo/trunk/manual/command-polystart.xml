@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Starts the definition of a new polygon.
-Each subsequent move while the turtle's pen is down results in the destination coordinate being added as a vertex to the polygon.
+Each subsequent move while the turtle's pen is down adds the destination coordinate as a vertex to the polygon.
 The polygon's definition is completed by running the <link linkend="command-polyend">POLYEND</link> command.
 </para>
 
