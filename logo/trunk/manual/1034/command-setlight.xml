@@ -1,70 +1,75 @@
 <section id="command-setlight">
-<title>SETLIGHT</title>
+<title>PONLUZ</title>
+<indexterm><primary>PONLUZ</primary></indexterm>
 <indexterm><primary>SETLIGHT</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETLIGHT</command> <parameter>properties</parameter></synopsis>
+<synopsis><command>PONLUZ</command> <parameter>propiedades</parameter>
+<command>SETLIGHT</command> <parameter>propiedades</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Sets how polygons are illuminated by <link linkend="command-polyview">POLYVIEW</link>.
-The <parameter>properties</parameter> input is a list of two numbers ranging from 0.0 to 1.0, the amount of ambient and diffuse light.
-The ambient component defines how much background light there is; the larger the number the brighter the light.
-The diffusion component is not a property of light source, but a property of how smooth the surface is (how much it scatters light).
-A higher value means the objects are smoother and reflective (like marble) a low value means the objects are rough (like chalk).
+Establece cómo <link linkend="command-polyview">MUESTRAPOLIGONO</link> ilumina los polígonos.
+El argumento <parameter>propiedades</parameter> es una lista de dos números en un rango de 0,0 a 1,0, la cantidad de ambiente y luz difusa.
+Ambiente define cómo se ilumina la escena, mientras mayor sea, más luminosa será la luz.
+Luz difusa no es una propiedad de la fuente luminosa misma, sino indica cuanto lisa es la superficie (cuanto esparce la luz).
+Un valor alto significa que los objetos son más lisos y reflectores (como un mármol) un valor bajo significa que los objetos son ásperos (como la tiza).
 </para>
 
 <para>
-To position the light use <userinput>SETTURTLE -3</userinput>.
+Para posicionar la luz usa a <userinput>ACTIVA -3</userinput>.
 </para>
 
 <para>
-SETLIGHT is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
-While it does run in 2D modes, the effect is not noticable without POLYVIEW.
+Se diseñaba PONLUZ para ejecutar en modo <link linkend="command-perspective">PERSPECTIVA</link>.
+Mientras que PONLUZ sí ejecuta en modos 2D, no se puede observar su efecto sin MUESTRAPOLIGONO.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>; simple usage
-SETLIGHT [0.3 0.6]
-SHOW LIGHT</userinput>
+<para>Un ejemplo simple:
+<programlisting><userinput>PONLUZ [0.3 0.6]
+MUESTRA LUZ</userinput>
 [0.3 0.6]</programlisting>
+</para>
 
-<programlisting><userinput>; a lightshow
-TO SQUARE
-  POLYSTART
-  REPEAT 4 [FORWARD 100 RIGHT 90]
-  POLYEND
-END
+<para>Un espectáculo de luz:
+    <programlisting><userinput>PARA CUADRADO
+  EMPIEZAPOLIGONO
+  REPITE 4 [AVANZA 100 GIRADERECHA 90]
+  TERMINAPOLIGONO
+FIN
 
-PERSPECTIVE
-REPEAT 72 [SQUARE RIGHTROLL 5]
-POLYVIEW
+PERSPECTIVA
+REPITE 72 [CUADRADO BALANCEADERECHA 5]
+MUESTRAPOLIGONO
 
-REPEAT 10 [
-  SETLIGHT (LIST (RANDOM 100)/100 (RANDOM 100)/100)
-  SHOW LIGHT
-  WAIT 60
+REPITE 10 [
+  PONLUZ (LISTA (AZAR 100)/100 (AZAR 100)/100)
+  MUESTRA LUZ
+  ESPERA 60
 ]</userinput></programlisting>
+</para>
+
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-light">LIGHT</link></member>
+<member><link linkend="command-light">LUZ</link></member>
 </simplelist></listitem>
 </varlistentry>
-
 
 
 </variablelist>

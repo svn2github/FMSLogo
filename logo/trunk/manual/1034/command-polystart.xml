@@ -1,52 +1,54 @@
 <section id="command-polystart">
-    <title>POLYSTART</title>
+    <title>EMPIEZAPOLIGONO</title>
+<indexterm><primary>EMPIEZAPOLIGONO</primary></indexterm>
 <indexterm><primary>POLYSTART</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>POLYSTART</command></synopsis>
+<synopsis><command>EMPIEZAPOLIGONO</command>
+<command>POLYSTART</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Starts the definition of a new polygon.
-Each subsequent move while the turtle's pen is down results in the destination coordinate being added as a vertex to the polygon.
-The polygon's definition is completed by running the <link linkend="command-polyend">POLYEND</link> command.
+Empieza la definición de un nuevo polígono.
+De ahora hasta que ejecutas <link linkend="command-polyend">TERMINAPOLIGONO</link>, cada vez que la tortuga se mueve mientras que el lápiz está abajo, se la agregará al polígono la coordenada de la destinación como vértice.
+La definición del polígono se completa por el comando <link linkend="command-polyend">TERMINAPOLIGONO</link>.
 </para>
 
 <para>
-Make sure you understand the <link linkend="polygon-restrictions">Polygon Restrictions</link>.
+Asegúrate de entender las <link linkend="polygon-restrictions">restricciones de los polígonos</link>.
 </para>
 
 <para>
-After all of the polygons are defined, you can view them as shaded polygons by running the <link linkend="command-polyview">POLYVIEW</link> command.
+Después de que todos los polígonos están definidos, puedes verlos como polígonos sombreados ejecutando el comando <link linkend="command-polyview">MUESTRAPOLIGONO</link>.
 </para>
 
 <para>
-POLYSTART is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode and does not run in 2D modes.
+Se diseñaba EMPIEZAPOLIGONO para ejecutar en modo <link linkend="command-perspective">PERSPECTIVA</link> y no funciona en modos 2D.
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
-    <programlisting><userinput>TO SQUARE
-  POLYSTART
-  REPEAT 4 [FORWARD 100 RIGHT 90]
-  POLYEND
-END
 
-PERSPECTIVE
-REPEAT 72 [SQUARE RIGHTROLL 5]
-POLYVIEW</userinput></programlisting>
+<varlistentry><term>Ejemplo</term>
+<listitem>
+    <programlisting><userinput>PARA CUADRADO
+  EMPIEZAPOLIGONO
+  REPITE 4 [AVANZA 100 GIRADERECHA 90]
+  TERMINAPOLIGONO
+FIN
+
+PERSPECTIVA
+REPITE 72 [CUADRADO BALANCEADERECHA 5]
+MUESTRAPOLIGONO</userinput></programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
