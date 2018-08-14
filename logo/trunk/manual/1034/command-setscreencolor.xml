@@ -1,40 +1,43 @@
 <section id="command-setscreencolor">
-<title>SETSCREENCOLOR</title>
+<title>PONCOLORFONDO</title>
+<indexterm><primary>PONCOLORFONDO</primary></indexterm>
+<indexterm><primary>PONCF</primary></indexterm>
 <indexterm><primary>SETSCREENCOLOR</primary></indexterm>
 <indexterm><primary>SETSC</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETSCREENCOLOR</command> <parameter>color</parameter>
-<command>SETSCREENCOLOUR</command> <parameter>color</parameter>
+<synopsis><command>PONCOLORFONDO</command> <parameter>color</parameter>
+<command>PONCF</command> <parameter>color</parameter>
+<command>SETSCREENCOLOR</command> <parameter>color</parameter>
 <command>SETSC</command> <parameter>color</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Sets the screen background color to <parameter>color</parameter> and changes the entire screen to that color.
-The <parameter>color</parameter> input may either be a color index or a color vector.
-A color index is a number from 0 - 15.
-A color vector is a list of [red green blue] intensities, each in the range of 0 - 255.
-For an explanation of the <parameter>color</parameter> input, see the section on <link linkend="using-color">Using Color</link>.
+Pone como color del fondo de la pantalla <parameter>color</parameter>, que puede ser un color indexado, un vector de color, o un nombre de color.
+Un color indexado es un entero en un rango de 0 - 15.
+Un vector de color es una lista con las intensidades de [rojo verde azul], en un rango 0-255.
+Para una explicación del argumento <parameter>color</parameter>, ve <link linkend="using-color">Usando Color</link>.
 </para>
-
 </listitem>
 </varlistentry>
-<varlistentry><term>Example</term>
-<listitem>
 
-<programlisting><userinput>SETSCREENCOLOR [0 0 0]
-SETPENCOLOR [255 255 255]
-REPEAT 4 [FORWARD 100 RIGHT 90]
-CLEAN</userinput>
+
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>PONCOLORFONDO [0 0 0]
+PONCOLORLAPIZ [255 255 255]
+REPITE 4 [AVANZA 100 GIRADERECHA 90]
+LIMPIA</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
-</variablelist>
 
+</variablelist>
 </section>

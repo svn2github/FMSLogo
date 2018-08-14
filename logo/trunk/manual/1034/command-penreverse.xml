@@ -1,41 +1,48 @@
 <section id="command-penreverse">
-<title>PENREVERSE</title>
+<title>LAPIZINVIERTE</title>
+<indexterm><primary>LAPIZINVIERTE</primary></indexterm>
+<indexterm><primary>LINVIERTE</primary></indexterm>
 <indexterm><primary>PENREVERSE</primary></indexterm>
 <indexterm><primary>PX</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PENREVERSE</command>
+<synopsis><command>LAPIZINVIERTE</command>
+<command>LINVIERTE</command>
+<command>PENREVERSE</command>
 <command>PX</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Sets the pen's position to "down" and the pen's mode to "reverse".
-In reverse mode, the pen draws in a color that is the bitwise negation of whatever pixel is under the pen.
-Use <link linkend="command-penpaint">PENPAINT</link> to restore the pen to normal use.
+Pone la posición de lápiz hacia abajo en el modo «LapizInvierte».
+En modo «LapizInvierte», el lápiz dibuja en un color que es la operación NOT bit a bit del color del píxel debajo del lápiz.
+Usa <link linkend="command-penpaint">LAPIZNORMAL</link> para volver al modo normal.
 </para>
 
+
 </listitem>
 </varlistentry>
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SETPENCOLOR [255 0 0]
-PENPAINT
-FORWARD 100
-PENREVERSE
-BACK 100</userinput></programlisting>
+<programlisting><userinput>PONCOLORLAPIZ [255 0 0]
+LAPIZNORMAL
+AVANZA 100
+LAPIZINVIERTE
+RETROCEDE 100</userinput></programlisting>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-penerase">PENERASE</link></member>
-<member><link linkend="command-penpaint">PENPAINT</link></member>
+<member><link linkend="command-penerase">GOMA</link></member>
+<member><link linkend="command-penpaint">LAPIZNORMAL</link></member>
 </simplelist></listitem>
 </varlistentry>
 

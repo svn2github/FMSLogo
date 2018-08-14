@@ -1,41 +1,42 @@
 <section id="command-clearpalette">
-    <title>CLEARPALETTE</title>
+    <title>BORRAPALETA</title>
+<indexterm><primary>BORRAPALETA</primary></indexterm>
 <indexterm><primary>CLEARPALETTE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>CLEARPALETTE</command></synopsis>
-</listitem>
-</varlistentry>
-
-<varlistentry><term>Description</term>
-<listitem>
-<para>
-CLEARPALETTE does nothing.
-It has been kept for compatibility with old programs, but its function is no longer needed.
-</para>
-
-<para>
-Historically, early versions of Microsoft Windows supported video displays that were limited to showing at most 256 colors at one time, although each of the colors used a full 24-bit range.
-The set of 256 possible colors was called the "palette" and could be changed depending on which colors you wanted to use.
-Whenever &PRODUCTNAME; used a new color (for example, when SETPENCOLOR was run), it would add the color to this palette.
-Once all of the 256 colors in the palette were set, a program could not draw a new color, even if some of the colors in the palette were not in active use.
-The CLEARPALETTE command used to remove all colors from the palette so that the palette could be refilled with new colors.
-</para>
-
-<para>
-Display devices, even old ones, no longer have a limited palette of colors, so CLEARPALETTE is no longer needed.
-</para>
-
+<synopsis><command>BORRAPALETA</command>
+<command>CLEARPALETTE</command></synopsis>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<programlisting><userinput>CLEARPALETTE</userinput></programlisting>
+<para>
+BORRAPALETA no hace nada.
+Queda como procedimiento por compatibilidad con programas viejos, pero ya no se necesita su función anterior.
+</para>
+
+<para>
+Históricamente, las primeras versiones de Microsoft Windows soportaban las tarjetas gráficas que fueron limitadas a mostrar no más que 256 colores a la vez, aunque cada de estos colores pudieron usar 18 bits de rojo, verde y azul.
+A este conjunto de 256 colores se lo llamaron la «paleta» y se pudieron cambiarla dependiendo de que colores querían usar.
+Cuando han llenado la «paleta» con 256 colores, un programa no pudo dibujar en un nuevo color, ni siquiera si algunos de los colores en la paleta no fueron en uso activo.
+En este caso, se pudieron usar BORRAPALETA para borrar todos los colores de la paleta para que la paleta pudiese estar rellanada con nuevos colores.
+</para>
+
+<para>
+Hoy por hoy, las tarjetas gráficas, incluso las viejas, no tienen una paleta limitada de colores, así que no se necesitan BORRAPALETA.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>BORRAPALETA</userinput></programlisting>
 </listitem>
 </varlistentry>
 

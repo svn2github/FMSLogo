@@ -1,44 +1,46 @@
 <section id="command-setpen">
-<title>SETPEN</title>
+<title>PONLAPIZ</title>
+<indexterm><primary>PONLAPIZ</primary></indexterm>
 <indexterm><primary>SETPEN</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETPEN</command> <parameter>characteristics</parameter></synopsis>
+<synopsis><command>PONLAPIZ</command> <parameter>características</parameter>
+<command>SETPEN</command> <parameter>características</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Sets the pen's position, mode, and hardware-dependent characteristics according to the information in the <parameter>characteristics</parameter> input.
-The characteristics input is a list with the following members: [PENDOWNP PENMODE PENSIZE PENCOLOR PENPAINT].
-The format of this list may change in futures version of &PRODUCTNAME;, as additional pen characteristics are added.
-To guarantee portability, the input should be taken from an earlier invocation of <link linkend="command-pen">PEN</link>.
+Pone la posición del lápiz, el modo y las características dependientes del hardware de acuerdo con la información del argumento <parameter>características</parameter>.
+El argumento <parameter>características</parameter> debe ser una lista con los elementos siguientes: [BAJALAPIZ? LAPIZMODO GROSOR COLORLAPIZ PATRONLAPIZ].
+El formato de esta lista puede cambiar en versiones futuras de &PRODUCTNAME;, a medida que se añade características adicionales.
+Para garantizar la compatibilidad de tu programa, el argumento debería ser una lista devuelta de una ejecución previa de <link linkend="command-pen">LAPIZ</link>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>CLEARSCREEN
-REPEAT 4 [FORWARD 100 RIGHT 90]
-MAKE "savepen PEN
+<programlisting><userinput>BORRAPANTALLA
+REPITE 4 [AVANZA 100 GIRADERECHA 90]
+HAZ "lapizguardado LAPIZ
 
-CLEARSCREEN
-SETPENSIZE [20 20]
-REPEAT 4 [FORWARD 100 RIGHT 90]
-SETPEN :savepen
+BORRAPANTALLA
+PONGROSOR [20 20]
+REPITE 4 [AVANZA 100 GIRADERECHA 90]
+PONLAPIZ :lapizguardado
 
-CLEARSCREEN
-REPEAT 4 [FORWARD 100 RIGHT 90]</userinput>
+BORRAPANTALLA
+REPITE 4 [AVANZA 100 GIRADERECHA 90]</userinput>
 </programlisting>
-
 </listitem>
 </varlistentry>
-</variablelist>
 
+
+</variablelist>
 </section>

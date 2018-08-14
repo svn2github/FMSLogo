@@ -1,53 +1,58 @@
 <section id="command-setpencolor">
-<title>SETPENCOLOR</title>
+<title>PONCOLORLAPIZ</title>
+<indexterm><primary>PONCOLORLAPIZ</primary></indexterm>
+<indexterm><primary>PONCL</primary></indexterm>
 <indexterm><primary>SETPENCOLOR</primary></indexterm>
 <indexterm><primary>SETPC</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETPENCOLOR</command> <parameter>color</parameter>
-<command>SETPENCOLOUR</command> <parameter>color</parameter>
+<synopsis><command>PONCOLORLAPIZ</command> <parameter>color</parameter>
+<command>PONCL</command> <parameter>color</parameter>
+<command>SETPENCOLOR</command> <parameter>color</parameter>
 <command>SETPC</command> <parameter>color</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Sets the pen color to <parameter>color</parameter>, which can either be a color index or a color vector.
-A color index is a number from 0 - 15.
-A color vector is a list of [red green blue] intensities, each in the range of 0 - 255.
-For an explanation of the <parameter>color</parameter> input, see the section on <link linkend="using-color">Using Color</link>.
+Pone el color del lápiz <parameter>color</parameter>, que puede ser un color indexado, un vector de color, o un nombre de color.
+Un color indexado es un entero en un rango de 0 - 15.
+Un vector de color es una lista con las intensidades de [rojo verde azul], en un rango 0-255.
+Para una explicación del argumento <parameter>color</parameter>, ve <link linkend="using-color">Usando Color</link>.
 </para>
 
 <para>
-The pen color affects any line drawn by the turtle (such as <link linkend="command-forward">FORWARD</link>).
-It also affects text that is drawn with <link linkend="command-label">LABEL</link>.
+El color del lápiz afecta cada línea dibujada por la tortuga (por ejemplo, con <link linkend="command-forward">AVANZA</link>).
+También afecta el color del texto que se escribe con <link linkend="command-label">ROTULO</link>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>REPEAT 255 [
-  SETPENCOLOR (LIST REPCOUNT 0 0)
-  FORWARD 100
-  BACK    100
-  RIGHT 1
+<programlisting><userinput>REPITE 255 [
+  PONCOLORLAPIZ (LISTA CUENTAREPITE 0 0)
+  AVANZA      100
+  RETROCEDE   100
+  GIRADERECHA 1
 ]</userinput>
 </programlisting>
 
-<programlisting><userinput>; using variables in a color vector
-MAKE "red   100
-MAKE "green 100
-MAKE "blue  100
-SETPENCOLOR [:red :green :blue]      ; error
-SETPENCOLOR (LIST :red :green :blue) ; works</userinput>
+<para>Usando variables en un vector de color:
+<programlisting><userinput>HAZ "rojo  100
+HAZ "verde 100
+HAZ "azul  100
+PONCOLORLAPIZ [:rojo :verde :azul]       ; da un error
+PONCOLORLAPIZ (LISTA :rojo :verde :azul) ; funciona</userinput>
 </programlisting>
+</para>
 
 </listitem>
 </varlistentry>

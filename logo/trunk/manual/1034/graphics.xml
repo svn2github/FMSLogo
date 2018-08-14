@@ -1669,8 +1669,8 @@ MUESTRAPOLIGONO</userinput></programlisting>
 
 <para>
 La tortuga tiene un lápiz para dibujar.
-En cualquier momento el lápiz puede estar «alzado» (con lo que si se mueve la tortuga, no dibuja) o «bajado» (en que caso de que la tortuga se mueva, deja un rastro).
-Si el lápiz está bajado, puedes dibujar en uno de tres modos: LAPIZNORMAL (para que dibuje cuando se mueve la tortuga), GOMA (para que borre lo que se había dibujado en su camino) o LAPIZINVIERTE (para que invierta el estado de cada punto a lo largo del camino de la tortuga).
+En cualquier momento el lápiz puede estar «arriba» (con lo que si se mueve la tortuga, no dibuja) o «abajo» (en que caso de que la tortuga se mueva, deja un rastro).
+Si el lápiz está abajo, puedes dibujar en uno de tres modos: LAPIZNORMAL (para que dibuje cuando se mueve la tortuga), GOMA (para que borre lo que se había dibujado en su camino) o LAPIZINVIERTE (para que invierta el estado de cada punto a lo largo del camino de la tortuga).
 </para>
 
         &command-pendown;

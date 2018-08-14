@@ -1,32 +1,37 @@
 <section id="command-setpensize">
-<title>SETPENSIZE</title>
+<title>PONGROSOR</title>
+<indexterm><primary>PONGROSOR</primary></indexterm>
 <indexterm><primary>SETPENSIZE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETPENSIZE</command> <parameter>size</parameter></synopsis>
+<synopsis><command>PONGROSOR</command> <parameter>tamaño</parameter>
+<command>SETPENSIZE</command> <parameter>tamaño</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Set the pen's thickness.
-The <parameter>size</parameter> input must be either a positive integer that denotes the pen's width or a list of the form [width height].
-When the <parameter>size</parameter> input is a list, SETPENSIZE ignores the height component, but this may change in a future release.
-To ensure that your programs are compatible with future versions of &PRODUCTNAME;, you should either use a height that is the same as the width, or not use the list input at all.
+Pone el grosor del lápiz.
+El argumento <parameter>tamaño</parameter> debe ser un entero positivo que significa el grosor del lápiz o una lista de la forma [anchura altura].
+Cuando el argumento <parameter>tamaño</parameter> es una lista, PONGROSOR ignora la altura, pero esto puede cambiar en una versión futura.
+Para asegurarte de que tus programas son compatibles con versiones futuras de &PRODUCTNAME;, deberías usar una altura que es lo mismo que la anchura o no usar una lista en absoluto.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SETPENSIZE 5
-REPEAT 4 [FORWARD 100 RIGHT 90]</userinput></programlisting>
+<programlisting><userinput>PONGROSOR 5
+REPITE 4 [AVANZA 100 GIRADERECHA 90]</userinput></programlisting>
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

@@ -1,31 +1,36 @@
 <section id="command-pennormal">
-    <title>PENNORMAL</title>
+    <title>LAPIZINICIAL</title>
+<indexterm><primary>LAPIZINICIAL</primary></indexterm>
 <indexterm><primary>PENNORMAL</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PENNORMAL</command></synopsis>
+<synopsis><command>LAPIZINICIAL</command>
+<command>PENNORMAL</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Sets the pen's state to the startup default of down and paint.
+Restaura todas las características del lápiz a los valores iniciales.
+Es decir, pone el lápiz hacia abajo, en el modo «LápizNormal», con un grosor de un píxel, y con el color negro.
 </para>
-
 </listitem>
+
+
 </varlistentry>
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>PENREVERSE
-FORWARD 100
-PENNORMAL
-BACK 100</userinput></programlisting>
+    <programlisting><userinput>LAPIZINVIERTE
+AVANZA 100
+LAPIZINICIAL
+RETROCEDE 100</userinput></programlisting>
 </listitem>
 </varlistentry>
-</variablelist>
 
+</variablelist>
 </section>

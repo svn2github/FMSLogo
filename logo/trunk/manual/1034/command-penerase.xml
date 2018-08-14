@@ -1,39 +1,42 @@
 <section id="command-penerase">
-<title>PENERASE</title>
+<title>GOMA</title>
+<indexterm><primary>GOMA</primary></indexterm>
 <indexterm><primary>PENERASE</primary></indexterm>
 <indexterm><primary>PE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PENERASE</command>
+<synopsis><command>GOMA</command>
+<command>PENERASE</command>
 <command>PE</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Sets the pen's position to "down" and the pen's mode to "erase".
-In erase mode, the pen draws in the color described by <link linkend="command-screencolor">SCREENCOLOR</link>.
-Use <link linkend="command-penpaint">PENPAINT</link> to restore the pen to normal use.
+Pone la posición de lápiz hacia abajo en el modo «Goma».
+En modo «Goma», el lápiz dibuja en el color descrito por <link linkend="command-screencolor">COLORFONDO</link>.
+Usa <link linkend="command-penpaint">LAPIZNORMAL</link> para volver al modo normal.
 </para>
 
 </listitem>
 </varlistentry>
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>FORWARD 100
-PENERASE
-BACK 100</userinput></programlisting>
+<programlisting><userinput>AVANZA 100
+GOMA
+RETROCEDE 100</userinput></programlisting>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-penpaint">PENPAINT</link></member>
-<member><link linkend="command-penreverse">PENREVERSE</link></member>
+<member><link linkend="command-penpaint">LAPIZNORMAL</link></member>
+<member><link linkend="command-penreverse">LAPIZINVIERTE</link></member>
 </simplelist></listitem>
 </varlistentry>
 
