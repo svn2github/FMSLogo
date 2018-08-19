@@ -1,36 +1,40 @@
 <section id="command-penmode">
-    <title>PENMODE</title>
+    <title>LAPIZMODO</title>
+<indexterm><primary>LAPIZMODO</primary></indexterm>
 <indexterm><primary>PENMODE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PENMODE</command></synopsis>
+<synopsis><command>LAPIZMODO</command>
+<command>PENMODE</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs one of the words "paint", "erase", or "reverse" according to the current pen mode.
+Devuelve una de las palabras «LapizNormal», «Goma» o «LapizInvierte», según el modo actual del lápiz.
 </para>
-
 </listitem>
 </varlistentry>
-<varlistentry><term>Example</term>
+
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>PENPAINT
-SHOW PENMODE</userinput>
-paint
-<userinput>PENERASE
-SHOW PENMODE</userinput>
-erase
-<userinput>PENREVERSE
-SHOW PENMODE</userinput>
-reverse</programlisting>
+    <programlisting><userinput>LAPIZNORMAL
+MUESTRA LAPIZMODO</userinput>
+LapizNormal
+<userinput>GOMA
+MUESTRA LAPIZMODO</userinput>
+Goma
+<userinput>LAPIZINVIERTE
+MUESTRA LAPIZMODO</userinput>
+LapizInvierte</programlisting>
 </listitem>
 </varlistentry>
-</variablelist>
 
+
+</variablelist>
 </section>

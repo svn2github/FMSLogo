@@ -1,34 +1,39 @@
 <section id="command-pensize">
-    <title>PENSIZE</title>
+    <title>GROSOR</title>
+<indexterm><primary>GROSOR</primary></indexterm>
 <indexterm><primary>PENSIZE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PENSIZE</command></synopsis>
+<synopsis><command>GROSOR</command>
+<command>PENSIZE</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the size of the pen as a list with two items: [Width Height].
-The width item is ignored by &PRODUCTNAME;.
+Devuelve el grosor del lápiz como una lista que contiene dos enteros [anchura altura].
+La anchura no se usa en &PRODUCTNAME;.
 </para>
-
 </listitem>
 </varlistentry>
-<varlistentry><term>Example</term>
+
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>SETPENSIZE [10 20]
-SHOW PENSIZE</userinput>
-[20 20]
-<userinput>SETPENSIZE [1 1]
-SHOW PENSIZE</userinput>
+    <programlisting><userinput>PONGROSOR [10 20]
+MUESTRA GROSOR</userinput>
+[20 20]</programlisting>
+
+    <programlisting><userinput>PONGROSOR [1 1]
+MUESTRA GROSOR</userinput>
 [1 1]</programlisting>
 </listitem>
 </varlistentry>
-</variablelist>
 
+</variablelist>
 </section>

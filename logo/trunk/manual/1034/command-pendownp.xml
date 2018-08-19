@@ -1,41 +1,46 @@
 <section id="command-pendownp">
-<title>PENDOWNP</title>
+<title>BAJALAPIZ?</title>
+<indexterm><primary>BAJALAPIZ?</primary></indexterm>
+<indexterm><primary>PENDOWN?</primary></indexterm>
 <indexterm><primary>PENDOWNP</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PENDOWNP</command>
+<synopsis><command>BAJALAPIZ?</command>
+<command>PENDOWNP</command>
 <command>PENDOWN?</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs TRUE if the pen is down, FALSE if it's up.
+Devuelve CIERTO si el lápiz está bajado y FALSO, si no lo está.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>PENUP
-SHOW PENDOWNP</userinput>
-false</programlisting>
+<programlisting><userinput>SUBELAPIZ
+MUESTRA BAJALAPIZ?</userinput>
+falso</programlisting>
 
-<programlisting><userinput>PENDOWN
-SHOW PENDOWNP</userinput>
-true</programlisting>
+<programlisting><userinput>BAJALAPIZ
+MUESTRA BAJALAPIZ?</userinput>
+cierto</programlisting>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-penup">PENUP</link></member>
-<member><link linkend="command-pendown">PENDOWN</link></member>
+<member><link linkend="command-penup">SUBELAPIZ</link></member>
+<member><link linkend="command-pendown">BAJALAPIZ</link></member>
 </simplelist></listitem>
 </varlistentry>
 
