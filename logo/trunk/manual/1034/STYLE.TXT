@@ -66,6 +66,11 @@ programmatically.
    color-by-index             - color indexado
    a color name               - un nombre de color
    a color vector             - un vector de color
+   a propery list             - una lista de propiedades
+   bury (buried)              - tapar (tapado)
+   unbury                     - destapar
+   erase                      - borrar
+   a contents list            - una lista de contenidos
 
 8) The following terms are generally translated the same way
 
