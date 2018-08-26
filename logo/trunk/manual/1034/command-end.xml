@@ -1,47 +1,49 @@
 <section id="command-end">
     <title>END</title>
+<indexterm><primary>FIN</primary></indexterm>
 <indexterm><primary>END</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
-<listitem><para>(special form)</para>
-<synopsis><command>END</command></synopsis>
-</listitem>
-</varlistentry>
-
-<varlistentry><term>Description</term>
-<listitem>
-<para>
-END delimits the end of a procedure that is defined with <link linkend="command-to">TO</link>.
-</para>
-
-<para>
-END is not really a command.
-As a result, procedures that manipulate other procedures don't work on END.
-For example, <userinput><link linkend="command-procedurep">PROCEDUREP</link> "END</userinput> outputs FALSE.
-</para>
+<varlistentry><term>Sinopsis</term>
+<listitem><para>(forma especial)</para>
+<synopsis><command>FIN</command>
+<command>END</command></synopsis>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<programlisting><userinput>TO ECHO :times :thing
-  REPEAT :times [PRINT :thing]
-END
+<para>
+FIN delimita el fin de un procedimiento que se define con <link linkend="command-to">PARA</link>.
+</para>
 
-ECHO 2 "Hello</userinput>
-Hello
-Hello
-<userinput>ECHO 3 "Bye</userinput>
-Bye
-Bye
-Bye</programlisting>
+<para>
+FIN no es un procedimiento de verdad.
+Como resultado, los procedimientos que manipulan otros procedimientos no funcionan sobre FIN.
+Por ejemplo, <userinput><link linkend="command-procedurep">PROCEDIMIENTO?</link> "FIN</userinput> devuelve FALSO.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>PARA RECITA :veces :cosa
+  REPITE :veces [ESCRIBE :cosa]
+FIN
+
+RECITA 2 "Hola</userinput>
+Hola
+Hola
+<userinput>RECITA 3 "Adiós</userinput>
+Adiós
+Adiós
+Adiós</programlisting>
 </listitem>
 </varlistentry>
 
 
 </variablelist>
-
 </section>

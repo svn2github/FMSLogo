@@ -1,37 +1,38 @@
 <section id="command-text">
-    <title>TEXT</title>
+    <title>TEXTO</title>
 <indexterm><primary>TEXT</primary></indexterm>
-
+<indexterm><primary>TEXTO</primary></indexterm>
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>TEXT</command> <parameter>procname</parameter></synopsis>
+<synopsis><command>TEXTO</command> <parameter>nombre_de_procedimiento</parameter>
+<command>TEXT</command> <parameter>nombre_de_procedimiento</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the text of the procedure named <parameter>procname</parameter> in the form expected by <link linkend="command-define">DEFINE</link>: a list of lists, the first of which describes the inputs to the procedure and the rest of which are the lines of its body.
-The text does not reflect formatting information used when the procedure was defined, such as continuation lines and extra spaces.
+Devuelve el texto del procedimiento llamado <parameter>nombre_de_procedimiento</parameter> en la forma que se requiere <link linkend="command-define">DEFINE</link>: una lista con sublistas, la primera describe los parámetros del procedimiento y las demás las líneas el cuerpo.
+El texto no refleja el formato en que se editó el procedimiento.
+Por ejemplo, no tiene ni espacios extras ni las tildes de la eñe que representan continuaciones de la línea.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>DEFINE "abc [[a b] [PRINT :a] [PRINT :b]]
-abc "Hello "Bye</userinput>
-Hello
-Bye
-<userinput>SHOW TEXT "abc</userinput>
-[[a b] [PRINT :a] [PRINT :b]]</programlisting>
+<programlisting><userinput>DEFINE "ABC [[a b] [ESCRIBE :a] [ESCRIBE :b]]
+ABC "Hola "Adiós</userinput>
+Hola
+Adiós
+<userinput>MUESTRA TEXTO "ABC</userinput>
+[[a b] [ESCRIBE :a] [ESCRIBE :b]]</programlisting>
 </listitem>
 </varlistentry>
 
 
 </variablelist>
-
 </section>

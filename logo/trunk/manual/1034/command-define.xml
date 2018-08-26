@@ -4,37 +4,37 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>DEFINE</command> <parameter>procname</parameter> <parameter>text</parameter></synopsis>
+<synopsis><command>DEFINE</command> <parameter>nombre_de_procedimiento</parameter> <parameter>texto</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Defines a procedure with name <parameter>procname</parameter> and definition <parameter>text</parameter>.
-If there is already a procedure with the same name, the new definition replaces the old one.
-The <parameter>text</parameter> input must be a list whose members are lists.
-The first member is a list of inputs; it looks like a <link linkend="command-to">TO</link> line without the word TO, without the procedure name, and without the colons before input names.
-In other words, the members of this first sublist are words for the names of required inputs and lists for the names of optional or rest inputs.
-The remaining sublists of the <parameter>text</parameter> input make up the body of the procedure, with one sublist for each instruction line of the body.
-(There is no <link linkend="command-end">END</link> line in the <parameter>text</parameter> input.)
+Define un procedimiento cuyo nombre es <parameter>nombre_de_procedimiento</parameter> y cuya definición es <parameter>texto</parameter>.
+Si existe un procedimiento con el mismo nombre, la nueva definición reemplaza a la antigua.
+El argumento <parameter>texto</parameter> debe ser una lista de sublistas.
+La primera sublista contiene los parámetros y se parece a la línea <link linkend="command-to">PARA</link>, pero sin la palabra PARA, sin el nombre del procedimiento y sin los dos puntos delante de los nombres de los parámetros.
+En otras palabras, los elementos de la primera sublista son palabras que indican los nombres de los parámetros requeridos, seguidos por listas con los nombres de los parámetros opcionales, seguidos por una lista con el nombre del parámetro restante.
+Las demás sublistas del argumento <parameter>texto</parameter> forman el cuerpo del procedimiento, con una sublista por cada línea de instrucción.
+(No hay una línea <link linkend="command-end">FIN</link> en el argumento <parameter>texto</parameter>.)
 </para>
 
 <para>
-It is an error to redefine a primitive procedure unless the variable <link linkend="command-redefp">REDEFP</link> has the value TRUE.
+No se puede redefinir un procedimiento, a no ser que la variable <link linkend="command-redefp">REDEFP</link> tenga el valor CIERTO.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>DEFINE "abc [[a b] [PRINT :a] [PRINT :b]]
-abc "Hello "Bye</userinput>
-Hello
-Bye</programlisting>
+<programlisting><userinput>DEFINE "ABC [[a b] [ESCRIBE :a] [ESCRIBE :b]]
+ABC "Hola "Adiós</userinput>
+Hola
+Adiós</programlisting>
 </listitem>
 </varlistentry>
 

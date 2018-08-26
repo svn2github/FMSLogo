@@ -4,85 +4,83 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>ARITY</command> <parameter>procedurename</parameter></synopsis>
+<synopsis><command>ARITY</command> <parameter>nombre_de_procedimiento</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a list of three numbers: the minimum, default, and maximum number of inputs for the procedure whose name is the input.
-It is an error if there is no such procedure.
-A maximum of -1 means that the number of inputs is unlimited.
+Devuelve una lista de tres enteros: el número mínimo, número por defecto y número máximo de argumentos del procedimiento cuyo nombre es <parameter>nombre_de_procedimiento</parameter>.
+Es un error si no hay un tal procedimiento.
+Un máximo de -1 quiere decir que el número de argumentos es ilimitado.
 </para>
 
 <para>
-The <parameter>procedurename</parameter> input must be a word.
+El argumento <parameter>nombre_de_procedimiento</parameter> debe ser una palabra.
 </para>
 
 <para>
-ARITY is provided to enable introspection.
-For example, if you wanted to write a &GENERICNAME; syntax checker in &PRODUCTNAME;, you would need to know how many inputs each procedure accepts.
+Se proporciona ARITY para habilitar introspección de tipos.
+Por ejemplo, si quieres escribir un programa en &PRODUCTNAME; que revisa el sintaxis de otro programa de &PRODUCTNAME;, necesitarías saber cuantos argumentos toma cada procedimiento.
 </para>
 
 <para>
-In some cases, the ARITY may output seemingly incorrect results.
-For example the <link linkend="command-for">FOR</link> command is documented to accept exactly two inputs, but ARITY outputs that it can accept 7.
-This is because FOR is library command that, for implementation convenience, accepts additional, undocumented inputs that have default values, and invokes itself recursively.
-This does not mean that you should provide more than two inputs, just that &PRODUCTNAME; does not complain if you do.
-Wherever ARITY and the documentation appear to be in conflict, follow the documentation.
+En algunos casos, ARITY puede devolver resultados aparentemente incorrectos.
+Por ejemplo, la documentación para <link linkend="command-for">DESDE</link> dice que acepta exactamente dos argumentos, pero ARITY devuelve que puede aceptar siete.
+La razón es que DESDE es un procedimiento del directorio de biblioteca que, por razones de conveniencia de implementación, acepta argumentos adicionales y no documentados que tienen valores por defecto y que DESDE se ejecuta a sí mismo recursivamente.
+Esto no quiere decir que debes proporcionar más que dos argumentos, solo que &PRODUCTNAME; no queje si lo hagas.
+Dondequiera que ARITY contradice a la documentación, confía en la documentación.
 </para>
 
 <para>
-It is an error for the <parameter>procedurename</parameter> input to be the name of a procedure with a special form like <link linkend="command-to">TO</link>.
-These procedures cannot be called in the normal way and their inputs are processed in a special manner.
-As such, the notion of minimum, default, or maximum inputs is irrelevant.
+Es un error si el argumento <parameter>nombre_de_procedimiento</parameter> es el nombre de un procedimiento con una forma especial, como <link linkend="command-to">PARA</link>.
+No se puede ejecutar estos procedimientos de una manera normal y sus argumentos son procesados de una manera especial.
+Entonces, la noción de un mínimo, por defecto o máximo número de argumentos no es relevante.
 </para>
-
 
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
 <para>
-The following example shows ARITY used on some well-known primitives.
-<programlisting><userinput>SHOW ARITY "FORWARD</userinput>
+El ejemplo siguiente demuestra ARITY usado con unas primitivas bien conocidas.
+<programlisting><userinput>MUESTRA ARITY "AVANZA</userinput>
 [1 1 1]
 
-<userinput>SHOW ARITY "WORD</userinput>
+<userinput>MUESTRA ARITY "PALABRA</userinput>
 [0 2 -1]
 </programlisting>
 </para>
 
 <para>
-The following example shows ARITY on a user-defined procedure that has one required input but accepts an infinite number of inputs.
-<programlisting><userinput>TO MYPROC.WITHREST :required [:rest]
-END
+El ejemplo siguiente demuestra ARITY usado con un procedimiento que tiene un parámetro requerido, pero que acepta un infinito número de argumentos.
+<programlisting><userinput>PARA PROCEDIMIENTO.CON.RESTANTE :requerido [:restante]
+FIN
 
-SHOW ARITY "MYPROC.WITHREST</userinput>
+MUESTRA ARITY "PROCEDIMIENTO.CON.RESTANTE</userinput>
 [1 1 -1]
 </programlisting>
 </para>
 
 <para>
-This following example shows ARITY on a user-defined procedure that has an optional input which defaults to "foo if not given.
-<programlisting><userinput>TO MYPROC.WITHDEFAULT :required [:optional "foo] 1
-END
+El ejemplo siguiente demuestra ARITY usado con un procedimiento que tiene un parámetro optativo que toma por defecto el valor "foo.
+<programlisting><userinput>PARA PROCEDIMIENTO.CON.OPTATIVO :requerido [:optativo "foo] 1
+FIN
 
-SHOW ARITY "MYPROC.WITHDEFAULT</userinput>
+MUESTRA ARITY "PROCEDIMIENTO.CON.OPTATIVO</userinput>
 [1 1 2]
 </programlisting>
 </para>
 
-
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>
