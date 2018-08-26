@@ -31,8 +31,8 @@ It is an error to redefine a primitive procedure unless the variable <link linke
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>DEFINE "abc [[a b] [PRINT :a] [PRINT :b]]
-abc "Hello "Bye</userinput>
+<programlisting><userinput>DEFINE "ABC [[a b] [PRINT :a] [PRINT :b]]
+ABC "Hello "Bye</userinput>
 Hello
 Bye</programlisting>
 </listitem>

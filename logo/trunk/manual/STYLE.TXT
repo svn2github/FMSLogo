@@ -29,3 +29,6 @@ programmatically.
    sample as a comment).
    This is violated in many places and all of them should be fixed.
    Ideally this would be enforced by check-manual.pl.
+
+6) Unless the specific context prevents it, procedure names are given in
+   all caps.  Variable names and property list names are given lowercase.

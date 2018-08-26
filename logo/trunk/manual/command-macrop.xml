@@ -27,11 +27,11 @@ Outputs FALSE, otherwise.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>SHOW MACROP "abc</userinput>
+<programlisting><userinput>SHOW MACROP "ABC</userinput>
 false
 
-<userinput>.DEFMACRO "abc [[a b] [print :a] [print :b]]
-SHOW MACROP "abc</userinput>
+<userinput>.DEFMACRO "ABC [[a b] [PRINT :a] [PRINT :b]]
+SHOW MACROP "ABC</userinput>
 true
 </programlisting>
 </listitem>

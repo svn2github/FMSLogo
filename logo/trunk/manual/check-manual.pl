@@ -233,6 +233,10 @@ $Exceptions{'command-copydef.xml'}{'allcaps'}{'WELCOME'}  = 1;
 
 $Exceptions{'command-crossmap.xml'}{'logo'}               = 1;
 
+$Exceptions{'command-define.xml'}{'allcaps'}{'ABC'}       = 1;
+
+$Exceptions{'command-definedp.xml'}{'allcaps'}{'ABC'}     = 1;
+
 $Exceptions{'command-dialogcreate.xml'}{'allcaps'}{'MYSETUP'} = 1;
 $Exceptions{'command-dialogcreate.xml'}{'allcaps'}{'OK'}      = 1;
 
@@ -401,6 +405,8 @@ $Exceptions{'command-localmake.xml'}{'allcaps'}{'SAYHELLO'} = 1;
 
 $Exceptions{'command-logoversion.xml'}{'logo'} = 1;
 
+$Exceptions{'command-macrop.xml'}{'allcaps'}{'ABC'}    = 1;
+
 $Exceptions{'command-map.xml'}{'allcaps'}{'?REST'}     = 1;
 
 $Exceptions{'command-map.se.xml'}{'allcaps'}{'?REST'}  = 1;
@@ -428,6 +434,8 @@ $Exceptions{'command-minimize.xml'}{'allcaps'}{'HIDEANDSHOW'} = 1;
 
 $Exceptions{'command-namelist.xml'}{'allcaps'}{'BAR'} = 1;
 $Exceptions{'command-namelist.xml'}{'allcaps'}{'FOO'} = 1;
+
+$Exceptions{'command-namep.xml'}{'allcaps'}{'ABC'}    = 1;
 
 $Exceptions{'command-names.xml'}{'allcaps'}{'BAR'} = 1;
 $Exceptions{'command-names.xml'}{'allcaps'}{'FOO'} = 1;
@@ -498,6 +506,10 @@ $Exceptions{'command-portmode.xml'}{'allcaps'}{'DOS'}    = 1;
 $Exceptions{'command-portmode.xml'}{'allcaps'}{'MODE'}   = 1;
 $Exceptions{'command-portmode.xml'}{'allcaps'}{'PARITY'} = 1;
 $Exceptions{'command-portmode.xml'}{'allcaps'}{'SPEED'}  = 1;
+
+$Exceptions{'command-pot.xml'}{'allcaps'}{'ABC'}  = 1;
+
+$Exceptions{'command-pots.xml'}{'allcaps'}{'ABC'} = 1;
 
 $Exceptions{'command-polyend.xml'}{'allcaps'}{'SQUARE'} = 1;
 
@@ -590,6 +602,8 @@ $Exceptions{'command-stop.xml'}{'allcaps'}{'MYPROGRAM'} = 1;
 $Exceptions{'command-tag.xml'}{'allcaps'}{'STATES'} = 1;
 
 $Exceptions{'command-test.xml'}{'allcaps'}{'MYTEST'} = 1;
+
+$Exceptions{'command-text.xml'}{'allcaps'}{'ABC'}  = 1;
 
 $Exceptions{'command-thing.xml'}{'allcaps'}{'FOO'} = 1;
 

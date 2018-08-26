@@ -24,16 +24,16 @@ For property lists, the entire list is shown on one line instead of as a series 
 <listitem>
 <programlisting><userinput>PPROP "plist1 "p1 1
 PPROP "plist1 "p2 2
-DEFINE "abc [[a b] [PRINT :a] [PRINT :b]]
+DEFINE "ABC [[a b] [PRINT :a] [PRINT :b]]
 MAKE "var 32
 
-POT [[abc] [var] [plist1]]</userinput>
-to abc :a :b
+POT [[ABC] [var] [plist1]]</userinput>
+to ABC :a :b
 Make "var 32
 Plist "plist1 = [p2 2 p1 1]
 
 <userinput>POT PROCEDURES</userinput>
-to abc :a :b
+to ABC :a :b
 </programlisting>
 </listitem>
 </varlistentry>

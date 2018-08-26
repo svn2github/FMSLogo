@@ -30,8 +30,8 @@ Outputs TRUE if the input is the name of a user-defined procedure or a library p
 false
 </programlisting>
 
-<programlisting><userinput>DEFINE "abc [[a b] [print :a] [print :b]]
-SHOW DEFINEDP "abc</userinput>
+<programlisting><userinput>DEFINE "ABC [[a b] [PRINT :a] [PRINT :b]]
+SHOW DEFINEDP "ABC</userinput>
 true
 </programlisting>
 </listitem>

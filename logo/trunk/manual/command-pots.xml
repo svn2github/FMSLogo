@@ -22,7 +22,7 @@ POTS abbreviates <userinput><link linkend="command-pot">POT</link> <link linkend
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>DEFINE "abc [[a b] [PRINT :a] [PRINT :b]]
+<programlisting><userinput>DEFINE "ABC [[a b] [PRINT :a] [PRINT :b]]
 POTS</userinput>
 to abc :a :b</programlisting>
 </listitem>
