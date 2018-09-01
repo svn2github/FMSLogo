@@ -4,51 +4,51 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>LOCAL</command> <parameter>varname</parameter>
-<command>LOCAL</command> <parameter>varnamelist</parameter>
-(<command>LOCAL</command> <parameter>varname1</parameter> <parameter>varname2</parameter> <parameter>...</parameter>)</synopsis>
+<synopsis><command>LOCAL</command> <parameter>nombre_de_variable</parameter>
+<command>LOCAL</command> <parameter>lista_de_nombres</parameter>
+(<command>LOCAL</command> <parameter>nombre_de_variable1</parameter> <parameter>nombre_de_variable2</parameter> <parameter>...</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Creates variables that are local to the currently running procedure.
-LOCAL accepts as input one or more words, or a list of words.
-A local variable is created for each of these words, with that word as its name.
-&GENERICNAME; variables follow dynamic scope rules; a variable that is local to a procedure is available to any sub procedure invoked by that procedure and may shadow a global variable by the same name.
-The variables created by LOCAL have no initial value; they must be assigned a value (for example, with <link linkend="command-make">MAKE</link>) before the procedure attempts to read their value.
+Crea variables que son locales al procedimiento en que se encuentran.
+LOCAL acepta como argumentos una o más palabras, o una lista de palabras.
+Se crea una variable por cada una de los argumentos, con el nombre de esa palabra.
+Las variables en &GENERICNAME; tienen un ámbito dinámico; una variable local en un procedimiento sólo está disponible en los subprocedimientos ejecutados por ese procedimiento.
+Las variables creadas con LOCAL no tienen valor inicial; les debes asignar un valor (por ejemplo, con <link linkend="command-make">HAZ</link>) antes de que tu programa intente leer su valor.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>TO FOO
-  MAKE "bar 1
-  PRINT :bar
-END
+<programlisting><userinput>PARA SIN.LOCAL
+  HAZ "bar 1
+  ESCRIBE :bar
+FIN
 
-FOO</userinput>
+SIN.LOCAL</userinput>
 1
 
-<userinput>SHOW :bar</userinput>
+<userinput>MUESTRA :bar</userinput>
 1
 
-<userinput>TO ABC
+<userinput>PARA CON.LOCAL
   LOCAL "xyz
-  MAKE "xyz 1
-  PRINT :xyz
-END
+  HAZ "xyz 1
+  ESCRIBE :xyz
+FIN
 
-ABC</userinput>
+CON.LOCAL</userinput>
 1
 
-<userinput>SHOW :xyz</userinput>
-xyz has no value
+<userinput>MUESTRA :xyz</userinput>
+xyz no tiene un valor todavía
 </programlisting>
 </listitem>
 </varlistentry>

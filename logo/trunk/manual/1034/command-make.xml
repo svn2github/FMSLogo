@@ -1,32 +1,35 @@
 <section id="command-make">
-    <title>MAKE</title>
+    <title>HAZ</title>
+<indexterm><primary>HAZ</primary></indexterm>
 <indexterm><primary>MAKE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>MAKE</command> <parameter>varname</parameter> <parameter>value</parameter></synopsis>
+<synopsis><command>HAZ</command> <parameter>nombre_de_variable</parameter> <parameter>valor</parameter>
+<command>MAKE</command> <parameter>nombre_de_variable</parameter> <parameter>valor</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
-<para>
-Command that assigns the value <parameter>value</parameter> to the variable named <parameter>varname</parameter>, which must be a word.
-Variable names are case-insensitive.
-If a variable with the same name already exists, the value of that variable is changed.
-If not, a new global variable is created.
+<para> 
+Asigna el valor indicado en <parameter>valor</parameter> a la variable <parameter>nombre_de_variable</parameter>, que debe ser una palabra.
+Los nombres de variables son insensible a las mayúsculas y minúsculas.
+Si la variable ya existe, cambia su valor.
+Si no, se crea una nueva variable global.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "foo [Hello how are you]
-SHOW :foo</userinput>
-[Hello how are you]
+<programlisting><userinput>HAZ "foo [Hola, cómo estás]
+MUESTRA :foo</userinput>
+[Hola, cómo estás]
 </programlisting>
 </listitem>
 </varlistentry>

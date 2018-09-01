@@ -1,38 +1,42 @@
 <section id="command-thing">
-    <title>THING</title>
+    <title>VALOR</title>
+<indexterm><primary>VALOR</primary></indexterm>
 <indexterm><primary>THING</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>THING</command> <parameter>varname</parameter>
-:<parameter>varname</parameter></synopsis>
+<synopsis><command>VALOR</command> <parameter>nombre_de_variable</parameter>
+<command>THING</command> <parameter>nombre_de_variable</parameter>
+:<parameter>nombre_de_variable</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the value of the variable whose name is the input word.
-If there is more than one such variable, the innermost local variable of that name is chosen.
+Devuelve el valor de una variable cuyo nombre es el argumento.
+Si hay más que una variable con este nombre, devuelve el valor de la variable más al interior.
 </para>
 
 <para>
-The colon notation for showing variables is an abbreviation for
-<programlisting><userinput>THING "</userinput></programlisting>
-So <userinput>:FOO</userinput> is the same as <userinput>(THING "FOO)</userinput>.
+La notación con dos puntos (:) es una abreviatura de
+<programlisting><userinput>VALOR "</userinput></programlisting>
+Así <userinput>:FOO</userinput> equivale a <userinput>(VALOR "FOO)</userinput>.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "FOO [Hello how are you]
-SHOW THING "FOO</userinput>
-[Hello how are you]
-<userinput>SHOW :FOO</userinput>
-[Hello how are you]
+<programlisting><userinput>HAZ "FOO [Hola, cómo estás]
+MUESTRA VALOR "FOO</userinput>
+[Hola, cómo estás]
+<userinput>MUESTRA :FOO</userinput>
+[Hola, cómo estás]
 </programlisting>
 </listitem>
 </varlistentry>
