@@ -1,53 +1,55 @@
 <section id="command-pprop">
-    <title>PPROP</title>
+    <title>PONPROP</title>
+<indexterm><primary>PONPROP</primary></indexterm>
 <indexterm><primary>PPROP</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PPROP</command> <parameter>plistname</parameter> <parameter>propertyname</parameter> <parameter>value</parameter></synopsis>
+<synopsis><command>PONPROP</command> <parameter>nombre_de_lista</parameter> <parameter>nombre_de_propiedad</parameter> <parameter>valor</parameter>
+<command>PPROP</command> <parameter>nombre_de_lista</parameter> <parameter>nombre_de_propiedad</parameter> <parameter>valor</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Adds a property to the property list named <parameter>plistname</parameter>.
-The property is named <parameter>propertyname</parameter> and has the value <parameter>value</parameter>.
-If no property list named <parameter>plistname</parameter> exists, then it is created.
-If the property named <parameter>propertyname</parameter> already has a value in the property list, then the value is replaced.
+Añade una propiedad a la lista de propiedades llamada <parameter>nombre_de_lista</parameter>.
+La propiedad se llama <parameter>nombre_de_propiedad</parameter> y tiene un valor de <parameter>valor</parameter>.
+Si no existe una lista de propiedades llamada <parameter>nombre_de_lista</parameter>, entonces se la crea.
+Si una propiedad llamada <parameter>nombre_de_propiedad</parameter> ya existe en la lista, entonces se remplaza el valor.
 </para>
 
 <para>
-The <parameter>plistname</parameter> input must be a word.
+El argumento <parameter>nombre_de_lista</parameter> debe ser una palabra.
 </para>
 
 <para>
-The <parameter>propertyname</parameter> input may be word, list, or array.
-Property names are compared in the same manner as <link linkend="command-equalp">EQUALP</link> compares its inputs.
+El argumento <parameter>nombre_de_propiedad</parameter> puede ser una palabra, una lista o un vector.
+Los nombres de propiedades se comparan de la misma manera que <link linkend="command-equalp">IGUALES?</link> compara sus argumentos.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>PPROP "plist1 "p1   1
-PPROP "plist1 "p2   2
-PPROP "plist2 "p1   10
-PPROP "plist2 "p2   20
-PPROP "plist2 [p 3] 30
+<programlisting><userinput>PONPROP "lprop1 "p1   1
+PONPROP "lprop1 "p2   2
+PONPROP "lprop2 "p1   10
+PONPROP "lprop2 "p2   20
+PONPROP "lprop2 [p 3] 30
 
-SHOW GPROP "plist1 "p1</userinput>
+MUESTRA PROPIEDAD "lprop1 "p1</userinput>
 1
-<userinput>SHOW GPROP "plist1 "p2</userinput>
+<userinput>MUESTRA PROPIEDAD "lprop1 "p2</userinput>
 2
-<userinput>SHOW GPROP "plist2 "p1</userinput>
+<userinput>MUESTRA PROPIEDAD "lprop2 "p1</userinput>
 10
-<userinput>SHOW GPROP "plist2 "p2</userinput>
+<userinput>MUESTRA PROPIEDAD "lprop2 "p2</userinput>
 20
-<userinput>SHOW GPROP "plist2 [p 3]</userinput>
+<userinput>MUESTRA PROPIEDAD "lprop2 [p 3]</userinput>
 30
 </programlisting>
 </listitem>
@@ -55,5 +57,4 @@ SHOW GPROP "plist1 "p1</userinput>
 
 
 </variablelist>
-
 </section>
