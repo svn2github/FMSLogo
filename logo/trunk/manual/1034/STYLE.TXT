@@ -71,6 +71,7 @@ programmatically.
    unbury                     - destapar
    erase                      - borrar
    a contents list            - una lista de contenidos
+   logolib                    - la bibioteca (de logo)
 
 8) The following terms are generally translated the same way
 
