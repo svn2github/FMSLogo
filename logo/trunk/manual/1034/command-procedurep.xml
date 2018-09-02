@@ -1,45 +1,49 @@
 <section id="command-procedurep">
-    <title>PROCEDUREP</title>
+    <title>PROCEDIMIENTO?</title>
+<indexterm><primary>PROCEDIMIENTO?</primary></indexterm>
 <indexterm><primary>PROCEDUREP</primary></indexterm>
+<indexterm><primary>PROCEDURE?</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PROCEDUREP</command> <parameter>name</parameter>
-<command>PROCEDURE?</command> <parameter>name</parameter></synopsis>
-</listitem>
-</varlistentry>
-
-<varlistentry><term>Description</term>
-<listitem>
-<para>
-Outputs TRUE if the input is the name of a procedure, outputs FALSE otherwise.
-</para>
-
-<para>
-<parameter>name</parameter> must be a word.
-</para>
+<synopsis><command>PROCEDIMIENTO?</command> <parameter>nombre</parameter>
+<command>PROCEDUREP</command> <parameter>nombre</parameter>
+<command>PROCEDURE?</command> <parameter>nombre</parameter></synopsis>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<programlisting><userinput>MAKE "foo 1
-TO BAR
-END
+<para>
+Devuelve CIERTO si el argumento es el nombre de un procedimiento, si no devuelve FALSO.
+</para>
 
-SHOW PROCEDUREP "foo</userinput>
-false
+<para>
+<parameter>nombre</parameter> debe ser una palabra.
+</para>
+</listitem>
+</varlistentry>
 
-<userinput>SHOW PROCEDUREP "bar</userinput>
-true
+
+
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>HAZ "foo 1
+PARA BAR
+FIN
+
+MUESTRA PROCEDIMIENTO? "foo</userinput>
+falso
+
+<userinput>MUESTRA PROCEDIMIENTO? "BAR</userinput>
+cierto
 </programlisting>
 </listitem>
 </varlistentry>
 
 
 </variablelist>
-
 </section>

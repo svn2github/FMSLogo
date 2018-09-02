@@ -1,43 +1,43 @@
 <section id="command-macrop">
-    <title>MACROP</title>
+    <title>MACRO?</title>
+<indexterm><primary>MACRO?</primary></indexterm>
 <indexterm><primary>MACROP</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>MACROP</command> <parameter>name</parameter>
-<command>MACRO?</command> <parameter>name</parameter></synopsis>
+<synopsis><command>MACRO?</command> <parameter>nombre</parameter>
+<command>MACROP</command> <parameter>nombre</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs TRUE if the input is the name of a user-defined macro or a library macro.
-Outputs FALSE, otherwise.
+Devuelve CIERTO si el argumento es el nombre de una macro definida por el usuario o proviene de la biblioteca de &GENERICNAME;.
+Devuelve FALSO, si no.
 </para>
 
 <para>
-<parameter>name</parameter> must be a word.
+<parameter>nombre</parameter> debe ser una palabra.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW MACROP "abc</userinput>
-false
+<programlisting><userinput>MUESTRA MACRO? "ABC</userinput>
+falso
 
-<userinput>.DEFMACRO "abc [[a b] [print :a] [print :b]]
-SHOW MACROP "abc</userinput>
-true
+<userinput>.DEFMACRO "ABC [[a b] [ESCRIBE :a] [ESCRIBE :b]]
+MUESTRA MACRO? "ABC</userinput>
+cierto
 </programlisting>
 </listitem>
 </varlistentry>
 
 
 </variablelist>
-
 </section>

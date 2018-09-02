@@ -1,43 +1,47 @@
 <section id="command-namep">
-    <title>NAMEP</title>
+    <title>VAR?</title>
+<indexterm><primary>VAR?</primary></indexterm>
 <indexterm><primary>NAMEP</primary></indexterm>
+<indexterm><primary>NAME?</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>NAMEP</command> <parameter>name</parameter>
-<command>NAME?</command> <parameter>name</parameter></synopsis>
-</listitem>
-</varlistentry>
-
-<varlistentry><term>Description</term>
-<listitem>
-<para>
-Outputs TRUE if the input is the name of a variable.  Outputs FALSE, otherwise.
-</para>
-
-<para>
-<parameter>name</parameter> must be a word.
-</para>
+<synopsis><command>VAR?</command> <parameter>nombre</parameter>
+<command>NAMEP</command> <parameter>nombre</parameter>
+<command>NAME?</command> <parameter>nombre</parameter></synopsis>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<programlisting><userinput>DEFINE "abc [[a b] [print :a] [print :b]]
-MAKE "xyz 1
-SHOW NAMEP "abc</userinput>
-false
+<para>
+Devuelve CIERTO si el argumento es el nombre de una variable.
+Devuelve FALSO, si no.
+</para>
 
-<userinput>SHOW NAMEP "xyz</userinput>
-true
+<para>
+<parameter>nombre</parameter> debe ser una palabra.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>DEFINE "ABC [[a b] [ESCRIBE :a] [ESCRIBE :b]]
+HAZ "xyz 1
+MUESTRA VAR? "ABC</userinput>
+falso
+
+<userinput>MUESTRA VAR? "xyz</userinput>
+cierto
 </programlisting>
 </listitem>
 </varlistentry>
 
 
 </variablelist>
-
 </section>

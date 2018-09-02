@@ -1,38 +1,42 @@
 <section id="command-definedp">
-    <title>DEFINEDP</title>
+    <title>DEFINIDO?</title>
+<indexterm><primary>DEFINIDO?</primary></indexterm>
 <indexterm><primary>DEFINEDP</primary></indexterm>
+<indexterm><primary>DEFINED?</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>DEFINEDP</command> <parameter>name</parameter>
-<command>DEFINED?</command> <parameter>name</parameter></synopsis>
-</listitem>
-</varlistentry>
-
-<varlistentry><term>Description</term>
-<listitem>
-<para>
-Outputs TRUE if the input is the name of a user-defined procedure or a library procedure.
-</para>
-
-<para>
-<parameter>name</parameter> must be a word.
-</para>
+<synopsis><command>DEFINIDO?</command> <parameter>nombre</parameter>
+<command>DEFINEDP</command> <parameter>nombre</parameter>
+<command>DEFINED?</command> <parameter>nombre</parameter></synopsis>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<programlisting><userinput>SHOW DEFINEDP "forward</userinput>
-false
+<para>
+Devuelve CIERTO si el argumento es el nombre de un procedimiento definido por el usuario o proviene de la biblioteca de &GENERICNAME;.
+</para>
+
+<para>
+<parameter>nombre</parameter> debe ser una palabra.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>MUESTRA DEFINIDO? "AVANZA</userinput>
+falso
 </programlisting>
 
-<programlisting><userinput>DEFINE "abc [[a b] [print :a] [print :b]]
-SHOW DEFINEDP "abc</userinput>
-true
+<programlisting><userinput>DEFINE "ABC [[a b] [ESCRIBE :a] [ESCRIBE :b]]
+MUESTRA DEFINIDO? "ABC</userinput>
+cierto
 </programlisting>
 </listitem>
 </varlistentry>

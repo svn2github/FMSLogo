@@ -1,38 +1,41 @@
 <section id="command-proplistp">
-<title>PROPLISTP</title>
+<title>LPROP?</title>
+<indexterm><primary>LPROP?</primary></indexterm>
 <indexterm><primary>PROPLISTP</primary></indexterm>
+<indexterm><primary>PROPLIST?</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PROPLISTP</command> <parameter>name</parameter>
-<command>PROPLIST?</command> <parameter>name</parameter></synopsis>
+<synopsis><command>LPROP?</command> <parameter>nombre</parameter>
+<command>PROPLISTP</command> <parameter>nombre</parameter>
+<command>PROPLIST?</command> <parameter>nombre</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs TRUE if the input is the name of a property list, outputs FALSE otherwise.
+Devuelve CIERTO si el argumento es el nombre de una lista de propiedades, devuelve FALSO si no.
 </para>
 
 <para>
-The <parameter>name</parameter> input must be a word.
+<parameter>nombre</parameter> debe ser una palabra.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW PROPLISTP "Helium</userinput>
-false
+<programlisting><userinput>MUESTRA LPROP? "Helio</userinput>
+falso
 
-<userinput>PPROP "Helium "Symbol       "He</userinput>
-<userinput>PPROP "Helium "AtomicNumber 2</userinput>
-<userinput>SHOW PROPLISTP "Helium</userinput>
-true
+<userinput>PONPROP "Helio "Símbolo       "He</userinput>
+<userinput>PONPROP "Helio "NúmeroAtómico 2</userinput>
+<userinput>MUESTRA LPROP? "Helio</userinput>
+cierto
 </programlisting>
 </listitem>
 </varlistentry>
