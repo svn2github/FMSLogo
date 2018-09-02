@@ -19,7 +19,7 @@ Cambia el valor de todos los elementos de una lista, menos el primero, por un nu
 </para>
 
 <para>
-La entrada <parameter>lista</parameter> debe ser una lista y no puede ser vaciá.
+El argumento <parameter>lista</parameter> debe ser una lista y no puede ser la lista vaciá.
 </para>
 
 <para>

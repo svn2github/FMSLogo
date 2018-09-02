@@ -15,7 +15,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Lee del puerto abierto y escribe los datos en la entrada <parameter>vector</parameter>.
+Lee del puerto abierto y escribe los datos en el argumento <parameter>vector</parameter>.
 Intentará leer hasta <parameter>total</parameter> bytes que estén disponibles.
 Escribe los bytes a <parameter>vector</parameter> como enteros pequeños (entre -128 y 127).
 Devuelve el número de bytes leído.

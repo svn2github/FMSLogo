@@ -16,7 +16,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Dibuja una parte o la totalidad de una elipse, según el rumbo y posición de la tortuga y las entradas.
+Dibuja una parte o la totalidad de una elipse, según el rumbo y posición de la tortuga y los argumentos.
 ARCOELIPSE no mueve la tortuga.
 La posición de la tortuga quede en el centro de la elipse.
 El arco de la elipse empieza al lugar descrito por <parameter>principioángulo</parameter> y traza un ángulo igual a <parameter>ángulo</parameter> en sentido horario.
@@ -24,13 +24,13 @@ El arco de la elipse empieza al lugar descrito por <parameter>principioángulo</
 
 <para>
 El tamaño depende de los valores de <parameter>medioeje.al.través</parameter> y <parameter>medioeje.en.línea</parameter>.
-La entrada <parameter>medioeje.al.través</parameter> es la distancia desde la tortuga hasta la elipse en el rumbo perpendicular al rumbo actual de la tortuga.
-La entrada <parameter>medioeje.en.línea</parameter> es la distancia desde la tortuga hasta la elipse en el rumbo actual de la tortuga.
+El argumento <parameter>medioeje.al.través</parameter> es la distancia desde la tortuga hasta la elipse en el rumbo perpendicular al rumbo actual de la tortuga.
+El argumento <parameter>medioeje.en.línea</parameter> es la distancia desde la tortuga hasta la elipse en el rumbo actual de la tortuga.
 Por consiguiente, el rumbo actual de la tortuga determina la orientación de la elipse.
 </para>
 
 <para>
-La entrada <parameter>principioángulo</parameter> es relativo al rumbo de la tortuga.
+El argumento <parameter>principioángulo</parameter> es relativo al rumbo de la tortuga.
 Un <parameter>principioángulo</parameter> de 0 indica que el arco elíptico empieza detrás de la tortuga.
 Se mide el <parameter>principioángulo</parameter> en sentido horario, entonces un valor de 90 indica que arco elíptico empieza a la izquierda de la tortuga (90 grados en el sentido del reloj de detrás de la tortuga).
 </para>

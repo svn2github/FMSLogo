@@ -15,8 +15,8 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve CIERTO si las dos entradas <parameter>cosa1</parameter> y <parameter>cosa2</parameter> son la misma cosa, así que ejecutando un mutador sobre solo una de las entradas cambiaría las dos.
-En otro caso, devuelve FALSO aunque las entradas tengan valores iguales.
+Devuelve CIERTO si los dos argumentos <parameter>cosa1</parameter> y <parameter>cosa2</parameter> son la misma cosa, así que ejecutando un mutador sobre solo uno de los argumentos cambiaría las dos.
+En otro caso, devuelve FALSO aunque los argumentos tengan valores iguales.
 </para>
 
 <para>

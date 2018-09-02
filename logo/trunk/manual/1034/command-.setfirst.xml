@@ -20,7 +20,7 @@ Cambia el valor del primer elemento de <parameter>lista</parameter> por un nuevo
 </para>
 
 <para>
-La entrada <parameter>lista</parameter> debe ser una lista y no puede ser vaciá.
+El argumento <parameter>lista</parameter> debe ser una lista y no puede ser la lista vaciá.
 </para>
 
 <para>

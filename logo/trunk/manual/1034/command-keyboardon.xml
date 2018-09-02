@@ -47,7 +47,7 @@ Esto incluye ignorar a las teclas de dirección, las de función, las de Mayús,
 </para>
 
 <para>
-Por otro lado, cuando HABILITATECLADO tiene dos entradas, <parameter>tecla_pulsada</parameter> y <parameter>tecla_liberada</parameter>, captura casi todos los eventos del teclado, incluido eventos por las teclas de dirección, las de función, las de Mayús, y las de Ctrl.
+Por otro lado, cuando HABILITATECLADO tiene dos argumentos, <parameter>tecla_pulsada</parameter> y <parameter>tecla_liberada</parameter>, captura casi todos los eventos del teclado, incluido eventos por las teclas de dirección, las de función, las de Mayús, y las de Ctrl.
 Adicionalmente, cada presión de tecla genera una ejecución diferente de <parameter>tecla_pulsada</parameter>.
 Por lo tanto, un <keycap>A</keycap> mayúscula puede generar los eventos del teclado siguiente: la tecla <keycap>Mayús</keycap> presionada, seguido por la tecla <keycap>A</keycap> presionada, seguido por la tecla <keycap>A</keycap> liberada, seguido por la tecla <keycap>Mayús</keycap> liberada.
 </para>
@@ -59,7 +59,7 @@ Por lo tanto, un <keycap>A</keycap> mayúscula puede generar los eventos del tec
 <listitem>
 
 <para>
-Usando HABILITATECLADO con un solo entrada para escribir caracteres en cuanto están presionados:
+Usando HABILITATECLADO con un solo argumento para escribir caracteres en cuanto están presionados:
 <programlisting><userinput>HABILITATECLADO [ESCRIBE CAR LEETECLA]
 PANTALLAGRAFICA
 PONFOCO [&PRODUCTNAME;]</userinput>
@@ -75,7 +75,7 @@ INHABILITATECLADO</userinput>
 </para>
 
 <para>
-Usando HABILITATECLADO con dos entradas para hacer cosas solo cuando teclas están presionadas:
+Usando HABILITATECLADO con dos argumentos para hacer cosas solo cuando teclas están presionadas:
 <programlisting><userinput>PARA TECLAPRESIONADA
   SI LEETECLA = ASCII "O [ OCULTATORTUGA ]
   SI LEETECLA = ASCII "F [ SI COLORFONDO &lt;> 1 [PONCOLORFONDO 1] ]

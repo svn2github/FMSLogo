@@ -20,7 +20,7 @@ Pone el tipo de letra que usa el comando <link linkend="command-label">ROTULO</l
 </para>
 
 <para>
-La entrada es una lista con una estructura que describe completamente un tipo de letra.
+El argumento es una lista con una estructura que describe completamente un tipo de letra.
 Los tipos disponibles dependen de tu sistema operativo.
 &PRODUCTNAME; tiene dos formas de especificar el tipo deseado.
 Una es de ejecutar PONTIPO en tus programas.

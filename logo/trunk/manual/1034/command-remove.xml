@@ -18,7 +18,7 @@
 Devuelve una nueva cosa que es igual a <parameter>cosas</parameter> con todos los miembros igual a <parameter>cosa_a_quitar</parameter> eliminado.
 </para>
 <para>
-La entrada <parameter>cosas</parameter> debe ser o una lista o una palabra.
+El argumento <parameter>cosas</parameter> debe ser o una lista o una palabra.
 </para>
 <para>
 Recordar que los miembros de una palabra son caracteres singulares.

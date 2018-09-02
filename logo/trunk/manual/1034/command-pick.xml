@@ -15,7 +15,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve un elemento escogido al azar de un objeto de entrada.
+Devuelve un elemento escogido al azar del argumento.
 </para>
 </listitem>
 </varlistentry>

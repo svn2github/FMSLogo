@@ -19,8 +19,8 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve el producto de los valores numéricos de las entradas.
-Si no hay entradas, entonces PRODUCTO devuelve 1.
+Devuelve el producto de los valores numéricos de los argumentos.
+Si no hay argumentos, entonces PRODUCTO devuelve 1.
 </para>
 </listitem>
 </varlistentry>

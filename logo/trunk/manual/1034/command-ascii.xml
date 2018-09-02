@@ -13,7 +13,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve el número entre 0 y 255 que representa la entrada <parameter>carácter</parameter> en la página de códigos actual.
+Devuelve el número entre 0 y 255 que representa el argumento <parameter>carácter</parameter> en la página de códigos actual.
 </para>
 
 <para>

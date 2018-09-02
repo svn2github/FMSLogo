@@ -17,7 +17,7 @@
 <listitem>
 <para>
 Mueve la tortuga a lo largo del eje Y desde la posición actual a una nueva coordenada absoluta Y.
-La entrada <parameter>ycor</parameter> es la nueva coordenada Y.
+El argumento <parameter>ycor</parameter> es la nueva coordenada Y.
 </para>
 </listitem>
 </varlistentry>

@@ -14,7 +14,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve el resultado de la operación NOT bit a bit de la entrada, que debe ser un entero.
+Devuelve el resultado de la operación NOT bit a bit del argumento, que debe ser un entero.
 </para>
 </listitem>
 </varlistentry>

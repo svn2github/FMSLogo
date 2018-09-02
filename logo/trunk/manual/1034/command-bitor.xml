@@ -15,8 +15,8 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve el resultado de la operación OR bit a bit de las entradas, que deben ser enteros.
-Si no hay entradas, entonces BITOR devuelve un valor con todos los bits apagados.
+Devuelve el resultado de la operación OR bit a bit de los argumentos, que deben ser enteros.
+Si no hay argumentos, entonces BITOR devuelve un valor con todos los bits apagados.
 </para>
 </listitem>
 </varlistentry>

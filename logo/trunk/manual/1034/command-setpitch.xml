@@ -17,7 +17,7 @@
 <listitem>
 <para>
 Inclina la tortuga a una nueva inclinación absoluta.
-La entrada <parameter>ángulo</parameter> se da en grados desde el eje negativo Z hacia el eje positivo Y, rotando alrededor del eje X.
+El argumento <parameter>ángulo</parameter> se da en grados desde el eje negativo Z hacia el eje positivo Y, rotando alrededor del eje X.
 </para>
 <para>
 Este comando se diseñaba para ejecutar en modo <link linkend="command-perspective">PERSPECTIVA</link>.

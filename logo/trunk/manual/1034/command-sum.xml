@@ -19,8 +19,8 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve la suma del valor numérico de las entradas.
-Si no hay entradas, entonces ADICION devuelve 0.
+Devuelve la suma del valor numérico de los argumentos.
+Si no hay argumentos, entonces ADICION devuelve 0.
 </para>
 </listitem>
 </varlistentry>

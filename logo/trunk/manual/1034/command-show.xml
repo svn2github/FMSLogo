@@ -17,7 +17,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Escribe la entrada o entradas al flujo de escritura actual, al igual que <link linkend="command-print">ESCRIBE</link>, pero si la entrada es una lista, la escribe entre corchetes.
+Escribe el argumento o argumentos al flujo de escritura actual, al igual que <link linkend="command-print">ESCRIBE</link>, pero si el argumento es una lista, lo escribe entre corchetes.
 </para>
 </listitem>
 </varlistentry>

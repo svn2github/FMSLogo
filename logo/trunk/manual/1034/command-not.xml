@@ -16,8 +16,8 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve CIERTO si la entrada tiene el valor FALSO, y viceversa.
-La entrada debe tener un valor de CIERTO o FALSO.
+Devuelve CIERTO si el argumento tiene el valor FALSO, y viceversa.
+El argumento debe tener un valor de CIERTO o FALSO.
 </para>
 </listitem>
 </varlistentry>

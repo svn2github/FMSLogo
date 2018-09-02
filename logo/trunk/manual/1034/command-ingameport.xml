@@ -16,7 +16,7 @@
 <listitem>
 <para>
 Lee el valor (o resistencia eléctrica a través) el canal del puerto de juego especificado con <parameter>máscara</parameter>.
-La entrada <parameter>máscara</parameter> debe ser 1, 2, 4, o 8.
+El argumento <parameter>máscara</parameter> debe ser 1, 2, 4, o 8.
 Si <parameter>máscara</parameter> es 1, entonces LEEPUERTOJUEGO lee el valor del eje x.
 Si <parameter>máscara</parameter> es 2, entonces LEEPUERTOJUEGO lee el valor del eje y.
 Si <parameter>máscara</parameter> es 4, entonces LEEPUERTOJUEGO lee el valor del timón.
@@ -25,7 +25,7 @@ Puedes leer el estado de los botones con <userinput>LEEPUERTO 513</userinput>.
 </para>
 
 <para>
-LEEPUERTOJUEGO devuelve -1 si nada esta connectada al puerto de juego o si la entrada <parameter>máscara</parameter> no es un valor soportado.
+LEEPUERTOJUEGO devuelve -1 si nada esta connectada al puerto de juego o si el argumento <parameter>máscara</parameter> no es un valor soportado.
 </para>
 </listitem>
 </varlistentry>

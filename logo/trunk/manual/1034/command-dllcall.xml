@@ -22,7 +22,7 @@ La función debe estar exportada de una biblioteca (DLL) previamente cargada con
 </para>
 
 <para>
-La entrada <parameter>función_y_argumentos</parameter> es de la forma <userinput>[tipof función tipo1 arg1 tipo2 arg2 tipo3 arg3 ...]</userinput>.
+El argumento <parameter>función_y_argumentos</parameter> es de la forma <userinput>[tipof función tipo1 arg1 tipo2 arg2 tipo3 arg3 ...]</userinput>.
 </para>
 
 <para>
@@ -134,7 +134,7 @@ LLAMADLL toma acciones distintas para cada tipo de argumento, según la tabla si
 
 
 <para>
-Si la entrada opcional <parameter>nombre_de_biblioteca</parameter> es dado, entonces LLAMADLL solamente busca a la función dentro de esa biblioteca.
+Si el argumento opcional <parameter>nombre_de_biblioteca</parameter> es dado, entonces LLAMADLL solamente busca a la función dentro de esa biblioteca.
 </para>
 
 <para>

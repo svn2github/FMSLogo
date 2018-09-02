@@ -35,8 +35,8 @@ Ambos <link linkend="command-nobitmapturtle">QUITAFORMA</link> y <link linkend="
 </para>
 
 <para>
-Si la entrada opcional <parameter>forma_gira?</parameter> es CIERTO, entonces el bitmap gira con el rumbo de la tortuga.
-Si no se da la entrada <parameter>forma_gira?</parameter>, es FALSO por omisión.
+Si el argumento opcional <parameter>forma_gira?</parameter> es CIERTO, entonces el bitmap gira con el rumbo de la tortuga.
+Si no se da el argumento <parameter>forma_gira?</parameter>, es FALSO por omisión.
 Debe ser o CIERTO o FALSO.
 </para>
 

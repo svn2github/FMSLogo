@@ -15,7 +15,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve el entero más cercano al valor numérico de la entrada.
+Devuelve el entero más cercano al valor numérico del argumento.
 </para>
 
 </listitem>

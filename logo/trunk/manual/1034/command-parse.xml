@@ -16,7 +16,7 @@
 <listitem>
 <para>
 Devuelve la lista que resultaría si <parameter>palabra</parameter> hubiese sido leída mediante <link linkend="command-readlist">LEELISTA</link>.
-Esto es, ANALIZA <link linkend="command-readword">LEEPALABRA</link> devuelve el mismo valor que LEELISTA para la misma entrada.
+Esto es, ANALIZA <link linkend="command-readword">LEEPALABRA</link> devuelve el mismo valor que LEELISTA para el mismo argumento.
 </para>
 </listitem>
 </varlistentry>

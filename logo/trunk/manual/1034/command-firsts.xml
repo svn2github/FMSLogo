@@ -16,10 +16,10 @@
 <listitem>
 <para>
 Devuelve una lista que contiene el primer elemento de cada una de los miembros de <parameter>lista</parameter>.
-Lanza un error si algún miembro de la lista de entrada es vacío.
+Lanza un error si algún miembro del argumento es vacío.
 </para>
 <para>
-La entrada <parameter>lista</parameter> puede ser vacía, en cuyo caso PRIMEROS devuelve la lista vacía.
+El argumento <parameter>lista</parameter> puede ser vacío, en cuyo caso PRIMEROS devuelve la lista vacía.
 </para>
 </listitem>
 </varlistentry>

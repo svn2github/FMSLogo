@@ -15,7 +15,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve una copia de la entrada <parameter>palabra</parameter>, pero en la que se han cambiado las mayúsculas por las correspondientes minúsculas.
+Devuelve una copia del argumento <parameter>palabra</parameter>, pero en la que se han cambiado las mayúsculas por las correspondientes minúsculas.
 </para>
 </listitem>
 </varlistentry>

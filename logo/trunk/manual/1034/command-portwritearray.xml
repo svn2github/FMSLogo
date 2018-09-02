@@ -21,7 +21,7 @@ Si se escriben los datos con éxito, entonces ESCRIBECADENAPUERTO devuelve <code
 </para>
 
 <para>
-Si <parameter>total</parameter> es más grande que el tamaño de la entrada <parameter>vector</parameter>, entonces intenta escribir todo el vector.
+Si <parameter>total</parameter> es más grande que el tamaño del argumento <parameter>vector</parameter>, entonces intenta escribir todo el vector.
 </para>
 
 </listitem>

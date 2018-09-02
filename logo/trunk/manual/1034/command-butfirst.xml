@@ -22,7 +22,7 @@
 <listitem>
 <para>
 Si <parameter>cosa</parameter> es una palabra, devuelve una palabra que contiene todos los caracteres de la palabra, menos el primero.
-Si <parameter>cosa</parameter> es una lista, devuelve una lista que contiene todos los miembros de la lista de entrada, menos el primero.
+Si <parameter>cosa</parameter> es una lista, devuelve una lista que contiene todos los miembros del argumento, menos el primero.
 </para>
 
 <para>

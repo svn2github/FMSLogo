@@ -15,11 +15,11 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Si <parameter>cosa2</parameter> es una palabra o lista y <link linkend="command-memberp">MIEMBRO?</link> devolvería CIERTO con las mismas entradas, entonces MIEMBRO devuelve la parte de <parameter>cosa2</parameter> desde la primera aparición de <parameter>cosa1</parameter> hasta el fin.
+Si <parameter>cosa2</parameter> es una palabra o lista y <link linkend="command-memberp">MIEMBRO?</link> devolvería CIERTO con los mismos argumentos, entonces MIEMBRO devuelve la parte de <parameter>cosa2</parameter> desde la primera aparición de <parameter>cosa1</parameter> hasta el fin.
 </para>
 
 <para>
-Si <link linkend="command-memberp">MIEMBRO?</link> devolvería FALSO con las mismas entradas, entonces MIEMBRO devuelve la palabra vacía o la lista vacía según el tipo de <parameter>cosa2</parameter>.
+Si <link linkend="command-memberp">MIEMBRO?</link> devolvería FALSO con los mismos argumentos, entonces MIEMBRO devuelve la palabra vacía o la lista vacía según el tipo de <parameter>cosa2</parameter>.
 </para>
 
 <para>

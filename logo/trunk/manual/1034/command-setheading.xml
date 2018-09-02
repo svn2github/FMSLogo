@@ -21,8 +21,8 @@
 <listitem>
 <para>
 Cambia el rumbo de la tortuga por un nuevo rumbo absoluto.
-La entrada <parameter>ángulo</parameter> es el rumbo nuevo que se mide en grados en sentido horario desde el eje Y.
-En modo PERSPECTIVA, la entrada <parameter>ángulo</parameter> el rumbo en grados desde el eje positivo X hacia el eje positivo Y rotando alrededor del eje Z.
+El argumento <parameter>ángulo</parameter> es el rumbo nuevo que se mide en grados en sentido horario desde el eje Y.
+En modo PERSPECTIVA, el argumento <parameter>ángulo</parameter> es el rumbo en grados desde el eje positivo X hacia el eje positivo Y rotando alrededor del eje Z.
 </para>
 </listitem>
 </varlistentry>

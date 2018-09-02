@@ -15,7 +15,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Deveulve el número entre 0 y 255 que representa la entrada <parameter>carácter</parameter> en la página de códigos actual.
+Deveulve el número entre 0 y 255 que representa el argumento <parameter>carácter</parameter> en la página de códigos actual.
 </para>
 
 <para>

@@ -18,7 +18,7 @@
 <para>
 Devuelve <parameter>entero</parameter> con un desplazamiento lógico a la izquierda <parameter>cantidad</parameter> bits en total.
 Si <parameter>cantidad</parameter> es negativa, el desplazamiento es a la derecha con todos los nuevos bits más significativos siendo apagados.
-Las entradas deben ser números enteros.
+Los argumentos deben ser números enteros.
 </para>
 </listitem>
 </varlistentry>

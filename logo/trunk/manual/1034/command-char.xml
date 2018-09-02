@@ -15,7 +15,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve el carácter en la página de códigos actual que corresponde al código que representa la entrada <parameter>número</parameter> (un entero entre 0 y 255).
+Devuelve el carácter en la página de códigos actual que corresponde al código que representa el argumento <parameter>número</parameter> (un entero entre 0 y 255).
 </para>
 </listitem>
 </varlistentry>

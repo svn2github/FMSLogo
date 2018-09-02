@@ -17,11 +17,11 @@
 
 <para>
 Devuelve el valor de la tecla más recientemente presionada o liberada.
-El numero devuelto depende de ambos la tecla presionada o liberada y si <link linkend="command-keyboardon">HABILITATECLADO</link> fue dado una o dos entradas.
+El numero devuelto depende de ambos la tecla presionada o liberada y si <link linkend="command-keyboardon">HABILITATECLADO</link> fue dado uno o dos argumentos.
 </para>
 
 <para>
-Si HABILITATECLADO fue dado una entrada, entonces el evento del teclado está capturado como el carácter presionado.
+Si HABILITATECLADO fue dado un argumento, entonces el evento del teclado está capturado como el carácter presionado.
 Es decir, LEETECLA devuelve el valor ASCII del carácter más recientemente presionado.
 Por ejemplo, sobre un teclado QWERTY para España, se pinta «5» y «%» sobre la misma tecla.
 Si el usuario presiona la tecla «5» sin presionar la tecla Mayús, entonces LEETECLA devuelve <userinput>53</userinput>, que es <userinput>ASCII 5</userinput>.
@@ -29,18 +29,18 @@ Por otro lado, si el usuario presiona la tecla «5» mientras se presiona la tec
 </para>
 
 <para>
-Además, si HABILITATECLADO fue solo dado una entrada, entonces se ignora pulsaciones de tecla que no se relacionan directamente a caracteres de texto.
+Además, si HABILITATECLADO fue solo dado un argumento, entonces se ignora pulsaciones de tecla que no se relacionan directamente a caracteres de texto.
 Por ejemplo, se ignora las teclas de Mayús, Control, Inicio, y Fin (entre otras).
 </para>
 
 <para>
-Si HABILITATECLADO fue dado dos entradas, entonces LEETECLA devuelve las pulsaciones como distintas presiones de tecla, pero no necesariamente el carácter deseado.
+Si HABILITATECLADO fue dado dos argumentos, entonces LEETECLA devuelve las pulsaciones como distintas presiones de tecla, pero no necesariamente el carácter deseado.
 In este caso, cuando se presiona la tecla «5», LEETECLA devuelve el mismo numero independientemente de si se mantiene presionada Mayús al mismo tiempo.
 Sin embargo, HABILITATECLADO genera distintos eventos cuando se presiona la tecla Mayús y cuando se libera la tecla Mayús, así que aún puedes identificar la diferencia entre <userinput>5</userinput> y <userinput>%</userinput>.
 </para>
 
 <para>
-En general, si HABILITATECLADO fue dado dos entradas, entonces LEETECLA devuelve un numero distinto por cada tecla física, pero hay excepciones.
+En general, si HABILITATECLADO fue dado dos argumentos, entonces LEETECLA devuelve un numero distinto por cada tecla física, pero hay excepciones.
 El numero asignado a una tecla puede variar entre teclados y distribuciones del teclado (por ejemplo, de Estado Unidos o de España).
 Del mismo modo, algunos teclados (tal como los que son fabricados por Microsoft para Windows) tienen más teclas que un teclado normal y puede generar eventos de teclado que no se puede sobre otros teclados (tal como un «Mayús Izquierdo» como distinto de «Mayús Derecho», o una tecla «Subir Volumen»).
 Finalmente, algunos teclados, tal como los de una computadora portátil, tienen modos especiales en lo cual la misma tecla física puede comportarse como dos teclas distintas dependiendo del modo.

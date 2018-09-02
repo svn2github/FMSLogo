@@ -19,14 +19,14 @@
 
 <para>
 En otros entornos de &GENERICNAME;, PONMARGENES borra todo lo escrito en la pantalla de texto.
-Después, lo arregla para que todo lo que se escribe fuera desplazado al abajo y a la derecha según la entrada <parameter>margenes</parameter>, efectivamente agregando margenes a la pantalla de texto.
+Después, lo arregla para que todo lo que se escribe fuera desplazado al abajo y a la derecha según el argumento <parameter>margenes</parameter>, efectivamente agregando margenes a la pantalla de texto.
 Específicamente, cada vez que se escribe una nueva línea (explícitamente o implícitamente) &GENERICNAME; escribe margen_x caracteres de espacio.
 También, en cada ejecución de PONCURSOR, se agrega las coordenadas a los margenes.
 (<link linkend="command-cursor">CURSOR</link> devuelve la posición del cursor relativo a los margenes, para que este desplazamiento fuera invisible a los programas de &GENERICNAME;.)
 </para>
 
 <para>
-La entrada es una lista de dos números, lo mismo que para <link linkend="command-setcursor">PONCURSOR</link>.
+El argumento es una lista de dos números, lo mismo que para <link linkend="command-setcursor">PONCURSOR</link>.
 </para>
 
 <para>

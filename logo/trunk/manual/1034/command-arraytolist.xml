@@ -15,7 +15,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
   <para>Convierte un vector en lista, ya que devuelve una lista cuyos miembros son los elementos de <parameter>vector</parameter>.
-  El primer miembro de la lista es el primer elemento del vector de entrada, independientemente del origen del vector.</para>
+  El primer miembro de la lista es el primer elemento del vector, independientemente del origen del vector.</para>
 
   <para>Puedes usar VECTORALISTA para disponer los datos en un vector a los procedimientos que toman listas, como <link linkend="command-map">TEJE</link>.
 </para>

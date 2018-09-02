@@ -16,7 +16,7 @@
 
 <varlistentry><term>Descripción</term>
 <listitem>
-<para>Devuelve una palabra formada por la unión de las entradas.</para>
+<para>Devuelve una palabra formada por la unión de los argumentos.</para>
 </listitem>
 </varlistentry>
 

@@ -16,10 +16,10 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve el opuesto (inverso aditivo) del valor numérico de la entrada.
+Devuelve el opuesto (inverso aditivo) del valor numérico del argumento.
 </para>
 <para>
-El signo menos (-) quiere decir opuesto cuando se lo precede de una expresión que requiere una entrada o cuando está precedido por un espacio y inmediatamente seguido por su entrada.
+El signo menos (-) quiere decir opuesto cuando se lo precede de una expresión que requiere un argumento o cuando está precedido por un espacio y inmediatamente seguido por su argumento.
 Hay una diferencia en el nivel de precedencia entre la forma nombrada y la forma simbólica:
 </para>
 

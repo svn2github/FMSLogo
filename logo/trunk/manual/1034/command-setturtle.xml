@@ -24,13 +24,13 @@ Después, todos los comandos de tortuga estará dirigidos a la tortuga nuevament
 
 <para>
 Cada tortuga mantiene su rumbo propio (orientación en 3D), posición, y lápiz, pero normalmente todas comparten el mismo <link linkend="command-penmode">LAPIZMODO</link>, <link linkend="command-pensize">GROSOR</link> y <link linkend="command-pencolor">COLORLAPIZ</link>.
-Sin embargo, si proporcionas la entrada opcional <parameter>tiene_propio_lápiz</parameter> como <userinput>"CIERTO</userinput>, entonces tanta la tortuga seleccionada como todas las otras que estén activadas nuevamente tendrán su proprio LAPIZMODO, GROSOR, y COLORLAPIZ.
+Sin embargo, si proporcionas el argumento opcional <parameter>tiene_propio_lápiz</parameter> como <userinput>"CIERTO</userinput>, entonces tanta la tortuga seleccionada como todas las otras que estén activadas nuevamente tendrán su propio LAPIZMODO, GROSOR, y COLORLAPIZ.
 También puedes cambiar que una tortuga previamente activada usa (o no usa) su propio lápiz especificando <parameter>tiene_propio_lápiz</parameter>.
 </para>
 
 <para>
-Si no das la entrada <parameter>tiene_propio_lápiz</parameter> y ACTIVA no activa a una nueva tortuga, entonces el lápiz de la tortuga especificada no cambia.
-Si no das la entrada <parameter>tiene_propio_lápiz</parameter> y ACTIVA sí activa a una nueva tortuga, entonces el lápiz de esta tortuga estará el lápiz compartido (él que &PRODUCTNAME; dio inicialmente a la tortuga 0 cuando se inició).
+Si no das el argumento <parameter>tiene_propio_lápiz</parameter> y ACTIVA no activa a una nueva tortuga, entonces el lápiz de la tortuga especificada no cambia.
+Si no das el argumento <parameter>tiene_propio_lápiz</parameter> y ACTIVA sí activa a una nueva tortuga, entonces el lápiz de esta tortuga estará el lápiz compartido (él que &PRODUCTNAME; dio inicialmente a la tortuga 0 cuando se inició).
 </para>
 </listitem>
 </varlistentry>

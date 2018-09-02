@@ -19,10 +19,10 @@
 <listitem>
   <para>Devuelve un vector multi-dimensional, comúnmente conocido como una matriz.</para>
 
-  <para>La entrada <parameter>tamañolista</parameter> es una lista de enteros que describen el tamaño de cada dimensión del vector.
+  <para>El argumento <parameter>tamañolista</parameter> es una lista de enteros que describen el tamaño de cada dimensión del vector.
   Debe ser una lista con uno o más enteros.</para>
 
-  <para>La entrada opcional <parameter>origen</parameter> es el primer elemento de cada dimensión en el vector multi-dimensional.
+  <para>El argumento opcional <parameter>origen</parameter> es el primer elemento de cada dimensión en el vector multi-dimensional.
   Debe ser un único entero.
   Por omisión, el origen de cada dimensión es 1.</para>
 </listitem>

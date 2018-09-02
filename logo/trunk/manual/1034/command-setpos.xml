@@ -17,7 +17,7 @@
 <listitem>
 <para>
 Mueve la tortuga a las coordenadas absolutas X, Y.
-La entrada <parameter>posición</parameter> debe ser una lista de dos números, las coordenadas X e Y.
+El argumento <parameter>posición</parameter> debe ser una lista de dos números, las coordenadas X e Y.
 Ve también <link linkend="command-pos">POS</link>.
 </para>
 

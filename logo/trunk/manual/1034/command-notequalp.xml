@@ -20,7 +20,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve FALSO si las entradas <parameter>cosa1</parameter> y <parameter>cosa2</parameter> son iguales, CIERTO si no lo son.
+Devuelve FALSO si los argumentos <parameter>cosa1</parameter> y <parameter>cosa2</parameter> son iguales, CIERTO si no lo son.
 </para>
 
 <para>

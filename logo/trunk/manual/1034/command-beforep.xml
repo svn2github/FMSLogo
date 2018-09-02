@@ -19,7 +19,7 @@
 <para>
 Devuelve CIERTO si <parameter>palabra1</parameter> es anterior en orden alfabético a <parameter>palabra2</parameter>, o según la secuencia ASCII si los caracteres no son letras.
 La sensibilidad a las mayúsculas y minúsculas es determinado por el valor de la variable <link linkend="command-caseignoredp">CASEIGNOREDP</link>.
-Tengas en cuenta que si las entradas son números, el resultado pueda ser no igual que con <link linkend="command-lessp">MENOR?</link>.
+Tengas en cuenta que si los argumentos son números, el resultado pueda ser no igual que con <link linkend="command-lessp">MENOR?</link>.
 Por ejemplo, <userinput>ANTERIOR 3 12</userinput> es FALSO porque "3" viene antes de "1" en orden ASCII.
 </para>
 </listitem>

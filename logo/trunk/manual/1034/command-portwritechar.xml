@@ -17,7 +17,7 @@
 <para>
 Escribe un byte al puerto abierto.
 Devuelve 1 si se lo escribe con éxito, -1 sino.
-La entrada <parameter>byte</parameter> debe ser un entero entre 0 y 255.
+El argumento <parameter>byte</parameter> debe ser un entero entre 0 y 255.
 </para>
 
 </listitem>

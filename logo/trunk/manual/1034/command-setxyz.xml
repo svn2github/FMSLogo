@@ -16,7 +16,7 @@
 <listitem>
 <para>
 Mueve la tortuga a las coordenadas absolutas X, Y, Z.
-Las entradas debe ser tres números, las coordenadas X, Y y Z.
+Los argumentos debe ser tres números, las coordenadas X, Y y Z.
 </para>
 
 <para>

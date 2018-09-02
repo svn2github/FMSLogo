@@ -17,7 +17,7 @@
 
 <para>
 Lee un byte (8 bits) de la especificada <parameter>dirección_de_puerto</parameter> y devuelve los datos como un entero.
-La entrada <parameter>dirección_de_puerto</parameter> especifica una dirección de un puerto de E/S.
+El argumento <parameter>dirección_de_puerto</parameter> especifica una dirección de un puerto de E/S.
 </para>
 
 <para>

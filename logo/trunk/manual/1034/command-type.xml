@@ -17,7 +17,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Escribe la entrada o entradas igual que <link linkend="command-print">ESCRIBE</link>, pero no produce el carácter de nueva línea y las entradas no se escriban separadas por espacios.
+Escribe el argumento o argumentos igual que <link linkend="command-print">ESCRIBE</link>, pero no produce el carácter de nueva línea y los argumentos no se escriban separados por espacios.
 </para>
 
 <para>

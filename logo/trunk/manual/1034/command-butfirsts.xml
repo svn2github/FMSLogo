@@ -24,7 +24,7 @@ MENOSPRIMEROS lanza un error si cualquier miembro de <parameter>lista</parameter
 </para>
 
 <para>
-La entrada <parameter>lista</parameter> puede ser vacía, en cuyo caso MENOSPRIMEROS devuelve la lista vacía.
+El argumento <parameter>lista</parameter> puede ser vacío, en cuyo caso MENOSPRIMEROS devuelve la lista vacía.
 </para>
 
 </listitem>

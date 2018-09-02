@@ -48,7 +48,7 @@ programmatically.
    template                   - plantilla
    instruction list           - una lista de instrucciones
    item                       - elemento
-   input (n)                  - entrada
+   input (n)                  - argumento
    output (n)                 - devuelto
    throw an error             - lanza un error
    throws a bad input error   - lanza un error de mala entrada

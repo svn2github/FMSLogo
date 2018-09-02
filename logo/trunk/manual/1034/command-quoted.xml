@@ -15,8 +15,8 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Si la entrada es una palabra, ENTRECOMILLAS devuelve la palabra con una comilla inglesa (<userinput>"</userinput>) al frente.
-Si la entrada no es una palabra, ENTRECOMILLAS la devuelve sin modificaciones.
+Si el argumento es una palabra, ENTRECOMILLAS devuelve la palabra con una comilla inglesa (<userinput>"</userinput>) al frente.
+Si el argumento no es una palabra, ENTRECOMILLAS la devuelve sin modificaciones.
 </para>
 </listitem>
 </varlistentry>

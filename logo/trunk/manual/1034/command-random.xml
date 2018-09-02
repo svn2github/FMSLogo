@@ -15,17 +15,17 @@
 <listitem>
 
 <para>
-Devuelve un entero uniformemente distribuido entre 0 y la entrada <parameter>rango</parameter> (incluido 0 y excluido <parameter>rango</parameter>).
-La entrada <parameter>rango</parameter> debe ser un entero no negativo.
+Devuelve un entero uniformemente distribuido entre 0 y el argumento <parameter>rango</parameter> (incluido 0 y excluido <parameter>rango</parameter>).
+El argumento <parameter>rango</parameter> debe ser un entero no negativo.
 </para>
 
 <para>
-Por ejemplo, si la entrada es 10, entonces AZAR devuelve cualquier de los enteros siguientes con probabilidad igual: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
+Por ejemplo, si el argumento es 10, entonces AZAR devuelve cualquier de los enteros siguientes con probabilidad igual: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
 </para>
 
 <para>
 Las computadora son inherentemente deterministas.
-Es decir, dado la misma conjunto de entradas, las computadoras siempre siguen un programa para producir exactamente la misma salida.
+Es decir, dado el mismo conjunto de entradas, las computadoras siempre siguen un programa para producir exactamente la misma salida.
 Esto lo hace difícil que una computadora generase números verdaderamente aleatorios.
 Por esta razón, cuando una computador genera un número aleatorio, se lo llaman «pseudoaleatorio», que quiere decir «falso aleatorio».
 </para>

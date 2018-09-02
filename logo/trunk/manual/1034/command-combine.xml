@@ -14,7 +14,7 @@
 
 <varlistentry><term>Descripción</term>
 <listitem>
-<para>Combina ambos de sus entradas en un solo valor.
+<para>Combina ambos de sus argumentos en un solo valor.
 Si <parameter>cosa2</parameter> es una palabra, funciona como <link linkend="command-word">PALABRA</link>.
 Si <parameter>cosa2</parameter> es una lista, funciona como <link linkend="command-fput">PONPRIMERO</link>.</para>
 </listitem>

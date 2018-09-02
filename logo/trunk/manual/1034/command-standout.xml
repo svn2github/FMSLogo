@@ -16,9 +16,9 @@
 <note><para>STANDOUT aun no es soportado en &PRODUCTNAME;.</para></note>
 
 <para>
-En otros entornos de &GENERICNAME;, STANDOUT devuelve una palabra que, cuando se lo escribe, aparece como la entrada, pero en modo sobresaliente (en negrita, en vídeo inverso, o cualquier otro efecto empleado por tu terminal).
+En otros entornos de &GENERICNAME;, STANDOUT devuelve una palabra que, cuando se lo escribe, aparece como el argumento, pero en modo sobresaliente (en negrita, en vídeo inverso, o cualquier otro efecto empleado por tu terminal).
 La palabra devuelto contiene los caracteres mágicos específicos a tu terminal al frente y al fin; la <parameter>cosa</parameter> original queda como palabra entre esos caracteres en forma idéntica de que si se lo ha escrito con <link linkend="command-type">MUESTRAT</link>.
-Lo devuelto siempre es palabra, no importa el tipo original de la entrada, pero pueda incluir espacios y otros caracteres de formato.
+Lo devuelto siempre es palabra, no importa el tipo original del argumento, pero pueda incluir espacios y otros caracteres de formato.
 </para>
 </listitem>
 </varlistentry>

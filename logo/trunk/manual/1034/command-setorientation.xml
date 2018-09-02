@@ -17,7 +17,7 @@
 <listitem>
 <para>
 Cambia la orientación de la tortuga por una nueva orientación absoluta.
-La entrada <parameter>orientación</parameter> debe ser una lista, [balanceo cabeceo rumbo] en grados.
+El argumento <parameter>orientación</parameter> debe ser una lista, [balanceo cabeceo rumbo] en grados.
 </para>
 
 <para>

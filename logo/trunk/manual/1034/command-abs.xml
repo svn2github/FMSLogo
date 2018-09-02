@@ -13,7 +13,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve el valor absoluto de la entrada.
+Devuelve el valor absoluto del argumento.
 </para>
 
 </listitem>

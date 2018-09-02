@@ -17,7 +17,7 @@
 <listitem>
 <para>
 Devuelve una copia de <parameter>cosas</parameter>, pero sin los miembros repetidos.
-Si dos o más miembros de la entrada son iguales, sólo permanece uno en lo devuelto, el que es más a la derecha.
+Si dos o más miembros del argumento son iguales, sólo permanece uno en lo devuelto, el que es más a la derecha.
 </para>
 
 <para>

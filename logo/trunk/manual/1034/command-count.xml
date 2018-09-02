@@ -15,11 +15,11 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Si la entrada <parameter>cosa</parameter> una palabra, CUENTA devuelve el número de caracteres.
+Si el argumento <parameter>cosa</parameter> es una palabra, CUENTA devuelve el número de caracteres.
 </para>
 
 <para>
-Si la entrada <parameter>cosa</parameter> es una lista o un vector, CUENTA devuelve el número de miembros.
+Si el argumento <parameter>cosa</parameter> es una lista o un vector, CUENTA devuelve el número de miembros.
 Para un vector esto es el índice del último elemento solo si el origen del vector es 1.
 </para>
 </listitem>

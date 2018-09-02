@@ -20,13 +20,13 @@
 
 <para>
 Devuelve un vector con <parameter>tamaño</parameter> elementos, cada uno de los cuales es inicialmente una lista vaciá.
-El <parameter>tamaño</parameter> entrada debe ser un número entero no negativo.
+El argumento <parameter>tamaño</parameter> debe ser un número entero no negativo.
 </para>
 
 <para>
 Los elementos del vector pueden seleccionarse con <link linkend="command-item">ELEMENTO</link> y cambiarse con <link linkend="command-setitem">PONELEMENTO</link>.
-El primer elemento del vector es el elemento número 1, a menos que se da una entrada <parameter>origen</parameter>, en cuyo caso, el primer elemento tiene el ese número como índice.
-Si se da una entrada <parameter>origen</parameter>, debe ser un número entero.
+El primer elemento del vector es el elemento número 1, a menos que se da un argumento <parameter>origen</parameter>, en cuyo caso, el primer elemento tiene el ese número como índice.
+Si se da un argumento <parameter>origen</parameter>, debe ser un número entero.
 Puedes obtener el origen de un vector con <link linkend="command-first">PRIMERO</link>.
 </para>
 

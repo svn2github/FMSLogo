@@ -20,7 +20,7 @@
 Hace que lo que devuelve <link linkend="command-random">AZAR</link> sea reproducible.
 Generalmente la secuencia de números aleatorios es distinta cada vez que se usa &GENERICNAME;.
 Si necesitas que AZAR repitiera la misma secuencia de números pseudoaleatorios (por ejemplo, para depurar un programa), puedes ejecutar REAZAR antes de ejecutar AZAR o SACAALAZAR.
-Si necesitas más de una secuencia repetida, puedes proporcionar a REAZAR una entrada de número entero, llamada una «semilla»; cada distinta semilla selecciona una secuencia única de números.
+Si necesitas más de una secuencia repetida, puedes proporcionar a REAZAR un argumento de número entero, llamada una «semilla»; cada distinta semilla selecciona una secuencia única de números.
 </para>
 </listitem>
 </varlistentry>

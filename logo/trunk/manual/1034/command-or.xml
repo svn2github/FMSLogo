@@ -17,8 +17,9 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve CIERTO si al menos una de las entradas tienen el valor CIERTO.  En otro caso, devuelve FALSO.
-Todas las entradas deben tener un valor de CIERTO o FALSO.
+Devuelve CIERTO si al menos uno de los argumentos tienen el valor CIERTO.
+En otro caso, devuelve FALSO.
+Todos los argumentos deben tener un valor de CIERTO o FALSO.
 </para>
 
 <para>
@@ -27,7 +28,7 @@ Es decir, «cierto», «Cierto» y «CIERTO» son todos iguales.
 </para>
 
 <para>
-Si no hay entradas, O devuelve FALSO.
+Si no hay argumentos, O devuelve FALSO.
 </para>
 </listitem>
 </varlistentry>

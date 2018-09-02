@@ -20,7 +20,7 @@ Fija el modo (velocidad, paridad, bits de datos, y bits de parada) del puerto ab
 </para>
 
 <para>
-La entrada <parameter>modo</parameter> debe ser de la forma <userinput>"COM<replaceable>n</replaceable>:<replaceable>VELOCIDAD</replaceable>,<replaceable>PARIDAD</replaceable>,<replaceable>DATOS</replaceable>,<replaceable>PARADA</replaceable></userinput>.
+El argumento <parameter>modo</parameter> debe ser de la forma <userinput>"COM<replaceable>n</replaceable>:<replaceable>VELOCIDAD</replaceable>,<replaceable>PARIDAD</replaceable>,<replaceable>DATOS</replaceable>,<replaceable>PARADA</replaceable></userinput>.
 Este es la misma forma que usa el comando MODE del intérprete de comandos de Windows.
 </para>
 

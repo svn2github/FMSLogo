@@ -18,8 +18,8 @@
 <para>
 Mueve la tortuga tal que traza una elipse en sentido horario.
 El tamaño y forma de la elipse depende de los valores de <parameter>medioeje.al.través</parameter> y <parameter>medioeje.en.línea</parameter>.
-La entrada <parameter>medioeje.al.través</parameter> es la distancia desde la tortuga hasta la elipse en el rumbo perpendicular al rumbo actual de la tortuga.
-La entrada <parameter>medioeje.en.línea</parameter> es la distancia desde la tortuga hasta la elipse en el rumbo actual de la tortuga.
+El argumento <parameter>medioeje.al.través</parameter> es la distancia desde la tortuga hasta la elipse en el rumbo perpendicular al rumbo actual de la tortuga.
+El argumento <parameter>medioeje.en.línea</parameter> es la distancia desde la tortuga hasta la elipse en el rumbo actual de la tortuga.
 Por consiguiente, el rumbo actual de la tortuga determina la orientación de la elipse.
 </para>
 
@@ -30,7 +30,7 @@ La elipse entera aparece a la derecha de la tortuga.
 </para>
 
 <para>
-Nota que las entradas <parameter>medioeje.en.línea</parameter> y <parameter>medioeje.al.través</parameter> son en orden reverso de lo del comando <link linkend="command-ellipse">ELIPSE</link>.
+Nota que los argumentos <parameter>medioeje.en.línea</parameter> y <parameter>medioeje.al.través</parameter> son en orden reverso de lo del comando <link linkend="command-ellipse">ELIPSE</link>.
 </para>
 </listitem>
 </varlistentry>

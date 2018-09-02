@@ -18,7 +18,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve CIERTO si la entrada <parameter>cosa</parameter> es una lista, FALSO si no lo es.
+Devuelve CIERTO si el argumento <parameter>cosa</parameter> es una lista, FALSO si no lo es.
 </para>
 </listitem>
 </varlistentry>

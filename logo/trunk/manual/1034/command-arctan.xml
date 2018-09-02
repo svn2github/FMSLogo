@@ -14,12 +14,12 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Con una entrada, devuelve el arcotangente de la entrada.
+Con un argumento, devuelve el arcotangente del argumento.
 Lo devuelto es dado en grados en el rango [-90,90].
 </para>
 
 <para>
-Con dos entradas, devuelve el arcotangente de <parameter>y</parameter> / <parameter>x</parameter>.
+Con dos argumentos, devuelve el arcotangente de <parameter>y</parameter> / <parameter>x</parameter>.
 Lo devuelto es dado en grados en el rango [-180,180].
 </para>
 </listitem>

@@ -20,7 +20,7 @@
 Instruye a la tortuga especificada ejecutar una lista de instrucciones especificada (la cual contiene normalmente instrucciones de tortuga).
 </para>
 <para>
-Primero, PIDE selecciona a la tortuga cuyo índice es igual a la entrada <parameter>índice_de_tortuga</parameter>.
+Primero, PIDE selecciona a la tortuga cuyo índice es igual al argumento <parameter>índice_de_tortuga</parameter>.
 Entonces, PIDE ejecuta <parameter>lista_de_instrucciones</parameter>.
 Por último, PIDE reselecciona a la tortuga previo.
 </para>

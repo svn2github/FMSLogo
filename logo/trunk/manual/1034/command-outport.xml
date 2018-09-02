@@ -17,7 +17,7 @@
 <listitem>
 <para>
 Escribe 2 bytes de <parameter>datos</parameter> al puerto de E/S especificado con <parameter>dirección_de_puerto</parameter>.
-La entrada <parameter>datos</parameter> debe ser un entero de no más de 2 bytes (entre 0 y 65525).
+El argumento <parameter>datos</parameter> debe ser un entero de no más de 2 bytes (entre 0 y 65525).
 </para>
 
 <para>

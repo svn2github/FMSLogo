@@ -16,7 +16,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Dibuja un círculo, según el rumbo y posición de la tortuga y la entrada <parameter>radio</parameter>.
+Dibuja un círculo, según el rumbo y posición de la tortuga y el argumento <parameter>radio</parameter>.
 El centro del círculo es la posición actual de la tortuga.
 CIRCULO no mueve la tortuga.
 </para>

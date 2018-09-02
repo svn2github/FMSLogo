@@ -16,7 +16,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve la entrada con los mismos miembros, pero en orden inverso.
+Devuelve el argumento con los mismos miembros, pero en orden inverso.
 </para>
 
 <para>

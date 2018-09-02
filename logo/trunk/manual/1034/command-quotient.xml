@@ -19,7 +19,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve el cociente de la división de los valores numéricos de las entradas.
+Devuelve el cociente de la división de los valores numéricos de los argumentos.
 Es decir, COCIENTE devuelve <parameter>dividendo</parameter> dividido por <parameter>divisor</parameter>.
 El resultado únicamente es un entero si el <parameter>dividendo</parameter> es múltiplo del <parameter>divisor</parameter>.
 Por ejemplo, <userinput>COCIENTE 5 2</userinput> es <userinput>2.5</userinput>, no <userinput>2</userinput>, pero <userinput>COCIENTE 4 2</userinput> es <userinput>2</userinput>, no <userinput>2.0</userinput>.

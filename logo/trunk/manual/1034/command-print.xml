@@ -24,11 +24,11 @@
 <listitem>
 
 <para>
-Escribe la entrada o entradas al flujo de escritura actual (inicialmente la <link linkend="commander-history">Caja de Historia</link>).
-Todas las entradas se escriben en una sola línea, separadas por espacios y terminando en una nueva línea.
-Si la entrada es una lista, no escribe los corchetes, pero sí se escriben corchetes en las listas inferiores.
+Escribe el argumento o argumentos al flujo de escritura actual (inicialmente la <link linkend="commander-history">Caja de Historia</link>).
+Todos los argumentos se escriben en una sola línea, separadas por espacios y terminando en una nueva línea.
+Si el argumento es una lista, no escribe los corchetes, pero sí se escriben corchetes en las listas inferiores.
 Los vectores se escriben entre llaves.
-La segunda forma (con paréntesis) se emplea cuando ESCRIBE lleva más de una entrada.
+La segunda forma (con paréntesis) se emplea cuando ESCRIBE lleva más de un argumento.
 </para>
 </listitem>
 </varlistentry>

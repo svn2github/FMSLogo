@@ -20,8 +20,8 @@ Dibuja una elipse, según el rumbo y posición de la tortuga y los argumentos.
 El centro de la elipse es la posición actual de la tortuga.
 ELIPSE no mueve la tortuga.  
 El tamaño y forma de la elipse depende de los valores de <parameter>medioeje.al.través</parameter> y <parameter>medioeje.en.línea</parameter>.
-La entrada <parameter>medioeje.al.través</parameter> es la distancia desde la tortuga hasta la elipse en el rumbo perpendicular al rumbo actual de la tortuga.
-La entrada <parameter>medioeje.en.línea</parameter> es la distancia desde la tortuga hasta la elipse en el rumbo actual de la tortuga.
+El argumento <parameter>medioeje.al.través</parameter> es la distancia desde la tortuga hasta la elipse en el rumbo perpendicular al rumbo actual de la tortuga.
+El argumento <parameter>medioeje.en.línea</parameter> es la distancia desde la tortuga hasta la elipse en el rumbo actual de la tortuga.
 Por consiguiente, el rumbo actual de la tortuga determina la orientación de la elipse.
 </para>
 </listitem>

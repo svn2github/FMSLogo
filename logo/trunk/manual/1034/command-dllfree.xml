@@ -18,7 +18,7 @@
 <listitem>
 <para>
 Cierra una biblioteca (DLL) previamente cargada con <link linkend="command-dllload">CARAGADLL</link>.
-Si la entrada <parameter>nombre_de_biblioteca</parameter> es dada, entonces se cierra la biblioteca con ese nombre.
+Si el argumento <parameter>nombre_de_biblioteca</parameter> es dado, entonces se cierra la biblioteca con ese nombre.
 Si no, QUITADLL cierra la biblioteca cargada más recientemente.
 </para>
 </listitem>

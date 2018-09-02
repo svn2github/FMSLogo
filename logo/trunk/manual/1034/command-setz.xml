@@ -17,7 +17,7 @@
 <listitem>
 <para>
 Mueve la tortuga a lo largo del eje Z desde la posición actual a una nueva coordenada absoluta Z.
-La entrada <parameter>zcor</parameter> es la nueva coordenada Z.
+El argumento <parameter>zcor</parameter> es la nueva coordenada Z.
 </para>
 
 <para>

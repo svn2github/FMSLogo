@@ -15,7 +15,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve la lista que resultaría si la entrada <parameter>cosa</parameter> (palabra o lista) hubiera sido analizada como línea de instrucciones; caracteres tal como los operadores infijos y paréntesis son miembros distintos en la lista devuelta.
+Devuelve la lista que resultaría si el argumento <parameter>cosa</parameter> (palabra o lista) hubiera sido analizado como línea de instrucciones; caracteres tal como los operadores infijos y paréntesis son miembros distintos en la lista devuelta.
 Tengas en cuento que las listas inferiores de una lista que ha sido procesado con EJECUTAANALIZA no son, ellas mismas, ejecutaanalizadas.
 </para>
 </listitem>

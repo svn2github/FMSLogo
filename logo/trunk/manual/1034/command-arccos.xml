@@ -13,12 +13,12 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve el arcocoseno de la entrada.
+Devuelve el arcocoseno del argumento.
 Lo devuelto es dado en grados en el rango [0, 180].
 </para>
 
 <para>
-Le entrada <parameter>número</parameter> debe ser en el rango [-1, 1].
+El argumento <parameter>número</parameter> debe ser en el rango [-1, 1].
 </para>
 </listitem>
 </varlistentry>

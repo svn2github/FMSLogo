@@ -24,7 +24,7 @@ Algunas veces, quieres que se invierta la imagen antes de mostrarla y algunas ve
 </para>
 
 <para>
-La entrada <parameter>modo</parameter> debe ser un entero entre 1 y 9.
+El argumento <parameter>modo</parameter> debe ser un entero entre 1 y 9.
 Se da el significado de cada valor en la tabla siguiente:
 
 <informaltable frame='all'>

@@ -15,7 +15,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve el signo de la entrada (-1 si es negativo, 0 si es cero, 1 si es positivo).
+Devuelve el signo del argumento (-1 si es negativo, 0 si es cero, 1 si es positivo).
 Esto puede ser útil cuando quieres aplicar el signo de un número a un otro.
 </para>
 

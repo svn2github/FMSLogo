@@ -17,7 +17,7 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve la raíz cuadrada del valor numérico de la entrada que, como es sabido, no puede ser un número negativo.
+Devuelve la raíz cuadrada del valor numérico del argumento que, como es sabido, no puede ser un número negativo.
 </para>
 </listitem>
 </varlistentry>

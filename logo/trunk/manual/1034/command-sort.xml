@@ -23,12 +23,12 @@ Lo devuelto es una secuencia nuevo del mismo tipo como <parameter>secuencia</par
 </para>
 
 <para>
-La entrada <parameter>predicado</parameter> debe ser el nombre de un procedimiento o una plantilla.
-El predicado debe tomar dos entradas y devuelve o CIERTO o FALSO.
+El argumento <parameter>predicado</parameter> debe ser el nombre de un procedimiento o una plantilla.
+El predicado debe tomar dos argumentos y devuelve o CIERTO o FALSO.
 </para>
 
 <para>
-Si no entrada <parameter>predicado</parameter> es dado, entonces, el predicado usado depende de la entrada <parameter>secuencia</parameter>, de acuerdo con la tabla siguiente.
+Si el argumento <parameter>predicado</parameter> no es dado, entonces, el predicado usado depende del argumento <parameter>secuencia</parameter>, de acuerdo con la tabla siguiente.
 
 <informaltable frame='all'>
   <tgroup cols='2'>

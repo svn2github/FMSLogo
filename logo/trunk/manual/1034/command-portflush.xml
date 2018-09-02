@@ -7,8 +7,8 @@
 
 <varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>LIMPIAPUERTO</command> <parameter>entrada</parameter>
-<command>PORTFLUSH</command> <parameter>entrada</parameter></synopsis>
+<synopsis><command>LIMPIAPUERTO</command> <parameter>argumento</parameter>
+<command>PORTFLUSH</command> <parameter>argumento</parameter></synopsis>
 </listitem>
 </varlistentry>
 
@@ -27,8 +27,8 @@ Después del despejamiento, te puedes estar seguro que todos los datos que has e
 </para>
 
 <para>
-Se requiere la entrada <parameter>entrada</parameter>, pero es ignorada.
-Queda como entrada requerida para la retrocompatibilidad con programas antiguos.
+Se requiere el argumento <parameter>argumento</parameter>, pero se lo ignora.
+Queda como parámetro requerido para la retrocompatibilidad con programas antiguos.
 </para>
 </listitem>
 </varlistentry>

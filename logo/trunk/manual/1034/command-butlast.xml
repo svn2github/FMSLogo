@@ -21,8 +21,8 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Si <parameter>cosa</parameter> es una palabra, devuelve una palabra que contiene todos los caracteres de la entrada, menos el último.
-Si <parameter>cosa</parameter> es una lista, devuelve una lista que contiene todos los miembros de la entrada, menos el último.
+Si <parameter>cosa</parameter> es una palabra, devuelve una palabra que contiene todos los caracteres del argumento, menos el último.
+Si <parameter>cosa</parameter> es una lista, devuelve una lista que contiene todos los miembros del argumento, menos el último.
 </para>
 
 <para>

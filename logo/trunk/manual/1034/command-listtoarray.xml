@@ -16,9 +16,9 @@
 
 <varlistentry><term>Descripción</term>
 <listitem>
-  <para>Convierte una lista en vector, ya que devuelve una vector del mismo tamaño que la entrada <parameter>lista</parameter>, cuyos elementos son los miembros de la entrada <parameter>lista</parameter>.</para>
+  <para>Convierte una lista en vector, ya que devuelve una vector del mismo tamaño que el argumento <parameter>lista</parameter>, cuyos elementos son los miembros del argumento <parameter>lista</parameter>.</para>
 
-  <para>Si se da una entrada <parameter>origen</parameter>, entonces el primer elemento del vector es al índice <parameter>origen</parameter>.
+  <para>Si se da un argumento <parameter>origen</parameter>, entonces el primer elemento del vector es al índice <parameter>origen</parameter>.
   Por defecto, el origen es 1.</para>
 
 </listitem>

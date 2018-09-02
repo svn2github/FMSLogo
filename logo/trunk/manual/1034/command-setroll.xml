@@ -16,7 +16,7 @@
 <listitem>
 <para>
 Gira la tortuga a su lado hasta un balanceo absoluto.
-La entrada <parameter>ángulo</parameter> es el balanceo nuevo que se mide en grados desde el eje X positivo hacia el eje Z negativo, rotando alrededor del eje Y.
+El argumento <parameter>ángulo</parameter> es el balanceo nuevo que se mide en grados desde el eje X positivo hacia el eje Z negativo, rotando alrededor del eje Y.
 </para>
 <para>
 Este comando se diseñaba para ejecutar en modo <link linkend="command-perspective">PERSPECTIVA</link>.

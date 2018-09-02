@@ -15,8 +15,8 @@
 <varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Devuelve el resultado de la operación AND bit a bit de las entradas, que deben ser enteros.
-Si no hay entradas, entonces BITAND devuelve un valor con todos los bits encendidos.
+Devuelve el resultado de la operación AND bit a bit de los argumentos, que deben ser enteros.
+Si no hay argumentos, entonces BITAND devuelve un valor con todos los bits encendidos.
 </para>
 </listitem>
 </varlistentry>

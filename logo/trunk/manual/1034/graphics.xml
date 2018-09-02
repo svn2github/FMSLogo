@@ -35,7 +35,7 @@ Ve <link linkend="using-color">Usando Color</link> por los detalles.
 &PRODUCTNAME; soporta múltiples tortugas.
 Cada tortuga mantiene su propio rumbo (orientación en 3D), posición, y control de lápiz.
 Se puede representar cada tortuga individualmente con una imagen usando <link linkend="command-bitmapturtle">PONFORMA</link>.
-Por defecto, todas las tortugas comparten el mismo modo de lápiz, color de lápiz, y grosor de lápiz, pero puedes hacer que una tortuga individual tiene su propia lápiz en proporcionando una entrada opcional a <link linkend="command-setturtle">ACTIVA</link>.
+Por defecto, todas las tortugas comparten el mismo modo de lápiz, color de lápiz, y grosor de lápiz, pero puedes hacer que una tortuga individual tiene su propia lápiz en proporcionando un argumento opcional a <link linkend="command-setturtle">ACTIVA</link>.
 </para>
 
 <para>
@@ -205,8 +205,8 @@ Cada vez que entras en modo <link linkend="command-perspective">PERSPECTIVA</lin
 
 <para>
 Algunas comandos (<link linkend="command-setpencolor">PONCOLORLAPIZ</link>, <link linkend="command-setfloodcolor">PONCOLORRELLENO</link>, <link linkend="command-setscreencolor">PONCOLORFONDO</link>) especifican la intensidad de los colores rojo, verde, y azul.
-Cada entrada representa qué cantidad de rojo, verde y azul requiere el color.
-Cada entrada tiene un rango de 0-255.
+Cada argumento representa qué cantidad de rojo, verde y azul requiere el color.
+Cada argumento tiene un rango de 0-255.
 Al mezclar cantidades diferentes de colores puedes crear 16,7 millones de colores diferentes.
 </para>
 
@@ -286,7 +286,7 @@ MUESTRA COLORLAPIZ</userinput>
 </variablelist>
 
 <para>
-Cada procedimiento de &PRODUCTNAME; que acepta un color como entrada, lo acepta como un color indexado, un nombre de color, o un vector de color.
+Cada procedimiento de &PRODUCTNAME; que acepta un color como argumento, lo acepta como un color indexado, un nombre de color, o un vector de color.
 Cuando usas un color indexado, el mapa de los índices de colores es el siguiente:
 
 <informaltable frame='all'>
