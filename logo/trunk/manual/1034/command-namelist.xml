@@ -1,32 +1,36 @@
 <section id="command-namelist">
-    <title>NAMELIST</title>
+    <title>LISTANOMBRES</title>
+<indexterm><primary>LISTANOMBRES</primary></indexterm>
 <indexterm><primary>NAMELIST</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>NAMELIST</command> <parameter>varname</parameter>
-<command>NAMELIST</command> <parameter>varnamelist</parameter></synopsis>
+<synopsis><command>LISTANOMBRES</command> <parameter>nombre_de_variable</parameter>
+<command>LISTANOMBRES</command> <parameter>lista_de_nombres</parameter>
+<command>NAMELIST</command> <parameter>nombre_de_variable</parameter>
+<command>NAMELIST</command> <parameter>lista_de_nombres</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a contents list consisting of an empty list followed by a list of the name or names given as input.
-This is useful in conjunction with workspace control procedures that require a contents list as input.
-These named variables do not have to exist.
+Devuelve una lista de contenidos formada por una lista vacía seguida de otra lista con el nombre o nombres de los argumentos.
+Esto es útil en conjunto con los procedimientos de <link linkend="workspace-control">control del área de trabajo</link> que requieren una lista de contenidos como argumento.
+Las variables nombradas no tienen que existir.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>NAMELIST [FOO BAR]</userinput>
-[[] [FOO BAR]]
-<userinput>NAMELIST "abc</userinput>
+<programlisting><userinput>MUESTRA LISTANOMBRES [foo bar]</userinput>
+[[] [foo bar]]</programlisting>
+
+<programlisting><userinput>MUESTRA LISTANOMBRES "abc</userinput>
 [[] [abc]]
 </programlisting>
 </listitem>
@@ -34,5 +38,4 @@ These named variables do not have to exist.
 
 
 </variablelist>
-
 </section>

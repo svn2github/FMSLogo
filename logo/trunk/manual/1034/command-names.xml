@@ -1,29 +1,32 @@
 <section id="command-names">
-    <title>NAMES</title>
+    <title>LVARS</title>
+<indexterm><primary>LVARS</primary></indexterm>
 <indexterm><primary>NAMES</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>NAMES</command></synopsis>
+<synopsis><command>LVARS</command>
+<command>NAMES</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a contents list consisting of an empty procedure list (indicating no procedure names) followed by a list of all unburied variable names in the workspace.
+Devuelve una lista de contenidos que contiene una lista vacía de procedimientos (que indica que no incluye nombres de procedimientos), seguida por una lista con los nombres de las variables no tapadas del área de trabajo.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "FOO 1
-MAKE "BAR 2
-SHOW NAMES</userinput>
+<programlisting><userinput>HAZ "foo 1
+HAZ "bar 2
+MUESTRA LVARS</userinput>
 [[] [bar foo]]
 </programlisting>
 </listitem>
@@ -31,5 +34,4 @@ SHOW NAMES</userinput>
 
 
 </variablelist>
-
 </section>

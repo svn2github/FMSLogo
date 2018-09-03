@@ -1,45 +1,41 @@
 <section id="command-stepped">
-<title>STEPPED</title>
+<title>LISTAPASO</title>
+<indexterm><primary>LISTAPASO</primary></indexterm>
 <indexterm><primary>STEPPED</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>STEPPED</command></synopsis>
+<synopsis><command>LISTAPASO</command>
+<command>STEPPED</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a contents list consisting of the list of stepped procedures followed by two empty lists.
+Devuelve una lista de contenidos que contiene los nombres de todos los elementos del área de trabajo que están afectados por <link linkend="command-step">PASO</link>.
+Es una lista de tres listas: los nombres de los procedimientos, los nombres de las variables y los nombres las listas de propiedades.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>TO MYFORWARD
-  FORWARD 10
-END
+<programlisting><userinput>PARA MIAVANZA
+  AVANZA 10
+FIN
 
-SHOW STEPPED</userinput>
+MUESTRA LISTAPASO</userinput>
 [[] [] []]
-<userinput>STEP "MYFORWARD
-SHOW STEPPED</userinput>
-[[MYFORWARD] [] []]
+<userinput>PASO "MIAVANZA
+MUESTRA LISTAPASO</userinput>
+[[miavanza] [] []]
 </programlisting>
 </listitem>
 </varlistentry>
-
-<varlistentry><term>See Also</term>
-<listitem><simplelist>
-<member><link linkend="command-step">STEP</link></member>
-</simplelist></listitem>
-</varlistentry>
-
 
 
 </variablelist>

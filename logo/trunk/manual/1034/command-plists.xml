@@ -1,35 +1,37 @@
 <section id="command-plists">
-    <title>PLISTS</title>
+    <title>LPROPS</title>
+<indexterm><primary>LPROPS</primary></indexterm>
 <indexterm><primary>PLISTS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PLISTS</command></synopsis>
+<synopsis><command>LPROPS</command>
+<command>PLISTS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a contents list, which is a list of three lists.
-The first two lists are empty, indicating that no procedure names or variable names are returned.
-The third list is a list of the names of all unburied property lists in the workspace.
+Devuelve una lista de contenidos, que es una lista de tres listas.
+Las dos primeras son vacías que indica que no incluye nombres de procedimientos o variables.
+La tercera es una lista de los nombres de todas las listas de propiedades no tapadas del área de trabajo.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>PPROP "properties "property 1
-SHOW PLISTS</userinput>
-[[] [] [properties]]
+<programlisting><userinput>PONPROP "propiedades "propiedad 1
+MUESTRA LPROP</userinput>
+[[] [] [propiedades]]
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
