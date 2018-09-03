@@ -27,7 +27,7 @@ END
 MAKE "name 1
 PPROP "properties "property 1
 SHOW CONTENTS</userinput>
-[[MYPROGRAM] [name] [properties]]
+[[myprogram] [name] [properties]]
 </programlisting>
 </listitem>
 </varlistentry>
