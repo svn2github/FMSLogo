@@ -192,15 +192,6 @@ FIN
 TAPA "BOVAR
 
 
-;copydef "bovars "erns
-
-PARA BNOMBRES
-BORRA LVARS
-FIN
-
-TAPA "BNOMBRES
-
-
 ;copydef "bprocs "erps
 
 PARA BPROCS
