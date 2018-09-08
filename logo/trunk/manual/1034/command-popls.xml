@@ -1,35 +1,36 @@
 <section id="command-popls">
-    <title>POPLS</title>
+    <title>IMPROPS</title>
+<indexterm><primary>IMPROPS</primary></indexterm>
 <indexterm><primary>POPLS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>POPLS</command></synopsis>
+<synopsis><command>IMPROPS</command>
+<command>POPLS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Prints the contents of all unburied property lists in the workspace to the current write stream.
-POPLS abbreviates <userinput><link linkend="command-po">PO</link> <link linkend="command-plists">PLISTS</link></userinput>.
+Escribe todas las propiedades de todas las listas de propiedades no tapadas del área de trabajo al flujo de escritura actual.
+IMPROPS es la abreviatura de <userinput><link linkend="command-po">IMDEFS</link> <link linkend="command-plists">LPROPS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>PPROP "plist1 "p1 1
-POPLS</userinput>
-Pprop "plist1 "p1 1
+<programlisting><userinput>PONPROP "lprop1 "p1 1
+IMPROPS</userinput>
+ponprop "lprop1 "p1 1
 </programlisting>
 </listitem>
 </varlistentry>
 
 
 </variablelist>
-
 </section>

@@ -1,41 +1,44 @@
 <section id="command-popl">
-    <title>POPL</title>
+    <title>IMDEFPROP</title>
+<indexterm><primary>IMDEFPROP</primary></indexterm>
 <indexterm><primary>POPL</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>POPL</command> <parameter>plname</parameter>
-<command>POPL</command> <parameter>plnamelist</parameter></synopsis>
-</listitem>
-</varlistentry>
-
-<varlistentry><term>Description</term>
-<listitem>
-<para>
-Prints the contents of the named property lists(s) to the current write stream.
-POPL abbreviates <userinput><link linkend="command-po">PO</link> <link linkend="command-pllist">PLLIST</link></userinput>.
-</para>
-
-<para>
-POPL treats all non-existent property lists as empty property lists.
-This is consistent with how <link linkend="command-gprop">GPROP</link> behaves when asked to get a non-existent property.
-</para>
+<synopsis><command>IMDEFPROP</command> <parameter>nombre</parameter>
+<command>IMDEFPROP</command> <parameter>lista_de_nombres</parameter>
+<command>POPL</command> <parameter>nombre</parameter>
+<command>POPL</command> <parameter>lista_de_nombres</parameter></synopsis>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<programlisting><userinput>PPROP "plist1 "p1 1
-POPL [plist1 plist2]</userinput>
-Pprop "plist1 "p1 1
+<para>
+Escribe todas las propiedades de las listas de propiedades nombradas al flujo de escritura actual.
+IMDEFPROP es la abreviatura de <userinput><link linkend="command-po">IMDEFS</link> <link linkend="command-pllist">LISTAPROPIEDADES</link></userinput>.
+</para>
+
+<para>
+IMDEFPROP trata a todas las lista de propiedades que no existen como si fueron listas de propiedades vaciás.
+Esto conforma con el comportamiento de <link linkend="command-gprop">PROPIEDAD</link> cuando le pides que devuelva una propiedad que no existe.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>PONPROP "lprop1 "p1 1
+IMDEFPROP [lprop1 lprop2]</userinput>
+ponprop "lprop1 "p1 1
 </programlisting>
 </listitem>
 </varlistentry>
 
 
 </variablelist>
-
 </section>

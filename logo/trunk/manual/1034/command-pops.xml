@@ -1,42 +1,43 @@
 <section id="command-pops">
-    <title>POPS</title>
+    <title>IMDEFPROCS</title>
+<indexterm><primary>IMDEFPROCS</primary></indexterm>
 <indexterm><primary>POPS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>POPS</command></synopsis>
+<synopsis><command>IMDEFPROCS</command>
+<command>POPS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Prints the definitions of all unburied procedures in the workspace to the current write stream.
-POPS abbreviates <userinput><link linkend="command-po">PO</link> <link linkend="command-procedures">PROCEDURES</link></userinput>.
+Escribe las definiciones de todos los procedimientos no tapados del área de trabajo al flujo de escritura actual.
+IMDEFPROCS es la abreviatura de <userinput><link linkend="command-po">IMDEFS</link> <link linkend="command-procedures">LPROCS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "var 1
+<programlisting><userinput>HAZ "var 1
 
-TO xxx
-  print "Hello ; comment
-end
+PARA XXX
+  ESCRIBE "Hola ; comentario
+FIN
 
-POPS</userinput>
-TO xxx
-  print "Hello ; comment
-END
+IMDEFPROCS</userinput>
+TO XXX
+  ESCRIBE "Hola ; comentario
+FIN
 </programlisting>
 </listitem>
 </varlistentry>
 
 
 </variablelist>
-
 </section>

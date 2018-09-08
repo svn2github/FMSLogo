@@ -1,34 +1,36 @@
 <section id="command-pots">
-<title>POTS</title>
+<title>IMTS</title>
+<indexterm><primary>IMTS</primary></indexterm>
 <indexterm><primary>POTS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>POTS</command></synopsis>
+<synopsis><command>IMTS</command>
+<command>POTS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Prints the title lines of all unburied procedures in the workspace to the current write stream.
-POTS abbreviates <userinput><link linkend="command-pot">POT</link> <link linkend="command-procedures">PROCEDURES</link></userinput>.
+Escribe las líneas de título de todos los procedimientos no tapados del área de trabajo al flujo de escritura actual.
+IMTS es la abreviatura de <userinput><link linkend="command-pot">IMTITULOSTODO</link> <link linkend="command-procedures">LPROCS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>DEFINE "abc [[a b] [PRINT :a] [PRINT :b]]
-POTS</userinput>
-to abc :a :b</programlisting>
+<programlisting><userinput>DEFINE "ABC [[a b] [ESCRIBE :a] [ESCRIBE :b]]
+IMTS</userinput>
+para abc :a :b</programlisting>
 </listitem>
 </varlistentry>
 
 
 </variablelist>
-
 </section>

@@ -1,38 +1,41 @@
 <section id="command-pon">
-    <title>PON</title>
+    <title>IMDEFVAR</title>
+<indexterm><primary>IMDEFVAR</primary></indexterm>
 <indexterm><primary>PON</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PON</command> <parameter>varname</parameter>
-<command>PON</command> <parameter>varlistname</parameter></synopsis>
+<synopsis><command>IMDEFVAR</command> <parameter>nombre_de_variable</parameter>
+<command>IMDEFVAR</command> <parameter>lista_de_nombres</parameter>
+<command>PON</command> <parameter>nombre_de_variable</parameter>
+<command>PON</command> <parameter>lista_de_nombres</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Prints the definitions of the named variable(s) to the current write stream.
-PON abbreviates <userinput><link linkend="command-po">PO</link> <link linkend="command-namelist">NAMELIST</link></userinput>.
+Escribe las definiciones de las variables nombradas al flujo de escritura actual.
+IMDEFVAR es la abreviatura de <userinput><link linkend="command-po">IMDEFS</link> <link linkend="command-namelist">LISTANOMBRES</link></userinput>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "foo 1
-MAKE "bar 2
-PON [foo bar]</userinput>
-Make "foo 1
-Make "bar 2
+<programlisting><userinput>HAZ "foo 1
+HAZ "bar 2
+IMDEFVAR [foo bar]</userinput>
+haz "foo 1
+haz "bar 2
 </programlisting>
 </listitem>
 </varlistentry>
 
 
 </variablelist>
-
 </section>
