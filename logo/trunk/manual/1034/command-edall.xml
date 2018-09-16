@@ -1,46 +1,49 @@
 <section id="command-edall">
-    <title>EDALL</title>
+    <title>EDTODO</title>
+<indexterm><primary>EDTODO</primary></indexterm>
 <indexterm><primary>EDALL</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>EDALL</command></synopsis>
-</listitem>
-</varlistentry>
-
-<varlistentry><term>Description</term>
-<listitem>
-<para>
-Opens all definitions in the workspace in the <link linkend="editor">editor</link>.
-</para>
-
-<para>
-EDALL abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linkend="command-contents">CONTENTS</link></userinput>.
-It is equivalent to pressing the <link linkend="commander-edall">Edall button</link>.
-</para>
+<synopsis><command>EDTODO</command>
+<command>EDALL</command></synopsis>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<programlisting><userinput>TO MYPROGRAM
-  PRINT :myvariable
-END
+<para>
+Abre las definiciones de todos los procedimientos, variables y listas de propiedades no tapados en el <link linkend="editor">editor</link>.
+</para>
 
-MAKE "myvariable "Hrllo
-MYPROGRAM</userinput>
-Hrllo
-<userinput>EDALL</userinput>
-<replaceable>change Hrllo to Hello and exit editor</replaceable>
-<userinput>MYPROGRAM</userinput>
-Hello
+<para>
+EDTODO es la abreviatura <userinput><link linkend="command-edit">EDITA</link> <link linkend="command-contents">CONTENIDO</link></userinput>.
+Equivale a presionar el <link linkend="commander-edall">Botón EdTodo</link>.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>PARA MIPROGRAMA
+  ESCRIBE :mivariable
+FIN
+
+HAZ "mivariable "Hrla
+MIPROGRAMA</userinput>
+Hrla
+<userinput>EDTODO</userinput>
+<replaceable>Cambia «Hrla» por «Hola» y sal del Editor</replaceable>
+<userinput>MIPROGRAMA</userinput>
+Hola
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

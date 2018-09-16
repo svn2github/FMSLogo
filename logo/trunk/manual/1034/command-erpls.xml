@@ -1,38 +1,40 @@
 <section id="command-erpls">
-    <title>ERPLS</title>
+    <title>BPROPS</title>
+<indexterm><primary>BPROPS</primary></indexterm>
 <indexterm><primary>ERPLS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>ERPLS</command></synopsis>
+<synopsis><command>BPROPS</command>
+<command>ERPLS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Erases all unburied property lists from the workspace.
-ERPLS abbreviates <userinput><link linkend="command-erase">ERASE</link> <link linkend="command-plists">PLISTS</link></userinput>.
+Borra todas las listas de propiedades no tapadas en el área de trabajo.
+BPROPS es la abreviatura de <userinput><link linkend="command-erase">BORRA</link> <link linkend="command-plists">LPROPS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>PPROP "plist1 "p1 1
-PPROP "plist2 "p2 2
-POPLS</userinput>
-Pprop "plist1 "p1 1
-Pprop "plist2 "p2 1
-<userinput>ERPLS
-POPLS</userinput>
+<programlisting><userinput>PONPROP "lprop1 "p1 1
+PONPROP "lprop2 "p2 2
+IMPROPS</userinput>
+ponprop "lprop1 "p1 1
+ponprop "lprop2 "p2 1
+<userinput>BPROPS
+IMPROPS</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

@@ -1,45 +1,47 @@
 <section id="command-edns">
-    <title>EDNS</title>
+    <title>EDNOMBRES</title>
+<indexterm><primary>EDNOMBRES</primary></indexterm>
 <indexterm><primary>EDNS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>EDNS</command></synopsis>
+<synopsis><command>EDNOMBRES</command>
+<command>EDNS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Opens all unburied variables in the <link linkend="editor">editor</link>.
+Abre las definiciones de todas las variables no tapadas en el <link linkend="editor">editor</link>.
 </para>
 
 <para>
-EDNS abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linkend="command-names">NAMES</link></userinput>.
+EDNOMBRES es la abreviatura de <userinput><link linkend="command-edit">EDITA</link> <link linkend="command-names">LVARS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>TO MYPROGRAM
-  PRINT :myvariable
-END
+<programlisting><userinput>PARA MIPROGRAMA
+  ESCRIBE :mivariable
+FIN
 
-MAKE "myvariable "Hrllo
-MYPROGRAM</userinput>
-Hrllo
-<userinput>EDNS</userinput>
-<replaceable>change Hrllo to Hello and exit editor</replaceable>
-<userinput>MYPROGRAM</userinput>
-Hello
+HAZ "mivariable "Hrla
+MIPROGRAMA</userinput>
+Hrla
+<userinput>EDNOMBRES</userinput>
+<replaceable>Cambia «Hrla» por «Hola» y sal del Editor</replaceable>
+<userinput>MIPROGRAMA</userinput>
+Hola
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

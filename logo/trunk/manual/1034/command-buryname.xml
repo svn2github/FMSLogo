@@ -1,44 +1,46 @@
 <section id="command-buryname">
-    <title>BURYNAME</title>
+    <title>TAPAVAR</title>
+<indexterm><primary>TAPAVAR</primary></indexterm>
 <indexterm><primary>BURYNAME</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>BURYNAME</command> <parameter>varname</parameter>
-<command>BURYNAME</command> <parameter>varnamelist</parameter></synopsis>
+<synopsis><command>TAPAVAR</command> <parameter>nombre_de_variable</parameter>
+<command>TAPAVAR</command> <parameter>lista_de_nombres</parameter>
+<command>BURYNAME</command> <parameter>nombre_de_variable</parameter>
+<command>BURYNAME</command> <parameter>lista_de_nombres</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Buries the variable(s) named in the input.
-BURYNAME abbreviates <userinput><link linkend="command-bury">BURY</link> <link linkend="command-namelist">NAMELIST</link></userinput>.
+Tapa las variables nombradas por el argumento.
+TAPAVAR es la abreviatura de <userinput><link linkend="command-bury">TAPA</link> <link linkend="command-namelist">LISTANOMBRES</link></userinput>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "foo [I am Foo]
-MAKE "bar [I am Bar]
-PONS</userinput>
-Make "bar [I am Bar]
-Make "foo [I am Foo]
-<userinput>BURYNAME [foo]
-PONS</userinput>
-Make "bar [I am Bar]
-<userinput>SHOW :foo</userinput>
-[I am Foo]
-<userinput>SHOW :bar</userinput>
-[I am Bar]
+<programlisting><userinput>HAZ "foo [Yo soy Foo]
+HAZ "bar [Yo soy Bar]
+IMVARS</userinput>
+haz "bar [Yo soy Bar]
+haz "foo [Yo soy Foo]
+<userinput>TAPAVAR [foo]
+IMVARS</userinput>
+haz "bar [Yo soy Bar]
+<userinput>MUESTRA :foo</userinput>
+[Yo soy Foo]
+<userinput>MUESTRA :bar</userinput>
+[Yo soy Bar]
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

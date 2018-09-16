@@ -1,44 +1,48 @@
 <section id="command-unburyname">
-    <title>UNBURYNAME</title>
+    <title>DESTAPANOMBRE</title>
+<indexterm><primary>DESTAPANOMBRE</primary></indexterm>
 <indexterm><primary>UNBURYNAME</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>UNBURYNAME</command> <parameter>varname</parameter>
-<command>UNBURYNAME</command> <parameter>varnamelist</parameter></synopsis>
+<synopsis><command>DESTAPANOMBRE</command> <parameter>nombre_de_variable</parameter>
+<command>DESTAPANOMBRE</command> <parameter>lista_de_nombres</parameter>
+<command>UNBURYNAME</command> <parameter>nombre_de_variable</parameter>
+<command>UNBURYNAME</command> <parameter>lista_de_nombres</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Unburies the variable(s) named in the input.
-UNBURYNAME abbreviates <userinput><link linkend="command-unbury">UNBURY</link> <link linkend="command-namelist">NAMELIST</link></userinput>.
+Destapa las variables nombradas por el argumento.
+DESTAPANOMBRE es la abreviatura de <userinput><link linkend="command-unbury">DESTAPA</link> <link linkend="command-namelist">LISTANOMBRES</link></userinput>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "foo [I am Foo]
-MAKE "bar [I am Bar]
-PONS</userinput>
-Make "bar [I am Bar]
-Make "foo [I am Foo]
-<userinput>BURYNAME [foo]
-PONS</userinput>
-Make "bar [I am Bar]
-<userinput>UNBURYNAME [foo]
-PONS</userinput>
-Make "bar [I am Bar]
-Make "foo [I am Foo]
+<programlisting><userinput>HAZ "foo [Yo soy Foo]
+HAZ "bar [Yo soy Bar]
+IMVARS</userinput>
+haz "bar [Yo soy Bar]
+haz "foo [Yo soy Foo]
+<userinput>TAPAVAR [foo]
+IMVARS</userinput>
+haz "bar [Yo soy Bar]
+<userinput>DESTAPANOMBRE [foo]
+IMVARS</userinput>
+haz "bar [Yo soy Bar]
+haz "foo [Yo soy Foo]
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

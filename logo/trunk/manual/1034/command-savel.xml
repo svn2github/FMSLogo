@@ -1,52 +1,55 @@
 <section id="command-savel">
-    <title>SAVEL</title>
+    <title>GUARDAL</title>
+<indexterm><primary>GUARDAL</primary></indexterm>
 <indexterm><primary>SAVEL</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SAVEL</command> <parameter>contentslist</parameter> <parameter>filename</parameter></synopsis>
+<synopsis><command>GUARDAL</command> <parameter>lista_de_contenidos</parameter> <parameter>nombre_de_archivo</parameter>
+<command>SAVEL</command> <parameter>lista_de_contenidos</parameter> <parameter>nombre_de_archivo</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Saves the definitions of the procedures, variables, and property lists specified by <parameter>contentslist</parameter> to a file named <parameter>filename</parameter>.
+Guarda las definiciones de todos los procedimientos, variables y listas de propiedades que se especifican en <parameter>lista_de_contenidos</parameter> en un archivo llamada <parameter>nombre_de_archivo</parameter>.
 </para>
 
 <para>
-SAVEL stands for "save list".
+GUARDAL quiere decir «guarda lista de contenidos».
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>TO MYPROGRAM1
-  PRINT "Hello1
-END
+<programlisting><userinput>PARA MIPROGRAMA1
+  ESCRIBE "Hola1
+FIN
 
-TO MYPROGRAM2
-  PRINT "Hello2
-END
+PARA MIPROGRAMA2
+  ESCRIBE "Hola2
+FIN
 
-POTS</userinput>
-TO MYPROGRAM1
-TO MYPROGRAM2
+IMTS</userinput>
+PARA MIPROGRAMA1
+PARA MIPROGRAMA2
 
-<userinput>SAVEL [[MYPROGRAM1] [] []] "myprogram.lgo
-ERALL
-POTS
-LOAD "myprogram.lgo
-POTS</userinput>
-TO MYPROGRAM1
+<userinput>GUARDAL [[MIPROGRAMA1] [] []] "miprograma.lgo
+BTODO
+IMTS
+CARGA "misprogramas.lgo
+IMTS</userinput>
+PARA MIPROGRAMA1
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

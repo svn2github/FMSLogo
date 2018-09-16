@@ -1,38 +1,41 @@
 <section id="command-erns">
-    <title>ERNS</title>
+    <title>BNOMBRES</title>
+<indexterm><primary>BNOMBRES</primary></indexterm>
 <indexterm><primary>ERNS</primary></indexterm>
+
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>ERNS</command></synopsis>
+<synopsis><command>BNOMBRES</command>
+<command>ERNS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Erases all unburied variables from the workspace.
-ERNS abbreviates <userinput><link linkend="command-erase">ERASE</link> <link linkend="command-names">NAMES</link></userinput>.
+Borra todas las variables no tapadas en el área de trabajo.
+BNOMBRES es la abreviatura de <userinput><link linkend="command-erase">BORRA</link> <link linkend="command-names">LVARS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "foo 1
-MAKE "bar 2
-PONS</userinput>
-Make "bar 2
-Make "foo 1
-<userinput>ERNS
-PONS</userinput>
+<programlisting><userinput>HAZ "foo 1
+HAZ "bar 2
+IMVARS</userinput>
+haz "bar 2
+haz "foo 1
+<userinput>BNOMBRES
+IMVARS</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

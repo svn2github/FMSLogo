@@ -1,42 +1,47 @@
 <section id="command-load">
-    <title>LOAD</title>
+    <title>CARGA</title>
+<indexterm><primary>CARGA</primary></indexterm>
 <indexterm><primary>LOAD</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>LOAD</command> <parameter>filename</parameter></synopsis>
+<synopsis><command>CARGA</command> <parameter>nombre_de_archivo</parameter>
+<command>LOAD</command> <parameter>nombre_de_archivo</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Reads instructions from the file named <parameter>filename</parameter> and runs them.
-The file can include procedure definitions with <link linkend="command-to">TO</link>, and these are accepted even if a procedure by the same name already exists.
-If the file assigns a list value to a variable named <link linkend="command-startup">STARTUP</link>, then that list is <link linkend="command-run">RUN</link> as an instruction list after the file is loaded.
+Carga las instrucciones del archivo llamado <parameter>nombre_de_archivo</parameter> y las ejecuta.
+El archivo puede incluir definiciones de procedimiento con <link linkend="command-to">PARA</link> aunque esos procedimientos ya existen.
+Si el archivo asigna una lista a una variable nombrada <link linkend="command-startup">STARTUP</link>, entonces se <link linkend="command-run">EJECUTA</link> esa lista como una lista de instrucciones después de que el archivo está cargada.
 </para>
 
+
 <para>
-It is important to understand that the file is executed, not copied, into the workspace:
+Es importante entender que se ejecuta el archivo, no lo copia al área de trabajo:
 
 <itemizedlist>
 <listitem>
 <para>
-If &GENERICNAME; sees a TO instruction, then it defines that procedure (the instructions between the TO and END are not immediately run, but instead become the body of the procedure).
+Si &GENERICNAME; ve una instrucción con PARA, entonces defina ese procedimiento (no se ejecuta las instrucciones entre el PARA y el FIN inmediatamente, pero en lugar de esto, las instrucciones se convierten en el cuerpo del procedimiento).
 </para>
 </listitem>
 
 <listitem>
 <para>
-If &GENERICNAME; sees a MAKE instruction, then it makes that name.
+Si &GENERICNAME; ve una instrucción con HAZ, entonces cree la variable.
 </para>
 </listitem>
 
 <listitem>
 <para>
-If &GENERICNAME; sees instructions that are outside of a procedure definition, then it runs that those instructions in the order seen.
+Si &GENERICNAME; ve instrucciones fuera de la definición de un procedimiento, las ejecuta en el orden en que aparezcan.
 </para>
 </listitem>
 </itemizedlist>
@@ -46,31 +51,31 @@ If &GENERICNAME; sees instructions that are outside of a procedure definition, t
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>TO MYPROGRAM1
-  PRINT "Hello1
-END
+<programlisting><userinput>PARA MIPROGRAMA1
+  ESCRIBE "Hola1
+FIN
 
-TO MYPROGRAM2
-  PRINT "Hello2
-END
+PARA MIPROGRAMA2
+  ESCRIBE "Hola2
+FIN
 
-POTS</userinput>
-TO MYPROGRAM1
-TO MYPROGRAM2
+IMTS</userinput>
+PARA MIPROGRAMA1
+PARA MIPROGRAMA2
 
-<userinput>SAVE "myprograms.lgo
-ERALL
-POTS
-LOAD "myprograms.lgo
-POTS</userinput>
-TO MYPROGRAM1
-TO MYPROGRAM2
+<userinput>GUARDA "misprogramas.lgo
+BTODO
+IMTS
+CARGA "misprogramas.lgo
+IMTS</userinput>
+PARA MIPROGRAMA1
+PARA MIPROGRAMA2
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

@@ -1,48 +1,50 @@
 <section id="command-buryall">
-    <title>BURYALL</title>
+    <title>TAPATODO</title>
+<indexterm><primary>TAPATODO</primary></indexterm>
 <indexterm><primary>BURYALL</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>BURYALL</command></synopsis>
+<synopsis><command>TAPATODO</command>
+<command>BURYALL</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Buries all procedures, variables, and property lists in the workspace.
-BURYALL abbreviates <userinput><link linkend="command-bury">BURY</link> <link linkend="command-contents">CONTENTS</link></userinput>.
+Tapa todos los procedimientos, variables y listas de propiedades en el área de trabajo.
+TAPATODO es la abreviatura de <userinput><link linkend="command-bury">TAPA</link> <link linkend="command-contents">CONTENIDO</link></userinput>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>TO FOO
-  PRINT [I am Foo]
-END
+<programlisting><userinput>PARA FOO
+  ESCRIBE [Yo soy Foo]
+FIN
 
-TO BAR
-  PRINT [I am Bar]
-END
+PARA BAR
+  ESCRIBE [Yo soy Bar]
+FIN
 
-POTS</userinput>
-TO BAR
-TO FOO
-<userinput>BURYALL
-POTS</userinput>
+IMTS</userinput>
+PARA BAR
+PARA FOO
+<userinput>TAPATODO
+IMTS</userinput>
 <userinput>FOO</userinput>
-I am Foo
+Yo soy Foo
 <userinput>BAR</userinput>
-I am Bar
+Yo soy Bar
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

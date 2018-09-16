@@ -1,42 +1,45 @@
 <section id="command-erps">
-    <title>ERPS</title>
+    <title>BPROCS</title>
+<indexterm><primary>BPROCS</primary></indexterm>
 <indexterm><primary>ERPS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>ERPS</command></synopsis>
+<synopsis><command>BPROCS</command>
+<command>ERPS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Erases all unburied procedures from the workspace.
-ERPS abbreviates <userinput><link linkend="command-erase">ERASE</link> <link linkend="command-procedures">PROCEDURES</link></userinput>.
+Borra todos los procedimientos no tapados en el área de trabajo.
+BPROCS es la abreviatura de <userinput><link linkend="command-erase">BORRA</link> <link linkend="command-procedures">LPROCS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>TO FOO
-END
+<programlisting><userinput>PARA FOO
+FIN
 
-TO BAR
-END
+PARA BAR
+FIN
 
-SHOW PROCEDURES</userinput>
+MUESTRA LPROCS</userinput>
 [bar foo]
-<userinput>ERPS
-SHOW PROCEDURES</userinput>
+<userinput>BPROCS
+MUESTRA LPROCS</userinput>
 []
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+</variablelist>
 </section>

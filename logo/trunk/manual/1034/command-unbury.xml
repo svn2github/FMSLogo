@@ -1,51 +1,53 @@
 <section id="command-unbury">
-    <title>UNBURY</title>
+    <title>DESTAPA</title>
+<indexterm><primary>DESTAPA</primary></indexterm>
 <indexterm><primary>UNBURY</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>UNBURY</command> <parameter>contentslist</parameter></synopsis>
-</listitem>
-</varlistentry>
-
-<varlistentry><term>Description</term>
-<listitem>
-<para>
-Unburies the procedures, variables, and property lists named in the input.
-That is, the named items are returned to view in <link linkend="command-contents">CONTENTS</link> and similar procedures.
-</para>
-
-<para>
-UNBURY does not throw an error if it is asked to bury a procedure, variable, or property list that is not buried, but doing so has no effect.
-</para>
-
-<para>
-See the <link linkend="workspace-queries">Workspace Queries</link> section for an explanation of the <parameter>contentslist</parameter> input.
-</para>
+<synopsis><command>DESTAPA</command> <parameter>lista_de_contenidos</parameter>
+<command>UNBURY</command> <parameter>lista_de_contenidos</parameter></synopsis>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Descripción</term>
 <listitem>
-<programlisting><userinput>MAKE "foo [I am Foo]
-MAKE "bar [I am Bar]
-PONS</userinput>
-Make "bar [I am Bar]
-Make "foo [I am Foo]
-<userinput>BURYNAME [foo]
-PONS</userinput>
-Make "bar [I am Bar]
-<userinput>UNBURY [ [] [foo] [] ]
-PONS</userinput>
-Make "bar [I am Bar]
-Make "foo [I am Foo]
+<para>
+Destapa los procedimientos, variables y listas de propiedades que aparecen en el argumento.
+Después de ser destapados, estos elementos se mostrarán con <link linkend="command-contents">CONTENTIDO</link>, etc.
+</para>
+
+<para>
+DESTAPA no lanza un error si le pidas que destape un procedimiento, una variable o una lista de propiedades que no está tapado, pero esto no tiene ningún efecto.
+</para>
+
+<para>
+Ve la sección titulada <link linkend="workspace-queries">Preguntas del área de trabajo</link> para una explicación del formato de <parameter>lista_de_contenidos</parameter>.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>HAZ "foo [Yo soy Foo]
+HAZ "bar [Yo soy Bar]
+IMVARS</userinput>
+haz "bar [Yo soy Bar]
+haz "foo [Yo soy Foo]
+<userinput>TAPAVAR [foo]
+IMVARS</userinput>
+haz "bar [I am Bar]
+<userinput>DESTAPA [ [] [foo] [] ]
+IMVARS</userinput>
+haz "bar [Yo soy Bar]
+haz "foo [Yo soy Foo]
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
