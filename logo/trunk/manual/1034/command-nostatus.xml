@@ -1,35 +1,39 @@
 <section id="command-nostatus">
-<title>NOSTATUS</title>
+<title>QUITAESTADO</title>
+<indexterm><primary>QUITAESTADO</primary></indexterm>
 <indexterm><primary>NOSTATUS</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>NOSTATUS</command></synopsis>
+<synopsis><command>QUITAESTADO</command>
+<command>NOSTATUS</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Closes the popup status window, if it is open.
-This command has the same effect as pressing the <link linkend="commander-status">Status Button</link> when it is depressed.
+Cierre la ventana que muestra el estado de &PRODUCTNAME;, si está abierta.
+Tiene el mismo efecto que pulsar el <link linkend="commander-status">Botón de Estado</link> cuando está deprimido.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>STATUS
-NOSTATUS</userinput></programlisting>
+<programlisting><userinput>ESTADO
+QUITAESTADO</userinput></programlisting>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="commander-status">The Status Button</link></member>
-<member><link linkend="command-status">STATUS</link></member>
+<member><link linkend="command-status">ESTADO</link></member>
 </simplelist></listitem>
 </varlistentry>
 
