@@ -46,6 +46,9 @@ programmatically.
    command                    - comando
    predicate                  - predicado
    template                   - plantilla
+   explicit-slot template     - una plantilla de ranuras numeradas
+   named-slot templates       - una plantilla de ranuras nombradas
+   named-procedure templates  - una plantilla de procedimiento nombrado
    instruction list           - una lista de instrucciones
    item                       - elemento
    input (n)                  - argumento

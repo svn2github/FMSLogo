@@ -1,27 +1,27 @@
 <chapter id="control-structures">
-   <title>Control Structures</title>
+   <title>Estructuras de control</title>
 
 <para>
-&GENERICNAME; has many facilities for controlling which instructions get executed next.
-Taken together, these facilities are commonly called "flow control", because they control the "flow" of execution.
+&GENERICNAME; tiene muchas facilidades para controlar cuales instrucciones se van a ejecutar próximamente.
+En conjunto, estas facilidades son llamadas comúnmente «estructuras de control» porque controla el flujo de ejecución de una manera estructurada.
 </para>
 
 <para>
-In the following descriptions, an "instruction list" input may be a list or a word.
-If it's a word, it is parsed into list form before it is run.
-Thus, <userinput><link linkend="command-run">RUN</link> <link linkend="command-readword">READWORD</link></userinput> or <userinput><link linkend="command-run">RUN</link> <link linkend="command-readlist">READLIST</link></userinput> work.
-The former is slightly preferable because it allows for a continued line (with <userinput>~</userinput>) that includes a comment (with <userinput>;</userinput>) on the first line.
+En las descripciones siguientes, un argumento que es una «lista de instrucción» puede ser una lista o una palabra.
+Si es una palabra, se la analiza para convertirla en forma de lista antes de ejecutarla.
+Por consiguiente, los dos <userinput><link linkend="command-run">EJECUTA</link> <link linkend="command-readword">LEEPALABRA</link></userinput> y <userinput><link linkend="command-run">EJECUTA</link> <link linkend="command-readlist">LEELISTA</link></userinput> funcionan.
+Se prefiere ligeramente una lista porque permite continuaciones de la línea (con <userinput>~</userinput>) que incluye un comentario (con <userinput>;</userinput>) en la primera línea.
 </para>
 
 <para>
-Pay attention to the difference between an "operation" and a "command".
-An operation is a procedure that outputs a value.
-A command is a procedure that does NOT output a value.
-Most procedures are either one or the other, but some are both.
+Fijate a la diferencia entre una «operación» y un «comando».
+Una operación es un procedimiento que devuelve un valor.
+Un comando es un procedimiento que no devuelve nada.
+La mayoría de los procedimientos son o uno o otro, pero algunos son los dos.
 </para>
 
    <section id="control-commands">
-       <title>Control Commands</title>
+       <title>Comandos de control</title>
 
        &command-run;
        &command-runresult;
@@ -68,92 +68,94 @@ Most procedures are either one or the other, but some are both.
 
 
    <section id="template-based-iteration">
-       <title>Iteración de Plantilla</title>
+       <title>Iteración de plantilla</title>
 
 <para>
-This section describes iteration tools that are based on the idea of a "template".
-This is a generalization of an instruction list or an expression list in which "slots" are provided for the tool to insert varying data.
-Three different forms of template can be used: explicit-slot templates, named-procedure templates, and named-slot templates.
-</para>
-
-<para>
-These iteration tools are extended versions of the ones in Appendix B of the book Computer Science Logo Style, Volume 3: Advanced Topics by Brian Harvey [MIT Press, 1987].
-The extensions are primarily to allow for variable numbers of inputs.
+Esta sección describe las herramientas de iteración que son basadas en el concepto de una «plantilla».
+Es una generalización de una lista de instrucción o una lista de expresión en que hay «ranuras» en la que la herramienta pueda insertar varios datos.
+Hay tres formas distintas de plantillas que puedes usar: plantillas de ranuras numeradas, plantillas de procedimiento nombrado y plantillas de ranuras nombradas.
 </para>
 
      <section id="explict-slot-templates">
-         <title>Plantilla de Ranura Explícita</title>
+         <title>Plantillas de ranuras numeradas</title>
 
 <para>
-The most commonly used form of template is the "explicit-slot" form, which is sometimes called the "question mark" form.
+La forma más usada de plantilla es la forma de «ranuras numeradas», llamada también la forma de «signo de interrogación».
 </para>
 
 <para>
-Example:
-<programlisting><userinput>SHOW MAP [? * ?] [2 3 4 5]</userinput>
+Ejemplo:
+<programlisting><userinput>MUESTRA TEJE [? * ?] [2 3 4 5]</userinput>
 [4 9 16 25]</programlisting>
 </para>
 
 <para>
-In this example, <link linkend="command-map">MAP</link> evaluates the template <userinput>[? * ?]</userinput> repeatedly, with each of the members of the data list <userinput>[2 3 4 5]</userinput> substituted in turn for the question marks.
-The same value was used for every question mark in a given evaluation.
-Some tools allow for more than one datum to be substituted in parallel; in these cases the slots are indicated by <userinput>?1</userinput> for the first datum, <userinput>?2</userinput> for the second, and so on.
+En este ejemplo, <link linkend="command-map">TEJE</link> evalúa la plantilla <userinput>[? * ?]</userinput> repetidamente, con cada elemento de la lista de datos <userinput>[2 3 4 5]</userinput> reemplazando los signos de interrogación en su turno.
+Se usa el mismo valor por cada signo de interrogación en la expresión.
+Algunas herramientas permitan que sustituyes más que un dato en paralelo.
+En estos casos, se indican las ranuras como <userinput>?1</userinput> por el primer dato, <userinput>?2</userinput> por el segundo, y así sucesivamente.
 </para>
 
 
 <para>
-Example:
-<programlisting><userinput>SHOW (MAP [(WORD ?1 ?2 ?1)] [a b c] [d e f])</userinput>
+Ejemplo:
+<programlisting><userinput>MUESTRA (TEJE [(PALABRA ?1 ?2 ?1)] [a b c] [d e f])</userinput>
 [ada beb cfc]</programlisting>
 </para>
 
 <para>
-If the template wishes to compute the datum number, the form <userinput>(? 1)</userinput> is equivalent to <userinput>?1</userinput>, so <userinput>(? ?1)</userinput> means the datum whose number is given in datum number 1.
-Some tools allow additional slot designations, as shown in the individual descriptions.
+Es por eso que la llaman a esta forma «plantilla de ranuras numeradas».
+</para>
+
+<para>
+Si la plantilla quiere computar de qué ranura debe sacar el valor, la forma <userinput>(? 1)</userinput> equivale a <userinput>?1</userinput>.
+Así que <userinput>(? ?1)</userinput> quiere decir el valor del dato cuyo número se da en el dato número 1.
+Algunas herramientas permitan designaciones de ranuras adicionales, como se muestra en sus descripciones respectivas.
 </para>
 
      </section>
 
 
      <section id="named-procedure-templates">
-         <title>Named-Procedure Templates</title>
+         <title>Plantillas de procedimiento nombrado</title>
 
 <para>
-The second form of template is the "named-procedure" form.
-If the template is a word rather than a list, it is taken as the name of a procedure.
-That procedure must accept a number of inputs equal to the number of parallel data slots provided by the tool; the procedure is applied to all the available data in order.
-That is, if data <userinput>?1</userinput> through <userinput>?3</userinput> are available, the template <userinput>"PROC</userinput> is equivalent to <userinput>[PROC ?1 ?2 ?3]</userinput>.
+La segunda forma de plantilla es la plantilla de «procedimiento nombrado».
+Si una plantilla es una palabra en lugar de una lista, se toma como el nombre de un procedimiento.
+Este procedimiento debe aceptar un número de argumentos igual que el número de datos que la herramienta le ofrece en paralelo; se aplica el procedimiento a todos los datos disponibles en orden.
+Eso es, si el dato <userinput>?1</userinput> hasta el dato <userinput>?3</userinput> están disponibles, la plantilla <userinput>"PROCEDIMIENTO</userinput> equivale a <userinput>[PROCEDIMIENTO ?1 ?2 ?3]</userinput>.
 </para>
 
 <para>
-Example:
-<programlisting><userinput>SHOW (MAP "word [a b c] [d e f])</userinput>
+Ejemplo:
+<programlisting><userinput>MUESTRA (TEJE "PALABRA [a b c] [d e f])</userinput>
 [ad be cf]</programlisting>
 
-<programlisting><userinput>TO DOTPRODUCT :a :b  ; vector dot product
-  OUTPUT APPLY "sum (MAP "product :a :b)
-END</userinput></programlisting>
+<programlisting><userinput>PARA PRODUCTO.ESCALAR :a :b ; producto escalar de vectores
+  DEVUELVE APLICA "ADICION (TEJE "PRODUCTO :a :b)
+FIN</userinput></programlisting>
 </para>
 
        </section>
 
 
      <section id="named-slot-templates">
-         <title>Named-Slot Templates</title>
+         <title>Plantillas de ranuras nombradas</title>
 
 <para>
-The third form of template is "named-slot" or "lambda" form.
-This form is indicated by a template list containing more than one item, whose first item is itself a list.
-The first item is taken as a list of names; local variables are created with those names and given the available data in order as their values.
-The number of names must equal the number of available data.
-This form is needed when one iteration tool is used within the template list of another, and the ? notation would be ambiguous in the inner template.
+A la tercer forma de plantilla se llama «ranuras nombradas» o «expresión lambda».
+Se indica esta forma cuando la plantilla es una lista que contiene más que un elemento y el primero es, a si mismo, una lista.
+El primer elemento se toma como una lista de nombres.
+Se crea variables locales con estes nombres y les dan valores de los datos disponibles en el mismo orden.
+El número de nombres debe ser igual a la cantidad de los datos disponibles.
+Se necesita esta forma cuando se usa una herramienta de iteración dentro de una lista de plantilla de otra herramienta de iteración y la notación con ? sería ambiguo dentro de la plantilla inferior.
 </para>
 
 <para>
-Example:
-<programlisting><userinput>TO MATRIXMULTIPLY :m1 :m2 [:tm2 TRANSPOSE :m2]
-  OUTPUT MAP [[row] MAP [[col] DOTPRODUCT :row :col] :tm2] :m1
-END</userinput></programlisting>
+Ejemplo:
+<programlisting><userinput>PARA MATRIZ.PRODUCTO :m1 :m2 [:tm2 TRASPON :m2]
+  DEVULEVE TEJE [[fila] TEJE [[columna] PRODUCTO.ESCALAR :fila :columna] :tm2] :m1
+FIN</userinput></programlisting>
 </para>
 
        </section>
