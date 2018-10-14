@@ -990,10 +990,6 @@ pul</literallayout></entry>
         <entry><literallayout>creaDir</literallayout></entry>
       </row>
       <row>
-        <entry><link linkend='command-modulo'>modulo</link></entry>
-        <entry><literallayout>resto</literallayout></entry>
-      </row>
-      <row>
         <entry><link linkend='command-mouseoff'>mouseoff</link></entry>
         <entry><literallayout>inHabilitaRaton</literallayout></entry>
       </row>

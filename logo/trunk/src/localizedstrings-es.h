@@ -359,7 +359,7 @@
 #define LOCALIZED_ALTERNATE_MIDIOPEN               "abreMidi"
 #define LOCALIZED_ALTERNATE_MINUS                  "cambiaSigno"
 #define LOCALIZED_ALTERNATE_MKDIR                  "creaDir"
-#define LOCALIZED_ALTERNATE_MODULO                 "resto"
+#define LOCALIZED_ALTERNATE_MODULO                 "modulo" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_MOUSEOFF               "inHabilitaRaton"
 #define LOCALIZED_ALTERNATE_MOUSEON                "habilitaRaton"
 #define LOCALIZED_ALTERNATE_MOUSEPOS               "posRaton"
