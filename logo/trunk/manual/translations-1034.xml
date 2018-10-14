@@ -543,8 +543,7 @@ mul</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-erns'>erns</link></entry>
-        <entry><literallayout>bnombres
-bovars</literallayout></entry>
+        <entry><literallayout>bnombres</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-erpls'>erpls</link></entry>
@@ -691,10 +690,6 @@ pp</literallayout></entry>
       <row>
         <entry><link linkend='command-groupboxdelete'>groupboxdelete</link></entry>
         <entry><literallayout>borraGroupbox</literallayout></entry>
-      </row>
-      <row>
-        <entry><link linkend='command-halt'>halt</link></entry>
-        <entry><literallayout>alto</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-heading'>heading</link></entry>
@@ -3152,10 +3147,6 @@ raizcuadrada</literallayout></entry>
       <row>
         <entry>bovar</entry>
         <entry><link linkend='command-ern'>ern</link></entry>
-      </row>
-      <row>
-        <entry>bovars</entry>
-        <entry><link linkend='command-erns'>erns</link></entry>
       </row>
       <row>
         <entry>bp</entry>
