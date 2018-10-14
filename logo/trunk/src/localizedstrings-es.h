@@ -291,7 +291,7 @@
 #define LOCALIZED_ALTERNATE_GREATER_               "mayor?"
 #define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "creaGroupbox"
 #define LOCALIZED_ALTERNATE_GROUPBOXDELETE         "borraGroupbox"
-#define LOCALIZED_ALTERNATE_HALT                   "alto"
+#define LOCALIZED_ALTERNATE_HALT                   "halt" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HASOWNPENP             "hasownpenp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HASOWNPEN_             "hasownpen?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HEADING                "rumbo"
