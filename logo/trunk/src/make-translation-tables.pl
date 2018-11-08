@@ -125,7 +125,7 @@ sub PrintShadowedProcedures($$$) {
 
     # Check this localization against all English procedure names.
     foreach my $otherEnglishProcedureName (values %{$English}) {
-                
+
       # If the localization matches the English procedure name, then the
       # localization is redundant, but it's not shadowing.
       if ($localizedProcedureNameInEnglish eq $otherEnglishProcedureName) {
@@ -238,7 +238,7 @@ sub PrintTranslationsAsText($$$) {
   }
   $toenglish->close();
 }
-      
+
 sub GetLinkend($) {
 
   my $EnglishProcedure = shift or die "not enough arguments";
