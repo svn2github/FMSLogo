@@ -1237,7 +1237,7 @@ FIN
 TAPA "REFRESCA
 
 
-;copydef "restante "rest
+;copydef "?restante "?rest
 
 PARA ?restante [:which 1]
 DEVUELVE MP ELEMENTO :which :template.lists
