@@ -1,31 +1,35 @@
 <section id="command-yield">
-<title>YIELD</title>
+<title>NOEXCLUSIVO</title>
+<indexterm><primary>NOEXCLUSIVO</primary></indexterm>
 <indexterm><primary>YIELD</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>YIELD</command></synopsis>
+<synopsis><command>NOEXCLUSIVO</command>
+<command>YIELD</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-YIELD tells &PRODUCTNAME; that it's okay to interrupt running &GENERICNAME; code in order to process windows messages, such as keyboard input, mouse clicks, or notifications to repaint the screen.
-The default state is to yield.
+Le dice a &PRODUCTNAME; que es permisible interrumpir la ejecución de código &GENERICNAME; para procesar los mensajes de ventanas, tal como las pulsaciones de tecla, clics del ratón, y notificaciones para actualizar la pantalla.
+El modo por defecto es NOEXCLUSIVO.
 </para>
 
 <para>
-See the <link linkend="command-noyield">NOYIELD</link> command for an explaination of what "yielding" means.
+La descripción del comando <link linkend="command-noyield">EXCLUSIVO</link> tiene una explicación de lo que pasa cuando no interrumpe la ejecución para procesar estos mensajes.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-eventcheck">EVENTCHECK</link></member>
+<member><link linkend="command-eventcheck">SIEVENTO</link></member>
 </simplelist></listitem>
 </varlistentry>
 

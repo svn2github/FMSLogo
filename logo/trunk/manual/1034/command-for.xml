@@ -1,80 +1,85 @@
 <section id="command-for">
-    <title>FOR</title>
+    <title>DESDE</title>
+<indexterm><primary>DESDE</primary></indexterm>
 <indexterm><primary>FOR</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>FOR</command> <parameter>controllist</parameter> <parameter>instructionlist</parameter></synopsis>
+<synopsis><command>DESDE</command> <parameter>lista_de_control</parameter> <parameter>lista_de_instrucciones</parameter>
+<command>FOR</command> <parameter>lista_de_control</parameter> <parameter>lista_de_instrucciones</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-FOR is a flexible tool for iteration.
+DESDE es una herramienta flexible para la iteración.
 </para>
 
 <para>
-The <parameter>controllist</parameter> input controls how the iteration occurs.
-It must be a list containing either three or four members.
-In order, they are:
+El argumento <parameter>lista_de_control</parameter> controla como ocurre la iteración.
+Debe ser una lista con tres o cuatro miembros.
+En orden, son:
 
 <orderedlist>
 
 <listitem>
 <para>
-A word, which is used as the name of a "control variable".
-The control variable is local to the procedure.
+Una palabra que se usa como el nombre del «variable de control».
+Esta variable es local al procedimiento.
 </para>
 </listitem>
 
 <listitem>
 <para>
-A word or list that is evaluated to determine a number, the "starting value" of the variable.
+Una palabra o lista que se evalúa para obtener el valor inicial de la variable.
 </para>
 </listitem>
 
 <listitem>
 <para>
-A word or list that is evaluated to determine a number, the "limit value" of the variable.
+Una palabra o lista que se evalúa para obtener un número, el valor límite de la variable.
 </para>
 </listitem>
 
 <listitem>
 <para>
-An optional word or list that is evaluated to determine the "step size".
-If the fourth member is missing, the step size is 1 or -1 depending on whether the limit value is greater than or less than the starting value, respectively.
+Una palabra o lista opcional que se evalúa para obtener el tamaño del incremento.
+Si falta el cuarto miembro tendrá el valor 1 o –1, dependiendo de si el valor límite sea mayor o menor que el valor inicial.
 </para>
 </listitem>
 </orderedlist>
 </para>
 
 <para>
-The <parameter>instructionlist</parameter> input dictates what FOR should do on each iteration.
-The effect of FOR is to run <parameter>instructionlist</parameter> repeatedly, assigning a new value to the "control variable" on each iteration.
-First the "starting value" is assigned to the control variable.
-Then the control value is compared to the "limit value".
-FOR is complete when the sign of (current - limit) is the same as the sign of the "step size".
+El argumento <parameter>lista_de_instrucciones</parameter> contiene las instrucciones que DESDE ejecuta en cada iteración.
 </para>
 
 <para>
-If no "step size" is provided, the <parameter>instructionlist</parameter> is always run at least once.
-An explicit step size can lead to a zero-trip FOR, (for example, <userinput>FOR [I 1 0 1] [<replaceable>...</replaceable>]</userinput>).
-Otherwise, <parameter>instructionlist</parameter> is run, then the control variable is incremented by the step size and FOR returns to the comparison step.
+El efecto de DESDE es que se ejecuta repetidamente las instrucciones contenidas en <parameter>lista_de_instrucciones</parameter>, y asigna un nuevo valor a la variable de control en cada iteración.
+Primero asigna el valor inicial a la variable de control y compara ese valor al valor límite.
+La ejecución termina cuando el signo de (actual - límite) es lo mismo que el signo del tamaño de incremento.
+En otro caso, se ejecutan las instrucciones contenidas en <parameter>lista_de_instrucciones</parameter>, se incrementa la variable de control por el valor del incremento y se vuelve a la comparación.
 </para>
 
 <para>
-In many cases, a FOR instruction can be rewritten to use <link linkend="command-repeat">REPEAT</link> and <link linkend="command-repcount">REPCOUNT</link>, instead.
+Si no hay un tamaño de incremento, entonces se ejecuta <parameter>lista_de_instrucciones</parameter> al menos una vez.
+Con un tamaño de incremento explicito, se puede conseguir que DESDE nunca ejecutara <parameter>lista_de_instrucciones</parameter> (por ejemplo, <userinput>DESDE [i 1 0 1] [<replaceable>...</replaceable>]</userinput>).
+</para>
+
+<para>
+En muchos casos, puedes reescribir una instrucción DESDE en términos de <link linkend="command-repeat">REPITE</link> y <link linkend="command-repcount">CUENTAREPITE</link>.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>FOR [I 2 7 1.5] [PRINT :I]</userinput>
+<programlisting><userinput>DESDE [i 2 7 1.5] [ESCRIBE :i]</userinput>
 2
 3.5
 5

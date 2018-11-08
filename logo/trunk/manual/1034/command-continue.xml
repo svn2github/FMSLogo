@@ -1,55 +1,61 @@
 <section id="command-continue">
-<title>CONTINUE</title>
+<title>SIGUE</title>
+<indexterm><primary>SIGUE</primary></indexterm>
 <indexterm><primary>CONTINUE</primary></indexterm>
 <indexterm><primary>CO</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>CONTINUE</command> <parameter>value</parameter>
-<command>CO</command> <parameter>value</parameter>
+<synopsis><command>SIGUE</command> <parameter>valor</parameter>
+(<command>SIGUE</command>)
+<command>CONTINUE</command> <parameter>valor</parameter>
+<command>CO</command> <parameter>valor</parameter>
 (<command>CONTINUE</command>)
 (<command>CO</command>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
-
 <para>
-Ends the current interactive pause, returning to the context of the <link linkend="command-pause">PAUSE</link> invocation that began it.
-If CONTINUE is given an input, that value is used as the output from the PAUSE.
-If not, the PAUSE does not output.
+Termina la pausa interactiva actual, volviendo al contexto desde el que se llamó a <link linkend="command-pause">PAUSA</link>.
+Si le das a SIGUE un argumento, PAUSA devuelve ese valor.
+Si no, PAUSA no devuelve nada.
 </para>
 
 <para>
-Exceptionally, the CONTINUE command can be used without its default input and without parentheses provided that nothing follows it on the instruction line.
+Como excepción a la regla general, puedes usar el comando SIGUE sin su argumento y sin paréntesis siempre y cuando nada sigue el comando en la línea de instrucción.
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 <para>
-<programlisting><userinput>TO MYPROGRAM
-  REPEAT 180 [RIGHT 2 IF 90=REPCOUNT [PAUSE]]
-  PRINT "Done
-END
+<programlisting><userinput>PARA MIPROGRAMA
+  REPITE 180 [GIRADERECHA 2 SI 90=CUENTAREPITE [PAUSA]]
+  ESCRIBE "Hecho
+FIN
 
-MYPROGRAM</userinput>
-Pausing...MYPROGRAM
+MIPROGRAMA</userinput>
+Pausando...MIPROGRAMA
 </programlisting>
-Enter <userinput>SHOW HEADING</userinput> in Pause Mode dialog box and hit OK.
-<programlisting>180
-</programlisting>
-Enter <userinput>CONTINUE</userinput> in Pause Box and hit OK.
-<programlisting>Done
-</programlisting>
+
+Entra <userinput>MUESTRA RUMBO</userinput> en el cuadro de diálogo titulado «Modo de Pausa» y presiona OK.
+
+<programlisting>180</programlisting>
+
+Entra <userinput>SIGUE</userinput> en el cuadro de diálogo titulado «Modo de Pausa» y presiona OK.
+
+<programlisting>Hecho</programlisting>
 </para>
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

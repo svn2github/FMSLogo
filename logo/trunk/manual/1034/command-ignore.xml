@@ -1,36 +1,40 @@
 <section id="command-ignore">
-    <title>IGNORE</title>
+    <title>IGNORA</title>
+<indexterm><primary>IGNORA</primary></indexterm>
 <indexterm><primary>IGNORE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>IGNORE</command> <parameter>list</parameter></synopsis>
+<synopsis><command>IGNORA</command> <parameter>valor</parameter>
+<command>IGNORE</command> <parameter>valor</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-IGNORE does nothing.
-This is useful when an expression is evaluated for a side effect and its actual output is unimportant.
+No hace nada.
+Es útil cuando se evalúa una expresión por su efecto secundario y lo que devuelve no es importante.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
-<programlisting><userinput>TO MYPROGRAM :arg
-  PRINT :arg
-  OUTPUT COUNT :arg
-END
 
-MYPROGRAM "Hello</userinput>
-Hello
-I don't know what to do with 5
-<userinput>IGNORE MYPROGRAM "Hello</userinput>
-Hello
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>PARA MIPROGRAMA :arg
+  ESCRIBE :arg
+  DEVUELVE CUENTA :arg
+FIN
+
+MIPROGRAMA "Hola</userinput>
+Hola
+No dices qué debo hacer con 4
+
+<userinput>IGNORA MIPROGRAMA "Hola</userinput>
+Hola
 </programlisting>
 </listitem>
 </varlistentry>

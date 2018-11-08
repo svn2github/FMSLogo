@@ -1,36 +1,40 @@
 <section id="command-while">
-    <title>WHILE</title>
+    <title>MIENTRAS</title>
+<indexterm><primary>MIENTRAS</primary></indexterm>
 <indexterm><primary>WHILE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>WHILE</command> <parameter>conditionlist</parameter> <parameter>instructionlist</parameter></synopsis>
+<synopsis><command>MIENTRAS</command> <parameter>lista_de_prueba</parameter> <parameter>lista_de_instrucciones</parameter>
+<command>WHILE</command> <parameter>lista_de_prueba</parameter> <parameter>lista_de_instrucciones</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Repeatedly evaluates the <parameter>instructionlist</parameter> as long as the evaluated <parameter>conditionlist</parameter> remains TRUE.
-WHILE evaluates <parameter>conditionlist</parameter> before <parameter>instructionlist</parameter>, so <parameter>instructionlist</parameter> may not be run at all.
-The <parameter>conditionlist</parameter> input must contain an expression that evalautes to either TRUE or FALSE.
+Ejecuta repetidamente la <parameter>lista_de_instrucciones</parameter> mientras que <parameter>lista_de_prueba</parameter> evalúa a CIERTO.
+MIENTRAS evalúa <parameter>lista_de_prueba</parameter> antes de evaluar <parameter>lista_de_instrucciones</parameter>, así que es posible que no se ejecuta <parameter>lista_de_instrucciones</parameter> ni una vez.
+El argumento <parameter>lista_de_prueba</parameter> debe contener una expresión que evalúa a CIERTO o FALSO.
 </para>
 
 <para>
-The fact that the <parameter>conditionlist</parameter> input is a list may be misleading, because it should contain exactly one expression.
-It is only a list because the contents of a list are not evaluated by default.
-Instead, they must be explicitly evaluated with <link linkend="command-run">RUN</link>.
-This allows &GENERICNAME; to reevaluate <parameter>conditionlist</parameter> after each iteration, rather than only evaluating it once.
+El hecho de que el argumento <parameter>lista_de_prueba</parameter> es una lista pueda engañar porque debería contener exactamente una expresión.
+Sólo es una lista para aplazar cuando se lo evalúa.
+Por ser una lista, se necesita evaluarlo explícitamente con <link linkend="command-run">EJECUTA</link>.
+Esto permite que MIENTRAS reevalúa <parameter>lista_de_prueba</parameter> antes de cada iteración, en lugar de sólo una vez.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "i 0
-WHILE [:i&lt;3] [MAKE "i :i+1 PRINT :i]</userinput>
+<programlisting><userinput>HAZ "i 0
+MIENTRAS [:i &lt; 3] [HAZ "i :i+1 ESCRIBE :i]</userinput>
 1
 2
 3

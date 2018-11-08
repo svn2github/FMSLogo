@@ -1,39 +1,41 @@
 <section id="command-repcount">
-    <title>REPCOUNT</title>
+    <title>CUENTAREPITE</title>
+<indexterm><primary>CUENTAREPITE</primary></indexterm>
 <indexterm><primary>REPCOUNT</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>REPCOUNT</command></synopsis>
+<synopsis><command>CUENTAREPITE</command>
+<command>REPCOUNT</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the number of the current repetition of a <link linkend="command-repeat">REPEAT</link> command's instruction list.
-That is, it outputs 1 the first time the instruction list is run, outputs 2 the second time, and so on.
-REPCOUNT outputs -1 when it is run outside the context of a FOREVER or REPEAT command's instruction list.
+Devuelve el número de repetición actual de una lista de instrucción que <link linkend="command-repeat">REPITE</link> ejecuta.
+Esto es, devuelve 1 si es la primera vez que REPITE ejecuta la lista de instrucción, 2 si es la segunda vez y así sucesivamente.
+CUENTAREPITE devuelve -1 si lo ejecutas fuera del contexto de una lista de instrucción del comando SIEMPRE o REPITE.
 </para>
 
 <para>
-If two REPEAT commands are nested, REPCOUNT outputs the repeat count of the innermost REPEAT.
+Si anidas dos instrucciones de REPITE, CUENTAREPITE devuelve el número de repetición del REPITE lo más interior.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>REPEAT 3 [PRINT (LIST "This "is "iteration REPCOUNT)]</userinput>
-This is iteration 1
-This is iteration 2
-This is iteration 3
+<programlisting><userinput>REPITE 3 [ESCRIBE (LISTA "Es "la "vuelta CUENTAREPITE)]</userinput>
+Es la vuelta 1
+Es la vuelta 2
+Es la vuelta 3
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

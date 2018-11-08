@@ -1,44 +1,47 @@
 <section id="command-eventcheck">
-    <title>EVENTCHECK</title>
+    <title>SIEVENTO</title>
+<indexterm><primary>SIEVENTO</primary></indexterm>
 <indexterm><primary>EVENTCHECK</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>EVENTCHECK</command></synopsis>
+<synopsis><command>SIEVENTO</command>
+<command>EVENTCHECK</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
-
 <para>
-The EVENTCHECK command is like calling <link linkend="command-yield">YIELD</link> immediately followed by <link linkend="command-noyield">NOYIELD</link>.
-It checks to see if any events are waiting to be processed.
-Some commands that input "callbacks" run them in a no-yield state.
-If the callback code is short and quick you won't see any problems.
-But if it's long the user will notice that they lose control during this period.
-If you sprinkle a few EVENTCHECK instructions around, then the user will not loose control for such a "long" period of time.
+El comando SIEVENTO es similar a ejecutar <link linkend="command-yield">NOEXCLUSIVO</link> seguido inmediatamente por <link linkend="command-noyield">EXCLUSIVO</link>.
+Chequea si hay eventos en espera de ser procesados.
+Algunos comandos que aceptan listas de instrucciones a ejecutar en respuesta a un evento las ejecutan en modo EXCLUSIVO.
+Si las instrucciones se ejecutan rápidamente, no presentan problemas.
+Pero si son lentos, entonces el usuario perderá el control durante ese tiempo.
+Si salpicas esas instrucciones con unas instrucciones de SIEVENTO, entonces el usuarario no perderá control por un tan largo trecho de tiempo.
 </para>
 
 <para>
-This command can be used as an alternative to placing YIELD and NOYIELD commands around computationally intensive loops.
-You can wrap the whole procedure in a NOYIELD/YIELD pair then you can call EVENTCHECK in strategic locations in your loops.
+Puedes usar SIEVENTO como alternativo de poner instrucciones de NOEXCLUSIVO y EXCLUSIVO alrededor de bucles que son computacionalmente caros.
+En lugar de esto, puedes envolver el procedimiento entero con un par de NOEXCLUSIVO/EXCLUSIVO y llamar SIEVENTO en lugares estratégicos en tus bucles.
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
-<programlisting><userinput>MOUSEON [REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] RIGHT 5]] [] [] [] []</userinput>
-<replaceable>Click the mouse in &PRODUCTNAME; Screen.
-Note that while it is drawing you cannot HALT it, because mouse callbacks do not yield.</replaceable>
 
-<userinput>MOUSEON [REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] RIGHT 5 EVENTCHECK]] [] [] [] []</userinput>
-<replaceable>Click the mouse in &PRODUCTNAME; Screen.
-Note that while it is drawing you can now HALT</replaceable>
+<varlistentry><term>Ejemplo</term>
+<listitem>
+ 
+<programlisting><userinput>HABILITARATON [REPITE 72 [REPITE 4 [AVANZA 100 GIRADERECHA 90] GIRADERECHA 5]] [] [] [] []</userinput>
+<replaceable>Hagas clic en la pantalla de &PRODUCTNAME; múltiples veces.
+Observa que mientras se dibuja no puedes presionar el Botón Alto, porque la interrupción trabaja en modo EXCLUSIVO.</replaceable>
+
+<userinput>HABILITARATON [REPITE 72 [REPITE 4 [AVANZA 100 GIRADERECHA 90] GIRADERECHA 5 SIEVENTO]] [] [] [] []</userinput>
+<replaceable>Hagas clic en la pantalla de &PRODUCTNAME; múltiples veces.
+Observa que mientras se dibuja sí puedes presionar el Botón Alto.</replaceable>
 </programlisting>
 
 </listitem>

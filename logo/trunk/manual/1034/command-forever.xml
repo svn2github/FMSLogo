@@ -1,40 +1,47 @@
 <section id="command-forever">
-<title>FOREVER</title>
+<title>SIEMPRE</title>
+<indexterm><primary>SIEMPRE</primary></indexterm>
 <indexterm><primary>FOREVER</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>FOREVER</command> <parameter>instructionlist</parameter></synopsis>
+<synopsis><command>SIEMPRE</command> <parameter>lista_de_instrucciones</parameter>
+<command>FOREVER</command> <parameter>lista_de_instrucciones</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Runs <parameter>instructionlist</parameter> repeatedly, forever.
+Ejecuta <parameter>lista_de_instrucciones</parameter> repetidamente, para siempre.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>FOREVER [PRINT "|Wake me when you are done.|]</userinput>
-Wake me when you are done.
-Wake me when you are done.
-Wake me when you are done.
-Wake me when you are done.
-Wake me when you are done.
-Wake me when you are done.
+<programlisting><userinput>SIEMPRE [ESCRIBE "|Despiertame cuando has terminado.|]</userinput>
+Despiertame cuando has terminado.
+Despiertame cuando has terminado.
+Despiertame cuando has terminado.
+Despiertame cuando has terminado.
+Despiertame cuando has terminado.
+Despiertame cuando has terminado.
+Despiertame cuando has terminado.
+Despiertame cuando has terminado.
 <replaceable>...</replaceable>
 </programlisting>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-repeat">REPEAT</link></member>
+<member><link linkend="command-repeat">REPITE</link></member>
 </simplelist></listitem>
 </varlistentry>
 

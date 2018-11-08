@@ -4,38 +4,38 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
 <synopsis><command>ERROR</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a list describing the error just caught, if any.
-If no error was caught since the last use of ERROR, then ERROR outputs the empty list.
-The error list contains four members: an integer code corresponding to the type of error, the text of the error message, the name of the procedure in which the error occurred, and the instruction line on which the error occurred.
+Devuelve una lista que describe el error que ATRAPA acaba de atrapar, si lo hay.
+Si no hay error después del último uso de ERROR, devuelve la lista vacía.
+La lista con el error contiene cuatro miembros: un entero que indica el código del tipo de error, el texto del mensaje de error, el nombre del procedimiento en donde se produce el error y la línea de instrucciones en que ocurrió el error.
 </para>
 
 <para>
-The meaning of the first item in the list is explained in the section on <link linkend="error-codes">Error Codes</link>.
+Se explica el significado del primer elemento de la lista en la sección sobre <link linkend="error-codes">Códigos de error</link>.
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
-<programlisting><userinput>TO MYPROGRAM
-  FORWARD 1000
-END
 
-FENCE
-CATCH "ERROR [MYPROGRAM]
-SHOW ERROR</userinput>
-[3 turtle out of bounds MYPROGRAM [FORWARD 1000]]
-<userinput>SHOW ERROR</userinput>
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>PARA MIPROGRAMA
+  AVANZA 1000
+FIN
+
+MODOJAULA
+ATRAPA "ERROR [MIPROGRAMA]
+MUESTRA ERROR</userinput>
+[3 tortuga fuera de los límites MIPROGRAMA [AVANZA 1000]]
+<userinput>MUESTRA ERROR</userinput>
 []
 </programlisting>
 </listitem>

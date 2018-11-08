@@ -1,42 +1,49 @@
 <section id="command-output">
-<title>OUTPUT</title>
+<title>DEVUELVE</title>
+<indexterm><primary>DEVUELVE</primary></indexterm>
+<indexterm><primary>DEV</primary></indexterm>
 <indexterm><primary>OUTPUT</primary></indexterm>
 <indexterm><primary>OP</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>OUTPUT</command> <parameter>value</parameter>
-<command>OP</command> <parameter>value</parameter></synopsis>
+<synopsis><command>DEVUELVE</command> <parameter>valor</parameter>
+<command>DEV</command> <parameter>valor</parameter>
+<command>OUTPUT</command> <parameter>valor</parameter>
+<command>OP</command> <parameter>valor</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Ends the running of the procedure in which it appears.
-That procedure outputs <parameter>value</parameter> to the context in which it was invoked.
-Don't be confused: OUTPUT itself is a command, but the procedure that invokes OUTPUT is an operation.
+Termina la ejecución del procedimiento en que aparece.
+Este procedimiento devuelve <parameter>valor</parameter> al contexto en el que se lo llamó.
+No seas confuso: DEVUELVE es un comando, pero el procedimiento que ejecuta DEVUELVE es una operación.
 </para>
 
 <para>
-The <parameter>value</parameter> input may be any &GENERICNAME; thing (word, list, array, etc.).
+El argumento <parameter>valor</parameter> puede ser cualquier cosa de &GENERICNAME; (palabra, lista, vector, etc.).
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
-<programlisting><userinput>TO MYPROGRAM
-  OUTPUT [This is the output]
-END
 
-SHOW MYPROGRAM</userinput>
-[This is the output]
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>PARA MIPROGRAMA
+  DEVUELVE [Lo que devuelve es esto]
+FIN
+
+MUESTRA MIPROGRAMA</userinput>
+[Lo que devuelve es esto]
 </programlisting>
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

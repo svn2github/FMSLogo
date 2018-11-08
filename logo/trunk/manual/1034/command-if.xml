@@ -1,73 +1,81 @@
 <section id="command-if">
-<title>IF</title>
+<title>SI</title>
+<indexterm><primary>SI</primary></indexterm>
 <indexterm><primary>IF</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>IF</command> <parameter>condition</parameter> <parameter>true.instructionlist</parameter>
-(<command>IF</command> <parameter>condition</parameter> <parameter>true.instructionlist</parameter> <parameter>false.instructionlist</parameter>)</synopsis>
+<synopsis><command>SI</command> <parameter>condición</parameter> <parameter>cierta_lista_de_instrucciones</parameter>
+(<command>SI</command> <parameter>condición</parameter> <parameter>cierta_lista_de_instrucciones</parameter> <parameter>falsa_lista_de_instrucciones</parameter>)
+<command>IF</command> <parameter>condición</parameter> <parameter>cierta_lista_de_instrucciones</parameter>
+(<command>IF</command> <parameter>condición</parameter> <parameter>cierta_lista_de_instrucciones</parameter> <parameter>falsa_lista_de_instrucciones</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Command or operation where:
+Es un comando u operación donde:
 
 <itemizedlist>
 <listitem>
 <para>
-If <parameter>condition</parameter> evaluates to TRUE, then IF runs <parameter>true.instructionlist</parameter>.
+Si <parameter>condición</parameter> es CIERTO, entonces SI ejecuta <parameter>cierta_lista_de_instrucciones</parameter>.
 </para>
 </listitem>
 
 <listitem>
 <para>
-If <parameter>condition</parameter> evalutes to FALSE, then IF does nothing.
+Si <parameter>condición</parameter> es FALSE, entonces SI no hace nada.
 </para>
 </listitem>
 
 <listitem>
 <para>
-If given a <parameter>false.instructionlist</parameter> input, IF acts like <link linkend="command-ifelse">IFELSE</link>.
+Si le das a SI el argumento opcional <parameter>falsa_lista_de_instrucciones</parameter>, entonces SI se comporta como <link linkend="command-ifelse">SISINO</link>.
 </para>
 </listitem>
 
 <listitem>
 <para>
-It is an error if <parameter>condition</parameter> does not evaluate to either TRUE or FALSE.
+Es un error si <parameter>condición</parameter> no es ni CIERTO ni FALSO.
 </para>
 </listitem>
 </itemizedlist>
 </para>
 
-
 <para>
-For compatibility with earlier versions of &GENERICNAME;, if an IF instruction is not enclosed in parentheses, but the first thing on the instruction line after the second input expression is a literal list (i.e., a list in square brackets), the IF is treated as if it were <link linkend="command-ifelse">IFELSE</link>, but a warning message is given.
-If this aberrant IF appears in a procedure body, the warning is given only the first time the procedure is invoked in each &GENERICNAME; session.
+Por compatibilidad con versiones de &GENERICNAME; anteriores, si una instrucción SI no está entre paréntesis pero lo primero de la línea que sigue el argumento <parameter>cierta_lista_de_instrucciones</parameter> es una lista literal (es decir, entre corchetes), entonces se trata SI como si fuera <link linkend="command-ifelse">SISINO</link>, pero se envía un mensaje de advertencia.
+Si ésta SI aberrante aparece en el cuerpo de un procedimiento, sólo se envía la advertencia la primera vez que se ejecuta el procedimiento en cada expresión de &GENERICNAME;.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<para>
+Con un sólo lista de instrucciones:
+<programlisting><userinput>SI 1=1 [ESCRIBE [Si, es cierto]]</userinput>
+Si, es cierto</programlisting>
 </para>
 
-</listitem>
-</varlistentry>
+<para>
+Con dos listas de instrucciones:
+<programlisting><userinput>PARA MAX :a :b
+  DEVUELVE (SI :a > :b [:a] [:b])
+FIN
 
-<varlistentry><term>Example</term>
-<listitem>
-<programlisting><userinput>; single instruction list
-IF 1=1 [PRINT [Yes it is true]]</userinput>
-Yes it is true</programlisting>
-
-<programlisting><userinput>; two instruction lists
-TO MAX :a :b
-  OUTPUT (IF :a > :b [:a] [:b])
-END
-
-SHOW MAX 1 2</userinput>
+MUESTRA MAX 1 2</userinput>
 2
 </programlisting>
+</para>
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

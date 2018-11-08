@@ -1,33 +1,34 @@
 <section id="command-run">
-    <title>RUN</title>
+    <title>EJECUTA</title>
+<indexterm><primary>EJECUTA</primary></indexterm>
 <indexterm><primary>RUN</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>RUN</command> <parameter>instructionlist</parameter></synopsis>
+<synopsis><command>EJECUTA</command> <parameter>lista_de_instrucciones</parameter>
+<command>RUN</command> <parameter>lista_de_instrucciones</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Runs the instructions in <parameter>instructionlist</parameter>; outputs if the list contains an expression that outputs.
+Ejecuta las instrucciones que contiene el argumento <parameter>lista_de_instrucciones</parameter>; devuelve si la lista contiene una expresión que devuelve.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "thingstodo [PRINT "Hello]
-RUN :thingstodo</userinput>
-Hello
+<programlisting><userinput>HAZ "cosas_que_hacer [ESCRIBE "Hola]
+EJECUTA :cosas_que_hacer</userinput>
+Hola
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

@@ -1,32 +1,35 @@
 <section id="command-true">
-    <title>TRUE</title>
+    <title>CIERTO</title>
+<indexterm><primary>CIERTO</primary></indexterm>
 <indexterm><primary>TRUE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
-<listitem><para>(special form)</para>
-<synopsis><command>TRUE</command></synopsis>
+<varlistentry><term>Sinopsis</term>
+<listitem><para>(forma especial)</para>
+<synopsis><command>CIERTO</command>
+<command>TRUE</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-This is a special word to indicate a positive condition.
-TRUE is a reserved value, not a procedure nor a variable.
+Es una palabra especial que indica el resultado positivo de una condición.
+CIERTO es una palabra reservada, no un procedimiento ni una variable.
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
-<programlisting><userinput>SHOW 1=1</userinput>
-true</programlisting>
 
-<programlisting><userinput>IF "TRUE [PRINT [TRUE is always true]]</userinput>
-TRUE is always true</programlisting>
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>MUESTRA 1=1</userinput>
+cierto</programlisting>
+
+<programlisting><userinput>SI "CIERTO [ESCRIBE [CIERTO siempre es cierto]]</userinput>
+CIERTO siempre es cierto</programlisting>
 </listitem>
 </varlistentry>
 

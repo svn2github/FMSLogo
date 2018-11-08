@@ -1,42 +1,45 @@
 <section id="command-setcursornowait">
-    <title>SETCURSORNOWAIT</title>
+    <title>PONCURSORNOESPERA</title>
+<indexterm><primary>PONCURSORNOESPERA</primary></indexterm>
 <indexterm><primary>SETCURSORNOWAIT</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETCURSORNOWAIT</command></synopsis>
+<synopsis><command>PONCURSORNOESPERA</command>
+<command>SETCURSORNOWAIT</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-SETCURSORNOWAIT changes the cursor to the familiar arrow shape.
-This should be just before a call to <link linkend="command-yield">YIELD</link>.
+Pone el cursor en la forma familiar de flecha.
+Debes usar este comando justo antes de una llamada a <link linkend="command-yield">NOEXCLUSIVO</link>.
 </para>
 
 <para>
-Once &PRODUCTNAME; is set to yield, the appropriate (non-hourglass) cursor is used on the next event involving the cursor (like moving the mouse), regardless of whether you call SETCURSORNOWAIT.
-However, calling SETCURSORNOWAIT shows the arrow cursor without waiting for the next event.
+Una vez que &PRODUCTNAME; se vuelva al modo NOEXCLUSIVO se usará el cursor apropiado (no el reloj de arena) al siguiente evento que involucra el cursor (tal como moviendo el ratón), independientemente de si ejecutaras PONCURSORNOESPERA.
+Sin embargo, ejecutando PONCURSORNOESPERA muestra el cursor de flecha sin esperar el evento siguiente.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>REPEAT 100 [
-  NOYIELD
-  SETCURSORWAIT
-  REPEAT 100 [
-    <replaceable>; (work to be done)</replaceable>
+<programlisting><userinput>REPITE 100 [
+  EXCLUSIVO
+  PONCURSORESPERA
+  REPITE 100 [
+    <replaceable>; (trabajo que hacer)</replaceable>
   ]
-  SETCURSORNOWAIT
-  YIELD
+  SETCURSORNOESPERA
+  NOEXCLUSIVO
 ]</userinput>
 </programlisting>
-
 </listitem>
 </varlistentry>
 

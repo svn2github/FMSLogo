@@ -1,27 +1,31 @@
 <section id="command-wait">
-    <title>WAIT</title>
+    <title>ESPERA</title>
+<indexterm><primary>ESPERA</primary></indexterm>
 <indexterm><primary>WAIT</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>WAIT</command> <parameter>delay</parameter></synopsis>
+<synopsis><command>ESPERA</command> <parameter>retraso</parameter>
+<command>WAIT</command> <parameter>retraso</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Delays further execution for about <parameter>delay</parameter> 1/60ths of a second.
-This also yields to other processes running on your system.
+Retrasa la ejecución de más instrucciones por un tiempo de <parameter>retraso</parameter> 1/60º de segundo.
+También cede el control de la CPU a otros procesos en tu sistema operativo.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>WAIT 600 ; ten seconds</userinput>
+<programlisting><userinput>ESPERA 600 ; diez segundos</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

@@ -1,45 +1,49 @@
 <section id="command-iftrue">
-<title>IFTRUE</title>
+<title>SICIERTO</title>
+<indexterm><primary>SICIERTO</primary></indexterm>
 <indexterm><primary>IFTRUE</primary></indexterm>
 <indexterm><primary>IFT</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>IFTRUE</command> <parameter>instructionlist</parameter>
-<command>IFT</command> <parameter>instructionlist</parameter></synopsis>
+<synopsis><command>SICIERTO</command> <parameter>lista_de_instrucciones</parameter>
+<command>IFTRUE</command> <parameter>lista_de_instrucciones</parameter>
+<command>IFT</command> <parameter>lista_de_instrucciones</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Runs <parameter>instructionlist</parameter> if the most recent TEST instruction had a TRUE input.
-Does nothing, otherwise.
-The TEST must have been in the same procedure or a superprocedure.
+Ejecuta <parameter>lista_de_instrucciones</parameter> si el argumento a la última instrucción <link linkend="command-test">PRUEBA</link> tuvo el valor CIERTO.
+De otra manera, no hace nada.
+PRUEBA debe usarse en el mismo procedimiento o superprocedimiento.
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
-<programlisting><userinput>TO MYTEST :arg
-  TEST 1 = :arg
-  PRINT [Do this]
-  PRINT [Do that]
-  IFTRUE [PRINT [arg was the number one]]
-  IFFALSE [PRINT [arg was NOT the number one]]
-END
 
-MYTEST 1</userinput>
-Do this
-Do that
-arg was the number one
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>PARA MIPRUEBA :arg
+  PRUEBA 1 = :arg
+  ESCRIBE [Haga esto]
+  ESCRIBE [Haga eso]
+  SICIERTO [ESCRIBE [arg es el número uno]]
+  SIFALSO  [ESCRIBE [arg NO es el número uno]]
+FIN
+
+MIPRUEBA 1</userinput>
+Haga esto
+Haga eso
+arg es el número uno
 </programlisting>
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

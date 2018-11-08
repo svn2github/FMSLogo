@@ -1,52 +1,58 @@
 <section id="command-settimer">
-    <title>SETTIMER</title>
+    <title>PONTEMPORIZADOR</title>
+<indexterm><primary>PONTEMPORIZADOR</primary></indexterm>
 <indexterm><primary>SETTIMER</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SETTIMER</command> <parameter>id</parameter> <parameter>delay</parameter> <parameter>callback</parameter></synopsis>
+<synopsis><command>PONTEMPORIZADOR</command> <parameter>id</parameter> <parameter>retraso</parameter> <parameter>retrollamada</parameter>
+<command>SETTIMER</command> <parameter>id</parameter> <parameter>retraso</parameter> <parameter>retrollamada</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
-
 <para>
-Sets up a timer identified by <parameter>id</parameter> (a number from 1-31) to call the instructions in <parameter>callback</parameter> in <parameter>delay</parameter> milliseconds of time.
-It continues to "fire" every <parameter>delay</parameter> milliseconds until you invoke <link linkend="command-cleartimer">CLEARTIMER</link> with the same <parameter>id</parameter>.
-</para>
-
-
-<para>
-You can clear the timer at any time with CLEARTIMER.
-In particular, you can clear the timer in the <parameter>callback</parameter> instructions to create a one-shot timer event.
-You can also create a timer at any time, including in the <parameter>callback</parameter> instructions.
-Halting clears all timers.
+Pone un temporizador que se identifica por <parameter>id</parameter> (un entero del rango 1-31) para ejecutar las instrucciones en <parameter>retrollamada</parameter> después de <parameter>retraso</parameter> milisegundos.
+El temporizador continua a ejecutar las instrucciones cada <parameter>retraso</parameter> milisegundos hasta que ejecutas <link linkend="command-cleartimer">TEMPORIZADORACERO</link> con el mismo <parameter>id</parameter>.
 </para>
 
 <para>
-Timers with <parameter>id</parameter> values from 1-16 run their callbacks in <link linkend="command-noyield">NOYIELD</link> mode, which means they are not interrupted by user interaction and the screen isn't repainted if it becomes occulded when the <parameter>callback</parameter> is running.
-Timers with <parameter>id</parameter> values from 17-31 run their callbacks in the normal, interruptable mode.
+En cualquier momento, puedes detener el temporizador con TEMPORIZADORACERO.
+En particular, puedes detenerlo desde las instrucciones en <parameter>retrollamada</parameter> para crear un evento del temporizador de un solo tiro.
+También puedes crear un temporizador en cualquier momento, incluido en las instrucciones de <parameter>retrollamada</parameter>.
 </para>
 
 <para>
-Each timer <parameter>id</parameter> can have different values for <parameter>callback</parameter>.
+Deteniendo a &PRODUCTNAME;, por ejemplo con <link linkend="command-halt">HALT</link> o el <link linkend="commander-halt">Botón Alto</link>, también detiene todos los temporizadores.
 </para>
 
+<para>
+Los temporizadores con valores de <parameter>id</parameter> en el rango 1-16 ejecutan sus retrollamadas en modo <link linkend="command-noyield">EXCLUSIVO</link>.
+Esto quiere decir que no se las interrumpen por acciones del usuario y no se repinta la pantalla si se vuelve ocultada mientras que se ejecutan las instrucciones de <parameter>retrollamada</parameter>.
+Los temporizadores con valores de <parameter>id</parameter> en el rango 17-31 ejecutan sus retrollamadas en el modo normal (interrumpible).
+</para>
+
+<para>
+Cada <parameter>id</parameter> del temporizador puede tener valores diferentes de <parameter>retrollamada</parameter>.
+</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SETTIMER 17 200 [SETPENCOLOR (LIST RANDOM 256 RANDOM 256 RANDOM 256)]</userinput>
-<replaceable>&PRODUCTNAME; is ready to run more instructions and the timer changes the pen color randomly every 200 milliseconds.</replaceable>
-<userinput>REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] RIGHT 5]
-CLEARTIMER 17</userinput>
+<programlisting><userinput>PONTEMPORIZADOR 17 200 [PONCOLORLAPIZ (LISTA AZAR 256 AZAR 256 AZAR 256)]</userinput>
+<replaceable>&PRODUCTNAME; está disponible a ejecutar más instrucciones y el temporizador cambia el color de lápiz al azar cada 200 milisegundos.</replaceable>
+<userinput>REPITE 72 [REPITE 4 [AVANZA 100 GIRADERECHA 90] GIRADERECHA 5]
+TEMPORIZADORACERO 17</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

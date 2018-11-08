@@ -1,56 +1,61 @@
 <section id="command-pause">
-    <title>PAUSE</title>
+    <title>PAUSA</title>
+<indexterm><primary>PAUSA</primary></indexterm>
 <indexterm><primary>PAUSE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>PAUSE</command></synopsis>
+<synopsis><command>PAUSA</command>
+<command>PAUSE</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Command or operation that enters an interactive pause.
-The user is prompted for instructions with a dialog box that includes the name of the procedure in which PAUSE was invoked.
-Local variables of that procedure are available during the pause.
-If the pause is ended by a <link linkend="command-continue">CONTINUE</link> instruction, then PAUSE outputs whatever the input to CONTINUE was.
+Entra en un modo de pausa interactiva.
+En este modo, &PRODUCTNAME; le pide instrucciones al usuario con un cuadro de diálogo.
+Escribe el nombre del procedimiento en que se ejecutó PAUSA en la caja de historia de instrucciones.
+Las variables locales de este procedimiento están disponibles durante la pausa.
+Si se termina la PAUSA con una instrucción de <link linkend="command-continue">SIGUE</link>, entonces PAUSA devuelve el argumento de SIGUE, si lo hay.
 </para>
 
 <para>
-If the variable <link linkend="command-erract">ERRACT</link> exists and an error condition occurs, then the contents of that variable are run as an instruction list.
-Typically ERRACT is given the value [PAUSE] so that an interactive pause mode is entered in the event of an error.
-This allows the user to check values of local variables at the time of the error.
+Si la variable <link linkend="command-erract">ERRACT</link> existe cuando una condición de error ocurre, entonces se ejecuta el contenido de esa variable como una lista de instrucciones.
+Típicamente, ERRACT tiene [PAUSA] como su valor para que se entre en un modo de pausa interactiva en caso de error.
+Éste permite que el usuario lea los valores de las variables locales al tiempo del error.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 <para>
-<programlisting><userinput>TO MYPROGRAM
-  REPEAT 180 [RIGHT 2 IF 90=REPCOUNT [PAUSE]]
-  PRINT "Done
-END
+<programlisting><userinput>PARA MIPROGRAMA
+  REPITE 180 [GIRADERECHA 2 SI 90=CUENTAREPITE [PAUSA]]
+  ESCRIBE "Hecho
+FIN
 
-MYPROGRAM</userinput>
-Pausing...MYPROGRAM
+MIPROGRAMA</userinput>
+Pausando...MIPROGRAMA
 </programlisting>
 
-Enter <userinput>SHOW HEADING</userinput> in Pause Mode dialog box and hit OK.
+Entra <userinput>MUESTRA RUMBO</userinput> en el cuadro de diálogo titulado «Modo de Pausa» y presiona OK.
 
 <programlisting>180</programlisting>
 
-Enter <userinput>CONTINUE</userinput> in Pause Box and hit OK.
+Entra <userinput>SIGUE</userinput> en el cuadro de diálogo titulado «Modo de Pausa» y presiona OK.
 
-<programlisting>Done</programlisting>
-
+<programlisting>Hecho</programlisting>
 </para>
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

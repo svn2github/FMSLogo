@@ -1,26 +1,29 @@
 <section id="command-bye">
-    <title>BYE</title>
+    <title>ADIOS</title>
+<indexterm><primary>ADIOS</primary></indexterm>
 <indexterm><primary>BYE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>BYE</command></synopsis>
+<synopsis><command>ADIOS</command>
+<command>BYE</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-BYE exits &PRODUCTNAME;.
+Sale de &PRODUCTNAME;.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>BYE</userinput>
+<programlisting><userinput>ADIOS</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

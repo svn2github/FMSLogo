@@ -4,30 +4,32 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
 <synopsis><command>HALT</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-The HALT command immediately stops &PRODUCTNAME; from processing any further commands and returns control to the commander.
-It is the same as pressing the <link linkend="commander-halt">Halt Button</link>.
+Inmediatamente detiene a &PRODUCTNAME; de ejecutar más instrucciones y devuelve el control al centro de comandos.
+Equivale a pulsar el <link linkend="commander-halt">Botón Alto</link>.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
-<programlisting><userinput>FOREVER [FORWARD REPCOUNT RIGHT 91 SETPENCOLOR REPCOUNT]</userinput>
-<replaceable>Type "HALT" in the commander's input box and press the Execute button.</replaceable>
-Stopping...
-</programlisting>
 
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>SIEMPRE [AVANZA CUENTAREPITE GIRADERECHA 91 PONCOLORLAPIZ CUENTAREPITE]</userinput>
+<replaceable>Teclea «HALT» en la caja de entrada del centro de comandos y pulsa el botón Ejecutar.</replaceable>
+Parando...
+</programlisting>
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

@@ -1,36 +1,40 @@
 <section id="command-do.until">
-    <title>DO.UNTIL</title>
+    <title>HAZ.HASTA</title>
+<indexterm><primary>HAZ.HASTA</primary></indexterm>
 <indexterm><primary>DO.UNTIL</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>DO.UNTIL</command> <parameter>instructionlist</parameter> <parameter>conditionlist</parameter></synopsis>
+<synopsis><command>HAZ.HASTA</command> <parameter>lista_de_instrucciones</parameter> <parameter>lista_de_prueba</parameter>
+<command>DO.UNTIL</command> <parameter>lista_de_instrucciones</parameter> <parameter>lista_de_prueba</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Repeatedly evaluates the <parameter>instructionlist</parameter> as long as the evaluated <parameter>conditionlist</parameter> remains FALSE.
-DO.UNTIL evaluates <parameter>instructionlist</parameter> before evaluating <parameter>conditionlist</parameter>, so <parameter>instructionlist</parameter> is always run at least once.
-The <parameter>conditionlist</parameter> input must contain an expression that evalautes to either TRUE or FALSE.
+Ejecuta repetidamente la <parameter>lista_de_instrucciones</parameter> mientras que <parameter>lista_de_prueba</parameter> evalúa a FALSO.
+HAZ.HASTA evalúa <parameter>lista_de_instrucciones</parameter> antes de evaluar <parameter>lista_de_prueba</parameter>, así que siempre se ejecuta <parameter>lista_de_instrucciones</parameter> al menos una vez.
+El argumento <parameter>lista_de_prueba</parameter> debe contener una expresión que evalúa a CIERTO o FALSO.
 </para>
 
 <para>
-The fact that the <parameter>conditionlist</parameter> input is a list may be misleading, because it should contain exactly one expression.
-It is only a list because the contents of a list are not evaluated by default.
-Instead, they must be explicitly evaluated with <link linkend="command-run">RUN</link>.
-This allows &GENERICNAME; to reevaluate <parameter>conditionlist</parameter> after each iteration, rather than only evaluating it once.
+El hecho de que el argumento <parameter>lista_de_prueba</parameter> es una lista pueda engañar porque debería contener exactamente una expresión.
+Sólo es una lista para aplazar cuando se lo evalúa.
+Por ser una lista, se necesita evaluarlo explícitamente con <link linkend="command-run">EJECUTA</link>.
+Esto permite que HAZ.HASTA reevalúa <parameter>lista_de_prueba</parameter> después de cada iteración, en lugar de sólo una vez.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MAKE "i 0
-DO.UNTIL [MAKE "i :i+1 PRINT :i] [:i>3]</userinput>
+<programlisting><userinput>HAZ "i 0
+HAZ.HASTA [HAZ "i :i+1 ESCRIBE :i] [:i > 3]</userinput>
 1
 2
 3

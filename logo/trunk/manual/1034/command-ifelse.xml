@@ -1,63 +1,77 @@
 <section id="command-ifelse">
-    <title>IFELSE</title>
+    <title>SISINO</title>
+<indexterm><primary>SISINO</primary></indexterm>
 <indexterm><primary>IFELSE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>IFELSE</command> <parameter>condition</parameter> <parameter>true.instructionlist</parameter> <parameter>false.instructionlist</parameter></synopsis>
+<synopsis><command>SISINO</command> <parameter>condición</parameter> <parameter>cierta_lista_de_instrucciones</parameter> <parameter>falsa_lista_de_instrucciones</parameter>
+<command>IFELSE</command> <parameter>condición</parameter> <parameter>cierta_lista_de_instrucciones</parameter> <parameter>falsa_lista_de_instrucciones</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Command or operation where:
+Es un comando u operación donde:
 
 <itemizedlist>
 <listitem>
 <para>
-If <parameter>condition</parameter> evaluates to TRUE, then IFELSE runs <parameter>true.instructionlist</parameter>.
+Si <parameter>condición</parameter> es CIERTO, entonces SISINO ejecuta <parameter>cierta_lista_de_instrucciones</parameter>.
 </para>
 </listitem>
 
 <listitem>
 <para>
-If <parameter>condition</parameter> evalutes to FALSE, then IFELSE runs <parameter>false.instructionlist</parameter>.
+Si <parameter>condición</parameter> es FALSO, entonces SISINO ejecuta <parameter>falsa_lista_de_instrucciones</parameter>.
 </para>
 </listitem>
 
 <listitem>
 <para>
-It is an error if <parameter>condition</parameter> does not evaluate to either TRUE or FALSE.
+Es un error si <parameter>condición</parameter> no es ni CIERTO ni FALSO.
 </para>
 </listitem>
 </itemizedlist>
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>; simple examples
-IFELSE 1=1 [PRINT [Yes it is true]] [PRINT [No it is false]]</userinput>
-Yes it is true
+<para>
+Ejemplos donde SISINO no devuelve nada:
+<programlisting><userinput>
+SISINO 1=1 [ESCRIBE [Si, es cierto]] [ESCRIBE [No, es falso]]</userinput>
+Si, es cierto
 
-<userinput>IFELSE 1=0 [PRINT [Yes it is true]] [PRINT [No it is false]]</userinput>
-No it is false
+<userinput>SISINO 1=0 [ESCRIBE [Si, es cierto]] [ESCRIBE [No, es falso]]</userinput>
+No, es falso
+</programlisting>
+</para>
 
-<userinput>; example where IFELSE outputs a value
-TO MAX :a :b
-  OUTPUT (IFELSE :a > :b [:a] [:b])
-END
 
-SHOW MAX 1 2</userinput>
+<para>
+Ejemplo donde SISINO devuelve un valor:
+<programlisting><userinput>
+PARA MAX :a :b
+  DEVUELVE SISINO :a > :b [:a] [:b]
+FIN
+
+MUESTRA MAX 1 2</userinput>
 2
 </programlisting>
+</para>
+
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

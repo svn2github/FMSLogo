@@ -37,8 +37,8 @@ If a floating point overflow occurs during an arithmetic operation, or a two-inp
 </para>
 
    <section id="error-codes">
-      <title>Error Codes</title>
-      <indexterm><primary>Error Codes</primary></indexterm>
+      <title>Códigos de error</title>
+      <indexterm><primary>Códigos de error</primary></indexterm>
 
 <para>
 When an error happens, you can use the <link linkend="command-error">ERROR</link> operation to figure out what went wrong.

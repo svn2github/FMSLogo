@@ -62,7 +62,7 @@
 
     <para>El botón Alto está deshabilitado cuando &PRODUCTNAME; no está ejecutando instrucciones.</para>
 
-    <para>Veas también el comando <link linkend="command-halt">ALTO</link>.</para>
+    <para>Veas también el comando <link linkend="command-halt">HALT</link>.</para>
   </section>
 
 

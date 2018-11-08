@@ -1,53 +1,58 @@
 <section id="command-catch">
-    <title>CATCH</title>
+    <title>ATRAPA</title>
+<indexterm><primary>ATRAPA</primary></indexterm>
 <indexterm><primary>CATCH</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>CATCH</command> <parameter>tag</parameter> <parameter>instructionlist</parameter></synopsis>
+<synopsis><command>ATRAPA</command> <parameter>etiqueta</parameter> <parameter>lista_de_instrucción</parameter>
+<command>CATCH</command> <parameter>etiqueta</parameter> <parameter>lista_de_instrucción</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Command or operation that runs its <parameter>instructionlist</parameter> input and outputs whatever <parameter>instructionlist</parameter> outputs.
-If <parameter>instructionlist</parameter> runs a <link linkend="command-throw">THROW</link> instruction with a tag equal to the <parameter>tag</parameter> input (case-insensitive comparison), then the running of <parameter>instructionlist</parameter> is immediately terminated.
-In this case, CATCH outputs if a value input is given to THROW.
+Ejecuta las instrucciones en <parameter>lista_de_instrucción</parameter> y devuelve lo que las instrucciones devuelve (o no devuelve nada, si las instrucciones no devuelven nada).
+Si <parameter>lista_de_instrucción</parameter> ejecuta una instrucción <link linkend="command-throw">LANZA</link> con un argumento igual al argumento <parameter>etiqueta</parameter> de ATRAPA (con una comparación insensible a las mayúsculas y minúsculas), entonces termina la ejecución inmediatamente.
+En este caso, si LANZA fue dado un valor, ATRAPA devuelve este valor.
 </para>
 
 <para>
-The <parameter>tag</parameter> input must be a word.
-If <parameter>tag</parameter> is the word <link linkend="command-error">ERROR</link>, then any error condition that arises during the running of <parameter>instructionlist</parameter> has the effect of <userinput>THROW "ERROR</userinput> instead of printing an error message and returning to toplevel.
-In this case, CATCH does <emphasis>not</emphasis> output a value.
-Also, during the running of <parameter>instructionlist</parameter>, the variable <link linkend="command-erract">ERRACT</link> is temporarily unbound.
-(If there is an error while ERRACT has a value, that value is taken as an instruction list to be run after printing the error message.
-Typically the value of ERRACT, if any, is the list <userinput>[<link linkend="command-pause">PAUSE</link>]</userinput>.)
+El argumento <parameter>etiqueta</parameter> debe ser una palabra.
+Si <parameter>etiqueta</parameter> es la palabra <link linkend="command-error">ERROR</link>, entonces cualquier condición de error que sucede mientras que se ejecuta <parameter>lista_de_instrucción</parameter> tiene el efecto de ejecutar <userinput>LANZA "ERROR</userinput> en lugar de escribir un mensaje de error y devolver control al alto nivel interactivo.
+En este caso, ATRAPA <emphasis>no</emphasis> devuelve un valor.
+Además, mientras se ejecuta <parameter>lista_de_instrucción</parameter>, la variable <link linkend="command-erract">ERRACT</link> se vuelve desligado.
+(Si hay un error mientras ERRACT tiene un valor, se toma ese valor como una lista de instrucciones para ser ejecutado después de escribir el mensaje de error.
+Típicamente, si ERRACT tiene un valor, es la lista <userinput>[<link linkend="command-pause">PAUSA</link>]</userinput>.)
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>TO MYPROGRAM2
-  PRINT [Before throw]
-  THROW "tag1
-  PRINT [We never get here because we THROW back]
-END
+<programlisting><userinput>PARA MIPROGRAMA2
+  ESCRIBE [Antes de lanzar]
+  LANZA "etiqueta1
+  ESCRIBE [Nunca llega aquí porque LANZA retrocede]
+FIN
 
-TO MYPROGRAM1
-  CATCH "tag1 [MYPROGRAM2]
-  PRINT [I'm back]
-END
+PARA MIPROGRAMA1
+  ATRAPA "etiqueta1 [MIPROGRAMA2]
+  ESCRIBE [Estoy de vuelta]
+FIN
 
-MYPROGRAM1</userinput>
-Before throw
-I'm back
+MIPROGRAMA1</userinput>
+Antes de lanzar
+Estoy de vuelta
 </programlisting>
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

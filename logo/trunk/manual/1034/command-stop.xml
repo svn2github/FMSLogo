@@ -1,43 +1,47 @@
 <section id="command-stop">
-    <title>STOP</title>
+    <title>ALTO</title>
+<indexterm><primary>ALTO</primary></indexterm>
 <indexterm><primary>STOP</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>STOP</command></synopsis>
+<synopsis><command>ALTO</command>
+<command>STOP</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Ends the running of the procedure in which it appears.
-Control is returned to the context in which that procedure was invoked.
-The stopped procedure does not output a value.
+Termina la ejecución del procedimiento en que aparece.
+Devuelve el control al contexto en el que se llamó el procedimiento.
+El procedimiento no devuelve ningún valor.
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>TO MYPROGRAM :arg
-  PRINT [Before Stop]
-  IF 1=:arg [STOP]
-  PRINT [After Stop]
-END
+<programlisting><userinput>PARA MIPROGRAMA :arg
+  ESCRIBE [Antes de ALTO]
+  SI 1=:arg [ALTO]
+  ESCRIBE [Después de ALTO]
+FIN
 
-MYPROGRAM 1</userinput>
-Before Stop
+MIPROGRAMA 1</userinput>
+Antes de ALTO
 
-<userinput>MYPROGRAM 2</userinput>
-Before Stop
-After Stop
+<userinput>MIPROGRAMA 2</userinput>
+Antes de ALTO
+Después de ALTO
 </programlisting>
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

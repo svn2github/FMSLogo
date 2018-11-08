@@ -7,7 +7,7 @@ committed.
 This document describes the style guidelines that are not checked
 programmatically.
 
-1) The voice is primarily formal and authoritative (to give confidence)
+1) The voice is primarily formal and authoritative (to give confidence).
    Where techinical accuracy is not compromised, it is also friendly and
    encouraging, as if talking to a friend.
    It is never condescending or insulting.
@@ -18,7 +18,7 @@ programmatically.
 2) Quotations are always given according to the RAE « ».
 
 3) The documentation is generally in the present tense, not future tense.
-   For example "COMMAND hace X", not "COMMAND haria X".
+   For example "COMMAND hace X", not "COMMAND hará X".
 
 4) Punctuation falls outside the quotation to clarify what's really intended
    to be quoted.  For example: SHOW 123 prints «123».
@@ -26,13 +26,12 @@ programmatically.
 5) When giving examples, the explanation should be given outside the code
    sample, as an introductory sentence (as opposed to inside the code
    sample as a comment).
-   This is violated in many places and all of them should be fixed.
    Ideally this would be enforced by check-manual.pl.
 
 6) Because the procedure documentation is a declarative statement of truth for
    all time, use SER instead of ESTAR when referring to the state of inputs.
-   For example: "Si la entrada es una palabra", not "Si la entrada está una
-   palabra".
+   For example: "Si el argumento es una palabra", not "Si el argumento está
+   una palabra".
 
 7) The following terms should always be translated in the same way
 
@@ -60,6 +59,7 @@ programmatically.
    workspace                  - área de trabajo
    an infix operator          - un operador infijo
    a double-quote (")         - una comilla inglesa (")
+   a backtick (`)             - una comilla invertida
    a backslash (\)            - una barra inversa (\)
    a tilda (~)                - una tilde de la eñe
    the current write stream   - el flujo de escritura actual
@@ -75,6 +75,9 @@ programmatically.
    erase                      - borrar
    a contents list            - una lista de contenidos
    logolib                    - la bibioteca (de logo)
+   toplevel                   - el alto nivel interactivo
+   unbound                    - desligado
+   tag                        - etiqueta
 
 8) The following terms are generally translated the same way
 
@@ -86,3 +89,6 @@ programmatically.
    greater than or equal to   - major o igual que
    anti-aliasing              - antialiasing
    a font                     - un tipo (de letras)
+   a callback                 - un retrollamada
+   splicing (lists)           - el empalme (empalmar)
+   the dialog box             - el cuadro de diálog

@@ -1,32 +1,36 @@
 <section id="command-cleartimer">
-    <title>CLEARTIMER</title>
+    <title>TEMPORIZADORACERO</title>
+<indexterm><primary>TEMPORIZADORACERO</primary></indexterm>
 <indexterm><primary>CLEARTIMER</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>CLEARTIMER</command> <parameter>id</parameter></synopsis>
+<synopsis><command>TEMPORIZADORACERO</command> <parameter>id</parameter>
+<command>CLEARTIMER</command> <parameter>id</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Clears a timer that was scheduled by <link linkend="command-settimer">SETTIMER</link> and identified by <parameter>id</parameter> (1-31).
+Detiene al temporizador puesto por <link linkend="command-settimer">PONTEMPORIZADOR</link> e identificado por <parameter>id</parameter> (1-31).
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SETTIMER 1 200 [SETPENCOLOR (LIST RANDOM 256 RANDOM 256 RANDOM 256)]</userinput>
-<replaceable>&PRODUCTNAME; is ready to run new instructions and the timer changes the pen color randomly every 200 milliseconds.</replaceable>
-<userinput>REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] RIGHT 5]
-CLEARTIMER 1</userinput>
+<programlisting><userinput>PONTEMPORIZADOR 17 200 [PONCOLORLAPIZ (LISTA AZAR 256 AZAR 256 AZAR 256)]</userinput>
+<replaceable>&PRODUCTNAME; está disponible a ejecutar más instrucciones y el temporizador cambia el color de lápiz al azar cada 200 milisegundos.</replaceable>
+<userinput>REPITE 72 [REPITE 4 [AVANZA 100 GIRADERECHA 90] GIRADERECHA 5]
+TEMPORIZADORACERO 17</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

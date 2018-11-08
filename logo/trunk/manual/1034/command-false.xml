@@ -1,33 +1,36 @@
 <section id="command-false">
-    <title>FALSE</title>
+    <title>FALSO</title>
+<indexterm><primary>FALSO</primary></indexterm>
 <indexterm><primary>FALSE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
-<listitem><para>(special form)</para>
-<synopsis><command>FALSE</command></synopsis>
+<varlistentry><term>Sinopsis</term>
+<listitem><para>(forma especial)</para>
+<synopsis><command>FALSO</command>
+<command>FALSE</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-This is a special word to indicate a negative condition.
-FALSE is a reserved value, not a procedure nor a variable.
+Es una palabra especial que indica el resultado negativo de una condición.
+FALSO es una palabra reservada, no un procedimiento ni una variable.
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW 1=0</userinput>
-false
+<programlisting><userinput>MUESTRA 1=0</userinput>
+falso
 </programlisting>
 
-<programlisting><userinput>IFELSE "FALSE [PRINT [We cannot get here]] [PRINT [FALSE is always false]]</userinput>
-FALSE is always false
+<programlisting><userinput>SISINO "FALSO [ESCRIBE [No se puede llegar aquí]] [ESCRIBE [FALSO siempre es falso]]</userinput>
+FALSO siempre es falso
 </programlisting>
 </listitem>
 </varlistentry>
