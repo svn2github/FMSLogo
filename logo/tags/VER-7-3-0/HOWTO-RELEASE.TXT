@@ -1,0 +1,61 @@
+This file contains the steps for doing a formal release.
+
+Build the Release Files
+==================================================================================
+1) Build the Candidate Release Files
+1.a) Copy the latest changes from src\README.TXT to src\CHANGELOG.TXT
+1.b) Update version.mk and src\test\logoversion.lgo
+1.c) Update the translation tables in the manual
+   cd src
+   perl make-translation-tables.pl
+   copy /Y translations-*.xml ..\manual
+
+1.d) Commit all changes
+
+1.e) Open up a fresh command prompt and cleanly build everything with:
+
+     make clean
+     make binaryexe binaryzip
+
+1.f) Copy resulting fmslogo-X-Y-Z.exe, fmslogo-X-Y-Z.zip to e:\fmslogo
+
+     copy /Y fmslogo-*.*.* e:\fmslogo
+
+1.g) Unzip e:\fmslogo\fmslogo-X-Y-Z.zip in place.
+
+
+Test the Candidate Release
+==================================================================================
+1) Test on Windows XP
+1.a) Install FMSLogo and run "src\test\testharness.lgo".
+1.b) Do a file comparison against the testlog.baseline.txt to look for regressions
+1.c) Run DEMO
+1.d) Configure the screensaver to use "src\test\screensaver-testharness.lgo" and
+     run the tests by previewing the screensaver.
+1.e) Run "src\test\benchmark.lgo" and copy the results into
+     "src\test\benchmark.baseline.txt"
+
+
+Release the files
+==================================================================================
+1) Tag the tree
+1.a) Commit any changes to the tests.
+1.b) Tag the tree VER-X-Y-Z
+   cd ..
+   svn cp trunk tags/VER-X-Y-Z
+   svn commit tags/VER-X-Y-Z
+
+2) Release the files on sourceforge.net
+2.a) Create a new folder on sourceforge and call it FMSLogo X.Y.Z
+2.b) Upload the following files:
+       README.TXT 
+       fmslogo-x-y-z.exe
+       fmslogo-x-y-z.zip
+2.c) Exclude README.TXT from download statistics
+2.d) Set fmslogo-x.y.z.exe as the default file for Windows and Linux
+
+3) Update the manual on the Web site
+3.a) Build an updated manual ("make website" within "manual")
+3.b) Open an SSH2/SFTP connection to web.sourceforge.net
+3.c) Browse to /home/project-web/fmslogo/htdocs/manual on the remote machine.
+3.d) Upload all of the HTML files in the www directory.
