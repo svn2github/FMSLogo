@@ -1152,10 +1152,6 @@ jf</literallayout></entry>
         <entry><literallayout>cl</literallayout></entry>
       </row>
       <row>
-        <entry><link linkend='command-pendown'>pd</link></entry>
-        <entry><literallayout>ul</literallayout></entry>
-      </row>
-      <row>
         <entry><link linkend='command-penerase'>pe</link></entry>
         <entry><literallayout>ub</literallayout></entry>
       </row>
@@ -1481,10 +1477,6 @@ sorteie</literallayout></entry>
         <entry><literallayout>leiaLista</literallayout></entry>
       </row>
       <row>
-        <entry><link linkend='command-readpos'>readpos</link></entry>
-        <entry><literallayout>posLeitura</literallayout></entry>
-      </row>
-      <row>
         <entry><link linkend='command-readword'>readword</link></entry>
         <entry><literallayout>leiaPalavra</literallayout></entry>
       </row>
@@ -1540,10 +1532,6 @@ gd</literallayout></entry>
       <row>
         <entry><link linkend='command-rightroll'>rightroll</link></entry>
         <entry><literallayout>roleparadireita</literallayout></entry>
-      </row>
-      <row>
-        <entry><link linkend='command-readlist'>rl</link></entry>
-        <entry><literallayout>rolepd</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-rmdir'>rmdir</link></entry>

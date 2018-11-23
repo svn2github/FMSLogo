@@ -398,7 +398,7 @@
 #define LOCALIZED_ALTERNATE_PARSE                  "analise"
 #define LOCALIZED_ALTERNATE_PAUSE                  "pausa"
 #define LOCALIZED_ALTERNATE_PC                     "cl"
-#define LOCALIZED_ALTERNATE_PD                     "ul"
+#define LOCALIZED_ALTERNATE_PD                     "pd" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PE                     "ub"
 #define LOCALIZED_ALTERNATE_PENCOLOR               "cordoLápis"
 #define LOCALIZED_ALTERNATE_PENDOWN                "useLápis"
@@ -469,7 +469,7 @@
 #define LOCALIZED_ALTERNATE_READCHARS              "leiaCaracteres"
 #define LOCALIZED_ALTERNATE_READER                 "arqLeitura"
 #define LOCALIZED_ALTERNATE_READLIST               "leiaLista"
-#define LOCALIZED_ALTERNATE_READPOS                "posLeitura"
+#define LOCALIZED_ALTERNATE_READPOS                "readpos" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_READRAWLINE            "readrawline" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_READWORD               "leiaPalavra"
 #define LOCALIZED_ALTERNATE_REMAINDER              "resto"
@@ -479,7 +479,7 @@
 #define LOCALIZED_ALTERNATE_RERANDOM               "repitasorteie"
 #define LOCALIZED_ALTERNATE_RIGHT                  "paradireita"
 #define LOCALIZED_ALTERNATE_RIGHTROLL              "roleparadireita"
-#define LOCALIZED_ALTERNATE_RL                     "rolepd"
+#define LOCALIZED_ALTERNATE_RL                     "rl" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RMDIR                  "apagueDir"
 #define LOCALIZED_ALTERNATE_ROLL                   "direçãoRolagem"
 #define LOCALIZED_ALTERNATE_ROUND                  "arredonde"
