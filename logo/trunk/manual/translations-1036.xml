@@ -385,14 +385,6 @@ deboguefenetres</literallayout></entry>
 definis</literallayout></entry>
       </row>
       <row>
-        <entry><link linkend='command-definedp'>defined?</link></entry>
-        <entry><literallayout>procédure?</literallayout></entry>
-      </row>
-      <row>
-        <entry><link linkend='command-definedp'>definedp</link></entry>
-        <entry><literallayout>procédurep</literallayout></entry>
-      </row>
-      <row>
         <entry><link linkend='command-dequeue'>dequeue</link></entry>
         <entry><literallayout>ôte
 ote</literallayout></entry>

@@ -233,8 +233,8 @@
 #define LOCALIZED_ALTERNATE_CURSOR                 "curseur" // 
 #define LOCALIZED_ALTERNATE_DEBUGWINDOWS           "déboguefenêtres" // 
 #define LOCALIZED_ALTERNATE_DEFINE                 "définis"
-#define LOCALIZED_ALTERNATE_DEFINEDP               "procédurep"
-#define LOCALIZED_ALTERNATE_DEFINED_               "procédure?"
+#define LOCALIZED_ALTERNATE_DEFINEDP               "definedp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_DEFINED_               "defined?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_DIALOGCREATE           "créedialogue" // 
 #define LOCALIZED_ALTERNATE_DIALOGENABLE           "activedialogue" // 
 #define LOCALIZED_ALTERNATE_DIALOGDELETE           "effacedialogue" // 
