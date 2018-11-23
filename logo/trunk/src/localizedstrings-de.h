@@ -525,7 +525,7 @@
 #define LOCALIZED_ALTERNATE_SETPITCH               "setpitch"
 #define LOCALIZED_ALTERNATE_SETPIXEL               "setpixel"
 #define LOCALIZED_ALTERNATE_SETPOS                 "auf"
-#define LOCALIZED_ALTERNATE_SETPOSXYZ              "aufxyz"
+#define LOCALIZED_ALTERNATE_SETPOSXYZ              "setposxyz" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETREAD                "LiesDatei"
 #define LOCALIZED_ALTERNATE_SETREADPOS             "setreadpos"
 #define LOCALIZED_ALTERNATE_SETROLL                "setroll"

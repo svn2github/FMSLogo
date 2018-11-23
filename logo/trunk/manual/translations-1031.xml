@@ -1299,10 +1299,6 @@ wiederhole</literallayout></entry>
         <entry><literallayout>auf</literallayout></entry>
       </row>
       <row>
-        <entry><link linkend='command-setposxyz'>setposxyz</link></entry>
-        <entry><literallayout>aufxyz</literallayout></entry>
-      </row>
-      <row>
         <entry><link linkend='command-setread'>setread</link></entry>
         <entry><literallayout>LiesDatei</literallayout></entry>
       </row>
