@@ -21,6 +21,7 @@ Build the Release Files
 
      copy /Y fmslogo-*.*.* e:\fmslogo
 
+1.g) Unzip e:\fmslogo\fmslogo-X-Y-Z.zip in place.
 
 
 Test the Candidate Release
@@ -39,7 +40,7 @@ Release the files
 ==================================================================================
 1) Tag the tree
 1.a) Commit any changes to the tests.
-   Tag the tree VER-X-Y-Z
+1.b) Tag the tree VER-X-Y-Z
    cd ..
    svn cp trunk tags/VER-X-Y-Z
    svn commit tags/VER-X-Y-Z
