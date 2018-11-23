@@ -3,19 +3,17 @@
 #define _LOGOCODECTRL_H_
 
 // When compiled in ANSI mode, neither wxStyledTextCtrl nor wxRichText
-// supports multi-byte character sets, such as Simplified Chinese.
+// supports multi-byte character sets, such as Simplified Chinese, or
+// non-latin scripts, such as Cyrillic (Russian) or Greek.
 // As a stop-gap solution until FMSLogo is a pure-Unicode application,
 // we provide an alternate implementation that is based on the wxTextCtrl.
 #if LOCALE == 2052 // Simplified Chinese
    #define USE_RICHTEXT_CODE_EDITOR
 #endif
-
-
-// When compiled in ANSI mode wxStyledTextCtrl doesn't support the
-// Windows 1251 code page (Cyrillic).
-// As a stop-gap solution until FMSLogo is a pure-Unicode application,
-// we provide an alternate implementation that is based on the wxTextCtrl.
 #if LOCALE == 1049 // Russian
+   #define USE_RICHTEXT_CODE_EDITOR
+#endif
+#if LOCALE == 1032 // Greek
    #define USE_RICHTEXT_CODE_EDITOR
 #endif
 
