@@ -267,10 +267,6 @@
         <entry><literallayout>ÊÁÔÁÃÑÁÖÇ</literallayout></entry>
       </row>
       <row>
-        <entry><link linkend='command-edit'>edit</link></entry>
-        <entry><literallayout>ÅÐÅÎÅÑÃÁÓÉÁ</literallayout></entry>
-      </row>
-      <row>
         <entry><link linkend='command-emptyp'>empty?</link></entry>
         <entry><literallayout>ÁÄÅÉÏ?</literallayout></entry>
       </row>

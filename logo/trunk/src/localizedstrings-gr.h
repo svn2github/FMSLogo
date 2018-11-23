@@ -249,7 +249,7 @@
 #define LOCALIZED_ALTERNATE_DOWNPITCH              "downpitch" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_DRIBBLE                "йатацяажг" // 
 #define LOCALIZED_ALTERNATE_ED                     "ed" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EDIT                   "епенеяцасиа" // 
+#define LOCALIZED_ALTERNATE_EDIT                   "edit" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ELLIPSEARC             "ellipsearc" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_EMPTYP                 "emptyp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_EMPTY_                 "адеио?" // 
