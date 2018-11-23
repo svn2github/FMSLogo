@@ -391,8 +391,7 @@ vettorealista</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-dir'>dir</link></entry>
-        <entry><literallayout>catalogo
-cat</literallayout></entry>
+        <entry><literallayout>cat</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-directories'>directories</link></entry>
@@ -496,10 +495,6 @@ edtutti</literallayout></entry>
       <row>
         <entry><link linkend='command-erase'>er</link></entry>
         <entry><literallayout>ca</literallayout></entry>
-      </row>
-      <row>
-        <entry><link linkend='command-erase'>erase</link></entry>
-        <entry><literallayout>cancella</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-erasefile'>erasefile</link></entry>
@@ -1111,10 +1106,6 @@ listaavettore</literallayout></entry>
 giù</literallayout></entry>
       </row>
       <row>
-        <entry><link linkend='command-penerase'>pe</link></entry>
-        <entry><literallayout>cancepenna</literallayout></entry>
-      </row>
-      <row>
         <entry><link linkend='command-pen'>pen</link></entry>
         <entry><literallayout>penna</literallayout></entry>
       </row>
@@ -1482,10 +1473,6 @@ pennagiù</literallayout></entry>
       <row>
         <entry><link linkend='command-rightroll'>rightroll</link></entry>
         <entry><literallayout>rolliodestro</literallayout></entry>
-      </row>
-      <row>
-        <entry><link linkend='command-readlist'>rl</link></entry>
-        <entry><literallayout>rd</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-rmdir'>rmdir</link></entry>
@@ -3137,7 +3124,7 @@ finché</literallayout></entry>
       </row>
       <row>
         <entry>catalogo</entry>
-        <entry><link linkend='command-dir'>dir</link></entry>
+        <entry><link linkend='command-files'>files</link></entry>
       </row>
       <row>
         <entry>cerchio</entry>

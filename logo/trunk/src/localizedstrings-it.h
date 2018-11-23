@@ -258,7 +258,7 @@
 #define LOCALIZED_ALTERNATE_EQUALP                 "ugualep"
 #define LOCALIZED_ALTERNATE_EQUAL_                 "uguale?"
 #define LOCALIZED_ALTERNATE_ER                     "ca"
-#define LOCALIZED_ALTERNATE_ERASE                  "cancella"
+#define LOCALIZED_ALTERNATE_ERASE                  "erase" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ERASEFILE              "cancellafile"
 #define LOCALIZED_ALTERNATE_ERF                    "caf"
 #define LOCALIZED_ALTERNATE_ERROR                  "errore"
@@ -399,7 +399,7 @@
 #define LOCALIZED_ALTERNATE_PAUSE                  "pausa"
 #define LOCALIZED_ALTERNATE_PC                     "cp"
 #define LOCALIZED_ALTERNATE_PD                     "giu"
-#define LOCALIZED_ALTERNATE_PE                     "cancepenna"
+#define LOCALIZED_ALTERNATE_PE                     "pe" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PENCOLOR               "colpenna"
 #define LOCALIZED_ALTERNATE_PENDOWN                "pennagiu"
 #define LOCALIZED_ALTERNATE_PENDOWNP               "pennagiup"
@@ -479,7 +479,7 @@
 #define LOCALIZED_ALTERNATE_RERANDOM               "riacaso"
 #define LOCALIZED_ALTERNATE_RIGHT                  "destra"
 #define LOCALIZED_ALTERNATE_RIGHTROLL              "rolliodestro"
-#define LOCALIZED_ALTERNATE_RL                     "rd"
+#define LOCALIZED_ALTERNATE_RL                     "rl" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RMDIR                  "eliminadir"
 #define LOCALIZED_ALTERNATE_ROLL                   "rollio"
 #define LOCALIZED_ALTERNATE_ROUND                  "arrotonda"
