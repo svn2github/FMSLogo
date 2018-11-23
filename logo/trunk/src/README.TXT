@@ -19,9 +19,11 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 7.3.0
+  o Fix Bug #518; Code editors no longer show NUL when typing Cyrillic
+    characters into the Russian version of FMSLogo.
   o Fix Bug #515; PORTWRITEARRAY now throws a "doesn't like input" error
     when given a non-array second input.
-  o Fix Bug #514; PORTWRITEARRAY now writes a ASCII space instead of
+  o Fix Bug #514; PORTWRITEARRAY now writes an ASCII space instead of
     uninitialized memory for non-integer items in its data array input.
   o Fix Bug #513; PORTWRITEARRAY no longer leaks memory.
   o Fix Bug #512; PORTREADARRAY no longer leaks memory.

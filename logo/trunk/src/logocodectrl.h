@@ -6,7 +6,16 @@
 // supports multi-byte character sets, such as Simplified Chinese.
 // As a stop-gap solution until FMSLogo is a pure-Unicode application,
 // we provide an alternate implementation that is based on the wxTextCtrl.
-#if LOCALE == 2052
+#if LOCALE == 2052 // Simplified Chinese
+   #define USE_RICHTEXT_CODE_EDITOR
+#endif
+
+
+// When compiled in ANSI mode wxStyledTextCtrl doesn't support the
+// Windows 1251 code page (Cyrillic).
+// As a stop-gap solution until FMSLogo is a pure-Unicode application,
+// we provide an alternate implementation that is based on the wxTextCtrl.
+#if LOCALE == 1049 // Russian
    #define USE_RICHTEXT_CODE_EDITOR
 #endif
 
