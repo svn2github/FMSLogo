@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 7.3.0 for Microsoft Windows
+FMSLogo Version 7.4.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -13,25 +13,14 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-7.3.0.exe - Installer for the Logo environment
-  fmslogo-7.3.0.zip - ZIP of the Logo environment
+  fmslogo-7.4.0.exe - Installer for the Logo environment
+  fmslogo-7.4.0.zip - ZIP of the Logo environment
 
 II. New features/bugs fixed:
 
-  Changed in 7.3.0
-  o Fix Bug #518; Code editors no longer show NUL glyphs when typing
-    Cyrillic characters into the Russian version of FMSLogo or Greek
-    characters into the Greek version.
-  o Fix Bug #515; PORTWRITEARRAY now throws a "doesn't like input" error
-    when given a non-array second input.
-  o Fix Bug #514; PORTWRITEARRAY now writes an ASCII space instead of
-    uninitialized memory for non-integer items in its data array input.
-  o Fix Bug #513; PORTWRITEARRAY no longer leaks memory.
-  o Fix Bug #512; PORTREADARRAY no longer leaks memory.
-  o Fix Bug #511; Fix the Spanish translations for READPOS and WRITEPOS (as
-    POSLECTURA and POSESCRITURA, respectively).
-  o Improvements to the Spanish translation.
-  o Improvements to the manual.
+  Changed in 7.4.0
+  o Fix Bug #520; In the Spanish FMSLogo, CASCADA now throws a Spanish "bad
+    input" error message when given a negative number for the first input.
 
   For a complete history of changes across all versions of FMSLogo, see
   https://sourceforge.net/p/fmslogo/source/HEAD/tree/trunk/logo/src/CHANGELOG.TXT

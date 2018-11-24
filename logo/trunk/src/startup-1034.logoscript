@@ -223,10 +223,10 @@ TAPA "BTODO
 ;copydef "cascada "cascade
 
 PARA CASCADA :cascade.limit [:cascade.inputs] 3
-SI NUMERO? :cascade.limit ~
-   [SI MENOR? :cascade.limit 0 ~
-       [(LANZA "error (FR [CASCADA doesn't like] :cascade.limit [as input]))] ~
-    HAZ "cascade.limit `[MAYOR? :template.number ,[ENTERO :cascade.limit]]]
+SI NUMERO? :cascade.limit [
+  SI :cascade.limit < 0 [(LANZA "error 4 :cascade.limit)]
+  HAZ "cascade.limit `[MAYOR? :template.number ,[ENTERO :cascade.limit]]
+]
 LOCAL [CASCADA.templates template.vars CASCADA.final]
 HAZ "cascade.templates []
 HAZ "template.vars []
