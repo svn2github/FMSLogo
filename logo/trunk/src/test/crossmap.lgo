@@ -7,6 +7,10 @@ TO CROSSMAPTEST.SMOKETEST
       [(CROSSMAP [WORD ?1 ?2] [a b c] [1 2 3 4])] ~
       [a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4]
 
+   ; special case when only one data input is given
+   SIMPLEREPORTTEST [ CROSSMAP [WORD ?1 ?2] [[a b c] [1 2 3 4]] ] ~
+      [a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4]
+
    ; compatibility with Computer Science Logo Style (:1 instead of ?1)
    SIMPLEREPORTTEST ~
       [(CROSSMAP [WORD :1 :2] [a b c] [1 2 3 4])] ~
