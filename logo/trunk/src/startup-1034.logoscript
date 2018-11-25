@@ -227,7 +227,7 @@ SI NUMERO? :cascade.limit [
   SI :cascade.limit < 0 [(LANZA "error 4 :cascade.limit)]
   HAZ "cascade.limit `[MAYOR? :template.number ,[ENTERO :cascade.limit]]
 ]
-LOCAL [CASCADA.templates template.vars CASCADA.final]
+LOCAL [cascade.templates template.vars cascade.final]
 HAZ "cascade.templates []
 HAZ "template.vars []
 HAZ "cascade.final [?1]
