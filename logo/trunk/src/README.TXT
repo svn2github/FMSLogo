@@ -19,6 +19,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   Changed in 7.4.0
+  o Fix Bug #521; The warning message about saving an empty workspace in the
+    Spanish FMSLogo is now gramatically correct.
   o Fix Bug #520; In the Spanish FMSLogo, CASCADA now throws a Spanish "bad
     input" error message when given a negative number for the first input.
   o Fix Bug #519; In the Spanish FMSLogo, CASCADA no longer leaks variables.

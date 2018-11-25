@@ -693,14 +693,14 @@
 
 // The dialog box for selecting a Startup procedure
 #define LOCALIZED_SELECTSTARTUP_CAPTION               "Seleccionar una instrucción " LOCALIZED_ALTERNATE_STARTUP
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "El área de trabajo no tiene una lista de instrucciones de " LOCALIZED_ALTERNATE_STARTUP " definida, por lo tanto\nnada va a pasar cuando se carga el protector de pantalla.\nPor favor, selecciona un procedimiento que se ejecuta cuando se carga el programa." 
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "La variable " LOCALIZED_ALTERNATE_STARTUP " no es una lista, por lo tanto\nnada va a pasar cuando se carga el protector de pantalla.\nPor favor, selecciona un procedimiento que se ejecuta cuando se carga el programa."
-#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "El área de trabajo tiene " LOCALIZED_ALTERNATE_STARTUP " definida como una lista vacía, por lo tanto\nnada va a pasar cuando se carga el protector de pantalla.\nPor favor, selecciona un procedimiento que se ejecuta cuando se carga el programa."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "El área de trabajo no tiene una lista de instrucciones de " LOCALIZED_ALTERNATE_STARTUP " definida, por lo tanto nada va a pasar cuando se carga el protector de pantalla.\n\nPor favor, selecciona un procedimiento que se ejecuta cuando se carga el programa." 
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "La variable " LOCALIZED_ALTERNATE_STARTUP " no es una lista, por lo tanto nada va a pasar cuando se carga el protector de pantalla.\n\nPor favor, selecciona un procedimiento que se ejecuta cuando se carga el programa."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "El área de trabajo tiene " LOCALIZED_ALTERNATE_STARTUP " definida como una lista vacía, por lo tanto nada va a pasar cuando se carga el protector de pantalla.\n\nPor favor, selecciona un procedimiento que se ejecuta cuando se carga el programa."
 #define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "No hay procedimientos definidos"
 
 // The warning dialog box when the user saves an empty workspace
 #define LOCALIZED_EMPTYWORKSPACE_TITLE                LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_EMPTYWORKSPACE_MESSAGE              "No hay procedimientos, variables ni listas de propiedades definidas, por lo tanto\nel área de trabajo será guardado como un archivo vacío.\n\n¿Deseas guardar el área de trabajo de todas formas?"
+#define LOCALIZED_EMPTYWORKSPACE_MESSAGE              "No hay procedimientos, variables ni listas de propiedades definidas, por lo tanto el área de trabajo será guardada como un archivo vacío.\n\n¿Deseas guardar el área de trabajo de todas formas?"
 
 //
 // Menu options in the popup menu
