@@ -42,7 +42,9 @@ CMiniEditor::CMiniEditor(
 {
     wxBoxSizer * topLevelSizer = new wxBoxSizer(wxVERTICAL);
 
-    // add the To Line input
+    // Add the To Line input.
+    // This is read-only because, at this point, it's too late to change it.
+    // The user can only modify the body of the procedure.
     wxTextCtrl * toLine = new wxTextCtrl(
         this,
         wxID_ANY,
@@ -113,6 +115,10 @@ CMiniEditor::CMiniEditor(
     // Ensure that the user doesn't resize the window so small
     // that the buttons overlap or are off-screen.
     SetMinSize(GetSize());
+
+    // Make the text field have focus so that the user can start
+    // typing the procedure's body immediately.
+    m_TextField->SetFocus();
 }
 
 CMiniEditor::~CMiniEditor()
