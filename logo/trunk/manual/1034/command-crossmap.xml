@@ -1,38 +1,42 @@
 <section id="command-crossmap">
-    <title>CROSSMAP</title>
+    <title>ENTRETEJE</title>
+<indexterm><primary>ENTRETEJE</primary></indexterm>
 <indexterm><primary>CROSSMAP</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>CROSSMAP</command> <parameter>template</parameter> <parameter>data</parameter>
-(<command>CROSSMAP</command> <parameter>template</parameter> <parameter>data1</parameter> <parameter>data2</parameter> <parameter>...</parameter>)</synopsis>
+<synopsis><command>ENTRETEJE</command> <parameter>plantilla</parameter> <parameter>lista_de_datos</parameter>
+(<command>ENTRETEJE</command> <parameter>plantilla</parameter> <parameter>datos1</parameter> <parameter>datos2</parameter> <parameter>...</parameter>)
+<command>CROSSMAP</command> <parameter>plantilla</parameter> <parameter>lista_de_datos</parameter>
+(<command>CROSSMAP</command> <parameter>plantilla</parameter> <parameter>datos1</parameter> <parameter>datos2</parameter> <parameter>...</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a list containing the results of <parameter>template</parameter> evaluations.
-Each data list contributes to a slot in the <parameter>template</parameter>; the number of slots is equal to the number of data list inputs.
-As a special case, if only one data list input is given, that list is taken as a list of data lists, and each of its members contributes values to a slot.
+Devuelve una lista que contiene los resultados de evaluaciones de <parameter>plantilla</parameter> de todas las combinaciones de sus argumentos de datos.
+Cada lista de datos contribuye argumentos a una ranura distinta en la <parameter>plantilla</parameter>; el número de ranuras debe ser igual al número de listas de datos que te das como argumentos a ENTRETEJE.
+Como caso especial, si ENTRETEJE sólo tiene un argumento de datos, se toma éste como una lista de listas de datos, y cada sublista contribuye argumentos a la ranura correspondiente.
 </para>
 
 <para>
-CROSSMAP differs from <link linkend="command-map">MAP</link> in that, instead of taking members from the <parameter>data</parameter> inputs in parallel, CROSSMAP takes all possible combinations of members of data inputs, which need not be the same length.
+ENTRETEJE se distinguía de <link linkend="command-map">TEJE</link> en que, en lugar de tomar elementos de los argumentos de datos en paralelo, ENTRETEJE evalúa todas las combinaciones posibles de sus argumentos de datos, que no necesitan ser del mismo tamaño.
 </para>
 
 <para>
-For compatibility with program listings in Brian Harvey's textbook series "Computer Science Logo Style", &PRODUCTNAME;'s CROSSMAP templates may use the notation :1 instead of ?1 to indicate slots.
+Para compatibilidad con los programas en los libros de texto «Computer Science Logo Style» de Brian Harvey, las plantillas de ENTRETEJE puede usar la notación <userinput>:1</userinput> como sinónimo de <userinput>?1</userinput> para indicar las ranuras.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW (CROSSMAP [WORD ?1 ?2] [a b c] [1 2 3 4])</userinput>
+<programlisting><userinput>MUESTRA (ENTRETEJE [PALABRA ?1 ?2] [a b c] [1 2 3 4])</userinput>
 [a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4]
 </programlisting>
 </listitem>

@@ -1,37 +1,40 @@
 <section id="command-rseq">
-<title>RSEQ</title>
+<title>SECRAC</title>
+<indexterm><primary>SECRAC</primary></indexterm>
 <indexterm><primary>RSEQ</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>RSEQ</command> <parameter>from</parameter> <parameter>to</parameter> <parameter>count</parameter></synopsis>
+<synopsis><command>SECRAC</command> <parameter>de</parameter> <parameter>a</parameter> <parameter>total</parameter>
+<command>RSEQ</command> <parameter>de</parameter> <parameter>a</parameter> <parameter>total</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs an ordered list of <parameter>count</parameter> equally spaced rational numbers starting with <parameter>from</parameter> and ending with <parameter>to</parameter>.
-If <parameter>from</parameter> is greater than <parameter>to</parameter>, then RSEQ outputs a sequence that counts backwards.
+Devuelve una lista de <parameter>total</parameter> números racionales, en orden, espaciado uniformemente y comenzando con <parameter>de</parameter> y terminando con <parameter>a</parameter>.
+Si <parameter>de</parameter> es mayor que <parameter>a</parameter>, entonces SECRAC devuelve una secuencia que cuenta hacia atrás.
 </para>
 
 <para>
-The name RSEQ is short for "Rational number SEQuenece".
+En nombre SECRAC es la abreviatura de «SECunecia de números RACionales».
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW RSEQ 3 5 9</userinput>
+<programlisting><userinput>MUESTRA SECRAC 3 5 9</userinput>
 [3 3.25 3.5 3.75 4 4.25 4.5 4.75 5]
 </programlisting>
 
-<programlisting><userinput>SHOW RSEQ 3 5 5</userinput>
+<programlisting><userinput>MUESTRA SECRAC 3 5 5</userinput>
 [3 3.5 4 4.5 5]
 </programlisting>
 
@@ -39,9 +42,9 @@ The name RSEQ is short for "Rational number SEQuenece".
 </varlistentry>
 
 
-<varlistentry><term>See Also</term>
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-iseq">ISEQ</link></member>
+<member><link linkend="command-iseq">SECENT</link></member>
 </simplelist></listitem>
 </varlistentry>
 

@@ -1,46 +1,52 @@
 <section id="command-find">
-    <title>FIND</title>
+    <title>ENCUENTRA</title>
+<indexterm><primary>ENCUENTRA</primary></indexterm>
 <indexterm><primary>FIND</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>FIND</command> <parameter>conditiontemplate</parameter> <parameter>data</parameter></synopsis>
+<synopsis><command>ENCUENTRA</command> <parameter>plantilla_de_prueba</parameter> <parameter>datos</parameter>
+<command>FIND</command> <parameter>plantilla_de_prueba</parameter> <parameter>datos</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the first item of the <parameter>data</parameter> input for which the value produced by evaluating <parameter>conditiontemplate</parameter> with that item in its slot is TRUE.
-If there is no such item, then FIND outputs the empty list.
+Devuelve el primer elemento del argumento <parameter>datos</parameter> por lo cual la evaluación de <parameter>plantilla_de_prueba</parameter> con este elemento es CIERTO.
+Si no hay un tal elemento, entonces ENCUENTRA devuelve la lista vaciá.
 </para>
 
 <para>
-In a template, the symbol <userinput>?REST</userinput> represents the portion of the data input to the right of the member currently being used as the <userinput>?</userinput> slot-filler.
-That is, if the data input is <userinput>[A B C D E]</userinput> and the template is being evaluated with <userinput>?</userinput> replaced by <userinput>B</userinput>, then <userinput>?REST</userinput> would be replaced by <userinput>[C D E]</userinput>.
-If multiple parallel slots are used, then <userinput>(?REST 1)</userinput> goes with <userinput>?1</userinput>, etc.
+En una plantilla, los símbolos <userinput>?RESTANTE</userinput> y <userinput>?REST</userinput> representan el porción de los datos a la derecha del miembro que se usa actualmente como el valor de la ranura <userinput>?</userinput>.
+Por ejemplo, si los datos son <userinput>[A B C D E]</userinput>, cuando se ejecuta la plantilla con <userinput>?</userinput> reemplazado por <userinput>B</userinput>, entonces también se reemplace a <userinput>?RESTANTE</userinput> y <userinput>?REST</userinput> por <userinput>[C D E]</userinput>.
 </para>
 
 <para>
-In a template, the symbol <userinput>#</userinput> represents the position in the data input of the member currently being used as the <userinput>?</userinput> slot-filler.
-That is, if the data input is <userinput>[A B C D E]</userinput> and the template is being evaluated with <userinput>?</userinput> replaced by <userinput>B</userinput>, then <userinput>#</userinput> would be replaced by <userinput>2</userinput>.
+Se usa el símbolo <userinput>?RESTANTE</userinput> sólo en la versión de &PRODUCTNAME; española.
+Se usa <userinput>?REST</userinput> en todas las versiones de &PRODUCTNAME;.
+</para>
+
+<para>
+En una plantilla, el símbolo <userinput>#</userinput> representa la posición en <parameter>datos</parameter> del miembro que se usa actualmente como el valor de la ranura <userinput>?</userinput>.
+Por ejemplo, si los datos son <userinput>[A B C D E]</userinput>, cuando se ejecuta la plantilla con <userinput>?</userinput> reemplazado por <userinput>B</userinput>, entonces también se reemplace a <userinput>#</userinput> por <userinput>2</userinput>.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>TO MYFIND :arg
-  IF :arg=1 [OUTPUT "true]
-  OUTPUT "false
-END
+<programlisting><userinput>PARA NEGATIVO? :arg
+  DEVUELVE :arg &lt; 0
+FIN
 
-SHOW (FIND "MYFIND [2 4 3 0])</userinput>
+MUESTRA ENCUENTRA "NEGATIVO? [2 4 3 0]</userinput>
 []
-<userinput>SHOW (FIND "MYFIND [2 1 3 0])</userinput>
-1
+<userinput>MUESTRA ENCUENTRA "NEGATIVO? [2 1 0 -3 -6]</userinput>
+-3
 </programlisting>
 </listitem>
 </varlistentry>

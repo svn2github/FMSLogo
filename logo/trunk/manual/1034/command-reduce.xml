@@ -4,63 +4,64 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>REDUCE</command> <parameter>template</parameter> <parameter>data</parameter></synopsis>
+<synopsis><command>REDUCE</command> <parameter>plantilla</parameter> <parameter>datos</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the result of applying the template to accumulate the items of the <parameter>data</parameter> input, two items at a time.
+Devuelve el resultado de aplicar la plantilla para acumular los elementos del argumento <parameter>datos</parameter>, dos a la vez.
 </para>
 
 <para>
-The <parameter>template</parameter> input must be a two-slot procedure.
-Typically, <parameter>template</parameter> is the name of an associative operation, like "<link linkend="command-sum">SUM</link>.
+El argumento <parameter>plantilla</parameter> debe tener dos ranuras.
+Típicamente, <parameter>plantilla</parameter> es el nombre de una operación asociativa, como "<link linkend="command-sum">ADICION</link>.
 </para>
 
 <para>
-If the <parameter>data</parameter> input has only one item (member in a list or character in a word), REDUCE outputs that item.
-Otherwise, <parameter>template</parameter> is first applied with <userinput>?1</userinput> filled with the next-to-last item and <userinput>?2</userinput> with the last item.
-Then, if there are more item, the template is applied with <userinput>?1</userinput> filled with the next item to the left and <userinput>?2</userinput> with the result from the previous evaluation.
-This process continues until all items have been used.
+Si el argumento <parameter>datos</parameter> contiene un solo elemento (un miembro de una lista o un carácter de una palabra), REDUCE devuelve ese elemento.
+Si no, se aplica <parameter>plantilla</parameter> primeramente con <userinput>?1</userinput> llenado con el segundo a último elemento y <userinput>?2</userinput> con el último elemento.
+Entonces, si hay más elementos, se aplica la plantilla con <userinput>?1</userinput> llenado con el próximo elemento a la izquierda y <userinput>?2</userinput> con el resultado de la evaluación previa.
+Este proceso continúa hasta que se ha usado todos los elementos en <parameter>datos</parameter>.
 </para>
 
 <para>
-The <parameter>data</parameter> input must not be empty.
-It must be either a list or a word (not an array).
+El argumento <parameter>datos</parameter> no debe ser vació.
+Debe ser una lista o una palabra (no un vector).
 </para>
 
 <para>
-If <parameter>template</parameter> is the name of a procedure that is capable of accepting arbitrarily many inputs, it is more efficient to use <link linkend="command-apply">APPLY</link> instead of REDUCE.
-REDUCE is good for associative procedures that have been written to accept exactly two inputs.
+Si <parameter>plantilla</parameter> es el nombre de un procedimiento que acepta un número arbitrario de argumentos, es más eficiente de usar <link linkend="command-apply">APLICA</link> en vez de REDUCE.
+REDUCE es bueno para los procedimientos que aceptan exactamente dos argumentos.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>TO MAX :a :b
-  OUTPUT IFELSE :a > :b [:a] [:b]
-END
+<programlisting><userinput>PARA MAX :a :b
+  DEVUELVE SISINO :a > :b [:a] [:b]
+FIN
 
-PRINT REDUCE "MAX [2 3 8 7 9 0]</userinput>
+ESCRIBE REDUCE "MAX [2 3 8 7 9 0]</userinput>
 9
 </programlisting>
 
 <para>
-Alternatively, REDUCE can be used to write MAX as a procedure that accepts any number of inputs, as SUM does:
+Alternativamente, puedes usar REDUCE para escribir MAX como un procedimiento que acepta cualquier número de argumentos, tal como ADICION:
 </para>
 
-<programlisting><userinput>TO MAX [:inputs] 2
-  IF EMPTYP :inputs [(THROW "error [not enough inputs to max])]
-  OUTPUT REDUCE [IFELSE ?1 > ?2 [?1] [?2]] :inputs
-END
+<programlisting><userinput>PARA MAX [:argumentos] 2
+  SI VACIO? :argumentos [(LANZA "error [MAX necesita recibir más cosas])]
+  DEVUELVE REDUCE [SISINO ?1 > ?2 [?1] [?2]] :argumentos
+FIN
 
-PRINT (MAX 2 3 8 7 9 0)</userinput>
+ESCRIBE (MAX 2 3 8 7 9 0)</userinput>
 9
 </programlisting>
 </listitem>

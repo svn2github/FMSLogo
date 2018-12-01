@@ -1,46 +1,56 @@
 <section id="command-map">
-    <title>MAP</title>
+    <title>TEJE</title>
+<indexterm><primary>TEJE</primary></indexterm>
 <indexterm><primary>MAP</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>MAP</command> <parameter>templatelist</parameter> <parameter>data</parameter>
-(<command>MAP</command> <parameter>templatelist</parameter> <parameter>data1</parameter> <parameter>data2</parameter> <parameter>...</parameter>)</synopsis>
+<synopsis><command>TEJE</command> <parameter>lista_de_plantilla</parameter> <parameter>dato</parameter>
+(<command>TEJE</command> <parameter>lista_de_plantilla</parameter> <parameter>dato1</parameter> <parameter>dato2</parameter> <parameter>...</parameter>)
+<command>MAP</command> <parameter>lista_de_plantilla</parameter> <parameter>dato</parameter>
+(<command>MAP</command> <parameter>lista_de_plantilla</parameter> <parameter>dato1</parameter> <parameter>dato2</parameter> <parameter>...</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a word or list, depending on the type of the <parameter>data</parameter> input, of the same length as that <parameter>data</parameter> input.
-(If more than one data input are given, the output is of the same type as <parameter>data1</parameter>.)
-Each item of the output is the result of evaluating the <parameter>templatelist</parameter>, filling the slots with the corresponding item(s) of the <parameter>data</parameter> input(s).
-(All data inputs must be the same length.)
-In the case of a word output, the results of the template evaluation must be words, and they are concatenated with <link linkend="command-word">WORD</link>.
+Devuelve una palabra o una lista, según el tipo del argumento <parameter>dato</parameter>, del mismo tamaño de <parameter>dato</parameter>.
+(Si proporcionas más que un dato, lo devuelto es del mismo tipo del argumento <parameter>dato1</parameter>.)
+Cada miembro de lo devuelto es el resultado de ejecutar el argumento <parameter>lista_de_plantilla</parameter>, después de llenar su ranura con el miembro correspondiente del argumento <parameter>dato</parameter> (o después de llenar sus ranuras con los miembros correspondientes de cada argumento de dato, si proporcionas más que una).
+Si proporcionas más que un dato, todos los argumentos de datos debe ser del mismo tamaño.
+Si <parameter>lista_de_plantilla</parameter> devuelve una palabra, todos los resultados de las evaluaciones de la plantilla deben ser palabras y TEJE devuelve la palabra que es la concatenación del todos ellos (usando <link linkend="command-word">PALABRA</link>).
 </para>
 
 <para>
-In a template, the symbol <userinput>?REST</userinput> represents the portion of the data input to the right of the member currently being used as the <userinput>?</userinput> slot-filler.
-That is, if the data input is <userinput>[A B C D E]</userinput> and the template is being evaluated with <userinput>?</userinput> replaced by <userinput>B</userinput>, then <userinput>?REST</userinput> would be replaced by <userinput>[C D E]</userinput>.
-If multiple parallel slots are used, then <userinput>(?REST 1)</userinput> goes with <userinput>?1</userinput>, etc.
+En una plantilla, los símbolos <userinput>?RESTANTE</userinput> y <userinput>?REST</userinput> representan el porción de los datos a la derecha del miembro que se usa actualmente como el valor de la ranura <userinput>?</userinput>.
+Por ejemplo, si los datos son <userinput>[A B C D E]</userinput>, cuando se ejecuta la plantilla con <userinput>?</userinput> reemplazado por <userinput>B</userinput>, entonces también se reemplace a <userinput>?RESTANTE</userinput> y <userinput>?REST</userinput> por <userinput>[C D E]</userinput>.
+Si usas múltiples ranuras paralelas, entonces <userinput>(?RESTANTE 1)</userinput> va a la ranura <userinput>?1</userinput>, etc.
 </para>
 
 <para>
-In a template, the symbol <userinput>#</userinput> represents the position in the data input of the member currently being used as the <userinput>?</userinput> slot-filler.
-That is, if the data input is <userinput>[A B C D E]</userinput> and the template is being evaluated with <userinput>?</userinput> replaced by <userinput>B</userinput>, then <userinput>#</userinput> would be replaced by <userinput>2</userinput>.
+Se usa el símbolo <userinput>?RESTANTE</userinput> sólo en la versión de &PRODUCTNAME; española.
+Se usa <userinput>?REST</userinput> en todas las versiones de &PRODUCTNAME;.
 </para>
 
+<para>
+En una plantilla, el símbolo <userinput>#</userinput> representa la posición en <parameter>lista_de_datos</parameter> del miembro que se usa actualmente como el valor de la ranura <userinput>?</userinput>.
+Por ejemplo, si los datos son <userinput>[A B C D E]</userinput>, cuando se ejecuta la plantilla con <userinput>?</userinput> reemplazado por <userinput>B</userinput>, entonces también se reemplace a <userinput>#</userinput> por <userinput>2</userinput>.
+</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW MAP [2 * ?] [1 2 3 4 5 6]</userinput>
+<programlisting><userinput>MUESTRA TEJE [2 * ?] [1 2 3 4 5 6]</userinput>
 [2 4 6 8 10 12]
 </programlisting>
-<programlisting><userinput>SHOW (MAP "LIST [a b c] [d e f])</userinput>
+
+<programlisting><userinput>MUESTRA (TEJE "LISTA [a b c] [d e f])</userinput>
 [[a d] [b e] [c f]]
 </programlisting>
 </listitem>

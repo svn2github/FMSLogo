@@ -1,77 +1,88 @@
 <section id="command-cascade">
-    <title>CASCADE</title>
+    <title>CASCADA</title>
+<indexterm><primary>CASCADA</primary></indexterm>
 <indexterm><primary>CASCADE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>CASCADE</command> <parameter>endtest</parameter> <parameter>template</parameter> <parameter>startvalue</parameter>
-(<command>CASCADE</command> <parameter>endtest</parameter> <parameter>template1</parameter> <parameter>startvalue1</parameter> <parameter>template2</parameter> <parameter>startvalue2</parameter> <parameter>...</parameter>)
-(<command>CASCADE</command> <parameter>endtest</parameter> <parameter>template1</parameter> <parameter>startvalue1</parameter> <parameter>template2</parameter> <parameter>startvalue2</parameter> <parameter>...</parameter> <parameter>finaltemplate</parameter>)</synopsis>
+<synopsis><command>CASCADA</command> <parameter>prueba_de_terminar</parameter> <parameter>plantilla</parameter> <parameter>valor_inicial</parameter>
+(<command>CASCADA</command> <parameter>prueba_de_terminar</parameter> <parameter>plantilla1</parameter> <parameter>valor_inicial1</parameter> <parameter>plantilla2</parameter> <parameter>valor_inicial2</parameter> <parameter>...</parameter>)
+(<command>CASCADA</command> <parameter>prueba_de_terminar</parameter> <parameter>plantilla1</parameter> <parameter>valor_inicial1</parameter> <parameter>plantilla2</parameter> <parameter>valor_inicial2</parameter> <parameter>...</parameter> <parameter>plantilla_final</parameter>)
+<command>CASCADE</command> <parameter>prueba_de_terminar</parameter> <parameter>plantilla</parameter> <parameter>valor_inicial</parameter>
+(<command>CASCADE</command> <parameter>prueba_de_terminar</parameter> <parameter>plantilla1</parameter> <parameter>valor_inicial1</parameter> <parameter>plantilla2</parameter> <parameter>valor_inicial2</parameter> <parameter>...</parameter>)
+(<command>CASCADE</command> <parameter>prueba_de_terminar</parameter> <parameter>plantilla1</parameter> <parameter>valor_inicial1</parameter> <parameter>plantilla2</parameter> <parameter>valor_inicial2</parameter> <parameter>...</parameter> <parameter>plantilla_final</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the result of applying a template (or several templates, see the section entitled <link linkend="template-based-iteration">Template-Based Iteration</link>) repeatedly, with a given value filling the slot the first time, and the result of each application filling the slot for the following application.
+Devuelve el resultado de aplicar una plantilla (o varias plantillas, ve a la sección titulada <link linkend="template-based-iteration">Iteración de Plantilla</link>) repetidamente, con el valor dado llenando la ranura por la primera aplicación y el resultado de cada aplicación llenando la ranura por la aplicación siguiente.
 </para>
 
 <para>
-In the simplest case, CASCADE has three inputs.
-The <parameter>template</parameter> is a one-slot expression template.
-That template is evaluated some number of times (perhaps zero).
-On the first evaluation, the slot is filled with the <parameter>startvalue</parameter> input; on subsequent evaluations, the slot is filled with the result of the previous evaluation.
-The number of evaluations is determined by the <parameter>endtest</parameter> input.
-This can be either a nonnegative integer, in which case the template is evaluated that many times, or a predicate expression template, in which case it is evaluated (with the same slot filler that is used for the evaluation of the second input) repeatedly, and the CASCADE evaluation continues as long as the predicate value is FALSE.
-(In other words, the predicate template indicates the condition for stopping.)
+En el caso más sencillo, CASCADA toma tres argumentos.
+El argumento <parameter>plantilla</parameter> es una plantilla de una sola ranura.
+Se evalúa esta plantilla algún número de veces (tal vez cero).
+Por la primera evaluación, se llena la ranura con el argumento <parameter>valor_inicial</parameter>; por las siguientes evaluaciones se llena la ranura con el resultado de la evaluación previa.
+El argumento <parameter>prueba_de_terminar</parameter> determina el número de evaluaciones.
+Este argumento puede ser un número no negativo, en cuyo caso se evalúa la plantilla aquel número de veces.
+También, <parameter>prueba_de_terminar</parameter> puede ser un predicado, en cuyo caso se lo evalúa repetidamente (con el mismo argumento que se usa para <parameter>plantilla</parameter>) y las evaluaciones de CASCADA continúa mientras que <parameter>prueba_de_terminar</parameter> se evalúa a FALSO.
+(En otras palabras, la plantilla <parameter>prueba_de_terminar</parameter> indica la condición de terminar).
 </para>
 
 <para>
-If the template is evaluated zero times, CASCADE outputs <parameter>startvalue</parameter>.
-Otherwise, CASCADE outputs the value produced by the last template evaluation.
+Si se evalúa la plantilla cero veces, CASCADA devuelve <parameter>valor_inicial</parameter>.
+Si se evalúa la plantilla al menos una vez, CASCADA devuelve el valor producido por la última evaluación.
 </para>
 
 <para>
-CASCADE templates may include the symbol <userinput>#</userinput> to represent the number of times the template has been evaluated.
-This slot is filled with 1 for the first evaluation, 2 for the second, and so on.
+Las plantillas de CASCADA puede incluir el símbolo <userinput>#</userinput> para representar el número de veces que la plantilla ha sido evaluada.
+Se llena esta ranura con 1 por la primera evaluación, 2 por la segunda, y así sucesivamente.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW CASCADE 5 [LPUT # ?] []</userinput>
+<programlisting><userinput>MUESTRA CASCADA 5 [LPUT # ?] []</userinput>
 [1 2 3 4 5]
 
-<userinput>SHOW CASCADE [VOWELP FIRST ?] [BUTFIRST ?] "spring</userinput>
-ing
+<userinput>PARA VOCAL? :arg
+  DEVUELVE MIEMBRO? :arg "aáeéiíoóuúü
+FIN
 
-<userinput>SHOW CASCADE 5 [# * ?] 1</userinput>
+MUESTRA CASCADA [VOCAL? PRIMERO ?] [MENOSPRIMERO ?] "plantilla</userinput>
+antilla
+
+<userinput>MUESTRA CASCADA 5 [# * ?] 1</userinput>
 120
 </programlisting>
 
 <para>
-Several cascaded results can be computed in parallel by providing additional <parameter>template</parameter>-<parameter>startvalue</parameter> pairs as inputs to CASCADE.
-In this case, all templates (including the <parameter>endtest</parameter> template, if used) are multi-slot, with the number of slots equal to the number of pairs of inputs.
-In each round of evaluations, <userinput>?2</userinput> represents the result of evaluating the second template in the previous round.
-If the total number of inputs (including the first <parameter>endtest</parameter> input) is odd, then the output from CASCADE is the final value of the first template.
-If the total number of inputs is even, then the last input is a template that is evaluated once, after the end test is satisfied, to determine the output from CASCADE.
+Puedes proporcionarle a CASCADA pares adicionales de los argumentos <parameter>plantilla</parameter> y <parameter>valor_inicial</parameter> para calcular varios resultados en paralelo.
+En este caso, todas las plantillas (incluido la plantilla <parameter>prueba_de_terminar</parameter> si la usas) son de múltiples ranuras, con el número de ranuras siendo igual al número de pares <parameter>plantilla</parameter>/<parameter>valor_inicial</parameter> dados.
+En cada ronda de evaluación, <userinput>?2</userinput> representa el resultado de la evaluación de la segunda plantilla en la ronda previa.
+Si el número total de argumentos (incluido el argumento <parameter>prueba_de_terminar</parameter>) es impar, entonces CASCADA devuelve el valor final de la primera plantilla.
+Si el número total de argumentos es par, entonces se toma el argumento final como una plantilla que se evalúa exactamente una vez, después de que se satisface la condición de terminar, para determina lo que CASCADA devuelve.
 </para>
 
 
-<programlisting><userinput>TO FIBONACCI :n
-  OUTPUT (CASCADE :n [?1 + ?2] 1 [?1] 0)
-END
+<programlisting><userinput>PARA FIBONACCI :n
+  DEVUELVE (CASCADA :n [?1 + ?2] 1 [?1] 0)
+FIN
 
-TO PIGLATIN :word
-  OUTPUT (CASCADE [VOWELP FIRST ?]
-                  [WORD BUTFIRST ? FIRST ?]
-                  :word
-                  [WORD ? "ay])
-END</userinput>
+PARA PIGLATIN :palabra
+  DEVUELVE (CASCADA [VOCAL? PRIMERO ?]
+                    [PALABRA MENOSPRIMERO ? PRIMERO ?]
+                    :palabra
+                    [PALABRA ? "ay])
+FIN</userinput>
 </programlisting>
 
 </listitem>

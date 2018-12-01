@@ -1,52 +1,59 @@
 <section id="command-transfer">
-    <title>TRANSFER</title>
+    <title>TRANSFIERE</title>
+<indexterm><primary>TRANSFIERE</primary></indexterm>
 <indexterm><primary>TRANSFER</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>TRANSFER</command> <parameter>endtest</parameter> <parameter>template</parameter> <parameter>inbasket</parameter></synopsis>
+<synopsis><command>TRANSFIERE</command> <parameter>prueba_de_terminar</parameter> <parameter>plantilla</parameter> <parameter>canasta</parameter>
+<command>TRANSFER</command> <parameter>prueba_de_terminar</parameter> <parameter>plantilla</parameter> <parameter>canasta</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the result of repeated evaluation of the <parameter>template</parameter> input.
-The template is evaluated once for each member of the list <parameter>inbasket</parameter>.
-TRANSFER maintains an "out basket" that is initially the empty list.
-After each evaluation of the template, the resulting value becomes the new "out basket".
-When all input has been processed, TRANSFER outputs the "out basket".
+Devuelve el resultado de ejecutar repetidamente el argumento <parameter>plantilla</parameter>.
+Se evalúa la plantilla una vez por cada elemento en la lista <parameter>canasta</parameter>.
+TRANSFIERE mantiene una «canasta de salida» que está inicialmente vacía.
+Después de cada evaluación de la plantilla, el resultado se vuelve la nueva «canasta de salida».
+Después de que se ha procesado todos los elementos de <parameter>canasta</parameter>, TRANSFIERE devuelve la «canasta de salida».
 </para>
 
 <para>
-In the template, the symbol <userinput>?IN</userinput> represents the current item from <parameter>inbasket</parameter>; the symbol <userinput>?OUT</userinput> represents the entire current "out basket".
-Other slot symbols should not be used.
+En la plantilla, el símbolo <userinput>?IN</userinput> representa el elemento actual de <parameter>canasta</parameter> y el símbolo <userinput>?OUT</userinput> representa la «canasta de salida».
+(En inglés, IN quiere decir «entrada» y OUT quiere decir «salida».)
+No debes usar las otras símbolos de ranuras en esta plantilla.
 </para>
 
 <para>
-If the <parameter>endtest</parameter> input is an empty list, evaluation continues until all <parameter>inbasket</parameter> members have been used.
-Otherwise, the <parameter>endtest</parameter> input must be a predicate expression template, and evaluation continues until either that template's value is TRUE or <parameter>inbasket</parameter> is used up.
+Si el argumento <parameter>prueba_de_terminar</parameter> es la lista vacía, la evaluación sigue hasta que se ha procesado todos los elementos de <parameter>canasta</parameter>.
+Si <parameter>prueba_de_terminar</parameter> no es la lista vacía, debe ser una plantilla que se evalúa a CIERTO o FALSO (un predicado).
+En este caso, la evaluación continúa hasta que <parameter>prueba_de_terminar</parameter> evalúa a CIERTO o se ha procesado todos los elementos de <parameter>canasta</parameter>.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
 <para>
-For each word in the last input, if that word is already part of the result, forget it; if not, append that word to the result so far.
-The result is initially empty.
+Para cada palabra en el argumento final, si esta palabra ya forma parte del resultado, olvidala.  Si no, añade esta palabra al fin del resultado.
+El resultado está inicialmente vacío.
 </para>
 
-<programlisting><userinput>SHOW TRANSFER [] [IFELSE MEMBERP ?IN ?OUT [?OUT] [LPUT ?IN ?OUT]] [A B C B D E F B C G]</userinput>
-[A B C D E F G]
+<programlisting><userinput>MUESTRA TRANSFIERE [] [SISINO MIEMBRO? ?IN ?OUT [?OUT] [PONULTIMO ?IN ?OUT]] [A A B A C B D A]</userinput>
+[A B C D]
 </programlisting>
 
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

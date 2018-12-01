@@ -1,43 +1,52 @@
 <section id="command-map.se">
-    <title>MAP.SE</title>
+    <title>TEJE.FR</title>
+<indexterm><primary>TEJE.FR</primary></indexterm>
 <indexterm><primary>MAP.SE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>MAP.SE</command> <parameter>templatelist</parameter> <parameter>data</parameter>
-(<command>MAP.SE</command> <parameter>templatelist</parameter> <parameter>data1</parameter> <parameter>data2</parameter> <parameter>...</parameter>)</synopsis>
+<synopsis><command>TEJE.FR</command> <parameter>lista_de_plantilla</parameter> <parameter>dato</parameter>
+(<command>TEJE.FR</command> <parameter>lista_de_plantilla</parameter> <parameter>dato1</parameter> <parameter>dato2</parameter> <parameter>...</parameter>)
+<command>MAP.SE</command> <parameter>lista_de_plantilla</parameter> <parameter>dato</parameter>
+(<command>MAP.SE</command> <parameter>lista_de_plantilla</parameter> <parameter>dato1</parameter> <parameter>dato2</parameter> <parameter>...</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a list formed by evaluating <parameter>templatelist</parameter> repeatedly and concatenating the results using <link linkend="command-sentence">SENTENCE</link>.
-That is, the members of the output are the members of the results of the evaluations.
-The output list might, therefore, be of a different length from that of the data input(s).
-(If the result of an evaluation is the empty list, it contributes nothing to the final output.)
-The data inputs may be words or lists.
+Devuelve una lista formada por la concatenación con <link linkend="command-sentence">FRASE</link> de los resultados de la ejecución repetida de <parameter>lista_de_plantilla</parameter> con todos los datos dados.
+Esto es, los elementos de la lista devuelta son los resultados de las evaluaciones.
+La lista devuelta puede tener, por lo tanto, un tamaño distinto de él de los argumento(s).
+(Si el resultado de una evaluación es la lista vacía, no contribuye nada a la lista devuelta.)
+Los argumentos de datos pueden ser palabras o listas. 
 </para>
 
 <para>
-In a template, the symbol <userinput>?REST</userinput> represents the portion of the data input to the right of the member currently being used as the <userinput>?</userinput> slot-filler.
-That is, if the data input is <userinput>[A B C D E]</userinput> and the template is being evaluated with <userinput>?</userinput> replaced by <userinput>B</userinput>, then <userinput>?REST</userinput> would be replaced by <userinput>[C D E]</userinput>.
-If multiple parallel slots are used, then <userinput>(?REST 1)</userinput> goes with <userinput>?1</userinput>, etc.
+En una plantilla, los símbolos <userinput>?RESTANTE</userinput> y <userinput>?REST</userinput> representan el porción de los datos a la derecha del miembro que se usa actualmente como el valor de la ranura <userinput>?</userinput>.
+Por ejemplo, si los datos son <userinput>[A B C D E]</userinput>, cuando se ejecuta la plantilla con <userinput>?</userinput> reemplazado por <userinput>B</userinput>, entonces también se reemplace a <userinput>?RESTANTE</userinput> y <userinput>?REST</userinput> por <userinput>[C D E]</userinput>.
+Si usas múltiples ranuras paralelas, entonces <userinput>(?RESTANTE 1)</userinput> va a la ranura <userinput>?1</userinput>, etc.
 </para>
 
 <para>
-In a template, the symbol <userinput>#</userinput> represents the position in the data input of the member currently being used as the <userinput>?</userinput> slot-filler.
-That is, if the data input is <userinput>[A B C D E]</userinput> and the template is being evaluated with <userinput>?</userinput> replaced by <userinput>B</userinput>, then <userinput>#</userinput> would be replaced by <userinput>2</userinput>.
+Se usa el símbolo <userinput>?RESTANTE</userinput> sólo en la versión de &PRODUCTNAME; española.
+Se usa <userinput>?REST</userinput> en todas las versiones de &PRODUCTNAME;.
 </para>
 
+<para>
+En una plantilla, el símbolo <userinput>#</userinput> representa la posición en <parameter>lista_de_datos</parameter> del miembro que se usa actualmente como el valor de la ranura <userinput>?</userinput>.
+Por ejemplo, si los datos son <userinput>[A B C D E]</userinput>, cuando se ejecuta la plantilla con <userinput>?</userinput> reemplazado por <userinput>B</userinput>, entonces también se reemplace a <userinput>#</userinput> por <userinput>2</userinput>.
+</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW (MAP.SE "LIST [a b c] [d e f])</userinput>
+<programlisting><userinput>MUESTRA (TEJE.FR "LISTA [a b c] [d e f])</userinput>
 [a d b e c f]
 </programlisting>
 </listitem>

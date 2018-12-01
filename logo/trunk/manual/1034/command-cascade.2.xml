@@ -1,29 +1,32 @@
 <section id="command-cascade.2">
-<title>CASCADE.2</title>
+<title>CASCADA.2</title>
+<indexterm><primary>CASCADA.2</primary></indexterm>
 <indexterm><primary>CASCADE.2</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>CASCADE.2</command> <parameter>endtest</parameter> <parameter>template1</parameter> <parameter>startvalue1</parameter> <parameter>template2</parameter> <parameter>startvalue2</parameter></synopsis>
+<synopsis><command>CASCADA.2</command> <parameter>prueba_de_terminar</parameter> <parameter>plantilla1</parameter> <parameter>valor_inicial1</parameter> <parameter>plantilla2</parameter> <parameter>valor_inicial2</parameter>
+<command>CASCADE.2</command> <parameter>prueba_de_terminar</parameter> <parameter>plantilla1</parameter> <parameter>valor_inicial1</parameter> <parameter>plantilla2</parameter> <parameter>valor_inicial2</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs the result of invoking <link linkend="command-cascade">CASCADE</link> with the same inputs.
-The only difference is that the default number of inputs is five instead of three.
+Devuelve el resultado de ejecutar <link linkend="command-cascade">CASCADA</link> con los mismos argumentos.
+La única diferencia entre los dos procedimientos es que CASCADA.2 tiene cinco argumentos por defecto, mientras que CASCADA tiene tres.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>TO FIBONACCI :n
-  OUTPUT CASCADE.2 :n [?1 + ?2] 1 [?1] 0
-END</userinput>
+<programlisting><userinput>PARA FIBONACCI :n
+  DEVUELVE CASCADA.2 :n [?1 + ?2] 1 [?1] 0
+FIN</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

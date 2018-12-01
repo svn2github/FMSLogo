@@ -1,34 +1,38 @@
 <section id="command-invoke">
-    <title>INVOKE</title>
+    <title>INVOCA</title>
+<indexterm><primary>INVOCA</primary></indexterm>
 <indexterm><primary>INVOKE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>INVOKE</command> <parameter>template</parameter> <parameter>input</parameter>
-(<command>INVOKE</command> <parameter>template</parameter> <parameter>input1</parameter> <parameter>input2</parameter> <parameter>...</parameter>)</synopsis>
+<synopsis><command>INVOCA</command> <parameter>plantilla</parameter> <parameter>argumento</parameter>
+(<command>INVOCA</command> <parameter>plantilla</parameter> <parameter>argumento1</parameter> <parameter>argumento2</parameter> <parameter>...</parameter>)
+<command>INVOKE</command> <parameter>plantilla</parameter> <parameter>argumento</parameter>
+(<command>INVOKE</command> <parameter>plantilla</parameter> <parameter>argumento1</parameter> <parameter>argumento2</parameter> <parameter>...</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Procedure that runs the <parameter>template</parameter>, filling its slots with the remaining input(s).
-The number of inputs must be an acceptable number of slots for <parameter>template</parameter>.
-It is illegal to use the primitive <link linkend="command-to">TO</link> as a template, but anything else is okay.
-INVOKE outputs what <parameter>template</parameter> outputs, if anything.
+Ejecuta el argumento <parameter>plantilla</parameter>, llenando las ranuras con el resto de sus argumentos, y devuelve el resultado, si lo hay.
+El número de elementos en <parameter>lista_de_argumentos</parameter> debe ser aceptable para la plantilla.
+Es ilegal invocar la primitiva <link linkend="command-to">PARA</link> como plantilla, pero cualquier otro procedimiento es legal.
 </para>
 
 <para>
-INVOKE is similar to <link linkend="command-apply">APPLY</link> except that INVOKE's inputs are provided as separate expressions rather than in a list.
+INVOCA parece a <link linkend="command-apply">APLICA</link> excepto que se proporciona los argumentos a INVOCA como expresiones distintos en lugar de una lista.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW (INVOKE "SUM 1 2 3)</userinput>
+<programlisting><userinput>MUESTRA (INVOCA "ADICION 1 2 3)</userinput>
 6</programlisting>
 </listitem>
 </varlistentry>
