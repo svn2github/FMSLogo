@@ -1,5 +1,5 @@
 <chapter id="macro-commands">
-   <title>Macro Commands</title>
+   <title>Procedimientos de macros</title>
 
        &command-.macro;
        &command-.defmacro;

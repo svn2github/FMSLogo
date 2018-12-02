@@ -4,21 +4,21 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>.DEFMACRO</command> <parameter>procname</parameter> <parameter>text</parameter></synopsis>
+<synopsis><command>.DEFMACRO</command> <parameter>nombre_de_macro</parameter> <parameter>texto</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-.DEFMACRO is like <link linkend="command-define">DEFINE</link> with the same exceptions as <link linkend="command-.macro">.MACRO</link>.
+.DEFMACRO es parecido a <link linkend="command-define">DEFINE</link> con las mismas excepciones de <link linkend="command-.macro">.MACRO</link>.
+Ve la documentación de DEFINE y .MACRO para más detalles.
 </para>
 
-<para>
-See <link linkend="command-define">DEFINE</link> and <link linkend="command-.macro">.MACRO</link> for more details.
-</para>
+
 </listitem>
 </varlistentry>
 

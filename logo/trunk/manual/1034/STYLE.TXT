@@ -78,6 +78,7 @@ programmatically.
    toplevel                   - el alto nivel interactivo
    unbound                    - desligado
    tag                        - etiqueta
+   macro                      - una macro
 
 8) The following terms are generally translated the same way
 

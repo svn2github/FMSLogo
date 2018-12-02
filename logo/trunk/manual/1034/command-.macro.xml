@@ -4,169 +4,176 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
-<listitem><para>(special form)</para>
-<synopsis><command>.MACRO</command> <parameter>procname</parameter> <parameter>:input1</parameter> <parameter>:input2</parameter> <parameter>...</parameter></synopsis>
+<varlistentry><term>Sinopsis</term>
+<listitem><para>(forma especial)</para>
+<synopsis><command>.MACRO</command> <parameter>nombre_de_macro</parameter> <parameter>:argumento1</parameter> <parameter>:argumento2</parameter> <parameter>...</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-A macro is a special kind of procedure whose output is evaluated as instructions in the context of the macro's caller.
-.MACRO is like <link linkend="command-to">TO</link> except that the new procedure becomes a macro.
+Una macro es un tipo especial de procedimiento cuyo resultado se evalúa como instrucciones en el contexto del procedimiento que ejecuta la macro.
+.MACRO es semejante a <link linkend="command-to">PARA</link> excepto que el nuevo procedimiento es una macro.
 </para>
 
 <para>
-Macros are useful for inventing new control structures comparable to <link linkend="command-repeat">REPEAT</link>, <link linkend="command-if">IF</link>, and so on.
-Such control structures can almost, but not quite, be duplicated by ordinary procedures.
-For example, here is an ordinary procedure version of REPEAT:
+Las macros se usan para crear nuevas estructuras de control comparables a <link linkend="command-repeat">REPITE</link> o <link linkend="command-if">SI</link>.
+Tales estructuras de control no pueden ser duplicados exactamente por procedimientos ordinarios.
+Por ejemplo, aquí está una definición de REPITE que usa un procedimiento normal:
 
-<programlisting>TO MY.REPEAT :num :instructions
-  IF :num=0 [STOP]
-  RUN :instructions
-  MY.REPEAT :num-1 :instructions
-END
+<programlisting>PARA MI.REPITE :veces :lista_de_instrucciones
+  SI :veces=0 [ALTO]
+  EJECUTA :lista_de_instrucciones
+  MI.REPITE :veces-1 :lista_de_instrucciones
+FIN
 </programlisting>
 </para>
 
 <para>
-This version works fine for most purposes, for example
+Esta versión parece funcionar bien en la mayoría de usos, por ejemplo:
 
-<programlisting>MY.REPEAT 5 [PRINT "hello]
+<programlisting>MI.REPITE 5 [ESCRIBE "hola]
 </programlisting>
 
-But it doesn't work if the instructions to be run include <link linkend="command-output">OUTPUT</link>, <link linkend="command-stop">STOP</link>, or <link linkend="command-local">LOCAL</link>.
-For example, consider this procedure:
+Pero, no funciona si las instrucciones a ejecutar incluyen <link linkend="command-output">DEVUELVE</link>, <link linkend="command-stop">ALTO</link> o <link linkend="command-local">LOCAL</link>.
+Por ejemplo, considera este procedimiento:
 
-<programlisting>TO EXAMPLE
-  PRINT [Guess my secret word.  You get three guesses.]
-  REPEAT 3 [TYPE "|?? | IF READWORD = "secret [PRINT "Right! STOP]]
-  PRINT [Sorry, the word was "secret"!]
-END
-</programlisting>
-</para>
-
-<para>
-This procedure works as written, but if MY.REPEAT were used instead of REPEAT, it wouldn't work because the STOP would stop MY.REPEAT instead of stopping EXAMPLE as desired.
-</para>
-
-<para>
-The solution is to make MY.REPEAT a macro.
-Instead of carrying out the computation, a macro must output a list containing instructions.
-The contents of that list are evaluated as if they appeared in place of the call to the macro.
-Here's a macro version of REPEAT:
-
-<programlisting>.MACRO MY.REPEAT :num :instructions
-  IF :num=0 [OUTPUT []]
-  OUTPUT SENTENCE :instructions (LIST "MY.REPEAT :num-1 :instructions)
-END
+<programlisting>PARA EJEMPLO
+  ESCRIBE [Averigua mi palabra secreta en tres intentos.]
+  REPITE 3 [SI LEEPALABRA = "secreta [ESCRIBE "Exacto! ALTO]]
+  ESCRIBE [Lo siento, ¡la palabra es «secreta»!]
+FIN
 </programlisting>
 </para>
 
 <para>
-Every macro is an operation; all macros always output something.
-Even in the base case, MY.REPEAT outputs an empty instruction list.
+Este procedimiento funciona como escrito, pero si utilizas MI.REPITE en lugar de REPITE, no funcionaría porque ALTO detiene MI.REPITE en lugar de EJEMPLO.
 </para>
 
 <para>
-To see how the MY.REPEAT macro works, let's take the example
+La solución es definir MI.REPITE como una macro.
+En lugar de computar algo por si mismo, una macro debe devolver una lista que contiene instrucciones.
+Se evalúa el contenido de esta lista como si aparece en el lugar donde se ejecuta la macro.
+La siguiente macro funciona como REPITE:
 
-<programlisting>MY.REPEAT 5 [PRINT "hello]
+<programlisting>.MACRO MI.REPITE :veces :lista_de_instrucciones
+  SI :veces=0 [DEVUELVE []]
+  DEVUELVE FRASE :lista_de_instrucciones (LISTA "MI.REPITE :veces-1 :lista_de_instrucciones)
+FIN
 </programlisting>
 </para>
 
 <para>
-For this example, MY.REPEAT outputs the instruction list
-<programlisting>[PRINT "hello MY.REPEAT 4 [PRINT "hello]]
+Cada macro es una operación; todas las macros siempre devuelven algo.
+Aún en el caso baso, MI.REPITE devuelve la lista de instrucciones vacía.
+</para>
+
+<para>
+Para ver como el macro MI.REPITE funciona, veamos el ejemplo.
+
+<programlisting>MI.REPITE 5 [ESCRIBE "hola]
 </programlisting>
 </para>
 
 <para>
-&PRODUCTNAME; then runs these instructions in place of the original invocation of MY.REPEAT; this prints "hello" once and invokes another repetition.
-</para>
-
-
-<para>
-The technique just shown, although fairly easy to understand, is too slow because each repetition constructs an instruction list for evaluation.
-Another approach is to make MY.REPEAT a macro that works just like the non-macro version unless the instructions to be repeated includes OUTPUT or STOP:
-
-<programlisting>.MACRO MY.REPEAT :num :instructions
-  CATCH "repeat.catchtag [OUTPUT REPEAT.DONE RUNRESULT [REPEAT1 :num :instructions]]
-  OUTPUT []
-END
-
-TO REPEAT1 :num :instructions
-  IF :num=0 [THROW "repeat.catchtag]
-  RUN :instructions
-  .MAYBEOUTPUT REPEAT1 :num-1 :instructions
-END
-
-TO REPEAT.DONE :repeat.result
-  IF EMPTYP :repeat.result [OUTPUT [STOP]]
-  OUTPUT LIST "output QUOTED FIRST :repeat.result
-END
+Primero, &PRODUCTNAME; ejecuta MI.REPITE.
+MI.REPITE devuelve la siguiente lista de instrucciones:
+<programlisting>[ESCRIBE "hola MI.REPITE 4 [ESCRIBE "hola]]
 </programlisting>
 </para>
 
 <para>
-If the instructions do not include STOP or OUTPUT, then REPEAT1 reaches its base case and invokes <link linkend="command-throw">THROW</link>.
-As a result, MY.REPEAT's last instruction line outputs an empty list, so the second evaluation of the macro does nothing.
-But if a STOP or OUTPUT happens, then REPEAT.DONE outputs a STOP or OUTPUT instruction that is re-run in the caller's context.
+Porque MI.REPITE es una macro, &PRODUCTNAME; inmediatamente ejecuta lo que devuelve.
+Hacer esto escribe «hola» una vez y ejecuta una otra repetición.
 </para>
 
-<para>
-The macro-defining commands have names starting with a dot because macros are an advanced feature of &GENERICNAME;.
-It's easy to get in trouble by defining a macro that doesn't terminate, or by failing to construct the instruction list properly.
-</para>
 
 <para>
-LISP users should note that &GENERICNAME; macros are <emphasis>not</emphasis> special forms.
-That is, the inputs to the macro are evaluated normally, as they would be for any other procedure.
-It's only the output from the macro that's handled unusually.
-</para>
+El método demostrado arriba, aunque fácil a entender, es demasiado lento porque cada repetición construye una lista de instrucción que se ejecuta separadamente.
+Un método más eficiente es hacer MI.REPITE une macro que funciona como el procedimiento normal excepto cuando las instrucciones a ejecutar incluyen ALTO o DEVUELVE:
 
-<para>
-Here's how you can implement <link linkend="command-localmake">LOCALMAKE</link> with .MACRO:
-<programlisting>.MACRO LOCALMAKE :name :value
-  OUTPUT (LIST ("local  word "" :name  "apply ""make (LIST :name :value))
-END
+<programlisting>.MACRO MI.REPITE :veces :lista_de_instrucciones
+  ATRAPA "repite.etiqueta [
+    DEVUELVE REPITE.FIN RESULTADOEJECUTA [REPITE1 :veces :lista_de_instrucciones]
+  ]
+  DEVUELVE []
+FIN
+
+PARA REPITE.FIN :repite.resultado
+  SI VACIO? :repite.resultado [DEVUELVE [ALTO]]
+  DEVUELVE LISTA "DEVUELVE ENTRECOMILLAS PRIMERO :repite.resultado
+FIN
+
+PARA REPITE1 :veces :lista_de_instrucciones
+  SI :veces=0 [LANZA "repite.etiqueta]
+  EJECUTA :lista_de_instrucciones
+  .QUIZADEVUELVE REPITE1 :veces-1 :lista_de_instrucciones
+FIN
 </programlisting>
 </para>
 
 <para>
-It's used this way:
+Si las instrucciones no incluyen ALTO o DEVUELVE, entonces REPITE1 llega al caso baso y ejecuta <link linkend="command-throw">LANZA</link>.
+Por lo tanto, la instrucción final de la macro MI.REPITE devuelve una lista vacía, entonces la evaluación de esta lista no hace nada.
+Pero, si ocurre un ALTO o DEVUELVE en <parameter>lista_de_instrucciones</parameter>, entonces REPITE.FIN devuelve una instrucción de ALTO o DEVUELVE que se ejecuta en el contexto de donde se ejecuta MI.REPITE.
+</para>
 
-<programlisting>TO TRY
-  LOCALMAKE "myvar "hello
-  PRINT :myvar
-END
+<para>
+Los comandos que definen macros tienen nombres que empiezan con un punto (.) porque son herramientas avanzadas de &GENERICNAME;.
+Es fácil meterte en problemas por definir una macro que no se termina, o por fallar de construir una lista de instrucciones correctamente.
+</para>
+
+<para>
+Los usuarios de LISP deben notar que las macros de &GENERICNAME; <emphasis>no</emphasis> son formas especiales.
+Esto es, los argumentos de una macro se evalúan normalmente, como los de cualquier procedimiento normal.
+Es solo lo que devuelve una macro que tiene un tratamiento inusual.
+</para>
+
+<para>
+Aquí es como puedes crear <link linkend="command-localmake">HAZLOCAL</link> con .MACRO:
+<programlisting>.MACRO MI.HAZLOCAL :nombre_de_variable :valor
+  DEVUELVE (LISTA
+    "LOCAL PALABRA "" :nombre_de_variable
+    "APLICA ""HAZ (LISTA :nombre_de_variable :valor)
+  )
+FIN
 </programlisting>
 </para>
 
 <para>
-LOCALMAKE outputs the list:
+Se la usa de esta manera:
 
-<programlisting>[LOCAL "myvar apply "make [myvar hello]]
+<programlisting>PARA EJEMPLO
+  MI.HAZLOCAL "mivar "hola
+  ESCRIBE :mivar
+FIN
 </programlisting>
 </para>
 
 <para>
-LOCALMAKE uses <link linkend="command-apply">APPLY</link> to avoid deciding whether the second input to <link linkend="command-make">MAKE</link> requires a quotation mark before it.
-In this case it would--<userinput>MAKE "myvar "hello</userinput>--but the quotation mark would be wrong if the value were a list.
-</para>
+MI.HAZLOCAL devuelve la lista:
 
-<para>
-It's often convenient to use the <link linkend="command-backtick">`</link> operation to construct the instruction list:
-
-<programlisting>.MACRO LOCALMAKE :name :value
-  OUTPUT `[LOCAL ,[WORD "" :name] APPLY "make [,[:name] ,[:value]]]
-END
+<programlisting>[LOCAL "mivar APLICA "HAZ [mivar hola]]
 </programlisting>
 </para>
 
 <para>
-On the other hand, ` is slow, since it's tree-recursive and written in &GENERICNAME;.
+MI.HAZLOCAL usa <link linkend="command-apply">APLICA</link> para evitar decidir si el segundo argumento de <link linkend="command-make">HAZ</link> requiere ser precedido por una comilla inglesa.
+En este caso, sí lo necesita--<userinput>HAZ "mivar "hola</userinput>--pero la comilla inglesa sería incorrecto si el valor fuera una lista.
+</para>
+
+<para>
+A menudo, es más conveniente usar la operación <link linkend="command-backtick">`</link> para construir una lista de instrucciones:
+
+<programlisting>.MACRO MI.HAZLOCAL :nombre_de_variable :valor
+  DEVUELVE `[LOCAL ,[PALABRA "" :nombre_de_variable] APLICA "HAZ [,[:nombre_de_variable] ,[:valor]]]
+FIN
+</programlisting>
+</para>
+
+<para>
+Pero, por otra parte, <userinput>`</userinput> es lento, porque tiene recursión de árbol y es escrito en &GENERICNAME;.
 </para>
 
 

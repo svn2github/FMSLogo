@@ -1,33 +1,34 @@
 <section id="command-macroexpand">
-    <title>MACROEXPAND</title>
+    <title>EXPANDEMACRO</title>
+<indexterm><primary>EXPANDEMACRO</primary></indexterm>
 <indexterm><primary>MACROEXPAND</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>MACROEXPAND</command> <parameter>macrocall</parameter></synopsis>
+<synopsis><command>EXPANDEMACRO</command> <parameter>instrucción_de_macro</parameter>
+<command>MACROEXPAND</command> <parameter>instrucción_de_macro</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Operation that inputs &GENERICNAME; expression (<parameter>macrocall</parameter>) that invokes a macro and outputs the &GENERICNAME; expression into which the macro would translate the input expression.
+Devuelve la lista de instrucciones que su argumento, que debe ser una instrucción de macro, devolvería antes de ser ejecutado por &GENERICNAME;.
 </para>
 
 <para>
-The <parameter>macrocall</parameter> input must be a list that begins with the name of a macro.
+El argumento <parameter>instrucción_de_macro</parameter> debe ser una lista que empieza con el nombre de una macro.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>LOCALMAKE "load "it
-SHOW MACROEXPAND [LOCALMAKE "pi 3.14159]</userinput>
-[local "pi apply "make [pi 3.14159]]
+<programlisting><userinput>MUESTRA EXPANDEMACRO [HAZLOCAL "pi 3.14159]</userinput>
+[LOCAL "pi APLICA "HAZ [pi 3.14159]]
 </programlisting>
 </listitem>
 </varlistentry>
