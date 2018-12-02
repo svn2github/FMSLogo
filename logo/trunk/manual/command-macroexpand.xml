@@ -25,8 +25,7 @@ The <parameter>macrocall</parameter> input must be a list that begins with the n
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>LOCALMAKE "load "it
-SHOW MACROEXPAND [LOCALMAKE "pi 3.14159]</userinput>
+<programlisting><userinput>SHOW MACROEXPAND [LOCALMAKE "pi 3.14159]</userinput>
 [local "pi apply "make [pi 3.14159]]
 </programlisting>
 </listitem>
