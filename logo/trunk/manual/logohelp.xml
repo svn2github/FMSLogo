@@ -2,6 +2,12 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
 
+  <!-- Get character entites used in publishing, like &mdash; -->
+  <!ENTITY % isopub PUBLIC
+    "ISO 8879:1986//ENTITIES Publishing//EN//XML"
+    "http://www.oasis-open.org/docbook/xml/4.5/ent/isopub.ent"
+  > %isopub;
+
   <!ENTITY LOGOEXE      "fmslogo.exe">
   <!ENTITY PRODUCTNAME  "FMSLogo">
   <!ENTITY GENERICNAME  "Logo">

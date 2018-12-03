@@ -55,7 +55,7 @@ SHOW ORIENTATION</userinput>
 
 <para>
 Here, you set the pitch to 180, which, from an orientation of <code>[0 0 0]</code> can be thought of as "keep nosing up until you're upside-down and looking backward", but ORIENTATION shows that the pitch is 0, even though the turtle is upside-down and looking backward.
-Instead, the turtle's orientation is equivalent to <code>[0 180 0]</code>, but it's described as flipping upside-down (roll = 180) and looking backward (heading = 180) -- <code>[180 0 180]</code>.
+Instead, the turtle's orientation is equivalent to <code>[0 180 0]</code>, but it's described as flipping upside-down (roll = 180) and looking backward (heading = 180)&mdash;<code>[180 0 180]</code>.
 So now what happens if you set the pitch to 180 again?
 Well, you set the orientation to <code>[180 180 180]</code>, which means "flip upside down, keep nosing up until you're upside-down and looking backward, then turn around", which puts you back at <code>[0 0 0]</code>.
 </para>

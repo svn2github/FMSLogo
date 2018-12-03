@@ -160,7 +160,7 @@ MI.HAZLOCAL devuelve la lista:
 
 <para>
 MI.HAZLOCAL usa <link linkend="command-apply">APLICA</link> para evitar decidir si el segundo argumento de <link linkend="command-make">HAZ</link> requiere ser precedido por una comilla inglesa.
-En este caso, sí lo necesita--<userinput>HAZ "mivar "hola</userinput>--pero la comilla inglesa sería incorrecto si el valor fuera una lista.
+En este caso, sí lo necesita &mdash;<userinput>HAZ "mivar "hola</userinput>&mdash; pero la comilla inglesa sería incorrecto si el valor fuera una lista.
 </para>
 
 <para>

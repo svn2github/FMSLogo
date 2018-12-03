@@ -33,7 +33,7 @@ En otras lenguajes de programación, se las llaman «vectores asociativos», «d
 </para>
 
 <para>
-Siempre se refieren a las listas de propiedades, abreviado a «lProp», por su nombre--no puedes meter una lProp en una variable directamente.
+Siempre se refieren a las listas de propiedades, abreviado a «lProp», por su nombre &mdash;no puedes meter una lProp en una variable directamente&mdash;.
 Entre otras cosas, esto quiere decir que no puedes pasar una lProp a un procedimiento de &GENERICNAME;, sólo puedes pasarle el nombre.
 </para>
 

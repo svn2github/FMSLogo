@@ -153,7 +153,7 @@ LOCALMAKE outputs the list:
 
 <para>
 LOCALMAKE uses <link linkend="command-apply">APPLY</link> to avoid deciding whether the second input to <link linkend="command-make">MAKE</link> requires a quotation mark before it.
-In this case it would--<userinput>MAKE "myvar "hello</userinput>--but the quotation mark would be wrong if the value were a list.
+In this case it would&mdash;<userinput>MAKE "myvar "hello</userinput>&mdash;but the quotation mark would be wrong if the value were a list.
 </para>
 
 <para>
