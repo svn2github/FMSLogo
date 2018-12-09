@@ -24,6 +24,7 @@ II. New features/bugs fixed:
   o Fix Bug #520; In the Spanish FMSLogo, CASCADA now throws a Spanish "bad
     input" error message when given a negative number for the first input.
   o Fix Bug #519; In the Spanish FMSLogo, CASCADA no longer leaks variables.
+  o Improvements to the Russian version of FMSLogo.
   o Improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see

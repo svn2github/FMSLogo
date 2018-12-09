@@ -238,7 +238,7 @@
 #define LOCALIZED_ALTERNATE_DIALOGCREATE           "диалогсоздай" 
 #define LOCALIZED_ALTERNATE_DIALOGENABLE           "диалогдопусти" 
 #define LOCALIZED_ALTERNATE_DIALOGDELETE           "диалогудали"
-#define LOCALIZED_ALTERNATE_DIALOGFILEOPEN         "dialogfileopen" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_DIALOGFILEOPEN         "диалогафайлоткрыть"
 #define LOCALIZED_ALTERNATE_DIALOGFILESAVE         "окнофайлсохранить" 
 #define LOCALIZED_ALTERNATE_DIFFERENCE             "разность"
 #define LOCALIZED_ALTERNATE_DIRECTORIES            "папки" 
@@ -308,7 +308,7 @@
 #define LOCALIZED_ALTERNATE_INGAMEPORT             "портигры" 
 #define LOCALIZED_ALTERNATE_INPORT                 "впорт" 
 #define LOCALIZED_ALTERNATE_INPORTB                "впортб"
-#define LOCALIZED_ALTERNATE_INT                    "int" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_INT                    "цела€часть"
 #define LOCALIZED_ALTERNATE_ITEM                   "элемент"
 #define LOCALIZED_ALTERNATE_KEYBOARDOFF            "клавиатуруотключи" 
 #define LOCALIZED_ALTERNATE_KEYBOARDON             "клавиатурувключи" 
@@ -366,8 +366,8 @@
 #define LOCALIZED_ALTERNATE_NAMEP                  "им€пи" 
 #define LOCALIZED_ALTERNATE_NAME_                  "им€?" 
 #define LOCALIZED_ALTERNATE_NAMES                  "имена" 
-#define LOCALIZED_ALTERNATE_NETACCEPTOFF           "netacceptoff" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETACCEPTON            "netaccepton" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NETACCEPTOFF           "подключениепосетивкл"
+#define LOCALIZED_ALTERNATE_NETACCEPTON            "подключениепосетиоткл"
 #define LOCALIZED_ALTERNATE_NETACCEPTRECEIVEVALUE  "значприемаполуч" 
 #define LOCALIZED_ALTERNATE_NETACCEPTSENDVALUE     "значотправкиполуч" 
 #define LOCALIZED_ALTERNATE_NETCONNECTOFF          "св€зьпосетивыкл" 
@@ -463,7 +463,7 @@
 #define LOCALIZED_ALTERNATE_RADTAN                 "radtg" 
 #define LOCALIZED_ALTERNATE_RANDOM                 "случайный"
 #define LOCALIZED_ALTERNATE_RAWASCII               "альткод" 
-#define LOCALIZED_ALTERNATE_RC                     "rc" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RC                     "жсмв"
 #define LOCALIZED_ALTERNATE_RCS                    "жсы" 
 #define LOCALIZED_ALTERNATE_READCHAR               "ждисимвол" 
 #define LOCALIZED_ALTERNATE_READCHARS              "ждисимволы" 

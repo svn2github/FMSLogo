@@ -432,6 +432,10 @@
         <entry><literallayout>äèàëîãäîïóñòè</literallayout></entry>
       </row>
       <row>
+        <entry><link linkend='command-dialogfileopen'>dialogfileopen</link></entry>
+        <entry><literallayout>äèàëîãàôàéëîòêðûòü</literallayout></entry>
+      </row>
+      <row>
         <entry><link linkend='command-dialogfilesave'>dialogfilesave</link></entry>
         <entry><literallayout>îêíîôàéëñîõðàíèòü</literallayout></entry>
       </row>
@@ -808,6 +812,10 @@
         <entry><literallayout>âïîðòá</literallayout></entry>
       </row>
       <row>
+        <entry><link linkend='command-int'>int</link></entry>
+        <entry><literallayout>öåëàÿ÷àñòü</literallayout></entry>
+      </row>
+      <row>
         <entry><link linkend='command-invoke'>invoke</link></entry>
         <entry><literallayout>âûçîâ</literallayout></entry>
       </row>
@@ -1082,6 +1090,14 @@
       <row>
         <entry><link linkend='command-names'>names</link></entry>
         <entry><literallayout>èìåíà</literallayout></entry>
+      </row>
+      <row>
+        <entry><link linkend='command-netacceptoff'>netacceptoff</link></entry>
+        <entry><literallayout>ïîäêëþ÷åíèåïîñåòèâêë</literallayout></entry>
+      </row>
+      <row>
+        <entry><link linkend='command-netaccepton'>netaccepton</link></entry>
+        <entry><literallayout>ïîäêëþ÷åíèåïîñåòèîòêë</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-netacceptreceivevalue'>netacceptreceivevalue</link></entry>
@@ -1529,6 +1545,10 @@
         <entry><literallayout>àëüòêîä</literallayout></entry>
       </row>
       <row>
+        <entry><link linkend='command-readchar'>rc</link></entry>
+        <entry><literallayout>æñìâ</literallayout></entry>
+      </row>
+      <row>
         <entry><link linkend='command-readchars'>rcs</link></entry>
         <entry><literallayout>æñû</literallayout></entry>
       </row>
@@ -1575,6 +1595,10 @@
       <row>
         <entry><link linkend='command-remdup'>remdup</link></entry>
         <entry><literallayout>óäïîâò</literallayout></entry>
+      </row>
+      <row>
+        <entry><link linkend='command-remove'>remove</link></entry>
+        <entry><literallayout>óäàëèýëåìåíò</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-remprop'>remprop</link></entry>
@@ -2104,6 +2128,10 @@
       <row>
         <entry><link linkend='command-wait'>wait</link></entry>
         <entry><literallayout>æäè</literallayout></entry>
+      </row>
+      <row>
+        <entry><link linkend='command-while'>while</link></entry>
+        <entry><literallayout>äîïîêà</literallayout></entry>
       </row>
       <row>
         <entry><link linkend='command-window'>window</link></entry>
@@ -3117,6 +3145,10 @@
         <entry><link linkend='command-dialogenable'>dialogenable</link></entry>
       </row>
       <row>
+        <entry>äèàëîãàôàéëîòêðûòü</entry>
+        <entry><link linkend='command-dialogfileopen'>dialogfileopen</link></entry>
+      </row>
+      <row>
         <entry>äèàëîãñîçäàé</entry>
         <entry><link linkend='command-dialogcreate'>dialogcreate</link></entry>
       </row>
@@ -3151,6 +3183,10 @@
       <row>
         <entry>æñ</entry>
         <entry><link linkend='command-readword'>rw</link></entry>
+      </row>
+      <row>
+        <entry>æñìâ</entry>
+        <entry><link linkend='command-readchar'>rc</link></entry>
       </row>
       <row>
         <entry>æñû</entry>
@@ -3247,6 +3283,10 @@
       <row>
         <entry>äîìîé</entry>
         <entry><link linkend='command-home'>home</link></entry>
+      </row>
+      <row>
+        <entry>äîïîêà</entry>
+        <entry><link linkend='command-while'>while</link></entry>
       </row>
       <row>
         <entry>âîñïðîèçâçâóê</entry>
@@ -4349,6 +4389,14 @@
         <entry><link linkend='command-setroll'>setroll</link></entry>
       </row>
       <row>
+        <entry>ïîäêëþ÷åíèåïîñåòèâêë</entry>
+        <entry><link linkend='command-netacceptoff'>netacceptoff</link></entry>
+      </row>
+      <row>
+        <entry>ïîäêëþ÷åíèåïîñåòèîòêë</entry>
+        <entry><link linkend='command-netaccepton'>netaccepton</link></entry>
+      </row>
+      <row>
         <entry>íîâêóðñîð</entry>
         <entry><link linkend='command-setcursor'>setcursor</link></entry>
       </row>
@@ -4925,6 +4973,10 @@
         <entry><link linkend='command-erasefile'>erasefile</link></entry>
       </row>
       <row>
+        <entry>óäàëèýëåìåíò</entry>
+        <entry><link linkend='command-remove'>remove</link></entry>
+      </row>
+      <row>
         <entry>óäâñå</entry>
         <entry><link linkend='command-erall'>erall</link></entry>
       </row>
@@ -4939,6 +4991,10 @@
       <row>
         <entry>öâåòýêðàíà</entry>
         <entry><link linkend='command-screencolor'>screencolor</link></entry>
+      </row>
+      <row>
+        <entry>öåëàÿ÷àñòü</entry>
+        <entry><link linkend='command-int'>int</link></entry>
       </row>
       <row>
         <entry>ôàéëû</entry>
