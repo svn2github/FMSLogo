@@ -1013,7 +1013,7 @@
 #define LOCALIZED_ERROR_BADMACROOUTPUT         "Macro devolvió %s en lugar de una lista"
 #define LOCALIZED_ERROR_DEEPEND                "FIN (END) dentro de una instrucción multi-línea"
 #define LOCALIZED_ERROR_DEEPENDIN              "FIN (END) dentro de una instrucción multi-línea en %p"
-#define LOCALIZED_ERROR_UNKNOWN                "Estado de error desconocido  - error interno."
+#define LOCALIZED_ERROR_UNKNOWN                "Estado de error desconocido - error interno."
 #define LOCALIZED_PAUSING                      "Pausando..."
 
 
