@@ -135,7 +135,7 @@ Los códigos de error y sus mensajes correspondientes son dados en la tabla sigu
 
       <row><entry>1401</entry><entry>Temporizador no encontrado</entry></row>
 
-      <row><entry>1500</entry><entry>Invalid state for instruction</entry></row>
+      <row><entry>1500</entry><entry>El estado está invalido para la instrucción</entry></row>
 
       <row><entry>2001</entry><entry>a PROCEDIMIENTO no le gustó recibir PROCEDIMIENTO porque toma sus entradas de manera especial</entry></row>
     </tbody>
