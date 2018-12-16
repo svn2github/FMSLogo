@@ -1,39 +1,43 @@
 <chapter id="error-processing">
-   <title>Error Processing</title>
+   <title>Proceso de errores</title>
 
 <para>
-If an error occurs, &GENERICNAME; takes the following steps.
-First, if there is an available variable named <link linkend="command-erract">ERRACT</link>, &GENERICNAME; takes its value as an instruction list and runs the instructions.
-The operation <link linkend="command-error">ERROR</link> may be used within the instructions (once) to examine the error condition.
-If the instruction list invokes <link linkend="command-pause">PAUSE</link>, the error message is printed before the pause happens.
-Certain errors are "recoverable"; for one of those errors, if the instruction list outputs a value, that value is used in place of the expression that caused the error.
-(If ERRACT invokes PAUSE and the user then invokes <link linkend="command-continue">CONTINUE</link> with an input, that input becomes the output from PAUSE and therefore the output from the ERRACT instruction list.)
+Cuando ocurre un error, &GENERICNAME; toma los pasos siguientes.
+Primero, si hay una variable definida llamada <link linkend="command-erract">ERRACT</link>, &GENERICNAME; toma su valor como una lista de instrucciones y la ejecuta.
+Puedes usar la operación <link linkend="command-error">ERROR</link> dentro de estas instrucciones (soló una vez) para examinar la condición de error.
+Si la lista de instrucciones ejecuta <link linkend="command-pause">PAUSA</link>, entonces se escribe el mensaje de error antes de que la pausa ocurre.
 </para>
 
 <para>
-It is possible for an ERRACT instruction list to produce an inappropriate value or no value where one is needed.
-As a result, the same error condition could recur forever.
+Hay ciertos errores que son «recuperables».
+Por uno de aquellos errores, si la lista de instrucciones devuelve un valor, se usa ese valor en lugar del expresión que causó el error.
+(Si las instrucciones en ERRACT ejecutan PAUSA y el usuario, del modo pausado, ejecuta <link linkend="command-continue">SIGUE</link> con un argumento, entonces PAUSA devuelve el valor de ese argumento, y, por consiguiente, es lo que la lista de instrucciones de ERRACT devuelve, también.)
+</para>
+
+<para>
+Es posible que una lista de instrucciones de ERRACT devuelva un valor no apropiado para el contexto o devuelva ningún valor cuando el contexto necesite uno.
+Como resultado, el mismo condición de error puede recurrir para siempre.
 
 <!-- The following is commented out because this functionality has been removed.
-     It has not been removed because maybe I should add it back.
+     The comment not been removed because maybe I should add the functionality back.
 To avoid that danger, if the same error condition occurs twice in a row from an ERRACT instruction list without user interaction, the message "Erract loop" is printed and control returns to toplevel.
 "Without user interaction" means that if ERRACT invokes PAUSE and the user provides an incorrect value, this loop prevention mechanism does not take effect and the user gets to try again.
 -->
 </para>
 
 <para>
-During the running of the ERRACT instruction list, the value of ERRACT is ignored, so that an error in the ERRACT instruction list does not cause a loop.
-In particular, an error during a pause does not cause a pause-within-a-pause.
+Mientras que se ejecuta la lista de instrucciones de ERRACT se ignora el valor de ERRACT para asegurar que un error en la lista de instrucciones no causa un bucle infinito.
+En particular, un error durante una pausa no causa una pausa-dentro-de-una-pausa.
 </para>
 
 <para>
-If ERRACT has no value, &GENERICNAME; handles the error by generating an internal <userinput>THROW "ERROR</userinput>.
-If this <link linkend="command-throw">THROW</link> is not caught by a <userinput>CATCH "ERROR</userinput> in the user program, it is eventually caught either by the toplevel instruction loop or by a pause loop, which prints the error message.
-An invocation of <userinput>CATCH "ERROR</userinput> takes precedence over ERRACT.
+Si ERRACT no tiene un valor, &GENERICNAME; maneja el error generando un <userinput>LANZA "ERROR</userinput> interno.
+Si no atrapas esta <link linkend="command-throw">LANZA</link> con un <userinput>ATRAPA "ERROR</userinput> en tu programa, se atrapa el error eventualmente el alto nivel interactivo o un bucle de pausa, que escribe el mensaje de error.
+Una ejecución de <userinput>ATRAPA "ERROR</userinput> tiene precedencia sobre ERRACT.
 </para>
 
 <para>
-If a floating point overflow occurs during an arithmetic operation, or a two-input mathematical function (like <link linkend="command-power">POWER</link>) is invoked with an illegal combination of inputs, the "doesn't like" message refers to the second operand, but should be taken as meaning the combination.
+Si un desbordamiento aritmético de coma flotante ocurre, o si se ejecuta una función de dos argumentos (como <link linkend="command-power">POTENCIA</link>) con una combinación de malos argumentos, el mensaje «no le gustó recibir» refiere al segundo argumento, pero deberías tomarlo como refiriendo a la combinación.
 </para>
 
    <section id="error-codes">
@@ -41,99 +45,99 @@ If a floating point overflow occurs during an arithmetic operation, or a two-inp
       <indexterm><primary>Códigos de error</primary></indexterm>
 
 <para>
-When an error happens, you can use the <link linkend="command-error">ERROR</link> operation to figure out what went wrong.
-ERROR outputs a list whose items describe the error.
-The first item is a numeric code for the type of error that occurred.
-The second item is a human-readable message that explains the error.
+Cuando ocurre un error, puedes usar la operación <link linkend="command-error">ERROR</link> para determinar lo que salió mal.
+ERROR devuelve una lista cuyos elementos describen el error.
+El primer elemento es el código numérico del tipo de error que ocurrió.
+El segundo elemento es un mensaje que explica el error en español.
 </para>
 
 <para>
-Some messages may have two different codes depending on whether the error is recoverable (that is, if a substitute value can be provided through the <link linkend="command-erract">ERRACT</link> mechanism).
+Algunos mensajes tienen dos códigos diferentes dependiendo de si el error es recuperable o no (esto es, si puedes proporcionar un valor sustituto mediante el mecanismo de <link linkend="command-erract">ERRACT</link>).
 </para>
 
 <para>
-Some messages are warnings rather than errors; these can not be caught.
+Algunos mensajes son advertencias y no errores; no se puede atrapar estos.
 </para>
 
 <para>
-The conditions which generate the first two error codes so bad that &GENERICNAME; exits immediately.
-These also cannot be caught.
+Las condiciones que generan códigos 1 y 34 son tan malas que &GENERICNAME; termina inmediatamente.
+No se puede atrapar estos tampoco.
 </para>
 
 <para>
-The numeric error codes and their corresponding human-readable messages are given in the table below.
+Los códigos de error y sus mensajes correspondientes son dados en la tabla siguiente.
 </para>
 
 <para>
 <informaltable frame='all'>
   <tgroup cols='2'>
     <thead>
-      <row><entry>Error Code</entry> <entry>Error Message</entry></row>
+      <row><entry>Código de Error</entry> <entry>Mensaje de Error</entry></row>
     </thead>
     <tbody>
-      <row><entry>0</entry><entry>Fatal internal error (can't be caught)</entry></row>
-      <row><entry>1</entry><entry>Out of memory (can't be caught)</entry></row>
-      <row><entry>2</entry><entry>Stack Overflow</entry></row>
-      <row><entry>3</entry><entry>Turtle out of bounds</entry></row>
-      <row><entry>4</entry><entry>PROC doesn't like DATUM as input (not recoverable)</entry></row>
-      <row><entry>5</entry><entry>PROC didn't output to PROC</entry></row>
-      <row><entry>6</entry><entry>Not enough inputs to PROC</entry></row>
-      <row><entry>7</entry><entry>PROC doesn't like DATUM as input (recoverable)</entry></row>
-      <row><entry>8</entry><entry>Too much inside ( )'s</entry></row>
-      <row><entry>9</entry><entry>I don't know what to do with DATUM</entry></row>
-      <row><entry>10</entry><entry>')' not found</entry></row>
-      <row><entry>11</entry><entry>VAR has no value</entry></row>
-      <row><entry>12</entry><entry>Unexpected ')'</entry></row>
-      <row><entry>13</entry><entry>I don't know how to PROC (recoverable)</entry></row>
-      <row><entry>14</entry><entry>Can't find catch tag for THROWTAG</entry></row>
-      <row><entry>15</entry><entry>PROC is already defined</entry></row>
-      <row><entry>16</entry><entry>Stopped</entry></row>
-      <row><entry>17</entry><entry>Already dribbling</entry></row>
-      <row><entry>18</entry><entry>File system error</entry></row>
-      <row><entry>19</entry><entry>Assuming you mean <link linkend="command-ifelse">IFELSE</link>, not <link linkend="command-if">IF</link> (warning only)</entry></row>
-      <row><entry>20</entry><entry>VAR shadowed by local in procedure call (warning only)</entry></row>
-      <row><entry>21</entry><entry>User-initiated <link linkend="command-throw">THROW</link> "Error</entry></row>
-      <row><entry>22</entry><entry>PROC is a primitive</entry></row>
-      <row><entry>23</entry><entry>Can't use <link linkend="command-to">TO</link> inside a procedure</entry></row>
-      <row><entry>24</entry><entry>I don't know how to PROC (not recoverable)</entry></row>
-      <row><entry>25</entry><entry><link linkend="command-iftrue">IFTRUE</link>/<link linkend="command-iffalse">IFFALSE</link> without <link linkend="command-test">TEST</link></entry></row>
-      <row><entry>26</entry><entry>Unexpected ']'</entry></row>
-      <row><entry>27</entry><entry>Unexpected '}'</entry></row>
-      <row><entry>28</entry><entry>Couldn't initialize graphics</entry></row>
-      <row><entry>29</entry><entry>Macro returned VALUE instead of a list</entry></row>
-      <row><entry>30</entry><entry>I don't know what to do with VALUE</entry></row>
-      <row><entry>31</entry><entry>Can only use <link linkend="command-stop">STOP</link> or <link linkend="command-output">OUTPUT</link> inside a procedure</entry></row>
-      <row><entry>32</entry><entry><link linkend="command-apply">APPLY</link> doesn't like DATUM as input.</entry></row>
-      <row><entry>33</entry><entry><link linkend="command-end">END</link> inside multi-line instruction</entry></row>
+      <row><entry>1</entry><entry>Logo: Error Interno Fatal (no puede ser atrapado)</entry></row>
+      <row><entry>2</entry><entry>desborde de pila</entry></row>
+      <row><entry>3</entry><entry>tortuga fuera de los límites</entry></row>
+      <row><entry>4</entry><entry>a PROCEDIMIENTO no le gustó recibir DATO (no recuperable)</entry></row>
+      <row><entry>5</entry><entry>PROCEDIMIENTO no devolvió valor a PROCEDIMIENTO</entry></row>
+      <row><entry>6</entry><entry>PROCEDIMIENTO necesita recibir más cosas</entry></row>
+      <row><entry>7</entry><entry>a PROCEDIMIENTO no le gustó recibir DATO (recuperable)</entry></row>
+      <row><entry>8</entry><entry>demasiadas cosas entre paréntesis ()</entry></row>
+      <row><entry>9</entry><entry>No dices qué debo hacer con DATO</entry></row>
+      <row><entry>10</entry><entry>demasiados paréntesis '('</entry></row>
+      <row><entry>11</entry><entry>VAR no tiene un valor todavía</entry></row>
+      <row><entry>12</entry><entry>paréntesis ')' inesperado</entry></row>
+      <row><entry>13</entry><entry>no sé cómo realizar PROCEDIMIENTO (recuperable)</entry></row>
+      <row><entry>14</entry><entry>no puedo encontrar la etiqueta <link linkend="command-throw">LANZA</link> (THROW) para ETIQUETA</entry></row>
+      <row><entry>15</entry><entry>PROCEDIMIENTO ya está definido</entry></row>
+      <row><entry>16</entry><entry>Parando...</entry></row>
+      <row><entry>17</entry><entry><link linkend="command-dribble">ECO</link> está activado</entry></row>
+      <row><entry>18</entry><entry>Error del sistema de archivos</entry></row>
+      <row><entry>19</entry><entry>Asumo que querías decir <link linkend="command-ifelse">SISINO</link> (IFELSE), no <link linkend="command-if">SI</link> (IF) (advertencia)</entry></row>
+      <row><entry>20</entry><entry>VAR cubierta por local en llamada a procedimiento (advertencia)</entry></row>
+      <row><entry>21</entry><entry><link linkend="command-throw">ATRAPA</link> "Error</entry></row>
+      <row><entry>22</entry><entry>PROCEDIMIENTO es una primitiva</entry></row>
+      <row><entry>23</entry><entry>No puedes usar <link linkend="command-to">PARA</link> (TO) dentro de un procedimiento</entry></row>
+      <row><entry>24</entry><entry>no sé cómo realizar PROCEDIMIENTO (no recuperable)</entry></row>
+      <row><entry>25</entry><entry><link linkend="command-iftrue">SICIERTO</link>/<link linkend="command-iffalse">SIFALSO</link> sin <link linkend="command-test">PRUEBA</link> (TEST)</entry></row>
+      <row><entry>26</entry><entry>corchete ']' inesperado</entry></row>
+      <row><entry>27</entry><entry>llave '}' inesperada</entry></row>
+      <row><entry>28</entry><entry>no pude inicializar gráficas</entry></row>
+      <row><entry>29</entry><entry>Macro devolvió VALOR en lugar de una lista</entry></row>
+      <row><entry>30</entry><entry>No dices qué debo hacer con VALOR</entry></row>
+      <row><entry>31</entry><entry>Solo puedes usar <link linkend="command-stop">ALTO</link>/<link linkend="command-output">DEVUELVE</link> dentro de un procedimiento</entry></row>
+      <row><entry>32</entry><entry>a <link linkend="command-apply">APLICA</link> no le gustó recibir DATO</entry></row>
+      <row><entry>33</entry><entry><link linkend="command-end">FIN</link> (END) dentro de una instrucción multi-línea</entry></row>
+      <row><entry>34</entry><entry>Logo: Falta de Memoria (no puede ser atrapado)</entry></row>
 
-      <row><entry>1001</entry><entry>WINDOW already exists</entry></row>
-      <row><entry>1002</entry><entry>WINDOW does not exist</entry></row>
+      <row><entry>1001</entry><entry>VENTANA ya existe</entry></row>
+      <row><entry>1002</entry><entry>VENTANA no existe</entry></row>
 
-      <row><entry>1101</entry><entry>DLL load failed</entry></row>
-      <row><entry>1102</entry><entry>DLL is not loaded</entry></row>
-      <row><entry>1103</entry><entry>Not all Type/Data inputs are paired</entry></row>
-      <row><entry>1104</entry><entry>Invalid data type input</entry></row>
-      <row><entry>1105</entry><entry>Invalid output type</entry></row>
-      <row><entry>1106</entry><entry>Function not found</entry></row>
+      <row><entry>1101</entry><entry>Falló la carga de la DLL</entry></row>
+      <row><entry>1102</entry><entry>La DLL no está cargada</entry></row>
+      <row><entry>1103</entry><entry>No coincide los tipos de datos</entry></row>
+      <row><entry>1104</entry><entry>Tipo de dato de la entrada inválido</entry></row>
+      <row><entry>1105</entry><entry>Tipo de dato de retorno inválido</entry></row>
+      <row><entry>1106</entry><entry>Función no encontrada</entry></row>
 
-      <row><entry>1201</entry><entry>Problem Reading GIF, check memory and diskspace</entry></row>
-      <row><entry>1202</entry><entry>Problem Generating GIF, check memory and diskspace</entry></row>
+      <row><entry>1201</entry><entry>Problema al leer GIF, revisa memoria o espacio en disco</entry></row>
+      <row><entry>1202</entry><entry>Problema al generar GIF, revisa cantidad de memoria o espacio en disco</entry></row>
 
-      <row><entry>1211</entry><entry>Could not open .bmp</entry></row>
-      <row><entry>1212</entry><entry>Unable to create Windows 3.0 bitmap</entry></row>
-      <row><entry>1213</entry><entry>Could not write .bmp</entry></row>
-      <row><entry>1214</entry><entry>Not a Windows 3.0 bitmap</entry></row>
+      <row><entry>1211</entry><entry>No puedo abrir .bmp</entry></row>
+      <row><entry>1212</entry><entry>No puedo crear bitmap tipo Windows 3.0</entry></row>
+      <row><entry>1213</entry><entry>No puedo guardar .bmp</entry></row>
+      <row><entry>1214</entry><entry>No es un bitmap tipo Windows 3.0</entry></row>
 
-      <row><entry>1300</entry><entry>MIDI Error</entry></row>
-      <row><entry>1301</entry><entry>MIDI Error: Already open</entry></row>
-      <row><entry>1302</entry><entry>MIDI Error: Invalid MIDI device</entry></row>
-      <row><entry>1303</entry><entry>MIDI Error: Not open</entry></row>
+      <row><entry>1300</entry><entry>Error de MIDI</entry></row>
+      <row><entry>1301</entry><entry>Error de MIDI: Ya está abierto</entry></row>
+      <row><entry>1302</entry><entry>Error de MIDI: Dispositivo Midi incorrecto</entry></row>
+      <row><entry>1303</entry><entry>Error de MIDI: No está abierto</entry></row>
 
-      <row><entry>1401</entry><entry>Timer not found</entry></row>
+      <row><entry>1401</entry><entry>Temporizador no encontrado</entry></row>
 
       <row><entry>1500</entry><entry>Invalid state for instruction</entry></row>
 
-      <row><entry>2001</entry><entry>PROC cannot be run on PROC because it has a special form</entry></row>
+      <row><entry>2001</entry><entry>a PROCEDIMIENTO no le gustó recibir PROCEDIMIENTO porque toma sus entradas de manera especial</entry></row>
     </tbody>
   </tgroup>
 </informaltable>
