@@ -1,34 +1,43 @@
 <section id="command-caseignoredp">
-    <title>CASEIGNOREDP</title>
+    <title>IGNORAMAYUSCULAS?</title>
+<indexterm><primary>IGNORAMAYUSCULAS?</primary></indexterm>
 <indexterm><primary>CASEIGNOREDP</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>CASEIGNOREDP</command></synopsis>
+<synopsis><command>IGNORAMAYUSCULAS?</command>
+<command>CASEIGNOREDP</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Normally, lower-case and upper-case letters are considered equal by <link linkend="command-equalp">EQUALP</link>, <link linkend="command-beforep">BEFOREP</link>, <link linkend="command-memberp">MEMBERP</link>, etc.
-However, if a variable named CASEIGNOREDP exists and its value is not TRUE, then those predicates consider lower-case and upper-case letters to be distinct (that is, not equal).
+Normalmente, los predicados <link linkend="command-equalp">IGUALES?</link>, <link linkend="command-beforep">ANTERIOR?</link>, <link linkend="command-memberp">MIEMBRO?</link>, etcétera consideran las letras minúsculas y mayúsculas como iguales.
+Sin embargo, si existe una variable llamada IGNORAMAYUSCULAS? o CASEIGNOREDP y su valor no está CIERTO, entonces, esos predicados  consideran las letras minúsculas y mayúsculas como distintas (es decir, no igual).
+</para>
+
+<para>
+Se usa el nombre <userinput>IGNORAMAYUSCULAS?</userinput> soló en la versión de &PRODUCTNAME; española.
+Se usa el nombre <userinput>CASEIGNOREDP</userinput> en todas las versiones de &PRODUCTNAME;.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>MAKE "CASEIGNOREDP "FALSE
-SHOW EQUALP "a "A</userinput>
-false</programlisting>
+<programlisting><userinput>HAZ "IGNORAMAYUSCULAS? "FALSO
+MUESTRA IGUALES? "a "A</userinput>
+falso</programlisting>
 
-<programlisting><userinput>MAKE "CASEIGNOREDP "TRUE
-SHOW EQUALP "a "A</userinput>
-true</programlisting>
+<programlisting><userinput>HAZ "IGNORAMAYUSCULAS? "CIERTO
+MUESTRA IGUALES? "a "A</userinput>
+cierto</programlisting>
 </listitem>
 </varlistentry>
 

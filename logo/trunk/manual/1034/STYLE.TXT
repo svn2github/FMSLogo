@@ -31,7 +31,11 @@ programmatically.
 6) Because the procedure documentation is a declarative statement of truth for
    all time, use SER instead of ESTAR when referring to the state of inputs.
    For example: "Si el argumento es una palabra", not "Si el argumento está
-   una palabra".
+   una palabra".  In this case, the argument's state doesn't change.
+
+   However, when discussing the impact of changing the value of special
+   variable, use ESTAR.  For example, "Cuando la variable REDEFP está
+   CIERTO".  In this case, the state of the variable can change.
 
 7) The following terms should always be translated in the same way
 

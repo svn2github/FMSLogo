@@ -4,30 +4,32 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
 <synopsis><command>REDEFP</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-If TRUE, allows primitives to be erased (see <link linkend="command-erase">ERASE</link>) or redefined (see <link linkend="command-copydef">COPYDEF</link>).
+Cuando la variable REDEFP está CIERTO, &PRODUCTNAME; permite que borres los primitivos (ve <link linkend="command-erase">BORRA</link>) o que los redefinas (ve <link linkend="command-copydef">COPIADEF</link>).
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>ERASE "FORWARD</userinput>
-FORWARD is a primitive
+<programlisting><userinput>BORRA "AVANZA</userinput>
+AVANZA es una primitiva
 
-<userinput>MAKE "REDEFP "TRUE
-ERASE "FORWARD
-FORWARD</userinput>
-I don't know how to FORWARD
+<userinput>HAZ "REDEFP "CIERTO
+BORRA "AVANZA
+AVANZA 100</userinput>
+no sé cómo realizar AVANZA
 </programlisting>
 </listitem>
 </varlistentry>

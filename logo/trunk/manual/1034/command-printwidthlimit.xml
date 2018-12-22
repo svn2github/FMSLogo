@@ -4,42 +4,45 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
 <synopsis><command>PRINTWIDTHLIMIT</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-PRINTWIDTHLIMIT is a special variable.
-If its value is a nonnegative integer, then &PRODUCTNAME; treats its value as the maximum number of items in any one list (or array) that is printed by <link linkend="command-print">PRINT</link>, etc.
-&PRODUCTNAME; also treats its value as the limit of how many characters in a word are printed, although at least 10 characters of every word is printed, regardless of PRINTWIDTHLIMIT's value.
+PRINTWIDTHLIMIT es una variable especial.
+Cuando su valor está un entero no negativo, &PRODUCTNAME; lo trata como el número máximo de elementos en una lista (o un vector) que pueda escribir <link linkend="command-print">ESCRIBE</link>, etcétera.
+&PRODUCTNAME; también trata su valor como el número máximo de caracteres de una palabra a escribir, aunque escribe al menos 10 caracteres de cada palabra, no importa el valor de PRINTWIDTHLIMIT.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>PRINT [1 2 3 4 5 6]</userinput>
+<programlisting><userinput>ESCRIBE [1 2 3 4 5 6]</userinput>
 1 2 3 4 5 6
 
-<userinput>MAKE "PRINTWIDTHLIMIT 4
-PRINT [1 2 3 4 5 6]</userinput>
+<userinput>HAZ "PRINTWIDTHLIMIT 4
+ESCRIBE [1 2 3 4 5 6]</userinput>
 1 2 3 4 ...
 </programlisting>
 
-<programlisting><userinput>PRINT "1234567890abcdefg</userinput>
+
+<programlisting><userinput>ESCRIBE "1234567890abcdefg</userinput>
 1234567890abcdefg
 
-<userinput>MAKE "PRINTWIDTHLIMIT 12
-PRINT "1234567890abcdefg</userinput>
+<userinput>HAZ "PRINTWIDTHLIMIT 12
+ESCRIBE "1234567890abcdefg</userinput>
 1234567890ab...
 
-<userinput>MAKE "PRINTWIDTHLIMIT 2
-PRINT "1234567890abcdefg</userinput>
+<userinput>HAZ "PRINTWIDTHLIMIT 2
+ESCRIBE "1234567890abcdefg</userinput>
 1234567890...
 </programlisting>
 </listitem>

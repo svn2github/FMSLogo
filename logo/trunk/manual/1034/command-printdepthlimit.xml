@@ -4,29 +4,31 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
 <synopsis><command>PRINTDEPTHLIMIT</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-PRINTDEPTHLIMIT is a special variable.
-If its value is a nonnegative integer, then &PRODUCTNAME; treats its value as maximum depth of a sublist (or subarray) structure that is printed by <link linkend="command-print">PRINT</link>, etc.
+PRINTDEPTHLIMIT es una variable especial.
+Cuando su valor está un entero no negativo, &PRODUCTNAME; lo trata como la profundidad máxima que pueda escribir <link linkend="command-print">ESCRIBE</link> de la estructura de una lista o un vector.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>PRINT [[1 [2 [3 [4 [5]]]]]]</userinput>
+<programlisting><userinput>ESCRIBE [[1 [2 [3 [4 [5]]]]]]</userinput>
 [1 [2 [3 [4 [5]]]]]]
 
-<userinput>MAKE "PRINTDEPTHLIMIT 4
-PRINT [[1 [2 [3 [4 [5]]]]]]</userinput>
+<userinput>HAZ "PRINTDEPTHLIMIT 4
+ESCRIBE [[1 [2 [3 [4 [5]]]]]]</userinput>
 [1 [2 [3 [... ...]]]]
 </programlisting>
 </listitem>

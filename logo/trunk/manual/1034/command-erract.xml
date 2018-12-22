@@ -4,41 +4,42 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
 <synopsis><command>ERRACT</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-ERRACT is an instructionlist that is run whenever an error is thrown and there is no <link linkend="command-catch">CATCH</link> tag for "ERROR.
-ERRACT typically has the value <userinput>[PAUSE]</userinput> to allow interactive debugging.
+La variable ERRACT es una lista de instrucciones que se ejecuta siempre y cuando se lanza un error y no hay una etiqueta de <link linkend="command-catch">ATRAPA</link> pora <userinput>"ERROR</userinput>.
+ERRACT típicamente tiene el valor <userinput>[PAUSA]</userinput> para habilitar la depuración interactiva.
 </para>
 
 <para>
-Some errors may be recoverable if ERRACT can fix the problem.
-For example, many bad input errors (such as running <userinput>FORWARD [1]</userinput>) are recoverable.
-If a bad input error causes ERRACT to be run, then the output of ERRACT is used instead of the bad input that caused the error.
-If ERRACT outputs another datum of bad input, then it is run again to fix the new problem.
+Puedes recuperar de algunos errores si ERRACT puede arreglar el problema.
+Por ejemplo, muchos errores de malos argumentos (tal que ejecutando <userinput>AVANZA [1]</userinput>) son recuperables.
+Si un error de mal argumento causa que se ejecuten ERRACT, entonces se use lo que ERRACT devuelva en lugar del mal argumento que causó el error.
+Si ERROR devuelve un valor que también es un mal argumento, entonces se lo ejecuta de nuevo para arreglar el nuevo problema.
 </para>
-
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
+<programlisting><userinput>AVANZA [1]</userinput>
+a AVANZA no le gustó recibir [1]
 
-<programlisting><userinput>FORWARD [1]</userinput>
-FORWARD doesn't like [1] as input
-
-<userinput>MAKE "ERRACT [PRINT [Doing replacement] 100]
-FORWARD [1]</userinput>
-Doing replacement
+<userinput>HAZ "ERRACT [ESCRIBE [Arreglando el error] 100]
+AVANZA [1]</userinput>
+Arreglando el error
 </programlisting>
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

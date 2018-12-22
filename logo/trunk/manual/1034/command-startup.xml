@@ -4,34 +4,35 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
 <synopsis><command>STARTUP</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-If assigned a list value in a file that is loaded by <link linkend="command-load">LOAD</link>, that value is run as an instruction list after the loading.
+Si le asignas a la variable STARTUP un valor que es una lista dentro de un archivo que se carga con <link linkend="command-load">CARGA</link>, &PRODUCTNAME; ejecuta esa lista como una lista de instrucciones después de cargar el archivo.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>TO MYPROGRAM
-  PRINT "Hello
-END
+<programlisting><userinput>PARA MIPROGRAMA
+  ESCRIBE "Hola
+FIN
 
-MAKE "STARTUP [MYPROGRAM]
-SAVE "myprogram.lgo</userinput>
-myprog.lgo
+HAZ "STARTUP [MIPROGRAMA]
+GUARDA "miprograma.lgo</userinput>
+miprograma...
 
-<userinput>ERALL
-LOAD "myprogram.lgo</userinput>
-Hello
+<userinput>BTODO
+CARGA "miprograma.lgo</userinput>
+Hola
 </programlisting>
 </listitem>
 </varlistentry>

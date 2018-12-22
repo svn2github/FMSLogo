@@ -1,10 +1,10 @@
 <chapter id="special-variables">
-   <title>Special Variables</title>
+   <title>Variables Especiales</title>
 
 <para>
-Some of &PRODUCTNAME;'s behavior can be controlled with special variable.
-The special variables follow the normal scoping rules, so a procedure can locally set one of them to limit the scope of its effect.
-Initially, no variables exist except <link linkend="command-caseignoredp">CASEIGNOREDP</link>, which is TRUE and buried.
+Puedes controlar un poco del comportamiento de &PRODUCTNAME; con variables especiales.
+Las variables especiales siguen las reglas normales de ámbito, así que un procedimiento puede ponerlas valores localmente para limitar el alcance de sus efectos.
+Inicialmente, ninguna variable existe excepto por <link linkend="command-caseignoredp">IGNORAMAYUSCULAS?</link>, que está tapada y tiene el valor de CIERTO.
 </para>
 
     &command-caseignoredp;
