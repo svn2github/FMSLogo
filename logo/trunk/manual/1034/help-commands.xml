@@ -1,8 +1,8 @@
 <chapter id="help-commands">
-   <title>Help Commands</title>
+   <title>Comandos de Ayuda</title>
 
 <para>
-You can access &PRODUCTNAME;'s manual and system documentation through &GENERICNAME; commands.
+Puedes acceder al manual de &PRODUCTNAME; a través de comandos de &GENERICNAME;.
 </para>
 
     &command-help;

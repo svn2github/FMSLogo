@@ -97,3 +97,4 @@ programmatically.
    a callback                 - un retrollamada
    splicing (lists)           - el empalme (empalmar)
    the dialog box             - el cuadro de diálog
+   deprecated                 - obsoleto

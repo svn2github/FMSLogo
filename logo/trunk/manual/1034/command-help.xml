@@ -1,40 +1,57 @@
 <section id="command-help">
-<title>HELP</title>
+<title>AYUDA</title>
+<indexterm><primary>AYUDA</primary></indexterm>
 <indexterm><primary>HELP</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>HELP</command>
-<command>HELP</command> <parameter>keyword</parameter></synopsis>
+<synopsis><command>AYUDA</command>
+<command>AYUDA</command> <parameter>termino</parameter>
+<command>HELP</command>
+<command>HELP</command> <parameter>termino</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-HELP has two forms: with and without a <parameter>keyword</parameter> input.
-When no <parameter>keyword</parameter> is given, &PRODUCTNAME; opens the &PRODUCTNAME; manual to the table of contents.
-When a <parameter>keyword</parameter> is given, &PRODUCTNAME; searches the &PRODUCTNAME; manual for the section on <parameter>keyword</parameter>.
-You may enter the full keyword or a partial keyword.
+Abre la manual de &PRODUCTNAME;.
+AYUDA tiene dos formas: con y sin el argumento <parameter>termino</parameter>.
+Sin argumento, abre el manual a la tabla de contenidos.
+Con argumento, &PRODUCTNAME; abre el manual a la sección indicado por el argumento <parameter>termino</parameter>.
+El argumento puede ser el nombre completo del tema o una parte del mismo.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>; open to the "introduction" section
-HELP "introduction</userinput>
+<para>
+Abre al tema «introducción» del manual:
+<programlisting><userinput>AYUDA "introducción</userinput>
 </programlisting>
+</para>
 
-<programlisting><userinput>; open the description of the ERASE command
-HELP "erase</userinput>
+<para>
+Entra en el motor de búsqueda de la ayuda:
+<programlisting><userinput>AYUDA "intro</userinput>
 </programlisting>
+</para>
+
+<para>
+Abre la documentación por el comando BORRA:
+<programlisting><userinput>AYUDA "borra</userinput>
+</programlisting>
+</para>
 
 </listitem>
 </varlistentry>
+
 
 </variablelist>
 </section>

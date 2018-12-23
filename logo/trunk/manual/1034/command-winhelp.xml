@@ -1,44 +1,56 @@
 <section id="command-winhelp">
-    <title>WINHELP</title>
+    <title>AYUDADEWINDOWS</title>
+<indexterm><primary>AYUDADEWINDOWS</primary></indexterm>
 <indexterm><primary>WINHELP</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>WINHELP</command> <parameter>filename</parameter>
-(<command>WINHELP</command> <parameter>filename</parameter> <parameter>keyword</parameter>)</synopsis>
+<synopsis><command>AYUDADEWINDOWS</command> <parameter>nombre_de_archivo</parameter>
+(<command>AYUDADEWINDOWS</command> <parameter>nombre_de_archivo</parameter> <parameter>termino</parameter>)
+<command>WINHELP</command> <parameter>nombre_de_archivo</parameter>
+(<command>WINHELP</command> <parameter>nombre_de_archivo</parameter> <parameter>termino</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-WINHELP has two forms: with and without a <parameter>keyword</parameter> input.
-When no <parameter>keyword</parameter> is given, &PRODUCTNAME; opens the Windows help on <parameter>filename</parameter> to the table of contents.
-When a <parameter>keyword</parameter> is given, &PRODUCTNAME; searches the Windows help for the section on <parameter>keyword</parameter> within the given help file.
-You must enter the full keyword.
+Abre un archivo de ayuda de Windows con la aplicación de ayuda llamada WinHelp, que es obsoleto hoy en día.
 </para>
 
 <para>
-The WinHelp file format has been deprecated by Microsoft.
-Therefore, this command is deprecated in &PRODUCTNAME;.
+AYUDADEWINDOWS tiene dos formas: con y sin el argumento <parameter>termino</parameter>.
+Sin el argumento <parameter>termino</parameter>, abre la aplicación WinHelp al nivel superior del archivo de WinHelp especificado con <parameter>nombre_de_archivo</parameter>.
+Con el argumento <parameter>termino</parameter>, &PRODUCTNAME; adicionalmente busca al tema indicado por el argumento en el archivo de WinHelp especificado.
+Debes entrar la palabra completa.
+</para>
+
+<para>
+Microsoft ha declarado el formato de WinHelp obsoleto y sin soporte.
+Por consiguiente, este comando es obsoleto en &PRODUCTNAME;.
 </para>
 
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>; Open winhelp file for notepad.exe
-WINHELP "c:\\windows\\help\\notepad.hlp</userinput>
+<para>
+Abre el archivo de WinHelp por la aplicación de notepad.exe:
+<programlisting><userinput>WINHELP "c:\\windows\\help\\notepad.hlp</userinput>
 </programlisting>
+</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-help">HELP</link></member>
+<member><link linkend="command-help">AUYDA</link></member>
 </simplelist></listitem>
 </varlistentry>
 
