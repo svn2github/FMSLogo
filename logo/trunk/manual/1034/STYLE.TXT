@@ -37,7 +37,12 @@ programmatically.
    variable, use ESTAR.  For example, "Cuando la variable REDEFP está
    CIERTO".  In this case, the state of the variable can change.
 
-7) The following terms should always be translated in the same way
+7) Chapter titles are given in sentence casing (that is, only the first
+   word is capitalized).  For example: "Special variables", not
+   "Special Variables". I don't know if this is correct, but at least
+   it's consistent.
+
+8) The following terms should always be translated in the same way
 
    The Commander              - El Centro de Comandos
    The (Commander) Input Box  - La Caja de Entrada (del Centro de Comandos)
