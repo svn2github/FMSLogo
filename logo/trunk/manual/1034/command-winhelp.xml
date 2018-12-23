@@ -24,7 +24,7 @@ Abre un archivo de ayuda de Windows con la aplicación de ayuda llamada WinHelp,
 <para>
 AYUDADEWINDOWS tiene dos formas: con y sin el argumento <parameter>termino</parameter>.
 Sin el argumento <parameter>termino</parameter>, abre la aplicación WinHelp al nivel superior del archivo de WinHelp especificado con <parameter>nombre_de_archivo</parameter>.
-Con el argumento <parameter>termino</parameter>, &PRODUCTNAME; adicionalmente busca al tema indicado por el argumento en el archivo de WinHelp especificado.
+Con el argumento <parameter>termino</parameter>, &PRODUCTNAME; adicionalmente busca al tema indicado por el argumento en el archivo de WinHelp.
 Debes entrar la palabra completa.
 </para>
 
