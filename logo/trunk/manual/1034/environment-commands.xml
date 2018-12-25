@@ -1,9 +1,9 @@
 <chapter id="environment-commands">
-   <title>Environment Commands</title>
+   <title>Procedimientos del entorno</title>
 
 <para>
-&PRODUCTNAME; provides a set of commands that enable you to better interact with the computing environment in which &PRODUCTNAME; runs.
-These commands can help you interface with computing elements outside of &PRODUCTNAME;, such as the underlying operating system or the display.
+&PRODUCTNAME; te proporciona un conjunto de procedimientos que habilita la interacción con el entorno en que &PRODUCTNAME; ejecuta.
+Aquellos procedimientos te pueden ayudar a interactuar con elementos de computación que son fuera de &PRODUCTNAME;, tales como el sistema operativo o la pantalla.
 </para>
 
     &command-logoversion;

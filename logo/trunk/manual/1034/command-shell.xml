@@ -4,38 +4,39 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>SHELL</command> <parameter>command</parameter>
-(<command>SHELL</command> <parameter>command</parameter> <parameter>wait</parameter>)</synopsis>
+<synopsis><command>SHELL</command> <parameter>comando</parameter>
+(<command>SHELL</command> <parameter>comando</parameter> <parameter>aguarda</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 
 <para>
-Runs an input string as a shell command.
-Outputs TRUE if the command was executed, FALSE otherwise.
-If the command is a literal list in the instruction line, and if you want a backslash character sent to the shell, you must use \\ to get the backslash through &GENERICNAME;'s reader intact.
+Ejecuta su argumento como un comando de shell (también llamado intérprete de comandos).
+Devuelve CIERTO si ejecuta el comando, FALSO si no.
+Si el comando es una lista de instrucciones literal y si quieres enviar una barra inversa al shell, debes usar <userinput>\\</userinput> para que la barra inversa queda intacta a través de la lectura de &GENERICNAME;.
 </para>
 
 <para>
-The optional <parameter>wait</parameter> input controls whether &PRODUCTNAME; waits for <parameter>command</parameter> to finish running before it runs the next instruction.
-If present, <parameter>wait</parameter> must be either TRUE or FALSE.
-When no <parameter>wait</parameter> input is given, SHELL does not wait for the command to finish.
+El argumento opcional <parameter>aguarda</parameter> controla si &PRODUCTNAME; aguarda para que <parameter>comando</parameter> termine antes de ejecutar la próxima instrucción.
+Si hay un argumento <parameter>aguarda</parameter>, debe ser CIERTO o FALSO.
+Cuando no se da el argumento <parameter>aguarda</parameter>, SHELL no aguarda que el comando termine.
 </para>
 
 <para>
-If your <parameter>command</parameter> contains spaces in the file path to the executable, it's a good idea to put double-quotes around it, or else you may end up running the wrong program.
-For example, if a file named <userinput>c:\Program.exe</userinput> exists, then the following instruction runs <userinput>c:\Program.exe</userinput> with the command-line parameter <userinput>Files\Audacity\audacity.exe</userinput>:
+Si tu <parameter>comando</parameter> tiene espacios en la ruta del ejecutable, es una buena idea encerrarlo con comillas inglesas, sino es posible que ejecutaras el programa equivocado.
+Por ejemplo, si hay un archivo llamado <userinput>c:\Program.exe</userinput>, entonces la instrucción siguiente ejecuta <userinput>c:\Program.exe</userinput> con el parámetro <userinput>Files\Audacity\audacity.exe</userinput>:
 
-<programlisting><userinput>SHOW SHELL [c:\\Program Files\\Audacity\\audacity.exe]</userinput>
+<programlisting><userinput>MUESTRA SHELL [c:\\Program Files\\Audacity\\audacity.exe]</userinput>
 </programlisting>
 
-However, the following instruction always runs <userinput>audacity.exe</userinput>, regardless of whether <userinput>c:\Program.exe</userinput> exists:
+Por lo contrario, la instrucción siguiente siempre ejecuta <userinput>audacity.exe</userinput>, sin importar si <userinput>c:\Program.exe</userinput> existe o no:
 
-<programlisting><userinput>SHOW SHELL [\"c:\\Program Files\\Audacity\\audacity.exe\"]</userinput>
+<programlisting><userinput>MUESTRA SHELL [\"c:\\Program Files\\Audacity\\audacity.exe\"]</userinput>
 </programlisting>
 
 </para>
@@ -43,20 +44,20 @@ However, the following instruction always runs <userinput>audacity.exe</userinpu
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 
-<programlisting><userinput>SHOW SHELL [notepad c:\\test.txt]</userinput>
-true
+<programlisting><userinput>MUESTRA SHELL [notepad c:\\ejemplo.txt]</userinput>
+cierto
 </programlisting>
 
-<programlisting><userinput>SHOW SHELL [unknown-app c:\\test.txt]</userinput>
-false
+<programlisting><userinput>MUESTRA SHELL [aplicacíon-desconocida c:\\ejemplo.txt]</userinput>
+falso
 </programlisting>
-
 </listitem>
 </varlistentry>
+
 
 </variablelist>
-
 </section>
