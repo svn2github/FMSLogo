@@ -1162,7 +1162,7 @@
 //
 // Messages shown by the FILE API.
 //
-#define LOCALIZED_FILE_CHDIRSUCCEEDED      "Cambiado a  \"%s\""
+#define LOCALIZED_FILE_CHDIRSUCCEEDED      "Cambiado a \"%s\""
 #define LOCALIZED_FILE_CHDIRFAILED         "No pude cambiar a directorio \"%s\""
 #define LOCALIZED_FILE_POPPEDTO            "Cambiado a \"%s\""
 #define LOCALIZED_FILE_MKDIRSUCCEEDED      "Ahora estamos en el nuevo directorio creado \"%s\""
