@@ -1,37 +1,40 @@
 <section id="command-mkdir">
-    <title>MKDIR</title>
+    <title>CREADIR</title>
+<indexterm><primary>CREADIR</primary></indexterm>
 <indexterm><primary>MKDIR</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>MKDIR</command> <parameter>directoryname</parameter></synopsis>
+<synopsis><command>CREADIR</command> <parameter>directorio</parameter>
+<command>MKDIR</command> <parameter>directorio</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Makes (creates) a directory and then changes (<link linkend="command-chdir">CHDIR</link>) into it.
-The <parameter>directoryname</parameter> input must be a word (the name of the directory you want to make).
-You can use the <link linkend="command-dir">DIR</link> command to list the files and directories in the current directory.
-You can go back into the parent directory with <link linkend="command-popdir">POPDIR</link>.
+Crea un nuevo directorio y cambia el directorio de trabajo actual a este nuevo directorio (como con <link linkend="command-chdir">CHDIR</link>).
+El argumento <parameter>directorio</parameter> debe ser una palabra (la ruta al directorio que quieres crear).
+Puedes usar el comando <link linkend="command-dir">DIR</link> para enumerar los archivos y directorios en el directorio de trabajo actual.
+Puedes regresar al directorio padre con <link linkend="command-popdir">DIRECTORIOPADRE</link>.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
-<listitem>
-<programlisting><userinput>MKDIR "junk</userinput>
-Now in newly created directory "junk"
 
-<userinput>POPDIR</userinput>
-Changed to "C:\Program Files\&PRODUCTNAME;"
+<varlistentry><term>Ejemplo</term>
+<listitem>
+<programlisting><userinput>CREADIR "miejemplo</userinput>
+Ahora estamos en el nuevo directorio creado "miejemplo"
+
+<userinput>DIRECTORIOPADRE</userinput>
+Cambiado a "C:\Program Files\&PRODUCTNAME;"
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
 </section>
-

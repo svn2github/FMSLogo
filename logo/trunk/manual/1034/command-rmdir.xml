@@ -1,46 +1,50 @@
 <section id="command-rmdir">
-<title>RMDIR</title>
+<title>ELIMINADIR</title>
+<indexterm><primary>ELIMINADIR</primary></indexterm>
 <indexterm><primary>RMDIR</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>RMDIR</command> <parameter>directoryname</parameter></synopsis>
+<synopsis><command>ELIMINADIR</command> <parameter>directorio</parameter>
+<command>RMDIR</command> <parameter>directorio</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Removes (deletes) a directory named <parameter>directoryname</parameter>.
-The <parameter>directoryname</parameter> input must be a word (a name of an existing directory).
-You cannot remove a directory if it is your working directory.
-You cannot remove a directory that contains files or other directories (both <link linkend="command-files">FILES</link> and <link linkend="command-directories">DIRECTORIES</link> must output the empty list when it is your working directory).
+Elimina el directorio llamado <parameter>directorio</parameter>.
+El argumento <parameter>directorio</parameter> debe ser una palabra (la ruta de un directorio existente).
+No puedes eliminar el directorio de trabajo actual.
+No puedes eliminar un directorio que contiene archivos u otros directorios (ambos <link linkend="command-files">LISTAARCHIVOS</link> y <link linkend="command-directories">DIRECTORIOS</link> debieran devolver la lista vacía si <parameter>directorio</parameter> fuera tu directorio de trabajo actual).
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>MKDIR "junk</userinput>
-Now in newly created directory "junk"
+<programlisting><userinput>CREADIR "miejemplo</userinput>
+Ahora estamos en el nuevo directorio creado "miejemplo"
 
-<userinput>POPDIR</userinput>
-Changed to "C:\Program Files\&PRODUCTNAME;"
+<userinput>DIRECTORIOPADRE</userinput>
+Cambiado a "C:\Program Files\&PRODUCTNAME;"
 
-<userinput>RMDIR "junk</userinput>
-Removed directory "junk"
+<userinput>ELIMINADIR "miejemplo</userinput>
+Directorio Eliminado "miejemplo"
 </programlisting>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-mkdir">MKDIR</link></member>
+<member><link linkend="command-mkdir">CREADIR</link></member>
 </simplelist></listitem>
 </varlistentry>
-
 
 </variablelist>
 </section>

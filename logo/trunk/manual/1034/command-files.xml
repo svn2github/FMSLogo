@@ -1,38 +1,42 @@
 <section id="command-files">
-    <title>FILES</title>
+    <title>LISTAARCHIVOS</title>
+<indexterm><primary>LISTAARCHIVOS</primary></indexterm>
 <indexterm><primary>FILES</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>FILES</command></synopsis>
+<synopsis><command>LISTAARCHIVOS</command>
+<command>FILES</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Outputs a list of the names of each file in the current working directory.
-The file names are sorted alphabetically.
+Devuelve una lista de los nombres de todos los archivos del directorio de trabajo actual.
+Los nombres se ordenan alfabéticamente.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>SHOW FILES</userinput>
+<programlisting><userinput>MUESTRA LISTAARCHIVOS</userinput>
 [fmslogo.exe LICENSE.TXT logohelp.chm README.TXT startup.logoscript turtle.bmp uninstall.exe]
 </programlisting>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>See Also</term>
+
+<varlistentry><term>Ve También</term>
 <listitem><simplelist>
-<member><link linkend="command-directories">DIRECTORIES</link></member>
+<member><link linkend="command-directories">DIRECTORIOS</link></member>
 </simplelist></listitem>
 </varlistentry>
 
 </variablelist>
 </section>
-

@@ -4,38 +4,38 @@
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
 <synopsis><command>DIR</command></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Prints out files and directories in the current directory.
-It prints out the <link linkend="command-files">FILES</link> list and <link linkend="command-directories">DIRECTORIES</link> list.
+Escribe una lista de archivos y directorios comprendidos en el directorio de trabajo actual.
+DIR escribe las listas devueltas por <link linkend="command-files">LISTAARCHIVOS</link> y <link linkend="command-directories">DIRECTORIOS</link>.
 </para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Example</term>
+
+<varlistentry><term>Ejemplo</term>
 <listitem>
 <programlisting><userinput>DIR</userinput>
-File fmslogo.exe
-File LICENSE.TXT
-File logohelp.chm
-File README.TXT
-File startup.logoscript
-File turtle.bmp
-File uninstall.exe
-Directory .
-Directory ..
-Directory Examples
-Directory logolib</programlisting>
+ARCHIVO fmslogo.exe
+ARCHIVO LICENSE.TXT
+ARCHIVO logohelp.chm
+ARCHIVO README.TXT
+ARCHIVO startup.logoscript
+ARCHIVO turtle.bmp
+ARCHIVO uninstall.exe
+DIRECTORIO .
+DIRECTORIO ..
+DIRECTORIO Examples
+DIRECTORIO logolib</programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
 </section>
-

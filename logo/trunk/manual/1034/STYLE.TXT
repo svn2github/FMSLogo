@@ -103,3 +103,4 @@ programmatically.
    splicing (lists)           - el empalme (empalmar)
    the dialog box             - el cuadro de diálog
    deprecated                 - obsoleto
+   current working directory  - el directorio de trabajo actual
