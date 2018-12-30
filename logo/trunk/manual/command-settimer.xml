@@ -14,7 +14,7 @@
 <listitem>
 
 <para>
-Sets up a timer identified by <parameter>id</parameter> (a number from 1-31) to call the instructions in <parameter>callback</parameter> in <parameter>delay</parameter> milliseconds of time.
+Sets up a timer identified by <parameter>id</parameter> (a number from 1-31) to call the instructions in <parameter>callback</parameter> in <parameter>delay</parameter> milliseconds.
 It continues to "fire" every <parameter>delay</parameter> milliseconds until you invoke <link linkend="command-cleartimer">CLEARTIMER</link> with the same <parameter>id</parameter>.
 </para>
 
