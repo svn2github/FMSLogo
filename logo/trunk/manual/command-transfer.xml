@@ -26,7 +26,7 @@ Other slot symbols should not be used.
 </para>
 
 <para>
-If the <parameter>endtest</parameter> input is an empty list, evaluation continues until all <parameter>inbasket</parameter> members have been used.
+If the <parameter>endtest</parameter> input is the empty list, evaluation continues until all <parameter>inbasket</parameter> members have been used.
 Otherwise, the <parameter>endtest</parameter> input must be a predicate expression template, and evaluation continues until either that template's value is TRUE or <parameter>inbasket</parameter> is used up.
 </para>
 
