@@ -57,7 +57,7 @@ Some messages are warnings rather than errors; these can not be caught.
 </para>
 
 <para>
-The conditions which generate the first two error codes so bad that &GENERICNAME; exits immediately.
+The conditions which generate error code 0 and error code 34 so bad that &GENERICNAME; exits immediately.
 These also cannot be caught.
 </para>
 
@@ -73,7 +73,7 @@ The numeric error codes and their corresponding human-readable messages are give
     </thead>
     <tbody>
       <row><entry>0</entry><entry>Fatal internal error (can't be caught)</entry></row>
-      <row><entry>1</entry><entry>Out of memory (can't be caught)</entry></row>
+      <row><entry>1</entry><entry>Out of memory</entry></row>
       <row><entry>2</entry><entry>Stack Overflow</entry></row>
       <row><entry>3</entry><entry>Turtle out of bounds</entry></row>
       <row><entry>4</entry><entry>PROC doesn't like DATUM as input (not recoverable)</entry></row>
@@ -106,6 +106,7 @@ The numeric error codes and their corresponding human-readable messages are give
       <row><entry>31</entry><entry>Can only use <link linkend="command-stop">STOP</link> or <link linkend="command-output">OUTPUT</link> inside a procedure</entry></row>
       <row><entry>32</entry><entry><link linkend="command-apply">APPLY</link> doesn't like DATUM as input.</entry></row>
       <row><entry>33</entry><entry><link linkend="command-end">END</link> inside multi-line instruction</entry></row>
+      <row><entry>34</entry><entry>Out of memory (can't be caught)</entry></row>
 
       <row><entry>1001</entry><entry>WINDOW already exists</entry></row>
       <row><entry>1002</entry><entry>WINDOW does not exist</entry></row>
