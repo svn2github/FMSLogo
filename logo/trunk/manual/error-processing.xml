@@ -14,8 +14,9 @@ Certain errors are "recoverable"; for one of those errors, if the instruction li
 It is possible for an ERRACT instruction list to produce an inappropriate value or no value where one is needed.
 As a result, the same error condition could recur forever.
 
-<!-- The following is commented out because this functionality has been removed.
-     It has not been removed because maybe I should add it back.
+<!-- The following sentences are commented out because this functionality has been removed.
+     The sentences have not been deleted because I may add the functionality back.
+
 To avoid that danger, if the same error condition occurs twice in a row from an ERRACT instruction list without user interaction, the message "Erract loop" is printed and control returns to toplevel.
 "Without user interaction" means that if ERRACT invokes PAUSE and the user provides an incorrect value, this loop prevention mechanism does not take effect and the user gets to try again.
 -->
