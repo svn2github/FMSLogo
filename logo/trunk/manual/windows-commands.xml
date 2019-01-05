@@ -81,8 +81,7 @@ The items are represented as text and displayed vertically, one per line.
       <title>Combobox Commands</title>
 
 <para>
-Comboboxes are a type of control that presents the user with a predetermined choice of items
-as well as a free-form text input.
+Comboboxes are a type of control that presents the user with a predetermined choice of items as well as a free-form text input.
 The items are represented as text and displayed vertically, one per line.
 </para>
 
