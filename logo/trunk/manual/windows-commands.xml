@@ -231,12 +231,12 @@ Windows programming supports two types of windows: Modal and Modeless.
 The modal windows (<link linkend="command-dialogcreate">DIALOGCREATE</link>) are similar to a non-windows programming model where the application is in control.
 In midstream of processing you, as the programmer, decide to prompt the user for information (that is, <link linkend="command-readlist">READLIST</link>).
 Processing is halted and other components of the application are inaccessible until the user supplies the requested information.
-For example, prompting the user for a file name to open a document is Modal.
+For example, prompting the user for a file name when trying to open a document is Modal.
 </para>
 
 <para>
 When an application uses a modeless window (<link linkend="command-windowcreate">WINDOWCREATE</link>), the user is in control.
-For example the commander in &PRODUCTNAME; is modeless.
+For example, the commander in &PRODUCTNAME; is modeless.
 The program is generally idle and reacts when the user triggers an event (such as pushing a button).
 </para>
 
@@ -262,7 +262,7 @@ Modal windows should be avoided where possible because users prefer to be in con
 
 <para>
 Below is a code listing that constructs a simple window that draws some polygons on the screen.
-Unlike a traditional program, the logic does not start and the beginning and run line-by-line until it reaches the end.
+Unlike a traditional program, the logic does not start at the beginning and run line-by-line until it reaches the end.
 Instead, the logic is broken into small chunks and is executed in response to "events" such as mouse clicks.
 </para>
 
