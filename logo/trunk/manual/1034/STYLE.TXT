@@ -101,6 +101,11 @@ programmatically.
    a font                     - un tipo (de letras)
    a callback                 - un retrollamada
    splicing (lists)           - el empalme (empalmar)
-   the dialog box             - el cuadro de diálog
+   the dialog box             - el cuadro de diálogo
    deprecated                 - obsoleto
    current working directory  - el directorio de trabajo actual
+   parent window              - la ventana padre
+   child window               - la ventana hija
+   droplist                   - la lista deplegable
+   checkbox                   - la casilla (de verificaión)
+   slider                     - deslizador
