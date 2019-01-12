@@ -1,31 +1,33 @@
 <section id="command-windowdelete">
-    <title>WINDOWDELETE</title>
+    <title>BORRAVENTANA</title>
+<indexterm><primary>BORRAVENTANA</primary></indexterm>
 <indexterm><primary>WINDOWDELETE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>WINDOWDELETE</command> <parameter>name</parameter></synopsis>
+<synopsis><command>BORRAVENTANA</command> <parameter>nombre</parameter>
+<command>WINDOWDELETE</command> <parameter>nombre</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Deletes (closes) the window whose name is <parameter>name</parameter>.
-All child window and controls are also deleted.
-If no window with the given name exists, then <emphasis>all</emphasis> windows and <emphasis>all</emphasis> controls which were created by &PRODUCTNAME; are deleted.
+Borra (cierra) la ventana identificada por <parameter>nombre</parameter>.
+Borra también las ventanas hijas de esa ventana.
+Si no hay ventana con el nombre dado, entonces se borran <emphasis>todas</emphasis> las ventanas y <emphasis>todos</emphasis> los controles que fueron creados con &PRODUCTNAME;.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
-BUTTONCREATE "mywindow "mybutton "PUSH 25 25 25 25 [PRINT "pushed]
-WINDOWDELETE "mywindow</userinput>
+    <programlisting><userinput>CREAVENTANA "raíz "miventana "mitítulo 0 0 100 100 []
+BORRAVENTANA "miventana</userinput>
 </programlisting>
 
 </listitem>
