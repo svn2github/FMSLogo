@@ -20,7 +20,7 @@ ERRACT típicamente tiene el valor <userinput>[PAUSA]</userinput> para habilitar
 
 <para>
 Puedes recuperar de algunos errores si ERRACT puede arreglar el problema.
-Por ejemplo, muchos errores de malos argumentos (tal que ejecutando <userinput>AVANZA [1]</userinput>) son recuperables.
+Por ejemplo, muchos errores de malos argumentos (tales como ejecutando <userinput>AVANZA [1]</userinput>) son recuperables.
 Si un error de mal argumento causa que se ejecuten ERRACT, entonces se use lo que ERRACT devuelva en lugar del mal argumento que causó el error.
 Si ERROR devuelve un valor que también es un mal argumento, entonces se lo ejecuta de nuevo para arreglar el nuevo problema.
 </para>
