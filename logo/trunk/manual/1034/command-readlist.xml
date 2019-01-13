@@ -27,7 +27,7 @@ Cuando se había leído por completo el archivo, LEELISTA devuelve la palabra va
 
 <para>
 LEELISTA procesa las barras inversas, barras verticales, y tildes de la eñe del flujo de lectura; la lista devuelta no contiene esos caracteres pero realizan su efecto usual.
-Del mismo modo, los corchetes realizan su efecto de agrupar múltiples líneas y cada corchete que abre debe ser emparejado con un corchete que cierre.
+Del mismo modo, los corchetes realizan su efecto de agrupar múltiples líneas y cada corchete que abre debe ser emparejado con un corchete que cierra.
 Contenido encerrado con corchetes aparece en la lista devuelta como una lista inferior.
 </para>
 

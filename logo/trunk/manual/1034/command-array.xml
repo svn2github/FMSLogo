@@ -32,7 +32,7 @@ Puedes obtener el origen de un vector con <link linkend="command-first">PRIMERO<
 
 <para>
 &PRODUCTNAME; tiene un sintaxis especial para crear vectores y especificar sus elementos al mismo tiempo.
-Los vectores son delimitados con llaves y el origen se puede especificar opcionalmente en añadiendo el carácter @ después del llave que cierre, seguido por el origen.
+Los vectores son delimitados con llaves y el origen se puede especificar opcionalmente en añadiendo el carácter @ después del llave que cierra, seguido por el origen.
 Por ejemplo, <userinput>{a b c}@0</userinput> crea un vector con tres elementos y un origen de 0.
 La primitiva <link linkend="command-print">ESCRIBE</link> y sus parientes escriben vectores usando el mismo sintaxis.
 </para>
