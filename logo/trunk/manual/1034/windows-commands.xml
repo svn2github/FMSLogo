@@ -271,7 +271,7 @@ En contrario, se divide la lógica en pequeños fragmentos que son ejecutados en
 <para>
 Este ejemplo puede crear una ventana modal o una ventana no modal.
 Si usa una ventana no modal, entonces puedes ejecutar CONFIGURA después de CREAVENTANA termina.
-Si usa una ventana modal, entonces se ejecuta CONFIGURA mediante la instrucción de CREADIALOGO porque CREADIALOGO no para hasta que el usuario cerrara la ventana.
+Si usa una ventana modal, entonces se ejecuta CONFIGURA mediante la instrucción de CREADIALOGO porque CREADIALOGO no termina hasta que el usuario cerrara la ventana.
 </para>
 
 <programlisting>PARA VENTANA
