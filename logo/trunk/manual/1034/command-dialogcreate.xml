@@ -1,70 +1,72 @@
 <section id="command-dialogcreate">
-    <title>DIALOGCREATE</title>
+    <title>CREADIALOGO</title>
+<indexterm><primary>CREADIALOGO</primary></indexterm>
 <indexterm><primary>DIALOGCREATE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>DIALOGCREATE</command> <parameter>parent</parameter> <parameter>name</parameter> <parameter>title</parameter> <parameter>xpos</parameter> <parameter>ypos</parameter> <parameter>width</parameter> <parameter>height</parameter> <parameter>setup</parameter></synopsis>
+<synopsis><command>CREADIALOGO</command> <parameter>padre</parameter> <parameter>nombre</parameter> <parameter>título</parameter> <parameter>xpos</parameter> <parameter>ypos</parameter> <parameter>anchura</parameter> <parameter>altura</parameter> <parameter>configuración</parameter>
+<command>DIALOGCREATE</command> <parameter>padre</parameter> <parameter>nombre</parameter> <parameter>título</parameter> <parameter>xpos</parameter> <parameter>ypos</parameter> <parameter>anchura</parameter> <parameter>altura</parameter> <parameter>configuración</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Creates a window that is suitable for use as a dialog box.
-A dialog window is used as the framework to which you add other window objects or controls (sometimes called widgets).
-You can add things such as buttons, scrollbars, listboxes, etc. to the dialog.
-This command is similar to <link linkend="command-windowcreate">WINDOWCREATE</link> except that it does not stop until the dialog is closed (see <link linkend="windows-modal-vs-modeless">Modal vs. Modeless</link>).
+Crea un cuadro de diálogo (una ventana modal).
+Se usa un cuadro de diálogo como armazón al que se puede añadir otros controles, como botones, barras de desplazamiento, cajas de lista, etc.
+Este procedimiento es parecido a <link linkend="command-windowcreate">CREAVENTANA</link> excepto que éste no termina hasta que se cierra el diálogo (ve la sección <link linkend="windows-modal-vs-modeless">La modalidad de las ventanas</link> para más detalles).
 </para>
 
 <para>
-The <parameter>parent</parameter> input is the name of the window that owns the new dialog.
-If this is the first window you are creating, use <userinput>"main</userinput> as the <parameter>parent</parameter> input.
+El argumento <parameter>padre</parameter> es el nombre de la ventana que es la dueña del nuevo cuadro de diálogo.
+Si el nuevo diálogo es la primera ventana que creas, usa <userinput>"raíz</userinput> como nombre de la ventana padre.
 </para>
 
 <para>
-The <parameter>name</parameter> input identifies the new dialog (perhaps as the parent of another future window or control) and <emphasis>must</emphasis> be a unique word.
+El argumento <parameter>nombre</parameter> identifica el nuevo diálogo (que puede ser la ventana padre de otras ventanas o controles).
+El nombre <emphasis>debe</emphasis> ser distinto de los nombres de todos los otros diálogos.
 </para>
 
 <para>
-The <parameter>title</parameter> input specifies the title, or caption, of the new dialog.
+El argumento <parameter>título</parameter> es el título del nuevo diálogo.
 </para>
 
 <para>
-The <parameter>xpos</parameter> input is the X coordinate where the upper-left corner of the new dialog is placed.
+El argumento <parameter>xpos</parameter> es la coordenada X donde se ubica la esquina de arriba a la izquierda del nuevo diálogo.
 </para>
 
 <para>
-The <parameter>ypos</parameter> input is the Y coordinate where the upper-left corner of the new dialog is placed.
+El argumento <parameter>ypos</parameter> es la coordenada Y donde se ubica la esquina de arriba a la izquierda del nuevo diálogo.
 </para>
 
 <para>
-The <parameter>width</parameter> input is the width of the new dialog, in dialog units.
+El argumento <parameter>anchura</parameter> es la anchura del nuevo diálogo, en unidades de diálogo.
 </para>
 
 <para>
-The <parameter>height</parameter> input is the height of the new dialog, in dialog units.
+El argumento <parameter>alturza</parameter> es la altura del nuevo diálogo, en unidades de diálogo.
 </para>
 
 <para>
-The <parameter>setup</parameter> input is an instruction list to run when the dialog is created.
-You should create and add child controls in the <parameter>setup</parameter> instruction list because DIALOGCREATE does not stop until the dialog is closed.
-Be sure to add at least one button that calls <link linkend="command-dialogdelete">DIALOGDELETE</link> on this window, such as OK, End, Close, or Cancel.
+El argumento <parameter>configuración</parameter> es una lista de instrucciones para ejecutar cuando se crea el nuevo diálogo.
+Debes crear y añadir controles al diálogo con la lista de instrucciones <parameter>configuración</parameter> porque CREADIALOGO no termina hasta que se cierra el diálogo.
+Asegúrate de añadir al menos un botón que ejecuta <link linkend="command-dialogdelete">BORRADIALOGO</link> al diálogo, tal como OK, Fin, Cerrar o Cancelar.
 </para>
 
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-<programlisting><userinput>TO MYSETUP
-  BUTTONCREATE "mydialog "myok "OK 25 25 50 25 [DIALOGDELETE "mydialog]
-END
+<programlisting><userinput>PARA CONFIGURA
+  CREABOTON "midialogo "miok "OK 25 25 50 25 [BORRADIALOGO "midialogo]
+FIN
 
-DIALOGCREATE "main "mydialog "mytitle 0 0 100 75 [MYSETUP]</userinput>
+CREADIALOGO "raíz "midialogo "Ejemplo 0 0 100 75 [CONFIGURA]</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

@@ -1,32 +1,36 @@
 <section id="command-dialogdelete">
-    <title>DIALOGDELETE</title>
+    <title>BORRADIALOGO</title>
+<indexterm><primary>BORRADIALOGO</primary></indexterm>
 <indexterm><primary>DIALOGDELETE</primary></indexterm>
 
 <variablelist>
 
-<varlistentry><term>Synopsis</term>
+ 
+<varlistentry><term>Sinopsis</term>
 <listitem>
-<synopsis><command>DIALOGDELETE</command> <parameter>name</parameter></synopsis>
+<synopsis><command>BORRADIALOGO</command> <parameter>nombre</parameter>
+<command>DIALOGDELETE</command> <parameter>nombre</parameter></synopsis>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Description</term>
+
+<varlistentry><term>Descripción</term>
 <listitem>
 <para>
-Deletes (closes) the dialog whose name is <parameter>name</parameter>.
-All child window and controls are also deleted.
+Borra (cierra) el cuadro de diálogo identificado por <parameter>nombre</parameter>.
+Borra también las ventanas hijas de ese cuadro de diálogo.
 </para>
 </listitem>
 </varlistentry>
 
 
-<varlistentry><term>Example</term>
+<varlistentry><term>Ejemplo</term>
 <listitem>
-    <programlisting><userinput>TO MYSETUP
-  BUTTONCREATE "mydialog "myok "OK 25 25 50 50 [DIALOGDELETE "mydialog]
-END
+<programlisting><userinput>PARA CONFIGURA
+  CREABOTON "midialogo "miok "OK 25 25 50 25 [BORRADIALOGO "midialogo]
+FIN
 
-DIALOGCREATE "main "mydialog "mytitle 0 0 100 100 [MYSETUP]</userinput>
+CREADIALOGO "raíz "midialogo "mitítulo 0 0 100 75 [CONFIGURA]</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
