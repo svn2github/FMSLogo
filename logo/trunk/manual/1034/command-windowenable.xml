@@ -16,8 +16,8 @@
 <listitem>
 <para>
 Habilita o deshabilita la ventana identificada por <parameter>nombre</parameter>.
-Si el argumento <parameter>habilita</parameter> iguala a CIERTO, entonces se habilita la ventana.
-Si el argumento <parameter>habilita</parameter> iguala a FALSO, entonces se deshabilita la ventana.
+Si el argumento <parameter>habilitar</parameter> iguala a CIERTO, entonces se habilita la ventana.
+Si el argumento <parameter>habilitar</parameter> iguala a FALSO, entonces se deshabilita la ventana.
 </para>
 </listitem>
 </varlistentry>
