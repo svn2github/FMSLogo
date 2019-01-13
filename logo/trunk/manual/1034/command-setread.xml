@@ -27,7 +27,7 @@ Así que, es posible oscilar entre leyendo de archivos distintos.
 </para>
 
 <para>
-Si cierres (con <link linkend="command-close">CIERRA</link>) el archivo de la lectura actual, además de cerrar el archivo, el flujo de lectura se vuelve el Centro de Comandos.
+Si cierras (con <link linkend="command-close">CIERRA</link>) el archivo de la lectura actual, además de cerrar el archivo, el flujo de lectura se vuelve el Centro de Comandos.
 </para>
 
 </listitem>

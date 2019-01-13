@@ -27,7 +27,7 @@ Así que, es posible oscilar entre escribiendo a archivos distintos.
 </para>
 
 <para>
-Si cierres (con <link linkend="command-close">CIERRA</link>) el archivo de la escritura actual, además de cerrar el archivo, el flujo de escritura se vuelve el Centro de Comandos.
+Si cierras (con <link linkend="command-close">CIERRA</link>) el archivo de la escritura actual, además de cerrar el archivo, el flujo de escritura se vuelve el Centro de Comandos.
 </para>
 
 </listitem>
