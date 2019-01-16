@@ -28,7 +28,7 @@ Si la nueva ventana es la primera ventana que creas, usa <userinput>"raíz</user
 
 <para>
 El argumento <parameter>nombre</parameter> identifica la nueva ventana (que puede ser la ventana padre de otras ventanas o controles).
-El nombre <emphasis>debe</emphasis> ser distinto de los nombres de todas las otras ventanas.
+El nombre <emphasis>debe</emphasis> ser distinto de los nombres de todas las otras ventanas, diálogos y controles.
 </para>
 
 <para>

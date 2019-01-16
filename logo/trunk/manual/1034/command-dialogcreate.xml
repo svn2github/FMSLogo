@@ -27,7 +27,7 @@ Si el nuevo diálogo es la primera ventana que creas, usa <userinput>"raíz</use
 
 <para>
 El argumento <parameter>nombre</parameter> identifica el nuevo diálogo (que puede ser la ventana padre de otras ventanas o controles).
-El nombre <emphasis>debe</emphasis> ser distinto de los nombres de todos los otros diálogos.
+El nombre <emphasis>debe</emphasis> ser distinto de los nombres de todas las otras ventanas, diálogos y controles.
 </para>
 
 <para>
